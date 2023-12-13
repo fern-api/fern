@@ -28,7 +28,9 @@ exports[`open api parser permit simple 1`] = `
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "operations": [],
+                },
                 "response": {
                   "body": {},
                 },
@@ -45,6 +47,16 @@ exports[`open api parser permit simple 1`] = `
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "operations": "list<root.TenantCreate>",
+                },
+              },
+              "headers": undefined,
+              "name": "TenantCreateBulkOperation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -66,7 +78,9 @@ exports[`open api parser permit simple 1`] = `
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "operations": [],
+                },
                 "response": {
                   "body": {},
                 },
@@ -83,6 +97,16 @@ exports[`open api parser permit simple 1`] = `
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "operations": "list<root.UserCreate>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserCreateBulkOperation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -104,7 +128,9 @@ exports[`open api parser permit simple 1`] = `
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "idents": [],
+                },
                 "response": {
                   "body": {},
                 },
@@ -121,6 +147,16 @@ exports[`open api parser permit simple 1`] = `
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "idents": "list<string>",
+                },
+              },
+              "headers": undefined,
+              "name": "TenantDeleteBulkOperation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -142,7 +178,9 @@ exports[`open api parser permit simple 1`] = `
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "idents": [],
+                },
                 "response": {
                   "body": {},
                 },
@@ -159,6 +197,16 @@ exports[`open api parser permit simple 1`] = `
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "idents": "list<string>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserDeleteBulkOperation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -180,7 +228,9 @@ exports[`open api parser permit simple 1`] = `
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "operations": [],
+                },
                 "response": {
                   "body": {},
                 },
@@ -197,6 +247,16 @@ exports[`open api parser permit simple 1`] = `
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "operations": "list<root.UserCreate>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserReplaceBulkOperation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -236,20 +296,6 @@ If the permission is already granted, it is skipped.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
             "method": "POST",
             "path": "/v2/facts/{proj_id}/{env_id}/set_rules",
             "path-parameters": {
@@ -261,6 +307,35 @@ If the permission is already granted, it is skipped.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "is_resource": {
+                    "docs": "if True, will set the condition set rule to the resource's autogen resource-set.",
+                    "type": "optional<boolean>",
+                  },
+                  "is_role": {
+                    "docs": "if True, will set the condition set rule to the role's autogen user-set.",
+                    "type": "optional<boolean>",
+                  },
+                  "permission": {
+                    "docs": "The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
+                    "type": "string",
+                  },
+                  "resource_set": {
+                    "docs": "The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*",
+                    "type": "string",
+                  },
+                  "user_set": {
+                    "docs": "The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ConditionSetRuleCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -347,18 +422,6 @@ If the permission is not granted, it is skipped.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/set_rules",
             "path-parameters": {
@@ -370,6 +433,35 @@ If the permission is not granted, it is skipped.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "is_resource": {
+                    "docs": "if True, will set the condition set rule to the resource's autogen resource-set.",
+                    "type": "optional<boolean>",
+                  },
+                  "is_role": {
+                    "docs": "if True, will set the condition set rule to the role's autogen user-set.",
+                    "type": "optional<boolean>",
+                  },
+                  "permission": {
+                    "docs": "The permission that will be removed from the userset *on* the resourceset. The permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
+                    "type": "string",
+                  },
+                  "resource_set": {
+                    "docs": "The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified *permission*",
+                    "type": "string",
+                  },
+                  "user_set": {
+                    "docs": "The userset that will be unassigned these permission, i.e: all the users matching this rule will lose the specified permission",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ConditionSetRuleRemove",
+              "query-parameters": undefined,
             },
           },
         },
@@ -421,6 +513,41 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "autogenerated": {
+                    "docs": "whether the set was autogenerated by the system.",
+                    "type": "optional<boolean>",
+                  },
+                  "conditions": {
+                    "docs": "a boolean expression that consists of multiple conditions, with and/or logic.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "an optional longer description of the set",
+                    "type": "optional<string>",
+                  },
+                  "key": {
+                    "docs": "A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
+                    "type": "string",
+                  },
+                  "parent_id": "optional<string>",
+                  "resource_id": "optional<string>",
+                  "type": {
+                    "docs": "the type of the set: UserSet or ResourceSet",
+                    "type": "optional<root.ConditionSetType>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ConditionSetCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -687,6 +814,28 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "conditions": {
+                    "docs": "a boolean expression that consists of multiple conditions, with and/or logic.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "an optional longer description of the set",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
+                    "type": "optional<string>",
+                  },
+                  "parent_id": "optional<string>",
+                },
+              },
+              "headers": undefined,
+              "name": "ConditionSetUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ConditionSetRead",
@@ -758,6 +907,27 @@ allowed.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "conflict_strategy": {
+                    "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
+                    "type": "optional<EnvironmentCopyConflictStrategy>",
+                  },
+                  "scope": {
+                    "docs": "Filters to include and exclude copied objects",
+                    "type": "optional<root.EnvironmentCopyScope>",
+                  },
+                  "target_env": {
+                    "docs": "If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier",
+                    "type": "root.EnvironmentCopyTarget",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "EnvironmentCopy",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.EnvironmentRead",
@@ -777,6 +947,9 @@ allowed.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "root.EnvironmentCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -930,11 +1103,49 @@ allowed.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "custom_branch_name": {
+                    "docs": "when using gitops feature, an optional branch name for the environment",
+                    "type": "optional<string>",
+                  },
+                  "description": {
+                    "docs": "an optional longer description of the environment",
+                    "type": "optional<string>",
+                  },
+                  "jwks": {
+                    "docs": "jwks for element frontend only login",
+                    "type": "optional<root.JwksObj>",
+                  },
+                  "name": {
+                    "docs": "The name of the environment",
+                    "type": "optional<string>",
+                  },
+                  "settings": {
+                    "docs": "the settings for this environment",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "EnvironmentUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.EnvironmentRead",
             },
           },
+        },
+      },
+      "types": {
+        "EnvironmentCopyConflictStrategy": {
+          "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
+          "enum": [
+            "fail",
+            "overwrite",
+          ],
         },
       },
     },
@@ -964,6 +1175,27 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "method": "POST",
             "path": "/v2/orgs",
+            "request": {
+              "body": {
+                "properties": {
+                  "key": {
+                    "docs": "A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the organization, usually it's your company's name.",
+                    "type": "string",
+                  },
+                  "settings": {
+                    "docs": "the settings for this project",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "OrganizationCreate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.OrganizationReadWithApiKey",
@@ -1088,6 +1320,23 @@ authenticated actor (i.e: human team member or api key).",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "The name of the organization, usually it's your company's name.",
+                    "type": "optional<string>",
+                  },
+                  "settings": {
+                    "docs": "the settings for this project",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "OrganizationUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.OrganizationRead",
@@ -1120,6 +1369,39 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "method": "POST",
             "path": "/v2/projects",
+            "request": {
+              "body": {
+                "properties": {
+                  "active_policy_repo_id": {
+                    "docs": "the id of the policy repo to use for this project",
+                    "type": "optional<string>",
+                  },
+                  "description": {
+                    "docs": "a longer description outlining the project objectives",
+                    "type": "optional<string>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the project (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the project.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the project",
+                    "type": "string",
+                  },
+                  "settings": {
+                    "docs": "the settings for this project",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "urn_namespace": {
+                    "docs": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ProjectCreate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ProjectRead",
@@ -1227,6 +1509,31 @@ Every project is a separate silo, and has its own unique set of environments and
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "active_policy_repo_id": {
+                    "docs": "the id of the policy repo to use for this project",
+                    "type": "optional<string>",
+                  },
+                  "description": {
+                    "docs": "a longer description outlining the project objectives",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name of the project",
+                    "type": "optional<string>",
+                  },
+                  "settings": {
+                    "docs": "the settings for this project",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ProjectUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ProjectRead",
@@ -1270,6 +1577,32 @@ to a role as one action.
                 "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "actions": "optional<list<string>>",
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this action group represents in your system",
+                    "type": "optional<string>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the action group",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceActionGroupCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -1437,6 +1770,28 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "actions": "optional<list<string>>",
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this action group represents in your system",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name of the action group",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceActionGroupUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceActionGroupRead",
@@ -1480,6 +1835,31 @@ Each (resource, action) pair defines a unique permission level.
                 "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this action respresents in your system",
+                    "type": "optional<string>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the action",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceActionCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -1647,6 +2027,27 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this action respresents in your system",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name of the action",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceActionUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceActionRead",
@@ -1696,6 +2097,9 @@ define a boolean \`private\` attributes that we can now use in our policies.
                 "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "root.ResourceAttributeCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -1880,6 +2284,9 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.ResourceAttributeUpdate",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceAttributeRead",
@@ -1924,6 +2331,31 @@ and will return the existing instance object in the response body.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "key": {
+                    "docs": "A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the \`permit.check()\` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly.",
+                    "type": "string",
+                  },
+                  "resource": {
+                    "docs": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be \`document\`.",
+                    "type": "string",
+                  },
+                  "tenant": {
+                    "docs": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceInstanceCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -2072,6 +2504,19 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceInstanceUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceInstanceRead",
@@ -2128,6 +2573,9 @@ If some of the permissions specified are already assigned, will skip them.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.AddRolePermissions",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceRoleRead",
@@ -2155,6 +2603,39 @@ If some of the permissions specified are already assigned, will skip them.",
                 "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
+                    "type": "optional<string>",
+                  },
+                  "extends": {
+                    "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
+                    "type": "optional<list<string>>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the role",
+                    "type": "string",
+                  },
+                  "permissions": {
+                    "docs": "list of action keys that define what actions this resource role is permitted to do",
+                    "type": "optional<list<string>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceRoleCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -2387,6 +2868,9 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.RemoveRolePermissions",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceRoleRead",
@@ -2419,6 +2903,35 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
+                    "type": "optional<string>",
+                  },
+                  "extends": {
+                    "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
+                    "type": "optional<list<string>>",
+                  },
+                  "name": {
+                    "docs": "The name of the role",
+                    "type": "optional<string>",
+                  },
+                  "permissions": {
+                    "docs": "list of action keys that define what actions this resource role is permitted to do",
+                    "type": "optional<list<string>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceRoleUpdate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -2468,6 +2981,42 @@ A resource may also contain:
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "actions": {
+                    "docs": "
+        A actions definition block, typically contained within a resource type definition block.
+        The actions represents the ways you can interact with a protected resource.
+        ",
+                    "type": "map<string, root.ActionBlockEditable>",
+                  },
+                  "attributes": {
+                    "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
+                    "type": "optional<map<string, root.AttributeBlockEditable>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this resource respresents in your system",
+                    "type": "optional<string>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the resource",
+                    "type": "string",
+                  },
+                  "urn": {
+                    "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -2622,6 +3171,38 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "actions": {
+                    "docs": "
+        A actions definition block, typically contained within a resource type definition block.
+        The actions represents the ways you can interact with a protected resource.
+        ",
+                    "type": "map<string, root.ActionBlockEditable>",
+                  },
+                  "attributes": {
+                    "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
+                    "type": "optional<map<string, root.AttributeBlockEditable>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this resource respresents in your system",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name of the resource",
+                    "type": "string",
+                  },
+                  "urn": {
+                    "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceReplace",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceRead",
@@ -2650,6 +3231,38 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "actions": {
+                    "docs": "
+        A actions definition block, typically contained within a resource type definition block.
+        The actions represents the ways you can interact with a protected resource.
+        ",
+                    "type": "optional<map<string, root.ActionBlockEditable>>",
+                  },
+                  "attributes": {
+                    "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
+                    "type": "optional<map<string, root.AttributeBlockEditable>>",
+                  },
+                  "description": {
+                    "docs": "An optional longer description of what this resource respresents in your system",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name of the resource",
+                    "type": "optional<string>",
+                  },
+                  "urn": {
+                    "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ResourceUpdate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -2705,6 +3318,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.RoleAssignmentCreate",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.RoleAssignmentRead",
@@ -2725,7 +3341,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": [],
                 "response": {
                   "body": {},
                 },
@@ -2742,6 +3358,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "list<root.RoleAssignmentCreate>",
             },
             "response": {
               "docs": "Successful Response",
@@ -2763,7 +3382,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "proj_id": "proj-id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": [],
                 "response": {
                   "body": {},
                 },
@@ -2780,6 +3399,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "list<root.RoleAssignmentRemove>",
             },
             "response": {
               "docs": "Successful Response",
@@ -2869,18 +3491,6 @@ If the role is not actually assigned, will return 404.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments",
             "path-parameters": {
@@ -2892,6 +3502,9 @@ If the role is not actually assigned, will return 404.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "root.RoleAssignmentRemove",
             },
           },
         },
@@ -2940,6 +3553,9 @@ If some of the permissions specified are already assigned, will skip them.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.AddRolePermissions",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.RoleRead",
@@ -2963,6 +3579,39 @@ If some of the permissions specified are already assigned, will skip them.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
+                    "type": "optional<string>",
+                  },
+                  "extends": {
+                    "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
+                    "type": "optional<list<string>>",
+                  },
+                  "key": {
+                    "docs": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the role",
+                    "type": "string",
+                  },
+                  "permissions": {
+                    "docs": "list of action keys that define what actions this resource role is permitted to do",
+                    "type": "optional<list<string>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RoleCreate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -3165,6 +3814,9 @@ If some of the permissions specified are already unassigned, will skip them.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.RemoveRolePermissions",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.RoleRead",
@@ -3193,6 +3845,35 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
+                    "type": "optional<string>",
+                  },
+                  "extends": {
+                    "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
+                    "type": "optional<list<string>>",
+                  },
+                  "name": {
+                    "docs": "The name of the role",
+                    "type": "optional<string>",
+                  },
+                  "permissions": {
+                    "docs": "list of action keys that define what actions this resource role is permitted to do",
+                    "type": "optional<list<string>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RoleUpdate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -3253,6 +3934,9 @@ and will return the existing tenant object in the response body.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "root.TenantCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -3492,6 +4176,27 @@ Fields that will be provided will be completely overwritten.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "description": {
+                    "docs": "an optional longer description of the tenant",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "A descriptive name for the tenant",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TenantUpdate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.TenantRead",
@@ -3551,6 +4256,7 @@ define a string \`owner\` attribute that we can now use in our policies.
               },
             },
             "request": {
+              "body": "root.ResourceAttributeCreate",
               "name": "CreateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": {
@@ -3746,6 +4452,7 @@ Fields that will be provided will be completely overwritten.",
               },
             },
             "request": {
+              "body": "root.ResourceAttributeUpdate",
               "name": "UpdateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": {
@@ -3806,6 +4513,23 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "role": {
+                    "docs": "the role that will be assigned (accepts either the role id or the role key)",
+                    "type": "string",
+                  },
+                  "tenant": {
+                    "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UserRoleCreate",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "root.RoleAssignmentRead",
@@ -3833,6 +4557,9 @@ and will return the existing user object in the response body.",
                 "docs": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": "root.UserCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -3976,6 +4703,9 @@ and will return the existing user object in the response body.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": "root.UserCreate",
+            },
             "response": {
               "docs": "An existing user was replaced",
               "type": "root.UserRead",
@@ -3992,19 +4722,6 @@ If the role is not actually assigned, will return 404.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "user_id": "user-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}/roles",
             "path-parameters": {
@@ -4020,6 +4737,23 @@ If the role is not actually assigned, will return 404.",
                 "docs": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "role": {
+                    "docs": "the role that will be unassigned (accepts either the role id or the role key)",
+                    "type": "string",
+                  },
+                  "tenant": {
+                    "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UserRoleRemove",
+              "query-parameters": undefined,
             },
           },
           "update_user": {
@@ -4045,6 +4779,31 @@ Fields that will be provided will be completely overwritten.",
                 "docs": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "attributes": {
+                    "docs": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "email": {
+                    "docs": "The email of the user. If synced, will be unique inside the environment.",
+                    "type": "optional<string>",
+                  },
+                  "first_name": {
+                    "docs": "First name of the user.",
+                    "type": "optional<string>",
+                  },
+                  "last_name": {
+                    "docs": "Last name of the user.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UserUpdate",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -4165,37 +4924,6 @@ Fields that will be provided will be completely overwritten.",
           "assignments_removed": "optional<integer>",
         },
       },
-      "ConditionSetCreate": {
-        "docs": undefined,
-        "properties": {
-          "autogenerated": {
-            "docs": "whether the set was autogenerated by the system.",
-            "type": "optional<boolean>",
-          },
-          "conditions": {
-            "docs": "a boolean expression that consists of multiple conditions, with and/or logic.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "an optional longer description of the set",
-            "type": "optional<string>",
-          },
-          "key": {
-            "docs": "A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
-            "type": "string",
-          },
-          "parent_id": "optional<string>",
-          "resource_id": "optional<string>",
-          "type": {
-            "docs": "the type of the set: UserSet or ResourceSet",
-            "type": "optional<ConditionSetType>",
-          },
-        },
-      },
       "ConditionSetRead": {
         "docs": undefined,
         "properties": {
@@ -4252,31 +4980,6 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "ConditionSetRuleCreate": {
-        "docs": undefined,
-        "properties": {
-          "is_resource": {
-            "docs": "if True, will set the condition set rule to the resource's autogen resource-set.",
-            "type": "optional<boolean>",
-          },
-          "is_role": {
-            "docs": "if True, will set the condition set rule to the role's autogen user-set.",
-            "type": "optional<boolean>",
-          },
-          "permission": {
-            "docs": "The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
-            "type": "string",
-          },
-          "resource_set": {
-            "docs": "The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*",
-            "type": "string",
-          },
-          "user_set": {
-            "docs": "The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission",
-            "type": "string",
-          },
-        },
-      },
       "ConditionSetRuleRead": {
         "docs": undefined,
         "properties": {
@@ -4322,78 +5025,11 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "ConditionSetRuleRemove": {
-        "docs": undefined,
-        "properties": {
-          "is_resource": {
-            "docs": "if True, will set the condition set rule to the resource's autogen resource-set.",
-            "type": "optional<boolean>",
-          },
-          "is_role": {
-            "docs": "if True, will set the condition set rule to the role's autogen user-set.",
-            "type": "optional<boolean>",
-          },
-          "permission": {
-            "docs": "The permission that will be removed from the userset *on* the resourceset. The permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
-            "type": "string",
-          },
-          "resource_set": {
-            "docs": "The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified *permission*",
-            "type": "string",
-          },
-          "user_set": {
-            "docs": "The userset that will be unassigned these permission, i.e: all the users matching this rule will lose the specified permission",
-            "type": "string",
-          },
-        },
-      },
       "ConditionSetType": {
         "docs": "An enumeration.",
         "enum": [
           "userset",
           "resourceset",
-        ],
-      },
-      "ConditionSetUpdate": {
-        "docs": undefined,
-        "properties": {
-          "conditions": {
-            "docs": "a boolean expression that consists of multiple conditions, with and/or logic.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "an optional longer description of the set",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'",
-            "type": "optional<string>",
-          },
-          "parent_id": "optional<string>",
-        },
-      },
-      "EnvironmentCopy": {
-        "docs": undefined,
-        "properties": {
-          "conflict_strategy": {
-            "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
-            "type": "optional<EnvironmentCopyConflictStrategy>",
-          },
-          "scope": {
-            "docs": "Filters to include and exclude copied objects",
-            "type": "optional<EnvironmentCopyScope>",
-          },
-          "target_env": {
-            "docs": "If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier",
-            "type": "EnvironmentCopyTarget",
-          },
-        },
-      },
-      "EnvironmentCopyConflictStrategy": {
-        "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
-        "enum": [
-          "fail",
-          "overwrite",
         ],
       },
       "EnvironmentCopyScope": {
@@ -4569,31 +5205,6 @@ Fields that will be provided will be completely overwritten.",
           "updated_at": {
             "docs": "Date and time when the environment was last updated/modified (ISO_8601 format).",
             "type": "datetime",
-          },
-        },
-      },
-      "EnvironmentUpdate": {
-        "docs": undefined,
-        "properties": {
-          "custom_branch_name": {
-            "docs": "when using gitops feature, an optional branch name for the environment",
-            "type": "optional<string>",
-          },
-          "description": {
-            "docs": "an optional longer description of the environment",
-            "type": "optional<string>",
-          },
-          "jwks": {
-            "docs": "jwks for element frontend only login",
-            "type": "optional<JwksObj>",
-          },
-          "name": {
-            "docs": "The name of the environment",
-            "type": "optional<string>",
-          },
-          "settings": {
-            "docs": "the settings for this environment",
-            "type": "optional<map<string, unknown>>",
           },
         },
       },
@@ -4789,23 +5400,6 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "OrganizationCreate": {
-        "docs": undefined,
-        "properties": {
-          "key": {
-            "docs": "A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the organization, usually it's your company's name.",
-            "type": "string",
-          },
-          "settings": {
-            "docs": "the settings for this project",
-            "type": "optional<map<string, unknown>>",
-          },
-        },
-      },
       "OrganizationRead": {
         "docs": undefined,
         "properties": {
@@ -4871,19 +5465,6 @@ Fields that will be provided will be completely overwritten.",
           "updated_at": {
             "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
             "type": "datetime",
-          },
-        },
-      },
-      "OrganizationUpdate": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "The name of the organization, usually it's your company's name.",
-            "type": "optional<string>",
-          },
-          "settings": {
-            "docs": "the settings for this project",
-            "type": "optional<map<string, unknown>>",
           },
         },
       },
@@ -4989,35 +5570,6 @@ Fields that will be provided will be completely overwritten.",
           "project_name": "optional<string>",
         },
       },
-      "ProjectCreate": {
-        "docs": undefined,
-        "properties": {
-          "active_policy_repo_id": {
-            "docs": "the id of the policy repo to use for this project",
-            "type": "optional<string>",
-          },
-          "description": {
-            "docs": "a longer description outlining the project objectives",
-            "type": "optional<string>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the project (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the project.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the project",
-            "type": "string",
-          },
-          "settings": {
-            "docs": "the settings for this project",
-            "type": "optional<map<string, unknown>>",
-          },
-          "urn_namespace": {
-            "docs": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "ProjectRead": {
         "docs": undefined,
         "properties": {
@@ -5063,27 +5615,6 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "ProjectUpdate": {
-        "docs": undefined,
-        "properties": {
-          "active_policy_repo_id": {
-            "docs": "the id of the policy repo to use for this project",
-            "type": "optional<string>",
-          },
-          "description": {
-            "docs": "a longer description outlining the project objectives",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the project",
-            "type": "optional<string>",
-          },
-          "settings": {
-            "docs": "the settings for this project",
-            "type": "optional<map<string, unknown>>",
-          },
-        },
-      },
       "RelationsBlock": {
         "docs": "A actions definition block, typically contained within a resource type definition block.
 The actions represents the ways you can interact with a protected resource.",
@@ -5095,49 +5626,6 @@ The actions represents the ways you can interact with a protected resource.",
           "permissions": {
             "docs": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`,i.e: the "permission name".",
             "type": "list<string>",
-          },
-        },
-      },
-      "ResourceActionCreate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this action respresents in your system",
-            "type": "optional<string>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the action",
-            "type": "string",
-          },
-        },
-      },
-      "ResourceActionGroupCreate": {
-        "docs": undefined,
-        "properties": {
-          "actions": "optional<list<string>>",
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this action group represents in your system",
-            "type": "optional<string>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the action group",
-            "type": "string",
           },
         },
       },
@@ -5191,24 +5679,6 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "ResourceActionGroupUpdate": {
-        "docs": undefined,
-        "properties": {
-          "actions": "optional<list<string>>",
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this action group represents in your system",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the action group",
-            "type": "optional<string>",
-          },
-        },
-      },
       "ResourceActionRead": {
         "docs": undefined,
         "properties": {
@@ -5259,23 +5729,6 @@ The actions represents the ways you can interact with a protected resource.",
           "updated_at": {
             "docs": "Date and time when the action was last updated/modified (ISO_8601 format).",
             "type": "datetime",
-          },
-        },
-      },
-      "ResourceActionUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this action respresents in your system",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the action",
-            "type": "optional<string>",
           },
         },
       },
@@ -5362,59 +5815,6 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "ResourceCreate": {
-        "docs": undefined,
-        "properties": {
-          "actions": {
-            "docs": "
-        A actions definition block, typically contained within a resource type definition block.
-        The actions represents the ways you can interact with a protected resource.
-        ",
-            "type": "map<string, ActionBlockEditable>",
-          },
-          "attributes": {
-            "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-            "type": "optional<map<string, AttributeBlockEditable>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this resource respresents in your system",
-            "type": "optional<string>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the resource",
-            "type": "string",
-          },
-          "urn": {
-            "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "ResourceInstanceCreate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "key": {
-            "docs": "A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the \`permit.check()\` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly.",
-            "type": "string",
-          },
-          "resource": {
-            "docs": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be \`document\`.",
-            "type": "string",
-          },
-          "tenant": {
-            "docs": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "ResourceInstanceRead": {
         "docs": undefined,
         "properties": {
@@ -5465,15 +5865,6 @@ The actions represents the ways you can interact with a protected resource.",
           "updated_at": {
             "docs": "Date and time when the resource instance was last updated/modified (ISO_8601 format).",
             "type": "datetime",
-          },
-        },
-      },
-      "ResourceInstanceUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
-            "type": "optional<map<string, unknown>>",
           },
         },
       },
@@ -5531,63 +5922,6 @@ The actions represents the ways you can interact with a protected resource.",
           "urn": {
             "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
             "type": "optional<string>",
-          },
-        },
-      },
-      "ResourceReplace": {
-        "docs": undefined,
-        "properties": {
-          "actions": {
-            "docs": "
-        A actions definition block, typically contained within a resource type definition block.
-        The actions represents the ways you can interact with a protected resource.
-        ",
-            "type": "map<string, ActionBlockEditable>",
-          },
-          "attributes": {
-            "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-            "type": "optional<map<string, AttributeBlockEditable>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this resource respresents in your system",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the resource",
-            "type": "string",
-          },
-          "urn": {
-            "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "ResourceRoleCreate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
-            "type": "optional<string>",
-          },
-          "extends": {
-            "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
-            "type": "optional<list<string>>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the role",
-            "type": "string",
-          },
-          "permissions": {
-            "docs": "list of action keys that define what actions this resource role is permitted to do",
-            "type": "optional<list<string>>",
           },
         },
       },
@@ -5659,59 +5993,6 @@ The actions represents the ways you can interact with a protected resource.",
           "updated_at": {
             "docs": "Date and time when the role was last updated/modified (ISO_8601 format).",
             "type": "datetime",
-          },
-        },
-      },
-      "ResourceRoleUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
-            "type": "optional<string>",
-          },
-          "extends": {
-            "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
-            "type": "optional<list<string>>",
-          },
-          "name": {
-            "docs": "The name of the role",
-            "type": "optional<string>",
-          },
-          "permissions": {
-            "docs": "list of action keys that define what actions this resource role is permitted to do",
-            "type": "optional<list<string>>",
-          },
-        },
-      },
-      "ResourceUpdate": {
-        "docs": undefined,
-        "properties": {
-          "actions": {
-            "docs": "
-        A actions definition block, typically contained within a resource type definition block.
-        The actions represents the ways you can interact with a protected resource.
-        ",
-            "type": "optional<map<string, ActionBlockEditable>>",
-          },
-          "attributes": {
-            "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-            "type": "optional<map<string, AttributeBlockEditable>>",
-          },
-          "description": {
-            "docs": "An optional longer description of what this resource respresents in your system",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the resource",
-            "type": "optional<string>",
-          },
-          "urn": {
-            "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
-            "type": "optional<string>",
           },
         },
       },
@@ -5811,35 +6092,6 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "RoleCreate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
-            "type": "optional<string>",
-          },
-          "extends": {
-            "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
-            "type": "optional<list<string>>",
-          },
-          "key": {
-            "docs": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The name of the role",
-            "type": "string",
-          },
-          "permissions": {
-            "docs": "list of action keys that define what actions this resource role is permitted to do",
-            "type": "optional<list<string>>",
-          },
-        },
-      },
       "RoleList": {
         "docs": undefined,
         "properties": {
@@ -5907,31 +6159,6 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "RoleUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
-            "type": "optional<string>",
-          },
-          "extends": {
-            "docs": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.",
-            "type": "optional<list<string>>",
-          },
-          "name": {
-            "docs": "The name of the role",
-            "type": "optional<string>",
-          },
-          "permissions": {
-            "docs": "list of action keys that define what actions this resource role is permitted to do",
-            "type": "optional<list<string>>",
-          },
-        },
-      },
       "RolesBlock": {
         "docs": "Resource roles definition block, defines all the roles on the resource.",
         "type": "map<string, unknown>",
@@ -5969,21 +6196,9 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "TenantCreateBulkOperation": {
-        "docs": undefined,
-        "properties": {
-          "operations": "list<TenantCreate>",
-        },
-      },
       "TenantCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
-      },
-      "TenantDeleteBulkOperation": {
-        "docs": undefined,
-        "properties": {
-          "idents": "list<string>",
-        },
       },
       "TenantDeleteBulkOperationResult": {
         "docs": undefined,
@@ -6038,23 +6253,6 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "TenantUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "description": {
-            "docs": "an optional longer description of the tenant",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "A descriptive name for the tenant",
-            "type": "optional<string>",
-          },
-        },
-      },
       "UserCreate": {
         "docs": undefined,
         "properties": {
@@ -6080,21 +6278,9 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "UserCreateBulkOperation": {
-        "docs": undefined,
-        "properties": {
-          "operations": "list<UserCreate>",
-        },
-      },
       "UserCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
-      },
-      "UserDeleteBulkOperation": {
-        "docs": undefined,
-        "properties": {
-          "idents": "list<string>",
-        },
       },
       "UserDeleteBulkOperationResult": {
         "docs": undefined,
@@ -6160,12 +6346,6 @@ The actions represents the ways you can interact with a protected resource.",
           "roles": "optional<list<UserRole>>",
         },
       },
-      "UserReplaceBulkOperation": {
-        "docs": undefined,
-        "properties": {
-          "operations": "list<UserCreate>",
-        },
-      },
       "UserReplaceBulkOperationResult": {
         "docs": undefined,
         "properties": {},
@@ -6183,59 +6363,12 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "UserRoleCreate": {
-        "docs": undefined,
-        "properties": {
-          "role": {
-            "docs": "the role that will be assigned (accepts either the role id or the role key)",
-            "type": "string",
-          },
-          "tenant": {
-            "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
-            "type": "string",
-          },
-        },
-      },
-      "UserRoleRemove": {
-        "docs": undefined,
-        "properties": {
-          "role": {
-            "docs": "the role that will be unassigned (accepts either the role id or the role key)",
-            "type": "string",
-          },
-          "tenant": {
-            "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
-            "type": "string",
-          },
-        },
-      },
       "UserStatus": {
         "docs": "An enumeration.",
         "enum": [
           "active",
           "pending",
         ],
-      },
-      "UserUpdate": {
-        "docs": undefined,
-        "properties": {
-          "attributes": {
-            "docs": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "email": {
-            "docs": "The email of the user. If synced, will be unique inside the environment.",
-            "type": "optional<string>",
-          },
-          "first_name": {
-            "docs": "First name of the user.",
-            "type": "optional<string>",
-          },
-          "last_name": {
-            "docs": "Last name of the user.",
-            "type": "optional<string>",
-          },
-        },
       },
       "ValidationError": {
         "docs": undefined,

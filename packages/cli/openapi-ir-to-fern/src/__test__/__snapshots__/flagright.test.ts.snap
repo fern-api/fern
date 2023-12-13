@@ -121,6 +121,9 @@ Each consumer Business entity needs three mandatory fields:
           ],
           "method": "POST",
           "path": "/business/users",
+          "request": {
+            "body": "Business",
+          },
           "response": {
             "docs": "Created",
             "type": "PostBusinessUserResponse",
@@ -156,6 +159,36 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "method": "POST",
           "path": "/events/business/user",
+          "request": {
+            "body": {
+              "properties": {
+                "eventDescription": {
+                  "docs": "Event description",
+                  "type": "optional<string>",
+                },
+                "eventId": {
+                  "docs": "Unique event ID",
+                  "type": "optional<string>",
+                },
+                "reason": {
+                  "docs": "Reason for the event or a state change",
+                  "type": "optional<string>",
+                },
+                "timestamp": {
+                  "docs": "Timestamp of the event",
+                  "type": "double",
+                },
+                "updatedBusinessUserAttributes": "optional<BusinessOptional>",
+                "userId": {
+                  "docs": "Transaction ID the event pertains to",
+                  "type": "string",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "BusinessUserEvent",
+            "query-parameters": undefined,
+          },
           "response": {
             "docs": "Created",
             "type": "BusinessWithRulesResult",
@@ -193,6 +226,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "method": "POST",
           "path": "/transactions",
           "request": {
+            "body": "Transaction",
             "name": "PostConsumerTransactionRequest",
             "query-parameters": {
               "validateDestinationUserId": {
@@ -235,6 +269,9 @@ Each consumer User entity needs three mandatory fields:
           ],
           "method": "POST",
           "path": "/consumer/users",
+          "request": {
+            "body": "User",
+          },
           "response": {
             "docs": "Created",
             "type": "PostConsumerUserResponse",
@@ -271,6 +308,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "method": "POST",
           "path": "/events/transaction",
+          "request": {
+            "body": {
+              "properties": {
+                "eventDescription": {
+                  "docs": "Event description",
+                  "type": "optional<string>",
+                },
+                "eventId": {
+                  "docs": "Unique event ID",
+                  "type": "optional<string>",
+                },
+                "metaData": "optional<DeviceData>",
+                "reason": {
+                  "docs": "Reason for the event or a state change",
+                  "type": "optional<string>",
+                },
+                "timestamp": {
+                  "docs": "Timestamp of the event",
+                  "type": "double",
+                },
+                "transactionId": {
+                  "docs": "Transaction ID the event pertains to",
+                  "type": "string",
+                },
+                "transactionState": "TransactionState",
+                "updatedTransactionAttributes": "optional<TransactionUpdatable>",
+              },
+            },
+            "headers": undefined,
+            "name": "TransactionEvent",
+            "query-parameters": undefined,
+          },
           "response": {
             "docs": "Created",
             "type": "TransactionEventMonitoringResult",
@@ -306,6 +375,36 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "method": "POST",
           "path": "/events/consumer/user",
+          "request": {
+            "body": {
+              "properties": {
+                "eventDescription": {
+                  "docs": "Event description",
+                  "type": "optional<string>",
+                },
+                "eventId": {
+                  "docs": "Unique event ID",
+                  "type": "optional<string>",
+                },
+                "reason": {
+                  "docs": "Reason for the event or a state change",
+                  "type": "optional<string>",
+                },
+                "timestamp": {
+                  "docs": "Timestamp of the event",
+                  "type": "double",
+                },
+                "updatedConsumerUserAttributes": "optional<UserOptional>",
+                "userId": {
+                  "docs": "Transaction ID the event pertains to",
+                  "type": "string",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "ConsumerUserEvent",
+            "query-parameters": undefined,
+          },
           "response": {
             "docs": "Created",
             "type": "UserWithRulesResult",
@@ -476,32 +575,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SWIFT": "SwiftDetails",
           "UPI": "UpiDetails",
           "WALLET": "WalletDetails",
-        },
-      },
-      "BusinessUserEvent": {
-        "docs": "Model for business user-related events",
-        "properties": {
-          "eventDescription": {
-            "docs": "Event description",
-            "type": "optional<string>",
-          },
-          "eventId": {
-            "docs": "Unique event ID",
-            "type": "optional<string>",
-          },
-          "reason": {
-            "docs": "Reason for the event or a state change",
-            "type": "optional<string>",
-          },
-          "timestamp": {
-            "docs": "Timestamp of the event",
-            "type": "double",
-          },
-          "updatedBusinessUserAttributes": "optional<BusinessOptional>",
-          "userId": {
-            "docs": "Transaction ID the event pertains to",
-            "type": "string",
-          },
         },
       },
       "BusinessUsersResponse": {
@@ -777,32 +850,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "middleName": {
             "docs": "Middle name of the user",
             "type": "optional<string>",
-          },
-        },
-      },
-      "ConsumerUserEvent": {
-        "docs": "Model for consumer user-related events",
-        "properties": {
-          "eventDescription": {
-            "docs": "Event description",
-            "type": "optional<string>",
-          },
-          "eventId": {
-            "docs": "Unique event ID",
-            "type": "optional<string>",
-          },
-          "reason": {
-            "docs": "Reason for the event or a state change",
-            "type": "optional<string>",
-          },
-          "timestamp": {
-            "docs": "Timestamp of the event",
-            "type": "double",
-          },
-          "updatedConsumerUserAttributes": "optional<UserOptional>",
-          "userId": {
-            "docs": "Transaction ID the event pertains to",
-            "type": "string",
           },
         },
       },
@@ -2043,34 +2090,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<double>",
           "week": "optional<double>",
           "year": "optional<double>",
-        },
-      },
-      "TransactionEvent": {
-        "docs": "Model for transaction-related events",
-        "properties": {
-          "eventDescription": {
-            "docs": "Event description",
-            "type": "optional<string>",
-          },
-          "eventId": {
-            "docs": "Unique event ID",
-            "type": "optional<string>",
-          },
-          "metaData": "optional<DeviceData>",
-          "reason": {
-            "docs": "Reason for the event or a state change",
-            "type": "optional<string>",
-          },
-          "timestamp": {
-            "docs": "Timestamp of the event",
-            "type": "double",
-          },
-          "transactionId": {
-            "docs": "Transaction ID the event pertains to",
-            "type": "string",
-          },
-          "transactionState": "TransactionState",
-          "updatedTransactionAttributes": "optional<TransactionUpdatable>",
         },
       },
       "TransactionEventMonitoringResult": {

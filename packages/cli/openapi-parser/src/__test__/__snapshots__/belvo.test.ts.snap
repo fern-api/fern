@@ -1000,7 +1000,106 @@ in the DevPortal.
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "access_mode": {
+                "enum": "single",
+                "type": "enum",
+              },
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "credentials_storage": {
+                "primitive": {
+                  "string": "store",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "fetch_historical": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username": {
+                "primitive": {
+                  "string": "username",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username2": {
+                "primitive": {
+                  "string": "secondusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username3": {
+                "primitive": {
+                  "string": "thirdusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "access_mode": {
@@ -1122,7 +1221,19 @@ in the DevPortal.
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RegisterLinkRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "LinksRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
@@ -1180,7 +1291,32 @@ in the DevPortal.
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "access_mode": {
@@ -1302,7 +1438,19 @@ in the DevPortal.
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchLinksRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBodyWithoutSaveData",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -1579,7 +1727,53 @@ in the DevPortal.
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "access_mode": {
@@ -1717,7 +1911,19 @@ in the DevPortal.
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "UpdateLinkRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "LinksPutRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -1859,7 +2065,15 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "access_mode": {
+                "enum": "single",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "access_mode": {
@@ -1997,7 +2211,19 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "ChangeLinkAccessModeRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "ChangeAccessMode",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -3677,7 +3903,25 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -4164,7 +4408,19 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveAccountsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "StandardRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -4242,7 +4498,39 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -4729,7 +5017,19 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchAccountsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -7806,7 +8106,46 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -8476,7 +8815,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTransactionsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TransactionsRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -8554,7 +8905,46 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "request_id": {
@@ -8630,7 +9020,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTransactionsAsyncRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TransactionsRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Accepted (when \`X-Belvo-Request-Mode\` is \`async\`)",
@@ -8689,7 +9091,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -9359,7 +9793,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchTransactionsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -11580,7 +12026,46 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2021-01-18",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2021-02-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -12093,7 +12578,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveBalancesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "BalancesRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -12157,7 +12654,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -12670,7 +13199,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchBalancesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -15044,7 +15585,25 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -15186,7 +15745,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveOwnersRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "StandardRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -15250,7 +15821,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -15392,7 +15995,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchOwnersRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -16707,7 +17322,46 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-01-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-02-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "primitive": {
+                  "string": "INFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [],
             "type": "array",
@@ -16761,7 +17415,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveInvoicesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "InvoicesRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -16845,7 +17511,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [],
             "type": "array",
@@ -16899,7 +17597,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchInvoicesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -17609,39 +18319,7 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "array": [],
-            "type": "array",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveTaxReturnsRequest",
       "headers": [],
       "internal": undefined,
@@ -17689,7 +18367,39 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "RetrieveTaxReturnsRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "generatedName": "RetrieveTaxReturnsRequestBodyZero",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "TaxReturnsMonthlyRequest",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "generatedName": "RetrieveTaxReturnsRequestBodyOne",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "TaxReturnsYearlyRequest",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -18448,7 +19158,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTaxStatusRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TaxStatusRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -19204,7 +19926,25 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "collected_at": {
@@ -19305,7 +20045,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTaxComplianceStatusRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TaxComplianceStatusRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -20061,7 +20813,52 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "allowed_income_types": {
+                "array": [
+                  {
+                    "enum": "SALARY",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "minimum_confidence_level": {
+                "enum": "HIGH",
+                "type": "enum",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "created_at": {
@@ -20253,7 +21050,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveIncomeRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "IncomesRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -20312,7 +21121,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -20509,7 +21350,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchIncomesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -21805,7 +22658,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -22378,7 +23263,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveRecurringExpensesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "RecurringExpensesRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
@@ -22442,7 +23339,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -23015,7 +23944,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchRecurringExpensesRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
@@ -24379,7 +25320,25 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "balance_gross": {
@@ -24674,7 +25633,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrievePortfolioRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "StandardRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -24732,7 +25703,32 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "balance_gross": {
@@ -25027,7 +26023,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchPortfolioRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBodyWithoutSaveData",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -26303,7 +27311,39 @@ If you try to access older information than what we can access, we will return a
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "account": {
@@ -26503,7 +27543,19 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveReceivableTransactionsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "ReceivableTransactionRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -27677,7 +28729,25 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -28194,7 +29264,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveRiskInsightsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "StandardRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
@@ -28258,7 +29340,39 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -28775,7 +29889,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchRiskInsightsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchBody",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
@@ -30068,7 +31194,36 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-01-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-02-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "OUTFLOW",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -30293,7 +31448,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTaxRetentionsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TaxRetentionsRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -31144,7 +32311,46 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "attach_pdf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "year_from": {
+                "primitive": {
+                  "string": "2018",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "year_to": {
+                "primitive": {
+                  "string": "2019",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [],
             "type": "array",
@@ -31198,7 +32404,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTaxDeclarationsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "TaxDeclarationsRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
@@ -31928,7 +33146,18 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -32265,7 +33494,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
           },
         },
       ],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveEmploymentRecordDetailsRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "EmploymentRecordRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -32789,7 +34030,129 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "allowed_income_types": {
+                "array": [
+                  {
+                    "enum": "SALARY",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "language": {
+                "primitive": {
+                  "string": "pt",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "minimum_confidence_level": {
+                "enum": "HIGH",
+                "type": "enum",
+              },
+              "transactions": {
+                "array": [
+                  {
+                    "properties": {
+                      "account_category": {
+                        "enum": "CHECKING_ACCOUNT",
+                        "type": "enum",
+                      },
+                      "account_holder_id": {
+                        "primitive": {
+                          "string": "a61bc801-9fa5-457b-88ad-850c96eaca30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "account_holder_type": {
+                        "literal": {
+                          "string": "INDIVIDUAL",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "account_id": {
+                        "primitive": {
+                          "string": "EBACA-89077589",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "amount": {
+                        "primitive": {
+                          "float": 650.89,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "BRL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "SALÁRIO MENSAL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "institution": {
+                        "primitive": {
+                          "string": "Erebor Retail Brasil",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "transaction_id": {
+                        "primitive": {
+                          "string": "3CWE4927CF15355",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "INFLOW",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "value_date": {
+                        "primitive": {
+                          "string": "2022-11-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [
               {
@@ -32947,7 +34310,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "path": "/api/enrich/incomes",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "VerifyIncomeRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "EyodIncomeVerificationRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -32993,7 +34368,103 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "language": {
+                "primitive": {
+                  "string": "pt",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "transactions": {
+                "array": [
+                  {
+                    "properties": {
+                      "account_category": {
+                        "enum": "CHECKING_ACCOUNT",
+                        "type": "enum",
+                      },
+                      "account_holder_id": {
+                        "primitive": {
+                          "string": "7890098789087",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "account_holder_type": {
+                        "enum": "INDIVIDUAL",
+                        "type": "enum",
+                      },
+                      "account_id": {
+                        "primitive": {
+                          "string": "BBVACA-89077589",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "amount": {
+                        "primitive": {
+                          "float": 650.89,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "BRL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "APPL3STORE",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "institution": {
+                        "primitive": {
+                          "string": "BBVA",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "mcc": {
+                        "primitive": {
+                          "int": 2345,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "transaction_id": {
+                        "primitive": {
+                          "string": "3CWE4927CF15355",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "INFLOW",
+                        "type": "enum",
+                      },
+                      "value_date": {
+                        "primitive": {
+                          "string": "2022-11-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "transactions": {
@@ -33134,7 +34605,19 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "path": "/api/categorization",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "CategorizeTransactionsRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CategorizationRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -33440,7 +34923,39 @@ For example:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "Bearer hv7alD71j0dzXf09iKfg7u",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Your webhook name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "url": {
+                "primitive": {
+                  "string": "https://mycompany.com/security/webhook",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "array": [],
             "type": "array",
@@ -33455,7 +34970,19 @@ For example:
       "path": "/payments/webhooks",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RegisterPaymentWebhookRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PaymentWebhookRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
@@ -34761,7 +36288,39 @@ For example:
       "path": "/payments/customers",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "CreateCustomerRequest",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "generatedName": "CreateCustomerRequestZero",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreateCustomerOfpi",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "generatedName": "CreateCustomerRequestOne",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreateCustomerPse",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
@@ -35396,7 +36955,39 @@ For example:
       "path": "/payments/bank-accounts",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "CreateBankAccountRequest",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "generatedName": "CreateBankAccountRequestZero",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreateBankAccountOfpi",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "generatedName": "CreateBankAccountRequestOne",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreateBankAccountPse",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
@@ -35940,7 +37531,39 @@ For example:
       "path": "/payments/payment-links",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "CreatePaymentlinkRequest",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "generatedName": "CreatePaymentlinkRequestZero",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreatePaymentLinkOfpi",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "generatedName": "CreatePaymentlinkRequestOne",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "CreatePaymentLinkPse",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
@@ -36693,7 +38316,19 @@ For example:
       "path": "/payments/payment-intents",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "CreatePaymentIntentRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreatePaymentIntentPse",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
@@ -36805,7 +38440,19 @@ During the payment intent flow, you need to fill in the payment intent with requ
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PatchPaymentIntentRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "PatchPaymentIntentPse",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
@@ -37874,6 +39521,8 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "TaxReturnsPersonalMonthlyPaginated",
     "TaxReturnsBusinessPaginated",
     "TaxReturnsBusinessMonthlyPaginated",
+    "TaxReturnsMonthlyRequest",
+    "TaxReturnsYearlyRequest",
     "TaxReturnPersonal",
     "TaxReturnPersonalMonthly",
     "TaxReturnBusiness",
@@ -37910,15 +39559,22 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "PaymentsInstitutionsPaginatedResponse",
     "paymentInstitution",
     "CustomerPaginatedResponse",
+    "CreateCustomerOfpi",
+    "CreateCustomerPse",
     "CustomerOfpi",
     "CustomerPse",
     "BankAccountPaginatedResponse",
+    "CreateBankAccountOfpi",
+    "CreateBankAccountPse",
     "BankAccountOfpiResponse",
     "BankAccountPseResponse",
     "PaymentLinkPaginatedResponse",
+    "CreatePaymentLinkOfpi",
+    "CreatePaymentLinkPse",
     "PaymentLinkOfpi",
     "PaymentLinkPse",
     "PaymentIntentPaginatedResponse",
+    "CreatePaymentIntentPse",
     "PaymentIntentPse",
     "PaymentsTransactionsPaginatedResponse",
     "paymentTransaction",
@@ -38159,6 +39815,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "PaymentIntentsPaymentMethodDetailsPse",
     "PatchPaymentMethodDetailsPse",
     "PatchPaymentIntentsBodyPse",
+    "TransactionsRequest",
+    "PatchBody",
+    "StandardRequest",
+    "PatchBodyWithoutSaveData",
   ],
   "schemas": {
     "AccessToResourceDenied": {

@@ -455,7 +455,116 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "air_booking": {
+                    "incoterm": "EXW",
+                    "origin_port_iata_code": "HKG",
+                    "origin_port_icao_code": "VHHH",
+                    "origin_port_loc_code": "HKHKG",
+                    "product_descriptions": [
+                      {
+                        "description": "Wristwatches",
+                        "description_for_export_customs": "手表",
+                        "description_for_export_customs_locale": "zh_CN",
+                        "hs_code": "9101.01",
+                      },
+                    ],
+                    "wants_delivery_service": true,
+                    "wants_pickup_service": true,
+                  },
+                  "cargo": {
+                    "contains_hazmat": false,
+                    "contains_li_ion": false,
+                    "contains_magnets": false,
+                    "contains_non_li_ion_battery": false,
+                    "contains_other_dangerous_goods": false,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose",
+                    ],
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "atomic_count": 9,
+                        "count": 9,
+                        "height": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                        "length": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                        "name": "Cellular phones",
+                        "unit_type": "pallet",
+                        "volume": {
+                          "unit": "cbm",
+                          "value": 472.62,
+                        },
+                        "weight": {
+                          "unit": "kg",
+                          "value": 2300.4,
+                        },
+                        "width": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                      },
+                    ],
+                    "volume": {
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                  },
+                  "cargo_ready_date": "2019-06-30",
+                  "consignee_entity_ref": "consignee_company_name_llc",
+                  "declared_as_strategy": "yes",
+                  "delivery_date": "2019-07-23",
+                  "destination_address_ref": "id-123456",
+                  "eccn_codes": "3A001, 5A002",
+                  "flow_direct": true,
+                  "name": "PO 123",
+                  "notify_party": "John Doe, doe@example.com",
+                  "ocean_booking": {
+                    "container_counts": {
+                      "forty_five_ft_hc": 4,
+                      "forty_ft": 2,
+                      "forty_ft_hc": 3,
+                      "twenty_ft": 1,
+                    },
+                    "destination_port_loc_code": "USLAX",
+                    "destination_port_us_cbp_port_code": "2704",
+                    "incoterm": "EXW",
+                    "is_lcl": false,
+                    "origin_port_loc_code": "CNYTN",
+                    "origin_port_us_cbp_port_code": "57078",
+                    "product_descriptions": [
+                      {
+                        "description": "Wristwatches",
+                        "description_for_export_customs": "手表",
+                        "description_for_export_customs_locale": "zh_CN",
+                        "hs_code": "9101.01",
+                      },
+                    ],
+                    "wants_delivery_service": true,
+                    "wants_pickup_service": true,
+                  },
+                  "origin_address_ref": "id-123456",
+                  "shipper_entity_ref": "shipper_company_name_ltd",
+                  "special_instructions": "Please book 40ft reefer container.",
+                  "trucking_booking": {
+                    "description_of_products": "watches",
+                    "is_ltl": true,
+                    "payment_terms": "collect",
+                  },
+                  "wants_bco": false,
+                  "wants_export_customs_service": false,
+                  "wants_flexport_freight": false,
+                  "wants_import_customs_service": false,
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -746,6 +855,84 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/bookings",
+            "request": {
+              "body": {
+                "properties": {
+                  "air_booking": "optional<root.CreateAirBooking>",
+                  "cargo": "root.CreateCargo",
+                  "cargo_ready_date": {
+                    "docs": "Always required. Date when cargo is ready for pickup at the origin location.",
+                    "type": "string",
+                  },
+                  "consignee_entity_ref": {
+                    "docs": "Always required. Customizable reference ID of company entity that is the consignee of the booking.",
+                    "type": "string",
+                  },
+                  "declared_as_strategy": {
+                    "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
+                    "type": "optional<CreateBookingDeclaredAsStrategy>",
+                  },
+                  "delivery_date": {
+                    "docs": "Optional. Target date by when cargo must be delivered.",
+                    "type": "optional<string>",
+                  },
+                  "destination_address_ref": {
+                    "docs": "Always required for trucking bookings. Always required for air and ocean bookings if \`wants_delivery_service\` is TRUE. Customizable reference ID of network location that is the delivery location.",
+                    "type": "string",
+                  },
+                  "eccn_codes": {
+                    "docs": "Required when declared_as_strategy is "yes". Please provide the ECCN codes (Export Control Classification Number) of the products subject to export control regulations. Make sure you find the right ECCN codes in the Commerce Control List. Make sure you provide the correct format of the ECCN code (five character alpha-numeric such as 3A001, 5A002, etc) seperated by commas. According to the laws, providing the wrong ECCN information might cause fines.",
+                    "type": "optional<string>",
+                  },
+                  "flow_direct": {
+                    "docs": "Optional. Whether to create Flow Direct Quote for the Booking. Currently, only Ocean LCL Booking is supported",
+                    "type": "optional<boolean>",
+                  },
+                  "metadata": "optional<root.MetadataCreate>",
+                  "name": {
+                    "docs": "Always required. Name of the booking.",
+                    "type": "string",
+                  },
+                  "notify_party": {
+                    "docs": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
+                    "type": "optional<string>",
+                  },
+                  "ocean_booking": "optional<root.CreateOceanBooking>",
+                  "origin_address_ref": {
+                    "docs": "Always required. Customizable reference ID of network location that is the pickup location.",
+                    "type": "string",
+                  },
+                  "shipper_entity_ref": {
+                    "docs": "Always required. Customizable reference ID of company entity that is the shipper of the booking.",
+                    "type": "string",
+                  },
+                  "special_instructions": {
+                    "docs": "Additional instructions not included in rest of booking form.",
+                    "type": "optional<string>",
+                  },
+                  "trucking_booking": "optional<root.CreateTruckingBooking>",
+                  "wants_bco": {
+                    "docs": "Optional. Whether the booking requires Flexport to provide BCO services.",
+                    "type": "optional<boolean>",
+                  },
+                  "wants_export_customs_service": {
+                    "docs": "Always required. Whether the booking requires Flexport to provide export customs services.",
+                    "type": "boolean",
+                  },
+                  "wants_flexport_freight": {
+                    "docs": "Optional. Whether the booking requires Flexport to provide freight services.",
+                    "type": "optional<boolean>",
+                  },
+                  "wants_import_customs_service": {
+                    "docs": "Optional. Whether the booking requires Flexport to provide import customs services.",
+                    "type": "optional<boolean>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateBooking",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created booking",
               "type": "BookingCreateResponse",
@@ -1125,6 +1312,14 @@ exports[`open api parser flexport simple 1`] = `
             "prev": "optional<string>",
           },
         },
+        "CreateBookingDeclaredAsStrategy": {
+          "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
+          "enum": [
+            "yes",
+            "no",
+            "notsure",
+          ],
+        },
       },
     },
     "bookingAmendment.yml": {
@@ -1149,7 +1344,82 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "amendment_note": "This is an amendment note with useful context to changes made to the booking",
+                  "booking_id": 12345,
+                  "new_cargo": {
+                    "contains_hazmat": false,
+                    "contains_li_ion": false,
+                    "contains_magnets": false,
+                    "contains_non_li_ion_battery": false,
+                    "contains_other_dangerous_goods": false,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose",
+                    ],
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "atomic_count": 9,
+                        "count": 9,
+                        "height": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                        "length": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                        "name": "Cellular phones",
+                        "unit_type": "pallet",
+                        "volume": {
+                          "unit": "cbm",
+                          "value": 472.62,
+                        },
+                        "weight": {
+                          "unit": "kg",
+                          "value": 2300.4,
+                        },
+                        "width": {
+                          "unit": "cm",
+                          "value": 100,
+                        },
+                      },
+                    ],
+                    "volume": {
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                  },
+                  "new_cargo_ready_date": "2019-06-30",
+                  "new_container_counts": {
+                    "forty_five_ft_hc": 4,
+                    "forty_ft": 2,
+                    "forty_ft_hc": 3,
+                    "twenty_ft": 1,
+                  },
+                  "new_destination_address_ref": "id-123456",
+                  "new_destination_port_loc_code": "CNYTN",
+                  "new_destination_port_us_cbp_port_code": "57078",
+                  "new_name": "Valentine's Day - 2020",
+                  "new_origin_address_ref": "id-123456",
+                  "new_origin_port_loc_code": "CNYTN",
+                  "new_origin_port_us_cbp_port_code": "57078",
+                  "new_product_descriptions": [
+                    {
+                      "description": "Wristwatches",
+                      "description_for_export_customs": "手表",
+                      "hs_code": "9101.01",
+                    },
+                  ],
+                  "new_wants_bco": true,
+                  "new_wants_flexport_freight": true,
+                  "new_wants_import_customs_service": true,
+                  "new_wants_pickup_service": true,
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1287,6 +1557,66 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/booking_amendments",
+            "request": {
+              "body": {
+                "properties": {
+                  "amendment_note": {
+                    "docs": "Additional message to Flexport regarding the booking amendment.",
+                    "type": "optional<string>",
+                  },
+                  "booking_id": {
+                    "docs": "Identifier of the existing booking to be modified",
+                    "type": "integer",
+                  },
+                  "new_cargo": "optional<root.CreateCargo>",
+                  "new_cargo_ready_date": {
+                    "docs": "Date when cargo is ready for pickup at the origin location.",
+                    "type": "optional<string>",
+                  },
+                  "new_container_counts": "optional<root.CreateContainerCounts>",
+                  "new_destination_address_ref": {
+                    "docs": "Customizable reference ID of network location that is the delivery location.",
+                    "type": "optional<string>",
+                  },
+                  "new_destination_port_loc_code": {
+                    "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. UN code for the destination port.",
+                    "type": "optional<string>",
+                  },
+                  "new_destination_port_us_cbp_port_code": {
+                    "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
+                    "type": "optional<string>",
+                  },
+                  "new_metadata": "optional<root.MetadataCreate>",
+                  "new_name": {
+                    "docs": "Name of the booking.",
+                    "type": "optional<string>",
+                  },
+                  "new_origin_address_ref": {
+                    "docs": "Customizable reference ID of network location that is the pickup location.",
+                    "type": "optional<string>",
+                  },
+                  "new_origin_port_loc_code": {
+                    "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. UN code for the origin port.",
+                    "type": "optional<string>",
+                  },
+                  "new_origin_port_us_cbp_port_code": {
+                    "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
+                    "type": "optional<string>",
+                  },
+                  "new_product_descriptions": {
+                    "docs": "New product (HS code) information",
+                    "type": "optional<list<root.CreateBookingAmendmentHsCode>>",
+                  },
+                  "new_wants_bco": "optional<boolean>",
+                  "new_wants_flexport_freight": "optional<boolean>",
+                  "new_wants_import_customs_service": "optional<boolean>",
+                  "new_wants_pickup_service": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateBookingAmendment",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created booking amendment",
               "type": "BookingAmendmentCreateResponse",
@@ -1329,7 +1659,11 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "booking_id": 4321,
+                  "purchase_order_line_item_id": 1234,
+                  "units": 234,
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1357,6 +1691,27 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/booking_line_items",
+            "request": {
+              "body": {
+                "properties": {
+                  "booking_id": {
+                    "docs": "Always required. The identifier of the booking to add the PO line item to",
+                    "type": "integer",
+                  },
+                  "purchase_order_line_item_id": {
+                    "docs": "Always required. The identifier of the PO line item to book",
+                    "type": "integer",
+                  },
+                  "units": {
+                    "docs": "Always required. Number of units to book",
+                    "type": "integer",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateBookingLineItem",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created booking line item",
               "type": "BookingLineItemCreateResponse",
@@ -1578,7 +1933,46 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "destination_address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "destination_coordinates": {
+                    "latitude": "76.003",
+                    "longitude": "-122.092",
+                  },
+                  "distance": {
+                    "unit": "km",
+                    "value": 100,
+                  },
+                  "flight_type": "freighter",
+                  "origin_address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "origin_coordinates": {
+                    "latitude": "76.003",
+                    "longitude": "-122.092",
+                  },
+                  "teus": "2",
+                  "transportation_mode": "air",
+                  "trucking_service_type": "ftl",
+                  "weight": {
+                    "unit": "kg",
+                    "value": 2300.4,
+                  },
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1598,6 +1992,75 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/carbon_calculation",
+            "request": {
+              "body": {
+                "properties": {
+                  "destination_address": {
+                    "docs": "The physical address of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
+                    "type": "optional<root.AddressForRequestBody>",
+                  },
+                  "destination_coordinates": {
+                    "docs": "The latitude and longitude of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
+                    "type": "optional<root.CoordinatesCreate>",
+                  },
+                  "destination_port": {
+                    "docs": "Port of destination, used if no more specific destination location is provided.",
+                    "type": "optional<string>",
+                  },
+                  "distance": {
+                    "docs": "The total distance traveled by the shipment. This can be used instead of origin/destination locations.",
+                    "type": "optional<root.DistanceCreate>",
+                  },
+                  "flight_type": {
+                    "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
+                    "type": "optional<CreateCarbonCalculationFlightType>",
+                  },
+                  "is_inland": {
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation was inland or not. Defaults to false.",
+                    "type": "optional<boolean>",
+                  },
+                  "is_lcl": {
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is less than container load or not. Defaults to false.",
+                    "type": "optional<boolean>",
+                  },
+                  "is_reefer": {
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is a reefer shipment. Defaults to false.",
+                    "type": "optional<boolean>",
+                  },
+                  "origin_address": {
+                    "docs": "The physical address of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
+                    "type": "optional<root.AddressForRequestBody>",
+                  },
+                  "origin_coordinates": {
+                    "docs": "The latitude and longitude of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
+                    "type": "optional<root.CoordinatesCreate>",
+                  },
+                  "origin_port": {
+                    "docs": "Port of origin, used if no more specific origin location is provided.",
+                    "type": "optional<string>",
+                  },
+                  "teus": {
+                    "docs": "The number of TEUs (Twenty-foot Equivalent Units) moved in the calculation. Either \`weight\` or \`teus\` is required.",
+                    "type": "optional<string>",
+                  },
+                  "transportation_mode": {
+                    "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
+                    "type": "CreateCarbonCalculationTransportationMode",
+                  },
+                  "trucking_service_type": {
+                    "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
+                    "type": "optional<CreateCarbonCalculationTruckingServiceType>",
+                  },
+                  "weight": {
+                    "docs": "The exact weight being shipped. Either \`weight\` or \`teus\` is required.",
+                    "type": "optional<root.WeightCreate>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCarbonCalculation",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success",
               "type": "CarbonCalculationCreateResponse",
@@ -1614,6 +2077,35 @@ exports[`open api parser flexport simple 1`] = `
             "self": "optional<string>",
             "version": "optional<integer>",
           },
+        },
+        "CreateCarbonCalculationFlightType": {
+          "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
+          "enum": [
+            "freighter",
+            "belly_freighter",
+            "unknown",
+          ],
+        },
+        "CreateCarbonCalculationTransportationMode": {
+          "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
+          "enum": [
+            "air",
+            "ocean",
+            "truck",
+            "rail",
+          ],
+        },
+        "CreateCarbonCalculationTruckingServiceType": {
+          "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
+          "enum": [
+            "ftl",
+            "ltl",
+            "drayage",
+            "cartage",
+            "last_mile",
+            "airport_transfer",
+            "air_cartage",
+          ],
         },
       },
     },
@@ -1639,7 +2131,18 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "currency_code": "USD",
+                  "invoice_number": "INVOICE-04-05-2020",
+                  "is_related_parties": false,
+                  "line_items": [],
+                  "proration_amount": {
+                    "amount": "12.34",
+                    "currency_code": "USD",
+                  },
+                  "shipment_id": 79683,
+                  "shipment_ref": "PO-123",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1798,6 +2301,43 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/commercial_invoices",
+            "request": {
+              "body": {
+                "properties": {
+                  "currency_code": {
+                    "docs": "The currency being used on the commercial invoice.",
+                    "type": "string",
+                  },
+                  "invoice_number": {
+                    "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
+                    "type": "string",
+                  },
+                  "involved_parties": "optional<list<root.CreateInvolvedParty>>",
+                  "is_related_parties": {
+                    "docs": "Whether there was a related parties transaction as defined by CBP.",
+                    "type": "optional<boolean>",
+                  },
+                  "line_items": "list<root.CreateCommercialInvoiceLineItem>",
+                  "manufacturer_refs": {
+                    "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location.",
+                    "type": "optional<list<string>>",
+                  },
+                  "metadata": "optional<root.MetadataCreate>",
+                  "proration_amount": "root.MoneyCreate",
+                  "shipment_id": {
+                    "docs": "Flexport's unique identifier for the shipment. Either shipment_id or shipment_ref is required.",
+                    "type": "optional<integer>",
+                  },
+                  "shipment_ref": {
+                    "docs": "Your custom string used to refer to the shipment. Can be used to look up or reference the shipment later on. Either shipment_id or shipment_ref is required.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCommercialInvoice",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created commercial invoice",
               "type": "CommercialInvoicesCreateResponse",
@@ -2217,7 +2757,16 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "currency_code": "USD",
+                  "invoice_number": "INVOICE-04-05-2020",
+                  "is_related_parties": false,
+                  "proration_amount": {
+                    "_object": "/money",
+                    "amount": "12.34",
+                    "currency_code": "USD",
+                  },
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2376,6 +2925,31 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "PATCH",
             "path": "/commercial_invoices",
+            "request": {
+              "body": {
+                "properties": {
+                  "currency_code": {
+                    "docs": "The currency being used on the commercial invoice.",
+                    "type": "optional<string>",
+                  },
+                  "invoice_number": {
+                    "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
+                    "type": "optional<string>",
+                  },
+                  "is_related_parties": {
+                    "docs": "Whether there was a related parties transaction as defined by CBP.",
+                    "type": "optional<boolean>",
+                  },
+                  "line_items": "optional<list<root.CreateCommercialInvoiceLineItem>>",
+                  "manufacturer_refs": "optional<list<string>>",
+                  "metadata": "optional<root.Metadata>",
+                  "proration_amount": "optional<root.Money>",
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateCommercialInvoice",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The updated commercial invoice",
               "type": "CommercialInvoicesUpdateResponse",
@@ -2453,7 +3027,10 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "name": "Zoomit",
+                  "ref": "zoomit-ref",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2495,6 +3072,23 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/network/companies",
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "Always required. Name of the company.",
+                    "type": "string",
+                  },
+                  "ref": {
+                    "docs": "Your custom string used to refer to the company",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompany",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created company",
               "type": "NetworkCompanyCreateResponse",
@@ -2734,7 +3328,10 @@ exports[`open api parser flexport simple 1`] = `
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "name": "Updated Zoomit",
+                  "ref": "zoomit_ref",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2782,6 +3379,23 @@ exports[`open api parser flexport simple 1`] = `
                 "docs": "The unique id for the requested company",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "Updated name of the company.",
+                    "type": "optional<string>",
+                  },
+                  "ref": {
+                    "docs": "Updated ref of the company",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateCompany",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "The updated company",
@@ -2966,7 +3580,27 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "company_ref": "Zoomit",
+                  "mailing_address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "name": "Zoomit",
+                  "ref": "my-zoomit-ref",
+                  "vat_numbers": [
+                    {
+                      "country_code": "GB",
+                      "number": "GB 123456789",
+                    },
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3004,6 +3638,39 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/network/company_entities",
+            "request": {
+              "body": {
+                "properties": {
+                  "company_id": {
+                    "docs": "The id of the new company entity's parent company. Either company_id or company_ref is required",
+                    "type": "optional<string>",
+                  },
+                  "company_ref": {
+                    "docs": "The ref of the new company entity's parent company. Either company_id or company_ref is required",
+                    "type": "optional<string>",
+                  },
+                  "mailing_address": {
+                    "docs": "Always Required. The object representing the mailing address of the company entity.",
+                    "type": "root.AddressForRequestBody",
+                  },
+                  "name": {
+                    "docs": "Always required. Legal name of the new company entity",
+                    "type": "string",
+                  },
+                  "ref": {
+                    "docs": "Not required. The ref that will be created for the new company entity",
+                    "type": "optional<string>",
+                  },
+                  "vat_numbers": {
+                    "docs": "Not required. An array of VAT Numbers for the new company entity.",
+                    "type": "optional<list<root.WriteVatNumber>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompanyEntity",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created company entity",
               "type": "NetworkCompanyEntityCreateResponse",
@@ -3086,7 +3753,25 @@ exports[`open api parser flexport simple 1`] = `
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "mailing_address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "name": "Zoomit V2",
+                  "ref": "zoomit-us",
+                  "vat_numbers": [
+                    {
+                      "country_code": "GB",
+                      "number": "GB 123456789",
+                    },
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3129,6 +3814,28 @@ exports[`open api parser flexport simple 1`] = `
                 "docs": "The unique id for the requested company entity",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "mailing_address": "optional<root.AddressForRequestBody>",
+                  "name": {
+                    "docs": "The new legal name of the company entity",
+                    "type": "optional<string>",
+                  },
+                  "ref": {
+                    "docs": "The new ref that will be used for the company entity",
+                    "type": "optional<string>",
+                  },
+                  "vat_numbers": {
+                    "docs": "If a value for vat_numbers is specified, the array specified will replace all the existing VAT numbers of the company entity",
+                    "type": "optional<list<root.WriteVatNumber>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateCompanyEntity",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Success",
@@ -3208,7 +3915,12 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "email": "john@example.com",
+                  "name": "John Smith",
+                  "phone_number": "861-555-5555",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3229,6 +3941,31 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/network/contacts",
+            "request": {
+              "body": {
+                "properties": {
+                  "company_id": {
+                    "docs": "ID of the new contact's company. If not specified, the contact will be created for your company.",
+                    "type": "optional<string>",
+                  },
+                  "email": {
+                    "docs": "Always required. Email address of the new contact.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "Always required. Name of the new contact.",
+                    "type": "string",
+                  },
+                  "phone_number": {
+                    "docs": "Always required. Phone number of the new contact.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateContact",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created contact",
               "type": "NetworkContactCreateResponse",
@@ -3372,7 +4109,11 @@ exports[`open api parser flexport simple 1`] = `
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "email": "john_new_email@example.com",
+                  "name": "John Smith",
+                  "phone_number": "861-555-7777",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3398,6 +4139,27 @@ exports[`open api parser flexport simple 1`] = `
                 "docs": "The unique id for the requested contact",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "email": {
+                    "docs": "Updated email address of the contact.",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Updated name of the contact.",
+                    "type": "optional<string>",
+                  },
+                  "phone_number": {
+                    "docs": "Updated phone number of the contact.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateContact",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "The updated contact",
@@ -4107,7 +4869,14 @@ exports[`open api parser flexport simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "document": "SGVsbG8sIFdvcmxkIQ==",
+                  "document_type": "packing_list",
+                  "file_name": "Flexport-Booking.pdf",
+                  "mime_type": "application/pdf",
+                  "shipment_id": 1234567,
+                  "user_email": "johndoe@flexport.com",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4127,6 +4896,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "method": "POST",
             "path": "/documents",
+            "request": {
+              "body": "root.CreateDocument",
+            },
             "response": {
               "docs": "Created",
               "type": "DocumentsCreateResponse",
@@ -5940,7 +6712,20 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "company_id": "xyz_123_ABC",
+                  "name": "Zoomit",
+                  "ref": "zoomit-management-co",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5968,6 +6753,36 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "method": "POST",
             "path": "/network/locations",
+            "request": {
+              "body": {
+                "properties": {
+                  "address": "root.AddressForRequestBody",
+                  "company_id": {
+                    "docs": "The id of the company entity to create this location for",
+                    "type": "string",
+                  },
+                  "contact_ids": {
+                    "docs": "Array of contact id's to assign to this location",
+                    "type": "optional<list<string>>",
+                  },
+                  "metadata": {
+                    "docs": "Optional metadata to add to a location. Keys must be strings and values should be arrays of strings.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "docs": "Name of the location",
+                    "type": "string",
+                  },
+                  "ref": {
+                    "docs": "Not required. The ref that will be created for the new location",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateLocation",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "The created location",
               "type": "NetworkLocationCreateResponse",
@@ -6040,7 +6855,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "address": {
+                    "city": "Albany",
+                    "country_code": "US",
+                    "state": "MN",
+                    "street_address": "1641 Settlers Lane",
+                    "street_address2": "STE 2918",
+                    "unlocode": "USAL2",
+                    "zip": "56307",
+                  },
+                  "name": "Zoomit V2",
+                  "ref": "zoomit-management-co",
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6073,6 +6900,32 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "docs": "The unique id for the requested location",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "address": "optional<root.AddressForRequestBody>",
+                  "contact_ids": {
+                    "docs": "If a value for contact_ids is specified, the array specified will replace all the existing contacts at the location",
+                    "type": "optional<list<string>>",
+                  },
+                  "metadata": {
+                    "docs": "Metadata to replace existing metadata. Keys must be strings and values should be arrays.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "docs": "New name of the location",
+                    "type": "optional<string>",
+                  },
+                  "ref": {
+                    "docs": "The new ref for the location",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateLocation",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Success",
@@ -6277,7 +7130,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "classifications": [
+                    {
+                      "codes": [],
+                      "region": "US",
+                    },
+                  ],
+                  "client_verified": true,
+                  "country_of_origin": "China",
+                  "description": "The best 12V AC Adapter on the market",
+                  "name": "AC Adapter 12V",
+                  "product_category": "Cosmetics",
+                  "product_properties": [
+                    {
+                      "type": "color",
+                      "value": "blue",
+                    },
+                  ],
+                  "sku": "WDVCDFD-RM00472",
+                  "suppliers": [
+                    {
+                      "country_of_origin": "CN",
+                      "id": 12345,
+                      "ref": "FACTORY-123",
+                    },
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6324,6 +7203,51 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "method": "POST",
             "path": "/products",
+            "request": {
+              "body": {
+                "properties": {
+                  "classifications": {
+                    "docs": "Array of product classifications. If a value is specified, the array of product classifications will replace the existing set of product classifications.",
+                    "type": "optional<list<root.WriteProductClassification>>",
+                  },
+                  "client_verified": {
+                    "docs": "Indicates whether Client has verified this Product.",
+                    "type": "optional<boolean>",
+                  },
+                  "country_of_origin": {
+                    "docs": "Nation in which the product is manufactured",
+                    "type": "string",
+                  },
+                  "description": {
+                    "docs": "Description of product",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Always required. Name of product",
+                    "type": "string",
+                  },
+                  "product_category": {
+                    "docs": "The category of the product",
+                    "type": "string",
+                  },
+                  "product_properties": {
+                    "docs": "Array of product properties, custom key value pairs that describe the product",
+                    "type": "optional<list<root.WriteProductProperty>>",
+                  },
+                  "sku": {
+                    "docs": "Always required. SKU of product",
+                    "type": "string",
+                  },
+                  "suppliers": {
+                    "docs": "Array of suppliers. If a value is specified, the array of suppliers will replace the existing set of suppliers.",
+                    "type": "optional<list<root.WriteProductSupplier>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateProduct",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Created",
               "type": "ProductCreateResponse",
@@ -6504,7 +7428,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "classifications": [
+                    {
+                      "codes": [],
+                      "region": "US",
+                    },
+                  ],
+                  "client_verified": true,
+                  "country_of_origin": "China",
+                  "description": "The best 12V AC Adapter on the market",
+                  "name": "AC Adapter 12V",
+                  "product_category": "Cosmetics",
+                  "product_properties": [
+                    {
+                      "type": "color",
+                      "value": "blue",
+                    },
+                  ],
+                  "sku": "WDVCDFD-RM00472",
+                  "suppliers": [
+                    {
+                      "country_of_origin": "CN",
+                      "id": 12345,
+                      "ref": "FACTORY-123",
+                    },
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6556,6 +7506,51 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "docs": "Unique id for the product to be updated",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "classifications": {
+                    "docs": "Array of product classifications. If a value is specified, the array of product classifications will replace the existing set of product classifications.",
+                    "type": "optional<list<root.WriteProductClassification>>",
+                  },
+                  "client_verified": {
+                    "docs": "Indicates whether Client has verified this Product.",
+                    "type": "optional<boolean>",
+                  },
+                  "country_of_origin": {
+                    "docs": "Nation in which the product is manufactured",
+                    "type": "optional<string>",
+                  },
+                  "description": {
+                    "docs": "Description of product",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Name of product",
+                    "type": "optional<string>",
+                  },
+                  "product_category": {
+                    "docs": "The category of the product",
+                    "type": "optional<string>",
+                  },
+                  "product_properties": {
+                    "docs": "Array of product properties, custom key value pairs that describe the product",
+                    "type": "optional<list<root.WriteProductProperty>>",
+                  },
+                  "sku": {
+                    "docs": "SKU of product",
+                    "type": "optional<string>",
+                  },
+                  "suppliers": {
+                    "docs": "Array of suppliers. If a value is specified, the array of suppliers will replace the existing set of suppliers.",
+                    "type": "optional<list<root.WriteProductSupplier>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateProduct",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Updated",
@@ -6634,7 +7629,106 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "cargo_ready_date": "2019-06-30",
+                  "currency_code": "USD",
+                  "destination_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "freight_payment_terms": "freight_collect",
+                  "incoterm": "EXW",
+                  "issue_date": "2019-09-30",
+                  "line_items": [
+                    {
+                      "assigned_party_ref": "id-12321",
+                      "cargo_ready_date": "2019-06-30",
+                      "destination_locations": [
+                        {
+                          "location_ref": "id-1234",
+                          "units": 1,
+                        },
+                      ],
+                      "destination_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
+                      "hs_codes": [
+                        {
+                          "code": "7608.20.00.00",
+                          "country_code": "CA",
+                        },
+                      ],
+                      "incoterm": "EXW",
+                      "item_key": "item_key_1",
+                      "line_item_number": 1,
+                      "line_type": "main_line",
+                      "measurements": [
+                        {
+                          "measure_type": "length",
+                          "unit_of_measure": "EA",
+                          "value": "1.0",
+                        },
+                      ],
+                      "must_arrive_date": "2019-09-30",
+                      "origin_location_ref": "id-123456",
+                      "origin_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
+                      "product": {
+                        "color": "red",
+                        "country_of_origin": "US",
+                        "dangerous": false,
+                        "ean_ucc_13": "0123456789012",
+                        "ean_ucc_8": "01234567",
+                        "lot_number": "123-456",
+                        "name": "AC Adapter 12",
+                        "product_category": "Cosmetics",
+                        "size": "M",
+                        "sku": "SKU-123",
+                        "style": "classical",
+                        "upc": "012345678912",
+                      },
+                      "transportation_mode": "air",
+                      "unit_cost": {
+                        "amount": "12.34",
+                        "currency_code": "USD",
+                      },
+                      "unit_of_measure": "BBL",
+                      "units": 100,
+                    },
+                  ],
+                  "memo": "memo",
+                  "must_arrive_date": "2019-09-30",
+                  "name": "PO 123",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
+                  "origin_location_ref": "id-123456",
+                  "origin_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "parties": [
+                    {
+                      "contacts": [
+                        {
+                          "department": "marketing",
+                          "email": "John.Doe@example.com",
+                          "fax": "1 323 555 1234",
+                          "name": "John Doe",
+                          "phone": "767 878 8888",
+                        },
+                      ],
+                      "external_ref": "id-12344",
+                      "location_ref": "id-12344",
+                      "role": "buyer",
+                    },
+                  ],
+                  "priority": "high",
+                  "status": "open",
+                  "transportation_mode": "air",
+                },
                 "response": {
                   "body": {
                     "_object": "/booking",
@@ -6774,6 +7868,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "method": "POST",
             "path": "/purchase_orders",
+            "request": {
+              "body": "root.CreateOrUpdatePurchaseOrder",
+            },
             "response": {
               "docs": "The created purchase order",
               "type": "root.PurchaseOrder",
@@ -7238,7 +8335,106 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "id": 1,
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "cargo_ready_date": "2019-06-30",
+                  "currency_code": "USD",
+                  "destination_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "freight_payment_terms": "freight_collect",
+                  "incoterm": "EXW",
+                  "issue_date": "2019-09-30",
+                  "line_items": [
+                    {
+                      "assigned_party_ref": "id-12321",
+                      "cargo_ready_date": "2019-06-30",
+                      "destination_locations": [
+                        {
+                          "location_ref": "id-1234",
+                          "units": 1,
+                        },
+                      ],
+                      "destination_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
+                      "hs_codes": [
+                        {
+                          "code": "7608.20.00.00",
+                          "country_code": "CA",
+                        },
+                      ],
+                      "incoterm": "EXW",
+                      "item_key": "item_key_1",
+                      "line_item_number": 1,
+                      "line_type": "main_line",
+                      "measurements": [
+                        {
+                          "measure_type": "length",
+                          "unit_of_measure": "EA",
+                          "value": "1.0",
+                        },
+                      ],
+                      "must_arrive_date": "2019-09-30",
+                      "origin_location_ref": "id-123456",
+                      "origin_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
+                      "product": {
+                        "color": "red",
+                        "country_of_origin": "US",
+                        "dangerous": false,
+                        "ean_ucc_13": "0123456789012",
+                        "ean_ucc_8": "01234567",
+                        "lot_number": "123-456",
+                        "name": "AC Adapter 12",
+                        "product_category": "Cosmetics",
+                        "size": "M",
+                        "sku": "SKU-123",
+                        "style": "classical",
+                        "upc": "012345678912",
+                      },
+                      "transportation_mode": "air",
+                      "unit_cost": {
+                        "amount": "12.34",
+                        "currency_code": "USD",
+                      },
+                      "unit_of_measure": "BBL",
+                      "units": 100,
+                    },
+                  ],
+                  "memo": "memo",
+                  "must_arrive_date": "2019-09-30",
+                  "name": "PO 123",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
+                  "origin_location_ref": "id-123456",
+                  "origin_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "parties": [
+                    {
+                      "contacts": [
+                        {
+                          "department": "marketing",
+                          "email": "John.Doe@example.com",
+                          "fax": "1 323 555 1234",
+                          "name": "John Doe",
+                          "phone": "767 878 8888",
+                        },
+                      ],
+                      "external_ref": "id-12344",
+                      "location_ref": "id-12344",
+                      "role": "buyer",
+                    },
+                  ],
+                  "priority": "high",
+                  "status": "open",
+                  "transportation_mode": "air",
+                },
                 "response": {
                   "body": {
                     "_object": "/booking",
@@ -7383,6 +8579,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "docs": "The unique id for the purchase order to be updated",
                 "type": "integer",
               },
+            },
+            "request": {
+              "body": "root.CreateOrUpdatePurchaseOrder",
             },
             "response": {
               "docs": "The update purchase order",
@@ -8402,7 +9601,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "shipment_ids": [
+                    123,
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -8424,6 +9627,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "method": "POST",
             "path": "/shipments_shareable",
+            "request": {
+              "body": {
+                "properties": {
+                  "shipment_ids": {
+                    "docs": "A list (length < 10) of the unique id for the shipment to be retrieved.",
+                    "type": "optional<list<integer>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ShipmentsShareableRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "collection of shipments shareable status url",
               "type": "ShipmentsShareableResponse",
@@ -8772,7 +9988,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "id": 1,
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -9080,6 +10296,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "docs": "The unique id for the shipment to be updated",
                 "type": "integer",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "metadata": {
+                    "docs": "Metadata to replace existing metadata. Keys should be strings and values should be arrays. All existing metadata will be replaced by the passed in object.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateShipment",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "The updated shipment",
@@ -10299,136 +11528,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "DPU",
         ],
       },
-      "CreateBooking": {
-        "docs": undefined,
-        "properties": {
-          "air_booking": "optional<CreateAirBooking>",
-          "cargo": "CreateCargo",
-          "cargo_ready_date": {
-            "docs": "Always required. Date when cargo is ready for pickup at the origin location.",
-            "type": "string",
-          },
-          "consignee_entity_ref": {
-            "docs": "Always required. Customizable reference ID of company entity that is the consignee of the booking.",
-            "type": "string",
-          },
-          "declared_as_strategy": {
-            "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
-            "type": "optional<CreateBookingDeclaredAsStrategy>",
-          },
-          "delivery_date": {
-            "docs": "Optional. Target date by when cargo must be delivered.",
-            "type": "optional<string>",
-          },
-          "destination_address_ref": {
-            "docs": "Always required for trucking bookings. Always required for air and ocean bookings if \`wants_delivery_service\` is TRUE. Customizable reference ID of network location that is the delivery location.",
-            "type": "string",
-          },
-          "eccn_codes": {
-            "docs": "Required when declared_as_strategy is "yes". Please provide the ECCN codes (Export Control Classification Number) of the products subject to export control regulations. Make sure you find the right ECCN codes in the Commerce Control List. Make sure you provide the correct format of the ECCN code (five character alpha-numeric such as 3A001, 5A002, etc) seperated by commas. According to the laws, providing the wrong ECCN information might cause fines.",
-            "type": "optional<string>",
-          },
-          "flow_direct": {
-            "docs": "Optional. Whether to create Flow Direct Quote for the Booking. Currently, only Ocean LCL Booking is supported",
-            "type": "optional<boolean>",
-          },
-          "metadata": "optional<MetadataCreate>",
-          "name": {
-            "docs": "Always required. Name of the booking.",
-            "type": "string",
-          },
-          "notify_party": {
-            "docs": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
-            "type": "optional<string>",
-          },
-          "ocean_booking": "optional<CreateOceanBooking>",
-          "origin_address_ref": {
-            "docs": "Always required. Customizable reference ID of network location that is the pickup location.",
-            "type": "string",
-          },
-          "shipper_entity_ref": {
-            "docs": "Always required. Customizable reference ID of company entity that is the shipper of the booking.",
-            "type": "string",
-          },
-          "special_instructions": {
-            "docs": "Additional instructions not included in rest of booking form.",
-            "type": "optional<string>",
-          },
-          "trucking_booking": "optional<CreateTruckingBooking>",
-          "wants_bco": {
-            "docs": "Optional. Whether the booking requires Flexport to provide BCO services.",
-            "type": "optional<boolean>",
-          },
-          "wants_export_customs_service": {
-            "docs": "Always required. Whether the booking requires Flexport to provide export customs services.",
-            "type": "boolean",
-          },
-          "wants_flexport_freight": {
-            "docs": "Optional. Whether the booking requires Flexport to provide freight services.",
-            "type": "optional<boolean>",
-          },
-          "wants_import_customs_service": {
-            "docs": "Optional. Whether the booking requires Flexport to provide import customs services.",
-            "type": "optional<boolean>",
-          },
-        },
-      },
-      "CreateBookingAmendment": {
-        "docs": undefined,
-        "properties": {
-          "amendment_note": {
-            "docs": "Additional message to Flexport regarding the booking amendment.",
-            "type": "optional<string>",
-          },
-          "booking_id": {
-            "docs": "Identifier of the existing booking to be modified",
-            "type": "integer",
-          },
-          "new_cargo": "optional<CreateCargo>",
-          "new_cargo_ready_date": {
-            "docs": "Date when cargo is ready for pickup at the origin location.",
-            "type": "optional<string>",
-          },
-          "new_container_counts": "optional<CreateContainerCounts>",
-          "new_destination_address_ref": {
-            "docs": "Customizable reference ID of network location that is the delivery location.",
-            "type": "optional<string>",
-          },
-          "new_destination_port_loc_code": {
-            "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. UN code for the destination port.",
-            "type": "optional<string>",
-          },
-          "new_destination_port_us_cbp_port_code": {
-            "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
-            "type": "optional<string>",
-          },
-          "new_metadata": "optional<MetadataCreate>",
-          "new_name": {
-            "docs": "Name of the booking.",
-            "type": "optional<string>",
-          },
-          "new_origin_address_ref": {
-            "docs": "Customizable reference ID of network location that is the pickup location.",
-            "type": "optional<string>",
-          },
-          "new_origin_port_loc_code": {
-            "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. UN code for the origin port.",
-            "type": "optional<string>",
-          },
-          "new_origin_port_us_cbp_port_code": {
-            "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
-            "type": "optional<string>",
-          },
-          "new_product_descriptions": {
-            "docs": "New product (HS code) information",
-            "type": "optional<list<CreateBookingAmendmentHsCode>>",
-          },
-          "new_wants_bco": "optional<boolean>",
-          "new_wants_flexport_freight": "optional<boolean>",
-          "new_wants_import_customs_service": "optional<boolean>",
-          "new_wants_pickup_service": "optional<boolean>",
-        },
-      },
       "CreateBookingAmendmentHsCode": {
         "docs": undefined,
         "properties": {
@@ -10445,14 +11544,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "string",
           },
         },
-      },
-      "CreateBookingDeclaredAsStrategy": {
-        "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
-        "enum": [
-          "yes",
-          "no",
-          "notsure",
-        ],
       },
       "CreateBookingHsCode": {
         "docs": undefined,
@@ -10474,117 +11565,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "string",
           },
         },
-      },
-      "CreateBookingLineItem": {
-        "docs": undefined,
-        "properties": {
-          "booking_id": {
-            "docs": "Always required. The identifier of the booking to add the PO line item to",
-            "type": "integer",
-          },
-          "purchase_order_line_item_id": {
-            "docs": "Always required. The identifier of the PO line item to book",
-            "type": "integer",
-          },
-          "units": {
-            "docs": "Always required. Number of units to book",
-            "type": "integer",
-          },
-        },
-      },
-      "CreateCarbonCalculation": {
-        "docs": undefined,
-        "properties": {
-          "destination_address": {
-            "docs": "The physical address of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
-            "type": "optional<AddressForRequestBody>",
-          },
-          "destination_coordinates": {
-            "docs": "The latitude and longitude of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
-            "type": "optional<CoordinatesCreate>",
-          },
-          "destination_port": {
-            "docs": "Port of destination, used if no more specific destination location is provided.",
-            "type": "optional<string>",
-          },
-          "distance": {
-            "docs": "The total distance traveled by the shipment. This can be used instead of origin/destination locations.",
-            "type": "optional<DistanceCreate>",
-          },
-          "flight_type": {
-            "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
-            "type": "optional<CreateCarbonCalculationFlightType>",
-          },
-          "is_inland": {
-            "docs": "For \`transportation_mode: ocean\`, indicates if the calculation was inland or not. Defaults to false.",
-            "type": "optional<boolean>",
-          },
-          "is_lcl": {
-            "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is less than container load or not. Defaults to false.",
-            "type": "optional<boolean>",
-          },
-          "is_reefer": {
-            "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is a reefer shipment. Defaults to false.",
-            "type": "optional<boolean>",
-          },
-          "origin_address": {
-            "docs": "The physical address of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
-            "type": "optional<AddressForRequestBody>",
-          },
-          "origin_coordinates": {
-            "docs": "The latitude and longitude of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
-            "type": "optional<CoordinatesCreate>",
-          },
-          "origin_port": {
-            "docs": "Port of origin, used if no more specific origin location is provided.",
-            "type": "optional<string>",
-          },
-          "teus": {
-            "docs": "The number of TEUs (Twenty-foot Equivalent Units) moved in the calculation. Either \`weight\` or \`teus\` is required.",
-            "type": "optional<string>",
-          },
-          "transportation_mode": {
-            "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
-            "type": "CreateCarbonCalculationTransportationMode",
-          },
-          "trucking_service_type": {
-            "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
-            "type": "optional<CreateCarbonCalculationTruckingServiceType>",
-          },
-          "weight": {
-            "docs": "The exact weight being shipped. Either \`weight\` or \`teus\` is required.",
-            "type": "optional<WeightCreate>",
-          },
-        },
-      },
-      "CreateCarbonCalculationFlightType": {
-        "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
-        "enum": [
-          "freighter",
-          "belly_freighter",
-          "unknown",
-        ],
-      },
-      "CreateCarbonCalculationTransportationMode": {
-        "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
-        "enum": [
-          "air",
-          "ocean",
-          "truck",
-          "rail",
-        ],
-      },
-      "CreateCarbonCalculationTruckingServiceType": {
-        "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
-        "enum": [
-          "ftl",
-          "ltl",
-          "drayage",
-          "cartage",
-          "last_mile",
-          "airport_transfer",
-          "air_cartage",
-        ],
       },
       "CreateCargo": {
         "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, \`shipping_units\` is required, and \`weight\` and \`volume\` is required in the \`cargo\` object or the \`shipping_units\` object. For simple cargo, \`shipping_units\` is required, but only one should be specified, and \`weight\` and \`volume\` are required in the \`cargo\` object.",
@@ -10630,39 +11610,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "contained_in_battery_powered_vehicles",
         ],
       },
-      "CreateCommercialInvoice": {
-        "docs": undefined,
-        "properties": {
-          "currency_code": {
-            "docs": "The currency being used on the commercial invoice.",
-            "type": "string",
-          },
-          "invoice_number": {
-            "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
-            "type": "string",
-          },
-          "involved_parties": "optional<list<CreateInvolvedParty>>",
-          "is_related_parties": {
-            "docs": "Whether there was a related parties transaction as defined by CBP.",
-            "type": "optional<boolean>",
-          },
-          "line_items": "list<CreateCommercialInvoiceLineItem>",
-          "manufacturer_refs": {
-            "docs": "[DEPRECATED] Array of your custom strings used to refer to a manufacturer location.",
-            "type": "optional<list<string>>",
-          },
-          "metadata": "optional<MetadataCreate>",
-          "proration_amount": "MoneyCreate",
-          "shipment_id": {
-            "docs": "Flexport's unique identifier for the shipment. Either shipment_id or shipment_ref is required.",
-            "type": "optional<integer>",
-          },
-          "shipment_ref": {
-            "docs": "Your custom string used to refer to the shipment. Can be used to look up or reference the shipment later on. Either shipment_id or shipment_ref is required.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "CreateCommercialInvoiceLineItem": {
         "docs": undefined,
         "properties": {
@@ -10695,69 +11642,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "quantity": "CreateQuantity",
           "value": "MoneyCreate",
           "volume": "optional<VolumeCreate>",
-        },
-      },
-      "CreateCompany": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "Always required. Name of the company.",
-            "type": "string",
-          },
-          "ref": {
-            "docs": "Your custom string used to refer to the company",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "CreateCompanyEntity": {
-        "docs": undefined,
-        "properties": {
-          "company_id": {
-            "docs": "The id of the new company entity's parent company. Either company_id or company_ref is required",
-            "type": "optional<string>",
-          },
-          "company_ref": {
-            "docs": "The ref of the new company entity's parent company. Either company_id or company_ref is required",
-            "type": "optional<string>",
-          },
-          "mailing_address": {
-            "docs": "Always Required. The object representing the mailing address of the company entity.",
-            "type": "AddressForRequestBody",
-          },
-          "name": {
-            "docs": "Always required. Legal name of the new company entity",
-            "type": "string",
-          },
-          "ref": {
-            "docs": "Not required. The ref that will be created for the new company entity",
-            "type": "optional<string>",
-          },
-          "vat_numbers": {
-            "docs": "Not required. An array of VAT Numbers for the new company entity.",
-            "type": "optional<list<WriteVatNumber>>",
-          },
-        },
-      },
-      "CreateContact": {
-        "docs": undefined,
-        "properties": {
-          "company_id": {
-            "docs": "ID of the new contact's company. If not specified, the contact will be created for your company.",
-            "type": "optional<string>",
-          },
-          "email": {
-            "docs": "Always required. Email address of the new contact.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "Always required. Name of the new contact.",
-            "type": "string",
-          },
-          "phone_number": {
-            "docs": "Always required. Phone number of the new contact.",
-            "type": "string",
-          },
         },
       },
       "CreateContainerCounts": {
@@ -11118,32 +12002,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "Z3",
         ],
       },
-      "CreateLocation": {
-        "docs": undefined,
-        "properties": {
-          "address": "AddressForRequestBody",
-          "company_id": {
-            "docs": "The id of the company entity to create this location for",
-            "type": "string",
-          },
-          "contact_ids": {
-            "docs": "Array of contact id's to assign to this location",
-            "type": "optional<list<string>>",
-          },
-          "metadata": {
-            "docs": "Optional metadata to add to a location. Keys must be strings and values should be arrays of strings.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "name": {
-            "docs": "Name of the location",
-            "type": "string",
-          },
-          "ref": {
-            "docs": "Not required. The ref that will be created for the new location",
-            "type": "optional<string>",
-          },
-        },
-      },
       "CreateOceanBooking": {
         "docs": undefined,
         "properties": {
@@ -11386,47 +12244,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "buyers_agent",
           "sellers_agent",
         ],
-      },
-      "CreateProduct": {
-        "docs": undefined,
-        "properties": {
-          "classifications": {
-            "docs": "Array of product classifications. If a value is specified, the array of product classifications will replace the existing set of product classifications.",
-            "type": "optional<list<WriteProductClassification>>",
-          },
-          "client_verified": {
-            "docs": "Indicates whether Client has verified this Product.",
-            "type": "optional<boolean>",
-          },
-          "country_of_origin": {
-            "docs": "Nation in which the product is manufactured",
-            "type": "string",
-          },
-          "description": {
-            "docs": "Description of product",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Always required. Name of product",
-            "type": "string",
-          },
-          "product_category": {
-            "docs": "The category of the product",
-            "type": "string",
-          },
-          "product_properties": {
-            "docs": "Array of product properties, custom key value pairs that describe the product",
-            "type": "optional<list<WriteProductProperty>>",
-          },
-          "sku": {
-            "docs": "Always required. SKU of product",
-            "type": "string",
-          },
-          "suppliers": {
-            "docs": "Array of suppliers. If a value is specified, the array of suppliers will replace the existing set of suppliers.",
-            "type": "optional<list<WriteProductSupplier>>",
-          },
-        },
       },
       "CreatePurchaseOrderHsCode": {
         "docs": undefined,
@@ -13187,147 +14004,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "drayage",
           "cartage",
         ],
-      },
-      "UpdateCommercialInvoice": {
-        "docs": undefined,
-        "properties": {
-          "currency_code": {
-            "docs": "The currency being used on the commercial invoice.",
-            "type": "optional<string>",
-          },
-          "invoice_number": {
-            "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
-            "type": "optional<string>",
-          },
-          "is_related_parties": {
-            "docs": "Whether there was a related parties transaction as defined by CBP.",
-            "type": "optional<boolean>",
-          },
-          "line_items": "optional<list<CreateCommercialInvoiceLineItem>>",
-          "manufacturer_refs": "optional<list<string>>",
-          "metadata": "optional<Metadata>",
-          "proration_amount": "optional<Money>",
-        },
-      },
-      "UpdateCompany": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "Updated name of the company.",
-            "type": "optional<string>",
-          },
-          "ref": {
-            "docs": "Updated ref of the company",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "UpdateCompanyEntity": {
-        "docs": undefined,
-        "properties": {
-          "mailing_address": "optional<AddressForRequestBody>",
-          "name": {
-            "docs": "The new legal name of the company entity",
-            "type": "optional<string>",
-          },
-          "ref": {
-            "docs": "The new ref that will be used for the company entity",
-            "type": "optional<string>",
-          },
-          "vat_numbers": {
-            "docs": "If a value for vat_numbers is specified, the array specified will replace all the existing VAT numbers of the company entity",
-            "type": "optional<list<WriteVatNumber>>",
-          },
-        },
-      },
-      "UpdateContact": {
-        "docs": undefined,
-        "properties": {
-          "email": {
-            "docs": "Updated email address of the contact.",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Updated name of the contact.",
-            "type": "optional<string>",
-          },
-          "phone_number": {
-            "docs": "Updated phone number of the contact.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "UpdateLocation": {
-        "docs": undefined,
-        "properties": {
-          "address": "optional<AddressForRequestBody>",
-          "contact_ids": {
-            "docs": "If a value for contact_ids is specified, the array specified will replace all the existing contacts at the location",
-            "type": "optional<list<string>>",
-          },
-          "metadata": {
-            "docs": "Metadata to replace existing metadata. Keys must be strings and values should be arrays.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "name": {
-            "docs": "New name of the location",
-            "type": "optional<string>",
-          },
-          "ref": {
-            "docs": "The new ref for the location",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "UpdateProduct": {
-        "docs": undefined,
-        "properties": {
-          "classifications": {
-            "docs": "Array of product classifications. If a value is specified, the array of product classifications will replace the existing set of product classifications.",
-            "type": "optional<list<WriteProductClassification>>",
-          },
-          "client_verified": {
-            "docs": "Indicates whether Client has verified this Product.",
-            "type": "optional<boolean>",
-          },
-          "country_of_origin": {
-            "docs": "Nation in which the product is manufactured",
-            "type": "optional<string>",
-          },
-          "description": {
-            "docs": "Description of product",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Name of product",
-            "type": "optional<string>",
-          },
-          "product_category": {
-            "docs": "The category of the product",
-            "type": "optional<string>",
-          },
-          "product_properties": {
-            "docs": "Array of product properties, custom key value pairs that describe the product",
-            "type": "optional<list<WriteProductProperty>>",
-          },
-          "sku": {
-            "docs": "SKU of product",
-            "type": "optional<string>",
-          },
-          "suppliers": {
-            "docs": "Array of suppliers. If a value is specified, the array of suppliers will replace the existing set of suppliers.",
-            "type": "optional<list<WriteProductSupplier>>",
-          },
-        },
-      },
-      "UpdateShipment": {
-        "docs": undefined,
-        "properties": {
-          "metadata": {
-            "docs": "Metadata to replace existing metadata. Keys should be strings and values should be arrays. All existing metadata will be replaced by the passed in object.",
-            "type": "optional<map<string, unknown>>",
-          },
-        },
       },
       "VatNumber": {
         "docs": undefined,

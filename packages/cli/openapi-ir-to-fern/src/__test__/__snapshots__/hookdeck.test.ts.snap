@@ -125,6 +125,31 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/bookmarks",
+            "request": {
+              "body": {
+                "properties": {
+                  "event_data_id": {
+                    "docs": "ID of the event data to bookmark",
+                    "type": "string",
+                  },
+                  "label": {
+                    "docs": "Descriptive name of the bookmark",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "A unique, human-friendly name for the bookmark",
+                    "type": "optional<string>",
+                  },
+                  "webhook_id": {
+                    "docs": "ID of the associated connection",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateBookmarkRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single bookmark",
               "type": "root.Bookmark",
@@ -272,7 +297,9 @@ exports[`open api parser hookdeck simple 1`] = `
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "target": "http",
+                },
                 "response": {
                   "body": [],
                 },
@@ -285,6 +312,19 @@ exports[`open api parser hookdeck simple 1`] = `
                 "docs": undefined,
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "target": {
+                    "docs": "Bookmark target",
+                    "type": "optional<TriggerBookmarkRequestTarget>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TriggerBookmarkRequest",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Array of created events",
@@ -308,6 +348,31 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "event_data_id": {
+                    "docs": "ID of the event data to bookmark",
+                    "type": "optional<string>",
+                  },
+                  "label": {
+                    "docs": "Descriptive name of the bookmark",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "A unique, human-friendly name for the bookmark",
+                    "type": "optional<string>",
+                  },
+                  "webhook_id": {
+                    "docs": "ID of the associated connection",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateBookmarkRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single bookmark",
               "type": "root.Bookmark",
@@ -320,6 +385,13 @@ exports[`open api parser hookdeck simple 1`] = `
           "enum": [
             "asc",
             "desc",
+          ],
+        },
+        "TriggerBookmarkRequestTarget": {
+          "docs": "Bookmark target",
+          "enum": [
+            "http",
+            "cli",
           ],
         },
       },
@@ -364,6 +436,19 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/bulk/events/retry",
+            "request": {
+              "body": {
+                "properties": {
+                  "query": {
+                    "docs": "Filter properties for the events to be included in the bulk retry",
+                    "type": "optional<CreateEventBulkRetryRequestQuery>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateEventBulkRetryRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single events bulk retry",
               "type": "root.BatchOperation",
@@ -508,6 +593,312 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateEventBulkRetryRequestQuery": {
+          "docs": "Filter properties for the events to be included in the bulk retry",
+          "properties": {
+            "attempts": {
+              "docs": "Filter by number of attempts",
+              "type": "optional<CreateEventBulkRetryRequestQueryAttempts>",
+            },
+            "body": {
+              "docs": "URL Encoded string of the JSON to match to the data body",
+              "type": "optional<CreateEventBulkRetryRequestQueryBody>",
+            },
+            "bulk_retry_id": "optional<CreateEventBulkRetryRequestQueryBulkRetryId>",
+            "cli_id": {
+              "docs": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
+              "type": "optional<CreateEventBulkRetryRequestQueryCliId>",
+            },
+            "cli_user_id": "optional<CreateEventBulkRetryRequestQueryCliUserId>",
+            "created_at": {
+              "docs": "Filter by \`created_at\` date using a date operator",
+              "type": "optional<CreateEventBulkRetryRequestQueryCreatedAt>",
+            },
+            "destination_id": {
+              "docs": "Filter by destination IDs",
+              "type": "optional<CreateEventBulkRetryRequestQueryDestinationId>",
+            },
+            "error_code": "optional<CreateEventBulkRetryRequestQueryErrorCode>",
+            "event_data_id": "optional<CreateEventBulkRetryRequestQueryEventDataId>",
+            "headers": {
+              "docs": "URL Encoded string of the JSON to match to the data headers",
+              "type": "optional<CreateEventBulkRetryRequestQueryHeaders>",
+            },
+            "id": {
+              "docs": "Filter by event IDs",
+              "type": "optional<CreateEventBulkRetryRequestQueryId>",
+            },
+            "issue_id": "optional<CreateEventBulkRetryRequestQueryIssueId>",
+            "last_attempt_at": {
+              "docs": "Filter by \`last_attempt_at\` date using a date operator",
+              "type": "optional<CreateEventBulkRetryRequestQueryLastAttemptAt>",
+            },
+            "parsed_query": {
+              "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+              "type": "optional<CreateEventBulkRetryRequestQueryParsedQuery>",
+            },
+            "path": {
+              "docs": "URL Encoded string of the string to match partially to the path",
+              "type": "optional<string>",
+            },
+            "response_status": {
+              "docs": "Filter by HTTP response status code",
+              "type": "optional<CreateEventBulkRetryRequestQueryResponseStatus>",
+            },
+            "source_id": {
+              "docs": "Filter by source IDs",
+              "type": "optional<CreateEventBulkRetryRequestQuerySourceId>",
+            },
+            "status": {
+              "docs": "Lifecyle status of the event",
+              "type": "optional<CreateEventBulkRetryRequestQueryStatus>",
+            },
+            "successful_at": {
+              "docs": "Filter by \`successful_at\` date using a date operator",
+              "type": "optional<CreateEventBulkRetryRequestQuerySuccessfulAt>",
+            },
+            "webhook_id": {
+              "docs": "Filter by webhook connection IDs",
+              "type": "optional<CreateEventBulkRetryRequestQueryWebhookId>",
+            },
+          },
+        },
+        "CreateEventBulkRetryRequestQueryAttempts": {
+          "discriminated": false,
+          "docs": "Filter by number of attempts",
+          "union": [
+            "integer",
+            "CreateEventBulkRetryRequestQueryAttemptsAny",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryAttemptsAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "contains": "optional<integer>",
+            "gt": "optional<integer>",
+            "gte": "optional<integer>",
+            "le": "optional<integer>",
+            "lte": "optional<integer>",
+          },
+        },
+        "CreateEventBulkRetryRequestQueryBody": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the data body",
+          "union": [
+            "string",
+            "CreateEventBulkRetryRequestQueryBodyOne",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryBodyOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateEventBulkRetryRequestQueryBulkRetryId": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryCliId": {
+          "discriminated": false,
+          "docs": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
+          "union": [
+            "string",
+            "CreateEventBulkRetryRequestQueryCliIdAny",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryCliIdAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+          },
+        },
+        "CreateEventBulkRetryRequestQueryCliUserId": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryCreatedAt": {
+          "discriminated": false,
+          "docs": "Filter by \`created_at\` date using a date operator",
+          "union": [
+            "datetime",
+            "CreateEventBulkRetryRequestQueryCreatedAtAny",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryCreatedAtAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "gt": "optional<datetime>",
+            "gte": "optional<datetime>",
+            "le": "optional<datetime>",
+            "lte": "optional<datetime>",
+          },
+        },
+        "CreateEventBulkRetryRequestQueryDestinationId": {
+          "discriminated": false,
+          "docs": "Filter by destination IDs",
+          "union": [
+            {
+              "docs": "Destination ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryErrorCode": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryEventDataId": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryHeaders": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the data headers",
+          "union": [
+            "string",
+            "CreateEventBulkRetryRequestQueryHeadersOne",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryHeadersOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateEventBulkRetryRequestQueryId": {
+          "discriminated": false,
+          "docs": "Filter by event IDs",
+          "union": [
+            {
+              "docs": "Event ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryIssueId": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryLastAttemptAt": {
+          "discriminated": false,
+          "docs": "Filter by \`last_attempt_at\` date using a date operator",
+          "union": [
+            "datetime",
+            "CreateEventBulkRetryRequestQueryLastAttemptAtAny",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryLastAttemptAtAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "gt": "optional<datetime>",
+            "gte": "optional<datetime>",
+            "le": "optional<datetime>",
+            "lte": "optional<datetime>",
+          },
+        },
+        "CreateEventBulkRetryRequestQueryParsedQuery": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "union": [
+            "string",
+            "CreateEventBulkRetryRequestQueryParsedQueryOne",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryParsedQueryOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateEventBulkRetryRequestQueryResponseStatus": {
+          "discriminated": false,
+          "docs": "Filter by HTTP response status code",
+          "union": [
+            "integer",
+            "CreateEventBulkRetryRequestQueryResponseStatusAny",
+            "list<integer>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryResponseStatusAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "contains": "optional<integer>",
+            "gt": "optional<integer>",
+            "gte": "optional<integer>",
+            "le": "optional<integer>",
+            "lte": "optional<integer>",
+          },
+        },
+        "CreateEventBulkRetryRequestQuerySourceId": {
+          "discriminated": false,
+          "docs": "Filter by source IDs",
+          "union": [
+            {
+              "docs": "Source ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQueryStatus": {
+          "discriminated": false,
+          "docs": "Lifecyle status of the event",
+          "union": [
+            "root.EventStatus",
+            "list<root.EventStatus>",
+          ],
+        },
+        "CreateEventBulkRetryRequestQuerySuccessfulAt": {
+          "discriminated": false,
+          "docs": "Filter by \`successful_at\` date using a date operator",
+          "union": [
+            "datetime",
+            "CreateEventBulkRetryRequestQuerySuccessfulAtAny",
+          ],
+        },
+        "CreateEventBulkRetryRequestQuerySuccessfulAtAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "gt": "optional<datetime>",
+            "gte": "optional<datetime>",
+            "le": "optional<datetime>",
+            "lte": "optional<datetime>",
+          },
+        },
+        "CreateEventBulkRetryRequestQueryWebhookId": {
+          "discriminated": false,
+          "docs": "Filter by webhook connection IDs",
+          "union": [
+            {
+              "docs": "Webhook ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
         "GetEventBulkRetriesRequestDir": {
           "enum": [
             "asc",
@@ -556,6 +947,19 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/bulk/ignored-events/retry",
+            "request": {
+              "body": {
+                "properties": {
+                  "query": {
+                    "docs": "Filter by the bulk retry ignored event query object",
+                    "type": "optional<CreateIgnoredEventBulkRetryRequestQuery>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateIgnoredEventBulkRetryRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single ignored events bulk retry",
               "type": "root.BatchOperation",
@@ -696,6 +1100,39 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateIgnoredEventBulkRetryRequestQuery": {
+          "docs": "Filter by the bulk retry ignored event query object",
+          "properties": {
+            "cause": {
+              "docs": "The cause of the ignored event",
+              "type": "optional<CreateIgnoredEventBulkRetryRequestQueryCause>",
+            },
+            "transformation_id": {
+              "docs": "The associated transformation ID (only applicable to the cause \`TRANSFORMATION_FAILED\`)",
+              "type": "optional<string>",
+            },
+            "webhook_id": {
+              "docs": "Connection ID of the ignored event",
+              "type": "optional<CreateIgnoredEventBulkRetryRequestQueryWebhookId>",
+            },
+          },
+        },
+        "CreateIgnoredEventBulkRetryRequestQueryCause": {
+          "discriminated": false,
+          "docs": "The cause of the ignored event",
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateIgnoredEventBulkRetryRequestQueryWebhookId": {
+          "discriminated": false,
+          "docs": "Connection ID of the ignored event",
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
         "GetIgnoredEventBulkRetriesRequestDir": {
           "enum": [
             "asc",
@@ -744,6 +1181,19 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/bulk/requests/retry",
+            "request": {
+              "body": {
+                "properties": {
+                  "query": {
+                    "docs": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
+                    "type": "optional<CreateRequestBulkRetryRequestQuery>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRequestBulkRetryRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single requests bulk retry",
               "type": "root.BatchOperation",
@@ -893,6 +1343,217 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateRequestBulkRetryRequestQuery": {
+          "docs": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
+          "properties": {
+            "body": {
+              "docs": "URL Encoded string of the JSON to match to the data body",
+              "type": "optional<CreateRequestBulkRetryRequestQueryBody>",
+            },
+            "bulk_retry_id": "optional<CreateRequestBulkRetryRequestQueryBulkRetryId>",
+            "created_at": "optional<CreateRequestBulkRetryRequestQueryCreatedAt>",
+            "events_count": "optional<CreateRequestBulkRetryRequestQueryEventsCount>",
+            "headers": {
+              "docs": "URL Encoded string of the JSON to match to the data headers",
+              "type": "optional<CreateRequestBulkRetryRequestQueryHeaders>",
+            },
+            "id": {
+              "docs": "Filter by requests IDs",
+              "type": "optional<CreateRequestBulkRetryRequestQueryId>",
+            },
+            "ignored_count": "optional<CreateRequestBulkRetryRequestQueryIgnoredCount>",
+            "ingested_at": "optional<CreateRequestBulkRetryRequestQueryIngestedAt>",
+            "parsed_query": {
+              "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+              "type": "optional<CreateRequestBulkRetryRequestQueryParsedQuery>",
+            },
+            "path": {
+              "docs": "URL Encoded string of the string to match partially to the path",
+              "type": "optional<string>",
+            },
+            "rejection_cause": {
+              "docs": "Filter by rejection cause",
+              "type": "optional<CreateRequestBulkRetryRequestQueryRejectionCause>",
+            },
+            "source_id": {
+              "docs": "Filter by source IDs",
+              "type": "optional<CreateRequestBulkRetryRequestQuerySourceId>",
+            },
+            "status": "optional<CreateRequestBulkRetryRequestQueryStatus>",
+            "verified": {
+              "docs": "Filter by verification status",
+              "type": "optional<boolean>",
+            },
+          },
+        },
+        "CreateRequestBulkRetryRequestQueryBody": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the data body",
+          "union": [
+            "string",
+            "CreateRequestBulkRetryRequestQueryBodyOne",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryBodyOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateRequestBulkRetryRequestQueryBulkRetryId": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "list<string>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryCreatedAt": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "datetime",
+            "CreateRequestBulkRetryRequestQueryCreatedAtAny",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryCreatedAtAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "gt": "optional<datetime>",
+            "gte": "optional<datetime>",
+            "le": "optional<datetime>",
+            "lte": "optional<datetime>",
+          },
+        },
+        "CreateRequestBulkRetryRequestQueryEventsCount": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "integer",
+            "CreateRequestBulkRetryRequestQueryEventsCountAny",
+            "list<integer>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryEventsCountAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "contains": "optional<integer>",
+            "gt": "optional<integer>",
+            "gte": "optional<integer>",
+            "le": "optional<integer>",
+            "lte": "optional<integer>",
+          },
+        },
+        "CreateRequestBulkRetryRequestQueryHeaders": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the data headers",
+          "union": [
+            "string",
+            "CreateRequestBulkRetryRequestQueryHeadersOne",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryHeadersOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateRequestBulkRetryRequestQueryId": {
+          "discriminated": false,
+          "docs": "Filter by requests IDs",
+          "union": [
+            {
+              "docs": "Request ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryIgnoredCount": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "integer",
+            "CreateRequestBulkRetryRequestQueryIgnoredCountAny",
+            "list<integer>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryIgnoredCountAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "contains": "optional<integer>",
+            "gt": "optional<integer>",
+            "gte": "optional<integer>",
+            "le": "optional<integer>",
+            "lte": "optional<integer>",
+          },
+        },
+        "CreateRequestBulkRetryRequestQueryIngestedAt": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "datetime",
+            "CreateRequestBulkRetryRequestQueryIngestedAtAny",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryIngestedAtAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "gt": "optional<datetime>",
+            "gte": "optional<datetime>",
+            "le": "optional<datetime>",
+            "lte": "optional<datetime>",
+          },
+        },
+        "CreateRequestBulkRetryRequestQueryParsedQuery": {
+          "discriminated": false,
+          "docs": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
+          "union": [
+            "string",
+            "CreateRequestBulkRetryRequestQueryParsedQueryOne",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryParsedQueryOne": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "CreateRequestBulkRetryRequestQueryRejectionCause": {
+          "discriminated": false,
+          "docs": "Filter by rejection cause",
+          "union": [
+            "root.RequestRejectionCause",
+            "CreateRequestBulkRetryRequestQueryRejectionCauseAny",
+            "list<root.RequestRejectionCause>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryRejectionCauseAny": {
+          "docs": undefined,
+          "properties": {
+            "any": "optional<boolean>",
+            "contains": "optional<root.RequestRejectionCause>",
+            "gt": "optional<root.RequestRejectionCause>",
+            "gte": "optional<root.RequestRejectionCause>",
+            "le": "optional<root.RequestRejectionCause>",
+            "lte": "optional<root.RequestRejectionCause>",
+          },
+        },
+        "CreateRequestBulkRetryRequestQuerySourceId": {
+          "discriminated": false,
+          "docs": "Filter by source IDs",
+          "union": [
+            {
+              "docs": "Source ID",
+              "type": "string",
+            },
+            "list<string>",
+          ],
+        },
+        "CreateRequestBulkRetryRequestQueryStatus": {
+          "enum": [
+            "accepted",
+            "rejected",
+          ],
+        },
         "GetRequestBulkRetriesRequestDir": {
           "enum": [
             "asc",
@@ -941,6 +1602,47 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/webhooks",
+            "request": {
+              "body": {
+                "properties": {
+                  "destination": {
+                    "docs": "Destination input object",
+                    "type": "optional<CreateConnectionRequestDestination>",
+                  },
+                  "destination_id": {
+                    "docs": "ID of a destination to bind to the connection",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "A unique name of the connection for the source",
+                    "type": "string",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                  "ruleset": {
+                    "docs": "Ruleset input object",
+                    "type": "optional<CreateConnectionRequestRuleset>",
+                  },
+                  "ruleset_id": {
+                    "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                    "type": "optional<string>",
+                  },
+                  "source": {
+                    "docs": "Source input object",
+                    "type": "optional<CreateConnectionRequestSource>",
+                  },
+                  "source_id": {
+                    "docs": "ID of a source to bind to the connection",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateConnectionRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single connection",
               "type": "root.Connection",
@@ -1139,6 +1841,31 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "Unique name of the connection for the source",
+                    "type": "optional<string>",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                  "ruleset": {
+                    "docs": "Ruleset input object",
+                    "type": "optional<UpdateConnectionRequestRuleset>",
+                  },
+                  "ruleset_id": {
+                    "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateConnectionRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single connection",
               "type": "root.Connection",
@@ -1154,6 +1881,47 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/webhooks",
+            "request": {
+              "body": {
+                "properties": {
+                  "destination": {
+                    "docs": "Destination input object",
+                    "type": "optional<UpsertConnectionRequestDestination>",
+                  },
+                  "destination_id": {
+                    "docs": "ID of a destination to bind to the connection",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "A unique name of the connection for the source",
+                    "type": "string",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                  "ruleset": {
+                    "docs": "Ruleset input object",
+                    "type": "optional<UpsertConnectionRequestRuleset>",
+                  },
+                  "ruleset_id": {
+                    "docs": "ID of a rule to bind to the connection. Default to the Workspace default ruleset",
+                    "type": "optional<string>",
+                  },
+                  "source": {
+                    "docs": "Source input object",
+                    "type": "optional<UpsertConnectionRequestSource>",
+                  },
+                  "source_id": {
+                    "docs": "ID of a source to bind to the connection",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertConnectionRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single connection",
               "type": "root.Connection",
@@ -1162,11 +1930,139 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateConnectionRequestDestination": {
+          "docs": "Destination input object",
+          "properties": {
+            "cli_path": {
+              "docs": "Path for the CLI destination",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "Name for the destination",
+              "type": "string",
+            },
+            "path_forwarding_disabled": "optional<boolean>",
+            "rate_limit": {
+              "docs": "Limit event attempts to receive per period",
+              "type": "optional<integer>",
+            },
+            "rate_limit_period": {
+              "docs": "Period to rate limit attempts",
+              "type": "optional<CreateConnectionRequestDestinationRateLimitPeriod>",
+            },
+            "url": {
+              "docs": "Endpoint of the destination",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "CreateConnectionRequestDestinationRateLimitPeriod": {
+          "docs": "Period to rate limit attempts",
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+          ],
+        },
+        "CreateConnectionRequestRuleset": {
+          "docs": "Ruleset input object",
+          "properties": {
+            "is_team_default": "optional<boolean>",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
+            "rules": {
+              "docs": "Array of rules to apply",
+              "type": "optional<list<root.Rule>>",
+            },
+          },
+        },
+        "CreateConnectionRequestSource": {
+          "docs": "Source input object",
+          "properties": {
+            "name": {
+              "docs": "A unique name for the source",
+              "type": "string",
+            },
+          },
+        },
         "GetConnectionsRequestDir": {
           "enum": [
             "asc",
             "desc",
           ],
+        },
+        "UpdateConnectionRequestRuleset": {
+          "docs": "Ruleset input object",
+          "properties": {
+            "is_team_default": "optional<boolean>",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
+            "rules": {
+              "docs": "Array of rules to apply",
+              "type": "optional<list<root.Rule>>",
+            },
+          },
+        },
+        "UpsertConnectionRequestDestination": {
+          "docs": "Destination input object",
+          "properties": {
+            "cli_path": {
+              "docs": "Path for the CLI destination",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "Name for the destination",
+              "type": "string",
+            },
+            "path_forwarding_disabled": "optional<boolean>",
+            "rate_limit": {
+              "docs": "Limit event attempts to receive per period",
+              "type": "optional<integer>",
+            },
+            "rate_limit_period": {
+              "docs": "Period to rate limit attempts",
+              "type": "optional<UpsertConnectionRequestDestinationRateLimitPeriod>",
+            },
+            "url": {
+              "docs": "Endpoint of the destination",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "UpsertConnectionRequestDestinationRateLimitPeriod": {
+          "docs": "Period to rate limit attempts",
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+          ],
+        },
+        "UpsertConnectionRequestRuleset": {
+          "docs": "Ruleset input object",
+          "properties": {
+            "is_team_default": "optional<boolean>",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
+            "rules": {
+              "docs": "Array of rules to apply",
+              "type": "optional<list<root.Rule>>",
+            },
+          },
+        },
+        "UpsertConnectionRequestSource": {
+          "docs": "Source input object",
+          "properties": {
+            "name": {
+              "docs": "A unique name for the source",
+              "type": "string",
+            },
+          },
         },
       },
     },
@@ -1210,6 +2106,36 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/destinations",
+            "request": {
+              "body": {
+                "properties": {
+                  "cli_path": {
+                    "docs": "Path for the CLI destination",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
+                  "path_forwarding_disabled": "optional<boolean>",
+                  "rate_limit": {
+                    "docs": "Limit event attempts to receive per period",
+                    "type": "optional<integer>",
+                  },
+                  "rate_limit_period": {
+                    "docs": "Period to rate limit attempts",
+                    "type": "optional<CreateDestinationRequestRateLimitPeriod>",
+                  },
+                  "url": {
+                    "docs": "Endpoint of the destination",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateDestinationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single destination",
               "type": "root.Destination",
@@ -1358,6 +2284,40 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "archived_at": {
+                    "docs": "Date the destination was archived",
+                    "type": "optional<datetime>",
+                  },
+                  "cli_path": {
+                    "docs": "Path for the CLI destination",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
+                  "path_forwarding_disabled": "optional<boolean>",
+                  "rate_limit": {
+                    "docs": "Limit event attempts to receive per period",
+                    "type": "optional<integer>",
+                  },
+                  "rate_limit_period": {
+                    "docs": "Period to rate limit attempts",
+                    "type": "optional<UpdateDestinationRequestRateLimitPeriod>",
+                  },
+                  "url": {
+                    "docs": "Endpoint of the destination",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateDestinationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single destination",
               "type": "root.Destination",
@@ -1373,6 +2333,36 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/destinations",
+            "request": {
+              "body": {
+                "properties": {
+                  "cli_path": {
+                    "docs": "Path for the CLI destination",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
+                  "path_forwarding_disabled": "optional<boolean>",
+                  "rate_limit": {
+                    "docs": "Limit event attempts to receive per period",
+                    "type": "optional<integer>",
+                  },
+                  "rate_limit_period": {
+                    "docs": "Period to rate limit attempts",
+                    "type": "optional<UpsertDestinationRequestRateLimitPeriod>",
+                  },
+                  "url": {
+                    "docs": "Endpoint of the destination",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertDestinationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single destination",
               "type": "root.Destination",
@@ -1381,10 +2371,34 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateDestinationRequestRateLimitPeriod": {
+          "docs": "Period to rate limit attempts",
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+          ],
+        },
         "GetDestinationsRequestDir": {
           "enum": [
             "asc",
             "desc",
+          ],
+        },
+        "UpdateDestinationRequestRateLimitPeriod": {
+          "docs": "Period to rate limit attempts",
+          "enum": [
+            "second",
+            "minute",
+            "hour",
+          ],
+        },
+        "UpsertDestinationRequestRateLimitPeriod": {
+          "docs": "Period to rate limit attempts",
+          "enum": [
+            "second",
+            "minute",
+            "hour",
           ],
         },
       },
@@ -1705,6 +2719,28 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/integrations",
+            "request": {
+              "body": {
+                "properties": {
+                  "configs": {
+                    "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+                    "type": "CreateIntegrationRequestConfigs",
+                  },
+                  "features": {
+                    "docs": "List of features to enable (see features list above)",
+                    "type": "list<root.IntegrationFeature>",
+                  },
+                  "label": {
+                    "docs": "Label of the integration",
+                    "type": "string",
+                  },
+                  "provider": "root.IntegrationProvider",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateIntegrationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single integration",
               "type": "root.Integration",
@@ -1849,11 +2885,57 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "configs": {
+                    "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+                    "type": "optional<UpdateIntegrationRequestConfigs>",
+                  },
+                  "features": {
+                    "docs": "List of features to enable (see features list above)",
+                    "type": "optional<list<root.IntegrationFeature>>",
+                  },
+                  "label": {
+                    "docs": "Label of the integration",
+                    "type": "optional<string>",
+                  },
+                  "provider": "optional<root.IntegrationProvider>",
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateIntegrationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single integration",
               "type": "root.Integration",
             },
           },
+        },
+      },
+      "types": {
+        "CreateIntegrationRequestConfigs": {
+          "discriminated": false,
+          "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "union": [
+            "root.HmacIntegrationConfigs",
+            "root.ApiKeyIntegrationConfigs",
+            "root.HandledHmacConfigs",
+            "root.BasicAuthIntegrationConfigs",
+            "root.ShopifyIntegrationConfigs",
+          ],
+        },
+        "UpdateIntegrationRequestConfigs": {
+          "discriminated": false,
+          "docs": "Decrypted Key/Value object of the associated configuration for that provider",
+          "union": [
+            "root.HmacIntegrationConfigs",
+            "root.ApiKeyIntegrationConfigs",
+            "root.HandledHmacConfigs",
+            "root.BasicAuthIntegrationConfigs",
+            "root.ShopifyIntegrationConfigs",
+          ],
         },
       },
     },
@@ -1877,6 +2959,25 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/issue-triggers",
+            "request": {
+              "body": {
+                "properties": {
+                  "channels": "optional<root.IssueTriggerChannels>",
+                  "configs": {
+                    "docs": "Configuration object for the specific issue type selected",
+                    "type": "optional<CreateIssueTriggerRequestConfigs>",
+                  },
+                  "name": {
+                    "docs": "Optional unique name to use as reference when using the API",
+                    "type": "optional<string>",
+                  },
+                  "type": "root.IssueType",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateIssueTriggerRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single issue trigger",
               "type": "root.IssueTrigger",
@@ -2051,6 +3152,28 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "channels": "optional<root.IssueTriggerChannels>",
+                  "configs": {
+                    "docs": "Configuration object for the specific issue type selected",
+                    "type": "optional<UpdateIssueTriggerRequestConfigs>",
+                  },
+                  "disabled_at": {
+                    "docs": "Date when the issue trigger was disabled",
+                    "type": "optional<datetime>",
+                  },
+                  "name": {
+                    "docs": "Optional unique name to use as reference when using the API",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateIssueTriggerRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single issue trigger",
               "type": "root.IssueTrigger",
@@ -2066,6 +3189,25 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/issue-triggers",
+            "request": {
+              "body": {
+                "properties": {
+                  "channels": "optional<root.IssueTriggerChannels>",
+                  "configs": {
+                    "docs": "Configuration object for the specific issue type selected",
+                    "type": "optional<UpsertIssueTriggerRequestConfigs>",
+                  },
+                  "name": {
+                    "docs": "Required unique name to use as reference when using the API",
+                    "type": "string",
+                  },
+                  "type": "root.IssueType",
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertIssueTriggerRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single issue trigger",
               "type": "root.IssueTrigger",
@@ -2074,6 +3216,15 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateIssueTriggerRequestConfigs": {
+          "discriminated": false,
+          "docs": "Configuration object for the specific issue type selected",
+          "union": [
+            "root.IssueTriggerDeliveryConfigs",
+            "root.IssueTriggerTransformationConfigs",
+            "root.IssueTriggerBackpressureConfigs",
+          ],
+        },
         "GetIssueTriggersRequestDir": {
           "enum": [
             "asc",
@@ -2084,6 +3235,24 @@ exports[`open api parser hookdeck simple 1`] = `
           "enum": [
             "created_at",
             "type",
+          ],
+        },
+        "UpdateIssueTriggerRequestConfigs": {
+          "discriminated": false,
+          "docs": "Configuration object for the specific issue type selected",
+          "union": [
+            "root.IssueTriggerDeliveryConfigs",
+            "root.IssueTriggerTransformationConfigs",
+            "root.IssueTriggerBackpressureConfigs",
+          ],
+        },
+        "UpsertIssueTriggerRequestConfigs": {
+          "discriminated": false,
+          "docs": "Configuration object for the specific issue type selected",
+          "union": [
+            "root.IssueTriggerDeliveryConfigs",
+            "root.IssueTriggerTransformationConfigs",
+            "root.IssueTriggerBackpressureConfigs",
           ],
         },
       },
@@ -2357,6 +3526,19 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "status": {
+                    "docs": "New status",
+                    "type": "UpdateIssueRequestStatus",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateIssueRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Updated issue",
               "type": "root.Issue",
@@ -2429,6 +3611,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "backpressure",
           ],
         },
+        "UpdateIssueRequestStatus": {
+          "docs": "New status",
+          "enum": [
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
+          ],
+        },
       },
     },
     "notifications.yml": {
@@ -2447,6 +3638,27 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "method": "PUT",
             "path": "/notifications/webhooks",
+            "request": {
+              "body": {
+                "properties": {
+                  "enabled": {
+                    "docs": "Enable or disable webhook notifications on the workspace",
+                    "type": "optional<boolean>",
+                  },
+                  "source_id": {
+                    "docs": "The Hookdeck Source to send the webhook to",
+                    "type": "optional<string>",
+                  },
+                  "topics": {
+                    "docs": "List of topics to send notifications for",
+                    "type": "optional<list<root.TopicsValue>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ToggleWebhookNotificationsRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Toggle operation status response",
               "type": "root.ToggleWebhookNotifications",
@@ -2898,6 +4110,19 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "webhook_ids": {
+                    "docs": "Subset of webhook_ids to re-run the event logic on. Useful to retry only specific ignored_events",
+                    "type": "list<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RetryRequestRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Retry request operation result",
               "type": "root.RetryRequest",
@@ -2985,6 +4210,24 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/rulesets",
+            "request": {
+              "body": {
+                "properties": {
+                  "is_team_default": "optional<boolean>",
+                  "name": {
+                    "docs": "Name for the ruleset",
+                    "type": "string",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRulesetRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single ruleset",
               "type": "optional<root.Ruleset>",
@@ -3123,6 +4366,28 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "archived_at": {
+                    "docs": "Date the ruleset was archived",
+                    "type": "optional<datetime>",
+                  },
+                  "is_team_default": "optional<boolean>",
+                  "name": {
+                    "docs": "Name for the ruleset",
+                    "type": "optional<string>",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateRulesetRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single ruleset",
               "type": "optional<root.Ruleset>",
@@ -3138,6 +4403,24 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/rulesets",
+            "request": {
+              "body": {
+                "properties": {
+                  "is_team_default": "optional<boolean>",
+                  "name": {
+                    "docs": "Name for the ruleset",
+                    "type": "string",
+                  },
+                  "rules": {
+                    "docs": "Array of rules to apply",
+                    "type": "optional<list<root.Rule>>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertRulesetRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single ruleset",
               "type": "optional<root.Ruleset>",
@@ -3194,6 +4477,19 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/sources",
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "A unique name for the source",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateSourceRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single source",
               "type": "root.Source",
@@ -3337,6 +4633,23 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "archived_at": {
+                    "docs": "Date the source was archived",
+                    "type": "optional<datetime>",
+                  },
+                  "name": {
+                    "docs": "A unique name for the source",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateSourceRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single source",
               "type": "root.Source",
@@ -3352,6 +4665,19 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/sources",
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "A unique name for the source",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertSourceRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single source",
               "type": "root.Source",
@@ -3388,6 +4714,27 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "POST",
             "path": "/transformations",
+            "request": {
+              "body": {
+                "properties": {
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "string",
+                  },
+                  "env": {
+                    "docs": "Key-value environment variables to be passed to the transformation",
+                    "type": "optional<map<string, CreateTransformationRequestEnvValue>>",
+                  },
+                  "name": {
+                    "docs": "A unique, human-friendly name for the transformation",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateTransformationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single transformation",
               "type": "root.Transformation",
@@ -3600,7 +4947,11 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "request": {
+                    "headers": {},
+                  },
+                },
                 "response": {
                   "body": {
                     "log_level": "debug",
@@ -3610,6 +4961,36 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/transformations/run",
+            "request": {
+              "body": {
+                "properties": {
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "optional<string>",
+                  },
+                  "env": {
+                    "docs": "Key-value environment variables to be passed to the transformation",
+                    "type": "optional<TestTransformationRequestEnv>",
+                  },
+                  "event_id": "optional<string>",
+                  "request": {
+                    "docs": "Request input to use for the transformation execution",
+                    "type": "optional<TestTransformationRequestRequest>",
+                  },
+                  "transformation_id": {
+                    "docs": "Transformation ID",
+                    "type": "optional<string>",
+                  },
+                  "webhook_id": {
+                    "docs": "ID of the connection to use for the execution \`context\`",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TestTransformationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Transformation run output",
               "type": "root.TransformationExecutorOutput",
@@ -3632,6 +5013,27 @@ exports[`open api parser hookdeck simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "optional<string>",
+                  },
+                  "env": {
+                    "docs": "Key-value environment variables to be passed to the transformation",
+                    "type": "optional<map<string, UpdateTransformationRequestEnvValue>>",
+                  },
+                  "name": {
+                    "docs": "A unique, human-friendly name for the transformation",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpdateTransformationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single transformation",
               "type": "root.Transformation",
@@ -3647,6 +5049,27 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "method": "PUT",
             "path": "/transformations",
+            "request": {
+              "body": {
+                "properties": {
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "string",
+                  },
+                  "env": {
+                    "docs": "Key-value environment variables to be passed to the transformation",
+                    "type": "optional<map<string, UpsertTransformationRequestEnvValue>>",
+                  },
+                  "name": {
+                    "docs": "A unique, human-friendly name for the transformation",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertTransformationRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "A single transformation",
               "type": "root.Transformation",
@@ -3655,6 +5078,14 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "CreateTransformationRequestEnvValue": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "double",
+          ],
+        },
         "GetTransformationExecutionsRequestDir": {
           "enum": [
             "asc",
@@ -3674,6 +5105,67 @@ exports[`open api parser hookdeck simple 1`] = `
           "enum": [
             "asc",
             "desc",
+          ],
+        },
+        "TestTransformationRequestEnv": {
+          "docs": "Key-value environment variables to be passed to the transformation",
+          "properties": {},
+        },
+        "TestTransformationRequestRequest": {
+          "docs": "Request input to use for the transformation execution",
+          "properties": {
+            "body": {
+              "docs": "Body of the request",
+              "type": "optional<TestTransformationRequestRequestBody>",
+            },
+            "headers": {
+              "docs": "Headers of the request",
+              "type": "map<string, string>",
+            },
+            "parsed_query": {
+              "docs": "JSON representation of the query params",
+              "type": "optional<TestTransformationRequestRequestParsedQuery>",
+            },
+            "path": {
+              "docs": "Path of the request",
+              "type": "optional<string>",
+            },
+            "query": {
+              "docs": "String representation of the query params of the request",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "TestTransformationRequestRequestBody": {
+          "discriminated": false,
+          "docs": "Body of the request",
+          "union": [
+            "TestTransformationRequestRequestBodyZero",
+            "string",
+          ],
+        },
+        "TestTransformationRequestRequestBodyZero": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "TestTransformationRequestRequestParsedQuery": {
+          "docs": "JSON representation of the query params",
+          "properties": {},
+        },
+        "UpdateTransformationRequestEnvValue": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "double",
+          ],
+        },
+        "UpsertTransformationRequestEnvValue": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            "string",
+            "double",
           ],
         },
       },

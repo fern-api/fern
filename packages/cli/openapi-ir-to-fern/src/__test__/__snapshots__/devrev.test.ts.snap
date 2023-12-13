@@ -56,6 +56,19 @@ exports[`open api parser devrev simple 1`] = `
             ],
             "method": "POST",
             "path": "/artifacts.prepare",
+            "request": {
+              "body": {
+                "properties": {
+                  "file_name": {
+                    "docs": "The name of the file that's being uploaded.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ArtifactsPrepareRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.ArtifactsPrepareResponse",
@@ -93,6 +106,9 @@ enterprise connections can be created by an organization.
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.create",
+            "request": {
+              "body": "root.DevOrgAuthConnectionsCreateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.DevOrgAuthConnectionsCreateResponse",
@@ -113,17 +129,21 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be deleted.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "DevOrgAuthConnectionsDeleteRequest",
+              "query-parameters": undefined,
+            },
           },
           "dev-org-auth-connections-get": {
             "auth": true,
@@ -206,17 +226,22 @@ disabled.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be toggled.",
+                    "type": "string",
+                  },
+                  "toggle": "optional<root.AuthConnectionToggle>",
+                },
+              },
+              "headers": undefined,
+              "name": "DevOrgAuthConnectionsToggleRequest",
+              "query-parameters": undefined,
+            },
           },
           "dev-org-auth-connections-update": {
             "auth": true,
@@ -232,6 +257,9 @@ disabled.
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.update",
+            "request": {
+              "body": "root.DevOrgAuthConnectionsUpdateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.DevOrgAuthConnectionsUpdateResponse",
@@ -265,6 +293,53 @@ authenticated user.
             ],
             "method": "POST",
             "path": "/auth-tokens.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "aud": {
+                    "docs": "The expected audience values with respect to the token.",
+                    "type": "optional<list<string>>",
+                  },
+                  "client_id": {
+                    "docs": "An identifier that represents the application which is requesting
+the token. If no client_id is present in the request to generate an
+application access token (AAT), DevRev will generate a client_id.
+This client_id is only associated with an AAT.
+",
+                    "type": "optional<string>",
+                  },
+                  "expires_in": {
+                    "docs": "The expected validity lifetime of the token in number of days.
+",
+                    "type": "optional<integer>",
+                  },
+                  "grant_type": "optional<root.AuthTokenGrantType>",
+                  "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                  "rev_info": "optional<root.AuthTokensRevInfo>",
+                  "scope": {
+                    "docs": "The requested set of scopes associated with the issued token. A
+space-delimited list of values in which the order of values does
+not matter.
+",
+                    "type": "optional<string>",
+                  },
+                  "subject_token": {
+                    "docs": "Represents the entity that requests the token. Not required when
+requesting an application access token (AAT).
+",
+                    "type": "optional<string>",
+                  },
+                  "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
+                  "token_hint": {
+                    "docs": "A hint that identifies the token.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "AuthTokensCreateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.AuthTokensCreateResponse",
@@ -289,12 +364,28 @@ given Dev organization.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {},
                 "response": undefined,
               },
             ],
             "method": "POST",
             "path": "/auth-tokens.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "token_id": {
+                    "docs": "The unique identifier for the token under a given Dev organization.
+If no token ID is provided, then the token ID will be set from the
+JTI claim of the token in the authorization header.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "AuthTokensDeleteRequest",
+              "query-parameters": undefined,
+            },
           },
           "get": {
             "auth": true,
@@ -410,12 +501,24 @@ authenticated user.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                },
                 "response": undefined,
               },
             ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                },
+              },
+              "headers": undefined,
+              "name": "AuthTokensSelfDeleteRequest",
+              "query-parameters": undefined,
+            },
           },
           "update": {
             "auth": true,
@@ -433,6 +536,24 @@ organization.
             ],
             "method": "POST",
             "path": "/auth-tokens.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "token_hint": {
+                    "docs": "A hint that identifies the token.",
+                    "type": "string",
+                  },
+                  "token_id": {
+                    "docs": "The unique identifier of the token under a given Dev organization.
+",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "AuthTokensUpdateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.AuthTokensUpdateResponse",
@@ -570,6 +691,9 @@ used.
             ],
             "method": "POST",
             "path": "/parts.create",
+            "request": {
+              "body": "root.PartsCreateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.PartsCreateResponse",
@@ -592,7 +716,9 @@ used.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
                 "response": {
                   "body": {},
                 },
@@ -600,6 +726,19 @@ used.
             ],
             "method": "POST",
             "path": "/parts.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the part to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "PartsDeleteRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.parts-delete-response",
@@ -730,6 +869,9 @@ used.
             ],
             "method": "POST",
             "path": "/parts.update",
+            "request": {
+              "body": "root.PartsUpdateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.PartsUpdateResponse",
@@ -763,6 +905,39 @@ organization.
             ],
             "method": "POST",
             "path": "/rev-orgs.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": "Description of the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "display_name": {
+                    "docs": "Name of the Rev organization.",
+                    "type": "string",
+                  },
+                  "domain": {
+                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "type": "optional<string>",
+                  },
+                  "environment": "optional<root.OrgEnvironment>",
+                  "external_ref": {
+                    "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                    "type": "optional<string>",
+                  },
+                  "tier": {
+                    "docs": "The tier of the RevOrg.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RevOrgsCreateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.RevOrgsCreateResponse",
@@ -785,7 +960,9 @@ organization.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
                 "response": {
                   "body": {},
                 },
@@ -793,6 +970,19 @@ organization.
             ],
             "method": "POST",
             "path": "/rev-orgs.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of Rev organization to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RevOrgsDeleteRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.rev-orgs-delete-response",
@@ -946,6 +1136,43 @@ them.
             ],
             "method": "POST",
             "path": "/rev-orgs.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": "Description of the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "display_name": {
+                    "docs": "Customer chosen name for the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "domain": {
+                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "type": "optional<string>",
+                  },
+                  "environment": "optional<root.OrgEnvironment>",
+                  "external_ref": {
+                    "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                    "type": "optional<string>",
+                  },
+                  "id": {
+                    "docs": "The ID of Rev organization to update.",
+                    "type": "string",
+                  },
+                  "tier": {
+                    "docs": "The tier of the RevOrg.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RevOrgsUpdateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.RevOrgsUpdateResponse",
@@ -979,6 +1206,30 @@ and a logical concept denoted by the tag's name.
             ],
             "method": "POST",
             "path": "/tags.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "allowed_values": {
+                    "docs": "The allowed values for the tag, or empty if no values are
+permitted.
+",
+                    "type": "optional<list<string>>",
+                  },
+                  "description": {
+                    "docs": "The description for the tag.",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name for the tag, which must be unique across all tags.
+",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TagsCreateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.TagsCreateResponse",
@@ -1001,7 +1252,9 @@ and a logical concept denoted by the tag's name.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                },
                 "response": {
                   "body": {},
                 },
@@ -1009,6 +1262,19 @@ and a logical concept denoted by the tag's name.
             ],
             "method": "POST",
             "path": "/tags.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the tag to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TagsDeleteRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.tags-delete-response",
@@ -1114,6 +1380,30 @@ used.
             ],
             "method": "POST",
             "path": "/tags.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "allowed_values": "optional<root.TagsUpdateAllowedValues>",
+                  "description": {
+                    "docs": "The updated description of the tag.",
+                    "type": "optional<string>",
+                  },
+                  "id": {
+                    "docs": "The ID of the tag to update.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The updated name of the tag. The name must be unique across all
+tags.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TagsUpdateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.TagsUpdateResponse",
@@ -1145,6 +1435,9 @@ used.
             ],
             "method": "POST",
             "path": "/timeline-entries.create",
+            "request": {
+              "body": "root.TimelineEntriesCreateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.TimelineEntriesCreateResponse",
@@ -1258,6 +1551,9 @@ used.
             ],
             "method": "POST",
             "path": "/timeline-entries.update",
+            "request": {
+              "body": "root.TimelineEntriesUpdateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.TimelineEntriesUpdateResponse",
@@ -1289,6 +1585,31 @@ used.
             ],
             "method": "POST",
             "path": "/webhooks.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "event_types": {
+                    "docs": "The event types that the webhook endpoint will receive.",
+                    "type": "optional<list<root.WebhookEventType>>",
+                  },
+                  "secret": {
+                    "docs": "The secret to use when verifying webhook events. If provided, the
+secret must be between 8 and 32 bytes (inclusive). If not set, a
+secret will be automatically generated and provided in the
+response.
+",
+                    "type": "optional<string>",
+                  },
+                  "url": {
+                    "docs": "The URL of the webhook endpoint.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "WebhooksCreateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.WebhooksCreateResponse",
@@ -1311,7 +1632,9 @@ used.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                },
                 "response": {
                   "body": {},
                 },
@@ -1319,6 +1642,19 @@ used.
             ],
             "method": "POST",
             "path": "/webhooks.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID for the webhook.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "WebhooksDeleteRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.webhooks-delete-response",
@@ -1398,6 +1734,37 @@ used.
             ],
             "method": "POST",
             "path": "/webhooks.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "action": "optional<root.WebhooksUpdateAction>",
+                  "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
+                  "id": {
+                    "docs": "ID for the webhook.",
+                    "type": "string",
+                  },
+                  "secret": {
+                    "docs": "If provided, updates the secret that's used when verifying webhook
+events, which must be between 8 and 32 bytes (inclusive). Otherwise
+if empty, then a new secret is generated. If the webhook is active,
+then its status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                    "type": "optional<string>",
+                  },
+                  "url": {
+                    "docs": "The webhook's updated URL. If the webhook is active, then the
+webhook's status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "WebhooksUpdateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.WebhooksUpdateResponse",
@@ -1431,6 +1798,9 @@ used.
             ],
             "method": "POST",
             "path": "/works.create",
+            "request": {
+              "body": "root.WorksCreateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.WorksCreateResponse",
@@ -1453,7 +1823,9 @@ used.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                },
                 "response": {
                   "body": {},
                 },
@@ -1461,6 +1833,19 @@ used.
             ],
             "method": "POST",
             "path": "/works.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The work's ID.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "WorksDeleteRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Success.",
               "type": "root.works-delete-response",
@@ -1713,6 +2098,9 @@ organizations.
             ],
             "method": "POST",
             "path": "/works.update",
+            "request": {
+              "body": "root.WorksUpdateRequest",
+            },
             "response": {
               "docs": "Success.",
               "type": "root.WorksUpdateResponse",
@@ -1764,15 +2152,6 @@ organizations.
           },
           "url": {
             "docs": "The artifact's download URL.",
-            "type": "string",
-          },
-        },
-      },
-      "ArtifactsPrepareRequest": {
-        "docs": "The request to prepare a URL to upload a file.",
-        "properties": {
-          "file_name": {
-            "docs": "The name of the file that's being uploaded.",
             "type": "string",
           },
         },
@@ -2101,51 +2480,6 @@ token. Only applicable for application access tokens.
           },
         ],
       },
-      "AuthTokensCreateRequest": {
-        "docs": "A request to create a new token corresponding to the requested token
-type.
-",
-        "properties": {
-          "aud": {
-            "docs": "The expected audience values with respect to the token.",
-            "type": "optional<list<string>>",
-          },
-          "client_id": {
-            "docs": "An identifier that represents the application which is requesting
-the token. If no client_id is present in the request to generate an
-application access token (AAT), DevRev will generate a client_id.
-This client_id is only associated with an AAT.
-",
-            "type": "optional<string>",
-          },
-          "expires_in": {
-            "docs": "The expected validity lifetime of the token in number of days.
-",
-            "type": "optional<integer>",
-          },
-          "grant_type": "optional<AuthTokenGrantType>",
-          "requested_token_type": "optional<AuthTokenRequestedTokenType>",
-          "rev_info": "optional<AuthTokensRevInfo>",
-          "scope": {
-            "docs": "The requested set of scopes associated with the issued token. A
-space-delimited list of values in which the order of values does
-not matter.
-",
-            "type": "optional<string>",
-          },
-          "subject_token": {
-            "docs": "Represents the entity that requests the token. Not required when
-requesting an application access token (AAT).
-",
-            "type": "optional<string>",
-          },
-          "subject_token_type": "optional<AuthTokenSubjectTokenType>",
-          "token_hint": {
-            "docs": "A hint that identifies the token.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -2181,18 +2515,6 @@ of values in which the order of values does not matter.
             "type": "optional<string>",
           },
           "token_type": "auth-token-token-type",
-        },
-      },
-      "AuthTokensDeleteRequest": {
-        "docs": "The request to revoke the token.",
-        "properties": {
-          "token_id": {
-            "docs": "The unique identifier for the token under a given Dev organization.
-If no token ID is provided, then the token ID will be set from the
-JTI claim of the token in the authorization header.
-",
-            "type": "optional<string>",
-          },
         },
       },
       "AuthTokensGetResponse": {
@@ -2242,28 +2564,6 @@ issue a Rev session token.
             "type": "string",
           },
           "user_traits": "optional<AuthTokensUserTraits>",
-        },
-      },
-      "AuthTokensSelfDeleteRequest": {
-        "docs": "The request to delete all the tokens created by the authenticated user,
-that match with the provided token type.
-",
-        "properties": {
-          "requested_token_type": "optional<AuthTokenRequestedTokenType>",
-        },
-      },
-      "AuthTokensUpdateRequest": {
-        "docs": "A request to update the token metadata.",
-        "properties": {
-          "token_hint": {
-            "docs": "A hint that identifies the token.",
-            "type": "string",
-          },
-          "token_id": {
-            "docs": "The unique identifier of the token under a given Dev organization.
-",
-            "type": "string",
-          },
         },
       },
       "AuthTokensUpdateResponse": {
@@ -2331,18 +2631,6 @@ connection.
           "auth_connection": "AuthConnection",
         },
       },
-      "DevOrgAuthConnectionsDeleteRequest": {
-        "docs": "Request to delete an enterprise authentication connection for a Dev
-organization. A default connection and a connection which is currently
-enabled cannot be deleted.
-",
-        "properties": {
-          "id": {
-            "docs": "ID of the authentication connection to be deleted.",
-            "type": "string",
-          },
-        },
-      },
       "DevOrgAuthConnectionsGetResponse": {
         "docs": "Response object encapsulating the configuration details of an
 authentication connection.
@@ -2362,18 +2650,6 @@ a Dev organization.
 ",
             "type": "list<AuthConnection>",
           },
-        },
-      },
-      "DevOrgAuthConnectionsToggleRequest": {
-        "docs": "Request to enable or disable an authentication connection for a Dev
-organization.
-",
-        "properties": {
-          "id": {
-            "docs": "ID of the authentication connection to be toggled.",
-            "type": "string",
-          },
-          "toggle": "optional<AuthConnectionToggle>",
         },
       },
       "DevOrgAuthConnectionsUpdateRequest": {
@@ -2943,15 +3219,6 @@ always be returned in the specified sort-by order.
           "part": "Part",
         },
       },
-      "PartsDeleteRequest": {
-        "docs": undefined,
-        "properties": {
-          "id": {
-            "docs": "The ID of the part to delete.",
-            "type": "string",
-          },
-        },
-      },
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
@@ -3058,51 +3325,11 @@ organization.
         },
       },
       "RevOrgSummary": "OrgBaseSummary",
-      "RevOrgsCreateRequest": {
-        "docs": "Request object to create a new Rev organization in the Dev
-organization.
-",
-        "properties": {
-          "description": {
-            "docs": "Description of the Rev organization.",
-            "type": "optional<string>",
-          },
-          "display_name": {
-            "docs": "Name of the Rev organization.",
-            "type": "string",
-          },
-          "domain": {
-            "docs": "Company's domain name. Example - 'devrev.ai'.",
-            "type": "optional<string>",
-          },
-          "environment": "optional<OrgEnvironment>",
-          "external_ref": {
-            "docs": "External ref is a custom unique identifier which is a reference to
-an unique id for this organization's data in some system of
-records.
-",
-            "type": "optional<string>",
-          },
-          "tier": {
-            "docs": "The tier of the RevOrg.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "RevOrgsCreateResponse": {
         "docs": "Response object for request to create a new Rev organization.
 ",
         "properties": {
           "rev_org": "RevOrg",
-        },
-      },
-      "RevOrgsDeleteRequest": {
-        "docs": "Request object to delete a Rev organization.",
-        "properties": {
-          "id": {
-            "docs": "The ID of Rev organization to delete.",
-            "type": "string",
-          },
         },
       },
       "RevOrgsGetResponse": {
@@ -3130,40 +3357,6 @@ sort order. If not set, then no prior elements exist.
           "rev_orgs": {
             "docs": "List with all of the Rev organizations' information.",
             "type": "list<RevOrg>",
-          },
-        },
-      },
-      "RevOrgsUpdateRequest": {
-        "docs": "Request object to update information of the Rev organization.
-",
-        "properties": {
-          "description": {
-            "docs": "Description of the Rev organization.",
-            "type": "optional<string>",
-          },
-          "display_name": {
-            "docs": "Customer chosen name for the Rev organization.",
-            "type": "optional<string>",
-          },
-          "domain": {
-            "docs": "Company's domain name. Example - 'devrev.ai'.",
-            "type": "optional<string>",
-          },
-          "environment": "optional<OrgEnvironment>",
-          "external_ref": {
-            "docs": "External ref is a custom unique identifier which is a reference to
-an unique id for this organization's data in some system of
-records.
-",
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": "The ID of Rev organization to update.",
-            "type": "string",
-          },
-          "tier": {
-            "docs": "The tier of the RevOrg.",
-            "type": "optional<string>",
           },
         },
       },
@@ -3288,39 +3481,10 @@ unique.
           },
         },
       },
-      "TagsCreateRequest": {
-        "docs": "The request to create a new tag.",
-        "properties": {
-          "allowed_values": {
-            "docs": "The allowed values for the tag, or empty if no values are
-permitted.
-",
-            "type": "optional<list<string>>",
-          },
-          "description": {
-            "docs": "The description for the tag.",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name for the tag, which must be unique across all tags.
-",
-            "type": "string",
-          },
-        },
-      },
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
           "tag": "Tag",
-        },
-      },
-      "TagsDeleteRequest": {
-        "docs": "The request to delete a tag.",
-        "properties": {
-          "id": {
-            "docs": "The ID of the tag to delete.",
-            "type": "string",
-          },
         },
       },
       "TagsGetResponse": {
@@ -3356,26 +3520,6 @@ sort order. If not set, then no prior elements exist.
           "set": {
             "docs": "Sets the allowed values for the tag.",
             "type": "optional<list<string>>",
-          },
-        },
-      },
-      "TagsUpdateRequest": {
-        "docs": "The request to update a tag.",
-        "properties": {
-          "allowed_values": "optional<TagsUpdateAllowedValues>",
-          "description": {
-            "docs": "The updated description of the tag.",
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": "The ID of the tag to update.",
-            "type": "string",
-          },
-          "name": {
-            "docs": "The updated name of the tag. The name must be unique across all
-tags.
-",
-            "type": "optional<string>",
           },
         },
       },
@@ -3756,40 +3900,10 @@ be set for other request types.
           "unverified",
         ],
       },
-      "WebhooksCreateRequest": {
-        "docs": "The request to create a new webhook.",
-        "properties": {
-          "event_types": {
-            "docs": "The event types that the webhook endpoint will receive.",
-            "type": "optional<list<WebhookEventType>>",
-          },
-          "secret": {
-            "docs": "The secret to use when verifying webhook events. If provided, the
-secret must be between 8 and 32 bytes (inclusive). If not set, a
-secret will be automatically generated and provided in the
-response.
-",
-            "type": "optional<string>",
-          },
-          "url": {
-            "docs": "The URL of the webhook endpoint.",
-            "type": "string",
-          },
-        },
-      },
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
           "webhook": "Webhook",
-        },
-      },
-      "WebhooksDeleteRequest": {
-        "docs": "The request to delete a webhook.",
-        "properties": {
-          "id": {
-            "docs": "ID for the webhook.",
-            "type": "string",
-          },
         },
       },
       "WebhooksGetResponse": {
@@ -3813,33 +3927,6 @@ response.
           "activate",
           "deactivate",
         ],
-      },
-      "WebhooksUpdateRequest": {
-        "docs": "The request to update a webhook.",
-        "properties": {
-          "action": "optional<WebhooksUpdateAction>",
-          "event_types": "optional<WebhooksUpdateRequestEventTypes>",
-          "id": {
-            "docs": "ID for the webhook.",
-            "type": "string",
-          },
-          "secret": {
-            "docs": "If provided, updates the secret that's used when verifying webhook
-events, which must be between 8 and 32 bytes (inclusive). Otherwise
-if empty, then a new secret is generated. If the webhook is active,
-then its status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.
-",
-            "type": "optional<string>",
-          },
-          "url": {
-            "docs": "The webhook's updated URL. If the webhook is active, then the
-webhook's status will transition to the 'unverified' state and it
-won't receive any object events until successfully verified.
-",
-            "type": "optional<string>",
-          },
-        },
       },
       "WebhooksUpdateRequestEventTypes": {
         "docs": undefined,
@@ -4001,15 +4088,6 @@ issues.
         "docs": undefined,
         "properties": {
           "work": "Work",
-        },
-      },
-      "WorksDeleteRequest": {
-        "docs": undefined,
-        "properties": {
-          "id": {
-            "docs": "The work's ID.",
-            "type": "string",
-          },
         },
       },
       "WorksExportResponse": {

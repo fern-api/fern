@@ -59,6 +59,9 @@ exports[`open api parser assembly simple 1`] = `
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/action-items",
+            "request": {
+              "body": "root.LemurActionItemsParameters",
+            },
             "response": {
               "docs": "LeMUR action items response",
               "type": "root.LemurActionItemsResponse",
@@ -105,6 +108,22 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/question-answer",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "questions": {
+                    "docs": "A list of questions to ask.",
+                    "type": "list<root.LemurQuestion>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurQuestionAnswerParameters",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "LeMUR question & answer response",
               "type": "root.LemurQuestionAnswerResponse",
@@ -124,6 +143,23 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/summary",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "answer_format": {
+                    "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurSummaryParameters",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "LeMUR summary response",
               "type": "root.LemurSummaryResponse",
@@ -143,6 +179,22 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/task",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "prompt": {
+                    "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurTaskParameters",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "LeMUR task response",
               "type": "root.LemurTaskResponse",
@@ -173,6 +225,19 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "method": "POST",
             "path": "/v2/realtime/token",
+            "request": {
+              "body": {
+                "properties": {
+                  "expires_in": {
+                    "docs": "The amount of time until the token expires in seconds.",
+                    "type": "integer",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRealtimeTemporaryTokenParameters",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Temporary authentication token generated.",
               "type": "root.RealtimeTemporaryTokenResponse",
@@ -203,6 +268,22 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "method": "POST",
             "path": "/v2/transcript",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.CreateTranscriptOptionalParameters",
+                ],
+                "properties": {
+                  "audio_url": {
+                    "docs": "The URL of the audio or video file to transcribe.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateTranscriptParameters",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Transcript created and queued for processing.",
               "type": "root.Transcript",
@@ -617,15 +698,6 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           },
         },
       },
-      "CreateRealtimeTemporaryTokenParameters": {
-        "docs": undefined,
-        "properties": {
-          "expires_in": {
-            "docs": "The amount of time until the token expires in seconds.",
-            "type": "integer",
-          },
-        },
-      },
       "CreateTranscriptOptionalParameters": {
         "docs": "The parameters for creating a transcript",
         "properties": {
@@ -768,18 +840,6 @@ Valid values are in the range [0, 1] inclusive.
           "word_boost": {
             "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
             "type": "optional<list<string>>",
-          },
-        },
-      },
-      "CreateTranscriptParameters": {
-        "docs": "The parameters for creating a transcript",
-        "extends": [
-          "CreateTranscriptOptionalParameters",
-        ],
-        "properties": {
-          "audio_url": {
-            "docs": "The URL of the audio or video file to transcribe.",
-            "type": "string",
           },
         },
       },
@@ -1037,18 +1097,6 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
-      "LemurQuestionAnswerParameters": {
-        "docs": undefined,
-        "extends": [
-          "LemurBaseParameters",
-        ],
-        "properties": {
-          "questions": {
-            "docs": "A list of questions to ask.",
-            "type": "list<LemurQuestion>",
-          },
-        },
-      },
       "LemurQuestionAnswerResponse": {
         "docs": undefined,
         "extends": [
@@ -1069,19 +1117,6 @@ Can be any value between 0.0 and 1.0 inclusive.
           "map<string, unknown>",
         ],
       },
-      "LemurSummaryParameters": {
-        "docs": undefined,
-        "extends": [
-          "LemurBaseParameters",
-        ],
-        "properties": {
-          "answer_format": {
-            "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
-",
-            "type": "optional<string>",
-          },
-        },
-      },
       "LemurSummaryResponse": {
         "docs": undefined,
         "extends": [
@@ -1090,18 +1125,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "response": {
             "docs": "The response generated by LeMUR.",
-            "type": "string",
-          },
-        },
-      },
-      "LemurTaskParameters": {
-        "docs": undefined,
-        "extends": [
-          "LemurBaseParameters",
-        ],
-        "properties": {
-          "prompt": {
-            "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
             "type": "string",
           },
         },

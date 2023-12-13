@@ -790,7 +790,19 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "OverdraftProtectionPatchOverdraftAccountsRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "overdraftProtectionPatch",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
@@ -853,7 +865,19 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "JointOwnersCreateJointOwnerInvitationRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "newJointOwnerInvitation",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
@@ -2098,7 +2122,19 @@ Note: This operation requires an identity challenge if the financial institution
       "path": "/transfers",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "TransfersCreateTransferRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "newTransfer",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Created.",
@@ -2306,7 +2342,19 @@ Note: This operation requires an identity challenge if the financial institution
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "TransfersPatchTransferRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "transferPatch",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",

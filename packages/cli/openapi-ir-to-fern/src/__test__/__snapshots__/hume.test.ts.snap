@@ -156,17 +156,26 @@ exports[`open api parser hume simple 1`] = `
           "request": {
             "body": {
               "properties": {
-                "file": {
-                  "docs": "Local media files (see recommended input filetypes) to be processed.
-
-If you wish to supply more than 100 files, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-                  "type": "list<string>",
+                "callback_url": {
+                  "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
+                  "type": "optional<string>",
                 },
-                "json": "BaseRequest",
+                "models": "optional<Models>",
+                "notify": {
+                  "docs": "Whether to send an email notification to the user upon job failure.",
+                  "type": "optional<boolean>",
+                },
+                "transcription": "optional<Transcription>",
+                "urls": {
+                  "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
+
+If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+                  "type": "optional<list<string>>",
+                },
               },
             },
             "headers": undefined,
-            "name": "StartJobRequest",
+            "name": "BaseRequest",
             "query-parameters": undefined,
           },
           "response": {
@@ -177,27 +186,6 @@ If you wish to supply more than 100 files, consider providing them as an archive
       },
     },
     "types": {
-      "BaseRequest": {
-        "docs": undefined,
-        "properties": {
-          "callback_url": {
-            "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
-            "type": "optional<string>",
-          },
-          "models": "optional<Models>",
-          "notify": {
-            "docs": "Whether to send an email notification to the user upon job failure.",
-            "type": "optional<boolean>",
-          },
-          "transcription": "optional<Transcription>",
-          "urls": {
-            "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
-
-If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-            "type": "optional<list<string>>",
-          },
-        },
-      },
       "Bcp47Tag": {
         "enum": [
           "zh",

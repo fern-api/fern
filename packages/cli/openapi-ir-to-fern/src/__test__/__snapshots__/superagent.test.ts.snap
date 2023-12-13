@@ -20,6 +20,22 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/agents",
+            "request": {
+              "body": {
+                "properties": {
+                  "documentId": "optional<string>",
+                  "has_memory": "optional<boolean>",
+                  "llm": "optional<map<string, unknown>>",
+                  "name": "string",
+                  "promptId": "optional<string>",
+                  "toolId": "optional<string>",
+                  "type": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "Agent",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -91,6 +107,9 @@ exports[`open api parser superagent simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": "map<string, unknown>",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -110,6 +129,17 @@ exports[`open api parser superagent simple 1`] = `
                 "docs": undefined,
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "has_streaming": "optional<boolean>",
+                  "input": "map<string, unknown>",
+                },
+              },
+              "headers": undefined,
+              "name": "PredictAgent",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
@@ -136,6 +166,16 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/api-tokens",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "ApiToken",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -212,6 +252,17 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/auth/sign-in",
+            "request": {
+              "body": {
+                "properties": {
+                  "email": "string",
+                  "password": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "SignIn",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -226,6 +277,19 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/auth/sign-up",
+            "request": {
+              "body": {
+                "properties": {
+                  "email": "string",
+                  "metadata": "optional<map<string, unknown>>",
+                  "name": "optional<string>",
+                  "password": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "SignUp",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -251,6 +315,22 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/documents",
+            "request": {
+              "body": {
+                "properties": {
+                  "authorization": "optional<map<string, unknown>>",
+                  "from_page": "optional<integer>",
+                  "name": "string",
+                  "splitter": "optional<map<string, unknown>>",
+                  "to_page": "optional<integer>",
+                  "type": "string",
+                  "url": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "Document",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -327,6 +407,18 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/prompts",
+            "request": {
+              "body": {
+                "properties": {
+                  "input_variables": "list<unknown>",
+                  "name": "string",
+                  "template": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "Prompt",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -398,6 +490,9 @@ exports[`open api parser superagent simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "body": "map<string, unknown>",
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -423,6 +518,18 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "method": "POST",
             "path": "/api/v1/tools",
+            "request": {
+              "body": {
+                "properties": {
+                  "authorization": "optional<map<string, unknown>>",
+                  "name": "string",
+                  "type": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "Tool",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "Successful Response",
               "type": "unknown",
@@ -552,79 +659,10 @@ exports[`open api parser superagent simple 1`] = `
       },
     },
     "types": {
-      "Agent": {
-        "docs": undefined,
-        "properties": {
-          "documentId": "optional<string>",
-          "has_memory": "optional<boolean>",
-          "llm": "optional<map<string, unknown>>",
-          "name": "string",
-          "promptId": "optional<string>",
-          "toolId": "optional<string>",
-          "type": "string",
-        },
-      },
-      "ApiToken": {
-        "docs": undefined,
-        "properties": {
-          "description": "string",
-        },
-      },
-      "Document": {
-        "docs": undefined,
-        "properties": {
-          "authorization": "optional<map<string, unknown>>",
-          "from_page": "optional<integer>",
-          "name": "string",
-          "splitter": "optional<map<string, unknown>>",
-          "to_page": "optional<integer>",
-          "type": "string",
-          "url": "string",
-        },
-      },
       "HttpValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
-        },
-      },
-      "PredictAgent": {
-        "docs": undefined,
-        "properties": {
-          "has_streaming": "optional<boolean>",
-          "input": "map<string, unknown>",
-        },
-      },
-      "Prompt": {
-        "docs": undefined,
-        "properties": {
-          "input_variables": "list<unknown>",
-          "name": "string",
-          "template": "string",
-        },
-      },
-      "SignIn": {
-        "docs": undefined,
-        "properties": {
-          "email": "string",
-          "password": "string",
-        },
-      },
-      "SignUp": {
-        "docs": undefined,
-        "properties": {
-          "email": "string",
-          "metadata": "optional<map<string, unknown>>",
-          "name": "optional<string>",
-          "password": "string",
-        },
-      },
-      "Tool": {
-        "docs": undefined,
-        "properties": {
-          "authorization": "optional<map<string, unknown>>",
-          "name": "string",
-          "type": "string",
         },
       },
       "ValidationError": {

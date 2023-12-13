@@ -83,7 +83,76 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/totp/device",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "CreateTotpDeviceRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createTotpDeviceRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "CreateTotpDeviceRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createTotpDeviceRequestDeviceName",
+              "key": "deviceName",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createTotpDeviceRequestSkew",
+              "key": "skew",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createTotpDeviceRequestPeriod",
+              "key": "period",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status and secret properties",
@@ -230,7 +299,65 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/totp/device",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UpdateTotpDeviceNameRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "updateTotpDeviceNameRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "UpdateTotpDeviceNameRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "updateTotpDeviceNameRequestExistingDeviceName",
+              "key": "existingDeviceName",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "updateTotpDeviceNameRequestNewDeviceName",
+              "key": "newDeviceName",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -618,7 +745,50 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/totp/device/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RemoveTotpDeviceRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "removeTotpDeviceRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RemoveTotpDeviceRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "removeTotpDeviceRequestDeviceName",
+              "key": "deviceName",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -763,7 +933,63 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/totp/verify",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "VerifyTotpCodeRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpCodeRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "VerifyTotpCodeRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpCodeRequestTotp",
+              "key": "totp",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpCodeRequestAllowUnverifiedDevices",
+              "key": "allowUnverifiedDevices",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -928,7 +1154,65 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/totp/device/verify",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "VerifyTotpDeviceRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpDeviceRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "VerifyTotpDeviceRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpDeviceRequestDeviceName",
+              "key": "deviceName",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifyTotpDeviceRequestTotp",
+              "key": "totp",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -1348,7 +1632,88 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/userid/map",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserIdMappingCreateMappingRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingCreateMappingRequestSuperTokensUserId",
+              "key": "superTokensUserId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "UserIdMappingCreateMappingRequestSuperTokensUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingCreateMappingRequestExternalUserId",
+              "key": "externalUserId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingCreateMappingRequestExternalUserIdInfo",
+              "key": "externalUserIdInfo",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingCreateMappingRequestForce",
+              "key": "force",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -1459,7 +1824,22 @@ exports[`open api parser supertokens parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userIdType": {
+                "enum": "SUPERTOKENS",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -1540,7 +1920,90 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/userid/map/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserIdMappingRemoveMappingRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingRemoveMappingRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "UserIdMappingRemoveMappingRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingRemoveMappingRequestUserIdType",
+              "key": "userIdType",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserIdMappingRemoveMappingRequestUserIdType",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "type": "enum",
+                  "values": [
+                    {
+                      "description": undefined,
+                      "generatedName": "SUPERTOKENS",
+                      "nameOverride": undefined,
+                      "value": "SUPERTOKENS",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "EXTERNAL",
+                      "nameOverride": undefined,
+                      "value": "EXTERNAL",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "ANY",
+                      "nameOverride": undefined,
+                      "value": "ANY",
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingRemoveMappingRequestForce",
+              "key": "force",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -1679,7 +2142,92 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/userid/external-user-id-info",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserIdMappingUpateExternalUserIdInfoRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserIdType",
+              "key": "userIdType",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserIdType",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "type": "enum",
+                  "values": [
+                    {
+                      "description": undefined,
+                      "generatedName": "SUPERTOKENS",
+                      "nameOverride": undefined,
+                      "value": "SUPERTOKENS",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "EXTERNAL",
+                      "nameOverride": undefined,
+                      "value": "EXTERNAL",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "ANY",
+                      "nameOverride": undefined,
+                      "value": "ANY",
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userIdMappingUpateExternalUserIdInfoRequestExternalUserIdInfo",
+              "key": "externalUserIdInfo",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -1805,7 +2353,110 @@ exports[`open api parser supertokens parse open api 1`] = `
       "path": "/recipe/signinup/code/consume",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "PasswordlessTryUseCodeRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCode",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
+                    "key": "preAuthSessionId",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "preAuthSessionId",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodeLinkCode",
+                    "key": "linkCode",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodeLinkCode",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "linkCode",
+                      "type": "reference",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
+                    "key": "preAuthSessionId",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "preAuthSessionId",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdDeviceId",
+                    "key": "deviceId",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdDeviceId",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "deviceId",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
+                    "key": "userInputCode",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "userInputCode",
+                      "type": "reference",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -2083,7 +2734,149 @@ Passing the optional deviceId signifies a resend code flow.
       "path": "/recipe/signinup/code",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "PasswordlessStartSignInRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessStartSignInRequestBodyEmail",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyEmailEmail",
+                    "key": "email",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessStartSignInRequestBodyEmailEmail",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "email",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyEmailUserInputCode",
+                    "key": "userInputCode",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "generatedName": "PasswordlessStartSignInRequestBodyEmailUserInputCode",
+                        "groupName": undefined,
+                        "nameOverride": undefined,
+                        "schema": "userInputCode",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumber",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
+                    "key": "phoneNumber",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "phoneNumber",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberUserInputCode",
+                    "key": "userInputCode",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumberUserInputCode",
+                        "groupName": undefined,
+                        "nameOverride": undefined,
+                        "schema": "userInputCode",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessStartSignInRequestBodyDeviceId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyDeviceIdDeviceId",
+                    "key": "deviceId",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessStartSignInRequestBodyDeviceIdDeviceId",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "deviceId",
+                      "type": "reference",
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessStartSignInRequestBodyDeviceIdUserInputCode",
+                    "key": "userInputCode",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "generatedName": "PasswordlessStartSignInRequestBodyDeviceIdUserInputCode",
+                        "groupName": undefined,
+                        "nameOverride": undefined,
+                        "schema": "userInputCode",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Starts the passwordless login process",
@@ -2322,7 +3115,18 @@ Passing the optional deviceId signifies a resend code flow.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "codeId": {
+                "primitive": {
+                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -2403,7 +3207,35 @@ Passing the optional deviceId signifies a resend code flow.
       "path": "/recipe/signinup/code/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "PasswordlessRevokeCodeRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "passwordlessRevokeCodeRequestCodeId",
+              "key": "codeId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "PasswordlessRevokeCodeRequestCodeId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "codeId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -2946,26 +3778,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PasswordlessRevokeAllCodesOfUserRequest",
       "headers": [
         {
@@ -3032,7 +3845,71 @@ Passing the optional deviceId signifies a resend code flow.
       "path": "/recipe/signinup/codes/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyEmail",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
+                    "key": "email",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "email",
+                      "type": "reference",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumber",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
+                    "key": "phoneNumber",
+                    "schema": {
+                      "description": undefined,
+                      "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "phoneNumber",
+                      "type": "reference",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -3346,7 +4223,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -3424,7 +4312,93 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/user⠀⠀",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "PasswordlessPutUserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "passwordlessPutUserRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "PasswordlessPutUserRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "passwordlessPutUserRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "generatedName": "Email",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "email",
+                      "type": "reference",
+                    },
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "description": undefined,
+                  "generatedName": "PasswordlessPutUserRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "passwordlessPutUserRequestPhoneNumber",
+              "key": "phoneNumber",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "generatedName": "PhoneNumber",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "phoneNumber",
+                      "type": "reference",
+                    },
+                  ],
+                  "allOfPropertyConflicts": [],
+                  "description": undefined,
+                  "generatedName": "PasswordlessPutUserRequestPhoneNumber",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
@@ -3570,7 +4544,58 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/signin",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailPasswordSigninRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordSigninRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordSigninRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "email",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordSigninRequestPassword",
+              "key": "password",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordSigninRequestPassword",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "password",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "signin response",
@@ -3713,7 +4738,58 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/signup",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailPasswordSignupRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordSignupRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordSignupRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "email",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordSignupRequestPassword",
+              "key": "password",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordSignupRequestPassword",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "password",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "signup response",
@@ -4024,7 +5100,32 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -4102,7 +5203,76 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/user",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailPasswordPutUserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordPutUserRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordPutUserRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordPutUserRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordPutUserRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "email",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordPutUserRequestPassword",
+              "key": "password",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordPutUserRequestPassword",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "password",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
@@ -4242,7 +5412,40 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/user/password/reset/token",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailPasswordGetPasswordResetTokenRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordGetPasswordResetTokenRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordGetPasswordResetTokenRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new reset password token for this user",
@@ -4679,7 +5882,79 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/user/password/reset",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailPasswordGetPasswordResetRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordGetPasswordResetRequestMethod",
+              "key": "method",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "type": "literal",
+                  "value": {
+                    "string": "token",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordGetPasswordResetRequestToken",
+              "key": "token",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailPasswordGetPasswordResetRequestToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailPasswordGetPasswordResetRequestNewPassword",
+              "key": "newPassword",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Reset a password using password reset token",
@@ -4927,7 +6202,29 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "hashingAlgorithm": {
+                "enum": "argon2",
+                "type": "enum",
+              },
+              "passwordHash": {
+                "primitive": {
+                  "string": "passwordHash",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -5034,7 +6331,97 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/user/passwordhash/import",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserImportRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userImportRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserImportRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "email",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userImportRequestPasswordHash",
+              "key": "passwordHash",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userImportRequestHashingAlgorithm",
+              "key": "hashingAlgorithm",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserImportRequestHashingAlgorithm",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "type": "enum",
+                  "values": [
+                    {
+                      "description": undefined,
+                      "generatedName": "argon2",
+                      "nameOverride": undefined,
+                      "value": "argon2",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "bcrypt",
+                      "nameOverride": undefined,
+                      "value": "bcrypt",
+                    },
+                    {
+                      "description": undefined,
+                      "generatedName": "firebase_scrypt",
+                      "nameOverride": undefined,
+                      "value": "firebase_scrypt",
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "import user response",
@@ -5129,7 +6516,30 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "johndoe@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "thirdPartyId": {
+                "primitive": {
+                  "string": "google",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "createdNewUser": {
@@ -5255,7 +6665,76 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "path": "/recipe/signinup",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "ThirdPartySigninupRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "thirdPartySigninupRequestThirdPartyId",
+              "key": "thirdPartyId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "ThirdPartySigninupRequestThirdPartyId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "thirdPartyId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "thirdPartySigninupRequestThirdPartyUserId",
+              "key": "thirdPartyUserId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "ThirdPartySigninupRequestThirdPartyUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "thirdPartyUserId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "thirdPartySigninupRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "ThirdPartySigninupRequestEmail",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "thirdPartyEmail",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Signin/up a user",
@@ -6364,7 +7843,19 @@ Note that there is an invisible character at the end of the path, this was to av
       "path": "/recipe/user/email/verify/token",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "EmailVerificationVerifyTokenRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "emailVerificationVerifyTokenRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new email verification token for this user",
@@ -6447,7 +7938,25 @@ Note that there is an invisible character at the end of the path, this was to av
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -6528,7 +8037,19 @@ Note that there is an invisible character at the end of the path, this was to av
       "path": "/recipe/user/email/verify/token/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "EmailVerificationVerifyTokenRemoveRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "emailVerificationVerifyTokenRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
@@ -6875,7 +8396,59 @@ Note that there is an invisible character at the end of the path, this was to av
       "path": "/recipe/user/email/verify",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "EmailVerificationVerifyRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "emailVerificationVerifyRequestMethod",
+              "key": "method",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "type": "literal",
+                  "value": {
+                    "string": "token",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "emailVerificationVerifyRequestToken",
+              "key": "token",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "EmailVerificationVerifyRequestToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify an email",
@@ -6976,7 +8549,25 @@ Note that there is an invisible character at the end of the path, this was to av
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -7057,7 +8648,19 @@ Note that there is an invisible character at the end of the path, this was to av
       "path": "/recipe/user/email/verify/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "EmailVerificationVerifyRemoveRequestBody",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "emailVerificationVerifyTokenRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
@@ -7309,7 +8912,18 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -7390,7 +9004,58 @@ e.g.:
       "path": "/recipe/user/metadata",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserMetadataUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userMetadataUpdateRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserMetadataUpdateRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userMetadataUpdateRequestMetadataUpdate",
+              "key": "metadataUpdate",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserMetadataUpdateRequestMetadataUpdate",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userMetadataUpdate",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -7467,7 +9132,18 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -7548,7 +9224,40 @@ e.g.:
       "path": "/recipe/user/metadata/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserMetadataDeleteRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userMetadataDeleteRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "UserMetadataDeleteRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -7669,7 +9378,48 @@ e.g.:
       "path": "/recipe/user/role",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "AddUserRoleRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "addUserRoleRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "AddUserRoleRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "addUserRoleRequestRole",
+              "key": "role",
+              "schema": {
+                "description": undefined,
+                "generatedName": "AddUserRoleRequestRole",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "role",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -7812,7 +9562,48 @@ e.g.:
       "path": "/recipe/user/role/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RemoveUserRoleRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "removeUserRoleRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RemoveUserRoleRequestUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "userId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "removeUserRoleRequestRole",
+              "key": "role",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RemoveUserRoleRequestRole",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "role",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -8257,7 +10048,30 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+              "role": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "createdNewRole": {
@@ -8345,7 +10159,60 @@ e.g.:
       "path": "/recipe/role",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "PutRoleRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "putRoleRequestRole",
+              "key": "role",
+              "schema": {
+                "description": undefined,
+                "generatedName": "PutRoleRequestRole",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "role",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "putRoleRequestPermissions",
+              "key": "permissions",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -8649,7 +10516,60 @@ e.g.:
       "path": "/recipe/role/permissions/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RemoveRolePermissionsRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "removeRolePermissionsRequestRole",
+              "key": "role",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RemoveRolePermissionsRequestRole",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "role",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "removeRolePermissionsRequestPermissions",
+              "key": "permissions",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -8914,7 +10834,18 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "role": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "didRoleExist": {
@@ -9002,7 +10933,35 @@ e.g.:
       "path": "/recipe/role/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RemoveRoleRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "removeRoleRequestRole",
+              "key": "role",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RemoveRoleRequestRole",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "role",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -9507,7 +11466,32 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "enableAntiCsrf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "useDynamicSigningKey": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "accessToken": {
@@ -9666,7 +11650,112 @@ e.g.:
       "path": "/recipe/session",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "CreateNewSessionRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createNewSessionRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateNewSessionRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createNewSessionRequestUserDataInJwt",
+              "key": "userDataInJWT",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateNewSessionRequestUserDataInJwt",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userDataInJWT",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createNewSessionRequestUserDataInDatabase",
+              "key": "userDataInDatabase",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateNewSessionRequestUserDataInDatabase",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userDataInDatabase",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createNewSessionRequestEnableAntiCsrf",
+              "key": "enableAntiCsrf",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateNewSessionRequestEnableAntiCsrf",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "enableAntiCsrf",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createNewSessionRequestUseDynamicSigningKey",
+              "key": "useDynamicSigningKey",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Decides if the token should be signed with a dynamic or static key, defaults to true",
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a new Session",
@@ -9792,38 +11881,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "sessionHandlesRevoked": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteSessionRequest",
       "headers": [
         {
@@ -9890,7 +11948,81 @@ e.g.:
       "path": "/recipe/session/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "DeleteSessionRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "DeleteSessionRequestBodySessionHandles",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "deleteSessionRequestBodySessionHandlesSessionHandles",
+                    "key": "sessionHandles",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "generatedName": "DeleteSessionRequestBodySessionHandlesSessionHandles",
+                        "groupName": undefined,
+                        "nameOverride": undefined,
+                        "schema": "sessionHandles",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "DeleteSessionRequestBodyUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "deleteSessionRequestBodyUserIdUserId",
+                    "key": "userId",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "generatedName": "DeleteSessionRequestBodyUserIdUserId",
+                        "groupName": undefined,
+                        "nameOverride": undefined,
+                        "schema": "userId",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Delete a session",
@@ -10029,7 +12161,112 @@ e.g.:
       "path": "/recipe/session/verify",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "VerifySessionRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "verifySessionRequestAccessToken",
+              "key": "accessToken",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "VerifySessionRequestAccessToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifySessionRequestEnableAntiCsrf",
+              "key": "enableAntiCsrf",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "VerifySessionRequestEnableAntiCsrf",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "enableAntiCsrf",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifySessionRequestDoAntiCsrfCheck",
+              "key": "doAntiCsrfCheck",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifySessionRequestCheckDatabase",
+              "key": "checkDatabase",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Decides if we always check if the session exists in the DB or just do token validation, defaults to false.",
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "verifySessionRequestAntiCsrfToken",
+              "key": "antiCsrfToken",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "VerifySessionRequestAntiCsrfToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify a session",
@@ -10219,7 +12456,66 @@ e.g.:
       "path": "/recipe/session/refresh",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RefreshSessionRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "refreshSessionRequestRefreshToken",
+              "key": "refreshToken",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RefreshSessionRequestRefreshToken",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "token",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "refreshSessionRequestEnableAntiCsrf",
+              "key": "enableAntiCsrf",
+              "schema": {
+                "description": undefined,
+                "generatedName": "RefreshSessionRequestEnableAntiCsrf",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "enableAntiCsrf",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "refreshSessionRequestAntiCsrfToken",
+              "key": "antiCsrfToken",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "RefreshSessionRequestAntiCsrfToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Refresh a session",
@@ -10685,7 +12981,58 @@ e.g.:
       "path": "/recipe/session/regenerate",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RegenerateSessionRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "regenerateSessionRequestAccessToken",
+              "key": "accessToken",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "RegenerateSessionRequestAccessToken",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "token",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "regenerateSessionRequestUserDataInJwt",
+              "key": "userDataInJWT",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "RegenerateSessionRequestUserDataInJwt",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userDataInJWT",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Regenerate user session",
@@ -11007,7 +13354,58 @@ e.g.:
       "path": "/recipe/session/data",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "PutSessionDataRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "putSessionDataRequestSessionHandle",
+              "key": "sessionHandle",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PutSessionDataRequestSessionHandle",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "handle",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "putSessionDataRequestUserDataInDatabase",
+              "key": "userDataInDatabase",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PutSessionDataRequestUserDataInDatabase",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userDataInDatabase",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Change Session Data",
@@ -11128,7 +13526,112 @@ e.g.:
       "path": "/recipe/jwt",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "CreateSignedJwtRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createSignedJwtRequestPayload",
+              "key": "payload",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateSignedJwtRequestPayload",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "createJWTPayload",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createSignedJwtRequestAlgorithm",
+              "key": "algorithm",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateSignedJwtRequestAlgorithm",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "createJWTAlgorithm",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createSignedJwtRequestJwksDomain",
+              "key": "jwksDomain",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateSignedJwtRequestJwksDomain",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "jwksDomain",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createSignedJwtRequestValidity",
+              "key": "validity",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "CreateSignedJwtRequestValidity",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "jwtValidity",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createSignedJwtRequestUseStaticSigningKey",
+              "key": "useStaticSigningKey",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Decides if the token should be signed with a dynamic or static key, defaults to true",
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a signed JWT",
@@ -11546,7 +14049,58 @@ e.g.:
       "path": "/recipe/jwt/data",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "PutJwtDataRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "putJwtDataRequestSessionHandle",
+              "key": "sessionHandle",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PutJwtDataRequestSessionHandle",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "handle",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "putJwtDataRequestUserDataInJwt",
+              "key": "userDataInJWT",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PutJwtDataRequestUserDataInJwt",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userDataInJWT",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Change JWT Data for a session",
@@ -11669,7 +14223,62 @@ e.g.:
       "path": "/recipe/dashboard/user",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "CreateDashboardUserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createDashboardUserRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "createDashboardUserRequestPassword",
+              "key": "password",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -11916,7 +14525,165 @@ e.g.:
       "path": "/recipe/dashboard/user",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "UpdateDashboardUserRequestBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "UpdateDashboardUserRequestBodyEmail",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyEmailEmail",
+                    "key": "email",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyEmailNewPassword",
+                    "key": "newPassword",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyEmailNewEmail",
+                    "key": "newEmail",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "UpdateDashboardUserRequestBodyUserId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyUserIdUserId",
+                    "key": "userId",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyUserIdNewPassword",
+                    "key": "newPassword",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "updateDashboardUserRequestBodyUserIdNewEmail",
+                    "key": "newEmail",
+                    "schema": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -12672,7 +15439,42 @@ e.g.:
       "path": "/recipe/dashboard/session/verify",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "VerifyDashboardUserSessionRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "verifyDashboardUserSessionRequestSessionId",
+              "key": "sessionId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -13000,7 +15802,62 @@ e.g.:
       "path": "/recipe/dashboard/signin",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "SignInDashboardUserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "signInDashboardUserRequestEmail",
+              "key": "email",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "signInDashboardUserRequestPassword",
+              "key": "password",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
@@ -14888,7 +17745,18 @@ e.g.:
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "status": {
@@ -14950,7 +17818,40 @@ e.g.:
       "path": "/user/remove",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "DeleteUserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "deleteUserRequestUserId",
+              "key": "userId",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "DeleteUserRequestUserId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "userId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns OK if the operation succeeded (even if the user didn't exist before the call)",
@@ -15498,7 +18399,42 @@ e.g.:
       "path": "/ee/license",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "SetLicenseRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "setLicenseRequestLicenseKey",
+              "key": "licenseKey",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
@@ -15724,42 +18660,50 @@ e.g.:
   },
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
-    "statusOK",
     "userId",
-    "passwordlessUser",
+    "statusOK",
     "preAuthSessionId",
-    "codeId",
+    "linkCode",
     "deviceId",
     "userInputCode",
-    "linkCode",
+    "passwordlessUser",
+    "email",
+    "phoneNumber",
+    "codeId",
     "timeCreated",
     "codeLifetime",
-    "phoneNumber",
-    "email",
+    "password",
     "user",
     "token",
     "paginationToken",
-    "thirdPartyUser",
     "thirdPartyId",
     "thirdPartyUserId",
+    "thirdPartyEmail",
+    "thirdPartyUser",
     "isVerified",
     "userMetadata",
+    "userMetadataUpdate",
     "role",
     "handle",
     "userDataInDatabase",
     "userDataInJWT",
     "expiry",
+    "enableAntiCsrf",
     "session",
     "cookieInfo",
     "sessionHandles",
     "tryRefreshTokenResponse",
     "message",
     "tokenTheftResponse",
+    "createJWTPayload",
+    "createJWTAlgorithm",
+    "jwksDomain",
+    "jwtValidity",
     "jwk",
     "helloResponse",
     "timeJoined",
-    "createJWTAlgorithm",
     "unauthorisedResponse",
+    "emailVerificationVerifyTokenRequest",
   ],
   "schemas": {
     "codeId": {

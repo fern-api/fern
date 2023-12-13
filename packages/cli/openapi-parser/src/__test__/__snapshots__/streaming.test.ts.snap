@@ -19,7 +19,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v1/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserStreamRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userStreamRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userStreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -49,7 +98,18 @@ exports[`open api parser streaming parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {},
             "type": "object",
@@ -64,7 +124,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v1/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userRequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -98,7 +207,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v2/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserV2StreamRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV2StreamRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -128,7 +286,18 @@ exports[`open api parser streaming parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "streamed": {
@@ -151,7 +320,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v2/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserV2Request",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV2RequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV2RequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -185,7 +403,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v3/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserV3StreamRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV3StreamRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3StreamRequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -274,7 +541,18 @@ exports[`open api parser streaming parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {},
             "type": "object",
@@ -289,7 +567,56 @@ exports[`open api parser streaming parse open api 1`] = `
       "path": "/v3/users",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserV3Request",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userV3RequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "userV3RequestStream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "",

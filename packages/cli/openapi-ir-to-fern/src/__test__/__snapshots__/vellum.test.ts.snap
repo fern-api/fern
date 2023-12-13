@@ -50,6 +50,46 @@ Used to retrieve a deployment given its ID or name.
 Creates a new document index.",
             "method": "POST",
             "path": "/v1/document-indexes",
+            "request": {
+              "body": {
+                "properties": {
+                  "copy_documents_from_index_id": {
+                    "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
+                    "type": "optional<string>",
+                  },
+                  "environment": {
+                    "docs": "The environment this document index is used in
+
+* \`DEVELOPMENT\` - Development
+* \`STAGING\` - Staging
+* \`PRODUCTION\` - Production",
+                    "type": "optional<root.EnvironmentEnum>",
+                  },
+                  "indexing_config": {
+                    "docs": "Configuration representing how documents should be indexed",
+                    "type": "map<string, unknown>",
+                  },
+                  "label": {
+                    "docs": "A human-readable label for the document index",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "A name that uniquely identifies this index within its workspace",
+                    "type": "string",
+                  },
+                  "status": {
+                    "docs": "The current status of the document index
+
+* \`ACTIVE\` - Active
+* \`ARCHIVED\` - Archived",
+                    "type": "optional<root.DocumentIndexStatus>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "DocumentIndexCreateRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "root.DocumentIndexRead",
@@ -192,6 +232,19 @@ Compiles the prompt backing the model version using the provided input values.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "input_values": {
+                    "docs": "Key/value pairs for each variable found within the model version's prompt template.",
+                    "type": "map<string, unknown>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ModelVersionCompilePromptRequestRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "root.ModelVersionCompilePromptResponse",
@@ -243,6 +296,52 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
+            "request": {
+              "body": {
+                "properties": {
+                  "label": {
+                    "docs": "A human-friendly label for corresponding entities created in Vellum.",
+                    "type": "string",
+                  },
+                  "meta": {
+                    "docs": "Optionally include additional metadata to store along with the prompt.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "model": {
+                    "docs": "The initial model to use for this prompt",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
+                    "type": "string",
+                  },
+                  "parameters": {
+                    "docs": "The initial model parameters to use for  this prompt",
+                    "type": "root.RegisterPromptModelParametersRequest",
+                  },
+                  "prompt": {
+                    "docs": "Information about how to execute the prompt template.",
+                    "type": "root.RegisterPromptPromptInfoRequest",
+                  },
+                  "provider": {
+                    "docs": "The initial LLM provider to use for this prompt
+
+* \`ANTHROPIC\` - Anthropic
+* \`COHERE\` - Cohere
+* \`GOOGLE\` - Google
+* \`HOSTED\` - Hosted
+* \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
+* \`OPENAI\` - OpenAI
+* \`PYQ\` - Pyq",
+                    "type": "root.ProviderEnum",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "RegisterPromptRequestRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "root.RegisterPromptResponse",
@@ -310,6 +409,25 @@ or overwritten with default values.",
                 "type": "string",
               },
             },
+            "request": {
+              "body": {
+                "properties": {
+                  "inputs": {
+                    "docs": "The inputs for the scenario",
+                    "type": "list<root.ScenarioInputRequest>",
+                  },
+                  "label": "optional<string>",
+                  "metric_input_params": "optional<root.SandboxMetricInputParamsRequest>",
+                  "scenario_id": {
+                    "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UpsertSandboxScenarioRequestRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "root.SandboxScenario",
@@ -376,7 +494,10 @@ or overwritten with default values.",
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "evaluation_params": {},
+                  "input_values": {},
+                },
                 "response": {
                   "body": {
                     "evaluation_params": {},
@@ -392,6 +513,31 @@ or overwritten with default values.",
                 "docs": "A UUID string identifying this test suite.",
                 "type": "string",
               },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "evaluation_params": {
+                    "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
+                    "type": "root.EvaluationParamsRequest",
+                  },
+                  "input_values": {
+                    "docs": "Key/value pairs for each input variable that the Test Suite expects.",
+                    "type": "map<string, unknown>",
+                  },
+                  "label": {
+                    "docs": "A human-friendly label for the test case.",
+                    "type": "optional<string>",
+                  },
+                  "test_case_id": {
+                    "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "TestSuiteTestCaseRequest",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "",
@@ -437,6 +583,32 @@ or overwritten with default values.",
 Executes a deployed Workflow and streams back its results.",
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
+          "request": {
+            "body": {
+              "properties": {
+                "external_id": {
+                  "docs": "Optionally include a unique identifier for tracking purposes.",
+                  "type": "optional<string>",
+                },
+                "inputs": "list<WorkflowRequestInputRequest>",
+                "release_tag": {
+                  "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+                  "type": "optional<string>",
+                },
+                "workflow_deployment_id": {
+                  "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+                  "type": "optional<string>",
+                },
+                "workflow_deployment_name": {
+                  "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "ExecuteWorkflowStreamRequest",
+            "query-parameters": undefined,
+          },
           "response-stream": {
             "docs": "",
             "type": "WorkflowStreamEvent",
@@ -461,7 +633,16 @@ Generate a completion using a previously defined deployment.
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
-              "request": undefined,
+              "request": {
+                "options": {
+                  "logprobs": "ALL",
+                },
+                "requests": [
+                  {
+                    "input_values": {},
+                  },
+                ],
+              },
               "response": {
                 "body": {
                   "results": [
@@ -477,6 +658,31 @@ Generate a completion using a previously defined deployment.
           ],
           "method": "POST",
           "path": "/v1/generate",
+          "request": {
+            "body": {
+              "properties": {
+                "deployment_id": {
+                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                  "type": "optional<string>",
+                },
+                "deployment_name": {
+                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                  "type": "optional<string>",
+                },
+                "options": {
+                  "docs": "Additional configuration that can be used to control what's included in the response.",
+                  "type": "optional<GenerateOptionsRequest>",
+                },
+                "requests": {
+                  "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                  "type": "list<GenerateRequest>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GenerateBodyRequest",
+            "query-parameters": undefined,
+          },
           "response": {
             "docs": "",
             "type": "GenerateResponse",
@@ -498,6 +704,31 @@ Generate a stream of completions using a previously defined deployment.
           ],
           "method": "POST",
           "path": "/v1/generate-stream",
+          "request": {
+            "body": {
+              "properties": {
+                "deployment_id": {
+                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                  "type": "optional<string>",
+                },
+                "deployment_name": {
+                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                  "type": "optional<string>",
+                },
+                "options": {
+                  "docs": "Additional configuration that can be used to control what's included in the response.",
+                  "type": "optional<GenerateOptionsRequest>",
+                },
+                "requests": {
+                  "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                  "type": "list<GenerateRequest>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GenerateStreamBodyRequest",
+            "query-parameters": undefined,
+          },
           "response-stream": {
             "docs": "",
             "type": "GenerateStreamResponse",
@@ -516,21 +747,33 @@ Perform a search against a document index.
             "NotFoundError",
             "InternalServerError",
           ],
-          "examples": [
-            {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
-              "request": undefined,
-              "response": {
-                "body": {
-                  "results": [],
+          "method": "POST",
+          "path": "/v1/search",
+          "request": {
+            "body": {
+              "properties": {
+                "index_id": {
+                  "docs": "The ID of the index to search against. Must provide either this or index_name.",
+                  "type": "optional<string>",
+                },
+                "index_name": {
+                  "docs": "The name of the index to search against. Must provide either this or index_id.",
+                  "type": "optional<string>",
+                },
+                "options": {
+                  "docs": "Configuration options for the search.",
+                  "type": "optional<SearchRequestOptionsRequest>",
+                },
+                "query": {
+                  "docs": "The query to search for.",
+                  "type": "string",
                 },
               },
             },
-          ],
-          "method": "POST",
-          "path": "/v1/search",
+            "headers": undefined,
+            "name": "SearchRequestBodyRequest",
+            "query-parameters": undefined,
+          },
           "response": {
             "docs": "",
             "type": "SearchResponse",
@@ -554,12 +797,35 @@ Used to submit feedback regarding the quality of previously generated completion
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
-              "request": undefined,
+              "request": {
+                "actuals": [],
+              },
               "response": undefined,
             },
           ],
           "method": "POST",
           "path": "/v1/submit-completion-actuals",
+          "request": {
+            "body": {
+              "properties": {
+                "actuals": {
+                  "docs": "Feedback regarding the quality of previously generated completions",
+                  "type": "list<SubmitCompletionActualRequest>",
+                },
+                "deployment_id": {
+                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                  "type": "optional<string>",
+                },
+                "deployment_name": {
+                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "SubmitCompletionActualsRequest",
+            "query-parameters": undefined,
+          },
           "url": "Predict",
         },
       },
@@ -727,42 +993,6 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "DocumentIndexCreateRequest": {
-        "docs": undefined,
-        "properties": {
-          "copy_documents_from_index_id": {
-            "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
-            "type": "optional<string>",
-          },
-          "environment": {
-            "docs": "The environment this document index is used in
-
-* \`DEVELOPMENT\` - Development
-* \`STAGING\` - Staging
-* \`PRODUCTION\` - Production",
-            "type": "optional<EnvironmentEnum>",
-          },
-          "indexing_config": {
-            "docs": "Configuration representing how documents should be indexed",
-            "type": "map<string, unknown>",
-          },
-          "label": {
-            "docs": "A human-readable label for the document index",
-            "type": "string",
-          },
-          "name": {
-            "docs": "A name that uniquely identifies this index within its workspace",
-            "type": "string",
-          },
-          "status": {
-            "docs": "The current status of the document index
-
-* \`ACTIVE\` - Active
-* \`ARCHIVED\` - Archived",
-            "type": "optional<DocumentIndexStatus>",
-          },
-        },
-      },
       "DocumentIndexRead": {
         "docs": undefined,
         "properties": {
@@ -867,28 +1097,6 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "ExecuteWorkflowStreamRequest": {
-        "docs": undefined,
-        "properties": {
-          "external_id": {
-            "docs": "Optionally include a unique identifier for tracking purposes.",
-            "type": "optional<string>",
-          },
-          "inputs": "list<WorkflowRequestInputRequest>",
-          "release_tag": {
-            "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-            "type": "optional<string>",
-          },
-          "workflow_deployment_id": {
-            "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-            "type": "optional<string>",
-          },
-          "workflow_deployment_name": {
-            "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "FinishReasonEnum": {
         "docs": "* \`LENGTH\` - LENGTH
 * \`STOP\` - STOP
@@ -898,27 +1106,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "STOP",
           "UNKNOWN",
         ],
-      },
-      "GenerateBodyRequest": {
-        "docs": undefined,
-        "properties": {
-          "deployment_id": {
-            "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-            "type": "optional<string>",
-          },
-          "deployment_name": {
-            "docs": "The name of the deployment. Must provide either this or deployment_id.",
-            "type": "optional<string>",
-          },
-          "options": {
-            "docs": "Additional configuration that can be used to control what's included in the response.",
-            "type": "optional<GenerateOptionsRequest>",
-          },
-          "requests": {
-            "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-            "type": "list<GenerateRequest>",
-          },
-        },
       },
       "GenerateErrorResponse": {
         "docs": undefined,
@@ -998,27 +1185,6 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "GenerateStreamBodyRequest": {
-        "docs": undefined,
-        "properties": {
-          "deployment_id": {
-            "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-            "type": "optional<string>",
-          },
-          "deployment_name": {
-            "docs": "The name of the deployment. Must provide either this or deployment_id.",
-            "type": "optional<string>",
-          },
-          "options": {
-            "docs": "Additional configuration that can be used to control what's included in the response.",
-            "type": "optional<GenerateOptionsRequest>",
-          },
-          "requests": {
-            "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-            "type": "list<GenerateRequest>",
-          },
-        },
-      },
       "GenerateStreamResponse": {
         "docs": undefined,
         "properties": {
@@ -1080,15 +1246,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "sandbox_snapshot": {
             "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
             "type": "optional<ModelVersionSandboxSnapshot>",
-          },
-        },
-      },
-      "ModelVersionCompilePromptRequestRequest": {
-        "docs": undefined,
-        "properties": {
-          "input_values": {
-            "docs": "Key/value pairs for each variable found within the model version's prompt template.",
-            "type": "map<string, unknown>",
           },
         },
       },
@@ -1418,48 +1575,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "prompt_syntax_version": "optional<integer>",
         },
       },
-      "RegisterPromptRequestRequest": {
-        "docs": undefined,
-        "properties": {
-          "label": {
-            "docs": "A human-friendly label for corresponding entities created in Vellum.",
-            "type": "string",
-          },
-          "meta": {
-            "docs": "Optionally include additional metadata to store along with the prompt.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "model": {
-            "docs": "The initial model to use for this prompt",
-            "type": "string",
-          },
-          "name": {
-            "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
-            "type": "string",
-          },
-          "parameters": {
-            "docs": "The initial model parameters to use for  this prompt",
-            "type": "RegisterPromptModelParametersRequest",
-          },
-          "prompt": {
-            "docs": "Information about how to execute the prompt template.",
-            "type": "RegisterPromptPromptInfoRequest",
-          },
-          "provider": {
-            "docs": "The initial LLM provider to use for this prompt
-
-* \`ANTHROPIC\` - Anthropic
-* \`COHERE\` - Cohere
-* \`GOOGLE\` - Google
-* \`HOSTED\` - Hosted
-* \`MOSAICML\` - MosaicML
-* \`MYSTIC\` - Mystic
-* \`OPENAI\` - OpenAI
-* \`PYQ\` - Pyq",
-            "type": "ProviderEnum",
-          },
-        },
-      },
       "RegisterPromptResponse": {
         "docs": undefined,
         "properties": {
@@ -1637,27 +1752,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "text_output_id": "optional<string>",
         },
       },
-      "SearchRequestBodyRequest": {
-        "docs": undefined,
-        "properties": {
-          "index_id": {
-            "docs": "The ID of the index to search against. Must provide either this or index_name.",
-            "type": "optional<string>",
-          },
-          "index_name": {
-            "docs": "The name of the index to search against. Must provide either this or index_id.",
-            "type": "optional<string>",
-          },
-          "options": {
-            "docs": "Configuration options for the search.",
-            "type": "optional<SearchRequestOptionsRequest>",
-          },
-          "query": {
-            "docs": "The query to search for.",
-            "type": "string",
-          },
-        },
-      },
       "SearchRequestOptionsRequest": {
         "docs": undefined,
         "properties": {
@@ -1807,23 +1901,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "detail": "string",
         },
       },
-      "SubmitCompletionActualsRequest": {
-        "docs": undefined,
-        "properties": {
-          "actuals": {
-            "docs": "Feedback regarding the quality of previously generated completions",
-            "type": "list<SubmitCompletionActualRequest>",
-          },
-          "deployment_id": {
-            "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-            "type": "optional<string>",
-          },
-          "deployment_name": {
-            "docs": "The name of the deployment. Must provide either this or deployment_id.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "TerminalNodeChatHistoryResult": {
         "docs": undefined,
         "properties": {
@@ -1897,27 +1974,6 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "TestSuiteTestCaseRequest": {
-        "docs": undefined,
-        "properties": {
-          "evaluation_params": {
-            "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-            "type": "EvaluationParamsRequest",
-          },
-          "input_values": {
-            "docs": "Key/value pairs for each input variable that the Test Suite expects.",
-            "type": "map<string, unknown>",
-          },
-          "label": {
-            "docs": "A human-friendly label for the test case.",
-            "type": "optional<string>",
-          },
-          "test_case_id": {
-            "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
-            "type": "optional<string>",
-          },
-        },
-      },
       "UploadDocumentErrorResponse": {
         "docs": undefined,
         "properties": {
@@ -1930,21 +1986,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "document_id": {
             "docs": "The ID of the newly created document.",
             "type": "string",
-          },
-        },
-      },
-      "UpsertSandboxScenarioRequestRequest": {
-        "docs": undefined,
-        "properties": {
-          "inputs": {
-            "docs": "The inputs for the scenario",
-            "type": "list<ScenarioInputRequest>",
-          },
-          "label": "optional<string>",
-          "metric_input_params": "optional<SandboxMetricInputParamsRequest>",
-          "scenario_id": {
-            "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
-            "type": "optional<string>",
           },
         },
       },

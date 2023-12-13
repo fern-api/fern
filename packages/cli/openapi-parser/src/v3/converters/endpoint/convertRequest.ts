@@ -34,7 +34,7 @@ interface ParsedApplicationJsonRequest {
 export function getApplicationJsonRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): ParsedApplicationJsonRequest | undefined {
-    for (const contentType of Object.keys(APPLICATION_JSON_CONTENT)) {
+    for (const contentType of Object.keys(requestBody.content)) {
         if (contentType.includes(APPLICATION_JSON_CONTENT) || APPLICATION_JSON_REGEX.test(contentType)) {
             const schema = getSchemaForContentType({
                 contentType,

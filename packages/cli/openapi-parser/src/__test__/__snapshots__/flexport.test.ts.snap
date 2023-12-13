@@ -22,7 +22,379 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "amendment_note": {
+                "primitive": {
+                  "string": "This is an amendment note with useful context to changes made to the booking",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "booking_id": {
+                "primitive": {
+                  "int": 12345,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "new_cargo": {
+                "properties": {
+                  "contains_hazmat": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_li_ion": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_magnets": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_non_li_ion_battery": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_other_dangerous_goods": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "lithium_batteries_packing_types": {
+                    "array": [
+                      {
+                        "enum": "packed_loose",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "marks_and_numbers": {
+                    "primitive": {
+                      "string": "Fragile",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "shipping_units": {
+                    "array": [
+                      {
+                        "properties": {
+                          "atomic_count": {
+                            "primitive": {
+                              "int": 9,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "count": {
+                            "primitive": {
+                              "int": 9,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "height": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "length": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "Cellular phones",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "unit_type": {
+                            "primitive": {
+                              "string": "pallet",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "volume": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cbm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 472.62,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "weight": {
+                            "properties": {
+                              "unit": {
+                                "enum": "kg",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 2300.4,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "width": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "volume": {
+                    "properties": {
+                      "unit": {
+                        "enum": "cbm",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "double": 472.62,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "weight": {
+                    "properties": {
+                      "unit": {
+                        "enum": "kg",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "double": 2300.4,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "new_cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_container_counts": {
+                "properties": {
+                  "forty_five_ft_hc": {
+                    "primitive": {
+                      "int": 4,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "forty_ft": {
+                    "primitive": {
+                      "int": 2,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "forty_ft_hc": {
+                    "primitive": {
+                      "int": 3,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "twenty_ft": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "new_destination_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_destination_port_loc_code": {
+                "primitive": {
+                  "string": "CNYTN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_destination_port_us_cbp_port_code": {
+                "primitive": {
+                  "string": "57078",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_name": {
+                "primitive": {
+                  "string": "Valentine's Day - 2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_origin_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_origin_port_loc_code": {
+                "primitive": {
+                  "string": "CNYTN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_origin_port_us_cbp_port_code": {
+                "primitive": {
+                  "string": "57078",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "new_product_descriptions": {
+                "array": [
+                  {
+                    "properties": {
+                      "description": {
+                        "primitive": {
+                          "string": "Wristwatches",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "description_for_export_customs": {
+                        "primitive": {
+                          "string": "手表",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "hs_code": {
+                        "primitive": {
+                          "string": "9101.01",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "new_wants_bco": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "new_wants_flexport_freight": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "new_wants_import_customs_service": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "new_wants_pickup_service": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -746,7 +1118,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/booking_amendments",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "BookingAmendmentCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateBookingAmendment",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking amendment",
@@ -1395,7 +1779,32 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "booking_id": {
+                "primitive": {
+                  "int": 4321,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "purchase_order_line_item_id": {
+                "primitive": {
+                  "int": 1234,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "units": {
+                "primitive": {
+                  "int": 234,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -1517,7 +1926,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/booking_line_items",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "BookingLineItemCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateBookingLineItem",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking line item",
@@ -4181,7 +4602,560 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "air_booking": {
+                "properties": {
+                  "incoterm": {
+                    "enum": "EXW",
+                    "type": "enum",
+                  },
+                  "origin_port_iata_code": {
+                    "primitive": {
+                      "string": "HKG",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "origin_port_icao_code": {
+                    "primitive": {
+                      "string": "VHHH",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "origin_port_loc_code": {
+                    "primitive": {
+                      "string": "HKHKG",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "product_descriptions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "description": {
+                            "primitive": {
+                              "string": "Wristwatches",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description_for_export_customs": {
+                            "primitive": {
+                              "string": "手表",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description_for_export_customs_locale": {
+                            "primitive": {
+                              "string": "zh_CN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "hs_code": {
+                            "primitive": {
+                              "string": "9101.01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "wants_delivery_service": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "wants_pickup_service": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "cargo": {
+                "properties": {
+                  "contains_hazmat": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_li_ion": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_magnets": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_non_li_ion_battery": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_other_dangerous_goods": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "lithium_batteries_packing_types": {
+                    "array": [
+                      {
+                        "enum": "packed_loose",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "marks_and_numbers": {
+                    "primitive": {
+                      "string": "Fragile",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "shipping_units": {
+                    "array": [
+                      {
+                        "properties": {
+                          "atomic_count": {
+                            "primitive": {
+                              "int": 9,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "count": {
+                            "primitive": {
+                              "int": 9,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "height": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "length": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "Cellular phones",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "unit_type": {
+                            "primitive": {
+                              "string": "pallet",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "volume": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cbm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 472.62,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "weight": {
+                            "properties": {
+                              "unit": {
+                                "enum": "kg",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 2300.4,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "width": {
+                            "properties": {
+                              "unit": {
+                                "enum": "cm",
+                                "type": "enum",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "double": 100,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "volume": {
+                    "properties": {
+                      "unit": {
+                        "enum": "cbm",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "double": 472.62,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "weight": {
+                    "properties": {
+                      "unit": {
+                        "enum": "kg",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "double": 2300.4,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "consignee_entity_ref": {
+                "primitive": {
+                  "string": "consignee_company_name_llc",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "declared_as_strategy": {
+                "enum": "yes",
+                "type": "enum",
+              },
+              "delivery_date": {
+                "primitive": {
+                  "string": "2019-07-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "destination_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "eccn_codes": {
+                "primitive": {
+                  "string": "3A001, 5A002",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "flow_direct": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "notify_party": {
+                "primitive": {
+                  "string": "John Doe, doe@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ocean_booking": {
+                "properties": {
+                  "container_counts": {
+                    "properties": {
+                      "forty_five_ft_hc": {
+                        "primitive": {
+                          "int": 4,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "forty_ft": {
+                        "primitive": {
+                          "int": 2,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "forty_ft_hc": {
+                        "primitive": {
+                          "int": 3,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "twenty_ft": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "destination_port_loc_code": {
+                    "primitive": {
+                      "string": "USLAX",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "destination_port_us_cbp_port_code": {
+                    "primitive": {
+                      "string": "2704",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "incoterm": {
+                    "enum": "EXW",
+                    "type": "enum",
+                  },
+                  "is_lcl": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "origin_port_loc_code": {
+                    "primitive": {
+                      "string": "CNYTN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "origin_port_us_cbp_port_code": {
+                    "primitive": {
+                      "string": "57078",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "product_descriptions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "description": {
+                            "primitive": {
+                              "string": "Wristwatches",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description_for_export_customs": {
+                            "primitive": {
+                              "string": "手表",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description_for_export_customs_locale": {
+                            "primitive": {
+                              "string": "zh_CN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "hs_code": {
+                            "primitive": {
+                              "string": "9101.01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "wants_delivery_service": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "wants_pickup_service": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "origin_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "shipper_entity_ref": {
+                "primitive": {
+                  "string": "shipper_company_name_ltd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "special_instructions": {
+                "primitive": {
+                  "string": "Please book 40ft reefer container.",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "trucking_booking": {
+                "properties": {
+                  "description_of_products": {
+                    "primitive": {
+                      "string": "watches",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "is_ltl": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "payment_terms": {
+                    "enum": "collect",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "wants_bco": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_export_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_flexport_freight": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_import_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -5751,7 +6725,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/bookings",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "BookingCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateBooking",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking",
@@ -7573,7 +8559,208 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "destination_address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "destination_coordinates": {
+                "properties": {
+                  "latitude": {
+                    "primitive": {
+                      "string": "76.003",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "longitude": {
+                    "primitive": {
+                      "string": "-122.092",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "distance": {
+                "properties": {
+                  "unit": {
+                    "enum": "km",
+                    "type": "enum",
+                  },
+                  "value": {
+                    "primitive": {
+                      "double": 100,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "flight_type": {
+                "enum": "freighter",
+                "type": "enum",
+              },
+              "origin_address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "origin_coordinates": {
+                "properties": {
+                  "latitude": {
+                    "primitive": {
+                      "string": "76.003",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "longitude": {
+                    "primitive": {
+                      "string": "-122.092",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "teus": {
+                "primitive": {
+                  "string": "2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "transportation_mode": {
+                "enum": "air",
+                "type": "enum",
+              },
+              "trucking_service_type": {
+                "enum": "ftl",
+                "type": "enum",
+              },
+              "weight": {
+                "properties": {
+                  "unit": {
+                    "enum": "kg",
+                    "type": "enum",
+                  },
+                  "value": {
+                    "primitive": {
+                      "double": 2300.4,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -7645,7 +8832,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/carbon_calculation",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "CarbonCalculationCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateCarbonCalculation",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
@@ -8957,7 +10156,69 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "invoice_number": {
+                "primitive": {
+                  "string": "INVOICE-04-05-2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_related_parties": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "line_items": {
+                "array": [],
+                "type": "array",
+              },
+              "proration_amount": {
+                "properties": {
+                  "amount": {
+                    "primitive": {
+                      "string": "12.34",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "currency_code": {
+                    "primitive": {
+                      "string": "USD",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "shipment_id": {
+                "primitive": {
+                  "int": 79683,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "shipment_ref": {
+                "primitive": {
+                  "string": "PO-123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -9786,7 +11047,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/commercial_invoices",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "CommercialInvoicesCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateCommercialInvoice",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created commercial invoice",
@@ -9899,7 +11172,58 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "invoice_number": {
+                "primitive": {
+                  "string": "INVOICE-04-05-2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_related_parties": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "proration_amount": {
+                "properties": {
+                  "_object": {
+                    "primitive": {
+                      "string": "/money",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "amount": {
+                    "primitive": {
+                      "string": "12.34",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "currency_code": {
+                    "primitive": {
+                      "string": "USD",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -10728,7 +12052,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/commercial_invoices",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "CommercialInvoicesUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateCommercialInvoice",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated commercial invoice",
@@ -12985,7 +14321,53 @@ we still recommend setting the Content-Type header to the value \`application/js
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "document": {
+                "primitive": {
+                  "string": "SGVsbG8sIFdvcmxkIQ==",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "document_type": {
+                "primitive": {
+                  "string": "packing_list",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "file_name": {
+                "primitive": {
+                  "string": "Flexport-Booking.pdf",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "mime_type": {
+                "primitive": {
+                  "string": "application/pdf",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "shipment_id": {
+                "primitive": {
+                  "int": 1234567,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "user_email": {
+                "primitive": {
+                  "string": "johndoe@flexport.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -13069,7 +14451,19 @@ we still recommend setting the Content-Type header to the value \`application/js
       "path": "/documents",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "DocumentsCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateDocument",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
@@ -21153,7 +22547,25 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -21346,7 +22758,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/network/companies",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkCompanyCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateCompany",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company",
@@ -21808,7 +23232,25 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Updated Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit_ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -22024,7 +23466,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkCompanyUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateCompany",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated company",
@@ -22698,7 +24152,117 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "company_id": {
+                "primitive": {
+                  "string": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "company_ref": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "mailing_address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "my-zoomit-ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "vat_numbers": {
+                "array": [
+                  {
+                    "properties": {
+                      "country_code": {
+                        "primitive": {
+                          "string": "GB",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "string": "GB 123456789",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -22881,7 +24445,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/network/company_entities",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkCompanyEntityCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateCompanyEntity",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company entity",
@@ -23328,7 +24904,103 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "mailing_address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-us",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "vat_numbers": {
+                "array": [
+                  {
+                    "properties": {
+                      "country_code": {
+                        "primitive": {
+                          "string": "GB",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "string": "GB 123456789",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -23527,7 +25199,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkCompanyEntityUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateCompanyEntity",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
@@ -24093,7 +25777,39 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "company_id": {
+                "primitive": {
+                  "string": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "email": {
+                "primitive": {
+                  "string": "john@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-5555",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -24175,7 +25891,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/network/contacts",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkContactCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateContact",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created contact",
@@ -24521,7 +26249,32 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "john_new_email@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-7777",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -24619,7 +26372,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkContactUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateContact",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated contact",
@@ -25279,7 +27044,86 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "company_id": {
+                "primitive": {
+                  "string": "xyz_123_ABC",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -25410,7 +27254,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/network/locations",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "NetworkLocationCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateLocation",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created location",
@@ -25805,7 +27661,79 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -25952,7 +27880,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "LocationUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateLocation",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
@@ -29410,7 +31350,129 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "classifications": {
+                "array": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "region": {
+                        "primitive": {
+                          "string": "US",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_properties": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "primitive": {
+                          "string": "color",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "blue",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "suppliers": {
+                "array": [
+                  {
+                    "properties": {
+                      "country_of_origin": {
+                        "primitive": {
+                          "string": "CN",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "int": 12345,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "ref": {
+                        "primitive": {
+                          "string": "FACTORY-123",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -29620,7 +31682,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/products",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "ProductCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateProduct",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
@@ -30094,7 +32168,129 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "classifications": {
+                "array": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "region": {
+                        "primitive": {
+                          "string": "US",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_properties": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "primitive": {
+                          "string": "color",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "blue",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "suppliers": {
+                "array": [
+                  {
+                    "properties": {
+                      "country_of_origin": {
+                        "primitive": {
+                          "string": "CN",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "int": 12345,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "ref": {
+                        "primitive": {
+                          "string": "FACTORY-123",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -30320,7 +32516,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "ProductUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateProduct",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated",
@@ -34065,7 +36273,487 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "destination_port": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "USFBN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "code_type": {
+                    "enum": "unlocode",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "freight_payment_terms": {
+                "enum": "freight_collect",
+                "type": "enum",
+              },
+              "incoterm": {
+                "enum": "EXW",
+                "type": "enum",
+              },
+              "issue_date": {
+                "primitive": {
+                  "string": "2019-09-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "line_items": {
+                "array": [
+                  {
+                    "properties": {
+                      "assigned_party_ref": {
+                        "primitive": {
+                          "string": "id-12321",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "cargo_ready_date": {
+                        "primitive": {
+                          "string": "2019-06-30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "destination_locations": {
+                        "array": [
+                          {
+                            "properties": {
+                              "location_ref": {
+                                "primitive": {
+                                  "string": "id-1234",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "units": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "destination_port": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "USFBN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "code_type": {
+                            "enum": "unlocode",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "hs_codes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "code": {
+                                "primitive": {
+                                  "string": "7608.20.00.00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "country_code": {
+                                "primitive": {
+                                  "string": "CA",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "incoterm": {
+                        "enum": "EXW",
+                        "type": "enum",
+                      },
+                      "item_key": {
+                        "primitive": {
+                          "string": "item_key_1",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "line_item_number": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "line_type": {
+                        "enum": "main_line",
+                        "type": "enum",
+                      },
+                      "measurements": {
+                        "array": [
+                          {
+                            "properties": {
+                              "measure_type": {
+                                "enum": "length",
+                                "type": "enum",
+                              },
+                              "unit_of_measure": {
+                                "primitive": {
+                                  "string": "EA",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "string": "1.0",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "must_arrive_date": {
+                        "primitive": {
+                          "string": "2019-09-30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "origin_location_ref": {
+                        "primitive": {
+                          "string": "id-123456",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "origin_port": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "USFBN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "code_type": {
+                            "enum": "unlocode",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "product": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "red",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "country_of_origin": {
+                            "primitive": {
+                              "string": "US",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dangerous": {
+                            "primitive": {
+                              "boolean": false,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "ean_ucc_13": {
+                            "primitive": {
+                              "string": "0123456789012",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "ean_ucc_8": {
+                            "primitive": {
+                              "string": "01234567",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "lot_number": {
+                            "primitive": {
+                              "string": "123-456",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "AC Adapter 12",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "product_category": {
+                            "primitive": {
+                              "string": "Cosmetics",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "size": {
+                            "primitive": {
+                              "string": "M",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "sku": {
+                            "primitive": {
+                              "string": "SKU-123",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "style": {
+                            "primitive": {
+                              "string": "classical",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "upc": {
+                            "primitive": {
+                              "string": "012345678912",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transportation_mode": {
+                        "enum": "air",
+                        "type": "enum",
+                      },
+                      "unit_cost": {
+                        "properties": {
+                          "amount": {
+                            "primitive": {
+                              "string": "12.34",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "currency_code": {
+                            "primitive": {
+                              "string": "USD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "unit_of_measure": {
+                        "enum": "BBL",
+                        "type": "enum",
+                      },
+                      "units": {
+                        "primitive": {
+                          "int": 100,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "memo": {
+                "primitive": {
+                  "string": "memo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "must_arrive_date": {
+                "primitive": {
+                  "string": "2019-09-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "order_class": {
+                "enum": "purchase_order",
+                "type": "enum",
+              },
+              "order_type": {
+                "primitive": {
+                  "string": "Apparel",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_location_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_port": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "USFBN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "code_type": {
+                    "enum": "unlocode",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "parties": {
+                "array": [
+                  {
+                    "properties": {
+                      "contacts": {
+                        "array": [
+                          {
+                            "properties": {
+                              "department": {
+                                "primitive": {
+                                  "string": "marketing",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "email": {
+                                "primitive": {
+                                  "string": "John.Doe@example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "fax": {
+                                "primitive": {
+                                  "string": "1 323 555 1234",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "John Doe",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "phone": {
+                                "primitive": {
+                                  "string": "767 878 8888",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "external_ref": {
+                        "primitive": {
+                          "string": "id-12344",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location_ref": {
+                        "primitive": {
+                          "string": "id-12344",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "role": {
+                        "enum": "buyer",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "priority": {
+                "enum": "high",
+                "type": "enum",
+              },
+              "status": {
+                "enum": "open",
+                "type": "enum",
+              },
+              "transportation_mode": {
+                "enum": "air",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -34824,7 +37512,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/purchase_orders",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PurchaseOrderCreateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateOrUpdatePurchaseOrder",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The created purchase order",
@@ -35811,7 +38511,487 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "destination_port": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "USFBN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "code_type": {
+                    "enum": "unlocode",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "freight_payment_terms": {
+                "enum": "freight_collect",
+                "type": "enum",
+              },
+              "incoterm": {
+                "enum": "EXW",
+                "type": "enum",
+              },
+              "issue_date": {
+                "primitive": {
+                  "string": "2019-09-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "line_items": {
+                "array": [
+                  {
+                    "properties": {
+                      "assigned_party_ref": {
+                        "primitive": {
+                          "string": "id-12321",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "cargo_ready_date": {
+                        "primitive": {
+                          "string": "2019-06-30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "destination_locations": {
+                        "array": [
+                          {
+                            "properties": {
+                              "location_ref": {
+                                "primitive": {
+                                  "string": "id-1234",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "units": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "destination_port": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "USFBN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "code_type": {
+                            "enum": "unlocode",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "hs_codes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "code": {
+                                "primitive": {
+                                  "string": "7608.20.00.00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "country_code": {
+                                "primitive": {
+                                  "string": "CA",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "incoterm": {
+                        "enum": "EXW",
+                        "type": "enum",
+                      },
+                      "item_key": {
+                        "primitive": {
+                          "string": "item_key_1",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "line_item_number": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "line_type": {
+                        "enum": "main_line",
+                        "type": "enum",
+                      },
+                      "measurements": {
+                        "array": [
+                          {
+                            "properties": {
+                              "measure_type": {
+                                "enum": "length",
+                                "type": "enum",
+                              },
+                              "unit_of_measure": {
+                                "primitive": {
+                                  "string": "EA",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "value": {
+                                "primitive": {
+                                  "string": "1.0",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "must_arrive_date": {
+                        "primitive": {
+                          "string": "2019-09-30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "origin_location_ref": {
+                        "primitive": {
+                          "string": "id-123456",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "origin_port": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "USFBN",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "code_type": {
+                            "enum": "unlocode",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "product": {
+                        "properties": {
+                          "color": {
+                            "primitive": {
+                              "string": "red",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "country_of_origin": {
+                            "primitive": {
+                              "string": "US",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "dangerous": {
+                            "primitive": {
+                              "boolean": false,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "ean_ucc_13": {
+                            "primitive": {
+                              "string": "0123456789012",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "ean_ucc_8": {
+                            "primitive": {
+                              "string": "01234567",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "lot_number": {
+                            "primitive": {
+                              "string": "123-456",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "AC Adapter 12",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "product_category": {
+                            "primitive": {
+                              "string": "Cosmetics",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "size": {
+                            "primitive": {
+                              "string": "M",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "sku": {
+                            "primitive": {
+                              "string": "SKU-123",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "style": {
+                            "primitive": {
+                              "string": "classical",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "upc": {
+                            "primitive": {
+                              "string": "012345678912",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transportation_mode": {
+                        "enum": "air",
+                        "type": "enum",
+                      },
+                      "unit_cost": {
+                        "properties": {
+                          "amount": {
+                            "primitive": {
+                              "string": "12.34",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "currency_code": {
+                            "primitive": {
+                              "string": "USD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "unit_of_measure": {
+                        "enum": "BBL",
+                        "type": "enum",
+                      },
+                      "units": {
+                        "primitive": {
+                          "int": 100,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "memo": {
+                "primitive": {
+                  "string": "memo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "must_arrive_date": {
+                "primitive": {
+                  "string": "2019-09-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "order_class": {
+                "enum": "purchase_order",
+                "type": "enum",
+              },
+              "order_type": {
+                "primitive": {
+                  "string": "Apparel",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_location_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_port": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "USFBN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "code_type": {
+                    "enum": "unlocode",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "parties": {
+                "array": [
+                  {
+                    "properties": {
+                      "contacts": {
+                        "array": [
+                          {
+                            "properties": {
+                              "department": {
+                                "primitive": {
+                                  "string": "marketing",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "email": {
+                                "primitive": {
+                                  "string": "John.Doe@example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "fax": {
+                                "primitive": {
+                                  "string": "1 323 555 1234",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "John Doe",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "phone": {
+                                "primitive": {
+                                  "string": "767 878 8888",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "external_ref": {
+                        "primitive": {
+                          "string": "id-12344",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location_ref": {
+                        "primitive": {
+                          "string": "id-12344",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "role": {
+                        "enum": "buyer",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "priority": {
+                "enum": "high",
+                "type": "enum",
+              },
+              "status": {
+                "enum": "open",
+                "type": "enum",
+              },
+              "transportation_mode": {
+                "enum": "air",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -36584,7 +39764,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "PurchaseOrderUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "CreateOrUpdatePurchaseOrder",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The update purchase order",
@@ -42838,7 +46030,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           ],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -44413,7 +47608,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       ],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "ShipmentUpdateRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schema": "UpdateShipment",
+          "type": "reference",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated shipment",
@@ -44526,7 +47733,23 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "shipment_ids": {
+                "array": [
+                  {
+                    "primitive": {
+                      "int": 123,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "_object": {
@@ -44606,7 +47829,45 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "path": "/shipments_shareable",
       "pathParameters": [],
       "queryParameters": [],
-      "request": undefined,
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "ShipmentsShareableRequest",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "shipmentsShareableRequestShipmentIds",
+              "key": "shipment_ids",
+              "schema": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "A list (length < 10) of the unique id for the shipment to be retrieved.",
+                  "groupName": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": "The unique id for the shipment to be retrieved.",
+                    "groupName": undefined,
+                    "schema": {
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments shareable status url",
@@ -44946,6 +48207,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
     "CreateLineItemMeasurement",
     "CreateParty",
     "CreateLineItem",
+    "CreateOrUpdatePurchaseOrder",
   ],
   "schemas": {
     "AdditionalDates": {
