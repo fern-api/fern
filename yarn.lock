@@ -4085,7 +4085,7 @@ __metadata:
     eslint-plugin-deprecation: ^2.0.0
     eslint-plugin-jest: ^26.5.3
     execa: ^6.1.0
-    husky: ^8.0.1
+    husky: ^8.0.3
     jest: ^29.7.0
     js-yaml: ^4.1.0
     lint-staged: ^12.4.1
@@ -4518,12 +4518,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "husky@npm:8.0.1"
+"husky@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "husky@npm:8.0.3"
   bin:
     husky: lib/bin.js
-  checksum: 943a73a13d0201318fd30e83d299bb81d866bd245b69e6277804c3b462638dc1921694cb94c2b8c920a4a187060f7d6058d3365152865406352e934c5fff70dc
+  checksum: 837bc7e4413e58c1f2946d38fb050f5d7324c6f16b0fd66411ffce5703b294bd21429e8ba58711cd331951ee86ed529c5be4f76805959ff668a337dbfa82a1b0
   languageName: node
   linkType: hard
 
