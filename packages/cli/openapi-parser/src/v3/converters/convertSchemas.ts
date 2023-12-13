@@ -160,7 +160,6 @@ export function convertSchemaObject(
     }
 
     // List of types that is undiscriminated union
-    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
     if (isListOfStrings(schema.type) && schema.type.length > 1) {
         const wrapVariantAsNullable = schema.type.includes("null");
         const subtypes: OpenAPIV3.SchemaObject[] = schema.type
