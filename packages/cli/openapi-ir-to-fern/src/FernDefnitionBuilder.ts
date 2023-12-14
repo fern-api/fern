@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
@@ -156,7 +156,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.imports == null) {
             fernFile.imports = {};
         }
-        fernFile.imports[importPrefix] = fileToImport;
+        fernFile.imports[importPrefix] = relative(
+            dirname(AbsoluteFilePath.of(`/${file}`)),
+            AbsoluteFilePath.of(`/${fileToImport}`)
+        );
         return importPrefix;
     }
 
