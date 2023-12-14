@@ -31,6 +31,10 @@ interface TestFailure {
     fixture: string;
 }
 
+interface RunningScriptConfig extends ScriptConfig {
+    containerId: string;
+}
+
 export async function testWorkspaceFixtures({
     workspace,
     irVersion,
@@ -55,6 +59,50 @@ export async function testWorkspaceFixtures({
     const lock = new Semaphore(numDockers);
 
     const testCases = [];
+    const runningScripts: RunningScriptConfig[] = [];
+    const taskContext = taskContextFactory.create(
+        `${workspace.workspaceName} script runner`
+    );
+    for (const script of scripts ?? []) {
+        const scriptFile = await tmp.file();
+        await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
+
+        // Start script runner
+        const startSeedCommand = await loggingExeca(
+            taskContext.logger,
+            "docker",
+            [
+                "run",
+                "-dit",
+                script.docker,
+            ]
+        );
+        if (startSeedCommand.failed) {
+            taskContext.logger.error(`Could not run script docker, container ID: ${script.docker}`);
+            taskContext.logger.error(startSeedCommand.stdout);
+            taskContext.logger.error(startSeedCommand.stderr);
+        }
+
+        // Add scripts to container
+        const copyCommand = await loggingExeca(
+            taskContext.logger,
+            "docker",
+            [
+                "cp",
+                scriptFile.path,
+                `${startSeedCommand.stdout}:/generated`
+            ],
+            {
+                doNotPipeOutput: true
+            }
+        );
+        if (copyCommand.failed) {
+            taskContext.logger.error(`Could not copy script to docker, container ID: ${script.docker}`);
+            taskContext.logger.error(copyCommand.stdout);
+            taskContext.logger.error(copyCommand.stderr);
+        }
+        runningScripts.push({...script, containerId: startSeedCommand.stdout});
+    }
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
         const absolutePathToWorkspace = AbsoluteFilePath.of(
@@ -71,7 +119,7 @@ export async function testWorkspaceFixtures({
                         language,
                         fixture,
                         docker,
-                        scripts,
+                        scripts: runningScripts,
                         customConfig: fixtureConfigInstance.customConfig,
                         taskContext: taskContextFactory.create(
                             `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
@@ -95,7 +143,7 @@ export async function testWorkspaceFixtures({
                     language,
                     fixture,
                     docker,
-                    scripts,
+                    scripts: runningScripts,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
@@ -138,7 +186,7 @@ export async function acquireLocksAndRunTest({
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
-    scripts: ScriptConfig[] | undefined;
+    scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -184,7 +232,7 @@ async function testWithWriteToDisk({
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
-    scripts: ScriptConfig[] | undefined;
+    scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -228,20 +276,37 @@ async function testWithWriteToDisk({
             fixtureName: fixture
         });
         for (const script of scripts ?? []) {
-            const scriptFile = await tmp.file();
-            await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
-            taskContext.logger.info(`Running script ${scriptFile.path}`);
+            taskContext.logger.info(`Running script on ${fixture}`);
+
+            // Add generated files to run scripts over
+            const copyCommand = await loggingExeca(
+                taskContext.logger,
+                "docker",
+                [
+                    "cp",
+                    outputDir,
+                    `${script.containerId}:/${fixture}/generated`
+                ],
+                {
+                    doNotPipeOutput: true
+                }
+            );
+            if (copyCommand.failed) {
+                taskContext.logger.error("Failed to run copy of scripts. See ouptut below");
+                taskContext.logger.error(copyCommand.stdout);
+                taskContext.logger.error(copyCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
+            
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
                 [
-                    "run",
-                    "-v",
-                    `${outputDir}:/generated`,
-                    "-v",
-                    `${scriptFile.path}:/test.sh`,
+                    "exec",
                     script.docker,
                     "/bin/sh",
+                    `cd /${fixture}/generated`,
+                    "&&",
                     "/test.sh"
                 ],
                 {
