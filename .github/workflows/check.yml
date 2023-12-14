@@ -48,9 +48,6 @@ jobs:
 
       - uses: actions/setup-node@v3
 
-      - name: Build seed docker for test
-        run: docker build . -f docker/seed/Dockerfile -t fernapi/python-seed
-
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli@0.15.16
 
