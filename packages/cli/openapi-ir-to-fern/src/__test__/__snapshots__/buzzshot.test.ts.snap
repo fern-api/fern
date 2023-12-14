@@ -37,6 +37,7 @@ exports[`open api parser buzzshot simple 1`] = `
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -72,26 +73,31 @@ exports[`open api parser buzzshot simple 1`] = `
                 "after": {
                   "allow-multiple": undefined,
                   "docs": "After",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "before": {
                   "allow-multiple": undefined,
                   "docs": "Before",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "complete": {
                   "allow-multiple": undefined,
                   "docs": "complete",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "date": {
                   "allow-multiple": undefined,
                   "docs": "Date",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -127,16 +133,19 @@ exports[`open api parser buzzshot simple 1`] = `
                 "complete": {
                   "allow-multiple": undefined,
                   "docs": "complete",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "is_event": {
                   "allow-multiple": undefined,
                   "docs": "is_event",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -172,6 +181,7 @@ exports[`open api parser buzzshot simple 1`] = `
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -207,6 +217,7 @@ exports[`open api parser buzzshot simple 1`] = `
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -242,6 +253,7 @@ exports[`open api parser buzzshot simple 1`] = `
                 "page": {
                   "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -284,21 +296,25 @@ exports[`open api parser buzzshot simple 1`] = `
                 "after": {
                   "allow-multiple": undefined,
                   "docs": "After",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "before": {
                   "allow-multiple": undefined,
                   "docs": "Before",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "complete": {
                   "allow-multiple": undefined,
                   "docs": "complete",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "date": {
                   "allow-multiple": undefined,
                   "docs": "Date",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -325,11 +341,13 @@ exports[`open api parser buzzshot simple 1`] = `
                 "complete": {
                   "allow-multiple": undefined,
                   "docs": "complete",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "is_event": {
                   "allow-multiple": undefined,
                   "docs": "is_event",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
               },

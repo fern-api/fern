@@ -113,31 +113,37 @@ exports[`open api parser hume simple 1`] = `
               "direction": {
                 "allow-multiple": undefined,
                 "docs": "The sort direction.",
+                "name": undefined,
                 "type": "optional<Direction>",
               },
               "limit": {
                 "allow-multiple": undefined,
                 "docs": "The maximum number of jobs to include in the response.",
+                "name": undefined,
                 "type": "optional<integer>",
               },
               "sort_by": {
                 "allow-multiple": undefined,
                 "docs": "The job timestamp to sort by.",
+                "name": undefined,
                 "type": "optional<SortBy>",
               },
               "status": {
                 "allow-multiple": true,
                 "docs": "Include only jobs with these statuses.",
+                "name": undefined,
                 "type": "optional<Status>",
               },
               "timestamp_ms": {
                 "allow-multiple": undefined,
                 "docs": "Defaults to the current date and time. See \`when\`.",
+                "name": undefined,
                 "type": "optional<integer>",
               },
               "when": {
                 "allow-multiple": undefined,
                 "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
+                "name": undefined,
                 "type": "optional<When>",
               },
             },

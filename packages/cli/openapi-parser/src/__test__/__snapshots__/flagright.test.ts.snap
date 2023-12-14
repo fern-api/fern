@@ -46,6 +46,7 @@ Here are some of the most used payload fields explained (you can find the full p
         {
           "description": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
           "name": "validateOriginUserId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -65,6 +66,7 @@ Here are some of the most used payload fields explained (you can find the full p
         {
           "description": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
           "name": "validateDestinationUserId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

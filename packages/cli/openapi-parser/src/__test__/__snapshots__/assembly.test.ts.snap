@@ -82,6 +82,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Maximum amount of transcripts to retrieve",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -104,6 +105,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Filter by transcript status",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -151,6 +153,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Only get transcripts created on this date",
           "name": "created_on",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -175,6 +178,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Get transcripts that were created before this transcript ID",
           "name": "before_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -199,6 +203,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Get transcripts that were created after this transcript ID",
           "name": "after_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -223,6 +228,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Only get throttled transcripts, overrides the status filter",
           "name": "throttled_only",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -507,6 +513,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "The maximum number of characters per caption",
           "name": "chars_per_caption",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -712,6 +719,7 @@ exports[`open api parser assembly parse open api 1`] = `
         {
           "description": "Keywords to search for",
           "name": "words",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

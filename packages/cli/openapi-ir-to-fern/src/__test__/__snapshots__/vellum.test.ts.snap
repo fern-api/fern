@@ -137,21 +137,25 @@ Used to list documents. Optionally filter on supported fields.
                 "document_index_id": {
                   "allow-multiple": undefined,
                   "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "Number of results to return per page.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
                   "docs": "The initial index from which to return the results.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "ordering": {
                   "allow-multiple": undefined,
                   "docs": "Which field to use when ordering the results.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
               },

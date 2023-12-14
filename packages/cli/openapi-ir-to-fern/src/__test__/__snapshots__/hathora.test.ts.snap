@@ -545,11 +545,13 @@ exports[`open api parser hathora simple 1`] = `
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },
@@ -590,11 +592,13 @@ exports[`open api parser hathora simple 1`] = `
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },
@@ -649,11 +653,13 @@ exports[`open api parser hathora simple 1`] = `
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },
@@ -712,6 +718,7 @@ exports[`open api parser hathora simple 1`] = `
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.RoomId>",
                 },
               },
@@ -758,6 +765,7 @@ exports[`open api parser hathora simple 1`] = `
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.RoomId>",
                 },
               },
@@ -804,6 +812,7 @@ exports[`open api parser hathora simple 1`] = `
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.RoomId>",
                 },
               },
@@ -850,6 +859,7 @@ exports[`open api parser hathora simple 1`] = `
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.RoomId>",
                 },
               },
@@ -914,6 +924,7 @@ exports[`open api parser hathora simple 1`] = `
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },
@@ -994,16 +1005,19 @@ exports[`open api parser hathora simple 1`] = `
                 "follow": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.TailLines>",
                 },
               },
@@ -1034,11 +1048,13 @@ exports[`open api parser hathora simple 1`] = `
                 "follow": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.TailLines>",
                 },
               },
@@ -1069,11 +1085,13 @@ exports[`open api parser hathora simple 1`] = `
                 "follow": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.TailLines>",
                 },
               },
@@ -1135,21 +1153,25 @@ exports[`open api parser hathora simple 1`] = `
                 "end": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "metrics": {
                   "allow-multiple": true,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.MetricName>",
                 },
                 "start": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "step": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -1228,6 +1250,7 @@ exports[`open api parser hathora simple 1`] = `
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },
@@ -1272,6 +1295,7 @@ exports[`open api parser hathora simple 1`] = `
                 "region": {
                   "allow-multiple": undefined,
                   "docs": undefined,
+                  "name": undefined,
                   "type": "optional<root.Region>",
                 },
               },

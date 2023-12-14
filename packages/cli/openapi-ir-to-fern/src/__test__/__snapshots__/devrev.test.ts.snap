@@ -33,6 +33,7 @@ exports[`open api parser devrev simple 1`] = `
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The ID of the artifact to get the URL for.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -165,6 +166,7 @@ connections can not be deleted using this method.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "ID of the authentication connection.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -410,6 +412,7 @@ given Dev organization.
                   "allow-multiple": undefined,
                   "docs": "The unique identifier of the token under a given Dev organization.
 ",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -458,6 +461,7 @@ token type issued for a given subject.
                   "docs": "An identifier that represents the application, which requested the
 token. Only relevant for application access tokens.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "requested_token_type": {
@@ -465,6 +469,7 @@ token. Only relevant for application access tokens.
                   "docs": "The type of the requested token. If no value is specified, the
 response will include tokens of all the types.
 ",
+                  "name": undefined,
                   "type": "optional<root.AuthTokenRequestedTokenType>",
                 },
                 "subject": {
@@ -473,6 +478,7 @@ response will include tokens of all the types.
 parameter, the ID of the authenticated entity is treated as the
 subject.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -609,17 +615,20 @@ organization.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "email": {
                   "allow-multiple": true,
                   "docs": "Filters Dev users based on email addresses.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "The maximum number of Dev users to return. The default is '50'.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -627,17 +636,20 @@ starts from the beginning.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
                 "sort_by": {
                   "allow-multiple": true,
                   "docs": "Fields to sort the Dev users by and the direction to sort them.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "state": {
                   "allow-multiple": true,
                   "docs": "Filters Dev users based on state.",
+                  "name": undefined,
                   "type": "optional<root.UserState>",
                 },
               },
@@ -765,6 +777,7 @@ used.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The ID of the part to retrieve.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -810,6 +823,7 @@ used.
                 "created_by": {
                   "allow-multiple": true,
                   "docs": "Filters for parts created by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "cursor": {
@@ -817,12 +831,14 @@ used.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "The maximum number of parts to return. The default is '50'.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -830,21 +846,25 @@ starts from the beginning.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
                 "name": {
                   "allow-multiple": true,
                   "docs": "Filters for parts of the provided name(s).",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
                   "docs": "Filters for parts owned by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type": {
                   "allow-multiple": true,
                   "docs": "Filters for parts of the provided type(s).",
+                  "name": undefined,
                   "type": "optional<root.PartType>",
                 },
               },
@@ -1008,6 +1028,7 @@ records.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The ID of the required Rev organization.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -1055,12 +1076,14 @@ to access.
                 "created_by": {
                   "allow-multiple": true,
                   "docs": "Filters by creator.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_date.after": {
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
+                  "name": undefined,
                   "type": "optional<datetime>",
                 },
                 "created_date.before": {
@@ -1068,6 +1091,7 @@ to access.
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
+                  "name": undefined,
                   "type": "optional<datetime>",
                 },
                 "cursor": {
@@ -1075,17 +1099,20 @@ to access.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "external_ref": {
                   "allow-multiple": true,
                   "docs": "List of external refs to filter Rev organizations for.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "The maximum number of Rev organizations to be retrieved per page.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -1093,12 +1120,14 @@ starts from the beginning.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
                 "modified_date.after": {
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
+                  "name": undefined,
                   "type": "optional<datetime>",
                 },
                 "modified_date.before": {
@@ -1106,6 +1135,7 @@ used.
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
+                  "name": undefined,
                   "type": "optional<datetime>",
                 },
                 "sort_by": {
@@ -1113,6 +1143,7 @@ used.
                   "docs": "Fields to sort the Rev organizations by and the direction to sort
 them.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1300,6 +1331,7 @@ permitted.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The requested tag's ID.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -1345,11 +1377,13 @@ permitted.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "The maximum number of tags to return. The default is '50'.",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -1357,6 +1391,7 @@ starts from the beginning.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
               },
@@ -1463,6 +1498,7 @@ tags.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The ID of the timeline entry to get.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -1510,6 +1546,7 @@ tags.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
@@ -1517,6 +1554,7 @@ starts from the beginning.
                   "docs": "The maximum number of entries to return. If not set, then this
 defaults to \`50\`.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -1524,11 +1562,13 @@ defaults to \`50\`.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
                 "object": {
                   "allow-multiple": undefined,
                   "docs": "The ID of the object to list timeline entries for.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -1680,6 +1720,7 @@ response.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "ID for the webhook.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -1887,11 +1928,13 @@ won't receive any object events until successfully verified.
                 "applies_to_part": {
                   "allow-multiple": true,
                   "docs": "Filters for work belonging to any of the provided parts.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_by": {
                   "allow-multiple": true,
                   "docs": "Filters for work created by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "first": {
@@ -1899,27 +1942,32 @@ won't receive any object events until successfully verified.
                   "docs": "The number of work items to return. The default is '50', the maximum
 is '5000'.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "issue.priority": {
                   "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided priorities.",
+                  "name": undefined,
                   "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
                   "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided Rev organizations.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
                   "docs": "Filters for work owned by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "stage.name": {
                   "allow-multiple": true,
                   "docs": "Filters for records in the provided stage(s).",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ticket.rev_org": {
@@ -1927,16 +1975,19 @@ is '5000'.
                   "docs": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ticket.severity": {
                   "allow-multiple": true,
                   "docs": "Filters for tickets with any of the provided severities.",
+                  "name": undefined,
                   "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
                   "allow-multiple": true,
                   "docs": "Filters for work of the provided types.",
+                  "name": undefined,
                   "type": "optional<root.WorkType>",
                 },
               },
@@ -1966,6 +2017,7 @@ organizations.
                 "id": {
                   "allow-multiple": undefined,
                   "docs": "The work's ID.",
+                  "name": undefined,
                   "type": "string",
                 },
               },
@@ -2012,11 +2064,13 @@ organizations.
                 "applies_to_part": {
                   "allow-multiple": true,
                   "docs": "Filters for work belonging to any of the provided parts.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_by": {
                   "allow-multiple": true,
                   "docs": "Filters for work created by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "cursor": {
@@ -2024,23 +2078,27 @@ organizations.
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "issue.priority": {
                   "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided priorities.",
+                  "name": undefined,
                   "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
                   "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided Rev organizations.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
                   "docs": "The maximum number of works to return. The default is '50'.
 ",
+                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
@@ -2048,16 +2106,19 @@ starts from the beginning.
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
+                  "name": undefined,
                   "type": "optional<root.ListMode>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
                   "docs": "Filters for work owned by any of these users.",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "stage.name": {
                   "allow-multiple": true,
                   "docs": "Filters for records in the provided stage(s).",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ticket.rev_org": {
@@ -2065,16 +2126,19 @@ used.
                   "docs": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
+                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ticket.severity": {
                   "allow-multiple": true,
                   "docs": "Filters for tickets with any of the provided severities.",
+                  "name": undefined,
                   "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
                   "allow-multiple": true,
                   "docs": "Filters for work of the provided types.",
+                  "name": undefined,
                   "type": "optional<root.WorkType>",
                 },
               },

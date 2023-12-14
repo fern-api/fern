@@ -44,6 +44,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by issue trigger name",
             "groupName": undefined,
@@ -63,6 +64,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -80,6 +82,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "disabled_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date when the issue trigger was disabled",
             "groupName": undefined,
@@ -235,6 +238,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -303,6 +307,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -371,6 +376,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -388,6 +394,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -407,6 +414,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -1157,6 +1165,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "event_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Event the attempt is associated with",
             "groupName": undefined,
@@ -1203,6 +1212,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -1247,6 +1257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -1315,6 +1326,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -1332,6 +1344,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -1351,6 +1364,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -1475,6 +1489,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by bookmark IDs",
             "groupName": undefined,
@@ -1521,6 +1536,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by bookmark name",
             "groupName": undefined,
@@ -1567,6 +1583,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "webhook_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by associated connection ID",
             "groupName": undefined,
@@ -1613,6 +1630,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "event_data_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by associated event data ID",
             "groupName": undefined,
@@ -1659,6 +1677,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "label",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by label",
             "groupName": undefined,
@@ -1705,6 +1724,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "last_used_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by last used date",
             "groupName": undefined,
@@ -1860,6 +1880,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -1904,6 +1925,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -1972,6 +1994,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -1989,6 +2012,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -2008,6 +2032,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -2588,6 +2613,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by destination IDs",
             "groupName": undefined,
@@ -2634,6 +2660,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The destination name",
             "groupName": undefined,
@@ -2794,6 +2821,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include archived resources in the response",
             "groupName": undefined,
@@ -2811,6 +2839,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date the destination was archived",
             "groupName": undefined,
@@ -2966,6 +2995,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "url",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "HTTP endpoint of the destination",
             "groupName": undefined,
@@ -3012,6 +3042,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cli_path",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Path for the CLI destination",
             "groupName": undefined,
@@ -3087,6 +3118,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -3131,6 +3163,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -3199,6 +3232,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -3216,6 +3250,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -3235,6 +3270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -4109,6 +4145,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by event IDs",
             "groupName": undefined,
@@ -4155,6 +4192,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Lifecyle status of the event",
             "groupName": undefined,
@@ -4197,6 +4235,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "issue_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4243,6 +4282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "webhook_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by webhook connection IDs",
             "groupName": undefined,
@@ -4289,6 +4329,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "destination_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by destination IDs",
             "groupName": undefined,
@@ -4335,6 +4376,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "source_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by source IDs",
             "groupName": undefined,
@@ -4381,6 +4423,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "attempts",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by number of attempts",
             "groupName": undefined,
@@ -4529,6 +4572,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "response_status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by HTTP response status code",
             "groupName": undefined,
@@ -4690,6 +4734,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "successful_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`successful_at\` date using a date operator",
             "groupName": undefined,
@@ -4820,6 +4865,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`created_at\` date using a date operator",
             "groupName": undefined,
@@ -4950,6 +4996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "error_code",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4996,6 +5043,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cli_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
             "groupName": undefined,
@@ -5071,6 +5119,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cli_user_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5117,6 +5166,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "last_attempt_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`last_attempt_at\` date using a date operator",
             "groupName": undefined,
@@ -5247,6 +5297,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "event_data_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5293,6 +5344,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "headers",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data headers",
             "groupName": undefined,
@@ -5334,6 +5386,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "body",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data body",
             "groupName": undefined,
@@ -5375,6 +5428,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "parsed_query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
             "groupName": undefined,
@@ -5416,6 +5470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "bulk_retry_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5462,6 +5517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "path",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the string to match partially to the path",
             "groupName": undefined,
@@ -5481,6 +5537,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "include",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include the data object in the event model",
             "groupName": undefined,
@@ -5499,6 +5556,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -5579,6 +5637,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -5647,6 +5706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -5664,6 +5724,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -5683,6 +5744,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -5985,6 +6047,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cancelled_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was cancelled",
             "groupName": undefined,
@@ -6140,6 +6203,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "completed_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry completed",
             "groupName": undefined,
@@ -6295,6 +6359,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was created",
             "groupName": undefined,
@@ -6450,6 +6515,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by bulk retry IDs",
             "groupName": undefined,
@@ -6496,6 +6562,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter for events to be included in the bulk retry, use query parameters of [Event](#events)",
             "groupName": undefined,
@@ -8160,6 +8227,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query_partial_match",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Allow partial filter match on query property",
             "groupName": undefined,
@@ -8177,6 +8245,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "in_progress",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Indicates if the bulk retry is currently in progress",
             "groupName": undefined,
@@ -8194,6 +8263,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -8238,6 +8308,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -8306,6 +8377,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -8323,6 +8395,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -8342,6 +8415,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -9904,6 +9978,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter properties for the events to be included in the bulk retry",
             "groupName": undefined,
@@ -11500,6 +11575,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cancelled_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was cancelled",
             "groupName": undefined,
@@ -11655,6 +11731,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "completed_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry completed",
             "groupName": undefined,
@@ -11810,6 +11887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was created",
             "groupName": undefined,
@@ -11965,6 +12043,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by bulk retry IDs",
             "groupName": undefined,
@@ -12011,6 +12090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by the bulk retry ignored event query object",
             "groupName": undefined,
@@ -12145,6 +12225,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query_partial_match",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Allow partial filter match on query property",
             "groupName": undefined,
@@ -12162,6 +12243,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "in_progress",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Indicates if the bulk retry is currently in progress",
             "groupName": undefined,
@@ -12179,6 +12261,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -12223,6 +12306,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -12291,6 +12375,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -12308,6 +12393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -12327,6 +12413,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -12586,6 +12673,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by the bulk retry ignored event query object",
             "groupName": undefined,
@@ -12887,6 +12975,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "label",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The integration label",
             "groupName": undefined,
@@ -12906,6 +12995,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "provider",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13605,6 +13695,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue IDs",
             "groupName": undefined,
@@ -13651,6 +13742,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "issue_trigger_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue trigger IDs",
             "groupName": undefined,
@@ -13697,6 +13789,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue types",
             "groupName": undefined,
@@ -13777,6 +13870,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue statuses",
             "groupName": undefined,
@@ -13869,6 +13963,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "merged_with",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Merged Issue IDs",
             "groupName": undefined,
@@ -13915,6 +14010,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "aggregation_keys",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by aggregation keys",
             "groupName": undefined,
@@ -14068,6 +14164,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by created dates",
             "groupName": undefined,
@@ -14223,6 +14320,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "first_seen_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by first seen dates",
             "groupName": undefined,
@@ -14378,6 +14476,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "last_seen_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by last seen dates",
             "groupName": undefined,
@@ -14533,6 +14632,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dismissed_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by dismissed dates",
             "groupName": undefined,
@@ -14688,6 +14788,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -14792,6 +14893,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -14860,6 +14962,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -14877,6 +14980,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -14896,6 +15000,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -14973,6 +15078,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue IDs",
             "groupName": undefined,
@@ -15019,6 +15125,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "issue_trigger_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue trigger IDs",
             "groupName": undefined,
@@ -15065,6 +15172,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue types",
             "groupName": undefined,
@@ -15145,6 +15253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Issue statuses",
             "groupName": undefined,
@@ -15237,6 +15346,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "merged_with",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by Merged Issue IDs",
             "groupName": undefined,
@@ -15283,6 +15393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "aggregation_keys",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by aggregation keys",
             "groupName": undefined,
@@ -15436,6 +15547,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by created dates",
             "groupName": undefined,
@@ -15591,6 +15703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "first_seen_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by first seen dates",
             "groupName": undefined,
@@ -15746,6 +15859,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "last_seen_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by last seen dates",
             "groupName": undefined,
@@ -15901,6 +16015,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dismissed_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by dismissed dates",
             "groupName": undefined,
@@ -16056,6 +16171,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -16160,6 +16276,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -16228,6 +16345,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -16245,6 +16363,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -16264,6 +16383,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -16568,6 +16688,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by requests IDs",
             "groupName": undefined,
@@ -16614,6 +16735,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16644,6 +16766,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "rejection_cause",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by rejection cause",
             "groupName": undefined,
@@ -16805,6 +16928,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "ignored_count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16966,6 +17090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "events_count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17127,6 +17252,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "source_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by source IDs",
             "groupName": undefined,
@@ -17173,6 +17299,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "verified",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by verification status",
             "groupName": undefined,
@@ -17190,6 +17317,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "headers",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data headers",
             "groupName": undefined,
@@ -17231,6 +17359,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "body",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data body",
             "groupName": undefined,
@@ -17272,6 +17401,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "parsed_query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
             "groupName": undefined,
@@ -17313,6 +17443,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "path",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the string to match partially to the path",
             "groupName": undefined,
@@ -17332,6 +17463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17462,6 +17594,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "ingested_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17592,6 +17725,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "bulk_retry_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17638,6 +17772,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "include",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17656,6 +17791,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -17724,6 +17860,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -17792,6 +17929,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -17809,6 +17947,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -17828,6 +17967,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -18136,6 +18276,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by event IDs",
             "groupName": undefined,
@@ -18182,6 +18323,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Lifecyle status of the event",
             "groupName": undefined,
@@ -18224,6 +18366,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "issue_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18270,6 +18413,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "webhook_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by webhook connection IDs",
             "groupName": undefined,
@@ -18316,6 +18460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "destination_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by destination IDs",
             "groupName": undefined,
@@ -18362,6 +18507,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "source_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by source IDs",
             "groupName": undefined,
@@ -18408,6 +18554,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "attempts",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by number of attempts",
             "groupName": undefined,
@@ -18556,6 +18703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "response_status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by HTTP response status code",
             "groupName": undefined,
@@ -18717,6 +18865,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "successful_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`successful_at\` date using a date operator",
             "groupName": undefined,
@@ -18847,6 +18996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`created_at\` date using a date operator",
             "groupName": undefined,
@@ -18977,6 +19127,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "error_code",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -19023,6 +19174,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cli_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by CLI IDs. \`?[any]=true\` operator for any CLI.",
             "groupName": undefined,
@@ -19098,6 +19250,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cli_user_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -19144,6 +19297,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "last_attempt_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by \`last_attempt_at\` date using a date operator",
             "groupName": undefined,
@@ -19274,6 +19428,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "event_data_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -19320,6 +19475,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "headers",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data headers",
             "groupName": undefined,
@@ -19361,6 +19517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "body",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the data body",
             "groupName": undefined,
@@ -19402,6 +19559,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "parsed_query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the JSON to match to the parsed query (JSON representation of the query)",
             "groupName": undefined,
@@ -19443,6 +19601,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "bulk_retry_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -19489,6 +19648,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "path",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "URL Encoded string of the string to match partially to the path",
             "groupName": undefined,
@@ -19508,6 +19668,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "include",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include the data object in the event model",
             "groupName": undefined,
@@ -19526,6 +19687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -19606,6 +19768,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -19674,6 +19837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -19691,6 +19855,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -19710,6 +19875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -19808,6 +19974,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by ignored events IDs",
             "groupName": undefined,
@@ -19854,6 +20021,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -19898,6 +20066,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -19966,6 +20135,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -19983,6 +20153,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -20002,6 +20173,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -20092,6 +20264,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "cancelled_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was cancelled",
             "groupName": undefined,
@@ -20247,6 +20420,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "completed_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry completed",
             "groupName": undefined,
@@ -20402,6 +20576,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by date the bulk retry was created",
             "groupName": undefined,
@@ -20557,6 +20732,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by bulk retry IDs",
             "groupName": undefined,
@@ -20603,6 +20779,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "in_progress",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Indicates if the bulk retry is currently in progress",
             "groupName": undefined,
@@ -20620,6 +20797,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
             "groupName": undefined,
@@ -21944,6 +22122,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query_partial_match",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Allow partial filter match on query property",
             "groupName": undefined,
@@ -21961,6 +22140,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -22005,6 +22185,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -22073,6 +22254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -22090,6 +22272,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -22109,6 +22292,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -23356,6 +23540,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
             "groupName": undefined,
@@ -24624,6 +24809,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by ruleset IDs",
             "groupName": undefined,
@@ -24670,6 +24856,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ruleset name",
             "groupName": undefined,
@@ -25052,6 +25239,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include archived resources in the response",
             "groupName": undefined,
@@ -25069,6 +25257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date the ruleset was archived",
             "groupName": undefined,
@@ -25224,6 +25413,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -25268,6 +25458,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -25336,6 +25527,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -25353,6 +25545,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -25372,6 +25565,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -25979,6 +26173,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by source IDs",
             "groupName": undefined,
@@ -26025,6 +26220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The source name",
             "groupName": undefined,
@@ -26185,6 +26381,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include archived resources in the response",
             "groupName": undefined,
@@ -26202,6 +26399,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date the source was archived",
             "groupName": undefined,
@@ -26357,6 +26555,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "integration_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by integration IDs",
             "groupName": undefined,
@@ -26422,6 +26621,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -26466,6 +26666,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -26534,6 +26735,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -26551,6 +26753,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -26570,6 +26773,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -27166,6 +27370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by transformation IDs",
             "groupName": undefined,
@@ -27212,6 +27417,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by transformation name",
             "groupName": undefined,
@@ -27268,6 +27474,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -27312,6 +27519,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -27380,6 +27588,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -27397,6 +27606,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -27416,6 +27626,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -28357,6 +28568,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "log_level",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Log level of the execution",
             "groupName": undefined,
@@ -28471,6 +28683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "webhook_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "ID of the connection the execution was run for",
             "groupName": undefined,
@@ -28517,6 +28730,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "issue_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "ID of the associated issue",
             "groupName": undefined,
@@ -28563,6 +28777,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "ISO date of the transformation's execution",
             "groupName": undefined,
@@ -28693,6 +28908,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -28737,6 +28953,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -28805,6 +29022,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -28822,6 +29040,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -28841,6 +29060,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
@@ -28980,6 +29200,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by connection IDs",
             "groupName": undefined,
@@ -29026,6 +29247,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by connection name",
             "groupName": undefined,
@@ -29186,6 +29408,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "destination_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by associated destination IDs",
             "groupName": undefined,
@@ -29232,6 +29455,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "source_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Filter by associated source IDs",
             "groupName": undefined,
@@ -29278,6 +29502,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Include archived resources in the response",
             "groupName": undefined,
@@ -29295,6 +29520,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "archived_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date the connection was archived",
             "groupName": undefined,
@@ -29450,6 +29676,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "full_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Fuzzy match the concatenated source and connection name. The source name and connection name must be separated by " -> "",
             "groupName": undefined,
@@ -29469,6 +29696,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "paused_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Date the connection was paused",
             "groupName": undefined,
@@ -29624,6 +29852,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort key(s)",
             "groupName": undefined,
@@ -29668,6 +29897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "dir",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Sort direction",
             "groupName": undefined,
@@ -29736,6 +29966,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "Result set size",
             "groupName": undefined,
@@ -29753,6 +29984,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "next",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the next set of results",
             "groupName": undefined,
@@ -29772,6 +30004,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "description": undefined,
           "name": "prev",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The ID to provide in the query to get the previous set of results",
             "groupName": undefined,
