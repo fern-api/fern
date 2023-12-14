@@ -12,7 +12,7 @@ fern check
 
 <CodeBlock title = ".github/workflows/fern-check.yml">
 ```yml 
-name: Fern API Validation Check
+name: Fern Validation Check
 
 on:
 pull_request:
@@ -20,7 +20,7 @@ branches: - main
 
 jobs:
 validate-fern-api:
-name: Validate using Fern API
+name: Validate using Fern's linter
 runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +32,7 @@ runs-on: ubuntu-latest
         with:
           node-version: '14'
 
-      - name: Install Fern API
+      - name: Install Fern
         run: npm install -g fern-api
 
       - name: Validate API with Fern
