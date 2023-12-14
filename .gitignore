@@ -4,3 +4,4 @@ dist/
 __pycache__/
 poetry.toml
 .idea/
+.dmypy.json

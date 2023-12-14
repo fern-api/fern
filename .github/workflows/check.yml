@@ -48,17 +48,14 @@ jobs:
 
       - uses: actions/setup-node@v3
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install Dependencies
-        run: poetry install
+      - name: Build seed docker for test
+        run: docker build . -f docker/seed/Dockerfile -t fernapi/python-seed
 
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli@0.15.16
 
       - name: Seed Test
-        run: seed test --workspace sdk --parallel 6
+        run: seed test --workspace sdk --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
