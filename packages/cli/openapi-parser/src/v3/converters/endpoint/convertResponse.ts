@@ -6,12 +6,10 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
+import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
 
-const APPLICATION_JSON_CONTENT = "application/json";
-const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 const APPLICATION_PDF = "application/pdf";
-const APPLICATION_VND_JSON = "application/x-ndjson";
 const AUDIO_MPEG = "audio/mpeg";
 const TEXT_PLAIN_CONTENT = "text/plain";
 
@@ -92,24 +90,21 @@ function convertResolvedResponse({
     responseBreadcrumbs: string[];
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-    const responseSchema =
-        resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
-        resolvedResponse.content?.[APPLICATION_VND_JSON]?.schema;
-    if (responseSchema != null) {
+    const jsonResponseSchema = getApplicationJsonResponse(resolvedResponse);
+    if (jsonResponseSchema != null) {
         if (isStreaming) {
             return {
                 type: "streamingJson",
                 description: resolvedResponse.description,
                 schema: convertSchemaWithExampleToSchema(
-                    convertSchema(responseSchema, false, context, responseBreadcrumbs)
+                    convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
                 )
             };
         }
         return {
             type: "json",
             description: resolvedResponse.description,
-            schema: convertSchema(responseSchema, false, context, responseBreadcrumbs)
+            schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
         };
     }
 
@@ -160,6 +155,12 @@ function convertResolvedResponse({
     return undefined;
 }
 
+function getApplicationJsonResponse(
+    response: OpenAPIV3.ResponseObject
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    return getApplicationJsonSchemaFromMedia(response.content ?? {});
+}
+
 function markErrorSchemas({
     responses,
     context
@@ -179,10 +180,7 @@ function markErrorSchemas({
         }
         errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const errorSchema =
-            resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-            resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
-            {}; // unknown response
+        const errorSchema = getApplicationJsonResponse(resolvedResponse) ?? {}; // unknown response
         context.markSchemaForStatusCode(parsedStatusCode, errorSchema);
     }
     return errorStatusCodes;

@@ -117,8 +117,12 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.float;
         case "double":
             return primitiveExample.double;
-        case "string":
+        case "string": {
+            if (primitiveExample.string.startsWith("$")) {
+                return `\\$${primitiveExample.string}`;
+            }
             return primitiveExample.string;
+        }
         case "datetime":
             return primitiveExample.datetime;
         case "date":
