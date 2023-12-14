@@ -1433,7 +1433,6 @@ exports[`open api parser deel simple 1`] = `
       },
       "types": {
         "CalculateFinalPaymentRequestCalculationType": {
-          "docs": undefined,
           "enum": [
             "CUSTOM_AMOUNT",
             "WORK_DAYS",
@@ -1677,49 +1676,12 @@ exports[`open api parser deel simple 1`] = `
             "method": "POST",
             "path": "/hris/direct-employees",
             "request": {
-              "body": "HrisDirectEmployee",
+              "body": "root.HrisDirectEmployee",
             },
             "response": {
               "docs": "Hris direct employee object that was created or edited",
               "type": "root.HrisDirectEmployeeContainer",
             },
-          },
-        },
-      },
-      "types": {
-        "HrisDirectEmployee": {
-          "docs": undefined,
-          "properties": {
-            "compensation": "root.HrisCompensation",
-            "contract": "HrisDirectEmployeeContract",
-            "employee_details": "root.HrisDirectEmployeeDetails",
-            "job_information": "HrisDirectEmployeeJobInformation",
-            "team_information": "root.HrisTeamInformation",
-            "vacation_info": "optional<HrisDirectEmployeeVacationInfo>",
-          },
-        },
-        "HrisDirectEmployeeContract": {
-          "base-properties": {},
-          "discriminant": "employment_type",
-          "docs": undefined,
-          "union": {
-            "FULL_TIME": "root.HrisContractFullTime",
-            "PART_TIME": "root.HrisContractPartTime",
-          },
-        },
-        "HrisDirectEmployeeJobInformation": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.HrisJobInformationTitleId",
-            "root.HrisJobInformationTitleName",
-          ],
-        },
-        "HrisDirectEmployeeVacationInfo": {
-          "docs": undefined,
-          "properties": {
-            "vacation_accrual_start_date": "string",
-            "vacation_yearly_policy": "double",
           },
         },
       },
@@ -3197,7 +3159,7 @@ exports[`open api parser deel simple 1`] = `
               },
             },
             "request": {
-              "body": "CreateTimeoffContainer",
+              "body": "root.CreateTimeoffContainer",
             },
             "response": {
               "docs": "Successful operation.",
@@ -3260,7 +3222,7 @@ exports[`open api parser deel simple 1`] = `
               },
             },
             "request": {
-              "body": "CreateTimeoffContainer",
+              "body": "root.CreateTimeoffContainer",
             },
             "response": {
               "docs": "Successful operation.",
@@ -3506,14 +3468,6 @@ exports[`open api parser deel simple 1`] = `
               "docs": "Successful operation.",
               "type": "root.GenericResultUpdated",
             },
-          },
-        },
-      },
-      "types": {
-        "CreateTimeoffContainer": {
-          "docs": undefined,
-          "properties": {
-            "data": "root.CreateTimeoff",
           },
         },
       },
@@ -5089,7 +5043,6 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "ContractsSortByEnum": {
-        "docs": undefined,
         "enum": [
           "contract_title",
           "client_name",
@@ -5734,15 +5687,11 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Is it a full-time contract or a part-time contract?",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "FullTime",
-            "nameOverride": undefined,
+            "name": "FullTime",
             "value": "Full-time",
           },
           {
-            "description": undefined,
-            "generatedName": "PartTime",
-            "nameOverride": undefined,
+            "name": "PartTime",
             "value": "Part-time",
           },
         ],
@@ -5849,7 +5798,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "EorCountryValidationsDefiniteContractType": {
-        "docs": undefined,
         "enum": [
           "ALLOWED_WITHOUT_LIMITATION",
           "ALLOWED_WITH_MAXIMUM_LIMITATION",
@@ -5883,7 +5831,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "EorCountryValidationsPartTimeHolidayType": {
-        "docs": undefined,
         "enum": [
           "PRORATED",
           "STANDARD",
@@ -6041,7 +5988,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "EorHolidaysRolloverType": {
-        "docs": undefined,
         "enum": [
           "EXPIRATION",
           "PAY_OUT",
@@ -6255,33 +6201,23 @@ exports[`open api parser deel simple 1`] = `
         "docs": "type of files allowed when uploading attachments",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "ApplicationPdf",
-            "nameOverride": undefined,
+            "name": "ApplicationPdf",
             "value": "application/pdf",
           },
           {
-            "description": undefined,
-            "generatedName": "TextCsv",
-            "nameOverride": undefined,
+            "name": "TextCsv",
             "value": "text/csv",
           },
           {
-            "description": undefined,
-            "generatedName": "TextPlain",
-            "nameOverride": undefined,
+            "name": "TextPlain",
             "value": "text/plain",
           },
           {
-            "description": undefined,
-            "generatedName": "ImageJpeg",
-            "nameOverride": undefined,
+            "name": "ImageJpeg",
             "value": "image/jpeg",
           },
           {
-            "description": undefined,
-            "generatedName": "ImagePng",
-            "nameOverride": undefined,
+            "name": "ImagePng",
             "value": "image/png",
           },
         ],
@@ -6765,7 +6701,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "InvoiceAdjustmentReviewToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -6780,7 +6715,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "InvoiceAdjustmentReviewsToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -7068,7 +7002,6 @@ exports[`open api parser deel simple 1`] = `
       },
       "LegalEntitySubType": "string",
       "LegalEntityType": {
-        "docs": undefined,
         "enum": [
           "individual",
           "company",
@@ -7173,7 +7106,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "MilestoneReviewToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -7201,7 +7133,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "MilestoneReviewsToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -7964,7 +7895,6 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "ProfileTypeEnum": {
-        "docs": undefined,
         "enum": [
           "client",
           "contractor",
@@ -8047,7 +7977,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "SortDirEnum": {
-        "docs": undefined,
         "enum": [
           "asc",
           "desc",
@@ -8174,7 +8103,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "TimeoffsStatusEnum": {
-        "docs": undefined,
         "enum": [
           "REQUESTED",
           "APPROVED",
@@ -8182,7 +8110,6 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "TimeoffsTypeEnum": {
-        "docs": undefined,
         "enum": [
           "VACATION",
           "SICK_LEAVE",
@@ -8258,7 +8185,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "TimesheetReviewToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -8273,7 +8199,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "TimesheetReviewsToCreateStatus": {
-        "docs": undefined,
         "enum": [
           "approved",
           "declined",
@@ -8467,9 +8392,7 @@ exports[`open api parser deel simple 1`] = `
           "biweekly",
           "semimonthly",
           {
-            "description": undefined,
-            "generatedName": "CalendarMonth",
-            "nameOverride": undefined,
+            "name": "CalendarMonth",
             "value": "calendar-month",
           },
         ],

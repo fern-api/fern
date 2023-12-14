@@ -87,10 +87,23 @@ export function wrapEnum({
     });
 }
 
+const HARDCODED_ENUM_NAMES: Record<string, string> = {
+    "<": "LESS_THAN",
+    ">": "GREATER_THAN",
+    ">=": "GREATER_THAN_OR_EQUAL_TO",
+    "<=": "LESS_THAN_OR_EQUAL_TO",
+    "!=": "NOT_EQUALS",
+    "=": "EQUAL_TO",
+    "==": "EQUAL_TO"
+};
+
 function generateEnumNameFromValue(value: string): string {
     const maybeParsedNumber = replaceStartingNumber(value);
+    const maybeHardcodedEnumName = HARDCODED_ENUM_NAMES[value];
     if (maybeParsedNumber != null) {
         return upperFirst(camelCase(maybeParsedNumber));
+    } else if (maybeHardcodedEnumName != null) {
+        return maybeHardcodedEnumName;
     } else {
         if (value.toLowerCase() === "n/a") {
             return "NOT_APPLICABLE";

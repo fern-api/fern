@@ -61577,25 +61577,25 @@ exports[`open api parser aries parse open api 1`] = `
             "values": [
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "LESS_THAN",
                 "nameOverride": "LessThan",
                 "value": "<",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "LESS_THAN_OR_EQUAL_TO",
                 "nameOverride": "LessThanOrEqualTo",
                 "value": "<=",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GREATER_THAN_OR_EQUAL_TO",
                 "nameOverride": "GreaterThanOrEqualTo",
                 "value": ">=",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GREATER_THAN",
                 "nameOverride": "GreaterThan",
                 "value": ">",
               },
@@ -62454,25 +62454,25 @@ exports[`open api parser aries parse open api 1`] = `
             "values": [
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "LESS_THAN",
                 "nameOverride": "LessThan",
                 "value": "<",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "LESS_THAN_OR_EQUAL_TO",
                 "nameOverride": "LessThanOrEqualTo",
                 "value": "<=",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GREATER_THAN_OR_EQUAL_TO",
                 "nameOverride": "GreaterThanOrEqualTo",
                 "value": ">=",
               },
               {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GREATER_THAN",
                 "nameOverride": "GreaterThan",
                 "value": ">",
               },

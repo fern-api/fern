@@ -1,10 +1,10 @@
 groups:
-  production:
+  node-sdk:
     audiences:
       - external
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.9.0-rc0
         output:
           location: npm
           package-name: '@fern-api/node-sdk'
@@ -13,6 +13,10 @@ groups:
           repository: fern-api/node-sdk
         config:
           namespaceExport: Fern
+  python-sdk:
+    audiences:
+      - external
+    generators:
       - name: fernapi/fern-python-sdk
         version: 0.6.5
         output:

@@ -201,6 +201,7 @@ navigation:
           - external
         snippets:
           python: fern-api
+          typescript: "@fern-api/node-sdk"
 
 navbar-links:
   - type: secondary

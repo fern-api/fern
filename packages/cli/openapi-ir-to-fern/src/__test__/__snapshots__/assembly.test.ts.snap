@@ -60,7 +60,7 @@ exports[`open api parser assembly simple 1`] = `
             "method": "POST",
             "path": "/lemur/v3/generate/action-items",
             "request": {
-              "body": "root.LemurBaseParameters",
+              "body": "root.LemurActionItemsParameters",
             },
             "response": {
               "docs": "LeMUR action items response",
@@ -1161,7 +1161,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       },
       "PiiPolicy": {
-        "docs": undefined,
         "enum": [
           "medical_process",
           "medical_condition",
@@ -1242,7 +1241,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       },
       "Sentiment": {
-        "docs": undefined,
         "enum": [
           "POSITIVE",
           "NEUTRAL",

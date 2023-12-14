@@ -21,6 +21,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
+import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
@@ -128,6 +129,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
+    addOpenAPIIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -400,7 +402,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "ir <path-to-output>",
-        false, // hide from help message
+        "Generate IR (Intermediate Representation)",
         (yargs) =>
             yargs
                 .positional("path-to-output", {
@@ -437,6 +439,34 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version
+            });
+        }
+    );
+}
+
+function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "openapi-ir <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await generateOpenAPIIrForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
             });
         }
     );

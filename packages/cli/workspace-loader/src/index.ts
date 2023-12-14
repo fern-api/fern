@@ -13,4 +13,7 @@ export {
     type Workspace
 } from "./types/Workspace";
 export * from "./utils";
-export { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+export {
+    convertOpenApiWorkspaceToFernWorkspace,
+    getOpenAPIIRFromOpenAPIWorkspace
+} from "./utils/convertOpenApiWorkspaceToFernWorkspace";
