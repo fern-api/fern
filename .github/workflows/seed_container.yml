@@ -10,6 +10,12 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -32,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/fastapi/Dockerfile
+          file: ./docker/seed/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           # use short SHA if modded, or just use latest if nothing changed
