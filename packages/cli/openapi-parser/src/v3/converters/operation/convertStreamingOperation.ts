@@ -8,6 +8,8 @@ import { OperationContext } from "../contexts";
 import { getApplicationJsonRequest } from "../endpoint/convertRequest";
 import { convertHttpOperation } from "./convertHttpOperation";
 
+const STREAM_SUFFIX = "stream";
+
 export interface StreamingEndpoints {
     streaming: EndpointWithExample;
     nonStreaming: EndpointWithExample | undefined;
@@ -52,7 +54,7 @@ export function convertStreamingOperation({
                         operationContext.sdkMethodName != null
                             ? {
                                   groupName: operationContext.sdkMethodName.groupName,
-                                  methodName: operationContext.sdkMethodName.methodName + "_stream" // TODO: Make this portable between naming conventions.
+                                  methodName: operationContext.sdkMethodName.methodName + "_" + STREAM_SUFFIX
                               }
                             : undefined,
                     operation: {
@@ -60,11 +62,11 @@ export function convertStreamingOperation({
                         requestBody: streamingRequestBody,
                         responses: streamingResponses
                     },
-                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"]
+                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
                 },
                 context,
                 streamingResponse: true,
-                suffix: "stream"
+                suffix: STREAM_SUFFIX
             });
 
             const nonStreamingRequestBody = getRequestBody({

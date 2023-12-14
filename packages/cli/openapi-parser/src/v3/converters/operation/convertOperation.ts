@@ -123,10 +123,9 @@ function isWebhook({ operation }: { operation: OpenAPIV3.OperationObject }): boo
 }
 
 function getSdkGroupAndMethod(operation: OpenAPIV3.OperationObject): EndpointSdkName | undefined {
-    const sdkMethodName =
-        getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME) ?? operation.operationId;
-    const sdkGroupName = getExtension<string | string[]>(operation, FernOpenAPIExtension.SDK_GROUP_NAME);
-    if (sdkGroupName != null && sdkMethodName != null) {
+    const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
+    const sdkGroupName = getExtension<string | string[]>(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
+    if (sdkMethodName != null) {
         return {
             groupName: typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName,
             methodName: sdkMethodName
