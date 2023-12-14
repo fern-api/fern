@@ -104,7 +104,7 @@ types:
         docs: Defaults to "normal"
       weight:
         type: string
-        docs: Defaults to 400. Can either be 100, 200, 300, 400, 500, 600, 700, 800, 900, or a range i.e. "100 900"
+        docs: Defaults to "100 900". Can either be 100, 200, 300, 400, 500, 600, 700, 800, 900, or a range i.e. "100 900"
       path:
         type: string
         docs: The relative path of the font file. woff/woff2 highly recommended.
