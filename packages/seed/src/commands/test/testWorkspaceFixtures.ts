@@ -274,7 +274,7 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
-            if (copyScriptCommand.failed ) {
+            if (copyScriptCommand.failed) {
                 taskContext.logger.error("Failed to copy script. See ouptut below");
                 taskContext.logger.error(copyScriptCommand.stdout);
                 taskContext.logger.error(copyScriptCommand.stderr);
