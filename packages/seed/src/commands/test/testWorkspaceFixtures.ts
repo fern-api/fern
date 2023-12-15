@@ -60,23 +60,13 @@ export async function testWorkspaceFixtures({
 
     const testCases = [];
     const runningScripts: RunningScriptConfig[] = [];
-    const taskContext = taskContextFactory.create(
-        `${workspace.workspaceName} script runner`
-    );
+    const taskContext = taskContextFactory.create(`${workspace.workspaceName} script runner`);
     for (const script of scripts ?? []) {
         const scriptFile = await tmp.file();
         await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
 
         // Start script runner
-        const startSeedCommand = await loggingExeca(
-            taskContext.logger,
-            "docker",
-            [
-                "run",
-                "-dit",
-                script.docker,
-            ]
-        );
+        const startSeedCommand = await loggingExeca(taskContext.logger, "docker", ["run", "-dit", script.docker]);
         if (startSeedCommand.failed) {
             taskContext.logger.error(`Could not run script docker, container ID: ${script.docker}`);
             taskContext.logger.error(startSeedCommand.stdout);
@@ -87,11 +77,7 @@ export async function testWorkspaceFixtures({
         const copyCommand = await loggingExeca(
             taskContext.logger,
             "docker",
-            [
-                "cp",
-                scriptFile.path,
-                `${startSeedCommand.stdout}:/generated`
-            ],
+            ["cp", scriptFile.path, `${startSeedCommand.stdout}:/generated`],
             {
                 doNotPipeOutput: true
             }
@@ -101,7 +87,7 @@ export async function testWorkspaceFixtures({
             taskContext.logger.error(copyCommand.stdout);
             taskContext.logger.error(copyCommand.stderr);
         }
-        runningScripts.push({...script, containerId: startSeedCommand.stdout});
+        runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
     }
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
@@ -282,11 +268,7 @@ async function testWithWriteToDisk({
             const copyCommand = await loggingExeca(
                 taskContext.logger,
                 "docker",
-                [
-                    "cp",
-                    outputDir,
-                    `${script.containerId}:/${fixture}/generated`
-                ],
+                ["cp", outputDir, `${script.containerId}:/${fixture}/generated`],
                 {
                     doNotPipeOutput: true
                 }
@@ -297,18 +279,11 @@ async function testWithWriteToDisk({
                 taskContext.logger.error(copyCommand.stderr);
                 return { type: "failure", reason: "Failed to run script...", fixture };
             }
-            
+
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
-                [
-                    "exec",
-                    script.docker,
-                    "/bin/sh",
-                    `cd /${fixture}/generated`,
-                    "&&",
-                    "/test.sh"
-                ],
+                ["exec", script.docker, "/bin/sh", `cd /${fixture}/generated`, "&&", "/test.sh"],
                 {
                     doNotPipeOutput: true
                 }
