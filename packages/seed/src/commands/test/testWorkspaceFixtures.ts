@@ -60,16 +60,10 @@ export async function testWorkspaceFixtures({
 
     const testCases = [];
     const runningScripts: RunningScriptConfig[] = [];
+    // Start running a docker container for each script instance
     for (const script of scripts ?? []) {
-        const scriptFile = await tmp.file();
-        await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
-
         // Start script runner
         const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/bash"]);
-        if (startSeedCommand.failed) {
-            throw Error(`start failed ${startSeedCommand.stderr}`);
-        }
-
         runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
     }
     for (const fixture of fixtures) {
@@ -257,7 +251,7 @@ async function testWithWriteToDisk({
             const scriptFile = await tmp.file();
             await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
 
-            // Add generated files to run scripts over
+            // Move scripts and generated files into the container
             const mkdirCommand = await loggingExeca(
                 taskContext.logger,
                 "docker",
@@ -266,8 +260,6 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
-
-            // Add scripts to container
             const copyScriptCommand = await loggingExeca(
                 undefined,
                 "docker",
@@ -276,10 +268,6 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
-            if (copyScriptCommand.failed) {
-                throw Error(`copy failed ${copyScriptCommand.stderr}`);
-            }
-
             const copyCommand = await loggingExeca(
                 taskContext.logger,
                 "docker",
@@ -295,7 +283,7 @@ async function testWithWriteToDisk({
                 return { type: "failure", reason: "Failed to run script...", fixture };
             }
 
-
+            // Now actually run the test script
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
