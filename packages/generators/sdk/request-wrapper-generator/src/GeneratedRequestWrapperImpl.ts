@@ -28,6 +28,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         endpoint: HttpEndpoint;
         wrapperName: string;
         packageId: PackageId;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -38,12 +39,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private endpoint: HttpEndpoint;
     private wrapperName: string;
     private packageId: PackageId;
+    protected includeSerdeLayer: boolean;
 
-    constructor({ service, endpoint, wrapperName, packageId }: GeneratedRequestWrapperImpl.Init) {
+    constructor({ service, endpoint, wrapperName, packageId, includeSerdeLayer }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.wrapperName = wrapperName;
         this.packageId = packageId;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -57,7 +60,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const property = requestInterface.addProperty({
-                name: this.getPropertyNameOfQueryParameter(queryParameter).propertyName,
+                name: `"${this.getPropertyNameOfQueryParameter(queryParameter).propertyName}"`,
                 type: getTextOfTsNode(
                     queryParameter.allowMultiple
                         ? ts.factory.createUnionTypeNode([
@@ -73,7 +76,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
             const property = requestInterface.addProperty({
-                name: this.getPropertyNameOfNonLiteralHeader(header).propertyName,
+                name: `"${this.getPropertyNameOfNonLiteralHeader(header).propertyName}"`,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             });
@@ -157,7 +160,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     ): OptionalKind<PropertySignatureStructure> {
         const type = context.type.getReferenceToType(property.valueType);
         return {
-            name: this.getInlinedRequestBodyPropertyKey(property),
+            name: `"${this.getInlinedRequestBodyPropertyKey(property)}"`,
             type: getTextOfTsNode(type.typeNodeWithoutUndefined),
             hasQuestionToken: type.isOptional,
             docs: property.docs != null ? [property.docs] : undefined,
@@ -242,7 +245,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): string {
-        return name.name.camelCase.unsafeName;
+        return this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue;
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
@@ -323,7 +326,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName: name.name.camelCase.unsafeName,
+            propertyName: this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue,
         };
     }
 
@@ -334,7 +337,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName: name.name.camelCase.unsafeName,
+            propertyName: this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue,
         };
     }
 

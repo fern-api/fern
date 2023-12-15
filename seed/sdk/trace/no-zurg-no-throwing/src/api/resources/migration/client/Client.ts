@@ -27,7 +27,7 @@ export class Migration {
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions
     ): Promise<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>> {
-        const { adminKeyHeader } = request;
+        const { "admin-key-header": adminKeyHeader } = request;
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,

@@ -234,6 +234,7 @@ export class SdkContextImpl implements SdkContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
+            includeSerdeLayer,
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

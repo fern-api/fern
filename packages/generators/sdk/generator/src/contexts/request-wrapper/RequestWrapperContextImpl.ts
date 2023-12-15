@@ -13,6 +13,7 @@ export declare namespace RequestWrapperContextImpl {
         packageResolver: PackageResolver;
         importsManager: ImportsManager;
         sourceFile: SourceFile;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -22,6 +23,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
     private sourceFile: SourceFile;
+    private includeSerdeLayer: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -29,12 +31,14 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         packageResolver,
         importsManager,
         sourceFile,
+        includeSerdeLayer,
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
         this.packageResolver = packageResolver;
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
@@ -53,6 +57,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
                 packageId,
                 endpoint,
             }),
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 

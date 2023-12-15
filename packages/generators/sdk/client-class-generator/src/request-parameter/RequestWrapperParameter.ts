@@ -56,9 +56,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             return ts.factory.createBindingElement(
                 undefined,
                 nonConflictingName !== nonBodyKey.propertyName
-                    ? ts.factory.createIdentifier(nonBodyKey.propertyName)
+                    ? ts.factory.createStringLiteral(nonBodyKey.propertyName)
                     : undefined,
-                nonConflictingName
+                nonConflictingName,
+                undefined
             );
         });
 

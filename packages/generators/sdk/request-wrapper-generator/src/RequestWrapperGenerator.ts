@@ -10,6 +10,7 @@ export declare namespace RequestWrapperGenerator {
             endpoint: HttpEndpoint;
             wrapperName: string;
             packageId: PackageId;
+            includeSerdeLayer: boolean;
         }
     }
 }
@@ -20,12 +21,14 @@ export class RequestWrapperGenerator {
         service,
         endpoint,
         wrapperName,
+        includeSerdeLayer,
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
             service,
             endpoint,
             wrapperName,
+            includeSerdeLayer,
         });
     }
 }
