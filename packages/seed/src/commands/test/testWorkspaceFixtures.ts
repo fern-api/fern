@@ -260,6 +260,12 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
+            if (mkdirCommand.failed) {
+                taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
+                taskContext.logger.error(mkdirCommand.stdout);
+                taskContext.logger.error(mkdirCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
             const copyScriptCommand = await loggingExeca(
                 undefined,
                 "docker",
@@ -268,6 +274,12 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
+            if (copyScriptCommand.failed ) {
+                taskContext.logger.error("Failed to copy script. See ouptut below");
+                taskContext.logger.error(copyScriptCommand.stdout);
+                taskContext.logger.error(copyScriptCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
             const copyCommand = await loggingExeca(
                 taskContext.logger,
                 "docker",
@@ -276,8 +288,8 @@ async function testWithWriteToDisk({
                     doNotPipeOutput: true
                 }
             );
-            if (copyScriptCommand.failed || mkdirCommand.failed || copyCommand.failed) {
-                taskContext.logger.error("Failed to run copy of scripts. See ouptut below");
+            if (copyCommand.failed) {
+                taskContext.logger.error("Failed to copy generated files. See ouptut below");
                 taskContext.logger.error(copyCommand.stdout);
                 taskContext.logger.error(copyCommand.stderr);
                 return { type: "failure", reason: "Failed to run script...", fixture };
