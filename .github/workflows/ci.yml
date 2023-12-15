@@ -1,6 +1,11 @@
 name: ci
 
 on:
+  pull_request:
+    paths-ignore:
+      - '.github/**'
+      - 'fern/docs/**'
+      - 'fern/docs.yml'
   push:
     paths-ignore:
       - '.github/**'
