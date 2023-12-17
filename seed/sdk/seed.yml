@@ -20,6 +20,7 @@ fixtures:
       outputMode: local_files
       outputFolder: local-files
 scripts:
-  - docker: gradle:8.5.0-jdk11
+  - docker: fernapi/java-seed
     commands:
+      - sdk use java 11.0.21-zulu
       - ./gradlew build
