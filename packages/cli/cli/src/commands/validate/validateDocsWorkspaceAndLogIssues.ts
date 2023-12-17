@@ -13,7 +13,7 @@ export async function validateDocsWorkspaceAndLogIssues({
     logWarnings: boolean;
 }): Promise<void> {
     const violations = await validateDocsWorkspace(workspace, context.logger);
-    const hasErrors = logViolations({ violations, context, logWarnings });
+    const { hasErrors } = logViolations({ violations, context, logWarnings });
 
     if (hasErrors) {
         context.failAndThrow();

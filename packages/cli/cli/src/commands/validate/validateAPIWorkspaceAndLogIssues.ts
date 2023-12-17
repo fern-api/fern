@@ -18,7 +18,7 @@ export async function validateAPIWorkspaceAndLogIssues({
     }
 
     const violations = await validateFernWorkspace(workspace, context.logger);
-    const hasErrors = logViolations({ violations, context, logWarnings });
+    const { hasErrors } = logViolations({ violations, context, logWarnings });
 
     if (hasErrors) {
         context.failAndThrow();
