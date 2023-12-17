@@ -570,19 +570,26 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
-        "Validates your Fern Definition",
+        "Validates your Fern Definition. Logs errors.",
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description: "Only run the command on the provided API"
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("warnings", {
+                    boolean: true,
+                    description: "Log warnings in addition to errors.",
+                    default: false
+                }),
         async (argv) => {
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
                 }),
-                cliContext
+                cliContext,
+                logWarnings: argv.warnings
             });
         }
     );
