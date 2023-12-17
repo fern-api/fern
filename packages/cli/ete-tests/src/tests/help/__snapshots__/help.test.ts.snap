@@ -9,7 +9,7 @@ Commands:
   fern-dev add <generator>      Add a code generator to generators.yml
   fern-dev generate             Generate all generators in the specified group
   fern-dev ir <path-to-output>  Generate IR (Intermediate Representation)
-  fern-dev check                Validates your Fern Definition
+  fern-dev check                Validates your Fern Definition. Logs errors.
   fern-dev login                Log in to Fern via GitHub
   fern-dev format               Formats your Fern Definition
   fern-dev upgrade              Upgrades version in fern.config.json. Also
