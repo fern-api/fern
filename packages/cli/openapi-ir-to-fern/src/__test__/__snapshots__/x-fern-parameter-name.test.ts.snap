@@ -39,7 +39,6 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
     },
     "headers": {
       "X-API-Version": {
-        "docs": undefined,
         "name": "version",
         "type": "string",
       },

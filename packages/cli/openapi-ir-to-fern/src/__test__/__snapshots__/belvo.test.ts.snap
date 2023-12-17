@@ -12307,7 +12307,6 @@ If you try to access older information than what we can access, we will return a
               "body": "root.TransactionsRequest",
               "headers": {
                 "X-Belvo-Request-Mode": {
-                  "docs": undefined,
                   "name": "belvoRequestMode",
                   "type": "literal<"async">",
                 },

@@ -20,10 +20,21 @@ export function buildHeader({
         context,
         fileContainingReference
     });
+    const headerType = getTypeFromTypeReference(typeReference);
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
-    return {
-        name: header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix),
-        docs: header.description ?? undefined,
-        type: getTypeFromTypeReference(typeReference)
+    const headerVariableName =
+        header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix);
+    if (header.description == null && header.name === headerVariableName) {
+        return headerType;
+    }
+    const headerSchema: RawSchemas.HttpHeaderSchema = {
+        type: headerType
     };
+    if (headerVariableName != null && headerVariableName !== header.name) {
+        headerSchema.name = headerVariableName;
+    }
+    if (header.description != null) {
+        headerSchema.docs = header.description;
+    }
+    return headerSchema;
 }
