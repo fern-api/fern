@@ -1,8 +1,10 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
+import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { entries } from "lodash-es";
@@ -19,17 +21,16 @@ export async function writeDefinitionForWorkspaces({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type !== "openapi") {
-                    context.failAndThrow("Cannot write definition for non-OpenAPI workspace.");
                     return;
                 }
                 const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
-                await writeDefinitionForWorkspace(fernWorkspace);
+                await writeDefinitionForWorkspace({ workspace: fernWorkspace, context });
             });
         })
     );
 }
 
-async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
+async function writeDefinitionForWorkspace({ workspace, context }: { workspace: FernWorkspace; context: TaskContext }) {
     const directoryOfDefinition = join(workspace.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await mkdir(directoryOfDefinition);
     await writeFile(
@@ -46,4 +47,5 @@ async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
         await mkdir(dirname, { recursive: true });
         await writeFile(absoluteFilepath, fileContents);
     }
+    context.logger.info(chalk.green(`Wrote definition to ${directoryOfDefinition}`));
 }

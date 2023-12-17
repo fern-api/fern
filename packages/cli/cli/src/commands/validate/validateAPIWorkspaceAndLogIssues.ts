@@ -2,6 +2,7 @@ import { formatLog, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { validateFernWorkspace } from "@fern-api/validator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import chalk from "chalk";
 import validatePackageName from "validate-npm-package-name";
 
 export async function validateAPIWorkspaceAndLogIssues(workspace: FernWorkspace, context: TaskContext): Promise<void> {
@@ -35,6 +36,8 @@ export async function validateAPIWorkspaceAndLogIssues(workspace: FernWorkspace,
 
     if (violationsContainError) {
         context.failAndThrow();
+    } else {
+        context.logger.info(chalk.green("✓ All checks passed"));
     }
 }
 

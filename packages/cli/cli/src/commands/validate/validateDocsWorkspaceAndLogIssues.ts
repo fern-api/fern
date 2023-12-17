@@ -2,6 +2,7 @@ import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { formatLog, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
+import chalk from "chalk";
 
 export async function validateDocsWorkspaceAndLogIssues(workspace: DocsWorkspace, context: TaskContext): Promise<void> {
     const violations = await validateDocsWorkspace(workspace, context.logger);
@@ -30,6 +31,8 @@ export async function validateDocsWorkspaceAndLogIssues(workspace: DocsWorkspace
 
     if (violationsContainError) {
         context.failAndThrow();
+    } else {
+        context.logger.info(chalk.green("✓ All checks passed"));
     }
 }
 
