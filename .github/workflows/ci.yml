@@ -6,11 +6,6 @@ on:
       - '.github/**'
       - 'fern/docs/**'
       - 'fern/docs.yml'
-  push:
-    paths-ignore:
-      - '.github/**'
-      - 'fern/docs/**'
-      - 'fern/docs.yml'
 
 jobs:
   lint:
