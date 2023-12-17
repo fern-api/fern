@@ -6,15 +6,17 @@ import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLog
 
 export async function validateWorkspaces({
     project,
-    cliContext
+    cliContext,
+    logWarnings
 }: {
     project: Project;
     cliContext: CliContext;
+    logWarnings: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            await validateDocsWorkspaceAndLogIssues(docsWorkspace, context);
+            await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings });
         });
     }
 
@@ -23,9 +25,9 @@ export async function validateWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "openapi") {
                     const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
-                    await validateAPIWorkspaceAndLogIssues(fernWorkspace, context);
+                    await validateAPIWorkspaceAndLogIssues({ workspace: fernWorkspace, context, logWarnings });
                 } else {
-                    await validateAPIWorkspaceAndLogIssues(workspace, context);
+                    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings });
                 }
             });
         })

@@ -31,6 +31,10 @@ interface TestFailure {
     fixture: string;
 }
 
+interface RunningScriptConfig extends ScriptConfig {
+    containerId: string;
+}
+
 export async function testWorkspaceFixtures({
     workspace,
     irVersion,
@@ -55,6 +59,13 @@ export async function testWorkspaceFixtures({
     const lock = new Semaphore(numDockers);
 
     const testCases = [];
+    const runningScripts: RunningScriptConfig[] = [];
+    // Start running a docker container for each script instance
+    for (const script of scripts ?? []) {
+        // Start script runner
+        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/bash"]);
+        runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
+    }
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
         const absolutePathToWorkspace = AbsoluteFilePath.of(
@@ -71,7 +82,7 @@ export async function testWorkspaceFixtures({
                         language,
                         fixture,
                         docker,
-                        scripts,
+                        scripts: runningScripts,
                         customConfig: fixtureConfigInstance.customConfig,
                         taskContext: taskContextFactory.create(
                             `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
@@ -81,7 +92,8 @@ export async function testWorkspaceFixtures({
                             RelativeFilePath.of(fixture),
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
                         ),
-                        outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode
+                        outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
+                        outputFolder: fixtureConfigInstance.outputFolder
                     })
                 );
             }
@@ -95,11 +107,12 @@ export async function testWorkspaceFixtures({
                     language,
                     fixture,
                     docker,
-                    scripts,
+                    scripts: runningScripts,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
-                    outputMode: workspace.workspaceConfig.defaultOutputMode
+                    outputMode: workspace.workspaceConfig.defaultOutputMode,
+                    outputFolder: fixture
                 })
             );
         }
@@ -129,7 +142,8 @@ export async function acquireLocksAndRunTest({
     taskContext,
     outputDir,
     absolutePathToWorkspace,
-    outputMode
+    outputMode,
+    outputFolder
 }: {
     lock: Semaphore;
     irVersion: string | undefined;
@@ -138,11 +152,12 @@ export async function acquireLocksAndRunTest({
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
-    scripts: ScriptConfig[] | undefined;
+    scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
+    outputFolder: string;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -158,7 +173,8 @@ export async function acquireLocksAndRunTest({
         taskContext,
         outputDir,
         absolutePathToWorkspace,
-        outputMode
+        outputMode,
+        outputFolder
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -176,7 +192,8 @@ async function testWithWriteToDisk({
     taskContext,
     outputDir,
     absolutePathToWorkspace,
-    outputMode
+    outputMode,
+    outputFolder
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -184,11 +201,12 @@ async function testWithWriteToDisk({
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     customConfig: unknown;
-    scripts: ScriptConfig[] | undefined;
+    scripts: RunningScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
+    outputFolder: string;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -228,21 +246,67 @@ async function testWithWriteToDisk({
             fixtureName: fixture
         });
         for (const script of scripts ?? []) {
+            taskContext.logger.info(`Running script on ${fixture}`);
+            const workDir = `${fixture}_${outputFolder}`;
             const scriptFile = await tmp.file();
-            await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
-            taskContext.logger.info(`Running script ${scriptFile.path}`);
+            await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
+
+            // Move scripts and generated files into the container
+            const mkdirCommand = await loggingExeca(
+                taskContext.logger,
+                "docker",
+                ["exec", script.containerId, "mkdir", `/${workDir}`],
+                {
+                    doNotPipeOutput: true
+                }
+            );
+            if (mkdirCommand.failed) {
+                taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
+                taskContext.logger.error(mkdirCommand.stdout);
+                taskContext.logger.error(mkdirCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
+            const copyScriptCommand = await loggingExeca(
+                undefined,
+                "docker",
+                ["cp", scriptFile.path, `${script.containerId}:/${workDir}/test.sh`],
+                {
+                    doNotPipeOutput: true
+                }
+            );
+            if (copyScriptCommand.failed) {
+                taskContext.logger.error("Failed to copy script. See ouptut below");
+                taskContext.logger.error(copyScriptCommand.stdout);
+                taskContext.logger.error(copyScriptCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
+            const copyCommand = await loggingExeca(
+                taskContext.logger,
+                "docker",
+                ["cp", `${outputDir}/.`, `${script.containerId}:/${workDir}/generated/`],
+                {
+                    doNotPipeOutput: true
+                }
+            );
+            if (copyCommand.failed) {
+                taskContext.logger.error("Failed to copy generated files. See ouptut below");
+                taskContext.logger.error(copyCommand.stdout);
+                taskContext.logger.error(copyCommand.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
+            }
+
+            // Now actually run the test script
             const command = await loggingExeca(
                 taskContext.logger,
                 "docker",
                 [
-                    "run",
-                    "-v",
-                    `${outputDir}:/generated`,
-                    "-v",
-                    `${scriptFile.path}:/test.sh`,
-                    script.docker,
-                    "/bin/sh",
-                    "/test.sh"
+                    "exec",
+                    script.containerId,
+                    "/bin/bash",
+                    "-c",
+                    `chmod +x /${workDir}/test.sh`,
+                    "&&",
+                    `/${workDir}/test.sh`
                 ],
                 {
                     doNotPipeOutput: true

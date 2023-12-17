@@ -2,6 +2,7 @@
 
 exports[`validate docs 1`] = `
 "Missing file: api.yml
+[docs]: Found 3 errors and 0 warnings. Run fern check --warnings to print out the warnings.
 [docs]: docs.yml -> favicon
         Path favicon.ico does not exist
 [docs]: docs.yml -> logo -> dark
@@ -11,7 +12,8 @@ exports[`validate docs 1`] = `
 `;
 
 exports[`validate simple 1`] = `
-"[simple-api]: api.yml -> error-discrimination
+"[simple-api]: Found 2 errors and 0 warnings. Run fern check --warnings to print out the warnings.
+[simple-api]: api.yml -> error-discrimination
               error-discrimination is required because this API has declared errors.
 [simple-api]: other.yml -> types -> MyType
               Type MissingType is not defined."
