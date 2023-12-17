@@ -183,6 +183,15 @@ servers:
 ```
 </CodeBlock>
 
+In a generated TypeScript SDK, you'd see:
+
+```yaml
+  const client = new ExampleClient({
+    environment: ExampleEnvironment.PRODUCTION,
+    ...
+  });
+```
+
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
