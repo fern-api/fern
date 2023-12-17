@@ -299,7 +299,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
                 taskContext.logger.error(mkdirCommand.stdout);
                 taskContext.logger.error(mkdirCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", fixture };
+                return { type: "failure", reason: "Failed to run script...", id };
             }
             const copyScriptCommand = await loggingExeca(
                 undefined,
@@ -313,7 +313,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy script. See ouptut below");
                 taskContext.logger.error(copyScriptCommand.stdout);
                 taskContext.logger.error(copyScriptCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", fixture };
+                return { type: "failure", reason: "Failed to run script...", id };
             }
             const copyCommand = await loggingExeca(
                 taskContext.logger,
@@ -327,7 +327,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to copy generated files. See ouptut below");
                 taskContext.logger.error(copyCommand.stdout);
                 taskContext.logger.error(copyCommand.stderr);
-                return { type: "failure", reason: "Failed to run script...", fixture };
+                return { type: "failure", reason: "Failed to run script...", id };
             }
 
             // Now actually run the test script
@@ -351,7 +351,7 @@ async function testWithWriteToDisk({
                 taskContext.logger.error("Failed to run script. See ouptut below");
                 taskContext.logger.error(command.stdout);
                 taskContext.logger.error(command.stderr);
-                return { type: "failure", reason: "Failed to run script...", fixture };
+                return { type: "failure", reason: "Failed to run script...", id };
             }
         }
         return { type: "success", id };
