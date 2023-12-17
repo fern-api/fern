@@ -169,6 +169,20 @@ export interface Person  { # <---- Overridden name
 }
 ```
 
+## Server names
+
+The `x-fern-server-name` extension is used to name your servers. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+servers:
+- url: https://api.example.com
+  x-fern-server-name: Production
+- url: https://sandbox.example.com
+  x-fern-server-name: Sandbox
+```
+</CodeBlock>
+
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
