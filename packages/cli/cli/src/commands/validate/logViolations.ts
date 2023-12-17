@@ -80,7 +80,7 @@ function logViolationsSummary({
 
     let message = `Found ${numErrors} errors and ${numWarnings} warnings.`;
     if (!logWarnings) {
-        message += "Run fern check --warnings to print out the warnings.";
+        message += " Run fern check --warnings to print out the warnings.";
     }
 
     if (numErrors > 0) {
