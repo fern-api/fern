@@ -2755,10 +2755,11 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/seed-config": 0.0.14
+    "@fern-fern/seed-config": 0.0.15
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
+    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2770,6 +2771,7 @@ __metadata:
     find-up: ^6.3.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
+    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -3241,10 +3243,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/seed-config@npm:0.0.14":
-  version: 0.0.14
-  resolution: "@fern-fern/seed-config@npm:0.0.14"
-  checksum: 3dae3729df7bba5266c0968cc26302e2fad544693b40894035282a375f8295277ccd7fd566e9c998571f7c9f444e0dac6599b3b8c021a1f971fb990a3a77743f
+"@fern-fern/seed-config@npm:0.0.15":
+  version: 0.0.15
+  resolution: "@fern-fern/seed-config@npm:0.0.15"
+  checksum: 522500dcd3a33e9d74ee0c64950183cc65d847b7a5ddcfc1724fa858816a9afef015a124be97a72714d358c1b8846542c7407cd198cc51885e6dcce5bf4ccee7
   languageName: node
   linkType: hard
 
