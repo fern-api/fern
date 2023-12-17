@@ -40,9 +40,7 @@ exports[`open api parser axle simple 1`] = `
               "name": "GetAccountRequest",
               "query-parameters": {
                 "expand": {
-                  "allow-multiple": undefined,
                   "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },
@@ -246,9 +244,7 @@ exports[`open api parser axle simple 1`] = `
               "name": "GetPolicyRequest",
               "query-parameters": {
                 "expand": {
-                  "allow-multiple": undefined,
                   "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },

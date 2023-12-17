@@ -1410,15 +1410,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsDeleteAssetRequest",
               "query-parameters": {
                 "checkReferrers": {
-                  "allow-multiple": undefined,
                   "docs": "True to check referrers of this asset.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "permanent": {
-                  "allow-multiple": undefined,
                   "docs": "True to delete the asset permanently.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },
@@ -1499,87 +1495,59 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsGetAssetContentRequest",
               "query-parameters": {
                 "auto": {
-                  "allow-multiple": undefined,
                   "docs": "True to use auto format.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "bg": {
-                  "allow-multiple": undefined,
                   "docs": "Optional background color.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "cache": {
-                  "allow-multiple": undefined,
                   "docs": "The cache duration in seconds.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "download": {
-                  "allow-multiple": undefined,
                   "docs": "Set it to 0 to prevent download.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "focusX": {
-                  "allow-multiple": undefined,
                   "docs": "Override the y focus point.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "focusY": {
-                  "allow-multiple": undefined,
                   "docs": "Override the x focus point.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "force": {
-                  "allow-multiple": undefined,
                   "docs": "True to force a new resize even if it already stored.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "format": {
-                  "allow-multiple": undefined,
                   "docs": "True to force a new resize even if it already stored.",
-                  "name": undefined,
                   "type": "optional<root.ImageFormat>",
                 },
                 "height": {
-                  "allow-multiple": undefined,
                   "docs": "The target height of the asset, if it is an image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The resize mode when the width and height is defined.",
-                  "name": undefined,
                   "type": "optional<root.ResizeMode>",
                 },
                 "nofocus": {
-                  "allow-multiple": undefined,
                   "docs": "True to ignore the asset focus point if any.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "quality": {
-                  "allow-multiple": undefined,
                   "docs": "Optional image quality, it is is an jpeg image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The optional version of the asset.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "width": {
-                  "allow-multiple": undefined,
                   "docs": "The target width of the asset, if it is an image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -1613,87 +1581,59 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsGetAssetContentBySlugRequest",
               "query-parameters": {
                 "auto": {
-                  "allow-multiple": undefined,
                   "docs": "True to use auto format.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "bg": {
-                  "allow-multiple": undefined,
                   "docs": "Optional background color.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "cache": {
-                  "allow-multiple": undefined,
                   "docs": "The cache duration in seconds.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "download": {
-                  "allow-multiple": undefined,
                   "docs": "Set it to 0 to prevent download.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "focusX": {
-                  "allow-multiple": undefined,
                   "docs": "Override the y focus point.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "focusY": {
-                  "allow-multiple": undefined,
                   "docs": "Override the x focus point.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "force": {
-                  "allow-multiple": undefined,
                   "docs": "True to force a new resize even if it already stored.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "format": {
-                  "allow-multiple": undefined,
                   "docs": "True to force a new resize even if it already stored.",
-                  "name": undefined,
                   "type": "optional<root.ImageFormat>",
                 },
                 "height": {
-                  "allow-multiple": undefined,
                   "docs": "The target height of the asset, if it is an image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The resize mode when the width and height is defined.",
-                  "name": undefined,
                   "type": "optional<root.ResizeMode>",
                 },
                 "nofocus": {
-                  "allow-multiple": undefined,
                   "docs": "True to ignore the asset focus point if any.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "quality": {
-                  "allow-multiple": undefined,
                   "docs": "Optional image quality, it is is an jpeg image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The optional version of the asset.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "width": {
-                  "allow-multiple": undefined,
                   "docs": "The target width of the asset, if it is an image.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -1723,15 +1663,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsGetAssetFoldersRequest",
               "query-parameters": {
                 "parentId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "scope": {
-                  "allow-multiple": undefined,
                   "docs": "The scope of the query.",
-                  "name": undefined,
                   "type": "optional<root.AssetFolderScope>",
                 },
               },
@@ -1761,45 +1697,31 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsGetAssetsRequest",
               "query-parameters": {
                 "$filter": {
-                  "allow-multiple": undefined,
                   "docs": "Optional OData filter.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "$orderby": {
-                  "allow-multiple": undefined,
                   "docs": "Optional OData order definition.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "$skip": {
-                  "allow-multiple": undefined,
                   "docs": "Optional number of items to skip.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "$top": {
-                  "allow-multiple": undefined,
                   "docs": "Optional number of items to take.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "ids": {
-                  "allow-multiple": undefined,
                   "docs": "The optional asset ids.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "parentId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "q": {
-                  "allow-multiple": undefined,
                   "docs": "The optional json query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1896,21 +1818,15 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsPostAssetRequest",
               "query-parameters": {
                 "duplicate": {
-                  "allow-multiple": undefined,
                   "docs": "True to duplicate the asset, event if the file has been uploaded.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The optional custom asset id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "parentId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1991,15 +1907,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "AssetsPostUpsertAssetRequest",
               "query-parameters": {
                 "duplicate": {
-                  "allow-multiple": undefined,
                   "docs": "True to duplicate the asset, event if the file has been uploaded.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "parentId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -2339,15 +2251,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "BackupsGetBackupContentV2Request",
               "query-parameters": {
                 "app": {
-                  "allow-multiple": undefined,
                   "docs": "The name of the app.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "appId": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the app.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -2539,9 +2447,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "CommentsGetCommentsRequest",
               "query-parameters": {
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The current version.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -2813,15 +2719,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsDeleteContentRequest",
               "query-parameters": {
                 "checkReferrers": {
-                  "allow-multiple": undefined,
                   "docs": "True to check referrers of this content.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "permanent": {
-                  "allow-multiple": undefined,
                   "docs": "True to delete the content permanently.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },
@@ -2915,9 +2817,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsGetContentRequest",
               "query-parameters": {
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The optional version.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -3019,15 +2919,11 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsGetContentsRequest",
               "query-parameters": {
                 "ids": {
-                  "allow-multiple": undefined,
                   "docs": "The optional ids of the content to fetch.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "q": {
-                  "allow-multiple": undefined,
                   "docs": "The optional json query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3094,9 +2990,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsGetReferencesRequest",
               "query-parameters": {
                 "q": {
-                  "allow-multiple": undefined,
                   "docs": "The optional json query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3134,9 +3028,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsGetReferencingRequest",
               "query-parameters": {
                 "q": {
-                  "allow-multiple": undefined,
                   "docs": "The optional json query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3205,21 +3097,15 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The optional custom content id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "publish": {
-                  "allow-multiple": undefined,
                   "docs": "True to automatically publish the content.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "The initial status.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3326,21 +3212,15 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
-                  "allow-multiple": undefined,
                   "docs": "Makes the update as patch.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "publish": {
-                  "allow-multiple": undefined,
                   "docs": "True to automatically publish the content.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "The initial status.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3634,9 +3514,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "HistoryGetAppHistoryRequest",
               "query-parameters": {
                 "channel": {
-                  "allow-multiple": undefined,
                   "docs": "The name of the channel.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3679,9 +3557,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "HistoryGetTeamHistoryRequest",
               "query-parameters": {
                 "channel": {
-                  "allow-multiple": undefined,
                   "docs": "The name of the channel.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3751,9 +3627,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "NewsGetNewsRequest",
               "query-parameters": {
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The latest received version.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -3827,9 +3701,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "NotificationsGetNotificationsRequest",
               "query-parameters": {
                 "version": {
-                  "allow-multiple": undefined,
                   "docs": "The current version.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -4367,21 +4239,15 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "RulesGetEventsRequest",
               "query-parameters": {
                 "ruleId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional rule id to filter to events.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "skip": {
-                  "allow-multiple": undefined,
                   "docs": "The number of events to skip.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "take": {
-                  "allow-multiple": undefined,
                   "docs": "The number of events to take.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -4574,9 +4440,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "RulesPutRuleRunRequest",
               "query-parameters": {
                 "fromSnapshots": {
-                  "allow-multiple": undefined,
                   "docs": "Runs the rule from snapeshots if possible.",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },
@@ -5783,9 +5647,7 @@ The client secret is auto generated on the server and returned. The client does 
               "name": "SearchGetSearchResultsRequest",
               "query-parameters": {
                 "query": {
-                  "allow-multiple": undefined,
                   "docs": "The search query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -6433,21 +6295,15 @@ You will be assigned as owner of the new team automatically.",
               "name": "UserManagementGetUsersRequest",
               "query-parameters": {
                 "query": {
-                  "allow-multiple": undefined,
                   "docs": "Optional query to search by email address or username.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "skip": {
-                  "allow-multiple": undefined,
                   "docs": "The number of users to skip.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "take": {
-                  "allow-multiple": undefined,
                   "docs": "The number of users to return.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -6690,9 +6546,7 @@ You will be assigned as owner of the new team automatically.",
               "name": "UsersGetUsersRequest",
               "query-parameters": {
                 "query": {
-                  "allow-multiple": undefined,
                   "docs": "The query to search the user by email address. Case invariant.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },

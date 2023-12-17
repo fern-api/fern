@@ -75,10 +75,7 @@ exports[`open api parser deel simple 1`] = `
             "method": "GET",
             "path": "/payments/{payment_id}/breakdown",
             "path-parameters": {
-              "payment_id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "payment_id": "string",
             },
             "response": {
               "docs": "Successful operation.",
@@ -245,25 +242,19 @@ exports[`open api parser deel simple 1`] = `
                 "entities": {
                   "allow-multiple": true,
                   "docs": "Filter by legal entity type; company, or individual",
-                  "name": undefined,
                   "type": "optional<root.LegalEntityType>",
                 },
                 "issued_from_date": {
-                  "allow-multiple": undefined,
                   "docs": "to get records created after given issue date",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "issued_to_date": {
-                  "allow-multiple": undefined,
                   "docs": "to get records created before given issued date",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "statuses of invoices to filter",
-                  "name": undefined,
                   "type": "optional<root.InvoiceStatusEnum>",
                 },
               },
@@ -314,31 +305,24 @@ exports[`open api parser deel simple 1`] = `
                 "currencies": {
                   "allow-multiple": true,
                   "docs": "Currency codes of contracts to filter.",
-                  "name": undefined,
                   "type": "optional<root.CurrencyCodeRequired>",
                 },
                 "date_from": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created on or after the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "date_to": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created before the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "entities": {
                   "allow-multiple": true,
                   "docs": "Filter by legal entity type; company, or individual",
-                  "name": undefined,
                   "type": "optional<root.LegalEntityType>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "statuses of payments to filter",
-                  "name": undefined,
                   "type": "optional<root.PaymentStatusEnum>",
                 },
               },
@@ -477,15 +461,11 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetPeopleListRequest",
               "query-parameters": {
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records.",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
               },
@@ -768,9 +748,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetContractPreviewRequest",
               "query-parameters": {
                 "templateId": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing contract template.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -803,9 +781,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "RemovePremiumFromContractRequest",
               "query-parameters": {
                 "reason": {
-                  "allow-multiple": undefined,
                   "docs": "Reason for deleting an existing Deel Premium from a contract.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1012,27 +988,19 @@ exports[`open api parser deel simple 1`] = `
               "name": "CalculateFinalPaymentRequest",
               "query-parameters": {
                 "calculation_type": {
-                  "allow-multiple": undefined,
                   "docs": "The days to calculate.",
-                  "name": undefined,
                   "type": "optional<CalculateFinalPaymentRequestCalculationType>",
                 },
                 "end_date": {
-                  "allow-multiple": undefined,
                   "docs": "The day to end the contract.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "workweek_end": {
-                  "allow-multiple": undefined,
                   "docs": "The day the work week ends, 0 to 6",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "workweek_start": {
-                  "allow-multiple": undefined,
                   "docs": "The day the work week starts, 0 to 6",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1169,69 +1137,51 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetContractListRequest",
               "query-parameters": {
                 "after_cursor": {
-                  "allow-multiple": undefined,
                   "docs": "Return next page of results after given cursor.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "countries": {
                   "allow-multiple": true,
                   "docs": "Country codes of contracts to filter.",
-                  "name": undefined,
                   "type": "optional<root.CountryCode>",
                 },
                 "currencies": {
                   "allow-multiple": true,
                   "docs": "Currency codes of contracts to filter.",
-                  "name": undefined,
                   "type": "optional<root.CurrencyCodeRequired>",
                 },
                 "external_id": {
-                  "allow-multiple": undefined,
                   "docs": "Filter contracts for given external ID",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records.",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "order_direction": {
-                  "allow-multiple": undefined,
                   "docs": "Order direction of results; ascending or descending.",
-                  "name": undefined,
                   "type": "optional<root.SortDirEnum>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Include a contract if by name or contractor name contains given search term.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "sort_by": {
-                  "allow-multiple": undefined,
                   "docs": "Sort contracts by given field name.",
-                  "name": undefined,
                   "type": "optional<root.ContractsSortByEnum>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "You can filter contracts by current status, a contract is included in results if its status is in this list.",
-                  "name": undefined,
                   "type": "optional<root.ContractStatusEnum>",
                 },
                 "team_id": {
-                  "allow-multiple": undefined,
                   "docs": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "types": {
                   "allow-multiple": true,
                   "docs": "You can filter contracts by type, a contract is included in results if its type is in this list.",
-                  "name": undefined,
                   "type": "optional<root.ContractTypeEnum>",
                 },
               },
@@ -1853,9 +1803,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "DeleteInvoiceAdjustmentByIdRequest",
               "query-parameters": {
                 "reason": {
-                  "allow-multiple": undefined,
                   "docs": "Reason for deleting an existing invoice adjustment",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1886,63 +1834,46 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetInvoiceAdjustmentsRequest",
               "query-parameters": {
                 "contract_id": {
-                  "allow-multiple": undefined,
                   "docs": "Id of an Deel contract.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "contract_types": {
                   "allow-multiple": true,
                   "docs": "types of contracts to filter",
-                  "name": undefined,
                   "type": "optional<root.ContractTypeEnum>",
                 },
                 "date_from": {
-                  "allow-multiple": undefined,
                   "docs": "to get invoice adjustments submitted on or after given start date (inclusive)",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "date_to": {
-                  "allow-multiple": undefined,
                   "docs": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "invoice_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "reporter_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "statuses of invoice adjustment to filter",
-                  "name": undefined,
                   "type": "optional<root.InvoiceAdjustmentStatusEnum>",
                 },
                 "types": {
                   "allow-multiple": true,
                   "docs": "types of invoice adjustments to filter",
-                  "name": undefined,
                   "type": "optional<root.InvoiceAdjustmentTypeEnum>",
                 },
               },
@@ -1981,55 +1912,40 @@ exports[`open api parser deel simple 1`] = `
                 "contract_types": {
                   "allow-multiple": true,
                   "docs": "types of contracts to filter",
-                  "name": undefined,
                   "type": "optional<root.ContractTypeEnum>",
                 },
                 "date_from": {
-                  "allow-multiple": undefined,
                   "docs": "to get invoice adjustments submitted on or after given start date (inclusive)",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "date_to": {
-                  "allow-multiple": undefined,
                   "docs": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "invoice_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "reporter_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "statuses of invoice adjustment to filter",
-                  "name": undefined,
                   "type": "optional<root.InvoiceAdjustmentStatusEnum>",
                 },
                 "types": {
                   "allow-multiple": true,
                   "docs": "types of invoice adjustments to filter",
-                  "name": undefined,
                   "type": "optional<root.InvoiceAdjustmentTypeEnum>",
                 },
               },
@@ -2207,15 +2123,11 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetJobTitleListRequest",
               "query-parameters": {
                 "after_cursor": {
-                  "allow-multiple": undefined,
                   "docs": "Return next page of results after given cursor",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
               },
@@ -2265,9 +2177,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetSeniorityListRequest",
               "query-parameters": {
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
               },
@@ -2769,21 +2679,15 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetAgreementsRequest",
               "query-parameters": {
                 "contract_id": {
-                  "allow-multiple": undefined,
                   "docs": "Deel contract id.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum number of records to return.",
-                  "name": undefined,
                   "type": "optional<root.AgreementsParamLimit>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Offset/index of record for the next page of records to return.",
-                  "name": undefined,
                   "type": "optional<root.AgreementsParamOffset>",
                 },
               },
@@ -3116,9 +3020,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "DeleteContractPgoTakRequest",
               "query-parameters": {
                 "reason": {
-                  "allow-multiple": undefined,
                   "docs": "Reason for deleting an existing task",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3666,9 +3568,7 @@ exports[`open api parser deel simple 1`] = `
               "name": "DeleteTimesheetByIdRequest",
               "query-parameters": {
                 "reason": {
-                  "allow-multiple": undefined,
                   "docs": "Reason for deleting an existing timesheet",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3727,51 +3627,37 @@ exports[`open api parser deel simple 1`] = `
               "name": "GetTimesheetsRequest",
               "query-parameters": {
                 "contract_id": {
-                  "allow-multiple": undefined,
                   "docs": "Id of a Deel contract.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "contract_types": {
                   "allow-multiple": true,
                   "docs": "Types of contracts to filter.",
-                  "name": undefined,
                   "type": "optional<root.ContractTypeEnum>",
                 },
                 "date_from": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created on or after the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "date_to": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created before the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results after given index of row",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "reporter_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "Statuses of timesheets to filter.",
-                  "name": undefined,
                   "type": "optional<root.TimesheetStatusEnum>",
                 },
               },
@@ -3810,43 +3696,31 @@ exports[`open api parser deel simple 1`] = `
                 "contract_types": {
                   "allow-multiple": true,
                   "docs": "Types of contracts to filter.",
-                  "name": undefined,
                   "type": "optional<root.ContractTypeEnum>",
                 },
                 "date_from": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created on or after the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "date_to": {
-                  "allow-multiple": undefined,
                   "docs": "Filtered results will include records created before the provided date.",
-                  "name": undefined,
                   "type": "optional<root.DateString>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "Return a page of results after given index of row",
-                  "name": undefined,
                   "type": "optional<long>",
                 },
                 "reporter_id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
-                  "name": undefined,
                   "type": "optional<double>",
                 },
                 "statuses": {
                   "allow-multiple": true,
                   "docs": "Statuses of timesheets to filter.",
-                  "name": undefined,
                   "type": "optional<root.TimesheetStatusEnum>",
                 },
               },
@@ -3934,10 +3808,7 @@ exports[`open api parser deel simple 1`] = `
             "method": "DELETE",
             "path": "/webhooks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
           },
           "WebhookController_editById": {
@@ -3958,10 +3829,7 @@ exports[`open api parser deel simple 1`] = `
             "method": "PATCH",
             "path": "/webhooks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -4019,10 +3887,7 @@ exports[`open api parser deel simple 1`] = `
             "method": "GET",
             "path": "/webhooks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "successful operation",

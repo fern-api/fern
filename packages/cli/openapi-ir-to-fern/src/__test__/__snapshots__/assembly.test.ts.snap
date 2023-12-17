@@ -434,9 +434,7 @@ The LLM response data, as well as any context provided in the original request w
               "name": "TranscriptGetSubtitlesRequest",
               "query-parameters": {
                 "chars_per_caption": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of characters per caption",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -464,39 +462,27 @@ The LLM response data, as well as any context provided in the original request w
               "name": "TranscriptListRequest",
               "query-parameters": {
                 "after_id": {
-                  "allow-multiple": undefined,
                   "docs": "Get transcripts that were created after this transcript ID",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "before_id": {
-                  "allow-multiple": undefined,
                   "docs": "Get transcripts that were created before this transcript ID",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_on": {
-                  "allow-multiple": undefined,
                   "docs": "Only get transcripts created on this date",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum amount of transcripts to retrieve",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Filter by transcript status",
-                  "name": undefined,
                   "type": "optional<TranscriptListRequestStatus>",
                 },
                 "throttled_only": {
-                  "allow-multiple": undefined,
                   "docs": "Only get throttled transcripts, overrides the status filter",
-                  "name": undefined,
                   "type": "optional<boolean>",
                 },
               },
@@ -532,7 +518,6 @@ The LLM response data, as well as any context provided in the original request w
                 "words": {
                   "allow-multiple": true,
                   "docs": "Keywords to search for",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },

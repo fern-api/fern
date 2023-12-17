@@ -23,10 +23,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/attempts/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single attempt",
@@ -57,42 +54,12 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetAttemptsRequest",
               "query-parameters": {
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetAttemptsRequestDir>",
-                },
-                "event_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "dir": "optional<GetAttemptsRequestDir>",
+                "event_id": "optional<string>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
               },
             },
             "response": {
@@ -171,10 +138,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "DELETE",
             "path": "/bookmarks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "An object with deleted bookmark's id",
@@ -191,10 +155,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/bookmarks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single bookmark",
@@ -225,72 +186,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetBookmarksRequest",
               "query-parameters": {
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetBookmarksRequestDir>",
-                },
-                "event_data_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "label": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "last_used_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "webhook_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "dir": "optional<GetBookmarksRequestDir>",
+                "event_data_id": "optional<string>",
+                "id": "optional<string>",
+                "label": "optional<string>",
+                "last_used_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "webhook_id": "optional<string>",
               },
             },
             "response": {
@@ -325,10 +231,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/bookmarks/{id}/trigger",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -360,10 +263,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/bookmarks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -433,10 +333,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/bulk/events/retry/{id}/cancel",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single events bulk retry",
@@ -525,72 +422,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetEventBulkRetriesRequest",
               "query-parameters": {
-                "cancelled_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "completed_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetEventBulkRetriesRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "in_progress": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "query_partial_match": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
+                "cancelled_at": "optional<datetime>",
+                "completed_at": "optional<datetime>",
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetEventBulkRetriesRequestDir>",
+                "id": "optional<string>",
+                "in_progress": "optional<boolean>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "query_partial_match": "optional<boolean>",
               },
             },
             "response": {
@@ -608,10 +450,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/bulk/events/retry/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single events bulk retry",
@@ -955,10 +794,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single ignored events bulk retry",
@@ -1043,72 +879,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIgnoredEventBulkRetriesRequest",
               "query-parameters": {
-                "cancelled_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "completed_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIgnoredEventBulkRetriesRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "in_progress": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "query_partial_match": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
+                "cancelled_at": "optional<datetime>",
+                "completed_at": "optional<datetime>",
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetIgnoredEventBulkRetriesRequestDir>",
+                "id": "optional<string>",
+                "in_progress": "optional<boolean>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "query_partial_match": "optional<boolean>",
               },
             },
             "response": {
@@ -1126,10 +907,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/bulk/ignored-events/retry/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single ignored events bulk retry",
@@ -1200,10 +978,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single requests bulk retry",
@@ -1297,72 +1072,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetRequestBulkRetriesRequest",
               "query-parameters": {
-                "cancelled_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "completed_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestBulkRetriesRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "in_progress": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "query_partial_match": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
+                "cancelled_at": "optional<datetime>",
+                "completed_at": "optional<datetime>",
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetRequestBulkRetriesRequestDir>",
+                "id": "optional<string>",
+                "in_progress": "optional<boolean>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "query_partial_match": "optional<boolean>",
               },
             },
             "response": {
@@ -1380,10 +1100,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/bulk/requests/retry/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single requests bulk retry",
@@ -1632,10 +1349,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/webhooks/{id}/archive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single connection",
@@ -1708,10 +1422,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/webhooks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single connection",
@@ -1742,84 +1453,19 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetConnectionsRequest",
               "query-parameters": {
-                "archived": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "archived_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "destination_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetConnectionsRequestDir>",
-                },
-                "full_name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "paused_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "source_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "archived": "optional<boolean>",
+                "archived_at": "optional<datetime>",
+                "destination_id": "optional<string>",
+                "dir": "optional<GetConnectionsRequestDir>",
+                "full_name": "optional<string>",
+                "id": "optional<string>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "paused_at": "optional<datetime>",
+                "prev": "optional<string>",
+                "source_id": "optional<string>",
               },
             },
             "response": {
@@ -1837,10 +1483,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/webhooks/{id}/pause",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single connection",
@@ -1857,10 +1500,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/webhooks/{id}/unarchive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single connection",
@@ -1877,10 +1517,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/webhooks/{id}/unpause",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single connection",
@@ -1899,10 +1536,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/webhooks/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -2149,10 +1783,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/destinations/{id}/archive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single destination",
@@ -2214,10 +1845,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/destinations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single destination",
@@ -2248,72 +1876,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetDestinationsRequest",
               "query-parameters": {
-                "archived": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "archived_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "cli_path": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetDestinationsRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "url": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "archived": "optional<boolean>",
+                "archived_at": "optional<datetime>",
+                "cli_path": "optional<string>",
+                "dir": "optional<GetDestinationsRequestDir>",
+                "id": "optional<string>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "url": "optional<string>",
               },
             },
             "response": {
@@ -2331,10 +1904,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/destinations/{id}/unarchive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single destination",
@@ -2353,10 +1923,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/destinations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -2497,10 +2064,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/events/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single event",
@@ -2533,162 +2097,32 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetEventsRequest",
               "query-parameters": {
-                "attempts": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "body": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "bulk_retry_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "cli_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "cli_user_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "destination_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetEventsRequestDir>",
-                },
-                "error_code": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "event_data_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "headers": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "include": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"data">>",
-                },
-                "issue_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "last_attempt_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetEventsRequestOrderBy>",
-                },
-                "parsed_query": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "path": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "response_status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "source_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<root.EventStatus>",
-                },
-                "successful_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "webhook_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "attempts": "optional<integer>",
+                "body": "optional<string>",
+                "bulk_retry_id": "optional<string>",
+                "cli_id": "optional<string>",
+                "cli_user_id": "optional<string>",
+                "created_at": "optional<datetime>",
+                "destination_id": "optional<string>",
+                "dir": "optional<GetEventsRequestDir>",
+                "error_code": "optional<string>",
+                "event_data_id": "optional<string>",
+                "headers": "optional<string>",
+                "id": "optional<string>",
+                "include": "optional<literal<"data">>",
+                "issue_id": "optional<string>",
+                "last_attempt_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<GetEventsRequestOrderBy>",
+                "parsed_query": "optional<string>",
+                "path": "optional<string>",
+                "prev": "optional<string>",
+                "response_status": "optional<integer>",
+                "source_id": "optional<string>",
+                "status": "optional<root.EventStatus>",
+                "successful_at": "optional<datetime>",
+                "webhook_id": "optional<string>",
               },
             },
             "response": {
@@ -2706,10 +2140,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/events/{id}/raw_body",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A request raw body data",
@@ -2726,10 +2157,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/events/{id}/mute",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single event",
@@ -2746,10 +2174,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/events/{id}/retry",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "Retried event with event attempt",
@@ -2795,14 +2220,8 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/integrations/{id}/attach/{source_id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "source_id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
+              "source_id": "string",
             },
             "response": {
               "docs": "Attach operation success status",
@@ -2856,10 +2275,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "DELETE",
             "path": "/integrations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "An object with deleted integration id",
@@ -2891,14 +2307,8 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/integrations/{id}/detach/{source_id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "source_id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
+              "source_id": "string",
             },
             "response": {
               "docs": "Detach operation success status",
@@ -2915,10 +2325,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/integrations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single integration",
@@ -2951,18 +2358,8 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIntegrationsRequest",
               "query-parameters": {
-                "label": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "provider": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<root.IntegrationProvider>",
-                },
+                "label": "optional<string>",
+                "provider": "optional<root.IntegrationProvider>",
               },
             },
             "response": {
@@ -2982,10 +2379,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/integrations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -3095,10 +2489,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "DELETE",
             "path": "/issue-triggers/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "An object with deleted issue trigger's id",
@@ -3115,10 +2506,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/issue-triggers/{id}/disable",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single issue trigger",
@@ -3135,10 +2523,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/issue-triggers/{id}/enable",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single issue trigger",
@@ -3155,10 +2540,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/issue-triggers/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single issue trigger",
@@ -3191,54 +2573,14 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIssueTriggersRequest",
               "query-parameters": {
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueTriggersRequestDir>",
-                },
-                "disabled_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueTriggersRequestOrderBy>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "type": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<root.IssueType>",
-                },
+                "dir": "optional<GetIssueTriggersRequestDir>",
+                "disabled_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<GetIssueTriggersRequestOrderBy>",
+                "prev": "optional<string>",
+                "type": "optional<root.IssueType>",
               },
             },
             "response": {
@@ -3257,10 +2599,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/issue-triggers/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -3387,10 +2726,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "DELETE",
             "path": "/issues/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "Dismissed issue",
@@ -3407,10 +2743,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/issues/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single issue",
@@ -3442,90 +2775,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIssueCountRequest",
               "query-parameters": {
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueCountRequestDir>",
-                },
-                "dismissed_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "first_seen_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "issue_trigger_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "last_seen_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "merged_with": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueCountRequestOrderBy>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueCountRequestStatus>",
-                },
-                "type": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssueCountRequestType>",
-                },
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetIssueCountRequestDir>",
+                "dismissed_at": "optional<datetime>",
+                "first_seen_at": "optional<datetime>",
+                "id": "optional<string>",
+                "issue_trigger_id": "optional<string>",
+                "last_seen_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "merged_with": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<GetIssueCountRequestOrderBy>",
+                "prev": "optional<string>",
+                "status": "optional<GetIssueCountRequestStatus>",
+                "type": "optional<GetIssueCountRequestType>",
               },
             },
             "response": {
@@ -3557,90 +2820,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIssuesRequest",
               "query-parameters": {
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssuesRequestDir>",
-                },
-                "dismissed_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "first_seen_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "issue_trigger_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "last_seen_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "merged_with": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssuesRequestOrderBy>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssuesRequestStatus>",
-                },
-                "type": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetIssuesRequestType>",
-                },
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetIssuesRequestDir>",
+                "dismissed_at": "optional<datetime>",
+                "first_seen_at": "optional<datetime>",
+                "id": "optional<string>",
+                "issue_trigger_id": "optional<string>",
+                "last_seen_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "merged_with": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<GetIssuesRequestOrderBy>",
+                "prev": "optional<string>",
+                "status": "optional<GetIssuesRequestStatus>",
+                "type": "optional<GetIssuesRequestType>",
               },
             },
             "response": {
@@ -3659,10 +2852,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/issues/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -3825,10 +3015,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/requests/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single request",
@@ -3862,170 +3049,37 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/requests/{id}/events",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "name": "GetRequestEventsRequest",
               "query-parameters": {
-                "attempts": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "body": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "bulk_retry_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "cli_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "cli_user_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "destination_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestEventsRequestDir>",
-                },
-                "error_code": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "event_data_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "headers": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "include": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"data">>",
-                },
-                "issue_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "last_attempt_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestEventsRequestOrderBy>",
-                },
-                "parsed_query": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "path": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "response_status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "source_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<root.EventStatus>",
-                },
-                "successful_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "webhook_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "attempts": "optional<integer>",
+                "body": "optional<string>",
+                "bulk_retry_id": "optional<string>",
+                "cli_id": "optional<string>",
+                "cli_user_id": "optional<string>",
+                "created_at": "optional<datetime>",
+                "destination_id": "optional<string>",
+                "dir": "optional<GetRequestEventsRequestDir>",
+                "error_code": "optional<string>",
+                "event_data_id": "optional<string>",
+                "headers": "optional<string>",
+                "id": "optional<string>",
+                "include": "optional<literal<"data">>",
+                "issue_id": "optional<string>",
+                "last_attempt_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<GetRequestEventsRequestOrderBy>",
+                "parsed_query": "optional<string>",
+                "path": "optional<string>",
+                "prev": "optional<string>",
+                "response_status": "optional<integer>",
+                "source_id": "optional<string>",
+                "status": "optional<root.EventStatus>",
+                "successful_at": "optional<datetime>",
+                "webhook_id": "optional<string>",
               },
             },
             "response": {
@@ -4058,50 +3112,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/requests/{id}/ignored_events",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "name": "GetRequestIgnoredEventsRequest",
               "query-parameters": {
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestIgnoredEventsRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "dir": "optional<GetRequestIgnoredEventsRequestDir>",
+                "id": "optional<string>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
               },
             },
             "response": {
@@ -4119,10 +3140,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/requests/{id}/raw_body",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A request raw body data",
@@ -4156,126 +3174,26 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetRequestsRequest",
               "query-parameters": {
-                "body": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "bulk_retry_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestsRequestDir>",
-                },
-                "events_count": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "headers": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "ignored_count": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "include": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"data">>",
-                },
-                "ingested_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestsRequestOrderBy>",
-                },
-                "parsed_query": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "path": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "rejection_cause": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<root.RequestRejectionCause>",
-                },
-                "source_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "status": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRequestsRequestStatus>",
-                },
-                "verified": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
+                "body": "optional<string>",
+                "bulk_retry_id": "optional<string>",
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetRequestsRequestDir>",
+                "events_count": "optional<integer>",
+                "headers": "optional<string>",
+                "id": "optional<string>",
+                "ignored_count": "optional<integer>",
+                "include": "optional<literal<"data">>",
+                "ingested_at": "optional<datetime>",
+                "limit": "optional<integer>",
+                "next": "optional<string>",
+                "order_by": "optional<GetRequestsRequestOrderBy>",
+                "parsed_query": "optional<string>",
+                "path": "optional<string>",
+                "prev": "optional<string>",
+                "rejection_cause": "optional<root.RequestRejectionCause>",
+                "source_id": "optional<string>",
+                "status": "optional<GetRequestsRequestStatus>",
+                "verified": "optional<boolean>",
               },
             },
             "response": {
@@ -4295,10 +3213,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "POST",
             "path": "/requests/{id}/retry",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -4380,10 +3295,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/rulesets/{id}/archive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single ruleset",
@@ -4433,10 +3345,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/rulesets/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single ruleset",
@@ -4467,60 +3376,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetRulesetsRequest",
               "query-parameters": {
-                "archived": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "archived_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetRulesetsRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "archived": "optional<boolean>",
+                "archived_at": "optional<datetime>",
+                "dir": "optional<GetRulesetsRequestDir>",
+                "id": "optional<string>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
               },
             },
             "response": {
@@ -4538,10 +3402,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/rulesets/{id}/unarchive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single ruleset",
@@ -4560,10 +3421,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/rulesets/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -4656,10 +3514,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/sources/{id}/archive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single source",
@@ -4704,10 +3559,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/sources/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single source",
@@ -4738,66 +3590,16 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetSourcesRequest",
               "query-parameters": {
-                "archived": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<boolean>",
-                },
-                "archived_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetSourcesRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "integration_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "archived": "optional<boolean>",
+                "archived_at": "optional<datetime>",
+                "dir": "optional<GetSourcesRequestDir>",
+                "id": "optional<string>",
+                "integration_id": "optional<string>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
               },
             },
             "response": {
@@ -4815,10 +3617,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/sources/{id}/unarchive",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single source",
@@ -4837,10 +3636,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/sources/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {
@@ -4959,10 +3755,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/transformations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "A single transformation",
@@ -4979,14 +3772,8 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/transformations/{id}/executions/{execution_id}",
             "path-parameters": {
-              "execution_id": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "execution_id": "string",
+              "id": "string",
             },
             "response": {
               "docs": "A single transformation execution",
@@ -5017,68 +3804,20 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "GET",
             "path": "/transformations/{id}/executions",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "name": "GetTransformationExecutionsRequest",
               "query-parameters": {
-                "created_at": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<datetime>",
-                },
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetTransformationExecutionsRequestDir>",
-                },
-                "issue_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "log_level": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetTransformationExecutionsRequestLogLevel>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "webhook_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "created_at": "optional<datetime>",
+                "dir": "optional<GetTransformationExecutionsRequestDir>",
+                "issue_id": "optional<string>",
+                "limit": "optional<integer>",
+                "log_level": "optional<GetTransformationExecutionsRequestLogLevel>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
+                "webhook_id": "optional<string>",
               },
             },
             "response": {
@@ -5110,48 +3849,13 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetTransformationsRequest",
               "query-parameters": {
-                "dir": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<GetTransformationsRequestDir>",
-                },
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<integer>",
-                },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "next": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "order_by": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<literal<"created_at">>",
-                },
-                "prev": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "dir": "optional<GetTransformationsRequestDir>",
+                "id": "optional<string>",
+                "limit": "optional<integer>",
+                "name": "optional<string>",
+                "next": "optional<string>",
+                "order_by": "optional<literal<"created_at">>",
+                "prev": "optional<string>",
               },
             },
             "response": {
@@ -5233,10 +3937,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "method": "PUT",
             "path": "/transformations/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "request": {
               "body": {

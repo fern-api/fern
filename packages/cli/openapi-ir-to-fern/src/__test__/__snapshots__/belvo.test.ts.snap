@@ -247,15 +247,11 @@ client.accounts.list(params: {
               "name": "DetailAccountRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -414,237 +410,161 @@ client.accounts.list(params: {
               "name": "ListAccountsRequest",
               "query-parameters": {
                 "balance__available": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__available__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__available__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__available__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__available__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__available__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` within a range of two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.current\` matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.current\` greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.current\` less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__current__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that have a \`balance.available\` within a range of two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "category": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts only for the given category (for example, \`CHECKING_ACCOUNT\` and \`SAVINGS_ACCOUNT\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "category__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts only for the given categories (for example, \`CHECKING_ACCOUNT\` and \`SAVINGS_ACCOUNT\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that hold finances in only this three-letter currency code.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts that hold finances in one of these three-letter currency codes.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`account.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`account.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts only for this institution (use the Belvo-designated name, such as \`erebor_mx_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts only for these institutions (use the Belvo-designated names, such as \`erebor_mx_retail\` and \`gringotts_mx_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "name": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts with exactly this internal (specified by the institution) name.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "name__icontains": {
-                  "allow-multiple": undefined,
                   "docs": "Return accounts partially matching this internal (specified by the institution) name.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "number": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this account number (as specified by the institution).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "number__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these account numbers (as specified by the institution).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "public_identification_name": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this type of account ID. For example, CLABE accounts.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "public_identification_value": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this account ID. For example, the account number for a CLABE account.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for accounts matching this account type, as designated by the institution.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -787,15 +707,11 @@ client.accounts.list(params: {
               "name": "PatchAccountsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -936,15 +852,11 @@ client.accounts.list(params: {
               "name": "RetrieveAccountsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1195,15 +1107,11 @@ client.balances.list(params: {
               "name": "DetailBalanceRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1357,180 +1265,124 @@ client.balances.list(params: {
               "name": "ListBalancesRequest",
               "query-parameters": {
                 "account": {
-                  "allow-multiple": undefined,
                   "docs": "The \`account.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances only for these \`account.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__type": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for accounts matching this account type, as designated by the institution.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for accounts matching these account types, as designated by the institution.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "balance__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances between these two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances that are in this three-letter currency code.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances that are in these three-letter currency codes.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`balance.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for these \`balance.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances only for this institution (use the Belvo-designated name, such as \`erebor_mx_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances only for these institutions (use the Belvo-designated names, such as \`erebor_mx_retail\` and \`gringotts_mx_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "value_date": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for exactly this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for after this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for this date or later (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for before this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for this date or earlier (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances for this date range (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1664,15 +1516,11 @@ client.balances.list(params: {
               "name": "PatchBalancesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1840,15 +1688,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "BalancesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -1959,93 +1803,63 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "ListBankAccountRequest",
               "query-parameters": {
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "customer": {
-                  "allow-multiple": undefined,
                   "docs": "The \`customer.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "holder__type": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for a matched value type.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "holder__type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for listed holder types.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`bank-account.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution": {
-                  "allow-multiple": undefined,
                   "docs": "The \`institution.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "number": {
-                  "allow-multiple": undefined,
                   "docs": "Return results that exactly match a value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "number__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for listed numbers.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "providers": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -2281,61 +2095,42 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "ListCustomersRequest",
               "query-parameters": {
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "customer__type": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this customer type (either \`INDIVIDUAL\` or \`BUSINESS\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`customer.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for one or more customers that match either the name or email you searched for. 
 
 **Note:** This filter supports both full and partial search queries, with a minimum of three characters required. For example, searching for \`car\` may match the following values:
@@ -2343,7 +2138,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
   - \`Carlos Vives\`
   - \`Carmen Domínguez\` 
   - \`carlos.vives@musicacolombia.co\`",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -2525,15 +2319,11 @@ At the moment, the employment records resource is available for:
               "name": "DetailEmploymentRecordRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -2634,30 +2424,22 @@ At the moment, the employment records resource is available for:
               "name": "ListEmploymentRecordsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -2777,15 +2559,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "EmploymentRecordRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3083,15 +2861,11 @@ client.incomes.list(params: {
               "name": "DetailIncomeRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3161,60 +2935,44 @@ client.incomes.list(params: {
               "name": "ListIncomesRequest",
               "query-parameters": {
                 "account": {
-                  "allow-multiple": undefined,
                   "docs": "The \`account.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`account.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return incomes for these \`account.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return incomes only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -3284,15 +3042,11 @@ client.incomes.list(params: {
               "name": "PatchIncomesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3399,15 +3153,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "IncomesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3516,15 +3266,11 @@ You can see a complete list of institutions by either consulting our [Institutio
               "name": "DetailInstitutionRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3622,96 +3368,63 @@ You can see a complete list of institutions by either consulting our [Institutio
               "name": "ListInstitutionsRequest",
               "query-parameters": {
                 "country_code": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions only for this two-letter country code.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "country_code__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions only for these two-letter country codes.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "display_name": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions that partially match this display name.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
-                "name": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "name": "optional<string>",
                 "name__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions with one or more of these Belvo-designated names.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "resources__allin": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions that support these resources.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions with the given status. You can choose between \`healthy\` or \`down\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions with one of the given statuses. You can choose between \`healthy\` or \`down\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions of this type. You can choose between \`bank\` or \`fiscal\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions of one of these types. You can choose between \`bank\` or \`fiscal\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "website": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions with this website URL.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3892,15 +3605,11 @@ client. investments_portfolio.list(params: {
               "name": "DetailPortfolioRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -3994,76 +3703,36 @@ client. investments_portfolio.list(params: {
             "request": {
               "name": "ListPortfolioRequest",
               "query-parameters": {
-                "created_at__gt": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at__gte": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at__lt": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at__lte": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
-                "created_at__range": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "created_at__gt": "optional<string>",
+                "created_at__gte": "optional<string>",
+                "created_at__lt": "optional<string>",
+                "created_at__lte": "optional<string>",
+                "created_at__range": "optional<string>",
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
-                "link__in": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "name": undefined,
-                  "type": "optional<string>",
-                },
+                "link__in": "optional<string>",
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -4157,15 +3826,11 @@ client. investments_portfolio.list(params: {
               "name": "PatchPortfolioRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4258,15 +3923,11 @@ client. investments_portfolio.list(params: {
               "name": "RetrievePortfolioRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4403,15 +4064,11 @@ client.invoices.list(params: {
               "name": "DetailInvoiceRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4480,195 +4137,133 @@ client.invoices.list(params: {
               "name": "ListInvoicesRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`invoice.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for these \`invoice.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices issued exactly on this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices issued after this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices issued on this date or later (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances issued before this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances issued on this date or earlier (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_date__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices issued within this date range (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_identification": {
-                  "allow-multiple": undefined,
                   "docs": "Return an invoice with this ID (as provided by the insitution).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "invoice_identification__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices with these IDs (as provided by the institution).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices with this status. Can be either \`Vigente\` (valid) or \`Cancelado\` (cancelled).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices with these statuses. Can be either \`Vigente\` (valid) or \`Cancelado\` (cancelled).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "total_amount__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices between these two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices of this type. Can be either \`OUTFLOW\` or \`INFLOW\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return invoices of these types. Can be either \`OUTFLOW\` or \`INFLOW\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4715,15 +4310,11 @@ client.invoices.list(params: {
               "name": "PatchInvoicesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4806,15 +4397,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "InvoicesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -4950,15 +4537,11 @@ For single links, you have to perform POST calls to an institution **every time*
               "name": "ChangeAccessMode",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5051,15 +4634,11 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "DetailLinkRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5134,144 +4713,98 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "ListLinksRequest",
               "query-parameters": {
                 "access_mode": {
-                  "allow-multiple": undefined,
                   "docs": "Return links only with this access mode. Can be either \`single\` or \`recurrent\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_by__not_in": {
-                  "allow-multiple": undefined,
                   "docs": "Return links that were not created by these Belvo users.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "external_id": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with this external ID.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "external_id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with these external IDs.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`link.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution": {
-                  "allow-multiple": undefined,
                   "docs": "Return links created for this institution (use the Belvo-designated name, such as \`erebor_mx_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return links created for these institutions (use the Belvo-designated name, such as \`erebor_mx_retail\` and \`gringotts_co_retail\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution_user_id": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with this specific institution user ID.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "institution_user_id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with these institution user IDs.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "refresh_rate": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with this refresh rate. Choose between \`6h\`, \`12h\`, \`24h\`, \`7d\`, or \`30d\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with this status. Choose between \`valid\`, \`invalid\`, \`unconfirmed\`, or \`token_required\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return links with these statuses. Choose between \`valid\`, \`invalid\`, \`unconfirmed\`, or \`token_required\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5327,15 +4860,11 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "PatchLinksRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5535,15 +5064,11 @@ For a list of standards codes, see the table below.
               "name": "LinksRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5692,15 +5217,11 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
               "name": "LinksPutRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5846,15 +5367,11 @@ client.owners.list(params: {
               "name": "DetailOwnerRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -5924,96 +5441,66 @@ client.owners.list(params: {
               "name": "ListOwnersRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "display_name__icontains": {
-                  "allow-multiple": undefined,
                   "docs": "Return owners whose full display name partially matches your query. For example, \`mar\` will return results for Mark, Maria, Neymar, Remarque, and so on.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "email": {
-                  "allow-multiple": undefined,
                   "docs": "Returns owners whose email address match your query.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`owner.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for these \`owner.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for this \`link.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return balances only for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -6076,15 +5563,11 @@ client.owners.list(params: {
               "name": "PatchOwnersRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -6145,15 +5628,11 @@ client.owners.list(params: {
               "name": "RetrieveOwnersRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -6317,57 +5796,39 @@ client.owners.list(params: {
               "name": "ListPaymentInstitutionsRequest",
               "query-parameters": {
                 "country": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions only for this country.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "country__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return institutions only for one of these countries.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -6482,117 +5943,79 @@ A payment intent captures all payment information (such as the amount to be char
               "name": "ListPaymentIntentsRequest",
               "query-parameters": {
                 "amount": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for more than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for and more than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for less than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this amount or less.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "customer": {
-                  "allow-multiple": undefined,
                   "docs": "The \`customer.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "customer__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`customer.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`payment-intent.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "payment_method_type": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "provider": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for listed status.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -6737,80 +6160,58 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "name": "ListPaymentLinksRequest",
               "query-parameters": {
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ordering": {
-                  "allow-multiple": undefined,
                   "docs": "Return results in a specified time order. Can be either:
 
   - \`created_at\` returns payment links from newest to oldest (in ascending order).
   - \`-created_at\` returns payment links from oldest to newest (in descending order).",
-                  "name": undefined,
                   "type": "optional<ListPaymentLinksRequestOrdering>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 100. If you enter a value greater than 100, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for one or more payment links that match the description you searched for. 
 
 **Note:** This filter supports both full and partial search queries, with a minimum of three characters required. For example, searching for \`trai\` may match the following values:
 
   - \`Awesome training sneakers\` 
   - \`Training equipment\`",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return payment links with this status. Can be either \`ACTIVE\` or \`INACTIVE\`.",
-                  "name": undefined,
                   "type": "optional<ListPaymentLinksRequestStatus>",
                 },
               },
@@ -6952,141 +6353,95 @@ You can use the Payment Transactions resource in order to get useful information
               "name": "ListPaymentTransactionsRequest",
               "query-parameters": {
                 "amount": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for more than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for and more than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for less than this amount.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this amount or less.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this amount range",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "beneficiary": {
-                  "allow-multiple": undefined,
                   "docs": "The \`beneficiary.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "beneficiary__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`beneficiary.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "charge": {
-                  "allow-multiple": undefined,
                   "docs": "The \`charge.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "charge__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more \`charge.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only after this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and after (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only before this date (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return results only for this date and before (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return results between this date range (in \`YYYY-MM-DD\` format).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for a matched value type.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "description": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for a matched value type.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more payment \`transaction.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "payer": {
-                  "allow-multiple": undefined,
                   "docs": "The payer's \`bank-account.id\` you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "payer__in": {
-                  "allow-multiple": undefined,
                   "docs": "One or more payer \`bank-account.id\`s (comma separated) that you want to get results for.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "transaction__type": {
-                  "allow-multiple": undefined,
                   "docs": "Return results for a matched value type.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -7362,15 +6717,11 @@ You can use the Payment Transactions resource in order to get useful information
               "name": "DetailReceivableTransactionRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -7459,126 +6810,88 @@ You can use the Payment Transactions resource in order to get useful information
               "name": "ListReceivableTransactionsRequest",
               "query-parameters": {
                 "account": {
-                  "allow-multiple": undefined,
                   "docs": "The \`account.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions only for these \`account.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "value_date": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for exactly this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for after this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for this date or later (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for before this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for this date or earlier (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return receivable transactions for this date range (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -7682,15 +6995,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "ReceivableTransactionRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -7916,15 +7225,11 @@ client. recurring_expenses.list(params: {
               "name": "DetailRecurringExpenseRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -8072,72 +7377,52 @@ client. recurring_expenses.list(params: {
               "name": "ListRecurringExpensesRequest",
               "query-parameters": {
                 "account": {
-                  "allow-multiple": undefined,
                   "docs": "The \`account.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account_in": {
-                  "allow-multiple": undefined,
                   "docs": "Return recurring expenses for these \`accound.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`recurring-expense.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`recurring-expense.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding either the \`link.id\` or the \`account.id\` filters in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -8283,15 +7568,11 @@ client. recurring_expenses.list(params: {
               "name": "PatchRecurringExpensesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -8470,15 +7751,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "RecurringExpensesRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -8680,15 +7957,11 @@ client. risk_insights.list(params: {
               "name": "DetailRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -8811,57 +8084,41 @@ client. risk_insights.list(params: {
               "name": "ListRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`risk-insight.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`risk-insight.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -8984,15 +8241,11 @@ client. risk_insights.list(params: {
               "name": "PatchRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9115,15 +8368,11 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "RetrieveRiskInsightsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9392,15 +8641,11 @@ client.tax_compliance_status.list(params: {
               "name": "DetailTaxComplianceStatusRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9462,87 +8707,61 @@ client.tax_compliance_status.list(params: {
               "name": "ListTaxComplianceStatusRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax compliance statuses that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax compliance statuses that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax compliance statuses that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax compliance statuses that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax compliance statuses that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`tax-compliance-status.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`tax-compliance-status.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -9611,15 +8830,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "TaxComplianceStatusRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9694,15 +8909,11 @@ At the moment, the Tax Declaration resource is available for:
               "name": "DetailTaxDeclarationRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9725,123 +8936,85 @@ At the moment, the Tax Declaration resource is available for:
               "name": "ListTaxDeclarationsRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`tax-declaration.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`tax-declaration.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "year": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations for this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "year__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations for after this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "year__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations for this year or after (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "year__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations for before this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "year__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations for this year or earlier (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "year__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax declarations between these two years (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -9915,15 +9088,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "TaxDeclarationsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10124,15 +9293,11 @@ client.tax_retentions.list(params: {
               "name": "DetailTaxRetentionsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10212,75 +9377,53 @@ client.tax_retentions.list(params: {
               "name": "ListTaxRetentionsRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax retentions that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax retentions that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax retentions that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax retentions that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax retentions that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -10389,15 +9532,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "TaxRetentionsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10525,15 +9664,11 @@ client.tax_returns.list(params: {
               "name": "DetailTaxReturnRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10556,135 +9691,93 @@ client.tax_returns.list(params: {
               "name": "ListTaxReturnsRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for exactly this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for after this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for this year or later (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for before this year (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for this year and earlier (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "ejercicio__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns for this range of years (\`YYYY\`).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`tax-return.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`tax-return.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "tipo_declaracion": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns with this declaration type.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "tipo_declaracion__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax returns with these declaration types.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10711,15 +9804,11 @@ client.tax_returns.list(params: {
               "name": "RetrieveTaxReturnsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10869,15 +9958,11 @@ client.tax_status.list(params: {
               "name": "DetailTaxStatusRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -10928,87 +10013,61 @@ client.tax_status.list(params: {
               "name": "ListTaxStatusRequest",
               "query-parameters": {
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax statuses that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax statuses that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax statuses that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax statuses that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return tax statuses that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for this \`tax-status.id\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "id__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`tax-status.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`link.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information for these \`link.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page. 
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
               },
@@ -11052,15 +10111,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "name": "TaxStatusRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -11345,15 +10400,11 @@ client.transactions.list(params: {
               "name": "DetailTransactionRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -11562,360 +10613,244 @@ client.transactions.list(params: {
               "name": "ListTransactionsRequest",
               "query-parameters": {
                 "account": {
-                  "allow-multiple": undefined,
                   "docs": "The \`account.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`account.id\` filter in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__available": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.available\` matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__available__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.available\` less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__available__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.available\` less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__available__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.available\` within a range of two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__balance__current__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that have a \`account.balance.current\` within a range of two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions only for these \`account.id\`s.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account_type": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for transactions matching this account type, as designated by the institution.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "account_type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return information only for transactions matching these account types, as designated by the institution.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution on exactly this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution after this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution on this date or later (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution before this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution on this date or earlier (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "accounting_date__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were processed by the institution in this date range (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions matching exactly this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions greater than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions greater than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions less than this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions less than or equal to this value.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "amount__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions between these two values.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "collected_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were retrieved from the institution between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database after this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database after or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database before this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database before or on this date (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "created_at__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that were last updated in Belvo's database between two dates (\`YYYY-MM-DD\` or full \`ISO-8601\` timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "credit_card_data__bill_name__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions for one of these bill names.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions in only this three-letter currency code.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "currency__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions in one of these three-letter currency codes.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "link": {
-                  "allow-multiple": undefined,
                   "docs": "The \`link.id\` you want to filter by.
 
 ℹ️ We highly recommend adding the \`account.id\` filter as well in order to improve your performance.
 ",
-                  "name": undefined,
                   "type": "string",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "page_size": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates how many results to return per page. By default we return 100 results per page.
 
 ℹ️ The minimum number of results returned per page is 1 and the maximum is 1000. If you enter a value greater than 1000, our API will default to the maximum value (1000).
 ",
-                  "name": undefined,
                   "type": "optional<integer>",
                 },
                 "reference": {
-                  "allow-multiple": undefined,
                   "docs": "Returns transactions with this institution-assigned reference number.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "reference__in": {
-                  "allow-multiple": undefined,
                   "docs": "Returns transactions with these institution-assigned reference numbers.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions with this status. Can be either \`PENDING\`, \`PROCESSED\`, or \`UNCATEGORIZED\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "status__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions with these statuses. Can be either \`PENDING\`, \`PROCESSED\`, or \`UNCATEGORIZED\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions with this type. Can be either \`INFLOW\` or \`OUTFLOW\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "type__in": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions with this types. Can be either \`INFLOW\` or \`OUTFLOW\`.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that occurred on exactly this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that occurred after this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__gte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that occurred on this date or later (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lt": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that occurred before this date (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__lte": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions that occurred on this date or earlier (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "value_date__range": {
-                  "allow-multiple": undefined,
                   "docs": "Return transactions for this date range (\`YYYY-MM-DD\` or full ISO-8601 timestamp).",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -12074,15 +11009,11 @@ client.transactions.list(params: {
               "name": "PatchTransactionsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -12245,15 +11176,11 @@ If you try to access older information than what we can access, we will return a
               "name": "RetrieveTransactionsRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },
@@ -12314,15 +11241,11 @@ If you try to access older information than what we can access, we will return a
               "name": "RetrieveTransactionsAsyncRequest",
               "query-parameters": {
                 "fields": {
-                  "allow-multiple": undefined,
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
                 "omit": {
-                  "allow-multiple": undefined,
                   "docs": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-                  "name": undefined,
                   "type": "optional<string>",
                 },
               },

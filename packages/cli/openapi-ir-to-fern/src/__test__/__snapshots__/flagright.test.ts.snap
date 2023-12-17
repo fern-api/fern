@@ -230,15 +230,11 @@ Here are some of the most used payload fields explained (you can find the full p
             "name": "PostConsumerTransactionRequest",
             "query-parameters": {
               "validateDestinationUserId": {
-                "allow-multiple": undefined,
                 "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
-                "name": undefined,
                 "type": "optional<string>",
               },
               "validateOriginUserId": {
-                "allow-multiple": undefined,
                 "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
-                "name": undefined,
                 "type": "optional<string>",
               },
             },

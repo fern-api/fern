@@ -17,8 +17,6 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
             "name": "GetUserRequest",
             "query-parameters": {
               "foo": {
-                "allow-multiple": undefined,
-                "docs": undefined,
                 "name": "bar",
                 "type": "string",
               },
