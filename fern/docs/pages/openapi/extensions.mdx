@@ -185,11 +185,13 @@ servers:
 
 In a generated TypeScript SDK, you'd see:
 
+<CodeBlock title="environment.ts">
 ```yaml
-  const client = new ExampleClient({
-    environment: ExampleEnvironment.PRODUCTION,
-    ...
-  });
+export const ExampleEnvironment = {
+    Production: "https://api.example.com",
+} as const;
+
+export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ```
 
 ## Audiences
