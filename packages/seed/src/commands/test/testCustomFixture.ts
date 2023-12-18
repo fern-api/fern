@@ -1,7 +1,6 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
@@ -34,7 +33,7 @@ export async function testCustomFixture({
     const taskContext = taskContextFactory.create(`${workspace.workspaceName}:${"custom"} -`);
 
     const result = await acquireLocksAndRunTest({
-        absolutePathToWorkspace: join(pathToFixture, RelativeFilePath.of(FERN_DIRECTORY)),
+        absolutePathToWorkspace: join(pathToFixture),
         lock,
         irVersion,
         outputVersion: undefined,
