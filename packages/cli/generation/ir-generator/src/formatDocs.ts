@@ -5,8 +5,10 @@ export async function formatDocs(docs: string | undefined): Promise<string | und
         const formattedDocs = prettier.format(docs, {
             parser: "markdown"
         });
-        const formattedDocsWoNewline = formattedDocs.replace(/[\r\n]+$/, "");
-        return formattedDocsWoNewline;
+        if (formattedDocs.endsWith("\n") || formattedDocs.endsWith("\r")) {
+            return formattedDocs.substring(0, formattedDocs.length - 1);
+        }
+        return formattedDocs;
     }
     return docs;
 }
