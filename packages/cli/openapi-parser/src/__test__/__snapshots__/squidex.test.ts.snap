@@ -24,6 +24,7 @@ exports[`open api parser squidex parse open api 1`] = `
         {
           "description": "Optional query to search by email address or username.",
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43,6 +44,7 @@ exports[`open api parser squidex parse open api 1`] = `
         {
           "description": "The number of users to skip.",
           "name": "skip",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -60,6 +62,7 @@ exports[`open api parser squidex parse open api 1`] = `
         {
           "description": "The number of users to return.",
           "name": "take",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -574,6 +577,7 @@ exports[`open api parser squidex parse open api 1`] = `
         {
           "description": "The query to search the user by email address. Case invariant.",
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2162,6 +2166,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The search query.",
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5862,6 +5867,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Runs the rule from snapeshots if possible.",
           "name": "fromSnapshots",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6170,6 +6176,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional rule id to filter to events.",
           "name": "ruleId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6189,6 +6196,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The number of events to skip.",
           "name": "skip",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6206,6 +6214,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The number of events to take.",
           "name": "take",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7128,6 +7137,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The latest received version.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7287,6 +7297,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The name of the channel.",
           "name": "channel",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7394,6 +7405,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The name of the channel.",
           "name": "channel",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7822,6 +7834,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional ids of the content to fetch.",
           "name": "ids",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7841,6 +7854,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional json query.",
           "name": "q",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7937,6 +7951,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The initial status.",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7956,6 +7971,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional custom content id.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7975,6 +7991,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to automatically publish the content.",
           "name": "publish",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8183,6 +8200,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional version.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8292,6 +8310,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The initial status.",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8311,6 +8330,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Makes the update as patch.",
           "name": "patch",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8328,6 +8348,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to automatically publish the content.",
           "name": "publish",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8591,6 +8612,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to check referrers of this content.",
           "name": "checkReferrers",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8608,6 +8630,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to delete the content permanently.",
           "name": "permanent",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8927,6 +8950,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional json query.",
           "name": "q",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9037,6 +9061,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional json query.",
           "name": "q",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9985,6 +10010,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The current version.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10361,6 +10387,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The current version.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10688,6 +10715,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The ID of the app.",
           "name": "appId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10707,6 +10735,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The name of the app.",
           "name": "app",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11059,6 +11088,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional version of the asset.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11076,6 +11106,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The cache duration in seconds.",
           "name": "cache",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11093,6 +11124,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Set it to 0 to prevent download.",
           "name": "download",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11110,6 +11142,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The target width of the asset, if it is an image.",
           "name": "width",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11127,6 +11160,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The target height of the asset, if it is an image.",
           "name": "height",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11144,6 +11178,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional image quality, it is is an jpeg image.",
           "name": "quality",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11161,6 +11196,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The resize mode when the width and height is defined.",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11178,6 +11214,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional background color.",
           "name": "bg",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11197,6 +11234,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Override the y focus point.",
           "name": "focusX",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11214,6 +11252,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Override the x focus point.",
           "name": "focusY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11231,6 +11270,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to ignore the asset focus point if any.",
           "name": "nofocus",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11248,6 +11288,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to use auto format.",
           "name": "auto",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11265,6 +11306,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to force a new resize even if it already stored.",
           "name": "force",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11282,6 +11324,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to force a new resize even if it already stored.",
           "name": "format",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11349,6 +11392,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional version of the asset.",
           "name": "version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11366,6 +11410,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The cache duration in seconds.",
           "name": "cache",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11383,6 +11428,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Set it to 0 to prevent download.",
           "name": "download",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11400,6 +11446,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The target width of the asset, if it is an image.",
           "name": "width",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11417,6 +11464,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The target height of the asset, if it is an image.",
           "name": "height",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11434,6 +11482,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional image quality, it is is an jpeg image.",
           "name": "quality",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11451,6 +11500,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The resize mode when the width and height is defined.",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11468,6 +11518,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional background color.",
           "name": "bg",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11487,6 +11538,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Override the y focus point.",
           "name": "focusX",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11504,6 +11556,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Override the x focus point.",
           "name": "focusY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11521,6 +11574,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to ignore the asset focus point if any.",
           "name": "nofocus",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11538,6 +11592,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to use auto format.",
           "name": "auto",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11555,6 +11610,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to force a new resize even if it already stored.",
           "name": "force",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11572,6 +11628,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to force a new resize even if it already stored.",
           "name": "format",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11642,6 +11699,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional parent folder id.",
           "name": "parentId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11661,6 +11719,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The scope of the query.",
           "name": "scope",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12282,6 +12341,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional parent folder id.",
           "name": "parentId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12301,6 +12361,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional asset ids.",
           "name": "ids",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12320,6 +12381,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional json query.",
           "name": "q",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12339,6 +12401,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional number of items to take.",
           "name": "$top",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12356,6 +12419,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional number of items to skip.",
           "name": "$skip",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12373,6 +12437,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional OData order definition.",
           "name": "$orderby",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12392,6 +12457,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "Optional OData filter.",
           "name": "$filter",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12474,6 +12540,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional parent folder id.",
           "name": "parentId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12493,6 +12560,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional custom asset id.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12512,6 +12580,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to duplicate the asset, event if the file has been uploaded.",
           "name": "duplicate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12768,6 +12837,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "The optional parent folder id.",
           "name": "parentId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12787,6 +12857,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to duplicate the asset, event if the file has been uploaded.",
           "name": "duplicate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13011,6 +13082,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to check referrers of this asset.",
           "name": "checkReferrers",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13028,6 +13100,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "description": "True to delete the asset permanently.",
           "name": "permanent",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

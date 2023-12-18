@@ -1457,6 +1457,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1474,6 +1475,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1491,6 +1493,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Set sort order. Allows "asc" (ascending) or "desc"  (descending)",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1521,6 +1524,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters for all booking line items from a purchase order",
           "name": "f.purchase_order.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1538,6 +1542,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters for all booking line items from a specific booking",
           "name": "f.booking.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1555,6 +1560,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters for all booking line items from a specific purchase order line item.",
           "name": "f.purchase_order_line_item.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3987,6 +3993,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4004,6 +4011,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4021,6 +4029,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Sort results by the specified field.",
           "name": "sort",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4051,6 +4060,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4081,6 +4091,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filter the list based on status of the booking",
           "name": "f.status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4111,6 +4122,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filter by the shipment resulting from the booking",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4128,6 +4140,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list based on the booking's consignee",
           "name": "f.consignee_entity_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4147,6 +4160,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list based on the booking's shipper",
           "name": "f.shipper_entity_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4166,6 +4180,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": undefined,
           "name": "f.name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4185,6 +4200,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with the specified cargo ready date",
           "name": "f.cargo_ready_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4204,6 +4220,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with cargo ready date after the specified date",
           "name": "f.cargo_ready_date.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4223,6 +4240,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with cargo ready date after the specified date, inclusive",
           "name": "f.cargo_ready_date.gte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4242,6 +4260,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with cargo ready date before the specified date",
           "name": "f.cargo_ready_date.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4261,6 +4280,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with cargo ready date before the specified date, inclusive",
           "name": "f.cargo_ready_date.lte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4280,6 +4300,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings with the specified created_at",
           "name": "f.created_at",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4299,6 +4320,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings created after the specified date",
           "name": "f.created_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4318,6 +4340,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings created after the specified date, inclusive",
           "name": "f.created_at.gte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4337,6 +4360,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings created before the specified date",
           "name": "f.created_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4356,6 +4380,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for bookings created before the specified date, inclusive",
           "name": "f.created_at.lte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4376,6 +4401,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "description": "Filters the list for bookings that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return bookings matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: \`f.metadata.PO #=123\` is invalid. It should instead be \`f.metadata.PO%20%23\`
 ",
           "name": "f.metadata.YOUR_METADATA_KEY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9839,6 +9865,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9856,6 +9883,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9873,6 +9901,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "The unique id for the shipment.",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9892,6 +9921,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters results based on the invoice number.",
           "name": "f.invoice_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9911,6 +9941,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters results based on the involved party seller ID.",
           "name": "f.involved_party_seller_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9930,6 +9961,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters results based on the invoolved party seller ref.",
           "name": "f.involved_party_seller_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13287,6 +13319,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13304,6 +13337,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13321,6 +13355,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "The unique id for the shipment.",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13929,6 +13964,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13946,6 +13982,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13963,6 +14000,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that belong to the given shipment",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13982,6 +14020,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that are the given type",
           "name": "f.document_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14001,6 +14040,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that have been archived",
           "name": "f.archived_at.exists",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14020,6 +14060,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that where uploaded after the given time",
           "name": "f.uploaded_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14039,6 +14080,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that where uploaded before the given time",
           "name": "f.uploaded_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14058,6 +14100,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that where uploaded on or after the given time",
           "name": "f.uploaded_at.gte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14077,6 +14120,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for documents that where uploaded on or before the given time",
           "name": "f.uploaded_at.lte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17134,6 +17178,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filter by the type of the event",
           "name": "f.type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17153,6 +17198,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filter by events which occurred on or after this datetime",
           "name": "f.occurred_at.gte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17172,6 +17218,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filter by events which occurred on or before this datetime",
           "name": "f.occurred_at.lte",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17191,6 +17238,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Get all events which involved the shipment with this ID",
           "name": "f.data.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17208,6 +17256,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Get all events which involved a resource of this type. The key for this filter will be the '_object' value for your target resource",
           "name": "f.data.resource._object",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20677,6 +20726,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20694,6 +20744,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20711,6 +20762,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Sort results by the specified field.",
           "name": "sort",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20729,6 +20781,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending).",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20759,6 +20812,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list based on the status of the invoice",
           "name": "f.status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20801,6 +20855,7 @@ we still recommend setting the Content-Type header to the value \`application/js
         {
           "description": "Filters the list for invoices associated with a shipment",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20820,6 +20875,7 @@ we still recommend setting the Content-Type header to the value \`application/js
 This parameter is mutually exclusive with the f.shipment.id filter.
 ",
           "name": "f.billed_directly_to_client",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20837,6 +20893,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the ID of the company entity that receives the invoice",
           "name": "f.entity.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20854,6 +20911,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the ref of the company entity that receives the invoice",
           "name": "f.entity.ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20873,6 +20931,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the name of the invoice",
           "name": "f.name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20892,6 +20951,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for invoices issued after the specified date",
           "name": "f.issued_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20911,6 +20971,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for invoices issued before the specified date",
           "name": "f.issued_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20930,6 +20991,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for invoices last updated after the specified date",
           "name": "f.last_updated_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20949,6 +21011,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for invoices last updated before the specified date",
           "name": "f.last_updated_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20968,6 +21031,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "[DEPRECATED] Filters the list for invoices billed directly to a client",
           "name": "f.client_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -20985,6 +21049,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "[DEPRECATED] Filters the list for invoices associated with a shipment",
           "name": "f.shipment_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22250,6 +22315,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22267,6 +22333,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22284,6 +22351,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for the company.",
           "name": "f.ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22303,6 +22371,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return companies that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return companies matching any of the specified metadata values for that metadata key.",
           "name": "f.metadata.YOUR_METADATA_KEY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23836,6 +23905,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23853,6 +23923,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23870,6 +23941,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for the company entity",
           "name": "f.ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23889,6 +23961,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id for the company entity's parent company",
           "name": "f.company_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23908,6 +23981,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for the company entity's parent company",
           "name": "f.company_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25461,6 +25535,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25478,6 +25553,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25495,6 +25571,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for the company.",
           "name": "f.company_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25514,6 +25591,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id for the company.",
           "name": "f.company.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25533,6 +25611,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters out all contacts not related to this location.",
           "name": "f.location.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26690,6 +26769,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26707,6 +26787,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26724,6 +26805,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for the location.",
           "name": "f.ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26743,6 +26825,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The ref for a company.",
           "name": "f.company_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26762,6 +26845,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id for a company.",
           "name": "f.company.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26781,6 +26865,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id for a contact at this location.",
           "name": "f.contact.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26800,6 +26885,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return locations that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return locations matching any of the specified metadata values for that metadata key.",
           "name": "f.metadata.YOUR_METADATA_KEY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28488,6 +28574,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28505,6 +28592,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28522,6 +28610,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers legs associated with the shipment leg specified by this id.",
           "name": "f.leg.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28539,6 +28628,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers legs associated with the shipment container specified by this id.",
           "name": "f.shipment_container.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28556,6 +28646,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers legs associated with the given container number.",
           "name": "f.shipment_container.container_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29491,6 +29582,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29508,6 +29600,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29525,6 +29618,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers associated with the shipment specified by this id.",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29542,6 +29636,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers associated with the given container number.",
           "name": "f.container_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29561,6 +29656,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return containers that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return containers matching any of the specified metadata values for that metadata key.",
           "name": "f.metadata.YOUR_METADATA_KEY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30538,6 +30634,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30555,6 +30652,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30572,6 +30670,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter by the type of port. Ports can have more than one type",
           "name": "f.port_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30614,6 +30713,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter by unlocode.",
           "name": "f.unlocode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31088,6 +31188,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Find the products having this SKU. SKUs are unique among active products, but there may be archived products that share the same sku.",
           "name": "f.sku",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31107,6 +31208,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter out all archived products (f.archived_at.exists=false) or filter out all unarchived products (f.archived_at.exists=true)",
           "name": "f.archived_at.exists",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31124,6 +31226,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Search for product properties that are key-value pairs. The key (TYPE) is appended at the end of the parameter name. Multiple property filters can be added to the same query. E.G. f.product_properties.color=blue",
           "name": "f.product_properties.TYPE",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33496,6 +33599,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33513,6 +33617,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33530,6 +33635,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33560,6 +33666,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the purchase order id",
           "name": "f.purchase_order.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33577,6 +33684,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on line item number",
           "name": "f.line_item_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33596,6 +33704,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on item key",
           "name": "f.item_key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33615,6 +33724,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
           "name": "f.purchase_order_version.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35696,6 +35806,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35713,6 +35824,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page Should be between 1 and 100 (inclusive)",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35730,6 +35842,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Sort results by the specified field (only \`id\` is supported at this time)",
           "name": "sort",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35748,6 +35861,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Set sort order. Allows "asc"(ascending) or "desc" (descending)",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35778,6 +35892,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter out all archived purchase orders (f.archived_at.exists=false) or filter out all unarchived purchase orders (f.archived_at.exists=true)",
           "name": "f.archived_at.exists",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35795,6 +35910,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the PO status",
           "name": "f.status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35831,6 +35947,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on PO buyer",
           "name": "f.buyer_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35850,6 +35967,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the PO seller",
           "name": "f.seller_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35869,6 +35987,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the PO seller entity",
           "name": "f.seller_entity_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35888,6 +36007,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the PO buyer entity",
           "name": "f.buyer_entity_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -35907,6 +36027,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on which role you take in the PO. You can state multiple roles with a comma.",
           "name": "f.roles",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36002,6 +36123,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter the list based on whether a PO is on the shipment matching the provided ID",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36019,6 +36141,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter the list based on PO name",
           "name": "f.name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36038,6 +36161,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter the list for POs last updated before the provided time",
           "name": "f.updated_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36057,6 +36181,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filter the list for POs last updated after the provided time",
           "name": "f.updated_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -38372,6 +38497,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "The id of the version of a purchase order. By default, the latest version of the purchase order is used.",
           "name": "f.purchase_order_version.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40631,6 +40757,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40648,6 +40775,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40665,6 +40793,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return legs for the shipment specified by this id.",
           "name": "f.shipment.id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40682,6 +40811,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Only return legs that match the given transportation mode",
           "name": "f.transportation_mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40699,6 +40829,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Returns legs including deleted legs",
           "name": "f.include_deleted",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41717,6 +41848,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Retrieves the leg even if it was deleted",
           "name": "f.include_deleted",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43512,6 +43644,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Page number of the page to retrieve",
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43529,6 +43662,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Count of items in each page. Should be between 1 and 100 (inclusive).",
           "name": "per",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43546,6 +43680,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Sort results by the specified field.",
           "name": "sort",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43594,6 +43729,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Set sort order. Allows "asc" (ascending) or "desc" (descending).",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43624,6 +43760,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the shipment's \`transportation_mode\`. One of \`ocean\` or \`air\`.",
           "name": "f.transportation_mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43641,6 +43778,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on the shipment's \`status\`. Cannot be used with \`f.statuses.any\`",
           "name": "f.status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43658,6 +43796,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for all shipments whose \`status\` is one of the passed in statuses. Can pass in multiple comma-separated statuses.",
           "name": "f.statuses.any",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43675,6 +43814,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that are associated with a container specified by the given container number.",
           "name": "f.container_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43694,6 +43834,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that are associated with the given purchase order number",
           "name": "f.purchase_order",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43713,6 +43854,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that are associated a product identified by the given SKU.",
           "name": "f.sku",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43732,6 +43874,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that where updated after the given time",
           "name": "f.updated_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43751,6 +43894,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that where updated before the given time",
           "name": "f.updated_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43770,6 +43914,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that where archived after the given time",
           "name": "f.archived_at.gt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43789,6 +43934,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that where archived before the given time",
           "name": "f.archived_at.lt",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43808,6 +43954,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that are associated with the given master bill number",
           "name": "f.master_bill_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43827,6 +43974,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that are associated with the given house bill number",
           "name": "f.house_bill_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43846,6 +43994,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that have the specified company entity (denoted by external ref) as a consignee",
           "name": "f.consignee_external_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43865,6 +44014,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that have a shipment leg with the same origin address ref",
           "name": "f.origin_address_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43884,6 +44034,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list for shipments that have a shipment leg with the same destination address ref",
           "name": "f.destination_address_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43904,6 +44055,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "description": "Filters the list for shipments that have a specific metadata key-value pair. Multiple metadata filters can be added to a single query. If there are multiple metadata filters each with the same metadata key, then the filter will return shipments matching any of the specified metadata values for that metadata key. Note that keys must be URL encoded; e.g.: \`f.metadata.PO #=123\` is invalid. It should instead be \`f.metadata.PO%20%23\`
 ",
           "name": "f.metadata.YOUR_METADATA_KEY",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43923,6 +44075,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_freight_management_bco",
           "name": "f.wants_freight_management_bco",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43940,6 +44093,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_flexport_freight",
           "name": "f.wants_flexport_freight",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43957,6 +44111,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_import_customs_service",
           "name": "f.wants_import_customs_service",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43974,6 +44129,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_export_customs_service",
           "name": "f.wants_export_customs_service",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43991,6 +44147,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_commercial_invoice_transcription",
           "name": "f.wants_commercial_invoice_transcription",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44008,6 +44165,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_flexport_insurance",
           "name": "f.wants_flexport_insurance",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44025,6 +44183,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_pickup_service",
           "name": "f.wants_pickup_service",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44042,6 +44201,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_trade_declaration_service",
           "name": "f.wants_trade_declaration_service",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44059,6 +44219,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's visibility_only flag",
           "name": "f.visibility_only",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44076,6 +44237,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on shipment's wants_delivery_service flag",
           "name": "f.wants_delivery_service",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -44093,6 +44255,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         {
           "description": "Filters the list based on whether the shipment belongs to a buyer's consolidation",
           "name": "f.belongs_to_a_buyers_consol",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

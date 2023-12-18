@@ -31,7 +31,6 @@ exports[`open api parser devrev simple 1`] = `
               "name": "ArtifactsLocateRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the artifact to get the URL for.",
                   "type": "string",
                 },
@@ -163,7 +162,6 @@ connections can not be deleted using this method.
               "name": "DevOrgAuthConnectionsGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "ID of the authentication connection.",
                   "type": "string",
                 },
@@ -407,7 +405,6 @@ given Dev organization.
               "name": "AuthTokensGetRequest",
               "query-parameters": {
                 "token_id": {
-                  "allow-multiple": undefined,
                   "docs": "The unique identifier of the token under a given Dev organization.
 ",
                   "type": "string",
@@ -454,21 +451,18 @@ token type issued for a given subject.
               "name": "AuthTokensListRequest",
               "query-parameters": {
                 "client_id": {
-                  "allow-multiple": undefined,
                   "docs": "An identifier that represents the application, which requested the
 token. Only relevant for application access tokens.
 ",
                   "type": "optional<string>",
                 },
                 "requested_token_type": {
-                  "allow-multiple": undefined,
                   "docs": "The type of the requested token. If no value is specified, the
 response will include tokens of all the types.
 ",
                   "type": "optional<root.AuthTokenRequestedTokenType>",
                 },
                 "subject": {
-                  "allow-multiple": undefined,
                   "docs": "The subject associated with the token. In the absence of this
 parameter, the ID of the authenticated entity is treated as the
 subject.
@@ -605,7 +599,6 @@ organization.
               "name": "DevUsersListRequest",
               "query-parameters": {
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -617,13 +610,11 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of Dev users to return. The default is '50'.
 ",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -763,7 +754,6 @@ used.
               "name": "PartsGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the part to retrieve.",
                   "type": "string",
                 },
@@ -813,20 +803,17 @@ used.
                   "type": "optional<string>",
                 },
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of parts to return. The default is '50'.
 ",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -1006,7 +993,6 @@ records.
               "name": "RevOrgsGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the required Rev organization.",
                   "type": "string",
                 },
@@ -1058,20 +1044,17 @@ to access.
                   "type": "optional<string>",
                 },
                 "created_date.after": {
-                  "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
                   "type": "optional<datetime>",
                 },
                 "created_date.before": {
-                  "allow-multiple": undefined,
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
                   "type": "optional<datetime>",
                 },
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -1083,26 +1066,22 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of Rev organizations to be retrieved per page.
 ",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
                   "type": "optional<root.ListMode>",
                 },
                 "modified_date.after": {
-                  "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
                   "type": "optional<datetime>",
                 },
                 "modified_date.before": {
-                  "allow-multiple": undefined,
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
@@ -1298,7 +1277,6 @@ permitted.
               "name": "TagsGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The requested tag's ID.",
                   "type": "string",
                 },
@@ -1341,19 +1319,16 @@ permitted.
               "name": "TagsListRequest",
               "query-parameters": {
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of tags to return. The default is '50'.",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
@@ -1461,7 +1436,6 @@ tags.
               "name": "TimelineEntriesGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the timeline entry to get.",
                   "type": "string",
                 },
@@ -1506,28 +1480,24 @@ tags.
               "name": "TimelineEntriesListRequest",
               "query-parameters": {
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of entries to return. If not set, then this
 defaults to \`50\`.
 ",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",
                   "type": "optional<root.ListMode>",
                 },
                 "object": {
-                  "allow-multiple": undefined,
                   "docs": "The ID of the object to list timeline entries for.",
                   "type": "string",
                 },
@@ -1678,7 +1648,6 @@ response.
               "name": "WebhooksGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "ID for the webhook.",
                   "type": "string",
                 },
@@ -1895,7 +1864,6 @@ won't receive any object events until successfully verified.
                   "type": "optional<string>",
                 },
                 "first": {
-                  "allow-multiple": undefined,
                   "docs": "The number of work items to return. The default is '50', the maximum
 is '5000'.
 ",
@@ -1964,7 +1932,6 @@ organizations.
               "name": "WorksGetRequest",
               "query-parameters": {
                 "id": {
-                  "allow-multiple": undefined,
                   "docs": "The work's ID.",
                   "type": "string",
                 },
@@ -2020,7 +1987,6 @@ organizations.
                   "type": "optional<string>",
                 },
                 "cursor": {
-                  "allow-multiple": undefined,
                   "docs": "The cursor to resume iteration from. If not provided, then iteration
 starts from the beginning.
 ",
@@ -2038,13 +2004,11 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of works to return. The default is '50'.
 ",
                   "type": "optional<integer>",
                 },
                 "mode": {
-                  "allow-multiple": undefined,
                   "docs": "The iteration mode to use, otherwise if not set, then "after" is
 used.
 ",

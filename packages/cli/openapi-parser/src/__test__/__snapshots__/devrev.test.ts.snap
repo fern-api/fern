@@ -30,6 +30,7 @@ exports[`open api parser devrev parse open api 1`] = `
         {
           "description": "The ID of the artifact to get the URL for.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -263,6 +264,7 @@ given Dev organization.
           "description": "The unique identifier of the token under a given Dev organization.
 ",
           "name": "token_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -350,6 +352,7 @@ token type issued for a given subject.
 token. Only relevant for application access tokens.
 ",
           "name": "client_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -371,6 +374,7 @@ token. Only relevant for application access tokens.
 response will include tokens of all the types.
 ",
           "name": "requested_token_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -391,6 +395,7 @@ parameter, the ID of the authenticated entity is treated as the
 subject.
 ",
           "name": "subject",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -687,6 +692,7 @@ connections can not be deleted using this method.
         {
           "description": "ID of the authentication connection.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -956,6 +962,7 @@ disabled.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -975,6 +982,7 @@ starts from the beginning.
         {
           "description": "Filters Dev users based on email addresses.",
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1000,6 +1008,7 @@ starts from the beginning.
           "description": "The maximum number of Dev users to return. The default is '50'.
 ",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1019,6 +1028,7 @@ starts from the beginning.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1037,6 +1047,7 @@ used.
           "description": "Fields to sort the Dev users by and the direction to sort them.
 ",
           "name": "sort_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1061,6 +1072,7 @@ used.
         {
           "description": "Filters Dev users based on state.",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1305,6 +1317,7 @@ used.
         {
           "description": "The ID of the part to retrieve.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1400,6 +1413,7 @@ used.
         {
           "description": "Filters for parts created by any of these users.",
           "name": "created_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1426,6 +1440,7 @@ used.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1446,6 +1461,7 @@ starts from the beginning.
           "description": "The maximum number of parts to return. The default is '50'.
 ",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1465,6 +1481,7 @@ starts from the beginning.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1482,6 +1499,7 @@ used.
         {
           "description": "Filters for parts of the provided name(s).",
           "name": "name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1506,6 +1524,7 @@ used.
         {
           "description": "Filters for parts owned by any of these users.",
           "name": "owned_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1530,6 +1549,7 @@ used.
         {
           "description": "Filters for parts of the provided type(s).",
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1789,6 +1809,7 @@ organization.
         {
           "description": "The ID of the required Rev organization.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1875,6 +1896,7 @@ to access.
         {
           "description": "Filters by creator.",
           "name": "created_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1900,6 +1922,7 @@ to access.
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
           "name": "created_date.after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1919,6 +1942,7 @@ to access.
 (inclusive).
 ",
           "name": "created_date.before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1938,6 +1962,7 @@ to access.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1957,6 +1982,7 @@ starts from the beginning.
         {
           "description": "List of external refs to filter Rev organizations for.",
           "name": "external_ref",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1982,6 +2008,7 @@ starts from the beginning.
           "description": "The maximum number of Rev organizations to be retrieved per page.
 ",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2001,6 +2028,7 @@ starts from the beginning.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2019,6 +2047,7 @@ used.
           "description": "Filters for objects created after the provided timestamp (inclusive).
 ",
           "name": "modified_date.after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2038,6 +2067,7 @@ used.
 (inclusive).
 ",
           "name": "modified_date.before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2057,6 +2087,7 @@ used.
 them.
 ",
           "name": "sort_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2317,6 +2348,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "The requested tag's ID.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2401,6 +2433,7 @@ and a logical concept denoted by the tag's name.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2420,6 +2453,7 @@ starts from the beginning.
         {
           "description": "The maximum number of tags to return. The default is '50'.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2439,6 +2473,7 @@ starts from the beginning.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2612,6 +2647,7 @@ used.
         {
           "description": "The ID of the timeline entry to get.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2705,6 +2741,7 @@ used.
         {
           "description": "The ID of the object to list timeline entries for.",
           "name": "object",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2721,6 +2758,7 @@ used.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2742,6 +2780,7 @@ starts from the beginning.
 defaults to \`50\`.
 ",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2761,6 +2800,7 @@ defaults to \`50\`.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3011,6 +3051,7 @@ used.
         {
           "description": "ID for the webhook.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3372,6 +3413,7 @@ used.
         {
           "description": "Filters for work belonging to any of the provided parts.",
           "name": "applies_to_part",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3396,6 +3438,7 @@ used.
         {
           "description": "Filters for work created by any of these users.",
           "name": "created_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3422,6 +3465,7 @@ used.
 is '5000'.
 ",
           "name": "first",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3439,6 +3483,7 @@ is '5000'.
         {
           "description": "Filters for issues with any of the provided priorities.",
           "name": "issue.priority",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3462,6 +3507,7 @@ is '5000'.
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
           "name": "issue.rev_orgs",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3486,6 +3532,7 @@ is '5000'.
         {
           "description": "Filters for work owned by any of these users.",
           "name": "owned_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3510,6 +3557,7 @@ is '5000'.
         {
           "description": "Filters for records in the provided stage(s).",
           "name": "stage.name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3536,6 +3584,7 @@ is '5000'.
 organizations.
 ",
           "name": "ticket.rev_org",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3560,6 +3609,7 @@ organizations.
         {
           "description": "Filters for tickets with any of the provided severities.",
           "name": "ticket.severity",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3582,6 +3632,7 @@ organizations.
         {
           "description": "Filters for work of the provided types.",
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3649,6 +3700,7 @@ organizations.
         {
           "description": "The work's ID.",
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3767,6 +3819,7 @@ organizations.
         {
           "description": "Filters for work belonging to any of the provided parts.",
           "name": "applies_to_part",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3791,6 +3844,7 @@ organizations.
         {
           "description": "Filters for work created by any of these users.",
           "name": "created_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3817,6 +3871,7 @@ organizations.
 starts from the beginning.
 ",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3836,6 +3891,7 @@ starts from the beginning.
         {
           "description": "Filters for issues with any of the provided priorities.",
           "name": "issue.priority",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3859,6 +3915,7 @@ starts from the beginning.
           "description": "Filters for issues with any of the provided Rev organizations.
 ",
           "name": "issue.rev_orgs",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3884,6 +3941,7 @@ starts from the beginning.
           "description": "The maximum number of works to return. The default is '50'.
 ",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3903,6 +3961,7 @@ starts from the beginning.
 used.
 ",
           "name": "mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3920,6 +3979,7 @@ used.
         {
           "description": "Filters for work owned by any of these users.",
           "name": "owned_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3944,6 +4004,7 @@ used.
         {
           "description": "Filters for records in the provided stage(s).",
           "name": "stage.name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3970,6 +4031,7 @@ used.
 organizations.
 ",
           "name": "ticket.rev_org",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3994,6 +4056,7 @@ organizations.
         {
           "description": "Filters for tickets with any of the provided severities.",
           "name": "ticket.severity",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4016,6 +4079,7 @@ organizations.
         {
           "description": "Filters for work of the provided types.",
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

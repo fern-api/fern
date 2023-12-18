@@ -1408,6 +1408,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1443,6 +1444,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1460,6 +1462,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "local",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1514,6 +1517,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1549,6 +1553,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1566,6 +1571,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "local",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1658,6 +1664,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1693,6 +1700,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "local",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1710,6 +1718,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1769,6 +1778,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1804,6 +1814,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "roomId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1909,6 +1920,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1944,6 +1956,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "roomId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2049,6 +2062,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2084,6 +2098,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "roomId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2189,6 +2204,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2224,6 +2240,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "roomId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2405,6 +2422,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2647,6 +2665,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "follow",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2664,6 +2683,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "tailLines",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2681,6 +2701,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2754,6 +2775,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "follow",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2771,6 +2793,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "tailLines",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2844,6 +2867,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "follow",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2861,6 +2885,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "tailLines",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2982,6 +3007,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "metrics",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3004,6 +3030,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "end",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3021,6 +3048,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3038,6 +3066,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "step",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3138,6 +3167,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3243,6 +3273,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "name": "region",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

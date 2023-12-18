@@ -19,13 +19,20 @@ export function buildPathParameter({
         context,
         fileContainingReference
     });
-    return pathParameter.variableReference != null
-        ? {
-              docs: pathParameter.description ?? undefined,
-              variable: `$${pathParameter.variableReference}`
-          }
-        : {
-              docs: pathParameter.description ?? undefined,
-              type: getTypeFromTypeReference(typeReference)
-          };
+    if (pathParameter.variableReference == null && pathParameter.description == null) {
+        return getTypeFromTypeReference(typeReference);
+    }
+    const pathParameterSchema: RawSchemas.HttpPathParameterSchema =
+        pathParameter.variableReference != null
+            ? {
+                  variable: `$${pathParameter.variableReference}`
+              }
+            : {
+                  type: getTypeFromTypeReference(typeReference)
+              };
+
+    if (pathParameter.description != null) {
+        pathParameterSchema.docs = pathParameter.description;
+    }
+    return pathParameterSchema;
 }

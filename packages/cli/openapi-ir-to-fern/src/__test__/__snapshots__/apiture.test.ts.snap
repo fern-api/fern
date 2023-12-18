@@ -119,7 +119,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                   "type": "optional<root.resourceId>",
                 },
                 "retryCount": {
-                  "allow-multiple": undefined,
                   "docs": "When retrying the operation, pass the \`retryCount\` from the \`incompleteAccountBalances\` response.",
                   "type": "optional<integer>",
                 },
@@ -151,12 +150,10 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                   "type": "optional<root.AccountAllowsFilter>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of items to return in this paged response.",
                   "type": "optional<integer>",
                 },
                 "location": {
-                  "allow-multiple": undefined,
                   "docs": "Filter accounts to just a subset of \`internal\` or \`external\` accounts (per the \`location\` property on the [\`accountItem\`](#schema-accountItem) schema).",
                   "type": "optional<AccountsListAccountsRequestLocation>",
                 },
@@ -166,7 +163,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                   "type": "optional<root.ProductType>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
                   "type": "optional<string>",
                 },
@@ -200,22 +196,18 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                   "type": "optional<root.AccountAllowsFilter>",
                 },
                 "customerId": {
-                  "allow-multiple": undefined,
                   "docs": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
                   "type": "optional<root.resourceId>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of items to return in this paged response.",
                   "type": "optional<integer>",
                 },
                 "secCode": {
-                  "allow-multiple": undefined,
                   "docs": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
                   "type": "root.AchSecCode",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
                   "type": "optional<string>",
                 },
@@ -277,7 +269,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "name": "InstitutionsGetCutoffTimesRequest",
               "query-parameters": {
                 "timeZoneId": {
-                  "allow-multiple": undefined,
                   "docs": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
                   "type": "optional<root.timeZoneId>",
                 },
@@ -340,22 +331,18 @@ This information provides hints to clients, allowing bank customers to select tr
               "name": "InstitutionsGetTransferDateRestrictionsRequest",
               "query-parameters": {
                 "endsOn": {
-                  "allow-multiple": undefined,
                   "docs": "The end of the range of dates to include in the response. in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the \`startOn\` date and is limited to a four year interval.",
                   "type": "optional<string>",
                 },
                 "risk": {
-                  "allow-multiple": undefined,
                   "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
                   "type": "optional<root.AchAccountRisk>",
                 },
                 "startsOn": {
-                  "allow-multiple": undefined,
                   "docs": "The start of the range of dates to include in the response, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that \`Credit\` and \`Debit\` here are relative to the account at the _external_ financial institution.",
                   "type": "optional<root.TransferTypeForDateRestrictions>",
                 },
@@ -414,27 +401,22 @@ This information provides hints to clients, allowing bank customers to select tr
               "name": "InstitutionsListTransferScheduleRequest",
               "query-parameters": {
                 "count": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
                   "type": "optional<integer>",
                 },
                 "direction": {
-                  "allow-multiple": undefined,
                   "docs": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For \`debit\`, dates are adjusted to the next business day. For \`credit\`, dates are adjusted to the previous business day.",
                   "type": "root.TransferScheduleDirection",
                 },
                 "endsOn": {
-                  "allow-multiple": undefined,
                   "docs": "The date to use to conclude calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
                   "type": "optional<string>",
                 },
                 "frequency": {
-                  "allow-multiple": undefined,
                   "docs": "The interval at which the money movement recurs.",
                   "type": "root.TransferFrequency",
                 },
                 "startsOn": {
-                  "allow-multiple": undefined,
                   "docs": "The date to use to begin calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
                   "type": "string",
                 },
@@ -461,22 +443,18 @@ This information provides hints to clients, allowing bank customers to select tr
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
               "query-parameters": {
                 "countryCode": {
-                  "allow-multiple": undefined,
                   "docs": "The country code in which to search for institutions. For the US, the \`locatorType\` must be \`abaRoutingNumber\`. For non-US countries, the \`locatorType\` must be \`swiftBicCode\` or \`ibanAccountNumber\`.",
                   "type": "string",
                 },
                 "includeIntermediaryInstitutions": {
-                  "allow-multiple": undefined,
                   "docs": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
                   "type": "optional<boolean>",
                 },
                 "locator": {
-                  "allow-multiple": undefined,
                   "docs": "The financial institution lookup key (routing number, IBAN, or SWIFT/BIC), as indicated by the \`locatorType\` query parameter.",
                   "type": "string",
                 },
                 "locatorType": {
-                  "allow-multiple": undefined,
                   "docs": "Indicates what type of value the \`locator\` query parameter is.",
                   "type": "root.InstitutionLocatorType",
                 },
@@ -596,12 +574,10 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "name": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
               "query-parameters": {
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of items to return in this paged response.",
                   "type": "optional<integer>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
                   "type": "optional<string>",
                 },
@@ -742,7 +718,6 @@ The default response lists only recent transactions. Normally, this is transacti
               "name": "TransactionsListTransactionsRequest",
               "query-parameters": {
                 "amount": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`amount\` is in this numeric range. This compares only the absolute value of the transaction. That is, the value \`[1000.00,1100.00)\` matches either a debit of \`-1070.25\` or a credit of \`1021.90\`.<br> Some examples of specifying an amount range: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`(999.99,1200.00]\` matches items where \`999.99 < amount <= 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount > 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
                   "type": "optional<root.amountRange>",
                 },
@@ -752,42 +727,34 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.transactionCategoryLabel>",
                 },
                 "checkNumber": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`check.number\` is in this integer range. Examples: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where \`1000 <= number <= 1199\`</li> <li>\`(999,1200]\` matches items where \`999 < number <= 1200\`</li> <li>\`[1200,]\` matches items where \`number >= 1200\`</li> <li>\`(1200,)\` matches items where \`number > 1200\`</li> <li>\`[,1200]\` matches items where \`number <= 1200\`</li> <li>\`(,1200)\` matches items where \`number < 1200\`</li> </ul>",
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.dateRange>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of items to return in this paged response.",
                   "type": "optional<integer>",
                 },
                 "occurredOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`occurredOn\` date is in this date range. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> \`2023-05-19\` match transactions occurring on May 19, 2023.</li> <li> \`[2023-05-01,2023-05-31]\` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> \`[2023-05-01,2023-06-01)\` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> \`[2023-05-09,]\` match transactions _n_ days on or after May 9, 2023</li> <li> \`(2023-05-09,)\` match transactions _n_ days after May 9, 2023</li> <li> \`[,2023-05-09]\` match transactions _n_ days on or before May 9, 2023</li> <li> \`(,2023-05-09)\` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
                   "type": "optional<string>",
                 },
                 "posted": {
-                  "allow-multiple": undefined,
                   "docs": "Limit transactions in the response based on the transaction's \`posted\` value. If \`true\`, include only posted transactions. If \`false\`, include only non-posted transactions. If omitted, do not filter based on \`posted\`. Note that using this filter excludes balance transactions because the \`posted\` property is not set on balance transactions, so neither \`true\` or \`false\` match them.",
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.dateRange>",
                 },
                 "retryCount": {
-                  "allow-multiple": undefined,
                   "docs": "When retrying the operation, pass the \`retryCount\` from the \`incompleteTransactions\` response.",
                   "type": "optional<integer>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
                   "type": "optional<string>",
                 },
@@ -929,32 +896,26 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "TransfersListTransfersRequest",
               "query-parameters": {
                 "creditsOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`schedule.creditsOn\` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
                   "type": "optional<root.dateRange>",
                 },
                 "debitsOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`schedule.debitsOn\` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
                   "type": "optional<root.dateRange>",
                 },
                 "historical": {
-                  "allow-multiple": undefined,
                   "docs": "If \`true\`, list only historical (\`state\` is \`processed\`) transfers. If \`false\`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
                   "type": "optional<boolean>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "The maximum number of items to return in this paged response.",
                   "type": "optional<integer>",
                 },
                 "scheduledOn": {
-                  "allow-multiple": undefined,
                   "docs": "Return only transactions whose \`schedule.scheduledOn\` date is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Example date ranges: <ul> <li> \`2022-05-19\` match only transfers scheduled on May 19, 2022.</li> <li> \`[2022-05-01,2022-06-01)\` in May, 2022: on or after May 1, but _before_ June 1</li> <li> \`(2022-05-01,2022-06-01)\` in May, 2022 (on or after May 1, but before June 1)</li> <li> \`[2022-05-09,]\` on or after May 9, 2022</li> <li> \`(2022-05-09,)\` after May 9, 2022</li> <li> \`[,2022-05-09]\` on or before May 9, 2022</li> <li> \`(,2022-05-09)\` before May 9, 2022</li> </ul>",
                   "type": "optional<root.dateRange>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
                   "type": "optional<string>",
                 },

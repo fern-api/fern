@@ -81,6 +81,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "description": "Include only accounts whose \`product.type\` is in pipe-delimited set. For example, to list only savings, checking, and CD accounts, use <br>\`?productType=savings|checking|cd\`.",
           "name": "productType",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -103,6 +104,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "description": "Filter accounts to just a subset of \`internal\` or \`external\` accounts (per the \`location\` property on the [\`accountItem\`](#schema-accountItem) schema).",
           "name": "location",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -133,6 +135,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "description": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
           "name": "allows",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -155,6 +158,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -174,6 +178,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -316,6 +321,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         {
           "description": "The unique account identifiers of one or more internal accounts. (Internal accounts are those with \`location\` value of \`internal\`.) If omitted, this operation uses the accounts for which the customer has view permissions but is limited to at most 1000 accounts. Note: The account IDs are unrelated to the account number.",
           "name": "accounts",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -333,6 +339,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         {
           "description": "When retrying the operation, pass the \`retryCount\` from the \`incompleteAccountBalances\` response.",
           "name": "retryCount",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -486,6 +493,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "description": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
           "name": "allows",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -503,6 +511,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "description": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
           "name": "secCode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "generatedName": "AccountsListEligibleAchAccountsRequestSecCode",
@@ -515,6 +524,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "description": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
           "name": "customerId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -532,6 +542,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -551,6 +562,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -634,6 +646,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -653,6 +666,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         {
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -926,6 +940,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The financial institution lookup key (routing number, IBAN, or SWIFT/BIC), as indicated by the \`locatorType\` query parameter.",
           "name": "locator",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -940,6 +955,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "Indicates what type of value the \`locator\` query parameter is.",
           "name": "locatorType",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestLocatorType",
@@ -952,6 +968,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The country code in which to search for institutions. For the US, the \`locatorType\` must be \`abaRoutingNumber\`. For non-US countries, the \`locatorType\` must be \`swiftBicCode\` or \`ibanAccountNumber\`.",
           "name": "countryCode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the financial institution.",
             "groupName": undefined,
@@ -966,6 +983,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "If looking up a beneficiary institution for a wire transfer beneficiary institution, request the response also include a list of intermediary institutions.",
           "name": "includeIntermediaryInstitutions",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1127,6 +1145,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The date to use to begin calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
           "name": "startsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1141,6 +1160,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The date to use to conclude calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
           "name": "endsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1160,6 +1180,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For \`debit\`, dates are adjusted to the next business day. For \`credit\`, dates are adjusted to the previous business day.",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "generatedName": "InstitutionsListTransferScheduleRequestDirection",
@@ -1172,6 +1193,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The maximum amount of dates to calculate and include in the response. If an end date is provided, the total count may be lower than the requested count.",
           "name": "count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1189,6 +1211,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         {
           "description": "The interval at which the money movement recurs.",
           "name": "frequency",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "generatedName": "InstitutionsListTransferScheduleRequestFrequency",
@@ -1246,6 +1269,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
         {
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
           "name": "If-None-Match",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1286,6 +1310,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
         {
           "description": "Identifies the time zone for formatting time values in the response. If omitted, time values are formatting in the local timezone of the financial institution.",
           "name": "timeZoneId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1460,6 +1485,7 @@ This information provides hints to clients, allowing bank customers to select tr
         {
           "description": "The start of the range of dates to include in the response, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
           "name": "startsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1479,6 +1505,7 @@ This information provides hints to clients, allowing bank customers to select tr
         {
           "description": "The end of the range of dates to include in the response. in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the \`startOn\` date and is limited to a four year interval.",
           "name": "endsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1498,6 +1525,7 @@ This information provides hints to clients, allowing bank customers to select tr
         {
           "description": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that \`Credit\` and \`Debit\` here are relative to the account at the _external_ financial institution.",
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1515,6 +1543,7 @@ This information provides hints to clients, allowing bank customers to select tr
         {
           "description": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
           "name": "risk",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1600,6 +1629,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1619,6 +1649,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1636,6 +1667,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Return only transactions whose \`occurredOn\` date is in this date range. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Each account has an implicit default transaction history range of _n_ days. This is normally 30 days but may be shorter for accounts with high activity. This _n_ day period is applied to any unbounded date ranges. The default date range is the most recent _n_ days. Example date ranges: <ul> <li> \`2023-05-19\` match transactions occurring on May 19, 2023.</li> <li> \`[2023-05-01,2023-05-31]\` match transactions occurring between May 1 and 31, 2023, inclusive</li> <li> \`[2023-05-01,2023-06-01)\` match transactions occurring in May, 2023 (on or after May 1, but before June 1)</li> <li> \`[2023-05-09,]\` match transactions _n_ days on or after May 9, 2023</li> <li> \`(2023-05-09,)\` match transactions _n_ days after May 9, 2023</li> <li> \`[,2023-05-09]\` match transactions _n_ days on or before May 9, 2023</li> <li> \`(,2023-05-09)\` match transactions _n_ days before but excluding May 9, 2023</li> </ul>",
           "name": "occurredOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1655,6 +1687,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Limit transactions in the response based on the transaction's \`posted\` value. If \`true\`, include only posted transactions. If \`false\`, include only non-posted transactions. If omitted, do not filter based on \`posted\`. Note that using this filter excludes balance transactions because the \`posted\` property is not set on balance transactions, so neither \`true\` or \`false\` match them.",
           "name": "posted",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1672,6 +1705,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
           "name": "createdOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1689,6 +1723,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
           "name": "postedOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1706,6 +1741,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Filter transactions to only those whose \`category\` is in this pipe-separated list. Categories are set by a transaction cleansing service or assigned by the account holder. Categories can include names such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "name": "category",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1728,6 +1764,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Filter transactions to only those whose \`type\` is in this pipe-separated list.",
           "name": "type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1750,6 +1787,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Filter transactions to only those whose \`subtype\` is in this pipe-separated list.",
           "name": "subtype",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1772,6 +1810,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Return only transactions whose \`amount\` is in this numeric range. This compares only the absolute value of the transaction. That is, the value \`[1000.00,1100.00)\` matches either a debit of \`-1070.25\` or a credit of \`1021.90\`.<br> Some examples of specifying an amount range: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`(999.99,1200.00]\` matches items where \`999.99 < amount <= 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount > 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
           "name": "amount",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1789,6 +1828,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "Return only transactions whose \`check.number\` is in this integer range. Examples: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where \`1000 <= number <= 1199\`</li> <li>\`(999,1200]\` matches items where \`999 < number <= 1200\`</li> <li>\`[1200,]\` matches items where \`number >= 1200\`</li> <li>\`(1200,)\` matches items where \`number > 1200\`</li> <li>\`[,1200]\` matches items where \`number <= 1200\`</li> <li>\`(,1200)\` matches items where \`number < 1200\`</li> </ul>",
           "name": "checkNumber",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1806,6 +1846,7 @@ The default response lists only recent transactions. Normally, this is transacti
         {
           "description": "When retrying the operation, pass the \`retryCount\` from the \`incompleteTransactions\` response.",
           "name": "retryCount",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1882,6 +1923,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "The entity tag that was returned in the \`ETag\` response header of a previous call. If the resource's current entity tag value matches this header value, the \`GET\` will return 304 (Not Modified) and no response body, else the current resource representation and updated \`ETag\` is returned.",
           "name": "If-None-Match",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1954,6 +1996,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "Return only transactions whose \`schedule.scheduledOn\` date is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. Example date ranges: <ul> <li> \`2022-05-19\` match only transfers scheduled on May 19, 2022.</li> <li> \`[2022-05-01,2022-06-01)\` in May, 2022: on or after May 1, but _before_ June 1</li> <li> \`(2022-05-01,2022-06-01)\` in May, 2022 (on or after May 1, but before June 1)</li> <li> \`[2022-05-09,]\` on or after May 9, 2022</li> <li> \`(2022-05-09,)\` after May 9, 2022</li> <li> \`[,2022-05-09]\` on or before May 9, 2022</li> <li> \`(,2022-05-09)\` before May 9, 2022</li> </ul>",
           "name": "scheduledOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1971,6 +2014,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "Return only transactions whose \`schedule.debitsOn\` date (when the funds are debited from the source account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
           "name": "debitsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1988,6 +2032,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "Return only transactions whose \`schedule.creditsOn\` (when the funds are credited to  the target account) is in this date range. Excludes any transfers that do not have a \`scheduledOn\` date. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. See the \`scheduledOn\` query parameter for examples.",
           "name": "creditsOn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2005,6 +2050,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "If \`true\`, list only historical (\`state\` is \`processed\`) transfers. If \`false\`, list only transfers that have not yet finished processing. If omitted, list all transfers.",
           "name": "historical",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2022,6 +2068,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2041,6 +2088,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         {
           "description": "The maximum number of items to return in this paged response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2101,6 +2149,7 @@ Note: This operation requires an identity challenge if the financial institution
         {
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
           "name": "Challenge",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2307,6 +2356,7 @@ Note: This operation requires an identity challenge if the financial institution
         {
           "description": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
           "name": "Challenge",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

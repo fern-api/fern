@@ -165,6 +165,29 @@ export interface Person  { # <---- Overridden name
 }
 ```
 
+## Parameter Names 
+
+The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI 
+parameters. 
+
+For example, if you have a header `X-API-Version`, you may want the parameter 
+in code to be called `version`. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+paths:
+  "/user":
+    get:
+      operationId: get_user
+      parameters:
+        - in: header
+          name: X-API-Version
+          x-fern-parameter-name: version # <---- specify the parameter name
+          schema:
+            type: string
+          required: true
+      ...
+
 ## Server names
 
 The `x-fern-server-name` extension is used to name your servers. 

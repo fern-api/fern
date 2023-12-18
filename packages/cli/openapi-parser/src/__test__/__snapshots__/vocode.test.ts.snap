@@ -34,6 +34,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51,6 +52,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -107,6 +109,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "phone_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -196,6 +199,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "phone_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -261,6 +265,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "phone_number",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -314,6 +319,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -331,6 +337,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -387,6 +394,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -440,6 +448,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -543,6 +552,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -627,6 +637,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -710,6 +721,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -727,6 +739,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -863,6 +876,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -958,6 +972,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1011,6 +1026,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1028,6 +1044,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1134,6 +1151,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1199,6 +1217,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1290,6 +1309,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1307,6 +1327,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1451,6 +1472,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1554,6 +1576,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1607,6 +1630,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "page",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1624,6 +1648,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1730,6 +1755,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

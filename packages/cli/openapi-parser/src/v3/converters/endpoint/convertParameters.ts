@@ -8,6 +8,7 @@ import {
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
@@ -94,7 +95,8 @@ export function convertParameters({
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: resolvedParameter.description
+            description: resolvedParameter.description,
+            parameterNameOverride: getParameterName(resolvedParameter)
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

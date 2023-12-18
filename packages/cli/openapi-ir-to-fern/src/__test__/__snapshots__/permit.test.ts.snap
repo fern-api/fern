@@ -382,27 +382,22 @@ If the permission is already granted, it is skipped.",
               "name": "ListSetPermissionsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "permission": {
-                  "allow-multiple": undefined,
                   "docs": "optional permission filter, will only return condition set rules granting this permission",
                   "type": "optional<string>",
                 },
                 "resource_set": {
-                  "allow-multiple": undefined,
                   "docs": "optional resource set filter, will only return rules where the permission is granted on this resource set",
                   "type": "optional<string>",
                 },
                 "user_set": {
-                  "allow-multiple": undefined,
                   "docs": "optional user set filter, will only return rules where the permission is granted to this user set",
                   "type": "optional<string>",
                 },
@@ -662,12 +657,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "name": "GetConditionSetAncestorsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -720,12 +713,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "name": "GetConditionSetDescendantsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -759,27 +750,22 @@ This includes any permissions granted to said condition set (i.e: any matching c
               "name": "ListConditionSetsRequest",
               "query-parameters": {
                 "include_total_count": {
-                  "allow-multiple": undefined,
                   "docs": "Include total count in response",
                   "type": "optional<boolean>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the condition sets name or key",
                   "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
                   "docs": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
                   "type": "optional<root.ConditionSetType>",
                 },
@@ -1044,12 +1030,10 @@ allowed.",
               "name": "ListEnvironmentsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -1289,12 +1273,10 @@ authenticated actor (i.e: human team member or api key).",
               "name": "ListOrganizationsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -1478,12 +1460,10 @@ Every project is a separate silo, and has its own unique set of environments and
               "name": "ListProjectsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -1726,12 +1706,10 @@ This includes any permissions granted to perform the action.",
               "name": "ListResourceActionGroupsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -1983,12 +1961,10 @@ This includes any permissions granted to perform the action.",
               "name": "ListResourceActionsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -2154,12 +2130,10 @@ attribute to evaluate as \`undefined\`.",
               "name": "DeleteResourceAttributeRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -2240,12 +2214,10 @@ attribute to evaluate as \`undefined\`.",
               "name": "ListResourceAttributesRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -2464,12 +2436,10 @@ and will return the existing instance object in the response body.",
               "name": "ListResourceInstancesRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -2823,12 +2793,10 @@ This includes any permissions granted to said role.",
               "name": "ListResourceRolesRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
@@ -3111,27 +3079,22 @@ A resource may also contain:
               "name": "ListResourcesRequest",
               "query-parameters": {
                 "include_built_in": {
-                  "allow-multiple": undefined,
                   "docs": "Whether to include or exclude built-in resources, default is False",
                   "type": "optional<boolean>",
                 },
                 "include_total_count": {
-                  "allow-multiple": undefined,
                   "docs": "Include total count in response",
                   "type": "optional<boolean>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the resources name or key",
                   "type": "optional<string>",
                 },
@@ -3449,27 +3412,22 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               "name": "ListRoleAssignmentsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "optional role filter, will only return role assignments granting this role.",
                   "type": "optional<string>",
                 },
                 "tenant": {
-                  "allow-multiple": undefined,
                   "docs": "optional tenant filter, will only return role assignments granted in that tenant.",
                   "type": "optional<string>",
                 },
                 "user": {
-                  "allow-multiple": undefined,
                   "docs": "optional user filter, will only return role assignments granted to this user.",
                   "type": "optional<string>",
                 },
@@ -3763,22 +3721,18 @@ This includes any permissions granted to said role.",
               "name": "ListRolesRequest",
               "query-parameters": {
                 "include_total_count": {
-                  "allow-multiple": undefined,
                   "docs": "Include total count in response",
                   "type": "optional<boolean>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the roles name or key",
                   "type": "optional<string>",
                 },
@@ -4077,22 +4031,18 @@ and will return the existing tenant object in the response body.",
               "name": "ListTenantUsersRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Match users with a specific role",
                   "type": "optional<string>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the email field",
                   "type": "optional<string>",
                 },
@@ -4126,22 +4076,18 @@ and will return the existing tenant object in the response body.",
               "name": "ListTenantsRequest",
               "query-parameters": {
                 "include_total_count": {
-                  "allow-multiple": undefined,
                   "docs": "Include total count in response",
                   "type": "optional<boolean>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the tenant name or key",
                   "type": "optional<string>",
                 },
@@ -4259,11 +4205,7 @@ define a string \`owner\` attribute that we can now use in our policies.
               "body": "root.ResourceAttributeCreate",
               "name": "CreateUserAttributeRequest",
               "query-parameters": {
-                "resource_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
+                "resource_id": "optional<string>",
               },
             },
             "response": {
@@ -4314,20 +4256,14 @@ attribute to evaluate as \`undefined\`.",
               "name": "DeleteUserAttributeRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
-                "resource_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
+                "resource_id": "optional<string>",
               },
             },
           },
@@ -4357,11 +4293,7 @@ attribute to evaluate as \`undefined\`.",
             "request": {
               "name": "GetUserAttributeRequest",
               "query-parameters": {
-                "resource_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
+                "resource_id": "optional<string>",
               },
             },
             "response": {
@@ -4406,20 +4338,14 @@ attribute to evaluate as \`undefined\`.",
               "name": "ListUserAttributesRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
-                "resource_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
+                "resource_id": "optional<string>",
               },
             },
             "response": {
@@ -4455,11 +4381,7 @@ Fields that will be provided will be completely overwritten.",
               "body": "root.ResourceAttributeUpdate",
               "name": "UpdateUserAttributeRequest",
               "query-parameters": {
-                "resource_id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
+                "resource_id": "optional<string>",
               },
             },
             "response": {
@@ -4654,22 +4576,18 @@ and will return the existing user object in the response body.",
               "name": "ListUsersRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "Page number of the results to fetch, starting at 1.",
                   "type": "optional<integer>",
                 },
                 "per_page": {
-                  "allow-multiple": undefined,
                   "docs": "The number of results per page (max 100).",
                   "type": "optional<integer>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Match users with a specific role",
                   "type": "optional<string>",
                 },
                 "search": {
-                  "allow-multiple": undefined,
                   "docs": "Text search for the email field",
                   "type": "optional<string>",
                 },
