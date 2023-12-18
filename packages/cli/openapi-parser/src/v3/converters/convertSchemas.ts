@@ -365,7 +365,7 @@ export function convertSchemaObject(
                 wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
                 subtypes: schema.oneOf.filter((schema) => {
-                    return !isReferenceObject(schema) && (schema.type as string) !== "null";
+                    return !(!isReferenceObject(schema) && (schema.type as string) !== "null");
                 }),
                 groupName
             });

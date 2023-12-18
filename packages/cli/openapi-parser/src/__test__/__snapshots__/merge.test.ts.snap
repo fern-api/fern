@@ -345,6 +345,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "account_type": {
+                        "enum": "SAVINGS",
+                        "type": "enum",
+                      },
                       "bank_name": {
                         "primitive": {
                           "string": "Chase",
@@ -852,6 +856,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "account_type": {
+                "enum": "SAVINGS",
+                "type": "enum",
               },
               "bank_name": {
                 "primitive": {
@@ -2310,6 +2318,10 @@ exports[`open api parser merge parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
+                              "type": {
+                                "enum": "SALARY",
+                                "type": "enum",
+                              },
                             },
                             "type": "object",
                           },
@@ -2952,6 +2964,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "type": {
+                        "enum": "SALARY",
+                        "type": "enum",
+                      },
                     },
                     "type": "object",
                   },
@@ -3302,12 +3318,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "employment_status": {
+                        "enum": "ACTIVE",
+                        "type": "enum",
+                      },
+                      "ethnicity": {
+                        "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                        "type": "enum",
+                      },
                       "first_name": {
                         "primitive": {
                           "string": "Greg",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "gender": {
+                        "enum": "MALE",
+                        "type": "enum",
                       },
                       "hire_date": {
                         "primitive": {
@@ -3343,6 +3371,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "marital_status": {
+                        "enum": "SINGLE",
+                        "type": "enum",
                       },
                       "mobile_phone_number": {
                         "primitive": {
@@ -5837,12 +5869,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "employment_status": {
+                    "enum": "ACTIVE",
+                    "type": "enum",
+                  },
+                  "ethnicity": {
+                    "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "type": "enum",
+                  },
                   "first_name": {
                     "primitive": {
                       "string": "Greg",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "gender": {
+                    "enum": "MALE",
+                    "type": "enum",
                   },
                   "hire_date": {
                     "primitive": {
@@ -5871,6 +5915,10 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "marital_status": {
+                    "enum": "SINGLE",
+                    "type": "enum",
                   },
                   "mobile_phone_number": {
                     "primitive": {
@@ -6068,12 +6116,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "employment_status": {
+                    "enum": "ACTIVE",
+                    "type": "enum",
+                  },
+                  "ethnicity": {
+                    "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "type": "enum",
+                  },
                   "first_name": {
                     "primitive": {
                       "string": "Greg",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "gender": {
+                    "enum": "MALE",
+                    "type": "enum",
                   },
                   "hire_date": {
                     "primitive": {
@@ -6109,6 +6169,10 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "marital_status": {
+                    "enum": "SINGLE",
+                    "type": "enum",
                   },
                   "mobile_phone_number": {
                     "primitive": {
@@ -6427,12 +6491,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "employment_status": {
+                "enum": "ACTIVE",
+                "type": "enum",
+              },
+              "ethnicity": {
+                "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                "type": "enum",
+              },
               "first_name": {
                 "primitive": {
                   "string": "Greg",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "gender": {
+                "enum": "MALE",
+                "type": "enum",
               },
               "hire_date": {
                 "primitive": {
@@ -6468,6 +6544,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "marital_status": {
+                "enum": "SINGLE",
+                "type": "enum",
               },
               "mobile_phone_number": {
                 "primitive": {
@@ -8436,7 +8516,52 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [
+            {
+              "name": "model_id",
+              "value": {
+                "primitive": {
+                  "string": "model-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "message": {
+                "primitive": {
+                  "string": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "reason": {
+                "enum": "GENERAL_CUSTOMER_REQUEST",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -8637,6 +8762,14 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "employment_type": {
+                        "enum": "FULL_TIME",
+                        "type": "enum",
+                      },
+                      "flsa_status": {
+                        "enum": "EXEMPT",
+                        "type": "enum",
+                      },
                       "id": {
                         "primitive": {
                           "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
@@ -8658,12 +8791,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "pay_currency": {
+                        "enum": "XUA",
+                        "type": "enum",
+                      },
+                      "pay_frequency": {
+                        "enum": "WEEKLY",
+                        "type": "enum",
+                      },
                       "pay_group": {
                         "primitive": {
                           "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "pay_period": {
+                        "enum": "HOUR",
+                        "type": "enum",
                       },
                       "remote_id": {
                         "primitive": {
@@ -9273,6 +9418,14 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "employment_type": {
+                "enum": "FULL_TIME",
+                "type": "enum",
+              },
+              "flsa_status": {
+                "enum": "EXEMPT",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
@@ -9294,12 +9447,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "pay_currency": {
+                "enum": "XUA",
+                "type": "enum",
+              },
+              "pay_frequency": {
+                "enum": "WEEKLY",
+                "type": "enum",
+              },
               "pay_group": {
                 "primitive": {
                   "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "pay_period": {
+                "enum": "HOUR",
+                "type": "enum",
               },
               "remote_id": {
                 "primitive": {
@@ -9832,6 +9997,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "type": {
+                        "enum": "TEAM",
+                        "type": "enum",
+                      },
                     },
                     "type": "object",
                   },
@@ -10205,6 +10374,10 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "type": {
+                "enum": "TEAM",
+                "type": "enum",
+              },
             },
             "type": "object",
           },
@@ -10402,6 +10575,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "ONGOING",
+                        "type": "enum",
                       },
                     },
                     "type": "object",
@@ -10767,6 +10944,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "status": {
+                "enum": "ONGOING",
+                "type": "enum",
               },
             },
             "type": "object",
@@ -11373,12 +11554,20 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "country": {
+                        "enum": "AF",
+                        "type": "enum",
+                      },
                       "id": {
                         "primitive": {
                           "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "location_type": {
+                        "enum": "HOME",
+                        "type": "enum",
                       },
                       "modified_at": {
                         "primitive": {
@@ -11761,12 +11950,20 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "country": {
+                "enum": "AF",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "location_type": {
+                "enum": "HOME",
+                "type": "enum",
               },
               "modified_at": {
                 "primitive": {
@@ -12554,6 +12751,14 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "run_state": {
+                        "enum": "PAID",
+                        "type": "enum",
+                      },
+                      "run_type": {
+                        "enum": "REGULAR",
+                        "type": "enum",
+                      },
                       "start_date": {
                         "primitive": {
                           "datetime": "2020-11-08T00:00:00Z",
@@ -13070,6 +13275,14 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "run_state": {
+                "enum": "PAID",
+                "type": "enum",
+              },
+              "run_type": {
+                "enum": "REGULAR",
+                "type": "enum",
               },
               "start_date": {
                 "primitive": {
@@ -14639,12 +14852,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "request_type": {
+                        "enum": "VACATION",
+                        "type": "enum",
+                      },
                       "start_time": {
                         "primitive": {
                           "datetime": "2020-11-10T00:00:00Z",
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "REQUESTED",
+                        "type": "enum",
+                      },
+                      "units": {
+                        "enum": "HOURS",
+                        "type": "enum",
                       },
                     },
                     "type": "object",
@@ -15246,12 +15471,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "request_type": {
+                    "enum": "VACATION",
+                    "type": "enum",
+                  },
                   "start_time": {
                     "primitive": {
                       "datetime": "2020-11-10T00:00:00Z",
                       "type": "datetime",
                     },
                     "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "REQUESTED",
+                    "type": "enum",
+                  },
+                  "units": {
+                    "enum": "HOURS",
+                    "type": "enum",
                   },
                 },
                 "type": "object",
@@ -15400,12 +15637,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "request_type": {
+                    "enum": "VACATION",
+                    "type": "enum",
+                  },
                   "start_time": {
                     "primitive": {
                       "datetime": "2020-11-10T00:00:00Z",
                       "type": "datetime",
                     },
                     "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "REQUESTED",
+                    "type": "enum",
+                  },
+                  "units": {
+                    "enum": "HOURS",
+                    "type": "enum",
                   },
                 },
                 "type": "object",
@@ -15641,6 +15890,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "policy_type": {
+                        "enum": "VACATION",
+                        "type": "enum",
                       },
                       "remote_id": {
                         "primitive": {
@@ -16099,6 +16352,10 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "policy_type": {
+                "enum": "VACATION",
+                "type": "enum",
+              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -16362,12 +16619,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "request_type": {
+                "enum": "VACATION",
+                "type": "enum",
+              },
               "start_time": {
                 "primitive": {
                   "datetime": "2020-11-10T00:00:00Z",
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "status": {
+                "enum": "REQUESTED",
+                "type": "enum",
+              },
+              "units": {
+                "enum": "HOURS",
+                "type": "enum",
               },
             },
             "type": "object",
@@ -16861,13 +17130,20 @@ exports[`open api parser merge parse open api 1`] = `
     "CategoriesEnum",
     "ModelOperation",
     "AccountIntegration",
+    "AccountTypeEnum",
     "RemoteData",
     "EnabledActionsEnum",
+    "ConditionTypeEnum",
     "OperatorSchema",
     "MethodEnum",
     "MultipartFormFieldRequest",
     "RequestFormatEnum",
     "DebugModelLogSummary",
+    "EarningTypeEnum",
+    "GenderEnum",
+    "EthnicityEnum",
+    "MaritalStatusEnum",
+    "EmploymentStatusEnum",
     "EmployeeRequest",
     "Earning",
     "Deduction",
@@ -16875,16 +17151,34 @@ exports[`open api parser merge parse open api 1`] = `
     "WarningValidationProblem",
     "ErrorValidationProblem",
     "DebugModeLog",
+    "PayPeriodEnum",
+    "PayFrequencyEnum",
+    "PayCurrencyEnum",
+    "FlsaStatusEnum",
+    "EmploymentTypeEnum",
     "CommonModelScopesBodyRequest",
     "ValidationProblemSource",
+    "GroupTypeEnum",
+    "ReasonEnum",
+    "IssueStatusEnum",
     "LinkedAccountCondition",
     "LinkedAccountSelectiveSyncConfigurationRequest",
     "LinkedAccountConditionRequest",
+    "CountryEnum",
+    "LocationTypeEnum",
     "LinkedAccountStatus",
+    "EncodingEnum",
     "AccountDetailsAndActions",
     "ConditionSchema",
+    "RunStateEnum",
+    "RunTypeEnum",
+    "ResponseTypeEnum",
     "SyncStatusStatusEnum",
     "SelectiveSyncConfigurationsUsageEnum",
+    "TimeOffStatusEnum",
+    "UnitsEnum",
+    "RequestTypeEnum",
+    "PolicyTypeEnum",
     "TimeOffRequest",
   ],
   "schemas": {
@@ -17951,13 +18245,11 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BankInfoAccountTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "AccountTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -18937,13 +19229,11 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "condition_type",
           "schema": {
             "description": undefined,
+            "generatedName": "ConditionSchemaConditionTypeZero",
             "groupName": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
+            "nameOverride": undefined,
+            "schema": "ConditionTypeEnum",
+            "type": "reference",
           },
         },
         {
@@ -21449,13 +21739,11 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EarningTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EarningTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -22098,13 +22386,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeGenderZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "GenderEnum",
+              "type": "reference",
             },
           },
         },
@@ -22118,13 +22404,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeEthnicityZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EthnicityEnum",
+              "type": "reference",
             },
           },
         },
@@ -22138,13 +22422,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeMaritalStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "MaritalStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -22250,13 +22532,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeEmploymentStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EmploymentStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -23315,13 +23595,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeRequestGenderZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "GenderEnum",
+              "type": "reference",
             },
           },
         },
@@ -23335,13 +23613,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeRequestEthnicityZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EthnicityEnum",
+              "type": "reference",
             },
           },
         },
@@ -23355,13 +23631,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeRequestMaritalStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "MaritalStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -23444,13 +23718,11 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmployeeRequestEmploymentStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EmploymentStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -23797,13 +24069,11 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmploymentPayPeriodZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "PayPeriodEnum",
+              "type": "reference",
             },
           },
         },
@@ -23817,13 +24087,11 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmploymentPayFrequencyZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "PayFrequencyEnum",
+              "type": "reference",
             },
           },
         },
@@ -23837,13 +24105,11 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmploymentPayCurrencyZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "PayCurrencyEnum",
+              "type": "reference",
             },
           },
         },
@@ -23882,13 +24148,11 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmploymentFlsaStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "FlsaStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -23925,13 +24189,11 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "EmploymentEmploymentTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EmploymentTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -24692,13 +24954,11 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "GroupTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "GroupTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -24859,13 +25119,11 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "IgnoreCommonModelRequestReasonZero",
             "groupName": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
+            "nameOverride": undefined,
+            "schema": "ReasonEnum",
+            "type": "reference",
           },
         },
         {
@@ -24929,13 +25187,11 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "IssueStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "IssueStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -25699,13 +25955,11 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "LocationCountryZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "CountryEnum",
+              "type": "reference",
             },
           },
         },
@@ -25719,13 +25973,11 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "LocationLocationTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "LocationTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -26201,13 +26453,11 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "MultipartFormFieldRequestEncodingZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "EncodingEnum",
+              "type": "reference",
             },
           },
         },
@@ -30284,13 +30534,11 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PayrollRunRunStateZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "RunStateEnum",
+              "type": "reference",
             },
           },
         },
@@ -30304,13 +30552,11 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PayrollRunRunTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "RunTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -30795,13 +31041,11 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RemoteResponseResponseTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "ResponseTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -31801,13 +32045,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "TimeOffStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -31846,13 +32088,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffUnitsZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "UnitsEnum",
+              "type": "reference",
             },
           },
         },
@@ -31889,13 +32129,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffRequestTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "RequestTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -32184,13 +32422,11 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffBalancePolicyTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "PolicyTypeEnum",
+              "type": "reference",
             },
           },
         },
@@ -32391,13 +32627,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffRequestStatusZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "TimeOffStatusEnum",
+              "type": "reference",
             },
           },
         },
@@ -32436,13 +32670,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffRequestUnitsZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "UnitsEnum",
+              "type": "reference",
             },
           },
         },
@@ -32479,13 +32711,11 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TimeOffRequestRequestTypeZero",
               "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
+              "nameOverride": undefined,
+              "schema": "RequestTypeEnum",
+              "type": "reference",
             },
           },
         },
