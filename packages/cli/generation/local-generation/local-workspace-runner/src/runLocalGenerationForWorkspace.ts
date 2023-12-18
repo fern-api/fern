@@ -1,5 +1,5 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
@@ -9,6 +9,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
+import { writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -223,6 +224,7 @@ async function writeIrToFile({
         audiences,
         generationLanguage: generatorInvocation.language
     });
+    context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =
         irVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({
@@ -238,11 +240,12 @@ async function writeIrToFile({
                       version: generatorInvocation.version
                   }
               });
-
+    context.logger.debug("Migrated IR");
     const irFile = await tmp.file({
         tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
-    await streamObjectToFile(absolutePathToIr, migratedIntermediateRepresentation, { pretty: true });
+    await writeFile(absolutePathToIr, JSON.stringify(migratedIntermediateRepresentation, undefined, 4));
+    context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
 }

@@ -14,17 +14,21 @@ export async function getPosthogManager(): Promise<PosthogManager> {
 }
 
 async function createPosthogManager(): Promise<PosthogManager> {
-    const posthogApiKey = process.env.POSTHOG_API_KEY;
-    if (posthogApiKey == null) {
+    try {
+        const posthogApiKey = process.env.POSTHOG_API_KEY;
+        if (posthogApiKey == null) {
+            return new NoopPosthogManager();
+        }
+        const userToken = await getUserToken();
+        if (userToken != null) {
+            return new UserPosthogManager({ token: userToken, posthogApiKey });
+        }
+        const accessToken = await getAccessToken();
+        if (accessToken != null) {
+            return new AccessTokenPosthogManager({ posthogApiKey });
+        }
+        return new UserPosthogManager({ token: undefined, posthogApiKey });
+    } catch (err) {
         return new NoopPosthogManager();
     }
-    const userToken = await getUserToken();
-    if (userToken != null) {
-        return new UserPosthogManager({ token: userToken, posthogApiKey });
-    }
-    const accessToken = await getAccessToken();
-    if (accessToken != null) {
-        return new AccessTokenPosthogManager({ posthogApiKey });
-    }
-    return new UserPosthogManager({ token: undefined, posthogApiKey });
 }
