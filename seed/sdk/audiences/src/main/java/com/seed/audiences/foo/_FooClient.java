@@ -21,6 +21,10 @@ public class _FooClient {
         this.clientOptions = clientOptions;
     }
 
+    public ImportingType find(FindRequest request) {
+        return find(request, null);
+    }
+
     public ImportingType find(FindRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
@@ -47,9 +51,5 @@ public class _FooClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public ImportingType find(FindRequest request) {
-        return find(request, null);
     }
 }

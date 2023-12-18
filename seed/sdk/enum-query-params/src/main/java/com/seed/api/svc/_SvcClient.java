@@ -24,6 +24,10 @@ public class _SvcClient {
         return test(Test.builder().build());
     }
 
+    public String test(Test request) {
+        return test(request, null);
+    }
+
     public String test(Test request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -49,9 +53,5 @@ public class _SvcClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String test(Test request) {
-        return test(request, null);
     }
 }

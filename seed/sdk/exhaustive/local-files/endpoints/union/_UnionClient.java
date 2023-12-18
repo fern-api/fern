@@ -27,6 +27,10 @@ public class _UnionClient {
     this.clientOptions = clientOptions;
   }
 
+  public Animal getAndReturnUnion(Animal request) {
+    return getAndReturnUnion(request,null);
+  }
+
   public Animal getAndReturnUnion(Animal request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("union")
@@ -55,9 +59,5 @@ public class _UnionClient {
     catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  public Animal getAndReturnUnion(Animal request) {
-    return getAndReturnUnion(request,null);
   }
 }

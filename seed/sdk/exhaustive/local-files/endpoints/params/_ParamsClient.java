@@ -31,6 +31,13 @@ public class _ParamsClient {
   /**
    * GET with path param
    */
+  public String getWithPath(String param) {
+    return getWithPath(param,null);
+  }
+
+  /**
+   * GET with path param
+   */
   public String getWithPath(String param, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("params")
@@ -56,10 +63,10 @@ public class _ParamsClient {
   }
 
   /**
-   * GET with path param
+   * GET with query param
    */
-  public String getWithPath(String param) {
-    return getWithPath(param,null);
+  public void getWithQuery(GetWithQuery request) {
+    getWithQuery(request,null);
   }
 
   /**
@@ -88,10 +95,10 @@ public class _ParamsClient {
     }
 
     /**
-     * GET with query param
+     * GET with multiple of same query param
      */
-    public void getWithQuery(GetWithQuery request) {
-      getWithQuery(request,null);
+    public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
+      getWithAllowMultipleQuery(request,null);
     }
 
     /**
@@ -121,10 +128,10 @@ public class _ParamsClient {
       }
 
       /**
-       * GET with multiple of same query param
+       * GET with path and query params
        */
-      public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-        getWithAllowMultipleQuery(request,null);
+      public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
+        getWithPathAndQuery(param,request,null);
       }
 
       /**
@@ -154,10 +161,10 @@ public class _ParamsClient {
         }
 
         /**
-         * GET with path and query params
+         * PUT to update with path param
          */
-        public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
-          getWithPathAndQuery(param,request,null);
+        public String modifyWithPath(String param, String request) {
+          return modifyWithPath(param,request,null);
         }
 
         /**
@@ -192,12 +199,5 @@ public class _ParamsClient {
           catch (IOException e) {
             throw new RuntimeException(e);
           }
-        }
-
-        /**
-         * PUT to update with path param
-         */
-        public String modifyWithPath(String param, String request) {
-          return modifyWithPath(param,request,null);
         }
       }

@@ -25,6 +25,13 @@ public class _ProblemClient {
     /**
      * Creates a problem
      */
+    public CreateProblemResponse createProblem(CreateProblemRequest request) {
+        return createProblem(request, null);
+    }
+
+    /**
+     * Creates a problem
+     */
     public CreateProblemResponse createProblem(CreateProblemRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -59,10 +66,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Creates a problem
+     * Updates a problem
      */
-    public CreateProblemResponse createProblem(CreateProblemRequest request) {
-        return createProblem(request, null);
+    public UpdateProblemResponse updateProblem(String problemId, CreateProblemRequest request) {
+        return updateProblem(problemId, request, null);
     }
 
     /**
@@ -104,10 +111,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Updates a problem
+     * Soft deletes a problem
      */
-    public UpdateProblemResponse updateProblem(String problemId, CreateProblemRequest request) {
-        return updateProblem(problemId, request, null);
+    public void deleteProblem(String problemId) {
+        deleteProblem(problemId, null);
     }
 
     /**
@@ -140,10 +147,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Soft deletes a problem
+     * Returns default starter files for problem
      */
-    public void deleteProblem(String problemId) {
-        deleteProblem(problemId, null);
+    public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {
+        return getDefaultStarterFiles(request, null);
     }
 
     /**
@@ -182,12 +189,5 @@ public class _ProblemClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Returns default starter files for problem
-     */
-    public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {
-        return getDefaultStarterFiles(request, null);
     }
 }

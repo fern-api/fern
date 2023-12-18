@@ -21,6 +21,10 @@ public class _ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    public void upload(byte[] request) {
+        upload(request, null);
+    }
+
     public void upload(byte[] request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -45,9 +49,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void upload(byte[] request) {
-        upload(request, null);
     }
 }

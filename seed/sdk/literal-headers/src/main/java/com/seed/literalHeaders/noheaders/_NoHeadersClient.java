@@ -21,6 +21,10 @@ public class _NoHeadersClient {
         this.clientOptions = clientOptions;
     }
 
+    public void get() {
+        get(null);
+    }
+
     public void get(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -43,9 +47,5 @@ public class _NoHeadersClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void get() {
-        get(null);
     }
 }

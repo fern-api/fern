@@ -22,6 +22,10 @@ public class _UnionClient {
         this.clientOptions = clientOptions;
     }
 
+    public MyUnion get(MyUnion request) {
+        return get(request, null);
+    }
+
     public MyUnion get(MyUnion request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -51,9 +55,5 @@ public class _UnionClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public MyUnion get(MyUnion request) {
-        return get(request, null);
     }
 }

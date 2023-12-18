@@ -22,6 +22,10 @@ public class _ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    public void endpoint() {
+        endpoint(null);
+    }
+
     public void endpoint(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -46,8 +50,8 @@ public class _ServiceClient {
         }
     }
 
-    public void endpoint() {
-        endpoint(null);
+    public void unknownRequest(Object request) {
+        unknownRequest(request, null);
     }
 
     public void unknownRequest(Object request, RequestOptions requestOptions) {
@@ -80,9 +84,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void unknownRequest(Object request) {
-        unknownRequest(request, null);
     }
 }

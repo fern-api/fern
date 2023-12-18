@@ -21,6 +21,10 @@ public class _WithNonLiteralHeadersClient {
         this.clientOptions = clientOptions;
     }
 
+    public void get(WithNonLiteralHeadersRequest request) {
+        get(request, null);
+    }
+
     public void get(WithNonLiteralHeadersRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,9 +59,5 @@ public class _WithNonLiteralHeadersClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void get(WithNonLiteralHeadersRequest request) {
-        get(request, null);
     }
 }

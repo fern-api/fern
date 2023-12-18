@@ -28,6 +28,13 @@ public class _PlaylistClient {
     /**
      * Create a new playlist
      */
+    public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request) {
+        return createPlaylist(serviceParam, request, null);
+    }
+
+    /**
+     * Create a new playlist
+     */
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -67,10 +74,10 @@ public class _PlaylistClient {
     }
 
     /**
-     * Create a new playlist
+     * Returns the user's playlists
      */
-    public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request) {
-        return createPlaylist(serviceParam, request, null);
+    public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
+        return getPlaylists(serviceParam, request, null);
     }
 
     /**
@@ -114,10 +121,10 @@ public class _PlaylistClient {
     }
 
     /**
-     * Returns the user's playlists
+     * Returns a playlist
      */
-    public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
-        return getPlaylists(serviceParam, request, null);
+    public Playlist getPlaylist(int serviceParam, String playlistId) {
+        return getPlaylist(serviceParam, playlistId, null);
     }
 
     /**
@@ -151,17 +158,18 @@ public class _PlaylistClient {
     }
 
     /**
-     * Returns a playlist
+     * Updates a playlist
      */
-    public Playlist getPlaylist(int serviceParam, String playlistId) {
-        return getPlaylist(serviceParam, playlistId, null);
+    public Optional<Playlist> updatePlaylist(int serviceParam, String playlistId) {
+        return updatePlaylist(serviceParam, playlistId, Optional.empty());
     }
 
     /**
      * Updates a playlist
      */
-    public Optional<Playlist> updatePlaylist(int serviceParam, String playlistId) {
-        return updatePlaylist(serviceParam, playlistId, Optional.empty());
+    public Optional<Playlist> updatePlaylist(
+            int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
+        return updatePlaylist(serviceParam, playlistId, request, null);
     }
 
     /**
@@ -210,11 +218,10 @@ public class _PlaylistClient {
     }
 
     /**
-     * Updates a playlist
+     * Deletes a playlist
      */
-    public Optional<Playlist> updatePlaylist(
-            int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
-        return updatePlaylist(serviceParam, playlistId, request, null);
+    public void deletePlaylist(int serviceParam, String playlistId) {
+        deletePlaylist(serviceParam, playlistId, null);
     }
 
     /**
@@ -244,12 +251,5 @@ public class _PlaylistClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a playlist
-     */
-    public void deletePlaylist(int serviceParam, String playlistId) {
-        deletePlaylist(serviceParam, playlistId, null);
     }
 }

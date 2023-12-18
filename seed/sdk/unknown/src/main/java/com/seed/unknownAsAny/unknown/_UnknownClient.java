@@ -24,6 +24,10 @@ public class _UnknownClient {
         this.clientOptions = clientOptions;
     }
 
+    public List<Object> post(Object request) {
+        return post(request, null);
+    }
+
     public List<Object> post(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,9 +58,5 @@ public class _UnknownClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public List<Object> post(Object request) {
-        return post(request, null);
     }
 }

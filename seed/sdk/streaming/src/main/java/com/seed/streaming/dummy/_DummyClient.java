@@ -23,6 +23,10 @@ public class _DummyClient {
         this.clientOptions = clientOptions;
     }
 
+    public Iterable<StreamResponse> generateStream(GenerateStreamRequestzs request) {
+        return generateStream(request, null);
+    }
+
     public Iterable<StreamResponse> generateStream(GenerateStreamRequestzs request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,9 +58,5 @@ public class _DummyClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Iterable<StreamResponse> generateStream(GenerateStreamRequestzs request) {
-        return generateStream(request, null);
     }
 }

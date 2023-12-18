@@ -31,6 +31,10 @@ public class Api {
         this.folderClient = Suppliers.memoize(() -> new _FolderClient(clientOptions));
     }
 
+    public void foo() {
+        foo(null);
+    }
+
     public void foo(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -52,10 +56,6 @@ public class Api {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void foo() {
-        foo(null);
     }
 
     public _AClient a() {

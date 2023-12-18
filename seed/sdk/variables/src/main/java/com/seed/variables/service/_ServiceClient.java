@@ -21,6 +21,10 @@ public class _ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    public void post() {
+        post(null);
+    }
+
     public void post(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -43,9 +47,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void post() {
-        post(null);
     }
 }

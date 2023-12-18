@@ -23,6 +23,10 @@ public class _PaymentClient {
         this.clientOptions = clientOptions;
     }
 
+    public UUID create(CreatePaymentRequest request) {
+        return create(request, null);
+    }
+
     public UUID create(CreatePaymentRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,8 +59,8 @@ public class _PaymentClient {
         }
     }
 
-    public UUID create(CreatePaymentRequest request) {
-        return create(request, null);
+    public void delete(String paymentId) {
+        delete(paymentId, null);
     }
 
     public void delete(String paymentId, RequestOptions requestOptions) {
@@ -82,9 +86,5 @@ public class _PaymentClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void delete(String paymentId) {
-        delete(paymentId, null);
     }
 }

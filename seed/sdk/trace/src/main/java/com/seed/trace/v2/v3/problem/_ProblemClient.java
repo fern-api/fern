@@ -25,6 +25,13 @@ public class _ProblemClient {
     /**
      * Returns lightweight versions of all problems
      */
+    public List<LightweightProblemInfoV2> getLightweightProblems() {
+        return getLightweightProblems(null);
+    }
+
+    /**
+     * Returns lightweight versions of all problems
+     */
     public List<LightweightProblemInfoV2> getLightweightProblems(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -53,10 +60,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Returns lightweight versions of all problems
+     * Returns latest versions of all problems
      */
-    public List<LightweightProblemInfoV2> getLightweightProblems() {
-        return getLightweightProblems(null);
+    public List<ProblemInfoV2> getProblems() {
+        return getProblems(null);
     }
 
     /**
@@ -90,10 +97,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Returns latest versions of all problems
+     * Returns latest version of a problem
      */
-    public List<ProblemInfoV2> getProblems() {
-        return getProblems(null);
+    public ProblemInfoV2 getLatestProblem(String problemId) {
+        return getLatestProblem(problemId, null);
     }
 
     /**
@@ -127,10 +134,10 @@ public class _ProblemClient {
     }
 
     /**
-     * Returns latest version of a problem
+     * Returns requested version of a problem
      */
-    public ProblemInfoV2 getLatestProblem(String problemId) {
-        return getLatestProblem(problemId, null);
+    public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion) {
+        return getProblemVersion(problemId, problemVersion, null);
     }
 
     /**
@@ -163,12 +170,5 @@ public class _ProblemClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Returns requested version of a problem
-     */
-    public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion) {
-        return getProblemVersion(problemId, problemVersion, null);
     }
 }

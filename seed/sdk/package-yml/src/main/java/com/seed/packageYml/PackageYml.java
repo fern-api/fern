@@ -28,6 +28,10 @@ public class PackageYml {
         this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
     }
 
+    public String echo(String request) {
+        return echo(request, null);
+    }
+
     public String echo(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -57,10 +61,6 @@ public class PackageYml {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String echo(String request) {
-        return echo(request, null);
     }
 
     public _ServiceClient service() {

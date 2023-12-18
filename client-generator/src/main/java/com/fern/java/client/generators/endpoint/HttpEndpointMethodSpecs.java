@@ -26,8 +26,8 @@ public final class HttpEndpointMethodSpecs {
     private final MethodSpec noRequestBodyMethodSpec;
 
     public HttpEndpointMethodSpecs(
-            MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec requestOptionsMethodSpec,
+            MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec) {
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;

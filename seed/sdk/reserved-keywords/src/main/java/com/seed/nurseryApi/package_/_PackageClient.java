@@ -21,6 +21,10 @@ public class _PackageClient {
         this.clientOptions = clientOptions;
     }
 
+    public void test(TestRequest request) {
+        test(request, null);
+    }
+
     public void test(TestRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl =
                 HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
@@ -43,9 +47,5 @@ public class _PackageClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void test(TestRequest request) {
-        test(request, null);
     }
 }

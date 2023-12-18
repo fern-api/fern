@@ -28,6 +28,10 @@ public class _ContainerClient {
         this.clientOptions = clientOptions;
     }
 
+    public List<String> getAndReturnListOfPrimitives(List<String> request) {
+        return getAndReturnListOfPrimitives(request, null);
+    }
+
     public List<String> getAndReturnListOfPrimitives(List<String> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -62,8 +66,8 @@ public class _ContainerClient {
         }
     }
 
-    public List<String> getAndReturnListOfPrimitives(List<String> request) {
-        return getAndReturnListOfPrimitives(request, null);
+    public List<ObjectWithRequiredField> getAndReturnListOfObjects(List<ObjectWithRequiredField> request) {
+        return getAndReturnListOfObjects(request, null);
     }
 
     public List<ObjectWithRequiredField> getAndReturnListOfObjects(
@@ -101,8 +105,8 @@ public class _ContainerClient {
         }
     }
 
-    public List<ObjectWithRequiredField> getAndReturnListOfObjects(List<ObjectWithRequiredField> request) {
-        return getAndReturnListOfObjects(request, null);
+    public Set<String> getAndReturnSetOfPrimitives(Set<String> request) {
+        return getAndReturnSetOfPrimitives(request, null);
     }
 
     public Set<String> getAndReturnSetOfPrimitives(Set<String> request, RequestOptions requestOptions) {
@@ -139,8 +143,8 @@ public class _ContainerClient {
         }
     }
 
-    public Set<String> getAndReturnSetOfPrimitives(Set<String> request) {
-        return getAndReturnSetOfPrimitives(request, null);
+    public Set<ObjectWithRequiredField> getAndReturnSetOfObjects(Set<ObjectWithRequiredField> request) {
+        return getAndReturnSetOfObjects(request, null);
     }
 
     public Set<ObjectWithRequiredField> getAndReturnSetOfObjects(
@@ -178,8 +182,8 @@ public class _ContainerClient {
         }
     }
 
-    public Set<ObjectWithRequiredField> getAndReturnSetOfObjects(Set<ObjectWithRequiredField> request) {
-        return getAndReturnSetOfObjects(request, null);
+    public Map<String, String> getAndReturnMapPrimToPrim(Map<String, String> request) {
+        return getAndReturnMapPrimToPrim(request, null);
     }
 
     public Map<String, String> getAndReturnMapPrimToPrim(Map<String, String> request, RequestOptions requestOptions) {
@@ -216,8 +220,9 @@ public class _ContainerClient {
         }
     }
 
-    public Map<String, String> getAndReturnMapPrimToPrim(Map<String, String> request) {
-        return getAndReturnMapPrimToPrim(request, null);
+    public Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
+            Map<String, ObjectWithRequiredField> request) {
+        return getAndReturnMapOfPrimToObject(request, null);
     }
 
     public Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
@@ -255,13 +260,12 @@ public class _ContainerClient {
         }
     }
 
-    public Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
-            Map<String, ObjectWithRequiredField> request) {
-        return getAndReturnMapOfPrimToObject(request, null);
-    }
-
     public Optional<ObjectWithRequiredField> getAndReturnOptional() {
         return getAndReturnOptional(Optional.empty());
+    }
+
+    public Optional<ObjectWithRequiredField> getAndReturnOptional(Optional<ObjectWithRequiredField> request) {
+        return getAndReturnOptional(request, null);
     }
 
     public Optional<ObjectWithRequiredField> getAndReturnOptional(
@@ -300,9 +304,5 @@ public class _ContainerClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Optional<ObjectWithRequiredField> getAndReturnOptional(Optional<ObjectWithRequiredField> request) {
-        return getAndReturnOptional(request, null);
     }
 }

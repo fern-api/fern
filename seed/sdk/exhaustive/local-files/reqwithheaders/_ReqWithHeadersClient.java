@@ -26,6 +26,10 @@ public class _ReqWithHeadersClient {
     this.clientOptions = clientOptions;
   }
 
+  public void getWithCustomHeader(ReqWithHeaders request) {
+    getWithCustomHeader(request,null);
+  }
+
   public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("test-headers")
@@ -56,9 +60,5 @@ public class _ReqWithHeadersClient {
     catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  public void getWithCustomHeader(ReqWithHeaders request) {
-    getWithCustomHeader(request,null);
   }
 }

@@ -25,6 +25,10 @@ public class _ServiceClient {
         return getFile(filename, GetFileRequest.builder().build());
     }
 
+    public File getFile(String filename, GetFileRequest request) {
+        return getFile(filename, request, null);
+    }
+
     public File getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -50,9 +54,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public File getFile(String filename, GetFileRequest request) {
-        return getFile(filename, request, null);
     }
 }

@@ -28,6 +28,10 @@ public class _OptionalClient {
         return sendOptionalBody(Optional.empty());
     }
 
+    public String sendOptionalBody(Optional<Map<String, Object>> request) {
+        return sendOptionalBody(request, null);
+    }
+
     public String sendOptionalBody(Optional<Map<String, Object>> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -61,9 +65,5 @@ public class _OptionalClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String sendOptionalBody(Optional<Map<String, Object>> request) {
-        return sendOptionalBody(request, null);
     }
 }

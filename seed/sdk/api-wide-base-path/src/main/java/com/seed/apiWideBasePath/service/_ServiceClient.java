@@ -21,6 +21,10 @@ public class _ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    public void post(String serviceParam, int endpointParam) {
+        post(serviceParam, endpointParam, null);
+    }
+
     public void post(String serviceParam, int endpointParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -44,9 +48,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void post(String serviceParam, int endpointParam) {
-        post(serviceParam, endpointParam, null);
     }
 }

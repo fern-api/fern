@@ -35,6 +35,10 @@ public class _ObjectClient {
     return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
   }
 
+  public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
+    return getAndReturnWithOptionalField(request,null);
+  }
+
   public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request,
       RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
@@ -66,8 +70,8 @@ public class _ObjectClient {
     }
   }
 
-  public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
-    return getAndReturnWithOptionalField(request,null);
+  public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
+    return getAndReturnWithRequiredField(request,null);
   }
 
   public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request,
@@ -101,8 +105,8 @@ public class _ObjectClient {
     }
   }
 
-  public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
-    return getAndReturnWithRequiredField(request,null);
+  public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
+    return getAndReturnWithMapOfMap(request,null);
   }
 
   public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request,
@@ -136,12 +140,13 @@ public class _ObjectClient {
     }
   }
 
-  public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
-    return getAndReturnWithMapOfMap(request,null);
-  }
-
   public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
     return getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField.builder().build());
+  }
+
+  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
+      NestedObjectWithOptionalField request) {
+    return getAndReturnNestedWithOptionalField(request,null);
   }
 
   public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
@@ -175,9 +180,9 @@ public class _ObjectClient {
     }
   }
 
-  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
-      NestedObjectWithOptionalField request) {
-    return getAndReturnNestedWithOptionalField(request,null);
+  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
+      NestedObjectWithRequiredField request) {
+    return getAndReturnNestedWithRequiredField(request,null);
   }
 
   public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
@@ -209,10 +214,5 @@ public class _ObjectClient {
     catch (IOException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
-      NestedObjectWithRequiredField request) {
-    return getAndReturnNestedWithRequiredField(request,null);
   }
 }

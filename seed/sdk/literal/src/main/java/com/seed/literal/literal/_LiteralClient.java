@@ -22,6 +22,10 @@ public class _LiteralClient {
         this.clientOptions = clientOptions;
     }
 
+    public CreateOptionsResponse createOptions(CreateOptionsRequest request) {
+        return createOptions(request, null);
+    }
+
     public CreateOptionsResponse createOptions(CreateOptionsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,8 +58,8 @@ public class _LiteralClient {
         }
     }
 
-    public CreateOptionsResponse createOptions(CreateOptionsRequest request) {
-        return createOptions(request, null);
+    public Options getOptions(GetOptionsRequest request) {
+        return getOptions(request, null);
     }
 
     public Options getOptions(GetOptionsRequest request, RequestOptions requestOptions) {
@@ -90,8 +94,8 @@ public class _LiteralClient {
         }
     }
 
-    public Options getOptions(GetOptionsRequest request) {
-        return getOptions(request, null);
+    public UndiscriminatedOptions getUndiscriminatedOptions(GetUndiscriminatedOptionsRequest request) {
+        return getUndiscriminatedOptions(request, null);
     }
 
     public UndiscriminatedOptions getUndiscriminatedOptions(
@@ -125,9 +129,5 @@ public class _LiteralClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public UndiscriminatedOptions getUndiscriminatedOptions(GetUndiscriminatedOptionsRequest request) {
-        return getUndiscriminatedOptions(request, null);
     }
 }

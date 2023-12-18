@@ -25,6 +25,13 @@ public class _ImdbClient {
     /**
      * Add a movie to the database
      */
+    public String createMovie(CreateMovieRequest request) {
+        return createMovie(request, null);
+    }
+
+    /**
+     * Add a movie to the database
+     */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -58,11 +65,8 @@ public class _ImdbClient {
         }
     }
 
-    /**
-     * Add a movie to the database
-     */
-    public String createMovie(CreateMovieRequest request) {
-        return createMovie(request, null);
+    public Movie getMovie(String movieId) {
+        return getMovie(movieId, null);
     }
 
     public Movie getMovie(String movieId, RequestOptions requestOptions) {
@@ -89,9 +93,5 @@ public class _ImdbClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Movie getMovie(String movieId) {
-        return getMovie(movieId, null);
     }
 }

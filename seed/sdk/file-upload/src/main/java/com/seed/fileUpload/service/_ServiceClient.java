@@ -26,6 +26,10 @@ public class _ServiceClient {
         this.clientOptions = clientOptions;
     }
 
+    public void post(File file, Optional<File> maybeFile, MyRequest request) {
+        post(file, maybeFile, request, null);
+    }
+
     public void post(File file, Optional<File> maybeFile, MyRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -101,8 +105,8 @@ public class _ServiceClient {
         }
     }
 
-    public void post(File file, Optional<File> maybeFile, MyRequest request) {
-        post(file, maybeFile, request, null);
+    public void justFile(File file, JustFileRequet request) {
+        justFile(file, request, null);
     }
 
     public void justFile(File file, JustFileRequet request, RequestOptions requestOptions) {
@@ -135,9 +139,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void justFile(File file, JustFileRequet request) {
-        justFile(file, request, null);
     }
 }

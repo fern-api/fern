@@ -23,6 +23,13 @@ public class _ServiceClient {
     /**
      * GET request with custom api key
      */
+    public String getWithBearerToken() {
+        return getWithBearerToken(null);
+    }
+
+    /**
+     * GET request with custom api key
+     */
     public String getWithBearerToken(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -46,12 +53,5 @@ public class _ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * GET request with custom api key
-     */
-    public String getWithBearerToken() {
-        return getWithBearerToken(null);
     }
 }

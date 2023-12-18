@@ -27,6 +27,10 @@ public class _FolderClient {
         this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
     }
 
+    public void foo() {
+        foo(null);
+    }
+
     public void foo(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -48,10 +52,6 @@ public class _FolderClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void foo() {
-        foo(null);
     }
 
     public _ServiceClient service() {
