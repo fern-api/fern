@@ -36,7 +36,8 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("custom-fixture", {
                     type: "string",
-                    demandOption: false
+                    demandOption: false,
+                    description: "Path to the api directory"
                 })
                 .option("fixture", {
                     type: "string",
