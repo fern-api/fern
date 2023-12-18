@@ -291,7 +291,6 @@ export function convertSchemaObject(
 
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
-        // TODO(dsinghvi): handle type: 'null'
         if (
             schema.discriminator != null &&
             schema.discriminator.mapping != null &&
@@ -353,14 +352,21 @@ export function convertSchemaObject(
                     groupName
                 });
             }
+
+            const hasNullValue =
+                schema.oneOf.filter((schema) => {
+                    return !isReferenceObject(schema) && (schema.type as string) === "null";
+                }).length > 0;
             return convertUndiscriminatedOneOf({
                 nameOverride,
                 generatedName,
                 breadcrumbs,
                 description,
-                wrapAsNullable,
+                wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
-                subtypes: schema.oneOf,
+                subtypes: schema.oneOf.filter((schema) => {
+                    return !isReferenceObject(schema) && (schema.type as string) !== "null";
+                }),
                 groupName
             });
         }
