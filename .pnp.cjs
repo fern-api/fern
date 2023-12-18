@@ -4520,10 +4520,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
-            ["@fern-fern/seed-config", "npm:0.0.14"],\
+            ["@fern-fern/seed-config", "npm:0.0.15"],\
             ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
+            ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
@@ -4535,6 +4536,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["find-up", "npm:6.3.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
@@ -5093,10 +5095,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/seed-config", [\
-        ["npm:0.0.14", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.14-9e7cec9882-3dae3729df.zip/node_modules/@fern-fern/seed-config/",\
+        ["npm:0.0.15", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.15-0d14dfa300-522500dcd3.zip/node_modules/@fern-fern/seed-config/",\
           "packageDependencies": [\
-            ["@fern-fern/seed-config", "npm:0.0.14"]\
+            ["@fern-fern/seed-config", "npm:0.0.15"]\
           ],\
           "linkType": "HARD"\
         }]\

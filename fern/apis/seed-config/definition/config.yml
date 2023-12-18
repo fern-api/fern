@@ -10,6 +10,11 @@ types:
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
       scripts: optional<list<ScriptConfig>>
+      allowedFailures: 
+        type: optional<list<string>>
+        docs: | 
+          List any fixtures that are okay to fail. For normal fixtures 
+          just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
 
   ScriptConfig:
     properties:
