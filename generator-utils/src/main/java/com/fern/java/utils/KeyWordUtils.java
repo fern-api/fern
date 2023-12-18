@@ -34,11 +34,9 @@ public final class KeyWordUtils {
             "assert",
             "switch");
 
-    private static final Set<String> RESERVED_METHOD_NAMES = Set.of(
-            "getClass");
+    private static final Set<String> RESERVED_METHOD_NAMES = Set.of("getClass");
 
-    private KeyWordUtils() {
-    }
+    private KeyWordUtils() {}
 
     public static String getKeyWordCompatibleMethodName(String funcName) {
         if (isReservedFunctionName(funcName)) {
