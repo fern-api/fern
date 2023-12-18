@@ -119,7 +119,7 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             return primitiveExample.double;
         case "string": {
             if (primitiveExample.string.startsWith("$")) {
-                return `\\$${primitiveExample.string}`;
+                return `${primitiveExample.string.slice(1)}`;
             }
             return primitiveExample.string;
         }
