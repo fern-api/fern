@@ -34,10 +34,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             "method": "GET",
             "path": "/user/{userId}",
             "path-parameters": {
-              "userId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "userId": "string",
             },
             "request": {
               "body": {
@@ -60,10 +57,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             "method": "GET",
             "path": "/user/{userId}",
             "path-parameters": {
-              "userId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "userId": "string",
             },
             "request": {
               "body": {
