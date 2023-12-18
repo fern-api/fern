@@ -312,7 +312,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET request that always throws an error",
+          "docs": "GET request that always throws an error",
           "errors": [
             {
               "docs": null,

@@ -8301,7 +8301,7 @@ exports[`generate IR 2`] = `
         "values": [
           {
             "availability": null,
-            "docs": "Mocked A regular file (e.g. foo.txt).",
+            "docs": "A regular file (e.g. foo.txt).",
             "name": {
               "name": {
                 "camelCase": {
@@ -8327,7 +8327,7 @@ exports[`generate IR 2`] = `
           },
           {
             "availability": null,
-            "docs": "Mocked A directory (e.g. foo/).",
+            "docs": "A directory (e.g. foo/).",
             "name": {
               "name": {
                 "camelCase": {

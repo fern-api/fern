@@ -15726,7 +15726,7 @@ exports[`generate IR 1`] = `
         "values": [
           {
             "availability": null,
-            "docs": "Mocked The migration is running.",
+            "docs": "The migration is running.",
             "name": {
               "name": {
                 "camelCase": {
@@ -15752,7 +15752,7 @@ exports[`generate IR 1`] = `
           },
           {
             "availability": null,
-            "docs": "Mocked The migration failed.",
+            "docs": "The migration failed.",
             "name": {
               "name": {
                 "camelCase": {
@@ -17342,7 +17342,7 @@ exports[`generate IR 1`] = `
           },
           {
             "availability": null,
-            "docs": "Mocked The rating scale is one to five stars",
+            "docs": "The rating scale is one to five stars",
             "name": {
               "name": {
                 "camelCase": {

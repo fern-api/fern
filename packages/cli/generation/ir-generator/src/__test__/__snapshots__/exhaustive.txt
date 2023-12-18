@@ -8139,7 +8139,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET with path param",
+          "docs": "GET with path param",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8234,7 +8234,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET with query param",
+          "docs": "GET with query param",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8404,7 +8404,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET with multiple of same query param",
+          "docs": "GET with multiple of same query param",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8603,7 +8603,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET with path and query params",
+          "docs": "GET with path and query params",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8810,7 +8810,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked PUT to update with path param",
+          "docs": "PUT to update with path param",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -10496,7 +10496,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked POST with custom object in request body, response is an object",
+          "docs": "POST with custom object in request body, response is an object",
           "errors": [
             {
               "docs": null,
@@ -11053,7 +11053,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked POST request with no auth",
+          "docs": "POST request with no auth",
           "errors": [
             {
               "docs": null,

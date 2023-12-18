@@ -5284,7 +5284,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Create a new playlist",
+          "docs": "Create a new playlist",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -5636,7 +5636,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns the user's playlists",
+          "docs": "Returns the user's playlists",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -5717,7 +5717,7 @@ exports[`generate IR 1`] = `
             {
               "allowMultiple": false,
               "availability": null,
-              "docs": "Mocked i'm another field",
+              "docs": "i'm another field",
               "name": {
                 "name": {
                   "camelCase": {
@@ -5748,7 +5748,7 @@ exports[`generate IR 1`] = `
             {
               "allowMultiple": false,
               "availability": null,
-              "docs": "Mocked I'm a multiline
+              "docs": "I'm a multiline
 description",
               "name": {
                 "name": {
@@ -6114,7 +6114,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns a playlist",
+          "docs": "Returns a playlist",
           "errors": [
             {
               "docs": null,
@@ -6593,7 +6593,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Updates a playlist",
+          "docs": "Updates a playlist",
           "errors": [
             {
               "docs": null,
@@ -7186,7 +7186,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Deletes a playlist",
+          "docs": "Deletes a playlist",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -7423,7 +7423,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Creates a problem",
+          "docs": "Creates a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -7796,7 +7796,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Updates a problem",
+          "docs": "Updates a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8270,7 +8270,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Soft deletes a problem",
+          "docs": "Soft deletes a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8417,7 +8417,7 @@ description",
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns default starter files for problem",
+          "docs": "Returns default starter files for problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -8992,7 +8992,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns sessionId and execution server URL for session. Spins up server.",
+          "docs": "Returns sessionId and execution server URL for session. Spins up server.",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -9240,7 +9240,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns execution server URL for session. Returns empty if session isn't registered.",
+          "docs": "Returns execution server URL for session. Returns empty if session isn't registered.",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -9432,7 +9432,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Stops execution session.",
+          "docs": "Stops execution session.",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -10284,7 +10284,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns lightweight versions of all problems",
+          "docs": "Returns lightweight versions of all problems",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -10447,7 +10447,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns latest versions of all problems",
+          "docs": "Returns latest versions of all problems",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -10701,7 +10701,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns latest version of a problem",
+          "docs": "Returns latest version of a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -11078,7 +11078,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns requested version of a problem",
+          "docs": "Returns requested version of a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -11468,7 +11468,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns lightweight versions of all problems",
+          "docs": "Returns lightweight versions of all problems",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -11669,7 +11669,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns latest versions of all problems",
+          "docs": "Returns latest versions of all problems",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -11961,7 +11961,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns latest version of a problem",
+          "docs": "Returns latest version of a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -12376,7 +12376,7 @@ The method name cannot include the following characters:
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked Returns requested version of a problem",
+          "docs": "Returns requested version of a problem",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -18731,7 +18731,7 @@ The method name cannot include the following characters:
           },
           {
             "availability": null,
-            "docs": "Mocked Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
+            "docs": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
             "name": {
               "name": {
                 "camelCase": {
@@ -22753,7 +22753,7 @@ The method name cannot include the following characters:
         "values": [
           {
             "availability": null,
-            "docs": "Mocked The migration is running",
+            "docs": "The migration is running",
             "name": {
               "name": {
                 "camelCase": {
@@ -22779,7 +22779,7 @@ The method name cannot include the following characters:
           },
           {
             "availability": null,
-            "docs": "Mocked The migration is failed",
+            "docs": "The migration is failed",
             "name": {
               "name": {
                 "camelCase": {
@@ -23907,7 +23907,7 @@ The method name cannot include the following characters:
           },
           {
             "availability": null,
-            "docs": "Mocked The problems that make up the playlist.",
+            "docs": "The problems that make up the playlist.",
             "name": {
               "name": {
                 "camelCase": {
@@ -31313,7 +31313,7 @@ The method name cannot include the following characters:
           },
           {
             "availability": null,
-            "docs": "Mocked The auto-generated session id. Formatted as a uuid.",
+            "docs": "The auto-generated session id. Formatted as a uuid.",
             "name": {
               "name": {
                 "camelCase": {
@@ -40491,7 +40491,7 @@ The method name cannot include the following characters:
     },
     "type_submission:SubmissionTypeEnum": {
       "availability": null,
-      "docs": "Mocked Keep in sync with SubmissionType.",
+      "docs": "Keep in sync with SubmissionType.",
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -46360,7 +46360,7 @@ The method name cannot include the following characters:
         "properties": [
           {
             "availability": null,
-            "docs": "Mocked If present, use this to load subseqent pages.
+            "docs": "If present, use this to load subseqent pages.
 The offset is the id of the next trace response to load.",
             "name": {
               "name": {
@@ -46594,7 +46594,7 @@ The offset is the id of the next trace response to load.",
         "properties": [
           {
             "availability": null,
-            "docs": "Mocked If present, use this to load subseqent pages.
+            "docs": "If present, use this to load subseqent pages.
 The offset is the id of the next trace response to load.",
             "name": {
               "name": {
@@ -65705,7 +65705,7 @@ The offset is the id of the next trace response to load.",
     },
     "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult": {
       "availability": null,
-      "docs": "Mocked The generated signature will include an additional param, actualResult",
+      "docs": "The generated signature will include an additional param, actualResult",
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -85027,7 +85027,7 @@ The offset is the id of the next trace response to load.",
     },
     "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult": {
       "availability": null,
-      "docs": "Mocked The generated signature will include an additional param, actualResult",
+      "docs": "The generated signature will include an additional param, actualResult",
       "examples": [],
       "name": {
         "fernFilepath": {

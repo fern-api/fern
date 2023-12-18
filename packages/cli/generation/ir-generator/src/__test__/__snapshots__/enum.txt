@@ -185,7 +185,7 @@ exports[`generate IR 1`] = `
         "values": [
           {
             "availability": null,
-            "docs": "Mocked The first enum value.",
+            "docs": "The first enum value.",
             "name": {
               "name": {
                 "camelCase": {
@@ -266,7 +266,7 @@ exports[`generate IR 1`] = `
     },
     "type_:One": {
       "availability": null,
-      "docs": "Mocked Represents a variety of casing conventions that
+      "docs": "Represents a variety of casing conventions that
 could collide without special care.",
       "examples": [
         {

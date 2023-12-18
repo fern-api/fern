@@ -132,7 +132,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET request with custom api key",
+          "docs": "GET request with custom api key",
           "errors": [],
           "examples": [],
           "fullPath": {

@@ -393,7 +393,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked GET request with custom auth scheme",
+          "docs": "GET request with custom auth scheme",
           "errors": [
             {
               "docs": null,
@@ -518,7 +518,7 @@ exports[`generate IR 1`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Mocked POST request with custom auth scheme",
+          "docs": "POST request with custom auth scheme",
           "errors": [
             {
               "docs": null,
