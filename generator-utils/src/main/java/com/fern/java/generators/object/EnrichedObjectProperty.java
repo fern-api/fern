@@ -56,16 +56,17 @@ public interface EnrichedObjectProperty {
             return Optional.empty();
         }
         return Optional.of(FieldSpec.builder(
-                        poetTypeName(),
-                        KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
-                        Modifier.PRIVATE,
-                        Modifier.FINAL)
+                poetTypeName(),
+                KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
+                Modifier.PRIVATE,
+                Modifier.FINAL)
                 .build());
     }
 
     @Value.Lazy
     default MethodSpec getterProperty() {
-        MethodSpec.Builder getterBuilder = MethodSpec.methodBuilder("get" + pascalCaseKey())
+        MethodSpec.Builder getterBuilder = MethodSpec
+                .methodBuilder(KeyWordUtils.getKeyWordCompatibleMethodName("get" + pascalCaseKey()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(poetTypeName());
         if (literalValue().isPresent()) {
