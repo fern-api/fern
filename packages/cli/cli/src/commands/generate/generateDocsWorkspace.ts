@@ -42,7 +42,7 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        await validateDocsWorkspaceAndLogIssues(docsWorkspace, context);
+        await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings: false });
 
         const fernWorkspaces = await Promise.all(
             project.apiWorkspaces.map(async (workspace) => {

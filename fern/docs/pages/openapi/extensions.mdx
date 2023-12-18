@@ -1,9 +1,5 @@
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
 
-<Callout intent="info">
-Tip: If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new).
-</Callout>
-
 ## SDK method names
 
 By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
@@ -18,7 +14,7 @@ The OpenAPI below will `client.users.create()`:
 
 ```yaml openapi.yaml
 paths:
-  /users
+  /users:
     post:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
@@ -191,6 +187,30 @@ paths:
             type: string
           required: true
       ...
+
+## Server names
+
+The `x-fern-server-name` extension is used to name your servers. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+servers:
+- url: https://api.example.com
+  x-fern-server-name: Production
+- url: https://sandbox.example.com
+  x-fern-server-name: Sandbox
+```
+</CodeBlock>
+
+In a generated TypeScript SDK, you'd see:
+
+<CodeBlock title="environment.ts">
+```yaml
+export const ExampleEnvironment = {
+    Production: "https://api.example.com",
+} as const;
+
+export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ```
 </CodeBlock>
 
@@ -419,3 +439,7 @@ shown in the third tab.
     ```
     </CodeBlock>
 </CodeBlocks>
+
+## Request an OpenAPI extension 
+
+If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new) to start a discussion about it.

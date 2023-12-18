@@ -145,7 +145,7 @@ navigation:
     layout:
       - section: Overview
         contents:
-          - page: Quickstart 
+          - page: Fern Docs Quickstart 
             path: ./docs/pages/docs/quickstart.mdx
             slug: quickstart
           - page: Configuration

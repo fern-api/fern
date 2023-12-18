@@ -17,7 +17,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage: GenerationLanguage | undefined;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
-    await validateAPIWorkspaceAndLogIssues(workspace, context);
+    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,

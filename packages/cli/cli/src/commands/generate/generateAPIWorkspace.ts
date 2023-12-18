@@ -48,7 +48,7 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
-    await validateAPIWorkspaceAndLogIssues(workspace, context);
+    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({
