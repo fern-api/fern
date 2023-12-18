@@ -22,8 +22,8 @@ import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -37,38 +37,39 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     @Override
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
-        String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
+        String packageName =
+                getPackageForFernfilepath(declaredTypeName.getFernFilepath().getAllParts());
         return ClassName.get(
                 packageName, declaredTypeName.getName().getPascalCase().getSafeName());
     }
 
     @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
-        String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
+        String packageName = getRootPackage();
         return ClassName.get(
                 packageName, "I" + declaredTypeName.getName().getPascalCase().getSafeName());
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
+        return getPackageForFernfilepath(fernFilepath.getAllParts());
     }
 
     protected final String getErrorsPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
+        return getPackageForFernfilepath(fernFilepath.getAllParts());
     }
 
-    protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
+    protected final String getPackageForFernfilepath() {
+        return this.getPackageForFernfilepath(Collections.emptyList());
+    }
+
+    protected final String getPackageForFernfilepath(List<Name> packageParts) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        if (fernFilepath.isPresent() && !fernFilepath.get().getAllParts().isEmpty()) {
-            tokens.add("resources");
-        }
-        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
+        tokens.addAll(packageParts.stream()
                 .map(Name::getCamelCase)
                 .map(SafeAndUnsafeString::getSafeName)
-                // names should be lower case
+                // names should be lowercase
                 .map(String::toLowerCase)
-                .collect(Collectors.toList())));
-        suffix.ifPresent(tokens::add);
+                .collect(Collectors.toList()));
         List<String> sanitizedTokens = new ArrayList<>();
         for (String token : tokens) {
             if (startsWithNumber(token)) {
