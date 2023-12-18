@@ -4584,8 +4584,12 @@ exports[`open api parser deel simple 1`] = `
       },
       "ContractPreview": "string",
       "ContractSearchForm": {
+        "discriminated": false,
         "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
-        "enum": [],
+        "union": [
+          "ContractSearchFormWithCursor",
+          "ContractSearchFormWithoutCursor",
+        ],
       },
       "ContractSearchFormWithCursor": {
         "docs": "This is a model to make it easier to understand and restrict search parameters",
@@ -4628,16 +4632,36 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "ContractSearchFormWithoutCursorCountries": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "CountryCodeList",
+          "CountryCode",
+        ],
       },
       "ContractSearchFormWithoutCursorCurrencies": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "CurrencyCodeList",
+          "CurrencyCodeRequired",
+        ],
       },
       "ContractSearchFormWithoutCursorStatuses": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "ContractStatusEnumList",
+          "ContractStatusEnum",
+        ],
       },
       "ContractSearchFormWithoutCursorTypes": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "ContractTypeEnum",
+          "ContractTypeEnumList",
+        ],
       },
       "ContractSignatureToCreate": {
         "docs": undefined,
@@ -4716,7 +4740,14 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "ContractToCreate": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "ContractToCreatePayAsYouGoTimeBased",
+          "ContractToCreatePaygTasks",
+          "ContractToCreatePaygMilestones",
+          "ContractToCreateOngoingTimeBased",
+        ],
       },
       "ContractToCreateOngoingTimeBased": {
         "docs": undefined,
@@ -6434,7 +6465,12 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "HrisDirectEmployeeJobInformation": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "HrisJobInformationTitleId",
+          "HrisJobInformationTitleName",
+        ],
       },
       "HrisDirectEmployeeResponse": {
         "docs": undefined,
@@ -6669,13 +6705,28 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "InvoiceAdjustmentSearchContainerContractTypes": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "ContractTypeEnumList",
+          "ContractTypeEnum",
+        ],
       },
       "InvoiceAdjustmentSearchContainerStatuses": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "InvoiceAdjustmentStatusEnumList",
+          "optional<InvoiceAdjustmentStatusEnum>",
+        ],
       },
       "InvoiceAdjustmentSearchContainerTypes": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "InvoiceAdjustmentTypeEnumList",
+          "InvoiceAdjustmentTypeEnum",
+        ],
       },
       "InvoiceAdjustmentStatusEnum": {
         "docs": "status of invoice adjustment",
@@ -8089,12 +8140,8 @@ exports[`open api parser deel simple 1`] = `
       },
       "TimesheetIdItems": "list<TimesheetIdItemsItem>",
       "TimesheetIdItemsItem": {
-        "discriminated": false,
         "docs": "ID of an existing timesheet record",
-        "union": [
-          "double",
-          "string",
-        ],
+        "enum": [],
       },
       "TimesheetList": "list<BasicTimesheet>",
       "TimesheetListContainer": {
@@ -8151,13 +8198,28 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "TimesheetSearchContainerContractTypes": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "ContractTypeEnumList",
+          "ContractTypeEnum",
+        ],
       },
       "TimesheetSearchContainerStatuses": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "TimesheetStatusEnumList",
+          "optional<TimesheetStatusEnum>",
+        ],
       },
       "TimesheetSearchContainerTypes": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "TimesheetTypeEnumList",
+          "TimesheetTypeEnum",
+        ],
       },
       "TimesheetSharedProperties": {
         "docs": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
@@ -8199,12 +8261,8 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetTypeEnum": "literal<"work">",
       "TimesheetTypeEnumList": "list<TimesheetTypeEnum>",
       "UniqueObjectIdentifier": {
-        "discriminated": false,
         "docs": "Unique identifier of this resource.",
-        "union": [
-          "string",
-          "double",
-        ],
+        "enum": [],
       },
       "UrlType": "optional<string>",
       "UrlTypeRequired": "string",
