@@ -38,7 +38,7 @@
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/ir-sdk": "0.0.3277",
     "lodash-es": "^4.17.21",
-    "prettier": "^3.0.0",
+    "prettier": "^2.7.1",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
     "@types/jest-specific-snapshot": "^0.5.7",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
-    "@types/prettier": "^3.0.0",
+    "@types/prettier": "^2.7.1",
     "@types/url-join": "^4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.26.0",
