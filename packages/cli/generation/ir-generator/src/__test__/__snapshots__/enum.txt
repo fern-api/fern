@@ -267,8 +267,7 @@ exports[`generate IR 1`] = `
     "type_:One": {
       "availability": null,
       "docs": "Represents a variety of casing conventions that
-could collide without special care.
-",
+could collide without special care.",
       "examples": [
         {
           "docs": null,

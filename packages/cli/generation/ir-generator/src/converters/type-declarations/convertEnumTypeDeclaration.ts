@@ -3,21 +3,23 @@ import { Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 
-export function convertEnumTypeDeclaration({
+export async function convertEnumTypeDeclaration({
     _enum,
     file
 }: {
     _enum: RawSchemas.EnumSchema;
     file: FernFileContext;
-}): Type {
+}): Promise<Type> {
     return Type.enum({
-        values: _enum.enum.map((value) => ({
-            ...convertDeclaration(value),
-            name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: typeof value === "string" ? value : value.value,
-                name: getEnumName(value).name
-            })
-        }))
+        values: await Promise.all(
+            _enum.enum.map(async (value) => ({
+                ...(await convertDeclaration(value)),
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    wireValue: typeof value === "string" ? value : value.value,
+                    name: getEnumName(value).name
+                })
+            }))
+        )
     });
 }
 

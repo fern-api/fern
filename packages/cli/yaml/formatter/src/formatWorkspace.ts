@@ -15,7 +15,7 @@ export async function formatFernWorkspace({
     shouldFix: boolean;
 }): Promise<void> {
     for (const [relativeFilepath, file] of entries(workspace.definition.namedDefinitionFiles)) {
-        const formatted = formatDefinitionFile({
+        const formatted = await formatDefinitionFile({
             fileContents: file.rawContents
         });
         if (formatted !== file.rawContents) {

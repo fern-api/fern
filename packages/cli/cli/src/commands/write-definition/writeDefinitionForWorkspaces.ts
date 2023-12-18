@@ -40,7 +40,7 @@ async function writeDefinitionForWorkspace({ workspace, context }: { workspace: 
     for (const [relativePath, definitionFile] of entries(workspace.definition.namedDefinitionFiles)) {
         const absoluteFilepath = join(directoryOfDefinition, RelativeFilePath.of(relativePath));
         let fileContents = yaml.dump(definitionFile.contents);
-        fileContents = formatDefinitionFile({
+        fileContents = await formatDefinitionFile({
             fileContents: yaml.dump(definitionFile.contents)
         });
         const dirname = absoluteFilepath.split("/").slice(0, -1).join("/");

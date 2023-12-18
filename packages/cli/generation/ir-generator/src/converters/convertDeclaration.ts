@@ -1,18 +1,19 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-sdk/api";
+import { formatDocs } from "../formatDocs";
 
 const DEFAULT_DECLARATION = {
     docs: undefined,
     availability: undefined
 };
 
-export function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
+export async function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Promise<Declaration> {
     if (typeof declaration === "string") {
         return DEFAULT_DECLARATION;
     }
     return {
-        docs: declaration.docs,
+        docs: await formatDocs(declaration.docs),
         availability: convertAvailability(declaration.availability)
     };
 }

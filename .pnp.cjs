@@ -4033,6 +4033,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest-specific-snapshot", "npm:0.5.7"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/prettier", "npm:2.7.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -4115,7 +4116,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/prettier", "npm:2.7.2"],\
+            ["@types/prettier", "npm:2.7.3"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -4678,7 +4679,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/prettier", "npm:2.7.2"],\
+            ["@types/prettier", "npm:2.7.3"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -6434,10 +6435,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/prettier", [\
-        ["npm:2.7.2", {\
-          "packageLocation": "./.yarn/cache/@types-prettier-npm-2.7.2-6b2e2f518f-b47d76a525.zip/node_modules/@types/prettier/",\
+        ["npm:2.7.3", {\
+          "packageLocation": "./.yarn/cache/@types-prettier-npm-2.7.3-497316f37c-705384209c.zip/node_modules/@types/prettier/",\
           "packageDependencies": [\
-            ["@types/prettier", "npm:2.7.2"]\
+            ["@types/prettier", "npm:2.7.3"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -6,13 +6,13 @@ import { convertAvailability } from "./convertDeclaration";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
-export function convertWebhookGroup({
+export async function convertWebhookGroup({
     webhooks,
     file
 }: {
     webhooks: Record<string, RawSchemas.WebhookSchema>;
     file: FernFileContext;
-}): WebhookGroup {
+}): Promise<WebhookGroup> {
     const webhookGroup: Webhook[] = [];
     for (const [webhookId, webhook] of Object.entries(webhooks)) {
         webhookGroup.push({
@@ -23,8 +23,10 @@ export function convertWebhookGroup({
             name: file.casingsGenerator.generateName(webhookId),
             headers:
                 webhook.headers != null
-                    ? Object.entries(webhook.headers).map(([headerKey, header]) =>
-                          convertHttpHeader({ headerKey, header, file })
+                    ? await Promise.all(
+                          Object.entries(webhook.headers).map(([headerKey, header]) =>
+                              convertHttpHeader({ headerKey, header, file })
+                          )
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file })

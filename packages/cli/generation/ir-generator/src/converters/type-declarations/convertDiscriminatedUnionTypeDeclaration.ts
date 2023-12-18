@@ -9,7 +9,7 @@ import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclara
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
-export function convertDiscriminatedUnionTypeDeclaration({
+export async function convertDiscriminatedUnionTypeDeclaration({
     union,
     file,
     typeResolver
@@ -17,7 +17,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
     union: RawSchemas.DiscriminatedUnionSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Type {
+}): Promise<Type> {
     const discriminant = getUnionDiscriminant(union);
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
@@ -27,14 +27,16 @@ export function convertDiscriminatedUnionTypeDeclaration({
         extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
             union["base-properties"] != null
-                ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
-                      ...convertDeclaration(propertyDefinition),
-                      name: file.casingsGenerator.generateNameAndWireValue({
-                          wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-                      }),
-                      valueType: file.parseTypeReference(propertyDefinition)
-                  }))
+                ? await Promise.all(
+                      Object.entries(union["base-properties"]).map(async ([propertyKey, propertyDefinition]) => ({
+                          ...(await convertDeclaration(propertyDefinition)),
+                          name: file.casingsGenerator.generateNameAndWireValue({
+                              wireValue: propertyKey,
+                              name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+                          }),
+                          valueType: file.parseTypeReference(propertyDefinition)
+                      }))
+                  )
                 : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
             const rawType: string | undefined =

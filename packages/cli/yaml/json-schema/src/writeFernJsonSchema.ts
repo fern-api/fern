@@ -7,9 +7,7 @@ import zodToJsonSchema from "zod-to-json-schema";
 export async function writeFernJsonSchema(filepath: AbsoluteFilePath): Promise<void> {
     const jsonSchema = zodToJsonSchema(DefinitionFileSchema, "Fern Definition");
     const jsonSchemaStr = JSON.stringify(jsonSchema);
-    const jsonSchemaFormatted = prettier.format(jsonSchemaStr, {
-        ...(await prettier.resolveConfig(filepath)),
-        filepath
-    });
+    const config = (await prettier.resolveConfig(filepath)) ?? undefined;
+    const jsonSchemaFormatted = prettier.format(jsonSchemaStr, { ...config, filepath });
     await writeFile(filepath, jsonSchemaFormatted);
 }
