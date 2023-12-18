@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streaming simple 1`] = `
+{
+  "definitionFiles": {
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "get": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "userId": "user-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "stream": false,
+                },
+                "response": {
+                  "body": {
+                    "streamed": false,
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/user/{userId}",
+            "path-parameters": {
+              "userId": "string",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "stream": "literal<false>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserGetRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.User",
+            },
+          },
+          "get_stream": {
+            "auth": false,
+            "docs": undefined,
+            "method": "GET",
+            "path": "/user/{userId}",
+            "path-parameters": {
+              "userId": "string",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "stream": "literal<true>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserGetStreamRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "",
+              "type": "root.StreamUser",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "StreamUser": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+          "streamed": "optional<literal<true>>",
+        },
+      },
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+          "streamed": "optional<literal<false>>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-sdk-group-name\` alongside \`x-fern-streaming\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
