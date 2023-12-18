@@ -10725,7 +10725,21 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "zip": "optional<string>",
         },
       },
-      "AirBookingDetail": "optional<AirBookingDetail>",
+      "AirBookingDetail": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "destination_port": "optional<Place>",
+          "incoterm": "optional<AirBookingDetailIncoterm>",
+          "origin_port": "optional<Place>",
+          "product_descriptions": "optional<list<BookingHsCode>>",
+          "wants_delivery_service": "optional<boolean>",
+          "wants_pickup_service": "optional<boolean>",
+        },
+      },
       "AirBookingDetailIncoterm": {
         "enum": [
           "EXW",
@@ -10742,8 +10756,28 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "DPU",
         ],
       },
-      "AirShipmentDetail": "optional<AirShipmentDetail>",
-      "AirShipmentLeg": "optional<AirShipmentLeg>",
+      "AirShipmentDetail": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "chargeable_volume": "optional<Volume>",
+          "chargeable_weight": "optional<Weight>",
+          "house_airway_bill": "optional<string>",
+          "master_airway_bill": "optional<string>",
+        },
+      },
+      "AirShipmentLeg": {
+        "docs": undefined,
+        "properties": {
+          "_object": "optional<string>",
+          "flight_number": "optional<string>",
+          "iata_code": "optional<string>",
+          "icao_code": "optional<string>",
+        },
+      },
       "Airport": {
         "docs": undefined,
         "properties": {
@@ -12824,7 +12858,23 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "currency_code": "optional<string>",
         },
       },
-      "OceanBookingDetail": "optional<OceanBookingDetail>",
+      "OceanBookingDetail": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "container_counts": "optional<ContainerCounts>",
+          "destination_port": "optional<Place>",
+          "incoterm": "optional<OceanBookingDetailIncoterm>",
+          "is_lcl": "optional<boolean>",
+          "origin_port": "optional<Place>",
+          "product_descriptions": "optional<list<BookingHsCode>>",
+          "wants_delivery_service": "optional<boolean>",
+          "wants_pickup_service": "optional<boolean>",
+        },
+      },
       "OceanBookingDetailIncoterm": {
         "enum": [
           "EXW",
@@ -12853,7 +12903,24 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "shipment_container": "optional<ContainerRef>",
         },
       },
-      "OceanShipmentDetail": "optional<OceanShipmentDetail>",
+      "OceanShipmentDetail": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "carrier_booking_number": "optional<string>",
+          "confirmed_space_released_at": {
+            "docs": "the date-time at which the carrier confirms space release related to the shipping order",
+            "type": "optional<datetime>",
+          },
+          "containers": "optional<ContainerCollectionRef>",
+          "house_bill_number": "optional<string>",
+          "is_lcl": "optional<boolean>",
+          "master_bill_number": "optional<string>",
+        },
+      },
       "OceanShipmentLeg": {
         "docs": undefined,
         "properties": {
@@ -12910,7 +12977,21 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "sellers_agent",
         ],
       },
-      "Place": "optional<Place>",
+      "Place": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "address": "optional<Address>",
+          "details": "optional<list<PlaceDetailsItem>>",
+          "name": {
+            "docs": "Name of the place",
+            "type": "optional<string>",
+          },
+        },
+      },
       "PlaceDetailsItem": {
         "discriminated": false,
         "docs": undefined,
@@ -13358,7 +13439,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "cancelled",
         ],
       },
-      "RailShipmentLeg": "optional<RailShipmentLeg>",
+      "RailShipmentLeg": {
+        "docs": undefined,
+        "properties": {
+          "_object": "optional<string>",
+          "container_legs": "optional<ContainerLegCollectionRef>",
+        },
+      },
       "Shipment": {
         "docs": undefined,
         "properties": {
@@ -13810,7 +13897,21 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "Terminal": {
         "docs": "Name and address of a specific terminal within a port or airport.  Possibly null",
-        "type": "optional<Terminal>",
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "address": "optional<Address>",
+          "firms_code": {
+            "docs": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities;  available prior to shipment arrival at location tagged 'customs_entry'",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "Name of the terminal",
+            "type": "optional<string>",
+          },
+        },
       },
       "TransportationMode": {
         "enum": [
@@ -13824,14 +13925,35 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "warehouse_storage",
         ],
       },
-      "TruckingBookingDetail": "optional<TruckingBookingDetail>",
+      "TruckingBookingDetail": {
+        "docs": undefined,
+        "properties": {
+          "_object": {
+            "docs": "Type of the object",
+            "type": "optional<string>",
+          },
+          "description_of_products": "optional<string>",
+          "is_ftl": "optional<boolean>",
+          "payment_terms": "optional<TruckingBookingDetailPaymentTerms>",
+        },
+      },
       "TruckingBookingDetailPaymentTerms": {
         "enum": [
           "collect",
           "prepaid",
         ],
       },
-      "TruckingShipmentLeg": "optional<TruckingShipmentLeg>",
+      "TruckingShipmentLeg": {
+        "docs": undefined,
+        "properties": {
+          "_object": "optional<string>",
+          "container_legs": "optional<ContainerLegCollectionRef>",
+          "pieces": "optional<integer>",
+          "scac_code": "optional<string>",
+          "service_type": "optional<TruckingShipmentLegServiceType>",
+          "tracking_number": "optional<string>",
+        },
+      },
       "TruckingShipmentLegServiceType": {
         "enum": [
           "ltl",

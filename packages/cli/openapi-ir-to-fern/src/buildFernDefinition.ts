@@ -40,7 +40,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
             const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
-            if (typeDeclaration.name === aliasType) {
+            if (aliasType === (typeDeclaration.name ?? id) || aliasType === `optional<${typeDeclaration.name ?? id}>`) {
                 continue;
             }
         }

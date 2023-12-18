@@ -11319,7 +11319,93 @@ For \`access_to_resource_denied\` errors, the description is:
 
 **Note**: For our recurring expenses resource, this account relates to the account that was analyzed to generate the recurring expenses report.
 ",
-        "type": "optional<Account>",
+        "properties": {
+          "balance": "AccountsBalance",
+          "balance_type": {
+            "docs": "Indicates whether this account is either an \`ASSET\` or a \`LIABILITY\`. You can consider the balance of an \`ASSET\` as being positive, while the balance of a \`LIABILITY\` as negative.
+",
+            "type": "optional<string>",
+          },
+          "bank_product_id": {
+            "docs": "*This field has been deprecated.*
+
+*The institution's product ID for the account type.*
+",
+            "type": "optional<string>",
+          },
+          "category": "optional<EnumAccountCategory>",
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "datetime",
+          },
+          "created_at": {
+            "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+            "type": "optional<datetime>",
+          },
+          "credit_data": "optional<AccountsCreditData>",
+          "currency": {
+            "docs": "The currency of the account. For example:
+- 🇧🇷 BRL (Brazilian Real)
+- 🇨🇴 COP (Colombian Peso)
+- 🇲🇽 MXN (Mexican Peso)
+
+ Please note that other currencies other than in the list above may be returned.",
+            "type": "optional<string>",
+          },
+          "funds_data": {
+            "docs": "One or more funds that contribute to the the pension account.",
+            "type": "optional<list<AccountsFundsData>>",
+          },
+          "id": {
+            "docs": "The unique identifier created by Belvo used to reference the current account.",
+            "type": "optional<string>",
+          },
+          "institution": "optional<InstitutionAccount>",
+          "internal_identification": {
+            "docs": "*This field has been deprecated.*
+
+*The institution's internal identification for the account.*
+",
+            "type": "optional<string>",
+          },
+          "last_accessed_at": {
+            "docs": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
+            "type": "optional<datetime>",
+          },
+          "link": {
+            "docs": "The \`link.id\` the account belongs to.",
+            "type": "optional<string>",
+          },
+          "loan_data": "optional<AccountsLoanData>",
+          "name": {
+            "docs": "The account name, as given by the institution.",
+            "type": "optional<string>",
+          },
+          "number": {
+            "docs": "The account number, as designated by the institution.",
+            "type": "optional<string>",
+          },
+          "public_identification_name": {
+            "docs": "The public name for the type of identification. For example: \`"CLABE"\`.
+
+ℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be \`AGENCY/ACCOUNT\`.
+",
+            "type": "optional<string>",
+          },
+          "public_identification_value": {
+            "docs": "The value for the \`public_identification_name\`.
+
+ℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be the agency and bank account number, separated by a slash.
+For example: \`0444/45722-0\`.
+",
+            "type": "optional<string>",
+          },
+          "receivables_data": "optional<AccountsReceivablesData>",
+          "type": {
+            "docs": "The account type, as designated by the institution.",
+            "type": "optional<string>",
+          },
+        },
       },
       "AccountsBalance": {
         "docs": "Details regarding the current and available balances for the account.
@@ -11358,7 +11444,56 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
       },
       "AccountsCreditData": {
         "docs": "The credit options associated with this account.",
-        "type": "optional<AccountsCreditData>",
+        "properties": {
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "credit_limit": {
+            "docs": "The maximum amount of credit the owner can receive.",
+            "type": "optional<double>",
+          },
+          "cutting_date": {
+            "docs": "The closing date of the credit period.",
+            "type": "optional<string>",
+          },
+          "end_date": {
+            "docs": "*This field has been deprecated.*
+",
+            "type": "optional<string>",
+          },
+          "interest_rate": {
+            "docs": "The annualized interest rate of the credit.",
+            "type": "optional<double>",
+          },
+          "last_payment_date": {
+            "docs": "*This field has been deprecated.*
+
+
+*The date when the last credit payment was made.*
+",
+            "type": "optional<string>",
+          },
+          "minimum_payment": {
+            "docs": "The minimum amount to be paid on the \`next_payment_date\`.",
+            "type": "optional<double>",
+          },
+          "monthly_payment": {
+            "docs": "*This field has been deprecated.*
+
+*The recurrent monthly payment, if applicable.*
+",
+            "type": "optional<double>",
+          },
+          "next_payment_date": {
+            "docs": "The due date for the next payment (\`YYYY-MM-DD\`).",
+            "type": "optional<string>",
+          },
+          "no_interest_payment": {
+            "docs": "The minimum amount required to pay to avoid generating interest.",
+            "type": "optional<double>",
+          },
+        },
       },
       "AccountsFundsData": {
         "docs": undefined,
@@ -11404,11 +11539,136 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
       },
       "AccountsLoanData": {
         "docs": "The loan options associated with this account.",
-        "type": "optional<AccountsLoanData>",
+        "properties": {
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "datetime",
+          },
+          "contract_amount": {
+            "docs": "The initial total loan amount, calculated by the institution, when the contract was signed. This amount includes the principal + interest + taxes + fees.",
+            "type": "optional<double>",
+          },
+          "contract_end_date": {
+            "docs": "The date when the loan is expected to be completed.",
+            "type": "optional<string>",
+          },
+          "contract_number": {
+            "docs": "The contract number of the loan, as given by the institution.",
+            "type": "optional<string>",
+          },
+          "contract_start_date": {
+            "docs": "The date when the loan contract was signed (\`YYYY-MM-DD\`).",
+            "type": "optional<string>",
+          },
+          "credit_limit": {
+            "docs": "This field has been deprecated.
+
+Please see \`principal\` instead.
+",
+            "type": "optional<double>",
+          },
+          "cutting_date": {
+            "docs": "This field has been deprecated.
+
+The closing date of the loan period.
+",
+            "type": "optional<string>",
+          },
+          "cutting_day": {
+            "docs": "This field has been deprecated.
+
+The closing day of the month for the loan.
+",
+            "type": "optional<string>",
+          },
+          "fees": {
+            "docs": "Breakdown of the fees applied to the loan.",
+            "type": "optional<list<optional<AccountsLoanDataFees>>>",
+          },
+          "interest_rate": {
+            "docs": "This field has been deprecated.
+
+Please see the \`interest_rates\` object instead.
+",
+            "type": "optional<double>",
+          },
+          "interest_rates": {
+            "docs": "Breakdown of the interest applied to the loan.",
+            "type": "optional<list<AccountsLoanDataInterestRate>>",
+          },
+          "last_payment_date": {
+            "docs": "This field has been deprecated.
+
+The date when the last loan payment was made.
+",
+            "type": "optional<string>",
+          },
+          "last_period_balance": {
+            "docs": "This field has been deprecated.
+
+Please see \`outstanding_balance\` instead.
+",
+            "type": "optional<double>",
+          },
+          "limit_day": {
+            "docs": "This field has been deprecated.
+
+Please see \`payment_day\` instead.
+",
+            "type": "optional<string>",
+          },
+          "loan_type": {
+            "docs": "The type of the loan, according to the institution.",
+            "type": "optional<string>",
+          },
+          "monthly_payment": {
+            "docs": "The recurrent monthly payment, if applicable.",
+            "type": "optional<double>",
+          },
+          "no_interest_payment": {
+            "docs": "This field has been deprecated.
+
+The minimum amount required to pay to avoid generating interest.
+",
+            "type": "optional<double>",
+          },
+          "number_of_installments_outstanding": {
+            "docs": "The number of installments left to pay.",
+            "type": "optional<integer>",
+          },
+          "number_of_installments_total": {
+            "docs": "The total number of installments required to pay the loan.",
+            "type": "optional<integer>",
+          },
+          "outstanding_balance": {
+            "docs": "The amount remaining to pay in total, including interest.",
+            "type": "optional<double>",
+          },
+          "outstanding_principal": {
+            "docs": "Outstanding loan amount, that is, how much remains to pay on the principal (not including interest).
+",
+            "type": "optional<double>",
+          },
+          "payment_day": {
+            "docs": "The day of the month by which the owner needs to pay the loan (\`YYYY-MM-DD\`).",
+            "type": "optional<string>",
+          },
+          "principal": {
+            "docs": "Total amount of the loan (the amount the user receives).",
+            "type": "optional<double>",
+          },
+        },
       },
       "AccountsLoanDataFees": {
         "docs": "Breakdown of the fees applied to the loan.",
-        "type": "optional<AccountsLoanDataFees>",
+        "properties": {
+          "type": "EnumLoanDataFeeType",
+          "value": {
+            "docs": "The total value of the fee. Same currency of the Loan.
+",
+            "type": "double",
+          },
+        },
       },
       "AccountsLoanDataInterestRate": {
         "docs": "Breakdown of the interest applied to the loan.",
@@ -11450,7 +11710,24 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "AccountsReceivablesData": {
         "docs": "Additional details regarding the receivables account, if applicable.",
-        "type": "optional<AccountsReceivablesData>",
+        "properties": {
+          "anticipated": {
+            "docs": "The amount that the owner of the account received earlier than contracted.",
+            "type": "optional<double>",
+          },
+          "available": {
+            "docs": "The amount that the owner of the account will receive according to an established date.",
+            "type": "optional<double>",
+          },
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "datetime",
+          },
+          "current": {
+            "docs": "The total sum of all receivables (\`available\` + \`anticipated\`)",
+            "type": "optional<double>",
+          },
+        },
       },
       "AnnualCostsAndDeductionsStatementBusiness": {
         "docs": "Object containing the reported annual costs and applicable deductions.",
@@ -11972,7 +12249,20 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "CategorizationMerchantData": {
         "docs": "Additional data regarding the merchant involved in the transaction.
 ",
-        "type": "optional<CategorizationMerchantData>",
+        "properties": {
+          "logo": {
+            "docs": "The URL to the merchant's logo.",
+            "type": "optional<string>",
+          },
+          "merchant_name": {
+            "docs": "The name of the merchant.",
+            "type": "optional<string>",
+          },
+          "website": {
+            "docs": "The URL to the merchant's website.",
+            "type": "optional<string>",
+          },
+        },
       },
       "Charge": {
         "docs": undefined,
@@ -13111,12 +13401,18 @@ Can be either:
   - \`NSS\`
   - \`CURP\`
 ",
-        "type": "optional<EnumEmploymentRecordDocumentType>",
+        "enum": [
+          "NSS",
+          "CURP",
+        ],
       },
       "EnumEmploymentRecordStatus": {
         "docs": "Indicates whether or not the individual is currently \`EMPLOYED\` or \`UNEMPLOYED\`.
 ",
-        "type": "optional<EnumEmploymentRecordStatus>",
+        "enum": [
+          "EMPLOYED",
+          "UNEMPLOYED",
+        ],
       },
       "EnumEmploymentRecordStatusUpdateEvents": {
         "docs": "The event that caused the change in employment status or salary. We return one of the following values:
@@ -13363,7 +13659,16 @@ For Mexico's SAT, we return one of the following values:
   - \`Pago\`
   - \`Traslado\`
 ",
-        "type": "optional<EnumInvoiceSatInvoiceType>",
+        "enum": [
+          "Egreso",
+          "Ingreso",
+          {
+            "name": "Nomina",
+            "value": "Nómina",
+          },
+          "Pago",
+          "Traslado",
+        ],
       },
       "EnumInvoiceSatPaymentMethod": {
         "docs": "The payment method code used for this invoice, as defined by the legal entity of the country.
@@ -13447,7 +13752,10 @@ We return one of the following values:
   - \`MONTHLY\`
   - \`YEARLY\`
 ",
-        "type": "optional<EnumLoanDataInterestRateType>",
+        "enum": [
+          "MONTHLY",
+          "YEARLY",
+        ],
       },
       "EnumPaymentIntentHolderTypePse": {
         "docs": "Type of bank account holder. For PSE, this value must be \`INDIVIDUAL\`.",
@@ -13547,7 +13855,12 @@ We return one of the following values:
   - \`CANCELLED\`
   - \`REVERTED\`
   - \`UNCATEGORIZED\`",
-        "type": "optional<EnumReceivableTransactionStatus>",
+        "enum": [
+          "APPROVED",
+          "CANCELLED",
+          "REVERTED",
+          "UNCATEGORIZED",
+        ],
       },
       "EnumReceivableTransactionType": {
         "docs": "The type of transaction. For example, whether the transaction was a \`VISA_DEBIT\` or a \`MASTERCARD_CREDIT\`.
@@ -13602,25 +13915,38 @@ We return one of the following values:
   - \`SUBSCRIPTION\`
   - \`REGULAR\`
 ",
-        "type": "optional<EnumRecurringExpensePaymentType>",
+        "enum": [
+          "SUBSCRIPTION",
+          "REGULAR",
+        ],
       },
       "EnumTaxComplianceStatusOutcome": {
         "docs": "Indicates whether the taxpayer is complying to all their tax obligations (\`POSITIVE\`), if they are not (\`NEGATIVE\`), or have none to comply to (\`NO_OBLIGATIONS\`).",
-        "type": "optional<EnumTaxComplianceStatusOutcome>",
+        "enum": [
+          "POSITIVE",
+          "NEGATIVE",
+          "NO_OBLIGATIONS",
+        ],
       },
       "EnumTaxRetentionPaymentStatus": {
         "docs": "Indicates whether or not the tax has been paid or not. Can be either:
   - \`PAID\`
   - \`PROVISIONED\`
 ",
-        "type": "optional<EnumTaxRetentionPaymentStatus>",
+        "enum": [
+          "PAID",
+          "PROVISIONED",
+        ],
       },
       "EnumTaxRetentionReceiverNationality": {
         "docs": "Whether the invoice receiver is a Mexican national or not. If the receiver is not considered a Mexican national, the retained taxes can be calculated differently. Possible values:
   - \`NATIONAL\`
   - \`FOREIGN\`
 ",
-        "type": "optional<EnumTaxRetentionReceiverNationality>",
+        "enum": [
+          "NATIONAL",
+          "FOREIGN",
+        ],
       },
       "EnumTaxRetentionType": {
         "docs": "The type of tax retention in relation to the invoice (from the perspective of the Link owner).
@@ -14679,9 +15005,118 @@ Please note that other currencies other than in the list above may be returned.
           "type": "EnumInvestmentPortfolioType",
         },
       },
-      "InvestmentsPortfolioInstrument": "optional<InvestmentsPortfolioInstrument>",
-      "InvestmentsPortfolioInstrumentFees": "optional<InvestmentsPortfolioInstrumentFees>",
-      "InvestmentsPortfolioInstrumentInterestRate": "optional<InvestmentsPortfolioInstrumentInterestRate>",
+      "InvestmentsPortfolioInstrument": {
+        "docs": undefined,
+        "properties": {
+          "average_acquisition_price": {
+            "docs": "The average price of each share acquired in the instrument.",
+            "type": "optional<double>",
+          },
+          "balance_gross": {
+            "docs": "The total gross value of the instrument (including taxes).",
+            "type": "optional<double>",
+          },
+          "balance_net": {
+            "docs": "The total net value of the instrument (excluding taxes).",
+            "type": "optional<double>",
+          },
+          "currency": {
+            "docs": "The currency of the instrument. For example:
+
+- 🇧🇷 BRL (Brazilian Real)
+- 🇨🇴 COP (Colombian Peso)
+- 🇲🇽 MXN (Mexican Peso)
+- 🇺🇸 USD (US Dollar)
+
+
+Please note that other currencies other than in the list above may be returned.
+",
+            "type": "string",
+          },
+          "fees": {
+            "docs": "An array of fees that apply to the instrument.",
+            "type": "optional<list<optional<InvestmentsPortfolioInstrumentFees>>>",
+          },
+          "id": {
+            "docs": "Belvo's unique ID for the current instrument.",
+            "type": "optional<string>",
+          },
+          "interest_rates": {
+            "docs": "An array of interest rates that apply to the instrument.",
+            "type": "optional<list<optional<InvestmentsPortfolioInstrumentInterestRate>>>",
+          },
+          "name": {
+            "docs": "The name of the instrument, as given by the institution.",
+            "type": "string",
+          },
+          "open_date": {
+            "docs": "The start date of the instrument. Only applicable for instruments of type \`bond\` or \`savings\`.",
+            "type": "optional<string>",
+          },
+          "price": {
+            "docs": "The current price of one share in the instrument.",
+            "type": "optional<double>",
+          },
+          "profit": {
+            "docs": "The current profit earned in the instrument.",
+            "type": "optional<double>",
+          },
+          "public_id": {
+            "docs": "The public identifiers for the instrument.",
+            "type": "optional<list<InvestmentsPortfolioInstrumentPublicId>>",
+          },
+          "quantity": {
+            "docs": "The total amount of shares owned in the instrument.",
+            "type": "optional<double>",
+          },
+          "redemption_conditions": {
+            "docs": "An array of conditions that apply to the instrument in order to retrieve the final value.
+
+For example, the due date, the liquidity date, the previdencia type, and so on.
+",
+            "type": "optional<list<optional<InvestmentsPortfolioInstrumentRedemptionConditions>>>",
+          },
+          "subtype": {
+            "docs": "The subtype for the instrument, as given by the institution.",
+            "type": "optional<string>",
+          },
+          "type": "EnumInvestmentPortfolioInstrumentType",
+        },
+      },
+      "InvestmentsPortfolioInstrumentFees": {
+        "docs": undefined,
+        "properties": {
+          "type": {
+            "docs": "The fee type incurred when making the purchase of the instrument.",
+            "type": "string",
+          },
+          "value": {
+            "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
+            "type": "double",
+          },
+        },
+      },
+      "InvestmentsPortfolioInstrumentInterestRate": {
+        "docs": undefined,
+        "properties": {
+          "index": {
+            "docs": "If applicable, the index type that the \`interest_rates.value\` is calculated against.",
+            "type": "optional<string>",
+          },
+          "type": {
+            "docs": "How often the interest rate is calculated on the instrument.",
+            "type": "string",
+          },
+          "value": {
+            "docs": "The interest rate for the instrument, in percent.
+
+
+ℹ️  **Note:** If the \`interest_rate.index\` is present, this value is a percentage of the index. For example, if \`interest_rate.index\` = \`CDI\` and \`interest_rate.value\` = \`90\`, then the total interest rate applied is 90% of the CDI.
+",
+            "type": "double",
+          },
+        },
+      },
       "InvestmentsPortfolioInstrumentPublicId": {
         "docs": "The public identifiers for the instrument.",
         "properties": {
@@ -14695,7 +15130,19 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
       },
-      "InvestmentsPortfolioInstrumentRedemptionConditions": "optional<InvestmentsPortfolioInstrumentRedemptionConditions>",
+      "InvestmentsPortfolioInstrumentRedemptionConditions": {
+        "docs": undefined,
+        "properties": {
+          "type": {
+            "docs": "The name of the redemption condition.",
+            "type": "string",
+          },
+          "value": {
+            "docs": "The value of \`redemption_conditions.type\`.",
+            "type": "string",
+          },
+        },
+      },
       "InvestmentsPortfoliosPaginatedResponse": {
         "docs": undefined,
         "properties": {
@@ -15050,17 +15497,86 @@ For detailed information regarding DIAN's payment types, please see their [offic
       "InvoiceSenderDetailsDian": {
         "docs": "Details regarding the sender.
 ",
-        "type": "optional<InvoiceSenderDetailsDian>",
+        "properties": {
+          "address": {
+            "docs": "The sender's address.
+",
+            "type": "optional<string>",
+          },
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "country": {
+            "docs": "The country where the sender pays their taxes.
+",
+            "type": "optional<string>",
+          },
+          "email": {
+            "docs": "The sender's email address.
+",
+            "type": "optional<string>",
+          },
+          "phone_number": {
+            "docs": "The sender's phone number.
+",
+            "type": "optional<string>",
+          },
+          "regimen": {
+            "docs": "The sender's regimen type.
+
+For detailed information regarding DIAN's regimens, please see their [official PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).
+",
+            "type": "optional<string>",
+          },
+          "tax_payer_type": {
+            "docs": "Indicates if the sender is a business or an individual. Can be either:
+  
+  - \`Persona Jurídica\`
+  - \`Persona Natural\`
+",
+            "type": "optional<string>",
+          },
+          "tax_scheme": {
+            "docs": "The sender's fiscal responsibilities.
+
+For detailed information regarding DIAN's tax schemes, please see their [official PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "InvoiceWarningsDian": {
         "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-        "type": "optional<InvoiceWarningsDian>",
+        "properties": {
+          "code": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "message": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "InvoiceWarningsSat": {
         "docs": "Object containing information about any warnings related to this invoice.
 ",
-        "type": "optional<InvoiceWarningsSat>",
+        "properties": {
+          "code": {
+            "docs": "The warning code.
+",
+            "type": "optional<string>",
+          },
+          "message": {
+            "docs": "The description of the warning.
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "InvoiceWithIdSat": {
         "docs": undefined,
@@ -15478,17 +15994,146 @@ Please note that other currencies other than in the list above may be returned.
       "InvoicesPayrollDian": {
         "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-        "type": "optional<InvoicesPayrollDian>",
+        "properties": {
+          "amount": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<double>",
+          },
+          "collected_at": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
+            "type": "optional<datetime>",
+          },
+          "date_from": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "date_to": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "days": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<integer>",
+          },
+          "payment_date": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "type": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "version": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "InvoicesPayrollSat": {
         "docs": "Details regarding the payroll payment. Only applicable for payroll invoices.
 ",
-        "type": "optional<InvoicesPayrollSat>",
+        "properties": {
+          "amount": {
+            "docs": "The total amount of the payroll payment.
+",
+            "type": "double",
+          },
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "date_from": {
+            "docs": "The start date of the payment period.
+",
+            "type": "optional<string>",
+          },
+          "date_to": {
+            "docs": "The end date of the payment period.
+",
+            "type": "optional<string>",
+          },
+          "days": {
+            "docs": "The number of days covered by the payment.
+",
+            "type": "optional<integer>",
+          },
+          "payment_date": {
+            "docs": "The payment date.
+",
+            "type": "string",
+          },
+          "type": {
+            "docs": "The payroll type, as defined by the legal entity of the country.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payroll-type)
+",
+            "type": "optional<string>",
+          },
+          "version": {
+            "docs": "The version of the payroll object.
+",
+            "type": "string",
+          },
+        },
       },
       "InvoicesReceiverDetailsDian": {
         "docs": "Details regarding the receiver.
 ",
-        "type": "optional<InvoicesReceiverDetailsDian>",
+        "properties": {
+          "address": {
+            "docs": "The receiver's address.
+",
+            "type": "optional<string>",
+          },
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "country": {
+            "docs": "The country where the receiver pays their taxes.
+",
+            "type": "optional<string>",
+          },
+          "email": {
+            "docs": "The receiver's email address.
+",
+            "type": "optional<string>",
+          },
+          "phone_number": {
+            "docs": "The receiver's phone number.
+",
+            "type": "optional<string>",
+          },
+          "regimen": {
+            "docs": "The receiver's regimen type.
+
+For detailed information regarding DIAN's regimens, please see their [official PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).
+",
+            "type": "optional<string>",
+          },
+          "tax_payer_type": {
+            "docs": "Indicates if the receiver is a business or an individual. Can be either:
+  
+  - \`Persona Jurídica\`
+  - \`Persona Natural\`
+",
+            "type": "optional<string>",
+          },
+          "tax_scheme": {
+            "docs": "The receiver's fiscal responsibilities.
+
+For detailed information regarding DIAN's tax schemes, please see their [official PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "InvoicesResponsePaginatedResponse": {
         "docs": undefined,
@@ -16185,7 +16830,29 @@ For \`not_found\` errors, the description is:
       },
       "OwnerDocumentId": {
         "docs": "Information regarding the identification document the owner provided to the bank.",
-        "type": "optional<OwnerDocumentId>",
+        "properties": {
+          "document_number": {
+            "docs": "The document's identification number.",
+            "type": "optional<string>",
+          },
+          "document_type": {
+            "docs": "The type of document the owner provided to the institution to open the account. Common document types are:
+
+🇧🇷 Brazil
+- \`CPF\` (*Cadastro de Pessoas Físicas*)
+- \`CNPJ\`(*Cadastro Nacional de Pessoas Jurídicas*)
+
+🇨🇴 Colombia
+- \`CC\`(*Cédula de Ciudadanía*)
+- \`NIT\` (*Número de Identificación Tributaria*)
+
+🇲🇽 Mexico
+- \`CURP\` (*Clave Única de Registro de Población*)
+- \`NISS\` (*Número de Seguridad Social*)
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "OwnersPaginatedResponse": {
         "docs": undefined,
@@ -17313,7 +17980,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "ReceivablesTransactionNumberOfInstallments": {
         "docs": "Details regarding the number of installments for the transaction, if applicable.",
-        "type": "optional<ReceivablesTransactionNumberOfInstallments>",
+        "properties": {
+          "paid": {
+            "docs": "The number of payments already made to pay the cost of the transaction.",
+            "type": "optional<integer>",
+          },
+          "total": {
+            "docs": "The number of payments required to pay the cost of the transaction.",
+            "type": "optional<integer>",
+          },
+        },
       },
       "ReceivablesTransactionsPaginatedResponse": {
         "docs": undefined,
@@ -17351,7 +18027,20 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "RecurringExpenseSourceTransaction": {
         "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
-        "type": "optional<RecurringExpenseSourceTransaction>",
+        "properties": {
+          "amount": {
+            "docs": "The transaction amount.",
+            "type": "double",
+          },
+          "description": {
+            "docs": "The description of the transaction provided by the institution. Usually, this is the text that the end user would see in the bank statement. The description can be an empty string.",
+            "type": "optional<string>",
+          },
+          "value_date": {
+            "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
+            "type": "string",
+          },
+        },
       },
       "RecurringExpenses": {
         "docs": "Recurring expense insights.
@@ -17505,22 +18194,184 @@ For \`request_timeout\` errors, the description is:
       },
       "RiskInsightsBalanceMetrics": {
         "docs": "Balance metrics calculated based on the user's balances from checking and savings accounts.",
-        "type": "optional<RiskInsightsBalanceMetrics>",
+        "properties": {
+          "balance_threshold_x": {
+            "docs": "The threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
+",
+            "type": "double",
+          },
+          "closing_balance": {
+            "docs": "The balance of all the accounts at the \`collected_at\` time.
+",
+            "type": "optional<double>",
+          },
+          "days_balance_below_0_1m": {
+            "docs": "The number of days that the total balance of the account is less than or equal to 0 in the last month.
+",
+            "type": "optional<integer>",
+          },
+          "days_balance_below_0_1w": {
+            "docs": "The number of days that the total balance of the account is less than or equal to 0 in the last week.
+",
+            "type": "optional<integer>",
+          },
+          "days_balance_below_0_3m": {
+            "docs": "The number of days that the total balance of the account is less than or equal to 0 in the last three months.
+",
+            "type": "optional<integer>",
+          },
+          "days_balance_below_x_1m": {
+            "docs": "The number of days that the total balance of the account is less than or equal to the amount specified in \`balance_threshold_x\` in the last month.
+",
+            "type": "optional<integer>",
+          },
+          "days_balance_below_x_1w": {
+            "docs": "The number of days that the total balance of the account is less than or equal to the amount specified in \`balance_threshold_x\` in the last week.
+",
+            "type": "optional<integer>",
+          },
+          "days_balance_below_x_3m": {
+            "docs": "The number of days that the total balance of the account is less than or equal to the amount specified in \`balance_threshold_x\` in the last three months.
+",
+            "type": "optional<integer>",
+          },
+          "max_balance_1m": {
+            "docs": "The maximum balance in the period (one month).
+",
+            "type": "optional<double>",
+          },
+          "max_balance_1w": {
+            "docs": "The maximum balance in the period (one week).
+",
+            "type": "optional<double>",
+          },
+          "max_balance_3m": {
+            "docs": "The maximum balance in the period (three months).
+",
+            "type": "optional<double>",
+          },
+          "min_balance_1m": {
+            "docs": "The minimum balance in the period (one month).
+",
+            "type": "optional<double>",
+          },
+          "min_balance_1w": {
+            "docs": "The minimum balance in the period (one week).
+",
+            "type": "optional<double>",
+          },
+          "min_balance_3m": {
+            "docs": "The minimum balance in the period (three months).
+",
+            "type": "optional<double>",
+          },
+        },
       },
       "RiskInsightsCashflowMetrics": {
         "docs": "Aggregated metrics calculated based on the user's transactions from checking, savings, credit, and loan accounts.
 
 However, internal transfers (transfers between accounts belonging to the same link) are not used in the calculation.
 ",
-        "type": "optional<RiskInsightsCashflowMetrics>",
+        "properties": {
+          "positive_to_negative_ratio_1m": {
+            "docs": "The ratio between sum_positive / sum_negative  in the last month (counted from the time of the request).
+
+ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+",
+            "type": "optional<double>",
+          },
+          "positive_to_negative_ratio_1w": {
+            "docs": "The ratio between sum_positive / sum_negative  in the last week (counted from the time of the request).
+
+ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be \`null\`.
+",
+            "type": "optional<double>",
+          },
+          "positive_to_negative_ratio_3m": {
+            "docs": "The ratio between sum_positive / sum_negative  in the last three months (counted from the time of the request).
+
+ℹ️ If the ratio is greater than \`1\`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+",
+            "type": "optional<double>",
+          },
+          "sum_negative_1m": {
+            "docs": "Sum total of all transactions leading to a negative cashflow in the last month (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+          "sum_negative_1w": {
+            "docs": "Sum total of all transactions leading to a negative cashflow in the last week (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+          "sum_negative_3m": {
+            "docs": "Sum total of all transactions leading to a negative cashflow in the last three months (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+          "sum_positive_1m": {
+            "docs": "Sum total of all transactions leading to a positive cashflow in the last month (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+          "sum_positive_1w": {
+            "docs": "Sum total of all transactions leading to a positive cashflow in the last week (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+          "sum_positive_3m": {
+            "docs": "Sum total of all transactions leading to a positive cashflow in the last three months (counted from the time of the request).
+",
+            "type": "optional<double>",
+          },
+        },
       },
       "RiskInsightsCreditCardMetrics": {
         "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
-        "type": "optional<RiskInsightsCreditCardMetrics>",
+        "properties": {
+          "num_accounts": {
+            "docs": "Number of credit cards accounts associated to the link.
+",
+            "type": "integer",
+          },
+          "sum_credit_limit": {
+            "docs": "Sum total of all credit cards' limits.
+",
+            "type": "optional<double>",
+          },
+          "sum_credit_used": {
+            "docs": "Sum total of all credit used.
+",
+            "type": "optional<double>",
+          },
+        },
       },
       "RiskInsightsLoansMetrics": {
         "docs": "Aggregated metrics calculated based on the user's loan accounts.",
-        "type": "optional<RiskInsightsLoansMetrics>",
+        "properties": {
+          "num_accounts": {
+            "docs": "Number of loan accounts associated with the link.
+",
+            "type": "integer",
+          },
+          "sum_loans_monthly_payment": {
+            "docs": "Sum total of the monthly payments for all the link's loan accounts.
+",
+            "type": "optional<double>",
+          },
+          "sum_loans_outstanding_principal": {
+            "docs": "Sum total of the outstanding principal for all the link's loan accounts.
+",
+            "type": "optional<double>",
+          },
+          "sum_loans_principal": {
+            "docs": "Sum total of the principal for all of the link's loan accounts.
+",
+            "type": "optional<double>",
+          },
+        },
       },
       "RiskInsightsPaginatedResponse": {
         "docs": undefined,
@@ -17548,7 +18399,167 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "RiskInsightsTransactionMetrics": {
         "docs": "Aggregated metrics calculated band on the user's transactions from checking, savings, credit card, and loan accounts.",
-        "type": "optional<RiskInsightsTransactionMetrics>",
+        "properties": {
+          "max_incoming_amount_1m": {
+            "docs": "The highest value inflow transaction in the last month.
+",
+            "type": "optional<double>",
+          },
+          "max_incoming_amount_1w": {
+            "docs": "The highest value inflow transaction in the last week.
+",
+            "type": "optional<double>",
+          },
+          "max_incoming_amount_3m": {
+            "docs": "The highest value inflow transaction in the last three months.
+",
+            "type": "optional<double>",
+          },
+          "max_outgoing_amount_1m": {
+            "docs": "The highest value outflow transaction in the last month.
+",
+            "type": "optional<double>",
+          },
+          "max_outgoing_amount_1w": {
+            "docs": "The highest value outflow transaction in the last week.
+",
+            "type": "optional<double>",
+          },
+          "max_outgoing_amount_3m": {
+            "docs": "The highest value outflow transaction in the last three months.
+",
+            "type": "optional<double>",
+          },
+          "mean_incoming_amount_1m": {
+            "docs": "The mean incoming value of all transactions in the last month.
+",
+            "type": "optional<double>",
+          },
+          "mean_incoming_amount_1w": {
+            "docs": "The mean incoming value of all transactions in the last week.
+",
+            "type": "optional<double>",
+          },
+          "mean_incoming_amount_3m": {
+            "docs": "The mean incoming value of all transactions in the last three months.
+",
+            "type": "optional<double>",
+          },
+          "mean_outgoing_amount_1m": {
+            "docs": "The mean outgoing value of all transaction in the last month.
+",
+            "type": "optional<double>",
+          },
+          "mean_outgoing_amount_1w": {
+            "docs": "The mean outgoing value of all transaction in the last week.
+",
+            "type": "optional<double>",
+          },
+          "mean_outgoing_amount_3m": {
+            "docs": "The mean outgoing value of all transaction in the last three months.
+",
+            "type": "optional<double>",
+          },
+          "num_incoming_transactions_1m": {
+            "docs": "The total number of inflow transactions for the last month.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_incoming_transactions_1w": {
+            "docs": "The total number of inflow transactions for the last week.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_incoming_transactions_3m": {
+            "docs": "The total number of inflow transactions for the last three months.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_outgoing_transactions_1m": {
+            "docs": "To total number of outflow transactions in the last month.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_outgoing_transactions_1w": {
+            "docs": "To total number of outflow transactions in the last week.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_outgoing_transactions_3m": {
+            "docs": "To total number of outflow transactions in the last three months.
+
+ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
+
+If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
+",
+            "type": "integer",
+          },
+          "num_transactions_1m": {
+            "docs": "The total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
+",
+            "type": "integer",
+          },
+          "num_transactions_1w": {
+            "docs": "The total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
+",
+            "type": "integer",
+          },
+          "num_transactions_3m": {
+            "docs": "The total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
+",
+            "type": "integer",
+          },
+          "sum_incoming_amount_1m": {
+            "docs": "The total sum of all inflow transactions for the last month.
+",
+            "type": "optional<double>",
+          },
+          "sum_incoming_amount_1w": {
+            "docs": "The total sum of all inflow transactions for the last week.
+",
+            "type": "optional<double>",
+          },
+          "sum_incoming_amount_3m": {
+            "docs": "The total sum of all inflow transactions for the last three months.
+",
+            "type": "optional<double>",
+          },
+          "sum_outgoing_amount_1m": {
+            "docs": "The total sum of all outflow transactions for the last month.
+",
+            "type": "optional<double>",
+          },
+          "sum_outgoing_amount_1w": {
+            "docs": "The total sum of all outflow transactions for the last week.
+",
+            "type": "optional<double>",
+          },
+          "sum_outgoing_amount_3m": {
+            "docs": "The total sum of all outflow transactions for the last three months.
+",
+            "type": "optional<double>",
+          },
+        },
       },
       "SecretKeys": {
         "docs": undefined,
@@ -18493,11 +19504,101 @@ By default, Belvo returns the yearly (annual) tax returns.
       },
       "TaxStatusAddressDian": {
         "docs": "The tax payer's address details.",
-        "type": "optional<TaxStatusAddressDian>",
+        "properties": {
+          "between_street": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<list<TaxStatusAddressBetweenStreetDian>>",
+          },
+          "exterior_number": {
+            "docs": "The street number.",
+            "type": "optional<string>",
+          },
+          "interior_number": {
+            "docs": "Additional address information.",
+            "type": "optional<string>",
+          },
+          "locality": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "municipality": {
+            "docs": "The municipality of the address.",
+            "type": "optional<string>",
+          },
+          "postal_code": {
+            "docs": "The postcode of the address.
+",
+            "type": "optional<string>",
+          },
+          "state": {
+            "docs": "The state that the address is in.",
+            "type": "optional<string>",
+          },
+          "street": {
+            "docs": "The tax payers street.",
+            "type": "optional<string>",
+          },
+          "street_type": {
+            "docs": "The \`street\` type.",
+            "type": "optional<string>",
+          },
+          "suburb": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "TaxStatusAddressSat": {
         "docs": "The tax payer's address details.",
-        "type": "optional<TaxStatusAddressSat>",
+        "properties": {
+          "between_street": {
+            "docs": "Additional information about where the \`street\` is located.
+",
+            "type": "optional<list<TaxStatusAddressBetweenStreetSat>>",
+          },
+          "exterior_number": {
+            "docs": "The street number.",
+            "type": "optional<string>",
+          },
+          "interior_number": {
+            "docs": "Additional address information.",
+            "type": "optional<string>",
+          },
+          "locality": {
+            "docs": "The locality of the address.
+",
+            "type": "optional<string>",
+          },
+          "municipality": {
+            "docs": "The municipality of the address.",
+            "type": "optional<string>",
+          },
+          "postal_code": {
+            "docs": "The postcode of the address.
+",
+            "type": "optional<string>",
+          },
+          "state": {
+            "docs": "The state that the address is in.",
+            "type": "optional<string>",
+          },
+          "street": {
+            "docs": "The tax payers street.",
+            "type": "optional<string>",
+          },
+          "street_type": {
+            "docs": "The \`street\` type.",
+            "type": "optional<string>",
+          },
+          "suburb": {
+            "docs": "The suburb of the tax payer.
+",
+            "type": "optional<string>",
+          },
+        },
       },
       "TaxStatusDian": {
         "docs": undefined,
@@ -18819,11 +19920,125 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxStatusTaxPayerInformationDian": {
         "docs": "Details regarding the taxpayer.",
-        "type": "optional<TaxStatusTaxPayerInformationDian>",
+        "properties": {
+          "commercial_name": {
+            "docs": "The name of the business designated for consumers and the general public.
+
+**Note**: Only applicable for businesses.
+",
+            "type": "optional<string>",
+          },
+          "curp": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "email": {
+            "docs": "Contact email address for the tax payer.",
+            "type": "optional<string>",
+          },
+          "first_last_name": {
+            "docs": "The tax payers's first last name.",
+            "type": "optional<string>",
+          },
+          "last_status_change_date": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "The tax payers's first name.",
+            "type": "optional<string>",
+          },
+          "phone": {
+            "docs": "Contact phone number for the tax payer.",
+            "type": "optional<string>",
+          },
+          "rfc": {
+            "docs": "The tax payers's identification number (NIT).
+",
+            "type": "optional<string>",
+          },
+          "second_last_name": {
+            "docs": "The tax payers's second last name.",
+            "type": "optional<string>",
+          },
+          "social_name": {
+            "docs": "The unique and exclusive name within the national territory that companies receive for legal or administrative purposes.
+**Note**: Only applicable for businesses.",
+            "type": "optional<string>",
+          },
+          "start_operations_date": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
+            "type": "optional<string>",
+          },
+          "status_padron": {
+            "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
+            "type": "optional<string>",
+          },
+        },
       },
       "TaxStatusTaxPayerInformationSat": {
         "docs": "Details regarding the taxpayer.",
-        "type": "optional<TaxStatusTaxPayerInformationSat>",
+        "properties": {
+          "commercial_name": {
+            "docs": "The name of the business designated for consumers and the general public.
+
+**Note**: Only applicable for businesses.
+",
+            "type": "optional<string>",
+          },
+          "curp": {
+            "docs": "The tax payers's *Clave Única de Registro de Población* (CURP) number.
+",
+            "type": "optional<string>",
+          },
+          "email": {
+            "docs": "Contact email address for the tax payer.",
+            "type": "optional<string>",
+          },
+          "first_last_name": {
+            "docs": "The tax payers's first last name.",
+            "type": "optional<string>",
+          },
+          "last_status_change_date": {
+            "docs": "Date when \`status_padron\` was most recently updated.
+",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "The tax payers's first name.",
+            "type": "optional<string>",
+          },
+          "phone": {
+            "docs": "Contact phone number for the tax payer.",
+            "type": "optional<string>",
+          },
+          "rfc": {
+            "docs": "The tax payers's identification number (For Mexico, this is the RFC).
+",
+            "type": "optional<string>",
+          },
+          "second_last_name": {
+            "docs": "The tax payers's second last name.",
+            "type": "optional<string>",
+          },
+          "social_name": {
+            "docs": "The unique and exclusive name within the national territory that companies receive for legal or administrative purposes.
+**Note**: Only applicable for businesses.",
+            "type": "optional<string>",
+          },
+          "start_operations_date": {
+            "docs": "Date when the tax payer commenced taxable commercial activities.
+",
+            "type": "optional<string>",
+          },
+          "status_padron": {
+            "docs": "Status of the taxpayer in the Federal Register of Taxpayers (RFC). Can be \`ACTIVO\` or \`INACTIVO\`.",
+            "type": "optional<string>",
+          },
+        },
       },
       "TokenRequiredResponse": {
         "docs": "MFA Token Required",
@@ -18998,7 +20213,30 @@ For \`too_many_sessions\` errors, the description is:
       },
       "TransactionCreditCardData": {
         "docs": "Additional data provided by the institution for credit card transactions.",
-        "type": "optional<TransactionCreditCardData>",
+        "properties": {
+          "bill_amount": {
+            "docs": "The aggregate bill amount, as of \`collected_at\`.",
+            "type": "optional<double>",
+          },
+          "bill_name": {
+            "docs": "The title of the monthly credit card bill the transaction belongs to. The format of the returned value is institution specific, however, some common examples are:
+
+- diciembre-2021
+- dec-2021
+- dec-21
+",
+            "type": "optional<string>",
+          },
+          "bill_status": "optional<EnumTransactionBillStatus>",
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "previous_bill_total": {
+            "docs": "The total amount of the previous month's bill, if available.",
+            "type": "optional<string>",
+          },
+        },
       },
       "TransactionMerchantData": {
         "docs": "Additional data regarding the merchant involved in the transaction.
@@ -19006,7 +20244,20 @@ We only return merchant information for new transactions made from *checking* or
 > **Get merchant information**
  We retrieve the merchant information for a transaction as part of our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) product, turning raw data into actionable insights. To enable this product, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
 ",
-        "type": "optional<TransactionMerchantData>",
+        "properties": {
+          "logo": {
+            "docs": "The URL to the merchant's logo.",
+            "type": "optional<string>",
+          },
+          "merchant_name": {
+            "docs": "The name of the merchant.",
+            "type": "optional<string>",
+          },
+          "website": {
+            "docs": "The URL to the merchant's website.",
+            "type": "optional<string>",
+          },
+        },
       },
       "TransactionsPaginatedResponse": {
         "docs": undefined,

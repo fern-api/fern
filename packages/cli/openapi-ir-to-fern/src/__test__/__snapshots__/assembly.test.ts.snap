@@ -614,7 +614,12 @@ The LLM response data, as well as any context provided in the original request w
         "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-        "type": "optional<AutoHighlightsResult>",
+        "properties": {
+          "results": {
+            "docs": "A temporally-sequential array of Key Phrases",
+            "type": "list<AutoHighlightResult>",
+          },
+        },
       },
       "Chapter": {
         "docs": "Chapter of the audio file",
