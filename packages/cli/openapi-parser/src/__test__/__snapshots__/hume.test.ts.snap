@@ -67,6 +67,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The maximum number of jobs to include in the response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -84,6 +85,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Include only jobs with these statuses.",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -106,6 +108,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Include only jobs that were created before or after \`timestamp_ms\`.",
           "name": "when",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -123,6 +126,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Defaults to the current date and time. See \`when\`.",
           "name": "timestamp_ms",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -140,6 +144,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The job timestamp to sort by.",
           "name": "sort_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -157,6 +162,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The sort direction.",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

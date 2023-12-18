@@ -959,6 +959,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return next page of results after given cursor.",
           "name": "after_cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -978,6 +979,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -995,6 +997,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Order direction of results; ascending or descending.",
           "name": "order_direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1012,6 +1015,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "You can filter contracts by type, a contract is included in results if its type is in this list.",
           "name": "types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1029,6 +1033,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "You can filter contracts by current status, a contract is included in results if its status is in this list.",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1046,6 +1051,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "team_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1063,6 +1069,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filter contracts for given external ID",
           "name": "external_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1082,6 +1089,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Country codes of contracts to filter.",
           "name": "countries",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1099,6 +1107,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Currency codes of contracts to filter.",
           "name": "currencies",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1116,6 +1125,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Include a contract if by name or contractor name contains given search term.",
           "name": "search",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1135,6 +1145,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Sort contracts by given field name.",
           "name": "sort_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1566,6 +1577,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing contract template.",
           "name": "templateId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2279,6 +2291,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Reason for deleting an existing task",
           "name": "reason",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2816,6 +2829,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Types of contracts to filter.",
           "name": "contract_types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2833,6 +2847,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Statuses of timesheets to filter.",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2850,6 +2865,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "reporter_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2867,6 +2883,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created on or after the provided date.",
           "name": "date_from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2884,6 +2901,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created before the provided date.",
           "name": "date_to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2901,6 +2919,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2918,6 +2937,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results after given index of row",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3985,6 +4005,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Reason for deleting an existing Deel Premium from a contract.",
           "name": "reason",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4062,6 +4083,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "The day to end the contract.",
           "name": "end_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4079,6 +4101,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "The days to calculate.",
           "name": "calculation_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4121,6 +4144,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "The day the work week starts, 0 to 6",
           "name": "workweek_start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4140,6 +4164,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "The day the work week ends, 0 to 6",
           "name": "workweek_end",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5143,6 +5168,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Id of a Deel contract.",
           "name": "contract_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5162,6 +5188,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Types of contracts to filter.",
           "name": "contract_types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5179,6 +5206,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Statuses of timesheets to filter.",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5196,6 +5224,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "reporter_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5213,6 +5242,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created on or after the provided date.",
           "name": "date_from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5230,6 +5260,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created before the provided date.",
           "name": "date_to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5247,6 +5278,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5264,6 +5296,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results after given index of row",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5454,6 +5487,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Reason for deleting an existing timesheet",
           "name": "reason",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5730,6 +5764,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "types of contracts to filter",
           "name": "contract_types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5747,6 +5782,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "types of invoice adjustments to filter",
           "name": "types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5764,6 +5800,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "statuses of invoice adjustment to filter",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5781,6 +5818,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "invoice_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5798,6 +5836,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "reporter_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5815,6 +5854,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get invoice adjustments submitted on or after given start date (inclusive)",
           "name": "date_from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5832,6 +5872,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
           "name": "date_to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5849,6 +5890,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5866,6 +5908,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5928,6 +5971,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Id of an Deel contract.",
           "name": "contract_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5947,6 +5991,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "types of contracts to filter",
           "name": "contract_types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5964,6 +6009,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "types of invoice adjustments to filter",
           "name": "types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5981,6 +6027,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "statuses of invoice adjustment to filter",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5998,6 +6045,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing invoice; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "invoice_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6015,6 +6063,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "ID of an existing profile; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "reporter_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6032,6 +6081,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get invoice adjustments submitted on or after given start date (inclusive)",
           "name": "date_from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6049,6 +6099,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get invoice adjustments submitted before given end date (excludes records submitted on this date)",
           "name": "date_to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6066,6 +6117,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6083,6 +6135,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results after given index of row; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6215,6 +6268,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Reason for deleting an existing invoice adjustment",
           "name": "reason",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6718,6 +6772,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6735,6 +6790,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return next page of results after given cursor",
           "name": "after_cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6842,6 +6898,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records; NOTE: technically ALL query parameters are strings or array of strings",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7155,6 +7212,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7174,6 +7232,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Maximum number of records to return.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7191,6 +7250,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Offset/index of record for the next page of records to return.",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7852,6 +7912,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get records created after given issue date",
           "name": "issued_from_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7871,6 +7932,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "to get records created before given issued date",
           "name": "issued_to_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7890,6 +7952,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "statuses of invoices to filter",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7907,6 +7970,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filter by legal entity type; company, or individual",
           "name": "entities",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8257,6 +8321,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created on or after the provided date.",
           "name": "date_from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8274,6 +8339,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filtered results will include records created before the provided date.",
           "name": "date_to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8291,6 +8357,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Currency codes of contracts to filter.",
           "name": "currencies",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8308,6 +8375,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "statuses of payments to filter",
           "name": "statuses",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8325,6 +8393,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Filter by legal entity type; company, or individual",
           "name": "entities",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8403,6 +8472,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records.",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8420,6 +8490,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "description": "Return a page of results with given number of records.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

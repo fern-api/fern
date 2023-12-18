@@ -193,6 +193,7 @@ Used to list documents. Optionally filter on supported fields.
         {
           "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
           "name": "document_index_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -212,6 +213,7 @@ Used to list documents. Optionally filter on supported fields.
         {
           "description": "Number of results to return per page.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -229,6 +231,7 @@ Used to list documents. Optionally filter on supported fields.
         {
           "description": "The initial index from which to return the results.",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -246,6 +249,7 @@ Used to list documents. Optionally filter on supported fields.
         {
           "description": "Which field to use when ordering the results.",
           "name": "ordering",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

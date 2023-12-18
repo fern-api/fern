@@ -373,17 +373,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "AcceptConnectionInvitationRequest",
               "query-parameters": {
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
                 "my_label": {
-                  "allow-multiple": undefined,
                   "docs": "Label for connection",
                   "type": "optional<string>",
                 },
@@ -444,7 +441,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "AcceptConnectionRequestRequest",
               "query-parameters": {
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
@@ -532,22 +528,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "CreateInvitationRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias",
                   "type": "optional<string>",
                 },
                 "auto_accept": {
-                  "allow-multiple": undefined,
                   "docs": "Auto-accept connection (defaults to configuration)",
                   "type": "optional<boolean>",
                 },
                 "multi_use": {
-                  "allow-multiple": undefined,
                   "docs": "Create invitation for multiple use (default false)",
                   "type": "optional<boolean>",
                 },
                 "public": {
-                  "allow-multiple": undefined,
                   "docs": "Create invitation from public DID (default false)",
                   "type": "optional<boolean>",
                 },
@@ -745,7 +737,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetConnectionMetadataRequest",
               "query-parameters": {
                 "key": {
-                  "allow-multiple": undefined,
                   "docs": "Key to retrieve.",
                   "type": "optional<string>",
                 },
@@ -857,47 +848,38 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingConnectionsRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias",
                   "type": "optional<string>",
                 },
                 "connection_protocol": {
-                  "allow-multiple": undefined,
                   "docs": "Connection protocol used",
                   "type": "optional<GetMatchingConnectionsRequestConnectionProtocol>",
                 },
                 "invitation_key": {
-                  "allow-multiple": undefined,
                   "docs": "invitation key",
                   "type": "optional<string>",
                 },
                 "invitation_msg_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier of the associated Invitation Mesage",
                   "type": "optional<string>",
                 },
                 "my_did": {
-                  "allow-multiple": undefined,
                   "docs": "My DID",
                   "type": "optional<string>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Connection state",
                   "type": "optional<GetMatchingConnectionsRequestState>",
                 },
                 "their_did": {
-                  "allow-multiple": undefined,
                   "docs": "Their DID",
                   "type": "optional<string>",
                 },
                 "their_public_did": {
-                  "allow-multiple": undefined,
                   "docs": "Their Public DID",
                   "type": "optional<string>",
                 },
                 "their_role": {
-                  "allow-multiple": undefined,
                   "docs": "Their role in the connection protocol",
                   "type": "optional<GetMatchingConnectionsRequestTheirRole>",
                 },
@@ -1000,17 +982,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "ReceiveInvitationRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias",
                   "type": "optional<string>",
                 },
                 "auto_accept": {
-                  "allow-multiple": undefined,
                   "docs": "Auto-accept connection (defaults to configuration)",
                   "type": "optional<boolean>",
                 },
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
@@ -1182,32 +1161,26 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetCreatedCredDefsRequest",
               "query-parameters": {
                 "cred_def_id": {
-                  "allow-multiple": undefined,
                   "docs": "Credential definition id",
                   "type": "optional<string>",
                 },
                 "issuer_did": {
-                  "allow-multiple": undefined,
                   "docs": "Issuer DID",
                   "type": "optional<string>",
                 },
                 "schema_id": {
-                  "allow-multiple": undefined,
                   "docs": "Schema identifier",
                   "type": "optional<string>",
                 },
                 "schema_issuer_did": {
-                  "allow-multiple": undefined,
                   "docs": "Schema issuer DID",
                   "type": "optional<string>",
                 },
                 "schema_name": {
-                  "allow-multiple": undefined,
                   "docs": "Schema name",
                   "type": "optional<string>",
                 },
                 "schema_version": {
-                  "allow-multiple": undefined,
                   "docs": "Schema version",
                   "type": "optional<string>",
                 },
@@ -1341,12 +1314,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "CredentialDefinitionSendRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
@@ -1590,17 +1561,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetCredentialsRequest",
               "query-parameters": {
                 "count": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum number to retrieve",
                   "type": "optional<string>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "Start index",
                   "type": "optional<string>",
                 },
                 "wql": {
-                  "allow-multiple": undefined,
                   "docs": "(JSON) WQL query",
                   "type": "optional<string>",
                 },
@@ -1640,12 +1608,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetRevocationStatusRequest",
               "query-parameters": {
                 "from": {
-                  "allow-multiple": undefined,
                   "docs": "Earliest epoch of revocation status interval of interest",
                   "type": "optional<string>",
                 },
                 "to": {
-                  "allow-multiple": undefined,
                   "docs": "Latest epoch of revocation status interval of interest",
                   "type": "optional<string>",
                 },
@@ -1794,17 +1760,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "W3CCredentialsListRequest",
               "query-parameters": {
                 "count": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum number to retrieve",
                   "type": "optional<string>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "Start index",
                   "type": "optional<string>",
                 },
                 "wql": {
-                  "allow-multiple": undefined,
                   "docs": "(JSON) WQL query",
                   "type": "optional<string>",
                 },
@@ -1878,12 +1841,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "AcceptDidexInvitationRequest",
               "query-parameters": {
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
                 "my_label": {
-                  "allow-multiple": undefined,
                   "docs": "Label for connection request",
                   "type": "optional<string>",
                 },
@@ -1944,12 +1905,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "AcceptDidexRequestRequest",
               "query-parameters": {
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
@@ -2004,32 +1963,26 @@ exports[`open api parser aries simple 1`] = `
               "name": "CreateDidexRequestRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias for connection",
                   "type": "optional<string>",
                 },
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
                 "my_label": {
-                  "allow-multiple": undefined,
                   "docs": "Label for connection request",
                   "type": "optional<string>",
                 },
                 "their_public_did": {
-                  "allow-multiple": undefined,
                   "docs": "Qualified public DID to which to request connection",
                   "type": "string",
                 },
                 "use_public_did": {
-                  "allow-multiple": undefined,
                   "docs": "Use public DID for this connection",
                   "type": "optional<boolean>",
                 },
@@ -2140,22 +2093,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "DidxRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias for connection",
                   "type": "optional<string>",
                 },
                 "auto_accept": {
-                  "allow-multiple": undefined,
                   "docs": "Auto-accept connection (defaults to configuration)",
                   "type": "optional<boolean>",
                 },
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
                 "my_endpoint": {
-                  "allow-multiple": undefined,
                   "docs": "My URL endpoint",
                   "type": "optional<string>",
                 },
@@ -2216,7 +2165,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetV10FeatureRecordsRequest",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
@@ -2260,17 +2208,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetV10FeaturesQueryRequest",
               "query-parameters": {
                 "comment": {
-                  "allow-multiple": undefined,
                   "docs": "Comment",
                   "type": "optional<string>",
                 },
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier, if none specified, then the query will provide features for this agent.",
                   "type": "optional<string>",
                 },
                 "query": {
-                  "allow-multiple": undefined,
                   "docs": "Protocol feature query",
                   "type": "optional<string>",
                 },
@@ -2335,7 +2280,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetV20FeatureRecordsRequest",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
@@ -2385,17 +2329,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetV20FeaturesQueriesRequest",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier, if none specified, then the query will provide features for this agent.",
                   "type": "optional<string>",
                 },
                 "query_goal_code": {
-                  "allow-multiple": undefined,
                   "docs": "Goal-code feature-type query",
                   "type": "optional<string>",
                 },
                 "query_protocol": {
-                  "allow-multiple": undefined,
                   "docs": "Protocol feature-type query",
                   "type": "optional<string>",
                 },
@@ -2477,12 +2418,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "Date",
               "query-parameters": {
                 "endorser_write_txn": {
-                  "allow-multiple": undefined,
                   "docs": "Endorser will write the transaction after endorsing it",
                   "type": "optional<boolean>",
                 },
                 "tran_id": {
-                  "allow-multiple": undefined,
                   "docs": "Transaction identifier",
                   "type": "string",
                 },
@@ -2700,12 +2639,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "SetEndorserInfoForConnIdRequest",
               "query-parameters": {
                 "endorser_did": {
-                  "allow-multiple": undefined,
                   "docs": "Endorser DID",
                   "type": "string",
                 },
                 "endorser_name": {
-                  "allow-multiple": undefined,
                   "docs": "Endorser Name",
                   "type": "optional<string>",
                 },
@@ -2750,7 +2687,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "SetEndorserRoleForConnIdRequest",
               "query-parameters": {
                 "transaction_my_job": {
-                  "allow-multiple": undefined,
                   "docs": "Transaction related jobs",
                   "type": "optional<SetEndorserRoleForConnIdRequestTransactionMyJob>",
                 },
@@ -2814,12 +2750,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "StartConnectionIntroductionRequest",
               "query-parameters": {
                 "message": {
-                  "allow-multiple": undefined,
                   "docs": "Message",
                   "type": "optional<string>",
                 },
                 "target_connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Target connection identifier",
                   "type": "string",
                 },
@@ -3540,22 +3474,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingCredExRecordsRequest",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Role assigned in credential exchange",
                   "type": "optional<GetMatchingCredExRecordsRequestRole>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Credential exchange state",
                   "type": "optional<GetMatchingCredExRecordsRequestState>",
                 },
                 "thread_id": {
-                  "allow-multiple": undefined,
                   "docs": "Thread identifier",
                   "type": "optional<string>",
                 },
@@ -6056,22 +5986,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingCredExRecordsV2Request",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Role assigned in credential exchange",
                   "type": "optional<GetMatchingCredExRecordsV2RequestRole>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Credential exchange state",
                   "type": "optional<GetMatchingCredExRecordsV2RequestState>",
                 },
                 "thread_id": {
-                  "allow-multiple": undefined,
                   "docs": "Thread identifier",
                   "type": "optional<string>",
                 },
@@ -8655,7 +8581,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetDidNymRoleRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
@@ -8691,7 +8616,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetDidVerkeyRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
@@ -8752,12 +8676,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetPublishedDidEndpointRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
                 "endpoint_type": {
-                  "allow-multiple": undefined,
                   "docs": "Endpoint type of interest (default 'Endpoint')",
                   "type": "optional<GetPublishedDidEndpointRequestEndpointType>",
                 },
@@ -8855,32 +8777,26 @@ exports[`open api parser aries simple 1`] = `
               "name": "RegisterNymRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias",
                   "type": "optional<string>",
                 },
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID to register",
                   "type": "string",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Role",
                   "type": "optional<RegisterNymRequestRole>",
                 },
                 "verkey": {
-                  "allow-multiple": undefined,
                   "docs": "Verification key",
                   "type": "string",
                 },
@@ -9056,12 +8972,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetKeylistsRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier (optional)",
                   "type": "optional<string>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
                   "type": "optional<GetKeylistsRequestRole>",
                 },
@@ -9095,7 +9009,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingMediationRecordsRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier (optional)",
                   "type": "optional<string>",
                 },
@@ -9110,7 +9023,6 @@ exports[`open api parser aries simple 1`] = `
                   "type": "optional<string>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Mediation state (optional)",
                   "type": "optional<GetMatchingMediationRecordsRequestState>",
                 },
@@ -9251,12 +9163,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "KeylistQueryFilterRequest",
               "query-parameters": {
                 "paginate_limit": {
-                  "allow-multiple": undefined,
                   "docs": "limit number of results",
                   "type": "optional<integer>",
                 },
                 "paginate_offset": {
-                  "allow-multiple": undefined,
                   "docs": "offset to use in pagination",
                   "type": "optional<integer>",
                 },
@@ -9578,10 +9488,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/multitenancy/wallet/{wallet_id}/token",
             "path-parameters": {
-              "wallet_id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "wallet_id": "string",
             },
             "request": {
               "body": {
@@ -9632,7 +9539,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingWalletsRequest",
               "query-parameters": {
                 "wallet_name": {
-                  "allow-multiple": undefined,
                   "docs": "Wallet name",
                   "type": "optional<string>",
                 },
@@ -9918,12 +9824,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "InvitationCreateRequest",
               "query-parameters": {
                 "auto_accept": {
-                  "allow-multiple": undefined,
                   "docs": "Auto-accept connection (defaults to configuration)",
                   "type": "optional<boolean>",
                 },
                 "multi_use": {
-                  "allow-multiple": undefined,
                   "docs": "Create invitation for multiple use (default false)",
                   "type": "optional<boolean>",
                 },
@@ -10058,22 +9962,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "ReceiveOobInvitationRequest",
               "query-parameters": {
                 "alias": {
-                  "allow-multiple": undefined,
                   "docs": "Alias for connection",
                   "type": "optional<string>",
                 },
                 "auto_accept": {
-                  "allow-multiple": undefined,
                   "docs": "Auto-accept connection (defaults to configuration)",
                   "type": "optional<boolean>",
                 },
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Identifier for active mediation record to be used",
                   "type": "optional<string>",
                 },
                 "use_existing_connection": {
-                  "allow-multiple": undefined,
                   "docs": "Use an existing connection, if possible",
                   "type": "optional<boolean>",
                 },
@@ -10436,22 +10336,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingPresExRecordsRequest",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Role assigned in presentation exchange",
                   "type": "optional<GetMatchingPresExRecordsRequestRole>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Presentation exchange state",
                   "type": "optional<GetMatchingPresExRecordsRequestState>",
                 },
                 "thread_id": {
-                  "allow-multiple": undefined,
                   "docs": "Thread identifier",
                   "type": "optional<string>",
                 },
@@ -10508,22 +10404,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetPresExCredentialsRequest",
               "query-parameters": {
                 "count": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum number to retrieve",
                   "type": "optional<string>",
                 },
                 "extra_query": {
-                  "allow-multiple": undefined,
                   "docs": "(JSON) object mapping referents to extra WQL queries",
                   "type": "optional<string>",
                 },
                 "referent": {
-                  "allow-multiple": undefined,
                   "docs": "Proof request referents of interest, comma-separated",
                   "type": "optional<string>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "Start index",
                   "type": "optional<string>",
                 },
@@ -11969,22 +11861,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingPresExRecordsV2Request",
               "query-parameters": {
                 "connection_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "role": {
-                  "allow-multiple": undefined,
                   "docs": "Role assigned in presentation exchange",
                   "type": "optional<GetMatchingPresExRecordsV2RequestRole>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Presentation exchange state",
                   "type": "optional<GetMatchingPresExRecordsV2RequestState>",
                 },
                 "thread_id": {
-                  "allow-multiple": undefined,
                   "docs": "Thread identifier",
                   "type": "optional<string>",
                 },
@@ -12041,22 +11929,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetPresExCredentialsV2Request",
               "query-parameters": {
                 "count": {
-                  "allow-multiple": undefined,
                   "docs": "Maximum number to retrieve",
                   "type": "optional<string>",
                 },
                 "extra_query": {
-                  "allow-multiple": undefined,
                   "docs": "(JSON) object mapping referents to extra WQL queries",
                   "type": "optional<string>",
                 },
                 "referent": {
-                  "allow-multiple": undefined,
                   "docs": "Proof request referents of interest, comma-separated",
                   "type": "optional<string>",
                 },
                 "start": {
-                  "allow-multiple": undefined,
                   "docs": "Start index",
                   "type": "optional<string>",
                 },
@@ -13583,12 +13467,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "DeleteTailsFileRequest",
               "query-parameters": {
                 "cred_def_id": {
-                  "allow-multiple": undefined,
                   "docs": "Credential definition identifier",
                   "type": "optional<string>",
                 },
                 "rev_reg_id": {
-                  "allow-multiple": undefined,
                   "docs": "Revocation registry identifier",
                   "type": "optional<string>",
                 },
@@ -13713,12 +13595,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetCreatedRegistriesRequest",
               "query-parameters": {
                 "cred_def_id": {
-                  "allow-multiple": undefined,
                   "docs": "Credential definition identifier",
                   "type": "optional<string>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Revocation registry state",
                   "type": "optional<GetCreatedRegistriesRequestState>",
                 },
@@ -13761,17 +13641,14 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetCredentialRevocationRecordRequest",
               "query-parameters": {
                 "cred_ex_id": {
-                  "allow-multiple": undefined,
                   "docs": "Credential exchange identifier",
                   "type": "optional<string>",
                 },
                 "cred_rev_id": {
-                  "allow-multiple": undefined,
                   "docs": "Credential revocation identifier",
                   "type": "optional<string>",
                 },
                 "rev_reg_id": {
-                  "allow-multiple": undefined,
                   "docs": "Revocation registry identifier",
                   "type": "optional<string>",
                 },
@@ -14038,12 +13915,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "PublishRevocationRegistryDefinitionRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
@@ -14123,12 +13998,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "PublishRevocationRegistryEntryRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
@@ -14319,7 +14192,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "SetRevocationRegistryStateRequest",
               "query-parameters": {
                 "state": {
-                  "allow-multiple": undefined,
                   "docs": "Revocation registry state to set",
                   "type": "SetRevocationRegistryStateRequestState",
                 },
@@ -14361,7 +14233,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "UpdateRevocationEntryStateRequest",
               "query-parameters": {
                 "apply_ledger_update": {
-                  "allow-multiple": undefined,
                   "docs": "Apply updated accumulator transaction to ledger",
                   "type": "boolean",
                 },
@@ -14552,22 +14423,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetMatchingCreatedSchemasRequest",
               "query-parameters": {
                 "schema_id": {
-                  "allow-multiple": undefined,
                   "docs": "Schema identifier",
                   "type": "optional<string>",
                 },
                 "schema_issuer_did": {
-                  "allow-multiple": undefined,
                   "docs": "Schema issuer DID",
                   "type": "optional<string>",
                 },
                 "schema_name": {
-                  "allow-multiple": undefined,
                   "docs": "Schema name",
                   "type": "optional<string>",
                 },
                 "schema_version": {
-                  "allow-multiple": undefined,
                   "docs": "Schema version",
                   "type": "optional<string>",
                 },
@@ -14687,12 +14554,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "SchemaSendRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
@@ -15063,7 +14928,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetDidEndpointRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
@@ -15109,27 +14973,22 @@ exports[`open api parser aries simple 1`] = `
               "name": "GetDidsRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "optional<string>",
                 },
                 "key_type": {
-                  "allow-multiple": undefined,
                   "docs": "Key type to query for.",
                   "type": "optional<GetDidsRequestKeyType>",
                 },
                 "method": {
-                  "allow-multiple": undefined,
                   "docs": "DID method to query for. e.g. sov to only fetch indy/sov DIDs",
                   "type": "optional<GetDidsRequestMethod>",
                 },
                 "posture": {
-                  "allow-multiple": undefined,
                   "docs": "Whether DID is current public DID, posted to ledger but current public DID, or local to the wallet",
                   "type": "optional<GetDidsRequestPosture>",
                 },
                 "verkey": {
-                  "allow-multiple": undefined,
                   "docs": "Verification key of interest",
                   "type": "optional<string>",
                 },
@@ -15193,7 +15052,6 @@ exports[`open api parser aries simple 1`] = `
               "name": "RotateKeypairRequest",
               "query-parameters": {
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
@@ -15246,12 +15104,10 @@ exports[`open api parser aries simple 1`] = `
               "name": "DidEndpointWithType",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
@@ -15293,22 +15149,18 @@ exports[`open api parser aries simple 1`] = `
               "name": "SetPublicDidRequest",
               "query-parameters": {
                 "conn_id": {
-                  "allow-multiple": undefined,
                   "docs": "Connection identifier",
                   "type": "optional<string>",
                 },
                 "create_transaction_for_endorser": {
-                  "allow-multiple": undefined,
                   "docs": "Create Transaction For Endorser's signature",
                   "type": "optional<boolean>",
                 },
                 "did": {
-                  "allow-multiple": undefined,
                   "docs": "DID of interest",
                   "type": "string",
                 },
                 "mediation_id": {
-                  "allow-multiple": undefined,
                   "docs": "Mediation identifier",
                   "type": "optional<string>",
                 },
@@ -15395,7 +15247,6 @@ exports[`open api parser aries simple 1`] = `
             "name": "EndorseTransactionRequest",
             "query-parameters": {
               "endorser_did": {
-                "allow-multiple": undefined,
                 "docs": "Endorser DID",
                 "type": "optional<string>",
               },

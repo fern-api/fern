@@ -22,6 +22,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41,6 +42,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -60,6 +62,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -238,6 +241,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -257,6 +261,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -276,6 +281,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -442,6 +448,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -461,6 +468,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -480,6 +488,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -506,6 +515,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -684,6 +694,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -703,6 +714,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -722,6 +734,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -872,6 +885,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -891,6 +905,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -910,6 +925,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1093,6 +1109,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1112,6 +1129,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1131,6 +1149,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1345,6 +1364,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1364,6 +1384,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1383,6 +1404,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1409,6 +1431,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1423,6 +1446,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "userIdType",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1571,6 +1595,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1590,6 +1615,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1609,6 +1635,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1859,6 +1886,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1878,6 +1906,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1897,6 +1926,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2081,6 +2111,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2100,6 +2131,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2119,6 +2151,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2292,6 +2325,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2311,6 +2345,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2330,6 +2365,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2673,6 +2709,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2692,6 +2729,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2711,6 +2749,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3146,6 +3185,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3165,6 +3205,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3184,6 +3225,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3414,6 +3456,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3433,6 +3476,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3452,6 +3496,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3478,6 +3523,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "Use this parameter to get information about all devices associated with an email (without the other query params)",
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3497,6 +3543,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "Use this parameter to get information about all devices associated with a phoneNumber (without the other query params)",
           "name": "phoneNumber",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3514,6 +3561,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "Use this parameter to get information about a single device (without the other query params)",
           "name": "deviceId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3531,6 +3579,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "Use this parameter to get information about a single device (without the other query params)",
           "name": "preAuthSessionId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3784,6 +3833,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3803,6 +3853,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3822,6 +3873,7 @@ Passing the optional deviceId signifies a resend code flow.
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3970,6 +4022,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3989,6 +4042,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4008,6 +4062,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4034,6 +4089,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4053,6 +4109,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "Use exactly one of phoneNumber, email or userId",
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4070,6 +4127,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "Use exactly one of phoneNumber, email or userId",
           "name": "phoneNumber",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4251,6 +4309,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4270,6 +4329,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4289,6 +4349,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4483,6 +4544,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4502,6 +4564,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4521,6 +4584,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4677,6 +4741,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4696,6 +4761,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4715,6 +4781,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4873,6 +4940,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4892,6 +4960,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4911,6 +4980,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4937,6 +5007,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "use either email or userId, not both",
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4954,6 +5025,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "use either email or userId, not both",
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5142,6 +5214,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5161,6 +5234,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5180,6 +5254,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5351,6 +5426,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5370,6 +5446,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5389,6 +5466,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5592,6 +5670,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5611,6 +5690,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5630,6 +5710,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5656,6 +5737,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "paginationToken",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5675,6 +5757,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5692,6 +5775,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "timeJoinedOrder",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5821,6 +5905,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5840,6 +5925,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5859,6 +5945,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6064,6 +6151,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6083,6 +6171,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6102,6 +6191,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6270,6 +6360,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6289,6 +6380,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6308,6 +6400,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6604,6 +6697,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6623,6 +6717,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6642,6 +6737,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6831,6 +6927,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6850,6 +6947,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6869,6 +6967,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6895,6 +6994,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6914,6 +7014,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "Either use userId or thirdPartyId and thirdPartyUserId",
           "name": "thirdPartyId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6931,6 +7032,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "Either use userId or thirdPartyId and thirdPartyUserId",
           "name": "thirdPartyUserId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7150,6 +7252,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7169,6 +7272,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7188,6 +7292,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7214,6 +7319,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "User's email",
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7387,6 +7493,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7406,6 +7513,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7425,6 +7533,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7451,6 +7560,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "paginationToken",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7470,6 +7580,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "timeJoinedOrder",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7500,6 +7611,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7643,6 +7755,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7662,6 +7775,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7681,6 +7795,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7782,6 +7897,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7801,6 +7917,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7820,6 +7937,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7976,6 +8094,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7995,6 +8114,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8014,6 +8134,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8157,6 +8278,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8176,6 +8298,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8195,6 +8318,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8221,6 +8345,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8240,6 +8365,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8335,6 +8461,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8354,6 +8481,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8373,6 +8501,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8587,6 +8716,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8606,6 +8736,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8625,6 +8756,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8751,6 +8883,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8770,6 +8903,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8789,6 +8923,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8815,6 +8950,7 @@ Note that there is an invisible character at the end of the path, this was to av
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8943,6 +9079,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8962,6 +9099,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8981,6 +9119,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9163,6 +9302,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9182,6 +9322,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9201,6 +9342,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9317,6 +9459,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9336,6 +9479,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9355,6 +9499,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9501,6 +9646,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9520,6 +9666,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9539,6 +9686,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9727,6 +9875,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9746,6 +9895,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9765,6 +9915,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9791,6 +9942,7 @@ e.g.:
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9886,6 +10038,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9905,6 +10058,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9924,6 +10078,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9950,6 +10105,7 @@ e.g.:
         {
           "description": undefined,
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10098,6 +10254,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10117,6 +10274,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10136,6 +10294,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10290,6 +10449,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10309,6 +10469,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10328,6 +10489,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10354,6 +10516,7 @@ e.g.:
         {
           "description": undefined,
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10455,6 +10618,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10474,6 +10638,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10493,6 +10658,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10674,6 +10840,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10693,6 +10860,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10712,6 +10880,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10738,6 +10907,7 @@ e.g.:
         {
           "description": undefined,
           "name": "permission",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10872,6 +11042,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10891,6 +11062,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10910,6 +11082,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11070,6 +11243,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11089,6 +11263,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11108,6 +11283,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11216,6 +11392,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11235,6 +11412,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11254,6 +11432,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11280,6 +11459,7 @@ e.g.:
         {
           "description": undefined,
           "name": "sessionHandle",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11589,6 +11769,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11608,6 +11789,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11627,6 +11809,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11887,6 +12070,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11906,6 +12090,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11925,6 +12110,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12100,6 +12286,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12119,6 +12306,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12138,6 +12326,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12395,6 +12584,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12414,6 +12604,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12433,6 +12624,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12761,6 +12953,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12780,6 +12973,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12799,6 +12993,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12825,6 +13020,7 @@ e.g.:
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12920,6 +13116,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12939,6 +13136,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12958,6 +13156,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13132,6 +13331,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13151,6 +13351,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13170,6 +13371,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13196,6 +13398,7 @@ e.g.:
         {
           "description": "Users session handle",
           "name": "sessionHandle",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13293,6 +13496,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13312,6 +13516,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13331,6 +13536,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13465,6 +13671,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13484,6 +13691,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13503,6 +13711,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13827,6 +14036,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13846,6 +14056,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13865,6 +14076,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13891,6 +14103,7 @@ e.g.:
         {
           "description": "Users session handle",
           "name": "sessionHandle",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13988,6 +14201,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14007,6 +14221,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14026,6 +14241,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14162,6 +14378,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14181,6 +14398,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14200,6 +14418,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14464,6 +14683,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14483,6 +14703,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14502,6 +14723,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14919,6 +15141,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14938,6 +15161,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14957,6 +15181,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14983,6 +15208,7 @@ e.g.:
         {
           "description": undefined,
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15002,6 +15228,7 @@ e.g.:
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15154,6 +15381,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15173,6 +15401,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15192,6 +15421,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15378,6 +15608,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15397,6 +15628,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15416,6 +15648,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15600,6 +15833,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15619,6 +15853,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15638,6 +15873,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15664,6 +15900,7 @@ e.g.:
         {
           "description": undefined,
           "name": "sessionId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15741,6 +15978,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15760,6 +15998,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15779,6 +16018,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16035,6 +16275,7 @@ e.g.:
         {
           "description": undefined,
           "name": "rid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16054,6 +16295,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16073,6 +16315,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16099,6 +16342,7 @@ e.g.:
         {
           "description": undefined,
           "name": "userId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16269,6 +16513,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16359,6 +16604,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16378,6 +16624,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16404,6 +16651,7 @@ e.g.:
         {
           "description": undefined,
           "name": "pid",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16772,6 +17020,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16791,6 +17040,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16974,6 +17224,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16993,6 +17244,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17019,6 +17271,7 @@ e.g.:
         {
           "description": "The param should take an array of comma seperated strings",
           "name": "includeRecipeIds",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17151,6 +17404,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17170,6 +17424,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17196,6 +17451,7 @@ e.g.:
         {
           "description": undefined,
           "name": "since",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17368,6 +17624,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17387,6 +17644,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17413,6 +17671,7 @@ e.g.:
         {
           "description": "The param should take an array of comma seperated strings",
           "name": "includeRecipeIds",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17432,6 +17691,7 @@ e.g.:
         {
           "description": undefined,
           "name": "paginationToken",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17451,6 +17711,7 @@ e.g.:
         {
           "description": undefined,
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17468,6 +17729,7 @@ e.g.:
         {
           "description": undefined,
           "name": "timeJoinedOrder",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17498,6 +17760,7 @@ e.g.:
         {
           "description": undefined,
           "name": "email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17517,6 +17780,7 @@ e.g.:
         {
           "description": undefined,
           "name": "phone",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17534,6 +17798,7 @@ e.g.:
         {
           "description": undefined,
           "name": "recipe",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17553,6 +17818,7 @@ e.g.:
         {
           "description": undefined,
           "name": "provider",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17776,6 +18042,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17795,6 +18062,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17930,6 +18198,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17949,6 +18218,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18076,6 +18346,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18095,6 +18366,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18230,6 +18502,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18249,6 +18522,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18357,6 +18631,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18376,6 +18651,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18527,6 +18803,7 @@ e.g.:
         {
           "description": undefined,
           "name": "api-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18546,6 +18823,7 @@ e.g.:
         {
           "description": "X.Y of the X.Y.Z CDI version.",
           "name": "cdi-version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

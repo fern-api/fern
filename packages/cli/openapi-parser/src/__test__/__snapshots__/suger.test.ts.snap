@@ -3645,6 +3645,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3664,6 +3665,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3683,6 +3685,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3700,6 +3703,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3976,6 +3980,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "The Entitlement Term ID, if not given, return the UsageRecordReports under the Entitlement",
           "name": "entitlementTermId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3995,6 +4000,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4014,6 +4020,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4033,6 +4040,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4050,6 +4058,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8002,6 +8011,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "filter by offerId",
           "name": "offerId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8021,6 +8031,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "filter by entitlementId",
           "name": "entitlementId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8040,6 +8051,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "filter by crmOpportunityId",
           "name": "crmOpportunityId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8059,6 +8071,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "filter by partnerOpportunityId",
           "name": "partnerOpportunityId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9080,6 +9093,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Bearer Access Token",
           "name": "Authorization",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9851,6 +9865,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given product ID",
           "name": "productId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9870,6 +9885,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9889,6 +9905,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given buyer ID",
           "name": "buyerId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9908,6 +9925,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9927,6 +9945,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9946,6 +9965,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9963,6 +9983,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10097,6 +10118,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given product ID",
           "name": "productId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10116,6 +10138,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given entitlement ID",
           "name": "entitlementId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10135,6 +10158,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "Filter revenue record details by the given buyer ID",
           "name": "buyerId",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10154,6 +10178,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10173,6 +10198,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10192,6 +10218,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10209,6 +10236,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12702,6 +12730,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12721,6 +12750,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12740,6 +12770,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12757,6 +12788,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12950,6 +12982,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12969,6 +13002,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12988,6 +13022,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13005,6 +13040,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13167,6 +13203,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13186,6 +13223,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13205,6 +13243,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13222,6 +13261,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13491,6 +13531,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
           "name": "startDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13510,6 +13551,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "end date (UTC) in YYYY-MM-DD format, default is today",
           "name": "endDate",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13529,6 +13571,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination size, default 20, max value is 1000",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13546,6 +13589,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "description": "List pagination offset, default 0",
           "name": "offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

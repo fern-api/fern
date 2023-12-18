@@ -51,10 +51,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "DELETE",
             "path": "/api/v1/agents/{agentId}",
             "path-parameters": {
-              "agentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "agentId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -71,10 +68,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/agents/{agentId}",
             "path-parameters": {
-              "agentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "agentId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -102,10 +96,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "PATCH",
             "path": "/api/v1/agents/{agentId}",
             "path-parameters": {
-              "agentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "agentId": "string",
             },
             "request": {
               "body": "map<string, unknown>",
@@ -125,10 +116,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "POST",
             "path": "/api/v1/agents/{agentId}/predict",
             "path-parameters": {
-              "agentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "agentId": "string",
             },
             "request": {
               "body": {
@@ -191,10 +179,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "DELETE",
             "path": "/api/v1/api-tokens/{tokenId}",
             "path-parameters": {
-              "tokenId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "tokenId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -211,10 +196,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/api-tokens/{tokenId}",
             "path-parameters": {
-              "tokenId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "tokenId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -346,10 +328,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "DELETE",
             "path": "/api/v1/documents/{documentId}",
             "path-parameters": {
-              "documentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "documentId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -366,10 +345,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/documents/{documentId}",
             "path-parameters": {
-              "documentId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "documentId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -434,10 +410,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "DELETE",
             "path": "/api/v1/prompts/{promptId}",
             "path-parameters": {
-              "promptId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "promptId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -454,10 +427,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/prompts/{promptId}",
             "path-parameters": {
-              "promptId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "promptId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -485,10 +455,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "PATCH",
             "path": "/api/v1/prompts/{promptId}",
             "path-parameters": {
-              "promptId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "promptId": "string",
             },
             "request": {
               "body": "map<string, unknown>",
@@ -545,10 +512,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "DELETE",
             "path": "/api/v1/tools/{toolId}",
             "path-parameters": {
-              "toolId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "toolId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -565,10 +529,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/tools/{toolId}",
             "path-parameters": {
-              "toolId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "toolId": "string",
             },
             "response": {
               "docs": "Successful Response",
@@ -626,10 +587,7 @@ exports[`open api parser superagent simple 1`] = `
             "method": "GET",
             "path": "/api/v1/users/{userId}",
             "path-parameters": {
-              "userId": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "userId": "string",
             },
             "response": {
               "docs": "Successful Response",

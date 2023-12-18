@@ -899,6 +899,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -918,6 +919,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection protocol used",
           "name": "connection_protocol",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -948,6 +950,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "invitation key",
           "name": "invitation_key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -967,6 +970,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier of the associated Invitation Mesage",
           "name": "invitation_msg_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -986,6 +990,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My DID",
           "name": "my_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1005,6 +1010,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1077,6 +1083,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Their DID",
           "name": "their_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1096,6 +1103,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Their Public DID",
           "name": "their_public_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1115,6 +1123,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Their role in the connection protocol",
           "name": "their_role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1340,6 +1349,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1359,6 +1369,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Auto-accept connection (defaults to configuration)",
           "name": "auto_accept",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1376,6 +1387,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create invitation for multiple use (default false)",
           "name": "multi_use",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1393,6 +1405,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create invitation from public DID (default false)",
           "name": "public",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1916,6 +1929,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1935,6 +1949,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Auto-accept connection (defaults to configuration)",
           "name": "auto_accept",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1952,6 +1967,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2458,6 +2474,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2477,6 +2494,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2496,6 +2514,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Label for connection",
           "name": "my_label",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2716,6 +2735,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2998,6 +3018,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Key to retrieve.",
           "name": "key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3383,6 +3404,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Target connection identifier",
           "name": "target_connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3397,6 +3419,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Message",
           "name": "message",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3563,6 +3586,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3582,6 +3606,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3672,6 +3697,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential definition id",
           "name": "cred_def_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3691,6 +3717,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Issuer DID",
           "name": "issuer_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3710,6 +3737,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema identifier",
           "name": "schema_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3729,6 +3757,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema issuer DID",
           "name": "schema_issuer_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3748,6 +3777,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema name",
           "name": "schema_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3767,6 +3797,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema version",
           "name": "schema_version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4443,6 +4474,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Earliest epoch of revocation status interval of interest",
           "name": "from",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4462,6 +4494,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Latest epoch of revocation status interval of interest",
           "name": "to",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4989,6 +5022,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Maximum number to retrieve",
           "name": "count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5008,6 +5042,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Start index",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5027,6 +5062,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "(JSON) WQL query",
           "name": "wql",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5238,6 +5274,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Maximum number to retrieve",
           "name": "count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5257,6 +5294,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Start index",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5276,6 +5314,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "(JSON) WQL query",
           "name": "wql",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5492,6 +5531,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Qualified public DID to which to request connection",
           "name": "their_public_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5506,6 +5546,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias for connection",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5525,6 +5566,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5544,6 +5586,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5563,6 +5606,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Label for connection request",
           "name": "my_label",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5582,6 +5626,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Use public DID for this connection",
           "name": "use_public_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5950,6 +5995,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias for connection",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5969,6 +6015,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Auto-accept connection (defaults to configuration)",
           "name": "auto_accept",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5986,6 +6033,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6005,6 +6053,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6237,6 +6286,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6256,6 +6306,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Label for connection request",
           "name": "my_label",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6476,6 +6527,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6495,6 +6547,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "My URL endpoint",
           "name": "my_endpoint",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6652,6 +6705,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier, if none specified, then the query will provide features for this agent.",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6671,6 +6725,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Goal-code feature-type query",
           "name": "query_goal_code",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6690,6 +6745,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Protocol feature-type query",
           "name": "query_protocol",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6852,6 +6908,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6985,6 +7042,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Comment",
           "name": "comment",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7004,6 +7062,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier, if none specified, then the query will provide features for this agent.",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7023,6 +7082,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Protocol feature query",
           "name": "query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7166,6 +7226,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11015,6 +11076,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11034,6 +11096,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Role assigned in credential exchange",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11064,6 +11127,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential exchange state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11148,6 +11212,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Thread identifier",
           "name": "thread_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24644,6 +24709,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24663,6 +24729,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Role assigned in credential exchange",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24693,6 +24760,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential exchange state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24777,6 +24845,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Thread identifier",
           "name": "thread_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30663,6 +30732,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30677,6 +30747,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Endpoint type of interest (default 'Endpoint')",
           "name": "endpoint_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30780,6 +30851,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30858,6 +30930,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31116,6 +31189,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID to register",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31130,6 +31204,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Verification key",
           "name": "verkey",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31144,6 +31219,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31163,6 +31239,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31182,6 +31259,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31199,6 +31277,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Role",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31549,6 +31628,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier (optional)",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31568,6 +31648,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Filer on role, 'client' for keys         mediated by other agents, 'server' for keys         mediated by this agent",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31710,6 +31791,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "limit number of results",
           "name": "paginate_limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31727,6 +31809,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "offset to use in pagination",
           "name": "paginate_offset",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32023,6 +32106,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier (optional)",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32042,6 +32126,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "List of mediator rules for recipient",
           "name": "mediator_terms",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32066,6 +32151,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "List of recipient rules for mediation",
           "name": "recipient_terms",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32090,6 +32176,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Mediation state (optional)",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33330,6 +33417,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Wallet name",
           "name": "wallet_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33714,6 +33802,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Auto-accept connection (defaults to configuration)",
           "name": "auto_accept",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33731,6 +33820,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create invitation for multiple use (default false)",
           "name": "multi_use",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34291,6 +34381,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Alias for connection",
           "name": "alias",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34310,6 +34401,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Auto-accept connection (defaults to configuration)",
           "name": "auto_accept",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34327,6 +34419,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Identifier for active mediation record to be used",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34346,6 +34439,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Use an existing connection, if possible",
           "name": "use_existing_connection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36088,6 +36182,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36107,6 +36202,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Role assigned in presentation exchange",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36137,6 +36233,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Presentation exchange state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -36203,6 +36300,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Thread identifier",
           "name": "thread_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -37167,6 +37265,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Maximum number to retrieve",
           "name": "count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -37186,6 +37285,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
           "name": "extra_query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -37205,6 +37305,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Proof request referents of interest, comma-separated",
           "name": "referent",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -37224,6 +37325,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Start index",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -42747,6 +42849,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "connection_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -42766,6 +42869,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Role assigned in presentation exchange",
           "name": "role",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -42796,6 +42900,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Presentation exchange state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -42868,6 +42973,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Thread identifier",
           "name": "thread_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43687,6 +43793,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Maximum number to retrieve",
           "name": "count",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43706,6 +43813,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "(JSON) object mapping referents to extra WQL queries",
           "name": "extra_query",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43725,6 +43833,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Proof request referents of interest, comma-separated",
           "name": "referent",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -43744,6 +43853,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Start index",
           "name": "start",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47698,6 +47808,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47717,6 +47828,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential revocation identifier",
           "name": "cred_rev_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47736,6 +47848,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Revocation registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47948,6 +48061,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential definition identifier",
           "name": "cred_def_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47967,6 +48081,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Revocation registry state",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48063,6 +48178,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Credential definition identifier",
           "name": "cred_def_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48082,6 +48198,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Revocation registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49010,6 +49127,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49029,6 +49147,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49320,6 +49439,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49339,6 +49459,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49442,6 +49563,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Apply updated accumulator transaction to ledger",
           "name": "apply_ledger_update",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50033,6 +50155,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Revocation registry state to set",
           "name": "state",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "generatedName": "SetRevocationRegistryStateRequestState",
@@ -50493,6 +50616,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50512,6 +50636,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50602,6 +50727,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema identifier",
           "name": "schema_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50621,6 +50747,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema issuer DID",
           "name": "schema_issuer_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50640,6 +50767,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema name",
           "name": "schema_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50659,6 +50787,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Schema version",
           "name": "schema_version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51512,6 +51641,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51526,6 +51656,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Endorser will write the transaction after endorsing it",
           "name": "endorser_write_txn",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51608,6 +51739,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Endorser DID",
           "name": "endorser_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51622,6 +51754,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Endorser Name",
           "name": "endorser_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51733,6 +51866,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Transaction related jobs",
           "name": "transaction_my_job",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52163,6 +52297,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Endorser DID",
           "name": "endorser_did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52554,6 +52689,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52573,6 +52709,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Key type to query for.",
           "name": "key_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52603,6 +52740,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID method to query for. e.g. sov to only fetch indy/sov DIDs",
           "name": "method",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52633,6 +52771,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Whether DID is current public DID, posted to ledger but current public DID, or local to the wallet",
           "name": "posture",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52669,6 +52808,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Verification key of interest",
           "name": "verkey",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52875,6 +53015,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53065,6 +53206,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53079,6 +53221,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53098,6 +53241,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53115,6 +53259,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Mediation identifier",
           "name": "mediation_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53208,6 +53353,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "DID of interest",
           "name": "did",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53292,6 +53438,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53311,6 +53458,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "description": "Create Transaction For Endorser's signature",
           "name": "create_transaction_for_endorser",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
