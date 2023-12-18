@@ -90,7 +90,7 @@ async function writeSampleApiDefinition({
     const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
     await writeFile(
         absoluteFilepathToImdbYaml,
-        formatDefinitionFile({
+        await formatDefinitionFile({
             fileContents: SAMPLE_IMDB_API
         })
     );

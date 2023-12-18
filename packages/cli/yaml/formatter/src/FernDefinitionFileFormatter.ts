@@ -24,9 +24,9 @@ export class FernDefinitionFileFormatter {
         this.fileContents = fileContents;
     }
 
-    public format(): string {
+    public async format(): Promise<string> {
         if (this.formatted == null) {
-            const { header, body } = this.splitFileAtHeader();
+            const { header, body } = await this.splitFileAtHeader();
 
             const writer = new FileWriter();
 
@@ -46,13 +46,13 @@ export class FernDefinitionFileFormatter {
             while (!reader.isEof()) {
                 location = this.writeNextLine({ nextLine: reader.readNextLine(), writer, location });
             }
-            this.formatted = this.prettierFormat(writer.getContent());
+            this.formatted = await this.prettierFormat(writer.getContent());
         }
         return this.formatted;
     }
 
-    private splitFileAtHeader(): { header: string[]; body: string[] } {
-        const lines = this.prettierFormat(this.fileContents).split("\n");
+    private async splitFileAtHeader(): Promise<{ header: string[]; body: string[] }> {
+        const lines = (await this.prettierFormat(this.fileContents)).split("\n");
 
         const indexOfSeparator = lines.findIndex((line) => {
             const trimmed = line.trim();
@@ -65,8 +65,8 @@ export class FernDefinitionFileFormatter {
         };
     }
 
-    private prettierFormat(content: string): string {
-        return prettier.format(content, {
+    private async prettierFormat(content: string): Promise<string> {
+        return await prettier.format(content, {
             parser: "yaml"
         });
     }

@@ -956,7 +956,7 @@ exports[`generate IR 2`] = `
           "availability": null,
           "baseUrl": null,
           "displayName": null,
-          "docs": "Add a movie to the database",
+          "docs": "Mocked Add a movie to the database",
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -2079,7 +2079,7 @@ exports[`generate IR 2`] = `
           },
           {
             "availability": null,
-            "docs": "The rating scale is one to five stars",
+            "docs": "Mocked The rating scale is one to five stars",
             "name": {
               "name": {
                 "camelCase": {

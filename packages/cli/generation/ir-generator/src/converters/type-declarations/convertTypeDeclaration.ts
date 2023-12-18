@@ -19,7 +19,7 @@ export interface TypeDeclarationWithDescendantFilepaths {
     descendantFilepaths: Set<FernFilepath>;
 }
 
-export function convertTypeDeclaration({
+export async function convertTypeDeclaration({
     typeName,
     typeDeclaration,
     file,
@@ -33,8 +33,8 @@ export function convertTypeDeclaration({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): TypeDeclarationWithDescendantFilepaths {
-    const declaration = convertDeclaration(typeDeclaration);
+}): Promise<TypeDeclarationWithDescendantFilepaths> {
+    const declaration = await convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
         file
@@ -44,7 +44,7 @@ export function convertTypeDeclaration({
         typeDeclaration: {
             ...declaration,
             name: declaredTypeName,
-            shape: convertType({ typeDeclaration, file, typeResolver }),
+            shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             examples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
@@ -74,7 +74,7 @@ export function convertTypeDeclaration({
     };
 }
 
-export function convertType({
+export async function convertType({
     typeDeclaration,
     file,
     typeResolver
@@ -82,8 +82,8 @@ export function convertType({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Type {
-    return visitRawTypeDeclaration<Type>(typeDeclaration, {
+}): Promise<Type> {
+    return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),

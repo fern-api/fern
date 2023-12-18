@@ -26,7 +26,7 @@ import { convertHttpResponse } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
 
-export function convertHttpService({
+export async function convertHttpService({
     rootPathParameters,
     serviceDefinition,
     file,
@@ -46,8 +46,8 @@ export function convertHttpService({
     variableResolver: VariableResolver;
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
-}): HttpService {
-    const servicePathParameters = convertPathParameters({
+}): Promise<HttpService> {
+    const servicePathParameters = await convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
@@ -62,96 +62,105 @@ export function convertHttpService({
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
-                ? Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
-                      convertHttpHeader({ headerKey, header, file })
+                ? await Promise.all(
+                      Object.entries(serviceDefinition.headers).map(([headerKey, header]) =>
+                          convertHttpHeader({ headerKey, header, file })
+                      )
                   )
                 : [],
         pathParameters: servicePathParameters,
-        endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
-            const endpointPathParameters = convertPathParameters({
-                pathParameters: endpoint["path-parameters"],
-                location: PathParameterLocation.Endpoint,
-                file,
-                variableResolver
-            });
-
-            const httpEndpoint = {
-                ...convertDeclaration(endpoint),
-                id: "",
-                name: file.casingsGenerator.generateName(endpointKey),
-                displayName: endpoint["display-name"],
-                auth: endpoint.auth ?? serviceDefinition.auth,
-                idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
-                baseUrl: endpoint.url ?? serviceDefinition.url,
-                method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
-                path: constructHttpPath(endpoint.path),
-                fullPath: constructHttpPath(
-                    file.rootApiFile["base-path"] != null
-                        ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
-                        : urlJoin(serviceDefinition["base-path"], endpoint.path)
-                ),
-                pathParameters: endpointPathParameters,
-                allPathParameters: [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
-                queryParameters:
-                    typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
-                        ? Object.entries(endpoint.request["query-parameters"]).map(
-                              ([queryParameterKey, queryParameter]) => {
-                                  const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
-                                  const valueType = file.parseTypeReference(queryParameter);
-                                  return {
-                                      ...convertDeclaration(queryParameter),
-                                      name: file.casingsGenerator.generateNameAndWireValue({
-                                          wireValue: queryParameterKey,
-                                          name
-                                      }),
-                                      valueType,
-                                      allowMultiple:
-                                          typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
-                                              ? queryParameter["allow-multiple"]
-                                              : false
-                                  };
-                              }
-                          )
-                        : [],
-                headers:
-                    typeof endpoint.request !== "string" && endpoint.request?.headers != null
-                        ? Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
-                              convertHttpHeader({ headerKey, header, file })
-                          )
-                        : [],
-                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                sdkRequest: convertHttpSdkRequest({
-                    service: serviceDefinition,
-                    request: endpoint.request,
+        endpoints: await Promise.all(
+            Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
+                const endpointPathParameters = await convertPathParameters({
+                    pathParameters: endpoint["path-parameters"],
+                    location: PathParameterLocation.Endpoint,
                     file,
-                    typeResolver
-                }),
-                response: convertHttpResponse({ endpoint, file, typeResolver }),
-                errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
-                examples:
-                    endpoint.examples != null
-                        ? endpoint.examples.map((example) =>
-                              convertExampleEndpointCall({
-                                  service: serviceDefinition,
-                                  endpoint,
-                                  example,
-                                  typeResolver,
-                                  errorResolver,
-                                  exampleResolver,
-                                  variableResolver,
-                                  file,
-                                  workspace
-                              })
-                          )
-                        : []
-            };
-            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
-            return httpEndpoint;
-        })
+                    variableResolver
+                });
+
+                const httpEndpoint: HttpEndpoint = {
+                    ...(await convertDeclaration(endpoint)),
+                    id: "",
+                    name: file.casingsGenerator.generateName(endpointKey),
+                    displayName: endpoint["display-name"],
+                    auth: endpoint.auth ?? serviceDefinition.auth,
+                    idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
+                    baseUrl: endpoint.url ?? serviceDefinition.url,
+                    method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
+                    path: constructHttpPath(endpoint.path),
+                    fullPath: constructHttpPath(
+                        file.rootApiFile["base-path"] != null
+                            ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
+                            : urlJoin(serviceDefinition["base-path"], endpoint.path)
+                    ),
+                    pathParameters: endpointPathParameters,
+                    allPathParameters: [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
+                    queryParameters:
+                        typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
+                            ? await Promise.all(
+                                  Object.entries(endpoint.request["query-parameters"]).map(
+                                      async ([queryParameterKey, queryParameter]) => {
+                                          const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
+                                          const valueType = file.parseTypeReference(queryParameter);
+                                          return {
+                                              ...(await convertDeclaration(queryParameter)),
+                                              name: file.casingsGenerator.generateNameAndWireValue({
+                                                  wireValue: queryParameterKey,
+                                                  name
+                                              }),
+                                              valueType,
+                                              allowMultiple:
+                                                  typeof queryParameter !== "string" &&
+                                                  queryParameter["allow-multiple"] != null
+                                                      ? queryParameter["allow-multiple"]
+                                                      : false
+                                          };
+                                      }
+                                  )
+                              )
+                            : [],
+                    headers:
+                        typeof endpoint.request !== "string" && endpoint.request?.headers != null
+                            ? await Promise.all(
+                                  Object.entries(endpoint.request.headers).map(([headerKey, header]) =>
+                                      convertHttpHeader({ headerKey, header, file })
+                                  )
+                              )
+                            : [],
+                    requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                    sdkRequest: convertHttpSdkRequest({
+                        service: serviceDefinition,
+                        request: endpoint.request,
+                        file,
+                        typeResolver
+                    }),
+                    response: await convertHttpResponse({ endpoint, file, typeResolver }),
+                    errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
+                    examples:
+                        endpoint.examples != null
+                            ? endpoint.examples.map((example) =>
+                                  convertExampleEndpointCall({
+                                      service: serviceDefinition,
+                                      endpoint,
+                                      example,
+                                      typeResolver,
+                                      errorResolver,
+                                      exampleResolver,
+                                      variableResolver,
+                                      file,
+                                      workspace
+                                  })
+                              )
+                            : []
+                };
+                httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+                return httpEndpoint;
+            })
+        )
     };
 }
 
-export function convertPathParameters({
+export async function convertPathParameters({
     pathParameters,
     location,
     file,
@@ -161,22 +170,24 @@ export function convertPathParameters({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): PathParameter[] {
+}): Promise<PathParameter[]> {
     if (pathParameters == null) {
         return [];
     }
-    return Object.entries(pathParameters).map(([parameterName, parameter]) =>
-        convertPathParameter({
-            parameterName,
-            parameter,
-            location,
-            file,
-            variableResolver
-        })
+    return await Promise.all(
+        Object.entries(pathParameters).map(([parameterName, parameter]) =>
+            convertPathParameter({
+                parameterName,
+                parameter,
+                location,
+                file,
+                variableResolver
+            })
+        )
     );
 }
 
-function convertPathParameter({
+async function convertPathParameter({
     parameterName,
     parameter,
     location,
@@ -188,9 +199,9 @@ function convertPathParameter({
     location: PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
-}): PathParameter {
+}): Promise<PathParameter> {
     return {
-        ...convertDeclaration(parameter),
+        ...(await convertDeclaration(parameter)),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
@@ -303,7 +314,7 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
     }
 }
 
-export function convertHttpHeader({
+export async function convertHttpHeader({
     headerKey,
     header,
     file
@@ -311,10 +322,10 @@ export function convertHttpHeader({
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
     file: FernFileContext;
-}): HttpHeader {
+}): Promise<HttpHeader> {
     const { name } = getHeaderName({ headerKey, header });
     return {
-        ...convertDeclaration(header),
+        ...(await convertDeclaration(header)),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
             name

@@ -28,6 +28,7 @@ import { convertTypeDeclaration } from "./converters/type-declarations/convertTy
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
+import { formatDocs } from "./formatDocs";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
@@ -72,21 +73,25 @@ export async function generateIntermediateRepresentation({
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: workspace.definition.rootApiFile.contents.docs,
+        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
         auth: convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
-                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
-                      convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                ? await Promise.all(
+                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                          convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                      )
                   )
                 : [],
         idempotencyHeaders:
             workspace.definition.rootApiFile.contents["idempotency-headers"] != null
-                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
-                      ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                ? await Promise.all(
+                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                          ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                      )
                   )
                 : [],
         types: {},
@@ -105,7 +110,7 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["base-path"] != null
                 ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
                 : undefined,
-        pathParameters: convertPathParameters({
+        pathParameters: await convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
@@ -140,13 +145,13 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            types: (types) => {
+            types: async (types) => {
                 if (types == null) {
                     return;
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
@@ -193,12 +198,12 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            service: (service) => {
+            service: async (service) => {
                 if (service == null) {
                     return;
                 }
 
-                const convertedHttpService = convertHttpService({
+                const convertedHttpService = await convertHttpService({
                     rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
                     file,
@@ -237,12 +242,12 @@ export async function generateIntermediateRepresentation({
                     }
                 });
             },
-            webhooks: (webhooks) => {
+            webhooks: async (webhooks) => {
                 if (webhooks == null) {
                     return;
                 }
                 const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
-                const convertedWebhookGroup = convertWebhookGroup({ webhooks, file });
+                const convertedWebhookGroup = await convertWebhookGroup({ webhooks, file });
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             }

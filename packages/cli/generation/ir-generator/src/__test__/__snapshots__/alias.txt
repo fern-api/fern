@@ -103,7 +103,7 @@ exports[`generate IR 1`] = `
   "types": {
     "type_:Object": {
       "availability": null,
-      "docs": "Object is an alias for a type.",
+      "docs": "Mocked Object is an alias for a type.",
       "examples": [
         {
           "docs": null,
@@ -434,7 +434,7 @@ exports[`generate IR 1`] = `
     },
     "type_:Type": {
       "availability": null,
-      "docs": "A simple type with just a name.",
+      "docs": "Mocked A simple type with just a name.",
       "examples": [
         {
           "docs": null,
@@ -753,7 +753,7 @@ exports[`generate IR 1`] = `
     },
     "type_:TypeId": {
       "availability": null,
-      "docs": "An alias for type IDs.",
+      "docs": "Mocked An alias for type IDs.",
       "examples": [
         {
           "docs": null,
