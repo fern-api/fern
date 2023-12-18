@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.trace.IPlaylistCreateRequest;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;

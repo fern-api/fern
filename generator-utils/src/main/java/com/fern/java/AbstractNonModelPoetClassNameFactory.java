@@ -45,7 +45,8 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
-        String packageName = getRootPackage();
+        String packageName =
+                getPackageForFernfilepath(declaredTypeName.getFernFilepath().getAllParts());
         return ClassName.get(
                 packageName, "I" + declaredTypeName.getName().getPascalCase().getSafeName());
     }
