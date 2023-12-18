@@ -8,6 +8,6 @@ export async function writeFernJsonSchema(filepath: AbsoluteFilePath): Promise<v
     const jsonSchema = zodToJsonSchema(DefinitionFileSchema, "Fern Definition");
     const jsonSchemaStr = JSON.stringify(jsonSchema);
     const config = (await prettier.resolveConfig(filepath)) ?? undefined;
-    const jsonSchemaFormatted = await prettier.format(jsonSchemaStr, { ...config, filepath });
+    const jsonSchemaFormatted = prettier.format(jsonSchemaStr, { ...config, filepath });
     await writeFile(filepath, jsonSchemaFormatted);
 }

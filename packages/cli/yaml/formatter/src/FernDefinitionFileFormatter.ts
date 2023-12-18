@@ -66,7 +66,7 @@ export class FernDefinitionFileFormatter {
     }
 
     private async prettierFormat(content: string): Promise<string> {
-        return await prettier.format(content, {
+        return prettier.format(content, {
             parser: "yaml"
         });
     }
