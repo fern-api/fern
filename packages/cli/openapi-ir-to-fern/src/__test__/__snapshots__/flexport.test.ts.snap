@@ -12498,7 +12498,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "GenericObjectRefId": {
-        "enum": [],
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "string",
+          "integer",
+        ],
       },
       "HsCode": {
         "docs": undefined,
@@ -12808,8 +12813,31 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "type": "map<string, unknown>",
       },
       "MetadataCreate": {
+        "discriminated": false,
         "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-        "enum": [],
+        "union": [
+          {
+            "docs": "Object format.",
+            "type": "MetadataCreateExampleKey",
+          },
+          {
+            "docs": "Array format.",
+            "type": "list<MetadataCreateItem>",
+          },
+        ],
+      },
+      "MetadataCreateExampleKey": {
+        "docs": "Object format.",
+        "properties": {
+          "example_key": "optional<list<string>>",
+        },
+      },
+      "MetadataCreateItem": {
+        "docs": undefined,
+        "properties": {
+          "name": "optional<string>",
+          "value": "optional<list<string>>",
+        },
       },
       "Money": {
         "docs": undefined,

@@ -1035,8 +1035,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       },
       "LemurBaseParametersContext": {
+        "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
-        "enum": [],
+        "union": [
+          "string",
+          "map<string, unknown>",
+        ],
       },
       "LemurBaseResponse": {
         "docs": undefined,
@@ -1104,8 +1108,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       },
       "LemurQuestionContext": {
+        "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
-        "enum": [],
+        "union": [
+          "string",
+          "map<string, unknown>",
+        ],
       },
       "LemurSummaryResponse": {
         "docs": undefined,

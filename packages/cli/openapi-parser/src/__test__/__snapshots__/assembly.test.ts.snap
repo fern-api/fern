@@ -2944,12 +2944,44 @@ Valid values are in the range [0, 1] inclusive.
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "Context to provide the model. This can be a string or a free-form JSON value.",
-              "generatedName": "LemurBaseParametersContext",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "type": "enum",
-              "values": [],
+              "oneOf": {
+                "description": "Context to provide the model. This can be a string or a free-form JSON value.",
+                "generatedName": "LemurBaseParametersContext",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schemas": [
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "key": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                ],
+                "type": "undisciminated",
+              },
+              "type": "oneOf",
             },
           },
         },
@@ -3093,12 +3125,44 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
-              "generatedName": "LemurQuestionContext",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "type": "enum",
-              "values": [],
+              "oneOf": {
+                "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+                "generatedName": "LemurQuestionContext",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schemas": [
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "key": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                ],
+                "type": "undisciminated",
+              },
+              "type": "oneOf",
             },
           },
         },

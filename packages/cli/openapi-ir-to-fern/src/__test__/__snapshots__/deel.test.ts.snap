@@ -8140,8 +8140,12 @@ exports[`open api parser deel simple 1`] = `
       },
       "TimesheetIdItems": "list<TimesheetIdItemsItem>",
       "TimesheetIdItemsItem": {
+        "discriminated": false,
         "docs": "ID of an existing timesheet record",
-        "enum": [],
+        "union": [
+          "double",
+          "string",
+        ],
       },
       "TimesheetList": "list<BasicTimesheet>",
       "TimesheetListContainer": {
@@ -8261,8 +8265,12 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetTypeEnum": "literal<"work">",
       "TimesheetTypeEnumList": "list<TimesheetTypeEnum>",
       "UniqueObjectIdentifier": {
+        "discriminated": false,
         "docs": "Unique identifier of this resource.",
-        "enum": [],
+        "union": [
+          "string",
+          "double",
+        ],
       },
       "UrlType": "optional<string>",
       "UrlTypeRequired": "string",

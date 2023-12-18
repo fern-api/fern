@@ -31274,12 +31274,34 @@ exports[`open api parser deel parse open api 1`] = `
       "groupName": undefined,
       "type": "array",
       "value": {
-        "description": "ID of an existing timesheet record",
-        "generatedName": "TimesheetIdItemsItem",
-        "groupName": undefined,
-        "nameOverride": undefined,
-        "type": "enum",
-        "values": [],
+        "oneOf": {
+          "description": "ID of an existing timesheet record",
+          "generatedName": "TimesheetIdItemsItem",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "schemas": [
+            {
+              "description": undefined,
+              "groupName": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+            {
+              "description": undefined,
+              "groupName": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          ],
+          "type": "undisciminated",
+        },
+        "type": "oneOf",
       },
     },
     "TimesheetList": {
@@ -32044,12 +32066,34 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "UniqueObjectIdentifier": {
-      "description": "Unique identifier of this resource.",
-      "generatedName": "UniqueObjectIdentifier",
-      "groupName": undefined,
-      "nameOverride": undefined,
-      "type": "enum",
-      "values": [],
+      "oneOf": {
+        "description": "Unique identifier of this resource.",
+        "generatedName": "UniqueObjectIdentifier",
+        "groupName": undefined,
+        "nameOverride": undefined,
+        "schemas": [
+          {
+            "description": undefined,
+            "groupName": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          {
+            "description": undefined,
+            "groupName": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        ],
+        "type": "undisciminated",
+      },
+      "type": "oneOf",
     },
     "UrlType": {
       "description": undefined,

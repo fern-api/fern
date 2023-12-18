@@ -45681,15 +45681,37 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "generatedName": "createPaymentIntentPseAmount",
           "key": "amount",
           "schema": {
-            "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
+            "oneOf": {
+              "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
 
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-            "generatedName": "CreatePaymentIntentPseAmount",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [],
+              "generatedName": "CreatePaymentIntentPseAmount",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schemas": [
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              ],
+              "type": "undisciminated",
+            },
+            "type": "oneOf",
           },
         },
         {
@@ -45814,15 +45836,37 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "generatedName": "createPaymentLinkOfpiAmount",
           "key": "amount",
           "schema": {
-            "description": "Amount to be paid by your customer. For OFPI, you can send through numbers with up to two decimal points, separated by a \`.\` period. For example: \`1234.12\`
+            "oneOf": {
+              "description": "Amount to be paid by your customer. For OFPI, you can send through numbers with up to two decimal points, separated by a \`.\` period. For example: \`1234.12\`
 
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`1234.12\`.
 ",
-            "generatedName": "CreatePaymentLinkOfpiAmount",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [],
+              "generatedName": "CreatePaymentLinkOfpiAmount",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schemas": [
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "float",
+                  },
+                  "type": "primitive",
+                },
+              ],
+              "type": "undisciminated",
+            },
+            "type": "oneOf",
           },
         },
         {
@@ -45961,15 +46005,37 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "generatedName": "createPaymentLinkPseAmount",
           "key": "amount",
           "schema": {
-            "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
+            "oneOf": {
+              "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
 
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-            "generatedName": "CreatePaymentLinkPseAmount",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [],
+              "generatedName": "CreatePaymentLinkPseAmount",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schemas": [
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              ],
+              "type": "undisciminated",
+            },
+            "type": "oneOf",
           },
         },
         {

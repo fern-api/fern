@@ -60443,12 +60443,34 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": undefined,
-              "generatedName": "GenericObjectRefId",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "type": "enum",
-              "values": [],
+              "oneOf": {
+                "description": undefined,
+                "generatedName": "GenericObjectRefId",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schemas": [
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "undisciminated",
+              },
+              "type": "oneOf",
             },
           },
         },
@@ -61954,12 +61976,113 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "MetadataCreate": {
-      "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-      "generatedName": "MetadataCreate",
-      "groupName": undefined,
-      "nameOverride": undefined,
-      "type": "enum",
-      "values": [],
+      "oneOf": {
+        "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
+        "generatedName": "MetadataCreate",
+        "groupName": undefined,
+        "nameOverride": undefined,
+        "schemas": [
+          {
+            "allOf": [],
+            "allOfPropertyConflicts": [],
+            "description": "Object format.",
+            "generatedName": "MetadataCreateExampleKey",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "properties": [
+              {
+                "conflict": {},
+                "generatedName": "metadataCreateExampleKeyExampleKey",
+                "key": "example_key",
+                "schema": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "type": "optional",
+                  "value": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+          {
+            "description": "Array format.",
+            "groupName": undefined,
+            "type": "array",
+            "value": {
+              "allOf": [],
+              "allOfPropertyConflicts": [],
+              "description": undefined,
+              "generatedName": "MetadataCreateItem",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "metadataCreateItemName",
+                  "key": "name",
+                  "schema": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "type": "optional",
+                    "value": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "metadataCreateItemValue",
+                  "key": "value",
+                  "schema": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "type": "optional",
+                    "value": {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "type": "array",
+                      "value": {
+                        "description": undefined,
+                        "groupName": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                },
+              ],
+              "type": "object",
+            },
+          },
+        ],
+        "type": "undisciminated",
+      },
+      "type": "oneOf",
     },
     "Money": {
       "allOf": [
