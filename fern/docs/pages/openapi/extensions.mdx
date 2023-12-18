@@ -1,9 +1,5 @@
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
 
-<Callout intent="info">
-Tip: If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new).
-</Callout>
-
 ## SDK method names
 
 By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
@@ -18,7 +14,7 @@ The OpenAPI below will `client.users.create()`:
 
 ```yaml openapi.yaml
 paths:
-  /users
+  /users:
     post:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
@@ -168,6 +164,55 @@ export interface Person  { # <---- Overridden name
     age?: integer;
 }
 ```
+
+## Parameter Names 
+
+The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI 
+parameters. 
+
+For example, if you have a header `X-API-Version`, you may want the parameter 
+in code to be called `version`. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+paths:
+  "/user":
+    get:
+      operationId: get_user
+      parameters:
+        - in: header
+          name: X-API-Version
+          x-fern-parameter-name: version # <---- specify the parameter name
+          schema:
+            type: string
+          required: true
+      ...
+
+## Server names
+
+The `x-fern-server-name` extension is used to name your servers. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+servers:
+- url: https://api.example.com
+  x-fern-server-name: Production
+- url: https://sandbox.example.com
+  x-fern-server-name: Sandbox
+```
+</CodeBlock>
+
+In a generated TypeScript SDK, you'd see:
+
+<CodeBlock title="environment.ts">
+```yaml
+export const ExampleEnvironment = {
+    Production: "https://api.example.com",
+} as const;
+
+export type ExampleEnvironment = typeof ExampleEnvironment.Production;
+```
+</CodeBlock>
 
 ## Audiences
 
@@ -394,3 +439,7 @@ shown in the third tab.
     ```
     </CodeBlock>
 </CodeBlocks>
+
+## Request an OpenAPI extension 
+
+If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new) to start a discussion about it.

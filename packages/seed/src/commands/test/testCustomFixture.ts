@@ -45,7 +45,9 @@ export async function testCustomFixture({
         customConfig: {},
         taskContext,
         outputDir: absolutePathToOutput,
-        outputMode: "github"
+        outputMode: "github",
+        outputFolder: "custom",
+        id: "custom"
     });
 
     if (result.type === "failure") {

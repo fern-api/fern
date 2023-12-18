@@ -104,6 +104,19 @@ export const FernOpenAPIExtension = {
     SDK_VARIABLE: "x-fern-sdk-variable",
 
     /**
+     * Used to customize the name of the parameter used for a header.
+     * Example usage:
+     * paths:
+     *   /path/to/my/endpoint/{id}:
+     *     parameters:
+     *       - in: header
+     *         name: X-Fern-Version
+     *         type: string
+     *         x-fern-parameter-name: version
+     */
+    PARAMETER_NAME: "x-fern-parameter-name",
+
+    /**
      * securitySchemes:
      *   Basic:
      *     scheme: http

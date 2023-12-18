@@ -19,10 +19,7 @@ exports[`open api parser hume simple 1`] = `
             "method": "GET",
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "",
@@ -36,10 +33,7 @@ exports[`open api parser hume simple 1`] = `
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
+              "id": "string",
             },
             "response": {
               "docs": "",
@@ -75,10 +69,7 @@ exports[`open api parser hume simple 1`] = `
           "method": "GET",
           "path": "/v0/batch/jobs/{id}/predictions",
           "path-parameters": {
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
           },
           "response": {
             "docs": "",
@@ -111,17 +102,14 @@ exports[`open api parser hume simple 1`] = `
             "name": "ListJobsRequest",
             "query-parameters": {
               "direction": {
-                "allow-multiple": undefined,
                 "docs": "The sort direction.",
                 "type": "optional<Direction>",
               },
               "limit": {
-                "allow-multiple": undefined,
                 "docs": "The maximum number of jobs to include in the response.",
                 "type": "optional<integer>",
               },
               "sort_by": {
-                "allow-multiple": undefined,
                 "docs": "The job timestamp to sort by.",
                 "type": "optional<SortBy>",
               },
@@ -131,12 +119,10 @@ exports[`open api parser hume simple 1`] = `
                 "type": "optional<Status>",
               },
               "timestamp_ms": {
-                "allow-multiple": undefined,
                 "docs": "Defaults to the current date and time. See \`when\`.",
                 "type": "optional<integer>",
               },
               "when": {
-                "allow-multiple": undefined,
                 "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
                 "type": "optional<When>",
               },

@@ -106,6 +106,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -209,6 +210,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -408,6 +410,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -432,6 +435,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
           "name": "account_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -462,6 +466,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return BankInfo's with this bank name.",
           "name": "bank_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -481,6 +486,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -498,6 +504,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -515,6 +522,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -534,6 +542,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return bank accounts for this employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -553,6 +562,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -571,6 +581,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -588,6 +599,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -605,6 +617,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -622,6 +635,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -639,6 +653,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Overrides the default ordering for this endpoint.",
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -669,6 +684,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -686,6 +702,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -704,6 +721,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -723,6 +741,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -893,6 +912,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -930,6 +950,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -948,6 +969,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -965,6 +987,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -983,6 +1006,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1153,6 +1177,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1174,6 +1199,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1191,6 +1217,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1208,6 +1235,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1227,6 +1255,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will return the benefits associated with the employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1246,6 +1275,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1264,6 +1294,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1281,6 +1312,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1298,6 +1330,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1315,6 +1348,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1332,6 +1366,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1349,6 +1384,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1507,6 +1543,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1544,6 +1581,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1562,6 +1600,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1692,6 +1731,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1713,6 +1753,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1730,6 +1771,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1747,6 +1789,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1766,6 +1809,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1783,6 +1827,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1800,6 +1845,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1817,6 +1863,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1834,6 +1881,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1851,6 +1899,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1970,6 +2019,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2007,6 +2057,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2074,6 +2125,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2395,6 +2447,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2416,6 +2469,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2433,6 +2487,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2450,6 +2505,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2469,6 +2525,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs for this employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2488,6 +2545,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs ended after this datetime.",
           "name": "ended_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2505,6 +2563,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs ended before this datetime.",
           "name": "ended_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2522,6 +2581,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2558,6 +2618,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2575,6 +2636,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2592,6 +2654,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2609,6 +2672,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2626,6 +2690,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2643,6 +2708,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs for this employee.",
           "name": "payroll_run_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2662,6 +2728,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2681,6 +2748,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs started after this datetime.",
           "name": "started_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2698,6 +2766,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employee payroll runs started before this datetime.",
           "name": "started_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3014,6 +3083,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3051,6 +3121,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3087,6 +3158,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3379,6 +3451,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3400,6 +3473,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees for this company.",
           "name": "company_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3419,6 +3493,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3436,6 +3511,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3453,6 +3529,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3472,6 +3549,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees with this display name.",
           "name": "display_full_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3495,6 +3573,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
           "name": "employment_status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3531,6 +3610,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5079,6 +5159,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees with this first name.",
           "name": "first_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5098,6 +5179,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees matching the group ids; multiple groups can be separated by commas.",
           "name": "groups",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5117,6 +5199,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5134,6 +5217,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5151,6 +5235,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include sensitive fields (such as social security numbers) in the response.",
           "name": "include_sensitive_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5168,6 +5253,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees with this last name.",
           "name": "last_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5187,6 +5273,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees for this manager.",
           "name": "manager_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5206,6 +5293,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5223,6 +5311,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5240,6 +5329,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5257,6 +5347,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees for this pay group",
           "name": "pay_group_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5276,6 +5367,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return Employees with this personal email",
           "name": "personal_email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5295,6 +5387,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5403,6 +5496,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5422,6 +5516,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5530,6 +5625,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees that started after this datetime.",
           "name": "started_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5547,6 +5643,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees that started before this datetime.",
           "name": "started_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5564,6 +5661,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees for this team.",
           "name": "team_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5583,6 +5681,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees that were terminated after this datetime.",
           "name": "terminated_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5600,6 +5699,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees that were terminated before this datetime.",
           "name": "terminated_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5617,6 +5717,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return Employees with this work email",
           "name": "work_email",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5636,6 +5737,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employees for this location.",
           "name": "work_location_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6143,6 +6245,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6164,6 +6267,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include debug fields (such as log file links) in the response.",
           "name": "is_debug_mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6181,6 +6285,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether or not third-party updates should be run asynchronously.",
           "name": "run_async",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6465,6 +6570,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6502,6 +6608,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8050,6 +8157,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8067,6 +8175,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include sensitive fields (such as social security numbers) in the response.",
           "name": "include_sensitive_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8084,6 +8193,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8192,6 +8302,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8331,6 +8442,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8399,6 +8511,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8575,6 +8688,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8596,6 +8710,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8613,6 +8728,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8630,6 +8746,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8649,6 +8766,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return employments for this employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8668,6 +8786,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8704,6 +8823,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8721,6 +8841,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8738,6 +8859,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8755,6 +8877,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8772,6 +8895,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Overrides the default ordering for this endpoint.",
           "name": "order_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8802,6 +8926,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8819,6 +8944,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8927,6 +9053,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8946,6 +9073,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9190,6 +9318,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9227,6 +9356,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9263,6 +9393,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9280,6 +9411,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9388,6 +9520,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9715,6 +9848,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9736,6 +9870,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9753,6 +9888,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9770,6 +9906,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9789,6 +9926,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9806,6 +9944,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9823,6 +9962,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9840,6 +9980,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9857,6 +9998,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9874,6 +10016,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9892,6 +10035,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9911,6 +10055,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9929,6 +10074,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return groups of these types. Multiple values can be separated by commas.",
           "name": "types",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10069,6 +10215,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10106,6 +10253,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10123,6 +10271,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10141,6 +10290,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10275,6 +10425,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": undefined,
           "name": "account_token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10294,6 +10445,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10313,6 +10465,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If included, will only include issues whose most recent action occurred before this time",
           "name": "end_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10332,6 +10485,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": undefined,
           "name": "end_user_organization_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10351,6 +10505,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return issues whose first incident time was after this datetime.",
           "name": "first_incident_time_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10368,6 +10523,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return issues whose first incident time was before this datetime.",
           "name": "first_incident_time_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10385,6 +10541,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If True, will include muted issues",
           "name": "include_muted",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10404,6 +10561,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": undefined,
           "name": "integration_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10423,6 +10581,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return issues whose last incident time was after this datetime.",
           "name": "last_incident_time_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10440,6 +10599,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return issues whose last incident time was before this datetime.",
           "name": "last_incident_time_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10457,6 +10617,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10474,6 +10635,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If included, will only include issues whose most recent action occurred after this time",
           "name": "start_date",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10496,6 +10658,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10823,6 +10986,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`mktg\` - mktg
 * \`filestorage\` - filestorage",
           "name": "category",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10883,6 +11047,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10902,6 +11067,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return linked accounts associated with the given email address.",
           "name": "end_user_email_address",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10921,6 +11087,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return linked accounts associated with the given organization name.",
           "name": "end_user_organization_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10940,6 +11107,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return linked accounts associated with the given origin ID.",
           "name": "end_user_origin_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10959,6 +11127,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Comma-separated list of EndUser origin IDs, making it possible to specify multiple EndUsers at once.",
           "name": "end_user_origin_ids",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10978,6 +11147,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": undefined,
           "name": "id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10997,6 +11167,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Comma-separated list of LinkedAccount IDs, making it possible to specify multiple LinkedAccounts at once.",
           "name": "ids",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11016,6 +11187,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If \`true\`, will include complete production duplicates of the account specified by the \`id\` query parameter in the response. \`id\` must be for a complete production linked account.",
           "name": "include_duplicates",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11033,6 +11205,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return linked accounts associated with the given integration name.",
           "name": "integration_name",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11052,6 +11225,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If included, will only include test linked accounts. If not included, will only include non-test linked accounts.",
           "name": "is_test_account",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11071,6 +11245,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11088,6 +11263,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Filter by status. Options: \`COMPLETE\`, \`INCOMPLETE\`, \`RELINK_NEEDED\`",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11276,6 +11452,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11297,6 +11474,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11314,6 +11492,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11331,6 +11510,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11350,6 +11530,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11367,6 +11548,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11384,6 +11566,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11401,6 +11584,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11418,6 +11602,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11435,6 +11620,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11453,6 +11639,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11472,6 +11659,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11646,6 +11834,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11683,6 +11872,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11700,6 +11890,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11718,6 +11909,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11767,6 +11959,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11905,6 +12098,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11926,6 +12120,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11943,6 +12138,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11960,6 +12156,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11979,6 +12176,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11996,6 +12194,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12013,6 +12212,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12030,6 +12230,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12047,6 +12248,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12064,6 +12266,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12176,6 +12379,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12213,6 +12417,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12372,6 +12577,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12393,6 +12599,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12410,6 +12617,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12427,6 +12635,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12446,6 +12655,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return payroll runs ended after this datetime.",
           "name": "ended_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12463,6 +12673,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return payroll runs ended before this datetime.",
           "name": "ended_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12480,6 +12691,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12497,6 +12709,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12514,6 +12727,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12531,6 +12745,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12548,6 +12763,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12565,6 +12781,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12601,6 +12818,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12626,6 +12844,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`TERMINATION\` - TERMINATION
 * \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
           "name": "run_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12674,6 +12893,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12710,6 +12930,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return payroll runs started after this datetime.",
           "name": "started_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12727,6 +12948,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return payroll runs started before this datetime.",
           "name": "started_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12866,6 +13088,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12903,6 +13126,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12920,6 +13144,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12956,6 +13181,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13130,6 +13356,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13226,6 +13453,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13331,6 +13559,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13352,6 +13581,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": undefined,
           "name": "common_model",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13371,6 +13601,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13390,6 +13621,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13528,6 +13760,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13549,6 +13782,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13568,6 +13802,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13687,6 +13922,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13836,6 +14072,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13857,6 +14094,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13874,6 +14112,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13891,6 +14130,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13910,6 +14150,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13928,6 +14169,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13945,6 +14187,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13962,6 +14205,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13979,6 +14223,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13996,6 +14241,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14013,6 +14259,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return teams with this parent team.",
           "name": "parent_team_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14032,6 +14279,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14162,6 +14410,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14199,6 +14448,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14217,6 +14467,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14411,6 +14662,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14432,6 +14684,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return time off for this approver.",
           "name": "approver_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14451,6 +14704,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14468,6 +14722,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14485,6 +14740,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14504,6 +14760,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return time off for this employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14523,6 +14780,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14559,6 +14817,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14576,6 +14835,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14593,6 +14853,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14610,6 +14871,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14627,6 +14889,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14644,6 +14907,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14704,6 +14968,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14730,6 +14995,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
           "name": "request_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14784,6 +15050,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14850,6 +15117,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15183,6 +15451,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15204,6 +15473,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include debug fields (such as log file links) in the response.",
           "name": "is_debug_mode",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15221,6 +15491,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether or not third-party updates should be run asynchronously.",
           "name": "run_async",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15394,6 +15665,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15415,6 +15687,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created after this datetime.",
           "name": "created_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15432,6 +15705,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return objects created before this datetime.",
           "name": "created_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15449,6 +15723,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The pagination cursor value.",
           "name": "cursor",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15468,6 +15743,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, will only return time off balances for this employee.",
           "name": "employee_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15487,6 +15763,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15505,6 +15782,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include data that was marked as deleted by third party webhooks.",
           "name": "include_deleted_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15522,6 +15800,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15539,6 +15818,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge after this date time will be returned.",
           "name": "modified_after",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15556,6 +15836,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "If provided, only objects synced by Merge before this date time will be returned.",
           "name": "modified_before",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15573,6 +15854,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Number of results to return per page.",
           "name": "page_size",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15597,6 +15879,7 @@ exports[`open api parser merge parse open api 1`] = `
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
           "name": "policy_type",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15651,6 +15934,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15669,6 +15953,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "The API provider's ID for the given object.",
           "name": "remote_id",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15688,6 +15973,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15830,6 +16116,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15867,6 +16154,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15885,6 +16173,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15902,6 +16191,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15920,6 +16210,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16088,6 +16379,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16125,6 +16417,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
           "name": "expand",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16161,6 +16454,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Whether to include the original data Merge fetched from the third-party to produce these models.",
           "name": "include_remote_data",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16178,6 +16472,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Deprecated. Use show_enum_origins.",
           "name": "remote_fields",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16238,6 +16533,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Which fields should be returned in non-normalized form.",
           "name": "show_enum_origins",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16329,6 +16625,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16402,6 +16699,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16458,6 +16756,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "description": "Token identifying the end user.",
           "name": "X-Account-Token",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

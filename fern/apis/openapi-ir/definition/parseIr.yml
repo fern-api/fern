@@ -75,12 +75,20 @@ types:
     properties:
       name: string
       schema: SchemaWithExample
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   HeaderWithExample:
     extends: commons.WithDescription
     properties:
       name: string
       schema: SchemaWithExample
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   SchemaWithExample:
     union:

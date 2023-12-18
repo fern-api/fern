@@ -150,12 +150,20 @@ types:
     properties:
       name: string
       schema: Schema
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   Header:
     extends: commons.WithDescription
     properties:
       name: string
       schema: Schema
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   Request:
     union:

@@ -49,10 +49,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
           },
           "GetAppInfo": {
@@ -64,10 +61,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/apps/v1/info/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -105,10 +99,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/apps/v1/update/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": "root.AppConfig",
@@ -138,10 +129,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/auth/v1/{appId}/login/anonymous",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -158,10 +146,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/auth/v1/{appId}/login/google",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -187,10 +172,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/auth/v1/{appId}/login/nickname",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -249,10 +231,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/builds/v1/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "",
@@ -282,14 +261,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
           },
           "GetBuildInfo": {
@@ -301,14 +274,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/builds/v1/{appId}/info/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "response": {
               "docs": "Ok",
@@ -337,10 +304,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/builds/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -353,14 +317,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "request": {
               "body": {
@@ -399,14 +357,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/deployments/v1/{appId}/create/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "request": {
               "body": "root.DeploymentConfig",
@@ -425,14 +377,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/deployments/v1/{appId}/info/{deploymentId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "deploymentId": {
-                "docs": undefined,
-                "type": "root.DeploymentId",
-              },
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
             },
             "response": {
               "docs": "Ok",
@@ -461,10 +407,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/deployments/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -527,31 +470,19 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/private",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePrivateLobbyDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -572,31 +503,19 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePublicLobbyDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -631,31 +550,19 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/lobby/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "ListActivePublicLobbiesDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -687,10 +594,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v2/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -702,18 +606,13 @@ exports[`open api parser hathora simple 1`] = `
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreateLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -734,10 +633,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/local",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -748,18 +644,13 @@ exports[`open api parser hathora simple 1`] = `
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreateLocalLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -780,10 +671,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/private",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -794,18 +682,13 @@ exports[`open api parser hathora simple 1`] = `
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePrivateLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -826,10 +709,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -840,18 +720,13 @@ exports[`open api parser hathora simple 1`] = `
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePublicLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -868,14 +743,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/lobby/v2/{appId}/info/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -903,19 +772,12 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "ListActivePublicLobbiesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -933,14 +795,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/lobby/v2/{appId}/setState/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "request": {
               "body": {
@@ -983,29 +839,14 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetLogsForAppRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "region": "optional<root.Region>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response-stream": {
@@ -1019,28 +860,14 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "deploymentId": {
-                "docs": undefined,
-                "type": "root.DeploymentId",
-              },
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
             },
             "request": {
               "name": "GetLogsForDeploymentRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response": {
@@ -1054,28 +881,14 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "request": {
               "name": "GetLogsForProcessRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response-stream": {
@@ -1120,38 +933,19 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "request": {
               "name": "GetMetricsRequest",
               "query-parameters": {
-                "end": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
+                "end": "optional<integer>",
                 "metrics": {
                   "allow-multiple": true,
-                  "docs": undefined,
                   "type": "optional<root.MetricName>",
                 },
-                "start": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "step": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
+                "start": "optional<integer>",
+                "step": "optional<integer>",
               },
             },
             "response": {
@@ -1179,14 +973,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/processes/v1/{appId}/info/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -1217,19 +1005,12 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetRunningProcessesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1261,19 +1042,12 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/processes/v1/{appId}/list/stopped",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetStoppedProcessesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1302,10 +1076,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/rooms/v1/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -1344,14 +1115,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
           },
           "GetActiveRoomsForProcess": {
@@ -1377,14 +1142,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/active",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -1402,14 +1161,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -1439,14 +1192,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -1462,14 +1209,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/rooms/v1/{appId}/info/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -1498,14 +1239,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/rooms/v1/{appId}/suspend/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
           },
         },

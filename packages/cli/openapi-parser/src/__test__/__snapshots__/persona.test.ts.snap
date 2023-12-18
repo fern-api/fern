@@ -180,6 +180,7 @@ exports[`open api parser persona parse open api 1`] = `
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -199,6 +200,7 @@ exports[`open api parser persona parse open api 1`] = `
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -1280,6 +1282,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -2992,6 +2995,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -3586,6 +3590,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4128,6 +4133,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4633,6 +4639,7 @@ Note that this will only delete the report -- it does not delete associated acco
         {
           "description": undefined,
           "name": "Persona-Version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -4919,6 +4926,7 @@ Note that this will only delete the report -- it does not delete associated acco
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5135,6 +5143,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5154,6 +5163,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5932,6 +5942,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -5951,6 +5962,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6642,6 +6654,7 @@ Note that this action will trigger any associated workflows and webhooks.",
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -6933,6 +6946,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
         {
           "description": undefined,
           "name": "Persona-Version",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7338,6 +7352,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -7357,6 +7372,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8221,6 +8237,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8247,6 +8264,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Inquiry ID for pagination cursor",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8266,6 +8284,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Inquiry ID for pagination cursor",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8285,6 +8304,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Limit on the number of inquiries returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8304,6 +8324,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Filter inquiries by account ID",
           "name": "filter[account-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -8323,6 +8344,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
         {
           "description": "Filter inquiries by reference ID",
           "name": "filter[reference-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9156,6 +9178,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -9175,6 +9198,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10237,6 +10261,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10263,6 +10288,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Account ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10282,6 +10308,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Account ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10301,6 +10328,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Limit on the number of accounts returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10320,6 +10348,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
         {
           "description": "Filter accounts by reference ID",
           "name": "filter[reference-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10629,6 +10658,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -10648,6 +10678,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11408,6 +11439,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11434,6 +11466,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "API Log ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11453,6 +11486,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "API Log ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11472,6 +11506,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Limit on the number of API Logs returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -11644,6 +11679,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12258,6 +12294,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12802,6 +12839,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -12821,6 +12859,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13415,6 +13454,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -13434,6 +13474,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14026,6 +14067,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14045,6 +14087,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14514,6 +14557,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -14533,6 +14577,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15269,6 +15314,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -15288,6 +15334,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16242,6 +16289,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16261,6 +16309,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16700,6 +16749,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16726,6 +16776,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Event ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16745,6 +16796,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Event ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16764,6 +16816,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Limit on the number of Events returned.",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16783,6 +16836,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Comma separated list of event names",
           "name": "filter[name]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16802,6 +16856,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Comma separated list of object ids",
           "name": "filter[object_id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16821,6 +16876,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Comma separated list of event ids",
           "name": "filter[id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -16895,6 +16951,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17085,6 +17142,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17104,6 +17162,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17770,6 +17829,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -17789,6 +17849,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18285,6 +18346,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18374,6 +18436,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -18393,6 +18456,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22005,6 +22069,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22024,6 +22089,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22865,6 +22931,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -22884,6 +22951,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23703,6 +23771,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -23722,6 +23791,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24367,6 +24437,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -24386,6 +24457,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25140,6 +25212,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -25159,6 +25232,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26046,6 +26120,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26072,6 +26147,7 @@ The columns we allow are
         {
           "description": "List ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26091,6 +26167,7 @@ The columns we allow are
         {
           "description": "List ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26110,6 +26187,7 @@ The columns we allow are
         {
           "description": "Limit on the number of lists returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26129,6 +26207,7 @@ The columns we allow are
         {
           "description": "Filter lists by status",
           "name": "filter[status]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26203,6 +26282,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26299,6 +26379,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26318,6 +26399,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26406,6 +26488,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26425,6 +26508,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26574,6 +26658,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26593,6 +26678,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26742,6 +26828,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26761,6 +26848,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26910,6 +26998,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -26929,6 +27018,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27078,6 +27168,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27097,6 +27188,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27246,6 +27338,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27265,6 +27358,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27414,6 +27508,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27433,6 +27528,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27600,6 +27696,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27619,6 +27716,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27828,6 +27926,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -27847,6 +27946,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28262,6 +28362,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28281,6 +28382,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28504,6 +28606,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -28523,6 +28626,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29055,6 +29159,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29074,6 +29179,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29557,6 +29663,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29576,6 +29683,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29799,6 +29907,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -29818,6 +29927,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30343,6 +30453,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30362,6 +30473,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30817,6 +30929,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -30836,6 +30949,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31067,6 +31181,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31086,6 +31201,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31435,6 +31551,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31454,6 +31571,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31611,6 +31729,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -31630,6 +31749,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32083,6 +32203,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32102,6 +32223,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32562,6 +32684,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32581,6 +32704,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32950,6 +33074,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -32969,6 +33094,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33126,6 +33252,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33145,6 +33272,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33514,6 +33642,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33533,6 +33662,7 @@ The columns we allow are
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33602,6 +33732,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33628,6 +33759,7 @@ The columns we allow are
         {
           "description": "Report ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33647,6 +33779,7 @@ The columns we allow are
         {
           "description": "Report ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33666,6 +33799,7 @@ The columns we allow are
         {
           "description": "Limit on the number of reports returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33685,6 +33819,7 @@ The columns we allow are
         {
           "description": "Filter reports by reference ID",
           "name": "filter[reference-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33704,6 +33839,7 @@ The columns we allow are
         {
           "description": "Filter reports by account ID",
           "name": "filter[account-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -33759,6 +33895,7 @@ The columns we allow are
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34376,6 +34513,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34402,6 +34540,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Case ID for pagination cursor",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34421,6 +34560,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Case ID for pagination cursor",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34440,6 +34580,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Limit on the number of cases returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34459,6 +34600,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by status",
           "name": "filter[status]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34478,6 +34620,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by resolution",
           "name": "filter[resolution]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34497,6 +34640,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by case template ID",
           "name": "filter[case-template-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34516,6 +34660,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by account ID",
           "name": "filter[account-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34535,6 +34680,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by inquiry ID",
           "name": "filter[inquiry-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -34554,6 +34700,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Filter cases by report ID",
           "name": "filter[report-id]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -37387,6 +37534,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -39476,6 +39624,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -39495,6 +39644,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40274,6 +40424,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40293,6 +40444,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40757,6 +40909,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40776,6 +40929,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40915,6 +41069,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -40934,6 +41089,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41073,6 +41229,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41092,6 +41249,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41236,6 +41394,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41255,6 +41414,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41394,6 +41554,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41413,6 +41574,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41552,6 +41714,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -41571,6 +41734,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -45842,6 +46006,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -45861,6 +46026,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46058,6 +46224,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46077,6 +46244,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "idempotency-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46231,6 +46399,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "key-inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46250,6 +46419,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent.",
           "name": "idempotence-key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46870,6 +47040,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -46889,6 +47060,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47583,6 +47755,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -47602,6 +47775,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48296,6 +48470,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48315,6 +48490,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48906,6 +49082,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48932,6 +49109,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "User audit log ID for cursor pagination",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48951,6 +49129,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "User audit log ID for cursor pagination",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -48970,6 +49149,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Limit on the number of User audit logs returned",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -49084,6 +49264,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -50576,6 +50757,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -51638,6 +51820,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52289,6 +52472,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52308,6 +52492,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -52859,6 +53044,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53465,6 +53651,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -53484,6 +53671,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -54630,6 +54818,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -55749,6 +55938,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -55768,6 +55958,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -56328,6 +56519,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -56926,6 +57118,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -56945,6 +57138,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -57552,6 +57746,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -57571,6 +57766,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -58588,6 +58784,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -59181,6 +59378,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -60210,6 +60408,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -60818,6 +61017,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -60837,6 +61037,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62294,6 +62495,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62791,6 +62993,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62817,6 +63020,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "APK key ID for pagination cursor",
           "name": "page[after]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62836,6 +63040,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "APK key ID for pagination cursor",
           "name": "page[before]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62855,6 +63060,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Limit on the number of APK keys returned (between 1 and 100)",
           "name": "page[size]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -62874,6 +63080,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Filter APK keys by name",
           "name": "filter[name]",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -66253,6 +66460,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -66272,6 +66480,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -68331,6 +68540,7 @@ The inquiry can still be resumed after expiry.",
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -69322,6 +69532,7 @@ The inquiry can still be resumed after expiry.",
         {
           "description": "Determines casing for the API response",
           "name": "Key-Inflection",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,
@@ -69341,6 +69552,7 @@ The inquiry can still be resumed after expiry.",
         {
           "description": "Ensures the request is idempotent",
           "name": "Idempotency-Key",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
             "groupName": undefined,

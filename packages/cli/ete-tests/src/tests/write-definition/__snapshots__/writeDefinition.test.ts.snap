@@ -53,8 +53,8 @@ service:
         name: ListPetsRequest
         query-parameters:
           limit:
-            docs: How many items to return at one time (max 100)
             type: optional<integer>
+            docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -76,8 +76,8 @@ service:
       auth: false
       path-parameters:
         petId:
-          docs: The id of the pet to retrieve
           type: string
+          docs: The id of the pet to retrieve
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request

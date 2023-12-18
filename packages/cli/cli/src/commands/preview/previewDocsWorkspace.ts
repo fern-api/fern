@@ -21,7 +21,7 @@ export async function previewDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        await validateDocsWorkspaceAndLogIssues(docsWorkspace, context);
+        await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings: false });
 
         await runPreviewServer({
             docsWorkspace,

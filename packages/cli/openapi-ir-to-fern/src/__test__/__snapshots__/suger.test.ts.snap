@@ -1624,22 +1624,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordGroupsByEntitlementRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -1683,22 +1679,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordGroupsByOrganizationRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -1747,22 +1739,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordGroupsByProductRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -1839,27 +1827,22 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordReportsByEntitlementRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementTermId": {
-                  "allow-multiple": undefined,
                   "docs": "The Entitlement Term ID, if not given, return the UsageRecordReports under the Entitlement",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -1931,22 +1914,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordReportsByOrganizationRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -2023,22 +2002,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListUsageRecordReportsByProductRequest",
               "query-parameters": {
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -4098,22 +4073,18 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListOperationsRequest",
               "query-parameters": {
                 "crmOpportunityId": {
-                  "allow-multiple": undefined,
                   "docs": "filter by crmOpportunityId",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
-                  "allow-multiple": undefined,
                   "docs": "filter by entitlementId",
                   "type": "optional<string>",
                 },
                 "offerId": {
-                  "allow-multiple": undefined,
                   "docs": "filter by offerId",
                   "type": "optional<string>",
                 },
                 "partnerOpportunityId": {
-                  "allow-multiple": undefined,
                   "docs": "filter by partnerOpportunityId",
                   "type": "optional<string>",
                 },
@@ -4929,37 +4900,30 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListRevenueRecordDetailsRequest",
               "query-parameters": {
                 "buyerId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given buyer ID",
                   "type": "optional<string>",
                 },
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given entitlement ID",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "productId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given product ID",
                   "type": "optional<string>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
@@ -5008,37 +4972,30 @@ exports[`open api parser suger simple 1`] = `
               "name": "ListRevenueRecordsRequest",
               "query-parameters": {
                 "buyerId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given buyer ID",
                   "type": "optional<string>",
                 },
                 "endDate": {
-                  "allow-multiple": undefined,
                   "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given entitlement ID",
                   "type": "optional<string>",
                 },
                 "limit": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
-                  "allow-multiple": undefined,
                   "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "productId": {
-                  "allow-multiple": undefined,
                   "docs": "Filter revenue record details by the given product ID",
                   "type": "optional<string>",
                 },
                 "startDate": {
-                  "allow-multiple": undefined,
                   "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },

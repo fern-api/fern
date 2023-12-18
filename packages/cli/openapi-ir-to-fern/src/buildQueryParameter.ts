@@ -22,11 +22,33 @@ export function buildQueryParameter({
     if (typeReference == null) {
         return undefined;
     }
-    return {
-        docs: queryParameter.description ?? undefined,
-        type: getTypeFromTypeReference(typeReference.value),
-        "allow-multiple": typeReference.allowMultiple ? true : undefined
+
+    const queryParameterType = getTypeFromTypeReference(typeReference.value);
+    if (
+        queryParameter.description == null &&
+        !typeReference.allowMultiple &&
+        queryParameter.parameterNameOverride == null
+    ) {
+        return queryParameterType;
+    }
+
+    const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
+        type: queryParameterType
     };
+
+    if (typeReference.allowMultiple) {
+        queryParameterSchema["allow-multiple"] = true;
+    }
+
+    if (queryParameter.description != null) {
+        queryParameterSchema.docs = queryParameter.description;
+    }
+
+    if (queryParameter.parameterNameOverride != null) {
+        queryParameterSchema.name = queryParameter.parameterNameOverride;
+    }
+
+    return queryParameterSchema;
 }
 
 interface QueryParameterTypeReference {
