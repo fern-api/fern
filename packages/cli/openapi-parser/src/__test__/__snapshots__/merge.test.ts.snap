@@ -16861,20 +16861,13 @@ exports[`open api parser merge parse open api 1`] = `
     "CategoriesEnum",
     "ModelOperation",
     "AccountIntegration",
-    "AccountTypeEnum",
     "RemoteData",
     "EnabledActionsEnum",
-    "ConditionTypeEnum",
     "OperatorSchema",
     "MethodEnum",
     "MultipartFormFieldRequest",
     "RequestFormatEnum",
     "DebugModelLogSummary",
-    "EarningTypeEnum",
-    "GenderEnum",
-    "EthnicityEnum",
-    "MaritalStatusEnum",
-    "EmploymentStatusEnum",
     "EmployeeRequest",
     "Earning",
     "Deduction",
@@ -16882,34 +16875,16 @@ exports[`open api parser merge parse open api 1`] = `
     "WarningValidationProblem",
     "ErrorValidationProblem",
     "DebugModeLog",
-    "PayPeriodEnum",
-    "PayFrequencyEnum",
-    "PayCurrencyEnum",
-    "FlsaStatusEnum",
-    "EmploymentTypeEnum",
     "CommonModelScopesBodyRequest",
     "ValidationProblemSource",
-    "GroupTypeEnum",
-    "ReasonEnum",
-    "IssueStatusEnum",
     "LinkedAccountCondition",
     "LinkedAccountSelectiveSyncConfigurationRequest",
     "LinkedAccountConditionRequest",
-    "CountryEnum",
-    "LocationTypeEnum",
     "LinkedAccountStatus",
-    "EncodingEnum",
     "AccountDetailsAndActions",
     "ConditionSchema",
-    "RunStateEnum",
-    "RunTypeEnum",
-    "ResponseTypeEnum",
     "SyncStatusStatusEnum",
     "SelectiveSyncConfigurationsUsageEnum",
-    "TimeOffStatusEnum",
-    "UnitsEnum",
-    "RequestTypeEnum",
-    "PolicyTypeEnum",
     "TimeOffRequest",
   ],
   "schemas": {
@@ -17975,45 +17950,14 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The bank account type
-
-* \`SAVINGS\` - SAVINGS
-* \`CHECKING\` - CHECKING",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The bank account type
-
-* \`SAVINGS\` - SAVINGS
-* \`CHECKING\` - CHECKING",
-                  "generatedName": "BankInfoAccountType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "BankInfoAccountTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "AccountTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -18992,42 +18936,14 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "generatedName": "conditionSchemaConditionType",
           "key": "condition_type",
           "schema": {
-            "oneOf": {
-              "description": "The type of value(s) that can be set for this condition.
-
-* \`BOOLEAN\` - BOOLEAN
-* \`DATE\` - DATE
-* \`DATE_TIME\` - DATE_TIME
-* \`INTEGER\` - INTEGER
-* \`FLOAT\` - FLOAT
-* \`STRING\` - STRING
-* \`LIST_OF_STRINGS\` - LIST_OF_STRINGS",
-              "generatedName": "ConditionSchemaConditionType",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schemas": [
-                {
-                  "description": undefined,
-                  "generatedName": "ConditionSchemaConditionTypeZero",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schema": "ConditionTypeEnum",
-                  "type": "reference",
-                },
-                {
-                  "description": undefined,
-                  "groupName": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              ],
-              "type": "undisciminated",
+            "description": undefined,
+            "groupName": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
             },
-            "type": "oneOf",
+            "type": "primitive",
           },
         },
         {
@@ -21532,49 +21448,14 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The type of earning.
-
-* \`SALARY\` - SALARY
-* \`REIMBURSEMENT\` - REIMBURSEMENT
-* \`OVERTIME\` - OVERTIME
-* \`BONUS\` - BONUS",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The type of earning.
-
-* \`SALARY\` - SALARY
-* \`REIMBURSEMENT\` - REIMBURSEMENT
-* \`OVERTIME\` - OVERTIME
-* \`BONUS\` - BONUS",
-                  "generatedName": "EarningType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EarningTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EarningTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -22216,51 +22097,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's gender.
-
-* \`MALE\` - MALE
-* \`FEMALE\` - FEMALE
-* \`NON-BINARY\` - NON-BINARY
-* \`OTHER\` - OTHER
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's gender.
-
-* \`MALE\` - MALE
-* \`FEMALE\` - FEMALE
-* \`NON-BINARY\` - NON-BINARY
-* \`OTHER\` - OTHER
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
-                  "generatedName": "EmployeeGender",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeGenderZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "GenderEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -22273,57 +22117,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's ethnicity.
-
-* \`AMERICAN_INDIAN_OR_ALASKA_NATIVE\` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
-* \`ASIAN_OR_INDIAN_SUBCONTINENT\` - ASIAN_OR_INDIAN_SUBCONTINENT
-* \`BLACK_OR_AFRICAN_AMERICAN\` - BLACK_OR_AFRICAN_AMERICAN
-* \`HISPANIC_OR_LATINO\` - HISPANIC_OR_LATINO
-* \`NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
-* \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
-* \`WHITE\` - WHITE
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's ethnicity.
-
-* \`AMERICAN_INDIAN_OR_ALASKA_NATIVE\` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
-* \`ASIAN_OR_INDIAN_SUBCONTINENT\` - ASIAN_OR_INDIAN_SUBCONTINENT
-* \`BLACK_OR_AFRICAN_AMERICAN\` - BLACK_OR_AFRICAN_AMERICAN
-* \`HISPANIC_OR_LATINO\` - HISPANIC_OR_LATINO
-* \`NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
-* \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
-* \`WHITE\` - WHITE
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
-                  "generatedName": "EmployeeEthnicity",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeEthnicityZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EthnicityEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -22336,51 +22137,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's filing status as related to marital status.
-
-* \`SINGLE\` - SINGLE
-* \`MARRIED_FILING_JOINTLY\` - MARRIED_FILING_JOINTLY
-* \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
-* \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
-* \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's filing status as related to marital status.
-
-* \`SINGLE\` - SINGLE
-* \`MARRIED_FILING_JOINTLY\` - MARRIED_FILING_JOINTLY
-* \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
-* \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
-* \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
-                  "generatedName": "EmployeeMaritalStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeMaritalStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "MaritalStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -22485,47 +22249,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employment status of the employee.
-
-* \`ACTIVE\` - ACTIVE
-* \`PENDING\` - PENDING
-* \`INACTIVE\` - INACTIVE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employment status of the employee.
-
-* \`ACTIVE\` - ACTIVE
-* \`PENDING\` - PENDING
-* \`INACTIVE\` - INACTIVE",
-                  "generatedName": "EmployeeEmploymentStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeEmploymentStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EmploymentStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -23583,51 +23314,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's gender.
-
-* \`MALE\` - MALE
-* \`FEMALE\` - FEMALE
-* \`NON-BINARY\` - NON-BINARY
-* \`OTHER\` - OTHER
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's gender.
-
-* \`MALE\` - MALE
-* \`FEMALE\` - FEMALE
-* \`NON-BINARY\` - NON-BINARY
-* \`OTHER\` - OTHER
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
-                  "generatedName": "EmployeeRequestGender",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeRequestGenderZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "GenderEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -23640,57 +23334,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's ethnicity.
-
-* \`AMERICAN_INDIAN_OR_ALASKA_NATIVE\` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
-* \`ASIAN_OR_INDIAN_SUBCONTINENT\` - ASIAN_OR_INDIAN_SUBCONTINENT
-* \`BLACK_OR_AFRICAN_AMERICAN\` - BLACK_OR_AFRICAN_AMERICAN
-* \`HISPANIC_OR_LATINO\` - HISPANIC_OR_LATINO
-* \`NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
-* \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
-* \`WHITE\` - WHITE
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's ethnicity.
-
-* \`AMERICAN_INDIAN_OR_ALASKA_NATIVE\` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
-* \`ASIAN_OR_INDIAN_SUBCONTINENT\` - ASIAN_OR_INDIAN_SUBCONTINENT
-* \`BLACK_OR_AFRICAN_AMERICAN\` - BLACK_OR_AFRICAN_AMERICAN
-* \`HISPANIC_OR_LATINO\` - HISPANIC_OR_LATINO
-* \`NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER\` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
-* \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
-* \`WHITE\` - WHITE
-* \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
-                  "generatedName": "EmployeeRequestEthnicity",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeRequestEthnicityZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EthnicityEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -23703,51 +23354,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employee's filing status as related to marital status.
-
-* \`SINGLE\` - SINGLE
-* \`MARRIED_FILING_JOINTLY\` - MARRIED_FILING_JOINTLY
-* \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
-* \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
-* \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employee's filing status as related to marital status.
-
-* \`SINGLE\` - SINGLE
-* \`MARRIED_FILING_JOINTLY\` - MARRIED_FILING_JOINTLY
-* \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
-* \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
-* \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
-                  "generatedName": "EmployeeRequestMaritalStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeRequestMaritalStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "MaritalStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -23829,47 +23443,14 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The employment status of the employee.
-
-* \`ACTIVE\` - ACTIVE
-* \`PENDING\` - PENDING
-* \`INACTIVE\` - INACTIVE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The employment status of the employee.
-
-* \`ACTIVE\` - ACTIVE
-* \`PENDING\` - PENDING
-* \`INACTIVE\` - INACTIVE",
-                  "generatedName": "EmployeeRequestEmploymentStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmployeeRequestEmploymentStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EmploymentStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -24215,59 +23796,14 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The time period this pay rate encompasses.
-
-* \`HOUR\` - HOUR
-* \`DAY\` - DAY
-* \`WEEK\` - WEEK
-* \`EVERY_TWO_WEEKS\` - EVERY_TWO_WEEKS
-* \`SEMIMONTHLY\` - SEMIMONTHLY
-* \`MONTH\` - MONTH
-* \`QUARTER\` - QUARTER
-* \`EVERY_SIX_MONTHS\` - EVERY_SIX_MONTHS
-* \`YEAR\` - YEAR",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The time period this pay rate encompasses.
-
-* \`HOUR\` - HOUR
-* \`DAY\` - DAY
-* \`WEEK\` - WEEK
-* \`EVERY_TWO_WEEKS\` - EVERY_TWO_WEEKS
-* \`SEMIMONTHLY\` - SEMIMONTHLY
-* \`MONTH\` - MONTH
-* \`QUARTER\` - QUARTER
-* \`EVERY_SIX_MONTHS\` - EVERY_SIX_MONTHS
-* \`YEAR\` - YEAR",
-                  "generatedName": "EmploymentPayPeriod",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmploymentPayPeriodZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "PayPeriodEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -24280,59 +23816,14 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The position's pay frequency.
-
-* \`WEEKLY\` - WEEKLY
-* \`BIWEEKLY\` - BIWEEKLY
-* \`MONTHLY\` - MONTHLY
-* \`QUARTERLY\` - QUARTERLY
-* \`SEMIANNUALLY\` - SEMIANNUALLY
-* \`ANNUALLY\` - ANNUALLY
-* \`THIRTEEN-MONTHLY\` - THIRTEEN-MONTHLY
-* \`PRO_RATA\` - PRO_RATA
-* \`SEMIMONTHLY\` - SEMIMONTHLY",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The position's pay frequency.
-
-* \`WEEKLY\` - WEEKLY
-* \`BIWEEKLY\` - BIWEEKLY
-* \`MONTHLY\` - MONTHLY
-* \`QUARTERLY\` - QUARTERLY
-* \`SEMIANNUALLY\` - SEMIANNUALLY
-* \`ANNUALLY\` - ANNUALLY
-* \`THIRTEEN-MONTHLY\` - THIRTEEN-MONTHLY
-* \`PRO_RATA\` - PRO_RATA
-* \`SEMIMONTHLY\` - SEMIMONTHLY",
-                  "generatedName": "EmploymentPayFrequency",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmploymentPayFrequencyZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "PayFrequencyEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -24345,653 +23836,14 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The position's currency code.
-
-* \`XUA\` - ADB Unit of Account
-* \`AFN\` - Afghan Afghani
-* \`AFA\` - Afghan Afghani (1927–2002)
-* \`ALL\` - Albanian Lek
-* \`ALK\` - Albanian Lek (1946–1965)
-* \`DZD\` - Algerian Dinar
-* \`ADP\` - Andorran Peseta
-* \`AOA\` - Angolan Kwanza
-* \`AOK\` - Angolan Kwanza (1977–1991)
-* \`AON\` - Angolan New Kwanza (1990–2000)
-* \`AOR\` - Angolan Readjusted Kwanza (1995–1999)
-* \`ARA\` - Argentine Austral
-* \`ARS\` - Argentine Peso
-* \`ARM\` - Argentine Peso (1881–1970)
-* \`ARP\` - Argentine Peso (1983–1985)
-* \`ARL\` - Argentine Peso Ley (1970–1983)
-* \`AMD\` - Armenian Dram
-* \`AWG\` - Aruban Florin
-* \`AUD\` - Australian Dollar
-* \`ATS\` - Austrian Schilling
-* \`AZN\` - Azerbaijani Manat
-* \`AZM\` - Azerbaijani Manat (1993–2006)
-* \`BSD\` - Bahamian Dollar
-* \`BHD\` - Bahraini Dinar
-* \`BDT\` - Bangladeshi Taka
-* \`BBD\` - Barbadian Dollar
-* \`BYN\` - Belarusian Ruble
-* \`BYB\` - Belarusian Ruble (1994–1999)
-* \`BYR\` - Belarusian Ruble (2000–2016)
-* \`BEF\` - Belgian Franc
-* \`BEC\` - Belgian Franc (convertible)
-* \`BEL\` - Belgian Franc (financial)
-* \`BZD\` - Belize Dollar
-* \`BMD\` - Bermudan Dollar
-* \`BTN\` - Bhutanese Ngultrum
-* \`BOB\` - Bolivian Boliviano
-* \`BOL\` - Bolivian Boliviano (1863–1963)
-* \`BOV\` - Bolivian Mvdol
-* \`BOP\` - Bolivian Peso
-* \`BAM\` - Bosnia-Herzegovina Convertible Mark
-* \`BAD\` - Bosnia-Herzegovina Dinar (1992–1994)
-* \`BAN\` - Bosnia-Herzegovina New Dinar (1994–1997)
-* \`BWP\` - Botswanan Pula
-* \`BRC\` - Brazilian Cruzado (1986–1989)
-* \`BRZ\` - Brazilian Cruzeiro (1942–1967)
-* \`BRE\` - Brazilian Cruzeiro (1990–1993)
-* \`BRR\` - Brazilian Cruzeiro (1993–1994)
-* \`BRN\` - Brazilian New Cruzado (1989–1990)
-* \`BRB\` - Brazilian New Cruzeiro (1967–1986)
-* \`BRL\` - Brazilian Real
-* \`GBP\` - British Pound
-* \`BND\` - Brunei Dollar
-* \`BGL\` - Bulgarian Hard Lev
-* \`BGN\` - Bulgarian Lev
-* \`BGO\` - Bulgarian Lev (1879–1952)
-* \`BGM\` - Bulgarian Socialist Lev
-* \`BUK\` - Burmese Kyat
-* \`BIF\` - Burundian Franc
-* \`XPF\` - CFP Franc
-* \`KHR\` - Cambodian Riel
-* \`CAD\` - Canadian Dollar
-* \`CVE\` - Cape Verdean Escudo
-* \`KYD\` - Cayman Islands Dollar
-* \`XAF\` - Central African CFA Franc
-* \`CLE\` - Chilean Escudo
-* \`CLP\` - Chilean Peso
-* \`CLF\` - Chilean Unit of Account (UF)
-* \`CNX\` - Chinese People’s Bank Dollar
-* \`CNY\` - Chinese Yuan
-* \`CNH\` - Chinese Yuan (offshore)
-* \`COP\` - Colombian Peso
-* \`COU\` - Colombian Real Value Unit
-* \`KMF\` - Comorian Franc
-* \`CDF\` - Congolese Franc
-* \`CRC\` - Costa Rican Colón
-* \`HRD\` - Croatian Dinar
-* \`HRK\` - Croatian Kuna
-* \`CUC\` - Cuban Convertible Peso
-* \`CUP\` - Cuban Peso
-* \`CYP\` - Cypriot Pound
-* \`CZK\` - Czech Koruna
-* \`CSK\` - Czechoslovak Hard Koruna
-* \`DKK\` - Danish Krone
-* \`DJF\` - Djiboutian Franc
-* \`DOP\` - Dominican Peso
-* \`NLG\` - Dutch Guilder
-* \`XCD\` - East Caribbean Dollar
-* \`DDM\` - East German Mark
-* \`ECS\` - Ecuadorian Sucre
-* \`ECV\` - Ecuadorian Unit of Constant Value
-* \`EGP\` - Egyptian Pound
-* \`GQE\` - Equatorial Guinean Ekwele
-* \`ERN\` - Eritrean Nakfa
-* \`EEK\` - Estonian Kroon
-* \`ETB\` - Ethiopian Birr
-* \`EUR\` - Euro
-* \`XBA\` - European Composite Unit
-* \`XEU\` - European Currency Unit
-* \`XBB\` - European Monetary Unit
-* \`XBC\` - European Unit of Account (XBC)
-* \`XBD\` - European Unit of Account (XBD)
-* \`FKP\` - Falkland Islands Pound
-* \`FJD\` - Fijian Dollar
-* \`FIM\` - Finnish Markka
-* \`FRF\` - French Franc
-* \`XFO\` - French Gold Franc
-* \`XFU\` - French UIC-Franc
-* \`GMD\` - Gambian Dalasi
-* \`GEK\` - Georgian Kupon Larit
-* \`GEL\` - Georgian Lari
-* \`DEM\` - German Mark
-* \`GHS\` - Ghanaian Cedi
-* \`GHC\` - Ghanaian Cedi (1979–2007)
-* \`GIP\` - Gibraltar Pound
-* \`XAU\` - Gold
-* \`GRD\` - Greek Drachma
-* \`GTQ\` - Guatemalan Quetzal
-* \`GWP\` - Guinea-Bissau Peso
-* \`GNF\` - Guinean Franc
-* \`GNS\` - Guinean Syli
-* \`GYD\` - Guyanaese Dollar
-* \`HTG\` - Haitian Gourde
-* \`HNL\` - Honduran Lempira
-* \`HKD\` - Hong Kong Dollar
-* \`HUF\` - Hungarian Forint
-* \`IMP\` - IMP
-* \`ISK\` - Icelandic Króna
-* \`ISJ\` - Icelandic Króna (1918–1981)
-* \`INR\` - Indian Rupee
-* \`IDR\` - Indonesian Rupiah
-* \`IRR\` - Iranian Rial
-* \`IQD\` - Iraqi Dinar
-* \`IEP\` - Irish Pound
-* \`ILS\` - Israeli New Shekel
-* \`ILP\` - Israeli Pound
-* \`ILR\` - Israeli Shekel (1980–1985)
-* \`ITL\` - Italian Lira
-* \`JMD\` - Jamaican Dollar
-* \`JPY\` - Japanese Yen
-* \`JOD\` - Jordanian Dinar
-* \`KZT\` - Kazakhstani Tenge
-* \`KES\` - Kenyan Shilling
-* \`KWD\` - Kuwaiti Dinar
-* \`KGS\` - Kyrgystani Som
-* \`LAK\` - Laotian Kip
-* \`LVL\` - Latvian Lats
-* \`LVR\` - Latvian Ruble
-* \`LBP\` - Lebanese Pound
-* \`LSL\` - Lesotho Loti
-* \`LRD\` - Liberian Dollar
-* \`LYD\` - Libyan Dinar
-* \`LTL\` - Lithuanian Litas
-* \`LTT\` - Lithuanian Talonas
-* \`LUL\` - Luxembourg Financial Franc
-* \`LUC\` - Luxembourgian Convertible Franc
-* \`LUF\` - Luxembourgian Franc
-* \`MOP\` - Macanese Pataca
-* \`MKD\` - Macedonian Denar
-* \`MKN\` - Macedonian Denar (1992–1993)
-* \`MGA\` - Malagasy Ariary
-* \`MGF\` - Malagasy Franc
-* \`MWK\` - Malawian Kwacha
-* \`MYR\` - Malaysian Ringgit
-* \`MVR\` - Maldivian Rufiyaa
-* \`MVP\` - Maldivian Rupee (1947–1981)
-* \`MLF\` - Malian Franc
-* \`MTL\` - Maltese Lira
-* \`MTP\` - Maltese Pound
-* \`MRU\` - Mauritanian Ouguiya
-* \`MRO\` - Mauritanian Ouguiya (1973–2017)
-* \`MUR\` - Mauritian Rupee
-* \`MXV\` - Mexican Investment Unit
-* \`MXN\` - Mexican Peso
-* \`MXP\` - Mexican Silver Peso (1861–1992)
-* \`MDC\` - Moldovan Cupon
-* \`MDL\` - Moldovan Leu
-* \`MCF\` - Monegasque Franc
-* \`MNT\` - Mongolian Tugrik
-* \`MAD\` - Moroccan Dirham
-* \`MAF\` - Moroccan Franc
-* \`MZE\` - Mozambican Escudo
-* \`MZN\` - Mozambican Metical
-* \`MZM\` - Mozambican Metical (1980–2006)
-* \`MMK\` - Myanmar Kyat
-* \`NAD\` - Namibian Dollar
-* \`NPR\` - Nepalese Rupee
-* \`ANG\` - Netherlands Antillean Guilder
-* \`TWD\` - New Taiwan Dollar
-* \`NZD\` - New Zealand Dollar
-* \`NIO\` - Nicaraguan Córdoba
-* \`NIC\` - Nicaraguan Córdoba (1988–1991)
-* \`NGN\` - Nigerian Naira
-* \`KPW\` - North Korean Won
-* \`NOK\` - Norwegian Krone
-* \`OMR\` - Omani Rial
-* \`PKR\` - Pakistani Rupee
-* \`XPD\` - Palladium
-* \`PAB\` - Panamanian Balboa
-* \`PGK\` - Papua New Guinean Kina
-* \`PYG\` - Paraguayan Guarani
-* \`PEI\` - Peruvian Inti
-* \`PEN\` - Peruvian Sol
-* \`PES\` - Peruvian Sol (1863–1965)
-* \`PHP\` - Philippine Peso
-* \`XPT\` - Platinum
-* \`PLN\` - Polish Zloty
-* \`PLZ\` - Polish Zloty (1950–1995)
-* \`PTE\` - Portuguese Escudo
-* \`GWE\` - Portuguese Guinea Escudo
-* \`QAR\` - Qatari Rial
-* \`XRE\` - RINET Funds
-* \`RHD\` - Rhodesian Dollar
-* \`RON\` - Romanian Leu
-* \`ROL\` - Romanian Leu (1952–2006)
-* \`RUB\` - Russian Ruble
-* \`RUR\` - Russian Ruble (1991–1998)
-* \`RWF\` - Rwandan Franc
-* \`SVC\` - Salvadoran Colón
-* \`WST\` - Samoan Tala
-* \`SAR\` - Saudi Riyal
-* \`RSD\` - Serbian Dinar
-* \`CSD\` - Serbian Dinar (2002–2006)
-* \`SCR\` - Seychellois Rupee
-* \`SLL\` - Sierra Leonean Leone
-* \`XAG\` - Silver
-* \`SGD\` - Singapore Dollar
-* \`SKK\` - Slovak Koruna
-* \`SIT\` - Slovenian Tolar
-* \`SBD\` - Solomon Islands Dollar
-* \`SOS\` - Somali Shilling
-* \`ZAR\` - South African Rand
-* \`ZAL\` - South African Rand (financial)
-* \`KRH\` - South Korean Hwan (1953–1962)
-* \`KRW\` - South Korean Won
-* \`KRO\` - South Korean Won (1945–1953)
-* \`SSP\` - South Sudanese Pound
-* \`SUR\` - Soviet Rouble
-* \`ESP\` - Spanish Peseta
-* \`ESA\` - Spanish Peseta (A account)
-* \`ESB\` - Spanish Peseta (convertible account)
-* \`XDR\` - Special Drawing Rights
-* \`LKR\` - Sri Lankan Rupee
-* \`SHP\` - St. Helena Pound
-* \`XSU\` - Sucre
-* \`SDD\` - Sudanese Dinar (1992–2007)
-* \`SDG\` - Sudanese Pound
-* \`SDP\` - Sudanese Pound (1957–1998)
-* \`SRD\` - Surinamese Dollar
-* \`SRG\` - Surinamese Guilder
-* \`SZL\` - Swazi Lilangeni
-* \`SEK\` - Swedish Krona
-* \`CHF\` - Swiss Franc
-* \`SYP\` - Syrian Pound
-* \`STN\` - São Tomé & Príncipe Dobra
-* \`STD\` - São Tomé & Príncipe Dobra (1977–2017)
-* \`TVD\` - TVD
-* \`TJR\` - Tajikistani Ruble
-* \`TJS\` - Tajikistani Somoni
-* \`TZS\` - Tanzanian Shilling
-* \`XTS\` - Testing Currency Code
-* \`THB\` - Thai Baht
-* \`XXX\` - The codes assigned for transactions where no currency is involved
-* \`TPE\` - Timorese Escudo
-* \`TOP\` - Tongan Paʻanga
-* \`TTD\` - Trinidad & Tobago Dollar
-* \`TND\` - Tunisian Dinar
-* \`TRY\` - Turkish Lira
-* \`TRL\` - Turkish Lira (1922–2005)
-* \`TMT\` - Turkmenistani Manat
-* \`TMM\` - Turkmenistani Manat (1993–2009)
-* \`USD\` - US Dollar
-* \`USN\` - US Dollar (Next day)
-* \`USS\` - US Dollar (Same day)
-* \`UGX\` - Ugandan Shilling
-* \`UGS\` - Ugandan Shilling (1966–1987)
-* \`UAH\` - Ukrainian Hryvnia
-* \`UAK\` - Ukrainian Karbovanets
-* \`AED\` - United Arab Emirates Dirham
-* \`UYW\` - Uruguayan Nominal Wage Index Unit
-* \`UYU\` - Uruguayan Peso
-* \`UYP\` - Uruguayan Peso (1975–1993)
-* \`UYI\` - Uruguayan Peso (Indexed Units)
-* \`UZS\` - Uzbekistani Som
-* \`VUV\` - Vanuatu Vatu
-* \`VES\` - Venezuelan Bolívar
-* \`VEB\` - Venezuelan Bolívar (1871–2008)
-* \`VEF\` - Venezuelan Bolívar (2008–2018)
-* \`VND\` - Vietnamese Dong
-* \`VNN\` - Vietnamese Dong (1978–1985)
-* \`CHE\` - WIR Euro
-* \`CHW\` - WIR Franc
-* \`XOF\` - West African CFA Franc
-* \`YDD\` - Yemeni Dinar
-* \`YER\` - Yemeni Rial
-* \`YUN\` - Yugoslavian Convertible Dinar (1990–1992)
-* \`YUD\` - Yugoslavian Hard Dinar (1966–1990)
-* \`YUM\` - Yugoslavian New Dinar (1994–2002)
-* \`YUR\` - Yugoslavian Reformed Dinar (1992–1993)
-* \`ZWN\` - ZWN
-* \`ZRN\` - Zairean New Zaire (1993–1998)
-* \`ZRZ\` - Zairean Zaire (1971–1993)
-* \`ZMW\` - Zambian Kwacha
-* \`ZMK\` - Zambian Kwacha (1968–2012)
-* \`ZWD\` - Zimbabwean Dollar (1980–2008)
-* \`ZWR\` - Zimbabwean Dollar (2008)
-* \`ZWL\` - Zimbabwean Dollar (2009)",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The position's currency code.
-
-* \`XUA\` - ADB Unit of Account
-* \`AFN\` - Afghan Afghani
-* \`AFA\` - Afghan Afghani (1927–2002)
-* \`ALL\` - Albanian Lek
-* \`ALK\` - Albanian Lek (1946–1965)
-* \`DZD\` - Algerian Dinar
-* \`ADP\` - Andorran Peseta
-* \`AOA\` - Angolan Kwanza
-* \`AOK\` - Angolan Kwanza (1977–1991)
-* \`AON\` - Angolan New Kwanza (1990–2000)
-* \`AOR\` - Angolan Readjusted Kwanza (1995–1999)
-* \`ARA\` - Argentine Austral
-* \`ARS\` - Argentine Peso
-* \`ARM\` - Argentine Peso (1881–1970)
-* \`ARP\` - Argentine Peso (1983–1985)
-* \`ARL\` - Argentine Peso Ley (1970–1983)
-* \`AMD\` - Armenian Dram
-* \`AWG\` - Aruban Florin
-* \`AUD\` - Australian Dollar
-* \`ATS\` - Austrian Schilling
-* \`AZN\` - Azerbaijani Manat
-* \`AZM\` - Azerbaijani Manat (1993–2006)
-* \`BSD\` - Bahamian Dollar
-* \`BHD\` - Bahraini Dinar
-* \`BDT\` - Bangladeshi Taka
-* \`BBD\` - Barbadian Dollar
-* \`BYN\` - Belarusian Ruble
-* \`BYB\` - Belarusian Ruble (1994–1999)
-* \`BYR\` - Belarusian Ruble (2000–2016)
-* \`BEF\` - Belgian Franc
-* \`BEC\` - Belgian Franc (convertible)
-* \`BEL\` - Belgian Franc (financial)
-* \`BZD\` - Belize Dollar
-* \`BMD\` - Bermudan Dollar
-* \`BTN\` - Bhutanese Ngultrum
-* \`BOB\` - Bolivian Boliviano
-* \`BOL\` - Bolivian Boliviano (1863–1963)
-* \`BOV\` - Bolivian Mvdol
-* \`BOP\` - Bolivian Peso
-* \`BAM\` - Bosnia-Herzegovina Convertible Mark
-* \`BAD\` - Bosnia-Herzegovina Dinar (1992–1994)
-* \`BAN\` - Bosnia-Herzegovina New Dinar (1994–1997)
-* \`BWP\` - Botswanan Pula
-* \`BRC\` - Brazilian Cruzado (1986–1989)
-* \`BRZ\` - Brazilian Cruzeiro (1942–1967)
-* \`BRE\` - Brazilian Cruzeiro (1990–1993)
-* \`BRR\` - Brazilian Cruzeiro (1993–1994)
-* \`BRN\` - Brazilian New Cruzado (1989–1990)
-* \`BRB\` - Brazilian New Cruzeiro (1967–1986)
-* \`BRL\` - Brazilian Real
-* \`GBP\` - British Pound
-* \`BND\` - Brunei Dollar
-* \`BGL\` - Bulgarian Hard Lev
-* \`BGN\` - Bulgarian Lev
-* \`BGO\` - Bulgarian Lev (1879–1952)
-* \`BGM\` - Bulgarian Socialist Lev
-* \`BUK\` - Burmese Kyat
-* \`BIF\` - Burundian Franc
-* \`XPF\` - CFP Franc
-* \`KHR\` - Cambodian Riel
-* \`CAD\` - Canadian Dollar
-* \`CVE\` - Cape Verdean Escudo
-* \`KYD\` - Cayman Islands Dollar
-* \`XAF\` - Central African CFA Franc
-* \`CLE\` - Chilean Escudo
-* \`CLP\` - Chilean Peso
-* \`CLF\` - Chilean Unit of Account (UF)
-* \`CNX\` - Chinese People’s Bank Dollar
-* \`CNY\` - Chinese Yuan
-* \`CNH\` - Chinese Yuan (offshore)
-* \`COP\` - Colombian Peso
-* \`COU\` - Colombian Real Value Unit
-* \`KMF\` - Comorian Franc
-* \`CDF\` - Congolese Franc
-* \`CRC\` - Costa Rican Colón
-* \`HRD\` - Croatian Dinar
-* \`HRK\` - Croatian Kuna
-* \`CUC\` - Cuban Convertible Peso
-* \`CUP\` - Cuban Peso
-* \`CYP\` - Cypriot Pound
-* \`CZK\` - Czech Koruna
-* \`CSK\` - Czechoslovak Hard Koruna
-* \`DKK\` - Danish Krone
-* \`DJF\` - Djiboutian Franc
-* \`DOP\` - Dominican Peso
-* \`NLG\` - Dutch Guilder
-* \`XCD\` - East Caribbean Dollar
-* \`DDM\` - East German Mark
-* \`ECS\` - Ecuadorian Sucre
-* \`ECV\` - Ecuadorian Unit of Constant Value
-* \`EGP\` - Egyptian Pound
-* \`GQE\` - Equatorial Guinean Ekwele
-* \`ERN\` - Eritrean Nakfa
-* \`EEK\` - Estonian Kroon
-* \`ETB\` - Ethiopian Birr
-* \`EUR\` - Euro
-* \`XBA\` - European Composite Unit
-* \`XEU\` - European Currency Unit
-* \`XBB\` - European Monetary Unit
-* \`XBC\` - European Unit of Account (XBC)
-* \`XBD\` - European Unit of Account (XBD)
-* \`FKP\` - Falkland Islands Pound
-* \`FJD\` - Fijian Dollar
-* \`FIM\` - Finnish Markka
-* \`FRF\` - French Franc
-* \`XFO\` - French Gold Franc
-* \`XFU\` - French UIC-Franc
-* \`GMD\` - Gambian Dalasi
-* \`GEK\` - Georgian Kupon Larit
-* \`GEL\` - Georgian Lari
-* \`DEM\` - German Mark
-* \`GHS\` - Ghanaian Cedi
-* \`GHC\` - Ghanaian Cedi (1979–2007)
-* \`GIP\` - Gibraltar Pound
-* \`XAU\` - Gold
-* \`GRD\` - Greek Drachma
-* \`GTQ\` - Guatemalan Quetzal
-* \`GWP\` - Guinea-Bissau Peso
-* \`GNF\` - Guinean Franc
-* \`GNS\` - Guinean Syli
-* \`GYD\` - Guyanaese Dollar
-* \`HTG\` - Haitian Gourde
-* \`HNL\` - Honduran Lempira
-* \`HKD\` - Hong Kong Dollar
-* \`HUF\` - Hungarian Forint
-* \`IMP\` - IMP
-* \`ISK\` - Icelandic Króna
-* \`ISJ\` - Icelandic Króna (1918–1981)
-* \`INR\` - Indian Rupee
-* \`IDR\` - Indonesian Rupiah
-* \`IRR\` - Iranian Rial
-* \`IQD\` - Iraqi Dinar
-* \`IEP\` - Irish Pound
-* \`ILS\` - Israeli New Shekel
-* \`ILP\` - Israeli Pound
-* \`ILR\` - Israeli Shekel (1980–1985)
-* \`ITL\` - Italian Lira
-* \`JMD\` - Jamaican Dollar
-* \`JPY\` - Japanese Yen
-* \`JOD\` - Jordanian Dinar
-* \`KZT\` - Kazakhstani Tenge
-* \`KES\` - Kenyan Shilling
-* \`KWD\` - Kuwaiti Dinar
-* \`KGS\` - Kyrgystani Som
-* \`LAK\` - Laotian Kip
-* \`LVL\` - Latvian Lats
-* \`LVR\` - Latvian Ruble
-* \`LBP\` - Lebanese Pound
-* \`LSL\` - Lesotho Loti
-* \`LRD\` - Liberian Dollar
-* \`LYD\` - Libyan Dinar
-* \`LTL\` - Lithuanian Litas
-* \`LTT\` - Lithuanian Talonas
-* \`LUL\` - Luxembourg Financial Franc
-* \`LUC\` - Luxembourgian Convertible Franc
-* \`LUF\` - Luxembourgian Franc
-* \`MOP\` - Macanese Pataca
-* \`MKD\` - Macedonian Denar
-* \`MKN\` - Macedonian Denar (1992–1993)
-* \`MGA\` - Malagasy Ariary
-* \`MGF\` - Malagasy Franc
-* \`MWK\` - Malawian Kwacha
-* \`MYR\` - Malaysian Ringgit
-* \`MVR\` - Maldivian Rufiyaa
-* \`MVP\` - Maldivian Rupee (1947–1981)
-* \`MLF\` - Malian Franc
-* \`MTL\` - Maltese Lira
-* \`MTP\` - Maltese Pound
-* \`MRU\` - Mauritanian Ouguiya
-* \`MRO\` - Mauritanian Ouguiya (1973–2017)
-* \`MUR\` - Mauritian Rupee
-* \`MXV\` - Mexican Investment Unit
-* \`MXN\` - Mexican Peso
-* \`MXP\` - Mexican Silver Peso (1861–1992)
-* \`MDC\` - Moldovan Cupon
-* \`MDL\` - Moldovan Leu
-* \`MCF\` - Monegasque Franc
-* \`MNT\` - Mongolian Tugrik
-* \`MAD\` - Moroccan Dirham
-* \`MAF\` - Moroccan Franc
-* \`MZE\` - Mozambican Escudo
-* \`MZN\` - Mozambican Metical
-* \`MZM\` - Mozambican Metical (1980–2006)
-* \`MMK\` - Myanmar Kyat
-* \`NAD\` - Namibian Dollar
-* \`NPR\` - Nepalese Rupee
-* \`ANG\` - Netherlands Antillean Guilder
-* \`TWD\` - New Taiwan Dollar
-* \`NZD\` - New Zealand Dollar
-* \`NIO\` - Nicaraguan Córdoba
-* \`NIC\` - Nicaraguan Córdoba (1988–1991)
-* \`NGN\` - Nigerian Naira
-* \`KPW\` - North Korean Won
-* \`NOK\` - Norwegian Krone
-* \`OMR\` - Omani Rial
-* \`PKR\` - Pakistani Rupee
-* \`XPD\` - Palladium
-* \`PAB\` - Panamanian Balboa
-* \`PGK\` - Papua New Guinean Kina
-* \`PYG\` - Paraguayan Guarani
-* \`PEI\` - Peruvian Inti
-* \`PEN\` - Peruvian Sol
-* \`PES\` - Peruvian Sol (1863–1965)
-* \`PHP\` - Philippine Peso
-* \`XPT\` - Platinum
-* \`PLN\` - Polish Zloty
-* \`PLZ\` - Polish Zloty (1950–1995)
-* \`PTE\` - Portuguese Escudo
-* \`GWE\` - Portuguese Guinea Escudo
-* \`QAR\` - Qatari Rial
-* \`XRE\` - RINET Funds
-* \`RHD\` - Rhodesian Dollar
-* \`RON\` - Romanian Leu
-* \`ROL\` - Romanian Leu (1952–2006)
-* \`RUB\` - Russian Ruble
-* \`RUR\` - Russian Ruble (1991–1998)
-* \`RWF\` - Rwandan Franc
-* \`SVC\` - Salvadoran Colón
-* \`WST\` - Samoan Tala
-* \`SAR\` - Saudi Riyal
-* \`RSD\` - Serbian Dinar
-* \`CSD\` - Serbian Dinar (2002–2006)
-* \`SCR\` - Seychellois Rupee
-* \`SLL\` - Sierra Leonean Leone
-* \`XAG\` - Silver
-* \`SGD\` - Singapore Dollar
-* \`SKK\` - Slovak Koruna
-* \`SIT\` - Slovenian Tolar
-* \`SBD\` - Solomon Islands Dollar
-* \`SOS\` - Somali Shilling
-* \`ZAR\` - South African Rand
-* \`ZAL\` - South African Rand (financial)
-* \`KRH\` - South Korean Hwan (1953–1962)
-* \`KRW\` - South Korean Won
-* \`KRO\` - South Korean Won (1945–1953)
-* \`SSP\` - South Sudanese Pound
-* \`SUR\` - Soviet Rouble
-* \`ESP\` - Spanish Peseta
-* \`ESA\` - Spanish Peseta (A account)
-* \`ESB\` - Spanish Peseta (convertible account)
-* \`XDR\` - Special Drawing Rights
-* \`LKR\` - Sri Lankan Rupee
-* \`SHP\` - St. Helena Pound
-* \`XSU\` - Sucre
-* \`SDD\` - Sudanese Dinar (1992–2007)
-* \`SDG\` - Sudanese Pound
-* \`SDP\` - Sudanese Pound (1957–1998)
-* \`SRD\` - Surinamese Dollar
-* \`SRG\` - Surinamese Guilder
-* \`SZL\` - Swazi Lilangeni
-* \`SEK\` - Swedish Krona
-* \`CHF\` - Swiss Franc
-* \`SYP\` - Syrian Pound
-* \`STN\` - São Tomé & Príncipe Dobra
-* \`STD\` - São Tomé & Príncipe Dobra (1977–2017)
-* \`TVD\` - TVD
-* \`TJR\` - Tajikistani Ruble
-* \`TJS\` - Tajikistani Somoni
-* \`TZS\` - Tanzanian Shilling
-* \`XTS\` - Testing Currency Code
-* \`THB\` - Thai Baht
-* \`XXX\` - The codes assigned for transactions where no currency is involved
-* \`TPE\` - Timorese Escudo
-* \`TOP\` - Tongan Paʻanga
-* \`TTD\` - Trinidad & Tobago Dollar
-* \`TND\` - Tunisian Dinar
-* \`TRY\` - Turkish Lira
-* \`TRL\` - Turkish Lira (1922–2005)
-* \`TMT\` - Turkmenistani Manat
-* \`TMM\` - Turkmenistani Manat (1993–2009)
-* \`USD\` - US Dollar
-* \`USN\` - US Dollar (Next day)
-* \`USS\` - US Dollar (Same day)
-* \`UGX\` - Ugandan Shilling
-* \`UGS\` - Ugandan Shilling (1966–1987)
-* \`UAH\` - Ukrainian Hryvnia
-* \`UAK\` - Ukrainian Karbovanets
-* \`AED\` - United Arab Emirates Dirham
-* \`UYW\` - Uruguayan Nominal Wage Index Unit
-* \`UYU\` - Uruguayan Peso
-* \`UYP\` - Uruguayan Peso (1975–1993)
-* \`UYI\` - Uruguayan Peso (Indexed Units)
-* \`UZS\` - Uzbekistani Som
-* \`VUV\` - Vanuatu Vatu
-* \`VES\` - Venezuelan Bolívar
-* \`VEB\` - Venezuelan Bolívar (1871–2008)
-* \`VEF\` - Venezuelan Bolívar (2008–2018)
-* \`VND\` - Vietnamese Dong
-* \`VNN\` - Vietnamese Dong (1978–1985)
-* \`CHE\` - WIR Euro
-* \`CHW\` - WIR Franc
-* \`XOF\` - West African CFA Franc
-* \`YDD\` - Yemeni Dinar
-* \`YER\` - Yemeni Rial
-* \`YUN\` - Yugoslavian Convertible Dinar (1990–1992)
-* \`YUD\` - Yugoslavian Hard Dinar (1966–1990)
-* \`YUM\` - Yugoslavian New Dinar (1994–2002)
-* \`YUR\` - Yugoslavian Reformed Dinar (1992–1993)
-* \`ZWN\` - ZWN
-* \`ZRN\` - Zairean New Zaire (1993–1998)
-* \`ZRZ\` - Zairean Zaire (1971–1993)
-* \`ZMW\` - Zambian Kwacha
-* \`ZMK\` - Zambian Kwacha (1968–2012)
-* \`ZWD\` - Zimbabwean Dollar (1980–2008)
-* \`ZWR\` - Zimbabwean Dollar (2008)
-* \`ZWL\` - Zimbabwean Dollar (2009)",
-                  "generatedName": "EmploymentPayCurrency",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmploymentPayCurrencyZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "PayCurrencyEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -25029,49 +23881,14 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The position's FLSA status.
-
-* \`EXEMPT\` - EXEMPT
-* \`SALARIED_NONEXEMPT\` - SALARIED_NONEXEMPT
-* \`NONEXEMPT\` - NONEXEMPT
-* \`OWNER\` - OWNER",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The position's FLSA status.
-
-* \`EXEMPT\` - EXEMPT
-* \`SALARIED_NONEXEMPT\` - SALARIED_NONEXEMPT
-* \`NONEXEMPT\` - NONEXEMPT
-* \`OWNER\` - OWNER",
-                  "generatedName": "EmploymentFlsaStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmploymentFlsaStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "FlsaStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -25107,51 +23924,14 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The position's type of employment.
-
-* \`FULL_TIME\` - FULL_TIME
-* \`PART_TIME\` - PART_TIME
-* \`INTERN\` - INTERN
-* \`CONTRACTOR\` - CONTRACTOR
-* \`FREELANCE\` - FREELANCE",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The position's type of employment.
-
-* \`FULL_TIME\` - FULL_TIME
-* \`PART_TIME\` - PART_TIME
-* \`INTERN\` - INTERN
-* \`CONTRACTOR\` - CONTRACTOR
-* \`FREELANCE\` - FREELANCE",
-                  "generatedName": "EmploymentEmploymentType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "EmploymentEmploymentTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EmploymentTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -25911,51 +24691,14 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The group type
-
-* \`TEAM\` - TEAM
-* \`DEPARTMENT\` - DEPARTMENT
-* \`COST_CENTER\` - COST_CENTER
-* \`BUSINESS_UNIT\` - BUSINESS_UNIT
-* \`GROUP\` - GROUP",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The group type
-
-* \`TEAM\` - TEAM
-* \`DEPARTMENT\` - DEPARTMENT
-* \`COST_CENTER\` - COST_CENTER
-* \`BUSINESS_UNIT\` - BUSINESS_UNIT
-* \`GROUP\` - GROUP",
-                  "generatedName": "GroupType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "GroupTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "GroupTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -26115,34 +24858,14 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "generatedName": "ignoreCommonModelRequestReason",
           "key": "reason",
           "schema": {
-            "oneOf": {
-              "description": undefined,
-              "generatedName": "IgnoreCommonModelRequestReason",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schemas": [
-                {
-                  "description": undefined,
-                  "generatedName": "IgnoreCommonModelRequestReasonZero",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schema": "ReasonEnum",
-                  "type": "reference",
-                },
-                {
-                  "description": undefined,
-                  "groupName": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              ],
-              "type": "undisciminated",
+            "description": undefined,
+            "groupName": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
             },
-            "type": "oneOf",
+            "type": "primitive",
           },
         },
         {
@@ -26205,37 +24928,14 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "oneOf": {
-                "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
-
-* \`ONGOING\` - ONGOING
-* \`RESOLVED\` - RESOLVED",
-                "generatedName": "IssueStatus",
-                "groupName": undefined,
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "generatedName": "IssueStatusZero",
-                    "groupName": undefined,
-                    "nameOverride": undefined,
-                    "schema": "IssueStatusEnum",
-                    "type": "reference",
-                  },
-                  {
-                    "description": undefined,
-                    "groupName": undefined,
-                    "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "undisciminated",
+              "description": undefined,
+              "groupName": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
-              "type": "oneOf",
+              "type": "primitive",
             },
           },
         },
@@ -26998,539 +25698,14 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The location's country.
-
-* \`AF\` - Afghanistan
-* \`AX\` - Åland Islands
-* \`AL\` - Albania
-* \`DZ\` - Algeria
-* \`AS\` - American Samoa
-* \`AD\` - Andorra
-* \`AO\` - Angola
-* \`AI\` - Anguilla
-* \`AQ\` - Antarctica
-* \`AG\` - Antigua and Barbuda
-* \`AR\` - Argentina
-* \`AM\` - Armenia
-* \`AW\` - Aruba
-* \`AU\` - Australia
-* \`AT\` - Austria
-* \`AZ\` - Azerbaijan
-* \`BS\` - Bahamas
-* \`BH\` - Bahrain
-* \`BD\` - Bangladesh
-* \`BB\` - Barbados
-* \`BY\` - Belarus
-* \`BE\` - Belgium
-* \`BZ\` - Belize
-* \`BJ\` - Benin
-* \`BM\` - Bermuda
-* \`BT\` - Bhutan
-* \`BO\` - Bolivia
-* \`BQ\` - Bonaire, Sint Eustatius and Saba
-* \`BA\` - Bosnia and Herzegovina
-* \`BW\` - Botswana
-* \`BV\` - Bouvet Island
-* \`BR\` - Brazil
-* \`IO\` - British Indian Ocean Territory
-* \`BN\` - Brunei
-* \`BG\` - Bulgaria
-* \`BF\` - Burkina Faso
-* \`BI\` - Burundi
-* \`CV\` - Cabo Verde
-* \`KH\` - Cambodia
-* \`CM\` - Cameroon
-* \`CA\` - Canada
-* \`KY\` - Cayman Islands
-* \`CF\` - Central African Republic
-* \`TD\` - Chad
-* \`CL\` - Chile
-* \`CN\` - China
-* \`CX\` - Christmas Island
-* \`CC\` - Cocos (Keeling) Islands
-* \`CO\` - Colombia
-* \`KM\` - Comoros
-* \`CG\` - Congo
-* \`CD\` - Congo (the Democratic Republic of the)
-* \`CK\` - Cook Islands
-* \`CR\` - Costa Rica
-* \`CI\` - Côte d'Ivoire
-* \`HR\` - Croatia
-* \`CU\` - Cuba
-* \`CW\` - Curaçao
-* \`CY\` - Cyprus
-* \`CZ\` - Czechia
-* \`DK\` - Denmark
-* \`DJ\` - Djibouti
-* \`DM\` - Dominica
-* \`DO\` - Dominican Republic
-* \`EC\` - Ecuador
-* \`EG\` - Egypt
-* \`SV\` - El Salvador
-* \`GQ\` - Equatorial Guinea
-* \`ER\` - Eritrea
-* \`EE\` - Estonia
-* \`SZ\` - Eswatini
-* \`ET\` - Ethiopia
-* \`FK\` - Falkland Islands (Malvinas)
-* \`FO\` - Faroe Islands
-* \`FJ\` - Fiji
-* \`FI\` - Finland
-* \`FR\` - France
-* \`GF\` - French Guiana
-* \`PF\` - French Polynesia
-* \`TF\` - French Southern Territories
-* \`GA\` - Gabon
-* \`GM\` - Gambia
-* \`GE\` - Georgia
-* \`DE\` - Germany
-* \`GH\` - Ghana
-* \`GI\` - Gibraltar
-* \`GR\` - Greece
-* \`GL\` - Greenland
-* \`GD\` - Grenada
-* \`GP\` - Guadeloupe
-* \`GU\` - Guam
-* \`GT\` - Guatemala
-* \`GG\` - Guernsey
-* \`GN\` - Guinea
-* \`GW\` - Guinea-Bissau
-* \`GY\` - Guyana
-* \`HT\` - Haiti
-* \`HM\` - Heard Island and McDonald Islands
-* \`VA\` - Holy See
-* \`HN\` - Honduras
-* \`HK\` - Hong Kong
-* \`HU\` - Hungary
-* \`IS\` - Iceland
-* \`IN\` - India
-* \`ID\` - Indonesia
-* \`IR\` - Iran
-* \`IQ\` - Iraq
-* \`IE\` - Ireland
-* \`IM\` - Isle of Man
-* \`IL\` - Israel
-* \`IT\` - Italy
-* \`JM\` - Jamaica
-* \`JP\` - Japan
-* \`JE\` - Jersey
-* \`JO\` - Jordan
-* \`KZ\` - Kazakhstan
-* \`KE\` - Kenya
-* \`KI\` - Kiribati
-* \`KW\` - Kuwait
-* \`KG\` - Kyrgyzstan
-* \`LA\` - Laos
-* \`LV\` - Latvia
-* \`LB\` - Lebanon
-* \`LS\` - Lesotho
-* \`LR\` - Liberia
-* \`LY\` - Libya
-* \`LI\` - Liechtenstein
-* \`LT\` - Lithuania
-* \`LU\` - Luxembourg
-* \`MO\` - Macao
-* \`MG\` - Madagascar
-* \`MW\` - Malawi
-* \`MY\` - Malaysia
-* \`MV\` - Maldives
-* \`ML\` - Mali
-* \`MT\` - Malta
-* \`MH\` - Marshall Islands
-* \`MQ\` - Martinique
-* \`MR\` - Mauritania
-* \`MU\` - Mauritius
-* \`YT\` - Mayotte
-* \`MX\` - Mexico
-* \`FM\` - Micronesia (Federated States of)
-* \`MD\` - Moldova
-* \`MC\` - Monaco
-* \`MN\` - Mongolia
-* \`ME\` - Montenegro
-* \`MS\` - Montserrat
-* \`MA\` - Morocco
-* \`MZ\` - Mozambique
-* \`MM\` - Myanmar
-* \`NA\` - Namibia
-* \`NR\` - Nauru
-* \`NP\` - Nepal
-* \`NL\` - Netherlands
-* \`NC\` - New Caledonia
-* \`NZ\` - New Zealand
-* \`NI\` - Nicaragua
-* \`NE\` - Niger
-* \`NG\` - Nigeria
-* \`NU\` - Niue
-* \`NF\` - Norfolk Island
-* \`KP\` - North Korea
-* \`MK\` - North Macedonia
-* \`MP\` - Northern Mariana Islands
-* \`NO\` - Norway
-* \`OM\` - Oman
-* \`PK\` - Pakistan
-* \`PW\` - Palau
-* \`PS\` - Palestine, State of
-* \`PA\` - Panama
-* \`PG\` - Papua New Guinea
-* \`PY\` - Paraguay
-* \`PE\` - Peru
-* \`PH\` - Philippines
-* \`PN\` - Pitcairn
-* \`PL\` - Poland
-* \`PT\` - Portugal
-* \`PR\` - Puerto Rico
-* \`QA\` - Qatar
-* \`RE\` - Réunion
-* \`RO\` - Romania
-* \`RU\` - Russia
-* \`RW\` - Rwanda
-* \`BL\` - Saint Barthélemy
-* \`SH\` - Saint Helena, Ascension and Tristan da Cunha
-* \`KN\` - Saint Kitts and Nevis
-* \`LC\` - Saint Lucia
-* \`MF\` - Saint Martin (French part)
-* \`PM\` - Saint Pierre and Miquelon
-* \`VC\` - Saint Vincent and the Grenadines
-* \`WS\` - Samoa
-* \`SM\` - San Marino
-* \`ST\` - Sao Tome and Principe
-* \`SA\` - Saudi Arabia
-* \`SN\` - Senegal
-* \`RS\` - Serbia
-* \`SC\` - Seychelles
-* \`SL\` - Sierra Leone
-* \`SG\` - Singapore
-* \`SX\` - Sint Maarten (Dutch part)
-* \`SK\` - Slovakia
-* \`SI\` - Slovenia
-* \`SB\` - Solomon Islands
-* \`SO\` - Somalia
-* \`ZA\` - South Africa
-* \`GS\` - South Georgia and the South Sandwich Islands
-* \`KR\` - South Korea
-* \`SS\` - South Sudan
-* \`ES\` - Spain
-* \`LK\` - Sri Lanka
-* \`SD\` - Sudan
-* \`SR\` - Suriname
-* \`SJ\` - Svalbard and Jan Mayen
-* \`SE\` - Sweden
-* \`CH\` - Switzerland
-* \`SY\` - Syria
-* \`TW\` - Taiwan
-* \`TJ\` - Tajikistan
-* \`TZ\` - Tanzania
-* \`TH\` - Thailand
-* \`TL\` - Timor-Leste
-* \`TG\` - Togo
-* \`TK\` - Tokelau
-* \`TO\` - Tonga
-* \`TT\` - Trinidad and Tobago
-* \`TN\` - Tunisia
-* \`TR\` - Turkey
-* \`TM\` - Turkmenistan
-* \`TC\` - Turks and Caicos Islands
-* \`TV\` - Tuvalu
-* \`UG\` - Uganda
-* \`UA\` - Ukraine
-* \`AE\` - United Arab Emirates
-* \`GB\` - United Kingdom
-* \`UM\` - United States Minor Outlying Islands
-* \`US\` - United States of America
-* \`UY\` - Uruguay
-* \`UZ\` - Uzbekistan
-* \`VU\` - Vanuatu
-* \`VE\` - Venezuela
-* \`VN\` - Vietnam
-* \`VG\` - Virgin Islands (British)
-* \`VI\` - Virgin Islands (U.S.)
-* \`WF\` - Wallis and Futuna
-* \`EH\` - Western Sahara
-* \`YE\` - Yemen
-* \`ZM\` - Zambia
-* \`ZW\` - Zimbabwe",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The location's country.
-
-* \`AF\` - Afghanistan
-* \`AX\` - Åland Islands
-* \`AL\` - Albania
-* \`DZ\` - Algeria
-* \`AS\` - American Samoa
-* \`AD\` - Andorra
-* \`AO\` - Angola
-* \`AI\` - Anguilla
-* \`AQ\` - Antarctica
-* \`AG\` - Antigua and Barbuda
-* \`AR\` - Argentina
-* \`AM\` - Armenia
-* \`AW\` - Aruba
-* \`AU\` - Australia
-* \`AT\` - Austria
-* \`AZ\` - Azerbaijan
-* \`BS\` - Bahamas
-* \`BH\` - Bahrain
-* \`BD\` - Bangladesh
-* \`BB\` - Barbados
-* \`BY\` - Belarus
-* \`BE\` - Belgium
-* \`BZ\` - Belize
-* \`BJ\` - Benin
-* \`BM\` - Bermuda
-* \`BT\` - Bhutan
-* \`BO\` - Bolivia
-* \`BQ\` - Bonaire, Sint Eustatius and Saba
-* \`BA\` - Bosnia and Herzegovina
-* \`BW\` - Botswana
-* \`BV\` - Bouvet Island
-* \`BR\` - Brazil
-* \`IO\` - British Indian Ocean Territory
-* \`BN\` - Brunei
-* \`BG\` - Bulgaria
-* \`BF\` - Burkina Faso
-* \`BI\` - Burundi
-* \`CV\` - Cabo Verde
-* \`KH\` - Cambodia
-* \`CM\` - Cameroon
-* \`CA\` - Canada
-* \`KY\` - Cayman Islands
-* \`CF\` - Central African Republic
-* \`TD\` - Chad
-* \`CL\` - Chile
-* \`CN\` - China
-* \`CX\` - Christmas Island
-* \`CC\` - Cocos (Keeling) Islands
-* \`CO\` - Colombia
-* \`KM\` - Comoros
-* \`CG\` - Congo
-* \`CD\` - Congo (the Democratic Republic of the)
-* \`CK\` - Cook Islands
-* \`CR\` - Costa Rica
-* \`CI\` - Côte d'Ivoire
-* \`HR\` - Croatia
-* \`CU\` - Cuba
-* \`CW\` - Curaçao
-* \`CY\` - Cyprus
-* \`CZ\` - Czechia
-* \`DK\` - Denmark
-* \`DJ\` - Djibouti
-* \`DM\` - Dominica
-* \`DO\` - Dominican Republic
-* \`EC\` - Ecuador
-* \`EG\` - Egypt
-* \`SV\` - El Salvador
-* \`GQ\` - Equatorial Guinea
-* \`ER\` - Eritrea
-* \`EE\` - Estonia
-* \`SZ\` - Eswatini
-* \`ET\` - Ethiopia
-* \`FK\` - Falkland Islands (Malvinas)
-* \`FO\` - Faroe Islands
-* \`FJ\` - Fiji
-* \`FI\` - Finland
-* \`FR\` - France
-* \`GF\` - French Guiana
-* \`PF\` - French Polynesia
-* \`TF\` - French Southern Territories
-* \`GA\` - Gabon
-* \`GM\` - Gambia
-* \`GE\` - Georgia
-* \`DE\` - Germany
-* \`GH\` - Ghana
-* \`GI\` - Gibraltar
-* \`GR\` - Greece
-* \`GL\` - Greenland
-* \`GD\` - Grenada
-* \`GP\` - Guadeloupe
-* \`GU\` - Guam
-* \`GT\` - Guatemala
-* \`GG\` - Guernsey
-* \`GN\` - Guinea
-* \`GW\` - Guinea-Bissau
-* \`GY\` - Guyana
-* \`HT\` - Haiti
-* \`HM\` - Heard Island and McDonald Islands
-* \`VA\` - Holy See
-* \`HN\` - Honduras
-* \`HK\` - Hong Kong
-* \`HU\` - Hungary
-* \`IS\` - Iceland
-* \`IN\` - India
-* \`ID\` - Indonesia
-* \`IR\` - Iran
-* \`IQ\` - Iraq
-* \`IE\` - Ireland
-* \`IM\` - Isle of Man
-* \`IL\` - Israel
-* \`IT\` - Italy
-* \`JM\` - Jamaica
-* \`JP\` - Japan
-* \`JE\` - Jersey
-* \`JO\` - Jordan
-* \`KZ\` - Kazakhstan
-* \`KE\` - Kenya
-* \`KI\` - Kiribati
-* \`KW\` - Kuwait
-* \`KG\` - Kyrgyzstan
-* \`LA\` - Laos
-* \`LV\` - Latvia
-* \`LB\` - Lebanon
-* \`LS\` - Lesotho
-* \`LR\` - Liberia
-* \`LY\` - Libya
-* \`LI\` - Liechtenstein
-* \`LT\` - Lithuania
-* \`LU\` - Luxembourg
-* \`MO\` - Macao
-* \`MG\` - Madagascar
-* \`MW\` - Malawi
-* \`MY\` - Malaysia
-* \`MV\` - Maldives
-* \`ML\` - Mali
-* \`MT\` - Malta
-* \`MH\` - Marshall Islands
-* \`MQ\` - Martinique
-* \`MR\` - Mauritania
-* \`MU\` - Mauritius
-* \`YT\` - Mayotte
-* \`MX\` - Mexico
-* \`FM\` - Micronesia (Federated States of)
-* \`MD\` - Moldova
-* \`MC\` - Monaco
-* \`MN\` - Mongolia
-* \`ME\` - Montenegro
-* \`MS\` - Montserrat
-* \`MA\` - Morocco
-* \`MZ\` - Mozambique
-* \`MM\` - Myanmar
-* \`NA\` - Namibia
-* \`NR\` - Nauru
-* \`NP\` - Nepal
-* \`NL\` - Netherlands
-* \`NC\` - New Caledonia
-* \`NZ\` - New Zealand
-* \`NI\` - Nicaragua
-* \`NE\` - Niger
-* \`NG\` - Nigeria
-* \`NU\` - Niue
-* \`NF\` - Norfolk Island
-* \`KP\` - North Korea
-* \`MK\` - North Macedonia
-* \`MP\` - Northern Mariana Islands
-* \`NO\` - Norway
-* \`OM\` - Oman
-* \`PK\` - Pakistan
-* \`PW\` - Palau
-* \`PS\` - Palestine, State of
-* \`PA\` - Panama
-* \`PG\` - Papua New Guinea
-* \`PY\` - Paraguay
-* \`PE\` - Peru
-* \`PH\` - Philippines
-* \`PN\` - Pitcairn
-* \`PL\` - Poland
-* \`PT\` - Portugal
-* \`PR\` - Puerto Rico
-* \`QA\` - Qatar
-* \`RE\` - Réunion
-* \`RO\` - Romania
-* \`RU\` - Russia
-* \`RW\` - Rwanda
-* \`BL\` - Saint Barthélemy
-* \`SH\` - Saint Helena, Ascension and Tristan da Cunha
-* \`KN\` - Saint Kitts and Nevis
-* \`LC\` - Saint Lucia
-* \`MF\` - Saint Martin (French part)
-* \`PM\` - Saint Pierre and Miquelon
-* \`VC\` - Saint Vincent and the Grenadines
-* \`WS\` - Samoa
-* \`SM\` - San Marino
-* \`ST\` - Sao Tome and Principe
-* \`SA\` - Saudi Arabia
-* \`SN\` - Senegal
-* \`RS\` - Serbia
-* \`SC\` - Seychelles
-* \`SL\` - Sierra Leone
-* \`SG\` - Singapore
-* \`SX\` - Sint Maarten (Dutch part)
-* \`SK\` - Slovakia
-* \`SI\` - Slovenia
-* \`SB\` - Solomon Islands
-* \`SO\` - Somalia
-* \`ZA\` - South Africa
-* \`GS\` - South Georgia and the South Sandwich Islands
-* \`KR\` - South Korea
-* \`SS\` - South Sudan
-* \`ES\` - Spain
-* \`LK\` - Sri Lanka
-* \`SD\` - Sudan
-* \`SR\` - Suriname
-* \`SJ\` - Svalbard and Jan Mayen
-* \`SE\` - Sweden
-* \`CH\` - Switzerland
-* \`SY\` - Syria
-* \`TW\` - Taiwan
-* \`TJ\` - Tajikistan
-* \`TZ\` - Tanzania
-* \`TH\` - Thailand
-* \`TL\` - Timor-Leste
-* \`TG\` - Togo
-* \`TK\` - Tokelau
-* \`TO\` - Tonga
-* \`TT\` - Trinidad and Tobago
-* \`TN\` - Tunisia
-* \`TR\` - Turkey
-* \`TM\` - Turkmenistan
-* \`TC\` - Turks and Caicos Islands
-* \`TV\` - Tuvalu
-* \`UG\` - Uganda
-* \`UA\` - Ukraine
-* \`AE\` - United Arab Emirates
-* \`GB\` - United Kingdom
-* \`UM\` - United States Minor Outlying Islands
-* \`US\` - United States of America
-* \`UY\` - Uruguay
-* \`UZ\` - Uzbekistan
-* \`VU\` - Vanuatu
-* \`VE\` - Venezuela
-* \`VN\` - Vietnam
-* \`VG\` - Virgin Islands (British)
-* \`VI\` - Virgin Islands (U.S.)
-* \`WF\` - Wallis and Futuna
-* \`EH\` - Western Sahara
-* \`YE\` - Yemen
-* \`ZM\` - Zambia
-* \`ZW\` - Zimbabwe",
-                  "generatedName": "LocationCountry",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "LocationCountryZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "CountryEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -27543,45 +25718,14 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The location's type. Can be either WORK or HOME
-
-* \`HOME\` - HOME
-* \`WORK\` - WORK",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The location's type. Can be either WORK or HOME
-
-* \`HOME\` - HOME
-* \`WORK\` - WORK",
-                  "generatedName": "LocationLocationType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "LocationLocationTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "LocationTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -28056,47 +26200,14 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The encoding of the value of \`data\`. Defaults to \`RAW\` if not defined.
-
-* \`RAW\` - RAW
-* \`BASE64\` - BASE64
-* \`GZIP_BASE64\` - GZIP_BASE64",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The encoding of the value of \`data\`. Defaults to \`RAW\` if not defined.
-
-* \`RAW\` - RAW
-* \`BASE64\` - BASE64
-* \`GZIP_BASE64\` - GZIP_BASE64",
-                  "generatedName": "MultipartFormFieldRequestEncoding",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "MultipartFormFieldRequestEncodingZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "EncodingEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -32172,51 +30283,14 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The state of the payroll run
-
-* \`PAID\` - PAID
-* \`DRAFT\` - DRAFT
-* \`APPROVED\` - APPROVED
-* \`FAILED\` - FAILED
-* \`CLOSED\` - CLOSED",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The state of the payroll run
-
-* \`PAID\` - PAID
-* \`DRAFT\` - DRAFT
-* \`APPROVED\` - APPROVED
-* \`FAILED\` - FAILED
-* \`CLOSED\` - CLOSED",
-                  "generatedName": "PayrollRunRunState",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "PayrollRunRunStateZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "RunStateEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -32229,51 +30303,14 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The type of the payroll run
-
-* \`REGULAR\` - REGULAR
-* \`OFF_CYCLE\` - OFF_CYCLE
-* \`CORRECTION\` - CORRECTION
-* \`TERMINATION\` - TERMINATION
-* \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The type of the payroll run
-
-* \`REGULAR\` - REGULAR
-* \`OFF_CYCLE\` - OFF_CYCLE
-* \`CORRECTION\` - CORRECTION
-* \`TERMINATION\` - TERMINATION
-* \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
-                  "generatedName": "PayrollRunRunType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "PayrollRunRunTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "RunTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -32757,34 +30794,14 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "oneOf": {
-                "description": undefined,
-                "generatedName": "RemoteResponseResponseType",
-                "groupName": undefined,
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "generatedName": "RemoteResponseResponseTypeZero",
-                    "groupName": undefined,
-                    "nameOverride": undefined,
-                    "schema": "ResponseTypeEnum",
-                    "type": "reference",
-                  },
-                  {
-                    "description": undefined,
-                    "groupName": undefined,
-                    "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "undisciminated",
+              "description": undefined,
+              "groupName": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
-              "type": "oneOf",
+              "type": "primitive",
             },
           },
         },
@@ -33783,51 +31800,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The status of this time off request.
-
-* \`REQUESTED\` - REQUESTED
-* \`APPROVED\` - APPROVED
-* \`DECLINED\` - DECLINED
-* \`CANCELLED\` - CANCELLED
-* \`DELETED\` - DELETED",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The status of this time off request.
-
-* \`REQUESTED\` - REQUESTED
-* \`APPROVED\` - APPROVED
-* \`DECLINED\` - DECLINED
-* \`CANCELLED\` - CANCELLED
-* \`DELETED\` - DELETED",
-                  "generatedName": "TimeOffStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "TimeOffStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -33865,45 +31845,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The measurement that the third-party integration uses to count time requested.
-
-* \`HOURS\` - HOURS
-* \`DAYS\` - DAYS",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The measurement that the third-party integration uses to count time requested.
-
-* \`HOURS\` - HOURS
-* \`DAYS\` - DAYS",
-                  "generatedName": "TimeOffUnits",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffUnitsZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "UnitsEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -33939,53 +31888,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The type of time off request.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The type of time off request.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
-                  "generatedName": "TimeOffRequestType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffRequestTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "RequestTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -34273,53 +32183,14 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The policy type of this time off balance.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The policy type of this time off balance.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
-                  "generatedName": "TimeOffBalancePolicyType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffBalancePolicyTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "PolicyTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -34519,51 +32390,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The status of this time off request.
-
-* \`REQUESTED\` - REQUESTED
-* \`APPROVED\` - APPROVED
-* \`DECLINED\` - DECLINED
-* \`CANCELLED\` - CANCELLED
-* \`DELETED\` - DELETED",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The status of this time off request.
-
-* \`REQUESTED\` - REQUESTED
-* \`APPROVED\` - APPROVED
-* \`DECLINED\` - DECLINED
-* \`CANCELLED\` - CANCELLED
-* \`DELETED\` - DELETED",
-                  "generatedName": "TimeOffRequestStatus",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffRequestStatusZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "TimeOffStatusEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -34601,45 +32435,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The measurement that the third-party integration uses to count time requested.
-
-* \`HOURS\` - HOURS
-* \`DAYS\` - DAYS",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The measurement that the third-party integration uses to count time requested.
-
-* \`HOURS\` - HOURS
-* \`DAYS\` - DAYS",
-                  "generatedName": "TimeOffRequestUnits",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffRequestUnitsZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "UnitsEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },
@@ -34675,53 +32478,14 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "groupName": undefined,
             "type": "optional",
             "value": {
-              "description": "The type of time off request.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
+              "description": undefined,
               "groupName": undefined,
-              "type": "nullable",
-              "value": {
-                "oneOf": {
-                  "description": "The type of time off request.
-
-* \`VACATION\` - VACATION
-* \`SICK\` - SICK
-* \`PERSONAL\` - PERSONAL
-* \`JURY_DUTY\` - JURY_DUTY
-* \`VOLUNTEER\` - VOLUNTEER
-* \`BEREAVEMENT\` - BEREAVEMENT",
-                  "generatedName": "TimeOffRequestRequestType",
-                  "groupName": undefined,
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "generatedName": "TimeOffRequestRequestTypeZero",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "RequestTypeEnum",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "groupName": undefined,
-                      "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
               },
+              "type": "primitive",
             },
           },
         },

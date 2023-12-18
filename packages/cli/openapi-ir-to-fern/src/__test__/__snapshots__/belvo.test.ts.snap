@@ -1873,28 +1873,13 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "types": {
         "CreateBankAccountRequest": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.CreateBankAccountOfpi",
-            "root.CreateBankAccountPse",
-          ],
+          "enum": [],
         },
         "CreateBankAccountResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.BankAccountOfpiResponse",
-            "root.BankAccountPseResponse",
-          ],
+          "enum": [],
         },
         "DetailBankAccountResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.BankAccountOfpiResponse",
-            "root.BankAccountPseResponse",
-          ],
+          "enum": [],
         },
       },
     },
@@ -2151,28 +2136,13 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "types": {
         "CreateCustomerRequest": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.CreateCustomerOfpi",
-            "root.CreateCustomerPse",
-          ],
+          "enum": [],
         },
         "CreateCustomerResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.CustomerOfpi",
-            "root.CustomerPse",
-          ],
+          "enum": [],
         },
         "DetailCustomerResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.CustomerOfpi",
-            "root.CustomerPse",
-          ],
+          "enum": [],
         },
       },
     },
@@ -4415,28 +4385,13 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "types": {
         "DetailInvoiceResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.InvoiceWithIdSat",
-            "root.InvoiceDian",
-          ],
+          "enum": [],
         },
         "PatchInvoicesResponseItem": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.InvoiceWithIdSat",
-            "root.InvoiceDian",
-          ],
+          "enum": [],
         },
         "RetrieveInvoicesResponseItem": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.InvoiceWithIdSat",
-            "root.InvoiceDian",
-          ],
+          "enum": [],
         },
       },
     },
@@ -6225,28 +6180,13 @@ During the payment intent flow, you need to fill in the payment intent with requ
       },
       "types": {
         "CreatePaymentlinkRequest": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.CreatePaymentLinkOfpi",
-            "root.CreatePaymentLinkPse",
-          ],
+          "enum": [],
         },
         "CreatePaymentlinkResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.PaymentLinkOfpi",
-            "root.PaymentLinkPse",
-          ],
+          "enum": [],
         },
         "DetailCreatePaymentlinkResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.PaymentLinkOfpi",
-            "root.PaymentLinkPse",
-          ],
+          "enum": [],
         },
         "ListPaymentLinksRequestOrdering": {
           "enum": [
@@ -9106,28 +9046,13 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "types": {
         "DetailTaxDeclarationResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxDeclarationIndividual",
-            "root.TaxDeclarationBusiness",
-          ],
+          "enum": [],
         },
         "ListTaxDeclarationsResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxDeclarationIndividualPaginated",
-            "root.TaxDeclarationBusinessPaginated",
-          ],
+          "enum": [],
         },
         "RetrieveTaxDeclarationsResponseItem": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxDeclarationBusiness",
-            "root.TaxDeclarationIndividual",
-          ],
+          "enum": [],
         },
       },
     },
@@ -9822,42 +9747,16 @@ client.tax_returns.list(params: {
       },
       "types": {
         "DetailTaxReturnResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxReturnPersonal",
-            "root.TaxReturnPersonalMonthly",
-            "root.TaxReturnBusiness",
-            "root.TaxReturnBusinessMonthly",
-          ],
+          "enum": [],
         },
         "ListTaxReturnsResponse": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxReturnsPersonalPaginated",
-            "root.TaxReturnsPersonalMonthlyPaginated",
-            "root.TaxReturnsBusinessPaginated",
-            "root.TaxReturnsBusinessMonthlyPaginated",
-          ],
+          "enum": [],
         },
         "RetrieveTaxReturnsRequestBody": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxReturnsMonthlyRequest",
-            "root.TaxReturnsYearlyRequest",
-          ],
+          "enum": [],
         },
         "RetrieveTaxReturnsResponseItem": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "root.TaxReturnPersonal",
-            "root.TaxReturnPersonalMonthly",
-            "root.TaxReturnBusiness",
-            "root.TaxReturnBusinessMonthly",
-          ],
+          "enum": [],
         },
       },
     },
@@ -12001,12 +11900,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
       },
       "BankAccountHolderRequestOfpiInformation": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "HolderInformationBusinessOfpi",
-          "HolderInformationIndividualOfpi",
-        ],
+        "enum": [],
       },
       "BankAccountInformationContentPse": {
         "docs": "Information about the payer's institution",
@@ -12053,12 +11947,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
       },
       "BankAccountOfpiResponseDetails": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "BankAccountDetailsOfpi",
-          "BankAccountDetailsOfpiPix",
-        ],
+        "enum": [],
       },
       "BankAccountPaginatedResponse": {
         "docs": undefined,
@@ -12085,12 +11974,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "BankAccountPaginatedResponseResultsItem": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "BankAccountOfpiResponse",
-          "BankAccountPseResponse",
-        ],
+        "enum": [],
       },
       "BankAccountPseResponse": "BankAccountBusinessPse",
       "BeneficiaryBankAccountOfpi": {
@@ -12114,12 +11998,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "BeneficiaryBankAccountOfpiDetails": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "BankAccountDetailsOpenFinance",
-          "BankAccountDetailsOpenFinancePix",
-        ],
+        "enum": [],
       },
       "BeneficiaryBankAccountPse": {
         "docs": undefined,
@@ -12339,12 +12218,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "ChargePaymentMethodDetails": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "ChargePaymentMethodDetailsPse",
-          "ChargePaymentMethodDetailsOfpi",
-        ],
+        "enum": [],
       },
       "ChargePaymentMethodDetailsOfpi": {
         "docs": "Details about the payment method.",
@@ -12411,12 +12285,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "CreateBankAccountOfpiDetails": {
-        "discriminated": false,
         "docs": "Information regarding the bank account.",
-        "union": [
-          "BankAccountDetailsOfpi",
-          "BankAccountDetailsOfpiPix",
-        ],
+        "enum": [],
       },
       "CreateBankAccountPse": {
         "docs": undefined,
@@ -12723,12 +12593,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "CustomerPaginatedResponseResultsItem": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "CustomerOfpi",
-          "CustomerPse",
-        ],
+        "enum": [],
       },
       "CustomerPse": {
         "docs": undefined,
@@ -14358,12 +14223,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
       },
       "HolderResponseOfpiInformation": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "HolderInformationBusinessOfpiResponse",
-          "HolderInformationIndividualOfpiResponse",
-        ],
+        "enum": [],
       },
       "Income": {
         "docs": "Income insights",
@@ -16160,12 +16020,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "InvoicesResponsePaginatedResponseResultsItem": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "InvoiceWithIdSat",
-          "InvoiceDian",
-        ],
+        "enum": [],
       },
       "LastErrorInvalidCredentials": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
@@ -17097,16 +16952,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
       },
       "PaymentIntentOfpiNextStep": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "NextStepDisplayPaymentMethodInformation",
-          "NextStepNeedsRedirect",
-          "NextStepDisplayConfirmationRequiredOfpi",
-          "NextStepDisplayPaymentProcessing",
-          "NextStepDisplayPaymentSucceeded",
-          "NextStepDisplayPaymentFailed",
-        ],
+        "enum": [],
       },
       "PaymentIntentOfpiPaymentMethodDetails": {
         "discriminated": false,
@@ -17308,28 +17154,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "PaymentIntentPseLastError": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "LastErrorInvalidCredentials",
-          "LastErrorInvalidToken",
-          "LastErrorLoginError",
-          "LastErrorTwoFactor",
-          "LastErrorPaymentError",
-          "LastErrorSessionExpired",
-        ],
+        "enum": [],
       },
       "PaymentIntentPseNextStep": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "NextStepDisplayPaymentMethodInformationPse",
-          "NextStepDisplayCredentialsRequiredPse",
-          "NextStepDisplayNeedsRedirectPse",
-          "NextStepDisplayTokenRequiredPse",
-          "NextStepDisplayCustomerBankAccountsPse",
-          "NextStepDisplayConfirmationRequiredPse",
-        ],
+        "enum": [],
       },
       "PaymentIntentsPaymentMethodDetailsBodyPse": {
         "docs": "Details about the organization's bank account that will receive the payment.",
@@ -17549,12 +17377,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "PaymentLinkPaginatedResponseResultsItem": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "PaymentLinkListOfpi",
-          "PaymentLinkListPse",
-        ],
+        "enum": [],
       },
       "PaymentLinkPse": {
         "docs": undefined,
@@ -17770,12 +17593,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
       },
       "PaymentTransactionPayer": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "TransactionBankAccountOfpi",
-          "TransactionBankAccountPse",
-        ],
+        "enum": [],
       },
       "PaymentWebhook": {
         "docs": undefined,
@@ -20204,12 +20022,8 @@ For \`too_many_sessions\` errors, the description is:
         "type": "map<string, unknown>",
       },
       "TransactionBankAccountPse": {
-        "discriminated": false,
         "docs": "Object containing the payer's bank account information.",
-        "union": [
-          "TransactionBankAccountBodyPse",
-          "BankAccountInformationPse",
-        ],
+        "enum": [],
       },
       "TransactionCreditCardData": {
         "docs": "Additional data provided by the institution for credit card transactions.",

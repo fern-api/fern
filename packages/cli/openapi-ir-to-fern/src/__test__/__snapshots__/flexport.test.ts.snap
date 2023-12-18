@@ -13711,13 +13711,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "ShipmentEventDataResource": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "Shipment",
-          "ShipmentLeg",
-          "OceanShipmentContainerLeg",
-        ],
+        "enum": [],
       },
       "ShipmentIncoterm": {
         "enum": [
