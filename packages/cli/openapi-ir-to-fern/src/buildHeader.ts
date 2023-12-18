@@ -30,7 +30,7 @@ export function buildHeader({
     const headerSchema: RawSchemas.HttpHeaderSchema = {
         type: headerType
     };
-    if (headerVariableName != null && headerVariableName !== header.name) {
+    if (headerVariableName !== header.name) {
         headerSchema.name = headerVariableName;
     }
     if (header.description != null) {
