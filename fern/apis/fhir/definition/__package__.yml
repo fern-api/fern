@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 types:
   ResourceList:
     discriminated: false
@@ -4874,6 +4872,7 @@ types:
       the healthcare field, used to track charges for a patient, cost centers, etc.
     extends: BaseResource
     properties:
+      resourceType: literal<"Account">
       identifier:
         docs: Unique identifier used to reference the account.  Might or might not
           be intended for human use (e.g. credit card number).
@@ -4914,7 +4913,6 @@ types:
       partOf:
         docs: Reference to a parent Account.
         type: optional<Reference>
-      discriminant: literal<"Account">
   AccountStatus:
     docs: Indicates whether the account is presently used/usable or not.
     enum:
@@ -5011,6 +5009,7 @@ types:
       independent of a particular patient, practitioner, or other performance context.
     extends: BaseResource
     properties:
+      resourceType: literal<"ActivityDefinition">
       url:
         docs: An absolute URI that is used to identify this activity definition when
           it is referenced in a specification, model, design or an instance; also
@@ -5250,7 +5249,6 @@ types:
           to specify an expression that calculated the weight, and the path on the
           request resource that would contain the result.
         type: optional<list<ActivityDefinitionDynamicValue>>
-      discriminant: literal<"ActivityDefinition">
   ActivityDefinitionStatus:
     docs: The status of this activity definition. Enables tracking the life-cycle
       of the content.
@@ -5347,6 +5345,7 @@ types:
       or that results in death.
     extends: BaseResource
     properties:
+      resourceType: literal<"AdverseEvent">
       identifier:
         docs: Business identifiers assigned to this adverse event by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -5423,7 +5422,6 @@ types:
       study:
         docs: AdverseEvent.study.
         type: optional<list<Reference>>
-      discriminant: literal<"AdverseEvent">
   AdverseEventActuality:
     docs: Whether the event actually happened, or just had the potential to. Note
       that this is independent of whether anyone was affected or harmed or how severely.
@@ -5519,6 +5517,7 @@ types:
       an individual and associated with exposure to a substance.
     extends: BaseResource
     properties:
+      resourceType: literal<"AllergyIntolerance">
       identifier:
         docs: Business identifiers assigned to this AllergyIntolerance by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -5609,7 +5608,6 @@ types:
         docs: Details about each adverse reaction event linked to exposure to the
           identified substance.
         type: optional<list<AllergyIntoleranceReaction>>
-      discriminant: literal<"AllergyIntolerance">
   AllergyIntoleranceType:
     docs: Identification of the underlying physiological mechanism for the reaction
       risk.
@@ -5718,6 +5716,7 @@ types:
       or more Encounter(s).
     extends: BaseResource
     properties:
+      resourceType: literal<"Appointment">
       identifier:
         docs: This records identifiers associated with this appointment concern that
           are defined by business processes and/or used to refer to it when a direct
@@ -5820,7 +5819,6 @@ types:
           the start/end times for the actual allocated time. However, in other situations
           the duration may be calculated by the scheduling system.
         type: optional<list<Period>>
-      discriminant: literal<"Appointment">
   AppointmentStatus:
     docs: The overall status of the Appointment. Each of the participants has their
       own participation status which indicates their involvement in the process, however
@@ -5921,6 +5919,7 @@ types:
       such as a confirmation or rejection.
     extends: BaseResource
     properties:
+      resourceType: literal<"AppointmentResponse">
       identifier:
         docs: This records identifiers associated with this appointment response concern
           that are defined by business processes and/ or used to refer to it when
@@ -5955,13 +5954,13 @@ types:
       comment:
         docs: Additional comments about the appointment.
         type: optional<string>
-      discriminant: literal<"AppointmentResponse">
   AuditEvent:
     docs: A record of an event made for purposes of maintaining a security log. Typical
       uses include detection of intrusion attempts and monitoring for inappropriate
       usage.
     extends: BaseResource
     properties:
+      resourceType: literal<"AuditEvent">
       type:
         type: Coding
         docs: Identifier for a family of the event.  For example, a menu item, program,
@@ -5998,7 +5997,6 @@ types:
       entity:
         docs: Specific instances of data or objects that have been accessed.
         type: optional<list<AuditEventEntity>>
-      discriminant: literal<"AuditEvent">
   AuditEventAction:
     docs: Indicator for type of action performed during the event that generated the
       audit.
@@ -6295,6 +6293,7 @@ types:
       for inclusion in the FHIR specification.
     extends: BaseResource
     properties:
+      resourceType: literal<"Basic">
       identifier:
         docs: Identifier assigned to the resource for business purposes, outside the
           context of FHIR.
@@ -6313,12 +6312,12 @@ types:
       author:
         docs: Indicates who was responsible for creating the resource instance.
         type: optional<Reference>
-      discriminant: literal<"Basic">
   Binary:
     docs: A resource that represents the data of a single raw artifact as digital
       content accessible in its native format.  A Binary resource can contain any
       content, whether text, image, pdf, zip archive, etc.
     properties:
+      resourceType: literal<"Binary">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -6356,12 +6355,12 @@ types:
       data:
         docs: The actual content, base64 encoded.
         type: optional<base64Binary>
-      discriminant: literal<"Binary">
   BiologicallyDerivedProduct:
     docs: A material substance originating from a biological entity intended to be
       transplanted or infused into another (possibly the same) biological entity.
     extends: BaseResource
     properties:
+      resourceType: literal<"BiologicallyDerivedProduct">
       identifier:
         docs: This records identifiers associated with this biologically derived product
           instance that are defined by business processes and/or used to refer to
@@ -6403,7 +6402,6 @@ types:
       storage:
         docs: Product storage.
         type: optional<list<BiologicallyDerivedProductStorage>>
-      discriminant: literal<"BiologicallyDerivedProduct">
   BiologicallyDerivedProductProductCategory:
     docs: Broad category of this product.
     enum:
@@ -6604,6 +6602,7 @@ types:
       case.
     extends: BaseResource
     properties:
+      resourceType: literal<"BodyStructure">
       identifier:
         docs: Identifier for this instance of the anatomical structure.
         type: optional<list<Identifier>>
@@ -6630,10 +6629,10 @@ types:
       patient:
         type: Reference
         docs: The person to which the body site belongs.
-      discriminant: literal<"BodyStructure">
   Bundle:
     docs: A container for a collection of resources.
     properties:
+      resourceType: literal<"Bundle">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -6679,7 +6678,6 @@ types:
       signature:
         docs: Digital Signature - base64 encoded. XML-DSig or a JWT.
         type: optional<Signature>
-      discriminant: literal<"Bundle">
   BundleType:
     docs: Indicates the purpose of this bundle - how it is intended to be used.
     enum:
@@ -6967,6 +6965,7 @@ types:
       implementation.
     extends: BaseResource
     properties:
+      resourceType: literal<"CapabilityStatement">
       url:
         docs: An absolute URI that is used to identify this capability statement when
           it is referenced in a specification, model, design or an instance; also
@@ -7096,7 +7095,6 @@ types:
       document:
         docs: A document definition.
         type: optional<list<CapabilityStatementDocument>>
-      discriminant: literal<"CapabilityStatement">
   CapabilityStatementStatus:
     docs: The status of this capability statement. Enables tracking the life-cycle
       of the content.
@@ -7935,6 +7933,7 @@ types:
       limited to care for a specific condition or set of conditions.
     extends: BaseResource
     properties:
+      resourceType: literal<"CarePlan">
       identifier:
         docs: Business identifiers assigned to this care plan by the performer or
           other systems which remain constant as the resource is updated and propagates
@@ -8026,7 +8025,6 @@ types:
       note:
         docs: General notes about the care plan not covered elsewhere.
         type: optional<list<Annotation>>
-      discriminant: literal<"CarePlan">
   CarePlanActivity:
     docs: Describes the intention of how one or more practitioners intend to deliver
       care for a particular patient, group or community for a period of time, possibly
@@ -8222,6 +8220,7 @@ types:
       in the coordination and delivery of care for a patient.
     extends: BaseResource
     properties:
+      resourceType: literal<"CareTeam">
       identifier:
         docs: Business identifiers assigned to this care team by the performer or
           other systems which remain constant as the resource is updated and propagates
@@ -8270,7 +8269,6 @@ types:
       note:
         docs: Comments made about the CareTeam.
         type: optional<list<Annotation>>
-      discriminant: literal<"CareTeam">
   CareTeamStatus:
     docs: Indicates the current state of the care team.
     enum:
@@ -8333,6 +8331,7 @@ types:
     docs: Catalog entries are wrappers that contextualize items included in a catalog.
     extends: BaseResource
     properties:
+      resourceType: literal<"CatalogEntry">
       identifier:
         docs: Used in supporting different identifiers for the same product, e.g.
           manufacturer code and retailer code.
@@ -8376,7 +8375,6 @@ types:
         docs: Used for example, to point to a substance, or to a device used to administer
           a medication.
         type: optional<list<CatalogEntryRelatedEntry>>
-      discriminant: literal<"CatalogEntry">
   CatalogEntryStatus:
     docs: Used to support catalog exchange even for unsupported products, e.g. getting
       list of medications even if not prescribable.
@@ -8440,6 +8438,7 @@ types:
       process and internal cost allocation.
     extends: BaseResource
     properties:
+      resourceType: literal<"ChargeItem">
       identifier:
         docs: Identifiers assigned to this event performer or other systems.
         type: optional<list<Identifier>>
@@ -8538,7 +8537,6 @@ types:
       supportingInformation:
         docs: Further information supporting this charge.
         type: optional<list<Reference>>
-      discriminant: literal<"ChargeItem">
   ChargeItemStatus:
     docs: The current state of the ChargeItem.
     enum:
@@ -8604,6 +8602,7 @@ types:
       system.
     extends: BaseResource
     properties:
+      resourceType: literal<"ChargeItemDefinition">
       url:
         docs: An absolute URI that is used to identify this charge item definition
           when it is referenced in a specification, model, design or an instance;
@@ -8715,7 +8714,6 @@ types:
           If no applicability rules are established for the group, then all properties
           always apply.
         type: optional<list<ChargeItemDefinitionPropertyGroup>>
-      discriminant: literal<"ChargeItemDefinition">
   ChargeItemDefinitionStatus:
     docs: The current state of the ChargeItemDefinition.
     enum:
@@ -8867,6 +8865,7 @@ types:
       for reimbursement.
     extends: BaseResource
     properties:
+      resourceType: literal<"Claim">
       identifier:
         docs: A unique identifier assigned to this claim.
         type: optional<list<Identifier>>
@@ -8967,7 +8966,6 @@ types:
       total:
         docs: The total value of the all the items in the claim.
         type: optional<Money>
-      discriminant: literal<"Claim">
   ClaimUse:
     docs: 'A code to indicate whether the nature of the request is: to request adjudication
       of products and services previously rendered; or requesting authorization and
@@ -9652,6 +9650,7 @@ types:
       Claim resource.
     extends: BaseResource
     properties:
+      resourceType: literal<"ClaimResponse">
       identifier:
         docs: A unique identifier assigned to this claim response.
         type: optional<list<Identifier>>
@@ -9750,7 +9749,6 @@ types:
       error:
         docs: Errors encountered during the processing of the adjudication.
         type: optional<list<ClaimResponseError>>
-      discriminant: literal<"ClaimResponse">
   ClaimResponseItem:
     docs: This resource provides the adjudication details from the processing of a
       Claim resource.
@@ -10402,6 +10400,7 @@ types:
       such as Apgar score.
     extends: BaseResource
     properties:
+      resourceType: literal<"ClinicalImpression">
       identifier:
         docs: Business identifiers assigned to this clinical impression by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -10481,7 +10480,6 @@ types:
           itself was made, though supplemental notes by the original author could
           also appear.
         type: optional<list<Annotation>>
-      discriminant: literal<"ClinicalImpression">
   ClinicalImpressionInvestigation:
     docs: A record of a clinical assessment performed to determine what problem(s)
       may affect the patient and before planning the treatments or management strategies
@@ -10576,6 +10574,7 @@ types:
       define a part or all of its content.
     extends: BaseResource
     properties:
+      resourceType: literal<"CodeSystem">
       url:
         docs: An absolute URI that is used to identify this code system when it is
           referenced in a specification, model, design or an instance; also called
@@ -10696,7 +10695,6 @@ types:
           hierarchical, but the definitions must be consulted to determine what the
           meanings of the hierarchical relationships are.
         type: optional<list<CodeSystemConcept>>
-      discriminant: literal<"CodeSystem">
   CodeSystemStatus:
     docs: The date (and optionally time) when the code system resource was created
       or revised.
@@ -10998,6 +10996,7 @@ types:
       reportable condition.
     extends: BaseResource
     properties:
+      resourceType: literal<"Communication">
       identifier:
         docs: Business identifiers assigned to this communication by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -11084,7 +11083,6 @@ types:
         docs: Additional notes or commentary about the communication by the sender,
           receiver or other interested parties.
         type: optional<list<Annotation>>
-      discriminant: literal<"Communication">
   CommunicationPayload:
     docs: An occurrence of information being transmitted; e.g. an alert that was sent
       to a responsible provider, a public health agency that was notified about a
@@ -11133,6 +11131,7 @@ types:
       agency be notified about a reportable condition.
     extends: BaseResource
     properties:
+      resourceType: literal<"CommunicationRequest">
       identifier:
         docs: Business identifiers assigned to this communication request by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -11217,7 +11216,6 @@ types:
         docs: Comments made about the request by the requester, sender, recipient,
           subject or other participants.
         type: optional<list<Annotation>>
-      discriminant: literal<"CommunicationRequest">
   CommunicationRequestPayload:
     docs: A request to convey information; e.g. the CDS system proposes that an alert
       be sent to a responsible provider, the CDS system proposes that the public health
@@ -11264,6 +11262,7 @@ types:
     docs: A compartment definition that defines how resources are accessed on a server.
     extends: BaseResource
     properties:
+      resourceType: literal<"CompartmentDefinition">
       url:
         docs: An absolute URI that is used to identify this compartment definition
           when it is referenced in a specification, model, design or an instance;
@@ -11333,7 +11332,6 @@ types:
       resource:
         docs: Information about how a resource is related to the compartment.
         type: optional<list<CompartmentDefinitionResource>>
-      discriminant: literal<"CompartmentDefinition">
   CompartmentDefinitionStatus:
     docs: The status of this compartment definition. Enables tracking the life-cycle
       of the content.
@@ -11410,6 +11408,7 @@ types:
       Encounter, etc.).
     extends: BaseResource
     properties:
+      resourceType: literal<"Composition">
       identifier:
         docs: A version-independent identifier for the Composition. This identifier
           stays constant as the composition is changed over time.
@@ -11470,7 +11469,6 @@ types:
       section:
         docs: The root of the sections that make up the composition.
         type: optional<list<CompositionSection>>
-      discriminant: literal<"Composition">
   CompositionStatus:
     docs: The workflow/clinical status of this composition. The status is a marker
       for the clinical standing of the document.
@@ -11726,6 +11724,7 @@ types:
       or classes in class models.
     extends: BaseResource
     properties:
+      resourceType: literal<"ConceptMap">
       url:
         docs: An absolute URI that is used to identify this concept map when it is
           referenced in a specification, model, design or an instance; also called
@@ -11826,7 +11825,6 @@ types:
       group:
         docs: A group of mappings that all have the same source and target system.
         type: optional<list<ConceptMapGroup>>
-      discriminant: literal<"ConceptMap">
   ConceptMapStatus:
     docs: The status of this concept map. Enables tracking the life-cycle of the content.
     enum:
@@ -12132,6 +12130,7 @@ types:
       or clinical concept that has risen to a level of concern.
     extends: BaseResource
     properties:
+      resourceType: literal<"Condition">
       identifier:
         docs: Business identifiers assigned to this condition by the performer or
           other systems which remain constant as the resource is updated and propagates
@@ -12237,7 +12236,6 @@ types:
         docs: Additional information about the Condition. This is a general notes/comments
           entry  for description of the Condition, its diagnosis and prognosis.
         type: optional<list<Annotation>>
-      discriminant: literal<"Condition">
   ConditionStage:
     docs: A clinical condition, problem, diagnosis, or other event, situation, issue,
       or clinical concept that has risen to a level of concern.
@@ -12319,6 +12317,7 @@ types:
       \ within a given policy context, for specific purposes and periods of time."
     extends: BaseResource
     properties:
+      resourceType: literal<"Consent">
       identifier:
         docs: Unique identifier for this copy of the Consent Statement.
         type: optional<list<Identifier>>
@@ -12378,7 +12377,6 @@ types:
         docs: An exception to the base policy of this consent. An exception can be
           an addition or removal of access permissions.
         type: optional<ConsentProvision>
-      discriminant: literal<"Consent">
   ConsentStatus:
     docs: Indicates the current state of this consent.
     enum:
@@ -12643,6 +12641,7 @@ types:
       i.e., a policy or agreement.
     extends: BaseResource
     properties:
+      resourceType: literal<"Contract">
       identifier:
         docs: Unique identifier for this Contract or a derivative that references
           a Source Contract.
@@ -12806,7 +12805,6 @@ types:
           and which would be the basis for legal action related to enforcement of
           this Contract.'
         type: optional<Reference>
-      discriminant: literal<"Contract">
   ContractContentDefinition:
     docs: Legally enforceable, formally recorded unilateral or bilateral directive
       i.e., a policy or agreement.
@@ -13687,6 +13685,7 @@ types:
       products and services. Includes both insurance and self-payment.
     extends: BaseResource
     properties:
+      resourceType: literal<"Coverage">
       identifier:
         docs: A unique identifier assigned to this coverage.
         type: optional<list<Identifier>>
@@ -13754,7 +13753,6 @@ types:
       contract:
         docs: The policy(s) which constitute this insurance coverage.
         type: optional<list<Reference>>
-      discriminant: literal<"Coverage">
   CoverageClass:
     docs: Financial instrument which may be used to reimburse or pay for health care
       products and services. Includes both insurance and self-payment.
@@ -13879,6 +13877,7 @@ types:
       and optionally to provide the insurance details of the policy.
     extends: BaseResource
     properties:
+      resourceType: literal<"CoverageEligibilityRequest">
       identifier:
         docs: A unique identifier assigned to this coverage eligiblity request.
         type: optional<list<Identifier>>
@@ -13935,7 +13934,6 @@ types:
         docs: Service categories or billable services for which benefit details and/or
           an authorization prior to service delivery may be required by the payor.
         type: optional<list<CoverageEligibilityRequestItem>>
-      discriminant: literal<"CoverageEligibilityRequest">
   CoverageEligibilityRequestPurposeItem:
     enum:
     - name: AuthRequirements
@@ -14142,6 +14140,7 @@ types:
       of an CoverageEligibilityRequest resource.
     extends: BaseResource
     properties:
+      resourceType: literal<"CoverageEligibilityResponse">
       identifier:
         docs: A unique identifier assigned to this coverage eligiblity request.
         type: optional<list<Identifier>>
@@ -14200,7 +14199,6 @@ types:
       error:
         docs: Errors encountered during the processing of the request.
         type: optional<list<CoverageEligibilityResponseError>>
-      discriminant: literal<"CoverageEligibilityResponse">
   CoverageEligibilityResponsePurposeItem:
     enum:
     - name: AuthRequirements
@@ -14437,6 +14435,7 @@ types:
       Ineffective treatment frequency, Procedure-condition conflict, etc.
     extends: BaseResource
     properties:
+      resourceType: literal<"DetectedIssue">
       identifier:
         docs: Business identifier associated with the detected issue record.
         type: optional<list<Identifier>>
@@ -14485,7 +14484,6 @@ types:
           manifesting.  Can also reflect an observation of known mitigating factors
           that may reduce/eliminate the need for any action.
         type: optional<list<DetectedIssueMitigation>>
-      discriminant: literal<"DetectedIssue">
   DetectedIssueSeverity:
     docs: Indicates the degree of importance associated with the identified issue
       based on the potential impact on the patient.
@@ -14580,6 +14578,7 @@ types:
       a medical or non-medical device.
     extends: BaseResource
     properties:
+      resourceType: literal<"Device">
       identifier:
         docs: Unique instance identifiers assigned to a device by manufacturers other
           organizations or owners.
@@ -14673,7 +14672,6 @@ types:
       parent:
         docs: The parent device.
         type: optional<Reference>
-      discriminant: literal<"Device">
   DeviceStatus:
     docs: Status of the Device availability.
     enum:
@@ -14933,6 +14931,7 @@ types:
       component of a medical device.
     extends: BaseResource
     properties:
+      resourceType: literal<"DeviceDefinition">
       identifier:
         docs: 'Unique instance identifiers assigned to a device by the software, manufacturers,
           other organizations or owners. For example: handle ID.'
@@ -15017,7 +15016,6 @@ types:
       classification:
         docs: What kind of device or device system this is.
         type: optional<list<DeviceDefinitionClassification>>
-      discriminant: literal<"DeviceDefinition">
   DeviceDefinitionUdiDeviceIdentifier:
     docs: The characteristics, operational status and capabilities of a medical-related
       component of a medical device.
@@ -15294,6 +15292,7 @@ types:
       device.
     extends: BaseResource
     properties:
+      resourceType: literal<"DeviceMetric">
       identifier:
         docs: 'Unique instance identifiers assigned to a device by the device or gateway
           software, manufacturers, other organizations or owners. For example: handle
@@ -15349,7 +15348,6 @@ types:
         docs: Describes the calibrations that have been performed or that are required
           to be performed.
         type: optional<list<DeviceMetricCalibration>>
-      discriminant: literal<"DeviceMetric">
   DeviceMetricOperationalStatus:
     docs: 'Indicates current operational state of the device. For example: On, Off,
       Standby, etc.'
@@ -15462,6 +15460,7 @@ types:
       may be an implantable device, or an external assistive device, such as a walker.
     extends: BaseResource
     properties:
+      resourceType: literal<"DeviceRequest">
       identifier:
         docs: Identifiers assigned to this order by the orderer or by the receiver.
         type: optional<list<Identifier>>
@@ -15565,7 +15564,6 @@ types:
       relevantHistory:
         docs: Key events in the history of the request.
         type: optional<list<Reference>>
-      discriminant: literal<"DeviceRequest">
   DeviceRequestParameter:
     docs: Represents a request for a patient to employ a medical device. The device
       may be an implantable device, or an external assistive device, such as a walker.
@@ -15615,6 +15613,7 @@ types:
       of a report from the patient or another clinician.
     extends: BaseResource
     properties:
+      resourceType: literal<"DeviceUseStatement">
       identifier:
         docs: An external identifier for this statement such as an IRI.
         type: optional<list<Identifier>>
@@ -15668,7 +15667,6 @@ types:
           include for example a comment, an instruction, or a note associated with
           the statement.
         type: optional<list<Annotation>>
-      discriminant: literal<"DeviceUseStatement">
   DeviceUseStatementStatus:
     docs: A code representing the patient or other source's judgment about the state
       of the device used that this statement is about.  Generally this will be active
@@ -15694,6 +15692,7 @@ types:
       formatted representation of diagnostic reports.
     extends: BaseResource
     properties:
+      resourceType: literal<"DiagnosticReport">
       identifier:
         docs: Identifiers assigned to this report by the performer or other systems.
         type: optional<list<Identifier>>
@@ -15773,7 +15772,6 @@ types:
         docs: Rich text representation of the entire result as issued by the diagnostic
           service. Multiple formats are allowed but they SHALL be semantically equivalent.
         type: optional<list<Attachment>>
-      discriminant: literal<"DiagnosticReport">
   DiagnosticReportStatus:
     docs: The status of the diagnostic report.
     enum:
@@ -15842,6 +15840,7 @@ types:
       that applies to the collection.
     extends: BaseResource
     properties:
+      resourceType: literal<"DocumentManifest">
       masterIdentifier:
         docs: A single identifier that uniquely identifies this manifest. Principally
           used to refer to the manifest in non-FHIR contexts.
@@ -15892,7 +15891,6 @@ types:
       related:
         docs: Related identifiers or resources associated with the DocumentManifest.
         type: optional<list<DocumentManifestRelated>>
-      discriminant: literal<"DocumentManifest">
   DocumentManifestStatus:
     docs: The status of this document manifest.
     enum:
@@ -15947,6 +15945,7 @@ types:
       documents like policy text.
     extends: BaseResource
     properties:
+      resourceType: literal<"DocumentReference">
       masterIdentifier:
         docs: Document identifier as assigned by the source of the document. This
           identifier is specific to this version of the document. This unique identifier
@@ -16012,7 +16011,6 @@ types:
       context:
         docs: The clinical context in which the document was prepared.
         type: optional<DocumentReferenceContext>
-      discriminant: literal<"DocumentReference">
   DocumentReferenceStatus:
     docs: The status of this document reference.
     enum:
@@ -16177,6 +16175,7 @@ types:
       from a combination of research studies.
     extends: BaseResource
     properties:
+      resourceType: literal<"EffectEvidenceSynthesis">
       url:
         docs: An absolute URI that is used to identify this effect evidence synthesis
           when it is referenced in a specification, model, design or an instance;
@@ -16320,7 +16319,6 @@ types:
       certainty:
         docs: A description of the certainty of the effect estimate.
         type: optional<list<EffectEvidenceSynthesisCertainty>>
-      discriminant: literal<"EffectEvidenceSynthesis">
   EffectEvidenceSynthesisStatus:
     docs: The status of this effect evidence synthesis. Enables tracking the life-cycle
       of the content.
@@ -16596,6 +16594,7 @@ types:
       of providing healthcare service(s) or assessing the health status of a patient.
     extends: BaseResource
     properties:
+      resourceType: literal<"Encounter">
       identifier:
         docs: Identifier(s) by which this encounter is known.
         type: optional<list<Identifier>>
@@ -16693,7 +16692,6 @@ types:
         docs: Another Encounter of which this encounter is a part of (administratively
           or in time).
         type: optional<Reference>
-      discriminant: literal<"Encounter">
   EncounterStatus:
     docs: planned | arrived | triaged | in-progress | onleave | finished | cancelled
       +.
@@ -17010,6 +17008,7 @@ types:
       server. This may include any security context information.
     extends: BaseResource
     properties:
+      resourceType: literal<"Endpoint">
       identifier:
         docs: Identifier for the organization that is used to identify the endpoint
           across multiple disparate systems.
@@ -17051,7 +17050,6 @@ types:
       header:
         docs: Additional headers / information to send as part of the notification.
         type: optional<list<string>>
-      discriminant: literal<"Endpoint">
   EndpointStatus:
     docs: active | suspended | error | off | test.
     enum:
@@ -17072,6 +17070,7 @@ types:
       a specified coverage.
     extends: BaseResource
     properties:
+      resourceType: literal<"EnrollmentRequest">
       identifier:
         docs: The Response business identifier.
         type: optional<list<Identifier>>
@@ -17094,12 +17093,12 @@ types:
       coverage:
         docs: Reference to the program or plan identification, underwriter or payor.
         type: optional<Reference>
-      discriminant: literal<"EnrollmentRequest">
   EnrollmentResponse:
     docs: This resource provides enrollment and plan details from the processing of
       an EnrollmentRequest resource.
     extends: BaseResource
     properties:
+      resourceType: literal<"EnrollmentResponse">
       identifier:
         docs: The Response business identifier.
         type: optional<list<Identifier>>
@@ -17125,7 +17124,6 @@ types:
         docs: The practitioner who is responsible for the services rendered to the
           patient.
         type: optional<Reference>
-      discriminant: literal<"EnrollmentResponse">
   EnrollmentResponseOutcome:
     docs: 'Processing status: error, complete.'
     enum:
@@ -17143,6 +17141,7 @@ types:
       level of responsibility for the patient during this time.
     extends: BaseResource
     properties:
+      resourceType: literal<"EpisodeOfCare">
       identifier:
         docs: The EpisodeOfCare may be known by different identifiers for different
           contexts of use, such as when an external agency is tracking the Episode
@@ -17188,7 +17187,6 @@ types:
       account:
         docs: The set of accounts that may be used for billing for this EpisodeOfCare.
         type: optional<list<Reference>>
-      discriminant: literal<"EpisodeOfCare">
   EpisodeOfCareStatus:
     docs: planned | waitlist | active | onhold | finished | cancelled.
     enum:
@@ -17305,6 +17303,7 @@ types:
       event can occur.
     extends: BaseResource
     properties:
+      resourceType: literal<"EventDefinition">
       url:
         docs: An absolute URI that is used to identify this event definition when
           it is referenced in a specification, model, design or an instance; also
@@ -17439,7 +17438,6 @@ types:
           trigger condition is specified, the event fires whenever any one of the
           trigger conditions is met.
         type: list<TriggerDefinition>
-      discriminant: literal<"EventDefinition">
   EventDefinitionStatus:
     docs: The status of this event definition. Enables tracking the life-cycle of
       the content.
@@ -17458,6 +17456,7 @@ types:
       the knowledge (evidence, assertion, recommendation) is about.
     extends: BaseResource
     properties:
+      resourceType: literal<"Evidence">
       url:
         docs: An absolute URI that is used to identify this evidence when it is referenced
           in a specification, model, design or an instance; also called its canonical
@@ -17588,7 +17587,6 @@ types:
         docs: A reference to a EvidenceVariable resomece that defines the outcome
           for the research.
         type: optional<list<Reference>>
-      discriminant: literal<"Evidence">
   EvidenceStatus:
     docs: The status of this evidence. Enables tracking the life-cycle of the content.
     enum:
@@ -17605,6 +17603,7 @@ types:
       (evidence, assertion, recommendation) is about.
     extends: BaseResource
     properties:
+      resourceType: literal<"EvidenceVariable">
       url:
         docs: An absolute URI that is used to identify this evidence variable when
           it is referenced in a specification, model, design or an instance; also
@@ -17732,7 +17731,6 @@ types:
         docs: A characteristic that defines the members of the evidence element. Multiple
           characteristics are applied with "and" semantics.
         type: list<EvidenceVariableCharacteristic>
-      discriminant: literal<"EvidenceVariable">
   EvidenceVariableStatus:
     docs: The status of this evidence variable. Enables tracking the life-cycle of
       the content.
@@ -17867,6 +17865,7 @@ types:
     docs: Example of workflow instance.
     extends: BaseResource
     properties:
+      resourceType: literal<"ExampleScenario">
       url:
         docs: An absolute URI that is used to identify this example scenario when
           it is referenced in a specification, model, design or an instance; also
@@ -17950,7 +17949,6 @@ types:
       workflow:
         docs: Another nested workflow.
         type: optional<list<canonical>>
-      discriminant: literal<"ExampleScenario">
   ExampleScenarioStatus:
     docs: The status of this example scenario. Enables tracking the life-cycle of
       the content.
@@ -18312,6 +18310,7 @@ types:
       the subscriber of the benefits provided.'
     extends: BaseResource
     properties:
+      resourceType: literal<"ExplanationOfBenefit">
       identifier:
         docs: A unique identifier assigned to this explanation of benefit.
         type: optional<list<Identifier>>
@@ -18470,7 +18469,6 @@ types:
       benefitBalance:
         docs: Balance by Benefit Category.
         type: optional<list<ExplanationOfBenefitBenefitBalance>>
-      discriminant: literal<"ExplanationOfBenefit">
   ExplanationOfBenefitStatus:
     docs: The status of the resource instance.
     enum:
@@ -19691,6 +19689,7 @@ types:
       in the context of care for the patient.
     extends: BaseResource
     properties:
+      resourceType: literal<"FamilyMemberHistory">
       identifier:
         docs: Business identifiers assigned to this family member history by the performer
           or other systems which remain constant as the resource is updated and propagates
@@ -19789,7 +19788,6 @@ types:
           condition per resource, though there is nothing stopping multiple resources
           - one per condition.
         type: optional<list<FamilyMemberHistoryCondition>>
-      discriminant: literal<"FamilyMemberHistory">
   FamilyMemberHistoryStatus:
     docs: A code specifying the status of the record of the family history of a specific
       family member.
@@ -19871,6 +19869,7 @@ types:
     docs: Prospective warnings of potential issues when providing care to the patient.
     extends: BaseResource
     properties:
+      resourceType: literal<"Flag">
       identifier:
         docs: Business identifiers assigned to this flag by the performer or other
           systems which remain constant as the resource is updated and propagates
@@ -19901,7 +19900,6 @@ types:
       author:
         docs: The person, organization or device that created the flag.
         type: optional<Reference>
-      discriminant: literal<"Flag">
   FlagStatus:
     docs: Supports basic workflow.
     enum:
@@ -19917,6 +19915,7 @@ types:
       herd immunity via immunization, meeting a process improvement objective, etc.
     extends: BaseResource
     properties:
+      resourceType: literal<"Goal">
       identifier:
         docs: Business identifiers assigned to this goal by the performer or other
           systems which remain constant as the resource is updated and propagates
@@ -19978,7 +19977,6 @@ types:
       outcomeReference:
         docs: Details of what's changed (or not changed).
         type: optional<list<Reference>>
-      discriminant: literal<"Goal">
   GoalLifecycleStatus:
     docs: The state of the goal throughout its lifecycle.
     enum:
@@ -20104,6 +20102,7 @@ types:
       resource defines a set and makes rules about the set.
     extends: BaseResource
     properties:
+      resourceType: literal<"GraphDefinition">
       url:
         docs: An absolute URI that is used to identify this graph definition when
           it is referenced in a specification, model, design or an instance; also
@@ -20177,7 +20176,6 @@ types:
       link:
         docs: Links this graph makes rules about.
         type: optional<list<GraphDefinitionLink>>
-      discriminant: literal<"GraphDefinition">
   GraphDefinitionStatus:
     docs: The status of this graph definition. Enables tracking the life-cycle of
       the content.
@@ -20357,6 +20355,7 @@ types:
       Organization.
     extends: BaseResource
     properties:
+      resourceType: literal<"Group">
       identifier:
         docs: A unique business identifier for this group.
         type: optional<list<Identifier>>
@@ -20393,7 +20392,6 @@ types:
       member:
         docs: Identifies the resource instances that are members of the group.
         type: optional<list<GroupMember>>
-      discriminant: literal<"Group">
   GroupType:
     docs: Identifies the broad classification of the kind of resources the group includes.
     enum:
@@ -20520,6 +20518,7 @@ types:
       of any proposed actions to be taken.
     extends: BaseResource
     properties:
+      resourceType: literal<"GuidanceResponse">
       requestIdentifier:
         docs: The identifier of the request associated with this response. If an identifier
           was given as part of the request, it will be reproduced here to enable the
@@ -20598,7 +20597,6 @@ types:
           with the evaluation. A subsequent request to the service should include
           this data.
         type: optional<list<DataRequirement>>
-      discriminant: literal<"GuidanceResponse">
   GuidanceResponseStatus:
     docs: The status of the response. If the evaluation is completed successfully,
       the status will indicate success. However, in order to complete the evaluation,
@@ -20625,6 +20623,7 @@ types:
     docs: The details of a healthcare service available at a location.
     extends: BaseResource
     properties:
+      resourceType: literal<"HealthcareService">
       identifier:
         docs: External identifiers for this item.
         type: optional<list<Identifier>>
@@ -20718,7 +20717,6 @@ types:
         docs: Technical endpoints providing access to services operated for the specific
           healthcare services defined at this resource.
         type: optional<list<Reference>>
-      discriminant: literal<"HealthcareService">
   HealthcareServiceEligibility:
     docs: The details of a healthcare service available at a location.
     properties:
@@ -20857,6 +20855,7 @@ types:
       but a study may have multiple series of different modalities.
     extends: BaseResource
     properties:
+      resourceType: literal<"ImagingStudy">
       identifier:
         docs: Identifiers for the ImagingStudy such as DICOM Study Instance UID, and
           Accession Number.
@@ -20935,7 +20934,6 @@ types:
       series:
         docs: Each study has one or more series of images or other content.
         type: optional<list<ImagingStudySeries>>
-      discriminant: literal<"ImagingStudy">
   ImagingStudyStatus:
     docs: The current state of the ImagingStudy.
     enum:
@@ -21115,6 +21113,7 @@ types:
       of an immunization as reported by a patient, a clinician or another party.
     extends: BaseResource
     properties:
+      resourceType: literal<"Immunization">
       identifier:
         docs: A unique identifier assigned to this immunization record.
         type: optional<list<Identifier>>
@@ -21216,7 +21215,6 @@ types:
         docs: The protocol (set of recommendations) being followed by the provider
           who administered the dose.
         type: optional<list<ImmunizationProtocolApplied>>
-      discriminant: literal<"Immunization">
   ImmunizationPerformer:
     docs: Describes the event of a patient being administered a vaccine or a record
       of an immunization as reported by a patient, a clinician or another party.
@@ -21390,6 +21388,7 @@ types:
       to determine if the administration is "valid" in relation to those  recommendations.
     extends: BaseResource
     properties:
+      resourceType: literal<"ImmunizationEvaluation">
       identifier:
         docs: A unique identifier assigned to this immunization evaluation record.
         type: optional<list<Identifier>>
@@ -21439,12 +21438,12 @@ types:
       seriesDosesString:
         docs: The recommended number of doses to achieve immunity.
         type: optional<string>
-      discriminant: literal<"ImmunizationEvaluation">
   ImmunizationRecommendation:
     docs: A patient's point-in-time set of recommendations (i.e. forecasting) according
       to a published schedule with optional supporting justification.
     extends: BaseResource
     properties:
+      resourceType: literal<"ImmunizationRecommendation">
       identifier:
         docs: A unique identifier assigned to this particular recommendation record.
         type: optional<list<Identifier>>
@@ -21460,7 +21459,6 @@ types:
       recommendation:
         docs: Vaccine administration recommendations.
         type: list<ImmunizationRecommendationRecommendation>
-      discriminant: literal<"ImmunizationRecommendation">
   ImmunizationRecommendationRecommendation:
     docs: A patient's point-in-time set of recommendations (i.e. forecasting) according
       to a published schedule with optional supporting justification.
@@ -21584,6 +21582,7 @@ types:
       to publish a computable definition of all the parts.
     extends: BaseResource
     properties:
+      resourceType: literal<"ImplementationGuide">
       url:
         docs: An absolute URI that is used to identify this implementation guide when
           it is referenced in a specification, model, design or an instance; also
@@ -21685,7 +21684,6 @@ types:
         docs: Information about an assembled implementation guide, created by the
           publication tooling.
         type: optional<ImplementationGuideManifest>
-      discriminant: literal<"ImplementationGuide">
   ImplementationGuideStatus:
     docs: The status of this implementation guide. Enables tracking the life-cycle
       of the content.
@@ -23017,6 +23015,7 @@ types:
     docs: Details of a Health Insurance product/plan provided by an organization.
     extends: BaseResource
     properties:
+      resourceType: literal<"InsurancePlan">
       identifier:
         docs: Business identifiers assigned to this health insurance product which
           remain constant as the resource is updated and propagates from server to
@@ -23068,7 +23067,6 @@ types:
       plan:
         docs: Details about an insurance plan.
         type: optional<list<InsurancePlanPlan>>
-      discriminant: literal<"InsurancePlan">
   InsurancePlanStatus:
     docs: The current state of the health insurance product.
     enum:
@@ -23437,6 +23435,7 @@ types:
       individual and total price for Billing purpose.
     extends: BaseResource
     properties:
+      resourceType: literal<"Invoice">
       identifier:
         docs: Identifier of this Invoice, often used for reference in correspondence
           about this invoice or for tracking of payments.
@@ -23495,7 +23494,6 @@ types:
       note:
         docs: Comments made about the invoice by the issuer, subject, or other participants.
         type: optional<list<Annotation>>
-      discriminant: literal<"Invoice">
   InvoiceStatus:
     docs: The current state of the Invoice.
     enum:
@@ -23663,6 +23661,7 @@ types:
       a collection of knowledge assets.
     extends: BaseResource
     properties:
+      resourceType: literal<"Library">
       url:
         docs: An absolute URI that is used to identify this library when it is referenced
           in a specification, model, design or an instance; also called its canonical
@@ -23810,7 +23809,6 @@ types:
           to a url, or may be directly embedded as a base-64 string. Either way, the
           contentType of the attachment determines how to interpret the content.
         type: optional<list<Attachment>>
-      discriminant: literal<"Library">
   LibraryStatus:
     docs: The status of this library. Enables tracking the life-cycle of the content.
     enum:
@@ -23827,6 +23825,7 @@ types:
       real-world "occurrence".
     extends: BaseResource
     properties:
+      resourceType: literal<"Linkage">
       active:
         docs: Indicates whether the asserted set of linkages are considered to be
           "in effect".
@@ -23841,7 +23840,6 @@ types:
           occurrence as well as how the items should be evaluated within the collection
           of linked items.
         type: list<LinkageItem>
-      discriminant: literal<"Linkage">
   LinkageItem:
     docs: Identifies two or more records (resource instances) that refer to the same
       real-world "occurrence".
@@ -23892,6 +23890,7 @@ types:
     docs: A list is a curated collection of resources.
     extends: BaseResource
     properties:
+      resourceType: literal<"List">
       identifier:
         docs: Identifier for the List assigned for business purposes outside the context
           of FHIR.
@@ -23938,7 +23937,6 @@ types:
       emptyReason:
         docs: If the list is empty, why the list is empty.
         type: optional<CodeableConcept>
-      discriminant: literal<"List">
   ListStatus:
     docs: Indicates the current state of this list.
     enum:
@@ -24007,6 +24005,7 @@ types:
       accommodated.
     extends: BaseResource
     properties:
+      resourceType: literal<"Location">
       identifier:
         docs: Unique code or number identifying the location to its users.
         type: optional<list<Identifier>>
@@ -24072,7 +24071,6 @@ types:
       endpoint:
         docs: Technical endpoints providing access to services operated for the location.
         type: optional<list<Reference>>
-      discriminant: literal<"Location">
   LocationStatus:
     docs: The status property covers the general availability of the resource, not
       the current value which may be covered by the operationStatus, or by a schedule/slots
@@ -24181,6 +24179,7 @@ types:
     docs: The Measure resource provides the definition of a quality measure.
     extends: BaseResource
     properties:
+      resourceType: literal<"Measure">
       url:
         docs: An absolute URI that is used to identify this measure when it is referenced
           in a specification, model, design or an instance; also called its canonical
@@ -24371,7 +24370,6 @@ types:
           either the name of a valid CQL expression within a referenced library, or
           a valid FHIR Resource Path.
         type: optional<list<MeasureSupplementalData>>
-      discriminant: literal<"Measure">
   MeasureStatus:
     docs: The status of this measure. Enables tracking the life-cycle of the content.
     enum:
@@ -24608,6 +24606,7 @@ types:
       measure; and optionally a reference to the resources involved in that calculation.
     extends: BaseResource
     properties:
+      resourceType: literal<"MeasureReport">
       identifier:
         docs: A formal identifier that is used to identify this MeasureReport when
           it is represented in other formats or referenced in a specification, model,
@@ -24654,7 +24653,6 @@ types:
         docs: A reference to a Bundle containing the Resources that were used in the
           calculation of this measure.
         type: optional<list<Reference>>
-      discriminant: literal<"MeasureReport">
   MeasureReportStatus:
     docs: The MeasureReport status. No data will be available until the MeasureReport
       status is complete.
@@ -24926,6 +24924,7 @@ types:
       content may be inline or provided by direct reference.
     extends: BaseResource
     properties:
+      resourceType: literal<"Media">
       identifier:
         docs: Identifiers associated with the image - these may include identifiers
           for the image itself, identifiers for the context of its collection (e.g.
@@ -25010,13 +25009,13 @@ types:
       note:
         docs: Comments made about the media by the performer, subject or other participants.
         type: optional<list<Annotation>>
-      discriminant: literal<"Media">
   Medication:
     docs: This resource is primarily used for the identification and definition of
       a medication for the purposes of prescribing, dispensing, and administering
       a medication as well as for making statements about medication use.
     extends: BaseResource
     properties:
+      resourceType: literal<"Medication">
       identifier:
         docs: Business identifier for this medication.
         type: optional<list<Identifier>>
@@ -25049,7 +25048,6 @@ types:
       batch:
         docs: Information that only applies to packages (not products).
         type: optional<MedicationBatch>
-      discriminant: literal<"Medication">
   MedicationIngredient:
     docs: This resource is primarily used for the identification and definition of
       a medication for the purposes of prescribing, dispensing, and administering
@@ -25140,6 +25138,7 @@ types:
       and the specific encounter between patient and health care practitioner.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicationAdministration">
       identifier:
         docs: Identifiers associated with this Medication Administration that are
           defined by business processes and/or used to refer to it when a direct URL
@@ -25228,7 +25227,6 @@ types:
         docs: A summary of the events of interest that have occurred, such as when
           the administration was verified.
         type: optional<list<Reference>>
-      discriminant: literal<"MedicationAdministration">
   MedicationAdministrationPerformer:
     docs: Describes the event of a patient consuming or otherwise being administered
       a medication.  This may be as simple as swallowing a tablet or it may be a long
@@ -25346,6 +25344,7 @@ types:
       order.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicationDispense">
       identifier:
         docs: Identifiers associated with this Medication Dispense that are defined
           by business processes and/or used to refer to it when a direct URL reference
@@ -25449,7 +25448,6 @@ types:
         docs: A summary of the events of interest that have occurred, such as when
           the dispense was verified.
         type: optional<list<Reference>>
-      discriminant: literal<"MedicationDispense">
   MedicationDispensePerformer:
     docs: Indicates that a medication product is to be or has been dispensed for a
       named person/patient.  This includes a description of the medication product
@@ -25541,6 +25539,7 @@ types:
     docs: Information about a medication that is used to support knowledge.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicationKnowledge">
       code:
         docs: 'A code that specifies this medication, or a textual description if
           no code is available. Usage note: This could be a standard medication code
@@ -25627,7 +25626,6 @@ types:
         docs: The time course of drug absorption, distribution, metabolism and excretion
           of a medication from the body.
         type: optional<list<MedicationKnowledgeKinetics>>
-      discriminant: literal<"MedicationKnowledge">
   MedicationKnowledgeRelatedMedicationKnowledge:
     docs: Information about a medication that is used to support knowledge.
     properties:
@@ -26231,6 +26229,7 @@ types:
       to harmonize with workflow patterns.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicationRequest">
       identifier:
         docs: Identifiers associated with this medication request that are defined
           by business processes and/or used to refer to it when a direct URL reference
@@ -26379,7 +26378,6 @@ types:
           that are likely to be relevant to a user looking at the current version
           of the resource.
         type: optional<list<Reference>>
-      discriminant: literal<"MedicationRequest">
   MedicationRequestDispenseRequest:
     docs: An order or request for both supply of the medication and the instructions
       for administration of the medication to a patient. The resource is called "MedicationRequest"
@@ -26547,6 +26545,7 @@ types:
       and is not missing detailed information.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicationStatement">
       identifier:
         docs: Identifiers associated with this Medication Statement that are defined
           by business processes and/or used to refer to it when a direct URL reference
@@ -26626,12 +26625,12 @@ types:
       dosage:
         docs: Indicates how the medication is/was or should be taken by the patient.
         type: optional<list<Dosage>>
-      discriminant: literal<"MedicationStatement">
   MedicinalProduct:
     docs: Detailed definition of a medicinal product, typically for uses other than
       direct patient care (e.g. regulatory use).
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProduct">
       identifier:
         docs: Business identifier for this product. Could be an MPID.
         type: optional<list<Identifier>>
@@ -26701,7 +26700,6 @@ types:
         docs: Indicates if the medicinal product has an orphan designation for the
           treatment of a rare disease.
         type: optional<list<MedicinalProductSpecialDesignation>>
-      discriminant: literal<"MedicinalProduct">
   MedicinalProductName:
     docs: Detailed definition of a medicinal product, typically for uses other than
       direct patient care (e.g. regulatory use).
@@ -26917,6 +26915,7 @@ types:
     docs: The regulatory authorization of a medicinal product.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductAuthorization">
       identifier:
         docs: Business identifier for the marketing authorization, as assigned by
           a regulator.
@@ -26972,7 +26971,6 @@ types:
       procedure:
         docs: The regulatory procedure for granting or amending a marketing authorization.
         type: optional<MedicinalProductAuthorizationProcedure>
-      discriminant: literal<"MedicinalProductAuthorization">
   MedicinalProductAuthorizationJurisdictionalAuthorization:
     docs: The regulatory authorization of a medicinal product.
     properties:
@@ -27064,6 +27062,7 @@ types:
       product, including for regulatory purposes.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductContraindication">
       subject:
         docs: The medication for which this is an indication.
         type: optional<list<Reference>>
@@ -27087,7 +27086,6 @@ types:
       population:
         docs: The population group to which this applies.
         type: optional<list<Population>>
-      discriminant: literal<"MedicinalProductContraindication">
   MedicinalProductContraindicationOtherTherapy:
     docs: The clinical particulars - indications, contraindications etc. of a medicinal
       product, including for regulatory purposes.
@@ -27133,6 +27131,7 @@ types:
     docs: Indication for the Medicinal Product.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductIndication">
       subject:
         docs: The medication for which this is an indication.
         type: optional<list<Reference>>
@@ -27161,7 +27160,6 @@ types:
       population:
         docs: The population group to which this applies.
         type: optional<list<Population>>
-      discriminant: literal<"MedicinalProductIndication">
   MedicinalProductIndicationOtherTherapy:
     docs: Indication for the Medicinal Product.
     properties:
@@ -27206,6 +27204,7 @@ types:
     docs: An ingredient of a manufactured item or pharmaceutical product.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductIngredient">
       identifier:
         docs: The identifier(s) of this Ingredient that are assigned by business processes
           and/or used to refer to it when a direct URL reference to the resource itself
@@ -27226,7 +27225,6 @@ types:
       substance:
         docs: The ingredient substance.
         type: optional<MedicinalProductIngredientSubstance>
-      discriminant: literal<"MedicinalProductIngredient">
   MedicinalProductIngredientSpecifiedSubstance:
     docs: An ingredient of a manufactured item or pharmaceutical product.
     properties:
@@ -27404,6 +27402,7 @@ types:
       or other forms of interactions.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductInteraction">
       subject:
         docs: The medication for which this is a described interaction.
         type: optional<list<Reference>>
@@ -27427,7 +27426,6 @@ types:
       management:
         docs: Actions for managing the interaction.
         type: optional<CodeableConcept>
-      discriminant: literal<"MedicinalProductInteraction">
   MedicinalProductInteractionInteractant:
     docs: The interactions of the medicinal product with other medicinal products,
       or other forms of interactions.
@@ -27467,6 +27465,7 @@ types:
     docs: The manufactured item as contained in the packaged medicinal product.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductManufactured">
       manufacturedDoseForm:
         type: CodeableConcept
         docs: Dose form as manufactured and before any transformation into the pharmaceutical
@@ -27491,11 +27490,11 @@ types:
       otherCharacteristics:
         docs: Other codeable characteristics.
         type: optional<list<CodeableConcept>>
-      discriminant: literal<"MedicinalProductManufactured">
   MedicinalProductPackaged:
     docs: A medicinal product in a container or package.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductPackaged">
       identifier:
         docs: Unique identifier.
         type: optional<list<Identifier>>
@@ -27525,7 +27524,6 @@ types:
         docs: A packaging item, as a contained for medicine, possibly with other packaging
           items within.
         type: list<MedicinalProductPackagedPackageItem>
-      discriminant: literal<"MedicinalProductPackaged">
   MedicinalProductPackagedBatchIdentifier:
     docs: A medicinal product in a container or package.
     properties:
@@ -27630,6 +27628,7 @@ types:
       form.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductPharmaceutical">
       identifier:
         docs: An identifier for the pharmaceutical medicinal product.
         type: optional<list<Identifier>>
@@ -27652,7 +27651,6 @@ types:
         docs: The path by which the pharmaceutical product is taken into or makes
           contact with the body.
         type: list<MedicinalProductPharmaceuticalRouteOfAdministration>
-      discriminant: literal<"MedicinalProductPharmaceutical">
   MedicinalProductPharmaceuticalCharacteristics:
     docs: A pharmaceutical product described in terms of its composition and dose
       form.
@@ -27826,6 +27824,7 @@ types:
     docs: Describe the undesirable effects of the medicinal product.
     extends: BaseResource
     properties:
+      resourceType: literal<"MedicinalProductUndesirableEffect">
       subject:
         docs: The medication for which this is an indication.
         type: optional<list<Reference>>
@@ -27841,13 +27840,13 @@ types:
       population:
         docs: The population group to which this applies.
         type: optional<list<Population>>
-      discriminant: literal<"MedicinalProductUndesirableEffect">
   MessageDefinition:
     docs: Defines the characteristics of a message that can be shared between systems,
       including the type of event that initiates the message, the content to be transmitted
       and what response(s), if any, are permitted.
     extends: BaseResource
     properties:
+      resourceType: literal<"MessageDefinition">
       url:
         docs: The business identifier that is used to reference the MessageDefinition
           and *is* expected to be consistent from server to server.
@@ -27958,7 +27957,6 @@ types:
           resources are to be added to the bundle when building the document. The
           GraphDefinition can also specify profiles that apply to the various resources.
         type: optional<list<canonical>>
-      discriminant: literal<"MessageDefinition">
   MessageDefinitionStatus:
     docs: The status of this message definition. Enables tracking the life-cycle of
       the content.
@@ -28082,6 +28080,7 @@ types:
       in which the MessageHeader resource instance is the first resource in the bundle.
     extends: BaseResource
     properties:
+      resourceType: literal<"MessageHeader">
       eventCoding:
         docs: Code that identifies the event this message represents and connects
           it with its definition. Events defined as part of the FHIR specification
@@ -28134,7 +28133,6 @@ types:
       definition:
         docs: Permanent link to the MessageDefinition for this message.
         type: optional<canonical>
-      discriminant: literal<"MessageHeader">
   MessageHeaderDestination:
     docs: The header for a message exchange that is either requesting or responding
       to an action.  The reference(s) that are the subject of the action as well as
@@ -28283,6 +28281,7 @@ types:
     docs: Raw data describing a biological sequence.
     extends: BaseResource
     properties:
+      resourceType: literal<"MolecularSequence">
       identifier:
         docs: A unique identifier for this particular sequence instance. This is a
           FHIR-defined id.
@@ -28343,7 +28342,6 @@ types:
       structureVariant:
         docs: Information about chromosome structure variation.
         type: optional<list<MolecularSequenceStructureVariant>>
-      discriminant: literal<"MolecularSequence">
   MolecularSequenceType:
     docs: Amino Acid Sequence/ DNA Sequence / RNA Sequence.
     enum:
@@ -28848,6 +28846,7 @@ types:
       used within the Identifier and Coding data types.
     extends: BaseResource
     properties:
+      resourceType: literal<"NamingSystem">
       name:
         docs: A natural language name identifying the naming system. This name should
           be usable as an identifier for the module by machine processing applications
@@ -28907,7 +28906,6 @@ types:
         docs: Indicates how the system may be identified when referenced in electronic
           exchange.
         type: list<NamingSystemUniqueId>
-      discriminant: literal<"NamingSystem">
   NamingSystemStatus:
     docs: The status of this naming system. Enables tracking the life-cycle of the
       content.
@@ -28995,6 +28993,7 @@ types:
       supplement to a patient/resident.
     extends: BaseResource
     properties:
+      resourceType: literal<"NutritionOrder">
       identifier:
         docs: Identifiers assigned to this order by the order sender or by the order
           receiver.
@@ -29071,7 +29070,6 @@ types:
         docs: Comments made about the {{title}} by the requester, performer, subject
           or other participants.
         type: optional<list<Annotation>>
-      discriminant: literal<"NutritionOrder">
   NutritionOrderOralDiet:
     docs: A request to supply a diet, formula feeding (enteral) or oral nutritional
       supplement to a patient/resident.
@@ -29367,6 +29365,7 @@ types:
       subject.
     extends: BaseResource
     properties:
+      resourceType: literal<"Observation">
       identifier:
         docs: A unique identifier assigned to this observation.
         type: optional<list<Identifier>>
@@ -29537,7 +29536,6 @@ types:
           for blood pressure measurement and multiple component observations for genetics
           observations.
         type: optional<list<ObservationComponent>>
-      discriminant: literal<"Observation">
   ObservationStatus:
     docs: The status of the result value.
     enum:
@@ -29713,6 +29711,7 @@ types:
       produced or consumed by an orderable health care service.
     extends: BaseResource
     properties:
+      resourceType: literal<"ObservationDefinition">
       publisher:
         docs: The name of the individual or organization that published the ObservationDefinition.
         type: optional<Reference>
@@ -29763,7 +29762,6 @@ types:
         docs: The set of critical coded results for the observation conforming to
           this ObservationDefinition.
         type: optional<Reference>
-      discriminant: literal<"ObservationDefinition">
   ObservationDefinitionPermittedDataTypeItem:
     enum:
     - name: Quantity
@@ -29918,6 +29916,7 @@ types:
       or a named query (using the search interaction).
     extends: BaseResource
     properties:
+      resourceType: literal<"OperationDefinition">
       url:
         docs: An absolute URI that is used to identify this operation definition when
           it is referenced in a specification, model, design or an instance; also
@@ -30036,7 +30035,6 @@ types:
           this operation, to help code generators when generating overloaded parameter
           sets for this operation.
         type: optional<list<OperationDefinitionOverload>>
-      discriminant: literal<"OperationDefinition">
   OperationDefinitionStatus:
     docs: The status of this operation definition. Enables tracking the life-cycle
       of the content.
@@ -30287,6 +30285,7 @@ types:
       a system action.
     extends: BaseResource
     properties:
+      resourceType: literal<"OperationOutcome">
       issue:
         docs: An error, warning, or information message that results from a system
           action.
@@ -30297,7 +30296,6 @@ types:
       resource:
         docs: Optional Resource created or modified by this operation.
         type: optional<ResourceList>
-      discriminant: literal<"OperationOutcome">
   OperationOutcomeIssue:
     docs: A collection of error, warning, or information messages that result from
       a system action.
@@ -30440,6 +30438,7 @@ types:
       practice groups, payer/insurer, etc.
     extends: BaseResource
     properties:
+      resourceType: literal<"Organization">
       identifier:
         docs: Identifier for the organization that is used to identify the organization
           across multiple disparate systems.
@@ -30472,7 +30471,6 @@ types:
       endpoint:
         docs: Technical endpoints providing access to services operated for the organization.
         type: optional<list<Reference>>
-      discriminant: literal<"Organization">
   OrganizationContact:
     docs: A formally or informally recognized grouping of people or organizations
       formed for the purpose of achieving some form of collective action.  Includes
@@ -30522,6 +30520,7 @@ types:
       that is not a part-of relationship/sub-division relationship.
     extends: BaseResource
     properties:
+      resourceType: literal<"OrganizationAffiliation">
       identifier:
         docs: Business identifiers that are specific to this role.
         type: optional<list<Identifier>>
@@ -30564,12 +30563,12 @@ types:
       endpoint:
         docs: Technical endpoints providing access to services operated for this role.
         type: optional<list<Reference>>
-      discriminant: literal<"OrganizationAffiliation">
   Parameters:
     docs: This resource is a non-persisted resource used to pass information into
       and back from an [operation](operations.html). It has no other use, and there
       is no RESTful endpoint associated with it.
     properties:
+      resourceType: literal<"Parameters">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -30591,7 +30590,6 @@ types:
       parameter:
         docs: A parameter passed to or received from the operation.
         type: optional<list<ParametersParameter>>
-      discriminant: literal<"Parameters">
   ParametersParameter:
     docs: This resource is a non-persisted resource used to pass information into
       and back from an [operation](operations.html). It has no other use, and there
@@ -30786,6 +30784,7 @@ types:
       animal receiving care or other health-related services.
     extends: BaseResource
     properties:
+      resourceType: literal<"Patient">
       identifier:
         docs: An identifier for this patient.
         type: optional<list<Identifier>>
@@ -30850,7 +30849,6 @@ types:
       link:
         docs: Link to another patient resource that concerns the same actual patient.
         type: optional<list<PatientLink>>
-      discriminant: literal<"Patient">
   PatientGender:
     docs: Administrative Gender - the gender that the patient is considered to have
       for administration and record keeping purposes.
@@ -31019,6 +31017,7 @@ types:
       rendered, and the request and response resource references.
     extends: BaseResource
     properties:
+      resourceType: literal<"PaymentNotice">
       identifier:
         docs: A unique identifier assigned to this payment notice.
         type: optional<list<Identifier>>
@@ -31057,12 +31056,12 @@ types:
       paymentStatus:
         docs: A code indicating whether payment has been sent or cleared.
         type: optional<CodeableConcept>
-      discriminant: literal<"PaymentNotice">
   PaymentReconciliation:
     docs: This resource provides the details including amount of a payment and allocates
       the payment items being paid.
     extends: BaseResource
     properties:
+      resourceType: literal<"PaymentReconciliation">
       identifier:
         docs: A unique identifier assigned to this payment reconciliation.
         type: optional<list<Identifier>>
@@ -31111,7 +31110,6 @@ types:
         docs: A note that describes or explains the processing in a human readable
           form.
         type: optional<list<PaymentReconciliationProcessNote>>
-      discriminant: literal<"PaymentReconciliation">
   PaymentReconciliationOutcome:
     docs: The outcome of a request for a reconciliation.
     enum:
@@ -31233,6 +31231,7 @@ types:
       a specific health-related context.
     extends: BaseResource
     properties:
+      resourceType: literal<"Person">
       identifier:
         docs: Identifier for a person within a particular scope.
         type: optional<list<Identifier>>
@@ -31265,7 +31264,6 @@ types:
       link:
         docs: Link to a resource that concerns the same actual person.
         type: optional<list<PersonLink>>
-      discriminant: literal<"Person">
   PersonGender:
     docs: Administrative Gender.
     enum:
@@ -31330,6 +31328,7 @@ types:
       support rules, order sets and protocols.
     extends: BaseResource
     properties:
+      resourceType: literal<"PlanDefinition">
       url:
         docs: An absolute URI that is used to identify this plan definition when it
           is referenced in a specification, model, design or an instance; also called
@@ -31480,7 +31479,6 @@ types:
       action:
         docs: An action or group of actions to be taken as part of the plan.
         type: optional<list<PlanDefinitionAction>>
-      discriminant: literal<"PlanDefinition">
   PlanDefinitionStatus:
     docs: The status of this plan definition. Enables tracking the life-cycle of the
       content.
@@ -32028,6 +32026,7 @@ types:
     docs: A person who is directly or indirectly involved in the provisioning of healthcare.
     extends: BaseResource
     properties:
+      resourceType: literal<"Practitioner">
       identifier:
         docs: An identifier that applies to this person in this role.
         type: optional<list<Identifier>>
@@ -32065,7 +32064,6 @@ types:
       communication:
         docs: A language the practitioner can use in patient communication.
         type: optional<list<CodeableConcept>>
-      discriminant: literal<"Practitioner">
   PractitionerGender:
     docs: Administrative Gender - the gender that the person is considered to have
       for administration and record keeping purposes.
@@ -32123,6 +32121,7 @@ types:
       may perform at an organization for a period of time.
     extends: BaseResource
     properties:
+      resourceType: literal<"PractitionerRole">
       identifier:
         docs: Business Identifiers that are specific to a role/location.
         type: optional<list<Identifier>>
@@ -32172,7 +32171,6 @@ types:
         docs: Technical endpoints providing access to services operated for the practitioner
           with this role.
         type: optional<list<Reference>>
-      discriminant: literal<"PractitionerRole">
   PractitionerRoleAvailableTime:
     docs: A specific set of Roles/Locations/specialties/services that a practitioner
       may perform at an organization for a period of time.
@@ -32261,6 +32259,7 @@ types:
       or hypnotherapy.
     extends: BaseResource
     properties:
+      resourceType: literal<"Procedure">
       identifier:
         docs: Business identifiers assigned to this procedure by the performer or
           other systems which remain constant as the resource is updated and is propagated
@@ -32397,7 +32396,6 @@ types:
       usedCode:
         docs: Identifies coded items that were used as part of the procedure.
         type: optional<list<CodeableConcept>>
-      discriminant: literal<"Procedure">
   ProcedurePerformer:
     docs: An action that is or was performed on or for a patient. This can be a physical
       intervention like an operation, or less invasive like long term services, counseling,
@@ -32486,6 +32484,7 @@ types:
       of which may impact security, privacy, and trust policies.
     extends: BaseResource
     properties:
+      resourceType: literal<"Provenance">
       target:
         docs: The Reference(s) that were generated or updated by  the activity described
           in this resource. A provenance can point to more than one target if multiple
@@ -32527,7 +32526,6 @@ types:
         docs: A digital signature on the target Reference(s). The signer should match
           a Provenance.agent. The purpose of the signature is indicated.
         type: optional<list<Signature>>
-      discriminant: literal<"Provenance">
   ProvenanceAgent:
     docs: Provenance of a resource is a record that describes entities and processes
       involved in producing and delivering or otherwise influencing that resource.
@@ -32645,6 +32643,7 @@ types:
       phraseology and grouping to allow coherent, consistent data collection.
     extends: BaseResource
     properties:
+      resourceType: literal<"Questionnaire">
       url:
         docs: An absolute URI that is used to identify this questionnaire when it
           is referenced in a specification, model, design or an instance; also called
@@ -32747,7 +32746,6 @@ types:
         docs: A particular question, question grouping or display text that is part
           of the questionnaire.
         type: optional<list<QuestionnaireItem>>
-      discriminant: literal<"Questionnaire">
   QuestionnaireStatus:
     docs: The status of this questionnaire. Enables tracking the life-cycle of the
       content.
@@ -33128,6 +33126,7 @@ types:
       of the questionnaire being responded to.
     extends: BaseResource
     properties:
+      resourceType: literal<"QuestionnaireResponse">
       identifier:
         docs: A business identifier assigned to a particular completed (or partially
           completed) questionnaire.
@@ -33173,7 +33172,6 @@ types:
         docs: A group or question item from the original questionnaire for which answers
           are provided.
         type: optional<list<QuestionnaireResponseItem>>
-      discriminant: literal<"QuestionnaireResponse">
   QuestionnaireResponseStatus:
     docs: The position of the questionnaire response within its overall lifecycle.
     enum:
@@ -33322,6 +33320,7 @@ types:
       care process.
     extends: BaseResource
     properties:
+      resourceType: literal<"RelatedPerson">
       identifier:
         docs: Identifier for a person within a particular scope.
         type: optional<list<Identifier>>
@@ -33362,7 +33361,6 @@ types:
         docs: A language which may be used to communicate with about the patient's
           health.
         type: optional<list<RelatedPersonCommunication>>
-      discriminant: literal<"RelatedPerson">
   RelatedPersonGender:
     docs: Administrative Gender - the gender that the person is considered to have
       for administration and record keeping purposes.
@@ -33420,6 +33418,7 @@ types:
       that have inter-dependencies such as "give this medication after that one".
     extends: BaseResource
     properties:
+      resourceType: literal<"RequestGroup">
       identifier:
         docs: Allows a service to provide a unique, business identifier for the request.
         type: optional<list<Identifier>>
@@ -33484,7 +33483,6 @@ types:
       action:
         docs: The actions, if any, produced by the evaluation of the artifact.
         type: optional<list<RequestGroupAction>>
-      discriminant: literal<"RequestGroup">
   RequestGroupAction:
     docs: A group of related requests that can be used to capture intended activities
       that have inter-dependencies such as "give this medication after that one".
@@ -33680,6 +33678,7 @@ types:
       that the knowledge (evidence, assertion, recommendation) is about.
     extends: BaseResource
     properties:
+      resourceType: literal<"ResearchDefinition">
       url:
         docs: An absolute URI that is used to identify this research definition when
           it is referenced in a specification, model, design or an instance; also
@@ -33843,7 +33842,6 @@ types:
         docs: A reference to a ResearchElementDefinition resomece that defines the
           outcome for the research.
         type: optional<Reference>
-      discriminant: literal<"ResearchDefinition">
   ResearchDefinitionStatus:
     docs: The status of this research definition. Enables tracking the life-cycle
       of the content.
@@ -33861,6 +33859,7 @@ types:
       (evidence, assertion, recommendation) is about.
     extends: BaseResource
     properties:
+      resourceType: literal<"ResearchElementDefinition">
       url:
         docs: An absolute URI that is used to identify this research element definition
           when it is referenced in a specification, model, design or an instance;
@@ -34019,7 +34018,6 @@ types:
         docs: A characteristic that defines the members of the research element. Multiple
           characteristics are applied with "and" semantics.
         type: list<ResearchElementDefinitionCharacteristic>
-      discriminant: literal<"ResearchElementDefinition">
   ResearchElementDefinitionStatus:
     docs: The status of this research element definition. Enables tracking the life-cycle
       of the content.
@@ -34194,6 +34192,7 @@ types:
       or animal subjects.
     extends: BaseResource
     properties:
+      resourceType: literal<"ResearchStudy">
       identifier:
         docs: Identifiers assigned to this research study by the sponsor or other
           systems.
@@ -34289,7 +34288,6 @@ types:
         docs: A goal that the study is aiming to achieve in terms of a scientific
           question to be answered by the analysis of data collected during the study.
         type: optional<list<ResearchStudyObjective>>
-      discriminant: literal<"ResearchStudy">
   ResearchStudyStatus:
     docs: The current state of the study.
     enum:
@@ -34403,6 +34401,7 @@ types:
       interest in a study.
     extends: BaseResource
     properties:
+      resourceType: literal<"ResearchSubject">
       identifier:
         docs: Identifiers assigned to this research subject for a study.
         type: optional<list<Identifier>>
@@ -34429,7 +34428,6 @@ types:
       consent:
         docs: A record of the patient's informed agreement to participate in the study.
         type: optional<Reference>
-      discriminant: literal<"ResearchSubject">
   ResearchSubjectStatus:
     docs: The current state of the subject.
     enum:
@@ -34464,6 +34462,7 @@ types:
       well as the likelihood of each outcome.
     extends: BaseResource
     properties:
+      resourceType: literal<"RiskAssessment">
       identifier:
         docs: Business identifier assigned to the risk assessment.
         type: optional<list<Identifier>>
@@ -34522,7 +34521,6 @@ types:
       note:
         docs: Additional comments about the risk assessment.
         type: optional<list<Annotation>>
-      discriminant: literal<"RiskAssessment">
   RiskAssessmentPrediction:
     docs: An assessment of the likely outcome(s) for a patient or other subject as
       well as the likelihood of each outcome.
@@ -34589,6 +34587,7 @@ types:
       a combination of research studies.
     extends: BaseResource
     properties:
+      resourceType: literal<"RiskEvidenceSynthesis">
       url:
         docs: An absolute URI that is used to identify this risk evidence synthesis
           when it is referenced in a specification, model, design or an instance;
@@ -34724,7 +34723,6 @@ types:
       certainty:
         docs: A description of the certainty of the risk estimate.
         type: optional<list<RiskEvidenceSynthesisCertainty>>
-      discriminant: literal<"RiskEvidenceSynthesis">
   RiskEvidenceSynthesisStatus:
     docs: The status of this risk evidence synthesis. Enables tracking the life-cycle
       of the content.
@@ -34951,6 +34949,7 @@ types:
     docs: A container for slots of time that may be available for booking appointments.
     extends: BaseResource
     properties:
+      resourceType: literal<"Schedule">
       identifier:
         docs: External Ids for this item.
         type: optional<list<Identifier>>
@@ -34983,12 +34982,12 @@ types:
         docs: Comments on the availability to describe any extended information. Such
           as custom constraints on the slots that may be associated.
         type: optional<string>
-      discriminant: literal<"Schedule">
   SearchParameter:
     docs: A search parameter that defines a named search item that can be used to
       search/filter on a resource.
     extends: BaseResource
     properties:
+      resourceType: literal<"SearchParameter">
       url:
         docs: An absolute URI that is used to identify this search parameter when
           it is referenced in a specification, model, design or an instance; also
@@ -35110,7 +35109,6 @@ types:
       component:
         docs: Used to define the parts of a composite search parameter.
         type: optional<list<SearchParameterComponent>>
-      discriminant: literal<"SearchParameter">
   SearchParameterStatus:
     docs: The status of this search parameter. Enables tracking the life-cycle of
       the content.
@@ -35246,6 +35244,7 @@ types:
       or operations to be performed.
     extends: BaseResource
     properties:
+      resourceType: literal<"ServiceRequest">
       identifier:
         docs: Identifiers assigned to this order instance by the orderer and/or the
           receiver and/or order fulfiller.
@@ -35404,11 +35403,11 @@ types:
       relevantHistory:
         docs: Key events in the history of the request.
         type: optional<list<Reference>>
-      discriminant: literal<"ServiceRequest">
   Slot:
     docs: A slot of time on a schedule that may be available for booking appointments.
     extends: BaseResource
     properties:
+      resourceType: literal<"Slot">
       identifier:
         docs: External Ids for this item.
         type: optional<list<Identifier>>
@@ -35450,7 +35449,6 @@ types:
         docs: Comments on the slot to describe any extended information. Such as custom
           constraints on the slot.
         type: optional<string>
-      discriminant: literal<"Slot">
   SlotStatus:
     docs: busy | free | busy-unavailable | busy-tentative | entered-in-error.
     enum:
@@ -35468,6 +35466,7 @@ types:
     docs: A sample to be used for analysis.
     extends: BaseResource
     properties:
+      resourceType: literal<"Specimen">
       identifier:
         docs: Id for specimen.
         type: optional<list<Identifier>>
@@ -35515,7 +35514,6 @@ types:
         docs: 'To communicate any details or issues about the specimen or during the
           specimen collection. (for example: broken vial, sent with patient, frozen).'
         type: optional<list<Annotation>>
-      discriminant: literal<"Specimen">
   SpecimenStatus:
     docs: The availability of the specimen.
     enum:
@@ -35695,6 +35693,7 @@ types:
     docs: A kind of specimen with associated set of requirements.
     extends: BaseResource
     properties:
+      resourceType: literal<"SpecimenDefinition">
       identifier:
         docs: A business identifier associated with the kind of specimen.
         type: optional<Identifier>
@@ -35713,7 +35712,6 @@ types:
       typeTested:
         docs: Specimen conditioned in a container as expected by the testing laboratory.
         type: optional<list<SpecimenDefinitionTypeTested>>
-      discriminant: literal<"SpecimenDefinition">
   SpecimenDefinitionTypeTested:
     docs: A kind of specimen with associated set of requirements.
     properties:
@@ -35919,6 +35917,7 @@ types:
       and constraints on resources and data types.
     extends: BaseResource
     properties:
+      resourceType: literal<"StructureDefinition">
       url:
         docs: An absolute URI that is used to identify this structure definition when
           it is referenced in a specification, model, design or an instance; also
@@ -36052,7 +36051,6 @@ types:
         docs: A differential view is expressed relative to the base StructureDefinition
           - a statement of differences that it applies.
         type: optional<StructureDefinitionDifferential>
-      discriminant: literal<"StructureDefinition">
   StructureDefinitionStatus:
     docs: The status of this structure definition. Enables tracking the life-cycle
       of the content.
@@ -36295,6 +36293,7 @@ types:
       data.
     extends: BaseResource
     properties:
+      resourceType: literal<"StructureMap">
       url:
         docs: An absolute URI that is used to identify this structure map when it
           is referenced in a specification, model, design or an instance; also called
@@ -36383,7 +36382,6 @@ types:
         docs: Organizes the mapping into manageable chunks for human review/ease of
           maintenance.
         type: list<StructureMapGroup>
-      discriminant: literal<"StructureMap">
   StructureMapStatus:
     docs: The status of this structure map. Enables tracking the life-cycle of the
       content.
@@ -37025,6 +37023,7 @@ types:
       another system can take an appropriate action.
     extends: BaseResource
     properties:
+      resourceType: literal<"Subscription">
       status:
         docs: The status of the subscription, which marks the server state for managing
           the subscription.
@@ -37051,7 +37050,6 @@ types:
         type: SubscriptionChannel
         docs: Details where to send notifications when resources are received that
           meet the criteria.
-      discriminant: literal<"Subscription">
   SubscriptionStatus:
     docs: The status of the subscription, which marks the server state for managing
       the subscription.
@@ -37128,6 +37126,7 @@ types:
     docs: A homogeneous material with a definite composition.
     extends: BaseResource
     properties:
+      resourceType: literal<"Substance">
       identifier:
         docs: Unique identifier for the substance.
         type: optional<list<Identifier>>
@@ -37152,7 +37151,6 @@ types:
       ingredient:
         docs: A substance can be composed of other substances.
         type: optional<list<SubstanceIngredient>>
-      discriminant: literal<"Substance">
   SubstanceStatus:
     docs: A code to indicate if the substance is actively used.
     enum:
@@ -37245,6 +37243,7 @@ types:
       \ direction."
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstanceNucleicAcid">
       sequenceType:
         docs: The type of the sequence shall be specified based on a controlled vocabulary.
         type: optional<CodeableConcept>
@@ -37270,7 +37269,6 @@ types:
           same length will be ordered by molecular weight; subunits that have identical
           sequences will be repeated multiple times.
         type: optional<list<SubstanceNucleicAcidSubunit>>
-      discriminant: literal<"SubstanceNucleicAcid">
   SubstanceNucleicAcidSubunit:
     docs: "Nucleic acids are defined by three distinct elements: the base, sugar and\
       \ linkage. Individual substance/moiety IDs will be created for each of these\
@@ -37432,6 +37430,7 @@ types:
     docs: Todo.
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstancePolymer">
       class:
         docs: Todo.
         type: optional<CodeableConcept>
@@ -37450,7 +37449,6 @@ types:
       repeat:
         docs: Todo.
         type: optional<list<SubstancePolymerRepeat>>
-      discriminant: literal<"SubstancePolymer">
   SubstancePolymerMonomerSet:
     docs: Todo.
     properties:
@@ -37689,6 +37687,7 @@ types:
       toxins, toxoids, recombinant vaccines, and immunomodulators.
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstanceProtein">
       sequenceType:
         docs: The SubstanceProtein descriptive elements will only be used when a complete
           or partial amino acid sequence is available or derivable from a nucleic
@@ -37717,7 +37716,6 @@ types:
           by decreasing molecular weight; subunits that have identical sequences will
           be repeated multiple times.
         type: optional<list<SubstanceProteinSubunit>>
-      discriminant: literal<"SubstanceProtein">
   SubstanceProteinSubunit:
     docs: A SubstanceProtein is defined as a single unit of a linear amino acid sequence,
       or a combination of subunits that are either covalently linked or have a defined
@@ -37798,6 +37796,7 @@ types:
     docs: Todo.
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstanceReferenceInformation">
       comment:
         docs: Todo.
         type: optional<string>
@@ -37813,7 +37812,6 @@ types:
       target:
         docs: Todo.
         type: optional<list<SubstanceReferenceInformationTarget>>
-      discriminant: literal<"SubstanceReferenceInformation">
   SubstanceReferenceInformationGene:
     docs: Todo.
     properties:
@@ -38002,6 +38000,7 @@ types:
       and the herbal annex.'
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstanceSourceMaterial">
       sourceMaterialClass:
         docs: General high level classification of the source material specific to
           the origin of the material.
@@ -38065,7 +38064,6 @@ types:
       partDescription:
         docs: To do.
         type: optional<list<SubstanceSourceMaterialPartDescription>>
-      discriminant: literal<"SubstanceSourceMaterial">
   SubstanceSourceMaterialFractionDescription:
     docs: 'Source material shall capture information on the taxonomic and anatomical
       origins as well as the fraction of a material that can result in or can be modified
@@ -38404,6 +38402,7 @@ types:
       is used for prescribing.
     extends: BaseResource
     properties:
+      resourceType: literal<"SubstanceSpecification">
       identifier:
         docs: Identifier by which this substance is known.
         type: optional<Identifier>
@@ -38463,7 +38462,6 @@ types:
       sourceMaterial:
         docs: Material or taxonomic/anatomical source for the substance.
         type: optional<Reference>
-      discriminant: literal<"SubstanceSpecification">
   SubstanceSpecificationMoiety:
     docs: The detailed description of a substance, typically at a level beyond what
       is used for prescribing.
@@ -38977,6 +38975,7 @@ types:
     docs: Record of delivery of what is supplied.
     extends: BaseResource
     properties:
+      resourceType: literal<"SupplyDelivery">
       identifier:
         docs: Identifier for the supply delivery event that is used to identify it
           across multiple disparate systems.
@@ -39023,7 +39022,6 @@ types:
       receiver:
         docs: Identifies the person who picked up the Supply.
         type: optional<list<Reference>>
-      discriminant: literal<"SupplyDelivery">
   SupplyDeliveryStatus:
     docs: A code specifying the state of the dispense event.
     enum:
@@ -39081,6 +39079,7 @@ types:
       healthcare setting.
     extends: BaseResource
     properties:
+      resourceType: literal<"SupplyRequest">
       identifier:
         docs: Business identifiers assigned to this SupplyRequest by the author and/or
           other systems. These identifiers remain constant as the resource is updated
@@ -39144,7 +39143,6 @@ types:
       deliverTo:
         docs: Where the supply is destined to go.
         type: optional<Reference>
-      discriminant: literal<"SupplyRequest">
   SupplyRequestStatus:
     docs: Status of the supply request.
     enum:
@@ -39210,6 +39208,7 @@ types:
     docs: A task to be performed.
     extends: BaseResource
     properties:
+      resourceType: literal<"Task">
       identifier:
         docs: The business identifier for this task.
         type: optional<list<Identifier>>
@@ -39325,7 +39324,6 @@ types:
       output:
         docs: Outputs produced by the Task.
         type: optional<list<TaskOutput>>
-      discriminant: literal<"Task">
   TaskStatus:
     docs: The current status of the task.
     enum:
@@ -39782,6 +39780,7 @@ types:
       functionality or a statement of required or desired server implementation.
     extends: BaseResource
     properties:
+      resourceType: literal<"TerminologyCapabilities">
       url:
         docs: An absolute URI that is used to identify this terminology capabilities
           when it is referenced in a specification, model, design or an instance;
@@ -39899,7 +39898,6 @@ types:
       closure:
         docs: Whether the $closure operation is supported.
         type: optional<TerminologyCapabilitiesClosure>
-      discriminant: literal<"TerminologyCapabilities">
   TerminologyCapabilitiesStatus:
     docs: The status of this terminology capabilities. Enables tracking the life-cycle
       of the content.
@@ -40301,6 +40299,7 @@ types:
     docs: A summary of information based on the results of executing a TestScript.
     extends: BaseResource
     properties:
+      resourceType: literal<"TestReport">
       identifier:
         docs: Identifier for the TestScript assigned for external purposes outside
           the context of FHIR.
@@ -40343,7 +40342,6 @@ types:
         docs: The results of the series of operations required to clean up after all
           the tests were executed (successfully or otherwise).
         type: optional<TestReportTeardown>
-      discriminant: literal<"TestReport">
   TestReportStatus:
     docs: The current state of this test report.
     enum:
@@ -40716,6 +40714,7 @@ types:
       to determine compliance against the FHIR specification.
     extends: BaseResource
     properties:
+      resourceType: literal<"TestScript">
       url:
         docs: An absolute URI that is used to identify this test script when it is
           referenced in a specification, model, design or an instance; also called
@@ -40825,7 +40824,6 @@ types:
         docs: A series of operations required to clean up after all the tests are
           executed (successfully or otherwise).
         type: optional<TestScriptTeardown>
-      discriminant: literal<"TestScript">
   TestScriptStatus:
     docs: The status of this test script. Enables tracking the life-cycle of the content.
     enum:
@@ -41685,6 +41683,7 @@ types:
       between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).
     extends: BaseResource
     properties:
+      resourceType: literal<"ValueSet">
       url:
         docs: An absolute URI that is used to identify this value set when it is referenced
           in a specification, model, design or an instance; also called its canonical
@@ -41777,7 +41776,6 @@ types:
           a simple collection of enumerated codes. This element holds the expansion,
           if it has been performed.
         type: optional<ValueSetExpansion>
-      discriminant: literal<"ValueSet">
   ValueSetStatus:
     docs: The status of this value set. Enables tracking the life-cycle of the content.
       The status of the value set applies to the value set definition (ValueSet.compose)
@@ -42227,6 +42225,7 @@ types:
       more elements.
     extends: BaseResource
     properties:
+      resourceType: literal<"VerificationResult">
       target:
         docs: A resource that was validated.
         type: optional<list<Reference>>
@@ -42273,7 +42272,6 @@ types:
       validator:
         docs: Information about the entity validating information.
         type: optional<list<VerificationResultValidator>>
-      discriminant: literal<"VerificationResult">
   VerificationResultPrimarySource:
     docs: Describes validation requirements, source(s), status and dates for one or
       more elements.
@@ -42428,6 +42426,7 @@ types:
       patient.
     extends: BaseResource
     properties:
+      resourceType: literal<"VisionPrescription">
       identifier:
         docs: A unique identifier assigned to this vision prescription.
         type: optional<list<Identifier>>
@@ -42455,7 +42454,6 @@ types:
         docs: Contain the details of  the individual lens specifications and serves
           as the authorization for the fullfillment by certified professionals.
         type: list<VisionPrescriptionLensSpecification>
-      discriminant: literal<"VisionPrescription">
   VisionPrescriptionLensSpecification:
     docs: An authorization for the provision of glasses and/or contact lenses to a
       patient.
@@ -42584,6 +42582,7 @@ types:
   Project:
     docs: Encapsulation of resources for a specific project or organization.
     properties:
+      resourceType: literal<"Project">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -42634,7 +42633,6 @@ types:
       site:
         docs: Web application or web site that is associated with the project.
         type: optional<list<ProjectSite>>
-      discriminant: literal<"Project">
   ProjectFeaturesItem:
     enum:
     - name: bots
@@ -42702,6 +42700,7 @@ types:
     docs: Medplum project membership. A project membership grants a user access to
       a project.
     properties:
+      resourceType: literal<"ProjectMembership">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -42758,10 +42757,10 @@ types:
       admin:
         docs: Whether this user is a project administrator.
         type: optional<boolean>
-      discriminant: literal<"ProjectMembership">
   ClientApplication:
     docs: Medplum client application for automated access.
     properties:
+      resourceType: literal<"ClientApplication">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -42808,10 +42807,10 @@ types:
       identityProvider:
         docs: Optional external Identity Provider (IdP) for the client application.
         type: optional<IdentityProvider>
-      discriminant: literal<"ClientApplication">
   User:
     docs: Representation of a human user of the system.
     properties:
+      resourceType: literal<"User">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -42864,10 +42863,10 @@ types:
         docs: Optional project if the user only exists for the project. This is used
           for the project-specific user database.
         type: optional<Reference>
-      discriminant: literal<"User">
   Login:
     docs: Login event and session details.
     properties:
+      resourceType: literal<"Login">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -42965,7 +42964,6 @@ types:
       userAgent:
         docs: The User-Agent request header as sent by the client.
         type: optional<string>
-      discriminant: literal<"Login">
   LoginAuthMethod:
     docs: The authentication method used to obtain the code (password or google).
     enum:
@@ -42992,6 +42990,7 @@ types:
   PasswordChangeRequest:
     docs: Password change request for the 'forgot password' flow.
     properties:
+      resourceType: literal<"PasswordChangeRequest">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43025,7 +43024,6 @@ types:
       redirectUri:
         docs: Redirect URI used when redirecting a client back to the client application.
         type: optional<uri>
-      discriminant: literal<"PasswordChangeRequest">
   PasswordChangeRequestType:
     docs: The type of password change request (invite or reset).
     enum:
@@ -43037,6 +43035,7 @@ types:
     docs: A JSON object that represents a cryptographic key. The members of the object
       represent properties of the key, including its value.
     properties:
+      resourceType: literal<"JsonWebKey">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43105,10 +43104,10 @@ types:
       qi:
         docs: The first CRT coefficient.
         type: optional<string>
-      discriminant: literal<"JsonWebKey">
   Bot:
     docs: Bot account for automated actions.
     properties:
+      resourceType: literal<"Bot">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43176,7 +43175,6 @@ types:
         docs: DEPRECATED Bot logic script. Use Bot.sourceCode or Bot.executableCode
           instead.
         type: optional<string>
-      discriminant: literal<"Bot">
   BotRuntimeVersion:
     docs: The identifier of the bot runtime environment (i.e., vmcontext, awslambda,
       etc).
@@ -43207,6 +43205,7 @@ types:
     docs: Access Policy for user or user group that defines how entities can or cannot
       access resources.
     properties:
+      resourceType: literal<"AccessPolicy">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43240,7 +43239,6 @@ types:
         docs: Use IP Access Rules to allowlist, block, and challenge traffic based
           on the visitor IP address.
         type: optional<list<AccessPolicyIpAccessRule>>
-      discriminant: literal<"AccessPolicy">
   AccessPolicyResource:
     docs: Access details for a resource type.
     properties:
@@ -43269,6 +43267,7 @@ types:
   UserConfiguration:
     docs: User specific configuration for the Medplum application.
     properties:
+      resourceType: literal<"UserConfiguration">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43299,7 +43298,6 @@ types:
       option:
         docs: User options that control the display of the application.
         type: optional<list<UserConfigurationOption>>
-      discriminant: literal<"UserConfiguration">
   UserConfigurationMenu:
     docs: Optional menu of shortcuts to URLs.
     properties:
@@ -43402,6 +43400,7 @@ types:
   BulkDataExport:
     docs: User specific configuration for the Medplum application.
     properties:
+      resourceType: literal<"BulkDataExport">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43452,7 +43451,6 @@ types:
         docs: Array of message file items following the same structure as the output
           array.
         type: optional<list<BulkDataExportError>>
-      discriminant: literal<"BulkDataExport">
   BulkDataExportStatus:
     docs: The status of the request.
     enum:
@@ -43499,6 +43497,7 @@ types:
   SmartAppLaunch:
     docs: This resource contains context details for a SMART App Launch.
     properties:
+      resourceType: literal<"SmartAppLaunch">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43525,10 +43524,10 @@ types:
         docs: Optional encounter indicating that the app was launched in the encounter
           context.
         type: optional<Reference>
-      discriminant: literal<"SmartAppLaunch">
   DomainConfiguration:
     docs: Domain specific configuration for the Medplum application.
     properties:
+      resourceType: literal<"DomainConfiguration">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43553,7 +43552,6 @@ types:
       identityProvider:
         docs: Optional external Identity Provider (IdP) for the domain name.
         type: optional<IdentityProvider>
-      discriminant: literal<"DomainConfiguration">
   AccessPolicyIpAccessRule:
     docs: Use IP Access Rules to allowlist, block, and challenge traffic based on
       the visitor IP address.
@@ -43579,6 +43577,7 @@ types:
   AsyncJob:
     docs: Contains details of long running asynchronous/background jobs.
     properties:
+      resourceType: literal<"AsyncJob">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43612,7 +43611,6 @@ types:
         type: uri
         docs: The full URL of the original kick-off request. In the case of a POST
           request, this URL will not include the request parameters.
-      discriminant: literal<"AsyncJob">
   AsyncJobStatus:
     docs: The status of the request.
     enum:
@@ -43627,6 +43625,7 @@ types:
   Agent:
     docs: Configuration details for an instance of the Medplum agent application.
     properties:
+      resourceType: literal<"Agent">
       id:
         docs: The logical id of the resource, as used in the URL for the resource.
           Once assigned, this value never changes.
@@ -43664,7 +43663,6 @@ types:
         docs: Details where to send notifications when resources are received that
           meet the criteria.
         type: list<AgentChannel>
-      discriminant: literal<"Agent">
   AgentStatus:
     docs: The status of the agent.
     enum:
