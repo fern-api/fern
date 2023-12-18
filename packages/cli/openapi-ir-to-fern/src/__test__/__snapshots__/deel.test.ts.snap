@@ -4338,14 +4338,34 @@ exports[`open api parser deel simple 1`] = `
           "weeks": "double",
         },
       },
-      "ClientLegalEntity": "optional<ClientLegalEntity>",
+      "ClientLegalEntity": {
+        "docs": undefined,
+        "properties": {
+          "email": "optional<EmailType>",
+          "id": "long",
+          "name": "string",
+          "registration_number": "string",
+          "subtype": "LegalEntitySubType",
+          "type": "LegalEntityType",
+          "vat_number": "string",
+        },
+      },
       "ClientOfBasicContract": {
         "docs": undefined,
         "properties": {
           "team": "optional<TeamOfBasicContract>",
         },
       },
-      "ClientOfContract": "optional<ClientOfContract>",
+      "ClientOfContract": {
+        "docs": undefined,
+        "properties": {
+          "email": "optional<EmailType>",
+          "full_name": "string",
+          "id": "long",
+          "legal_entity": "optional<ClientLegalEntity>",
+          "team": "TeamOfContract",
+        },
+      },
       "CompensationDetailsOfContract": {
         "docs": undefined,
         "properties": {
@@ -6122,7 +6142,16 @@ exports[`open api parser deel simple 1`] = `
       },
       "FileAttachmentInfo": {
         "docs": "This object is used for linking file attachments to your records.",
-        "type": "optional<FileAttachmentInfo>",
+        "properties": {
+          "filename": {
+            "docs": "Original filename you used to upload using attachments end-point.",
+            "type": "string",
+          },
+          "key": {
+            "docs": "You can call attachments end-point, get key and URL to upload your file.",
+            "type": "string",
+          },
+        },
       },
       "FileObject": {
         "docs": "This is the file you will upload in a multi-part form.",
@@ -7859,7 +7888,20 @@ exports[`open api parser deel simple 1`] = `
       },
       "Seniority": {
         "docs": "Seniority describes level of expertise at a job e.g. junior",
-        "type": "optional<Seniority>",
+        "properties": {
+          "id": {
+            "docs": "Unique identifier for seniority record",
+            "type": "double",
+          },
+          "level": {
+            "docs": "Level of seniority level e.g. 2",
+            "type": "optional<double>",
+          },
+          "name": {
+            "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
+            "type": "string",
+          },
+        },
       },
       "SeniorityList": "list<SeniorityRequired>",
       "SeniorityListContainer": {
@@ -8354,7 +8396,15 @@ exports[`open api parser deel simple 1`] = `
       },
       "WorkStatementScaleEnumOptional": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
-        "type": "optional<WorkStatementScaleEnumOptional>",
+        "enum": [
+          "hourly",
+          "daily",
+          "weekly",
+          "monthly",
+          "biweekly",
+          "semimonthly",
+          "custom",
+        ],
       },
       "WorkerEmailType": {
         "docs": "Worker's email address.",
@@ -8368,8 +8418,44 @@ exports[`open api parser deel simple 1`] = `
           "type": "LegalEntityType",
         },
       },
-      "WorkerOfBasicContract": "optional<WorkerOfBasicContract>",
-      "WorkerOfContract": "optional<WorkerOfContract>",
+      "WorkerOfBasicContract": {
+        "docs": undefined,
+        "properties": {
+          "alternate_email": "optional<AlternateEmailList>",
+          "email": "optional<EmailType>",
+          "full_name": "string",
+          "id": "long",
+          "image": "optional<UrlType>",
+        },
+      },
+      "WorkerOfContract": {
+        "docs": undefined,
+        "properties": {
+          "alternate_email": "optional<AlternateEmailList>",
+          "date_of_birth": "optional<DateTimeString>",
+          "email": "optional<EmailType>",
+          "expected_email": "optional<WorkerEmailType>",
+          "first_name": {
+            "docs": "Worker's first name",
+            "type": "optional<string>",
+          },
+          "full_name": {
+            "docs": "Worker's full name.",
+            "type": "optional<string>",
+          },
+          "id": "optional<long>",
+          "image": "optional<string>",
+          "last_name": {
+            "docs": "Worker's last name",
+            "type": "optional<string>",
+          },
+          "legal_entity": "optional<WorkerLegalEntity>",
+          "nationality": {
+            "docs": "Worker's nationality.",
+            "type": "optional<string>",
+          },
+        },
+      },
     },
   },
   "rootApiFile": {

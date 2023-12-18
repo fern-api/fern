@@ -4186,7 +4186,15 @@ exports[`open api parser hookdeck simple 1`] = `
           "UNKNOWN",
         ],
       },
-      "AttemptState": "optional<AttemptState>",
+      "AttemptState": {
+        "enum": [
+          "DELIVERING",
+          "QUEUED",
+          "PENDING",
+          "COMPLETED",
+          "HOLD",
+        ],
+      },
       "AttemptStatus": {
         "docs": "Attempt status",
         "enum": [
@@ -4198,7 +4206,13 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "AttemptTrigger": {
         "docs": "How the attempt was triggered",
-        "type": "optional<AttemptTrigger>",
+        "enum": [
+          "INITIAL",
+          "MANUAL",
+          "BULK_RETRY",
+          "UNPAUSE",
+          "AUTOMATIC",
+        ],
       },
       "BasicAuthIntegrationConfigs": {
         "docs": undefined,
@@ -4397,8 +4411,14 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "ConnectionFilterProperty": {
+        "discriminated": false,
         "docs": "JSON using our filter syntax to filter on request headers",
-        "type": "optional<ConnectionFilterProperty>",
+        "union": [
+          "optional<string>",
+          "double",
+          "boolean",
+          "ConnectionFilterPropertyThree",
+        ],
       },
       "ConnectionFilterPropertyThree": {
         "docs": undefined,
@@ -4515,7 +4535,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "DeliveryIssueData": {
         "docs": "Delivery issue data",
-        "type": "optional<DeliveryIssueData>",
+        "properties": {
+          "trigger_attempt": "optional<EventAttempt>",
+          "trigger_event": "optional<Event>",
+        },
       },
       "DeliveryIssueReference": {
         "docs": "Reference to the event and attempt an issue is being created for.",
@@ -4624,7 +4647,11 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "DestinationRateLimitPeriod": {
         "docs": "Period to rate limit attempts",
-        "type": "optional<DestinationRateLimitPeriod>",
+        "enum": [
+          "second",
+          "minute",
+          "hour",
+        ],
       },
       "DetachedIntegrationFromSource": {
         "docs": undefined,
@@ -4700,7 +4727,80 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "EventArray": "list<Event>",
-      "EventAttempt": "optional<EventAttempt>",
+      "EventAttempt": {
+        "docs": undefined,
+        "properties": {
+          "archived_at": {
+            "docs": "Date the attempt was archived",
+            "type": "optional<string>",
+          },
+          "attempt_number": {
+            "docs": "Sequential number of attempts (up to and including this one) made for the associated event",
+            "type": "optional<integer>",
+          },
+          "body": {
+            "docs": "Response body from the destination",
+            "type": "optional<EventAttemptBody>",
+          },
+          "bulk_retry_id": {
+            "docs": "ID of associated bulk retry",
+            "type": "optional<string>",
+          },
+          "created_at": {
+            "docs": "Date the attempt was created",
+            "type": "datetime",
+          },
+          "delivered_at": {
+            "docs": "Date the attempt was delivered",
+            "type": "optional<datetime>",
+          },
+          "delivery_latency": {
+            "docs": "Time elapsed between attempt initiation and final delivery (in ms)",
+            "type": "optional<integer>",
+          },
+          "destination_id": "optional<string>",
+          "error_code": "optional<AttemptErrorCodes>",
+          "event_id": {
+            "docs": "Event ID",
+            "type": "string",
+          },
+          "id": {
+            "docs": "Attempt ID",
+            "type": "string",
+          },
+          "requested_url": {
+            "docs": "URL of the destination where delivery was attempted",
+            "type": "optional<string>",
+          },
+          "responded_at": {
+            "docs": "Date the destination responded to this attempt",
+            "type": "optional<datetime>",
+          },
+          "response_latency": {
+            "docs": "Time elapsed between attempt initiation and a response from the destination (in ms)",
+            "type": "optional<integer>",
+          },
+          "response_status": {
+            "docs": "Attempt's HTTP response code",
+            "type": "optional<integer>",
+          },
+          "state": "optional<AttemptState>",
+          "status": "AttemptStatus",
+          "successful_at": {
+            "docs": "Date the attempt was successful",
+            "type": "optional<datetime>",
+          },
+          "team_id": {
+            "docs": "Team ID",
+            "type": "string",
+          },
+          "trigger": "optional<AttemptTrigger>",
+          "updated_at": {
+            "docs": "Date the attempt was last updated",
+            "type": "datetime",
+          },
+        },
+      },
       "EventAttemptBody": {
         "docs": "Response body from the destination",
         "properties": {},
@@ -5040,7 +5140,11 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "IssueTriggerChannels": {
         "docs": "Notification channels object for the specific channel type",
-        "type": "optional<IssueTriggerChannels>",
+        "properties": {
+          "email": "optional<IssueTriggerEmailChannel>",
+          "opsgenie": "optional<IssueTriggerIntegrationChannel>",
+          "slack": "optional<IssueTriggerSlackChannel>",
+        },
       },
       "IssueTriggerDeliveryConfigs": {
         "docs": "Configurations for a 'delivery' issue trigger",
@@ -5340,7 +5444,40 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "Ruleset": {
         "docs": "Associated [Ruleset](#ruleset-object) object",
-        "type": "optional<Ruleset>",
+        "properties": {
+          "archived_at": {
+            "docs": "Date the ruleset was archived",
+            "type": "optional<datetime>",
+          },
+          "created_at": {
+            "docs": "Date the ruleset was created",
+            "type": "datetime",
+          },
+          "id": {
+            "docs": "ID of the ruleset",
+            "type": "string",
+          },
+          "is_team_default": {
+            "docs": "Default ruleset of Workspace",
+            "type": "boolean",
+          },
+          "name": {
+            "docs": "A unique name for the ruleset",
+            "type": "string",
+          },
+          "rules": {
+            "docs": "Array of rules to apply",
+            "type": "list<Rule>",
+          },
+          "team_id": {
+            "docs": "ID of the workspace",
+            "type": "string",
+          },
+          "updated_at": {
+            "docs": "Date the ruleset was last updated",
+            "type": "datetime",
+          },
+        },
       },
       "RulesetPaginatedResult": {
         "docs": undefined,
@@ -5393,7 +5530,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "second",
         ],
       },
-      "ShortEventData": "optional<ShortEventData>",
+      "ShortEventData": {
+        "docs": undefined,
+        "properties": {
+          "body": "optional<ShortEventDataBody>",
+          "headers": "optional<ShortEventDataHeaders>",
+          "is_large_payload": "optional<boolean>",
+          "parsed_query": "optional<ShortEventDataParsedQuery>",
+          "path": "string",
+          "query": "optional<string>",
+        },
+      },
       "ShortEventDataBody": {
         "discriminated": false,
         "docs": undefined,
@@ -5769,7 +5916,10 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "TransformationIssueData": {
         "docs": "Transformation issue data",
-        "type": "optional<TransformationIssueData>",
+        "properties": {
+          "transformation_execution": "TransformationExecution",
+          "trigger_attempt": "optional<EventAttempt>",
+        },
       },
       "TransformationIssueReference": {
         "docs": "Reference to the event request transformation an issue is being created for.",
