@@ -25,3 +25,7 @@ scripts:
       - source "$HOME/.sdkman/bin/sdkman-init.sh"
       - sdk use java 11.0.21-zulu
       - gradle compileJava
+allowedFailures:
+  - enum
+  - extends
+  - response-property

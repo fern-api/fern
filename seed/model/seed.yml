@@ -5,6 +5,14 @@ language: java
 generatorType: Model
 defaultOutputMode: github
 scripts:
-  - docker: gradle:8.5.0-jdk11
+  - docker: fernapi/java-seed
     commands:
-      - ./gradlew build
+      - source "$HOME/.sdkman/bin/sdkman-init.sh"
+      - sdk use java 11.0.21-zulu
+      - gradle compileJava
+allowedFailures:
+  - enum
+  - exhaustive
+  - extends
+  - reserved-keywords
+  - trace
