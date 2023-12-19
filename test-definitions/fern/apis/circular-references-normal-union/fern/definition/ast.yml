@@ -1,0 +1,12 @@
+types:
+  FieldValue:
+    properties:
+      parent: AnotherContainerValue
+  ContainerValue:
+    properties:
+      child: FieldValue
+  AnotherContainerValue:
+    discriminated: false
+    union:
+      - ContainerValue
+      - FieldValue
