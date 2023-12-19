@@ -23,7 +23,7 @@ class Data_Base64(pydantic.BaseModel):
 
 
 """
-from seed.examples.resources.commons import Data_String
+from seed.examples.commons import Data_String
 
 Data_String(type="string", value="data")
 """

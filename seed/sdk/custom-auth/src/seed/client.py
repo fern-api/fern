@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.custom_auth.client import AsyncCustomAuthClient, CustomAuthClient
+from .custom_auth._client import AsyncCustomAuthClient, CustomAuthClient
 
 
 class SeedCustomAuth:

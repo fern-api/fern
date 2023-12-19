@@ -13,7 +13,7 @@ from fastapi import params
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .resources.svc.service.service import AbstractSvcService
+from .svc.service.service import AbstractSvcService
 
 
 def register(

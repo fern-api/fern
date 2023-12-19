@@ -5,9 +5,9 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .ec_2._client import AsyncEc2Client, Ec2Client
 from .environment import SeedMultiUrlEnvironmentEnvironment
-from .resources.ec_2.client import AsyncEc2Client, Ec2Client
-from .resources.s_3.client import AsyncS3Client, S3Client
+from .s_3._client import AsyncS3Client, S3Client
 
 
 class SeedMultiUrlEnvironment:

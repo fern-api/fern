@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.unknown.client import AsyncUnknownClient, UnknownClient
+from .unknown._client import AsyncUnknownClient, UnknownClient
 
 
 class SeedUnknownAsAny:

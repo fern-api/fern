@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.package.client import AsyncPackageClient, PackageClient
+from .package._client import AsyncPackageClient, PackageClient
 
 
 class SeedNurseryApi:

@@ -5,11 +5,11 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.endpoints.client import AsyncEndpointsClient, EndpointsClient
-from .resources.inlined_requests.client import AsyncInlinedRequestsClient, InlinedRequestsClient
-from .resources.no_auth.client import AsyncNoAuthClient, NoAuthClient
-from .resources.no_req_body.client import AsyncNoReqBodyClient, NoReqBodyClient
-from .resources.req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
+from .endpoints._client import AsyncEndpointsClient, EndpointsClient
+from .inlined_requests._client import AsyncInlinedRequestsClient, InlinedRequestsClient
+from .no_auth._client import AsyncNoAuthClient, NoAuthClient
+from .no_req_body._client import AsyncNoReqBodyClient, NoReqBodyClient
+from .req_with_headers._client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
 class SeedExhaustive:

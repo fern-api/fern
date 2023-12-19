@@ -3,8 +3,8 @@
 import datetime as dt
 import typing
 
+from ..commons.metadata.types.metadata import Metadata
 from ..core.datetime_utils import serialize_datetime
-from ..resources.commons.resources.metadata.types.metadata import Metadata
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -15,7 +15,7 @@ except ImportError:
 class Node(pydantic.BaseModel):
     """
     from seed.objects_with_imports import Node
-    from seed.objects_with_imports.resources.commons import Metadata
+    from seed.objects_with_imports.commons import Metadata
 
     Node(
         id="node-8dvgfja2",

@@ -5,8 +5,8 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.folder_a.client import AsyncFolderAClient, FolderAClient
-from .resources.foo.client import AsyncFooClient, FooClient
+from .folder_a._client import AsyncFolderAClient, FolderAClient
+from .foo._client import AsyncFooClient, FooClient
 
 
 class SeedAudiences:

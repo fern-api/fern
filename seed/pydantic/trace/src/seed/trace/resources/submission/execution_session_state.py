@@ -16,7 +16,7 @@ except ImportError:
 class ExecutionSessionState(pydantic.BaseModel):
     last_time_contacted: typing.Optional[str] = pydantic.Field(alias="lastTimeContacted")
     session_id: str = pydantic.Field(
-        alias="sessionId", description=("The auto-generated session id. Formatted as a uuid.\n")
+        alias="sessionId", description="The auto-generated session id. Formatted as a uuid."
     )
     is_warm_instance: bool = pydantic.Field(alias="isWarmInstance")
     aws_task_id: typing.Optional[str] = pydantic.Field(alias="awsTaskId")

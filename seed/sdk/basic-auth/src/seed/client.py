@@ -4,8 +4,8 @@ import typing
 
 import httpx
 
+from .basic_auth._client import AsyncBasicAuthClient, BasicAuthClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
 
 
 class SeedBasicAuth:

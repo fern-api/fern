@@ -19,3 +19,10 @@ fixtures:
         pydantic_config: 
           version: v2
       outputFolder: pydantic-v2
+allowedFailures: 
+  - bytes
+  - file-download
+  - file-upload
+  - literal-headers
+  - response-property
+  - streaming

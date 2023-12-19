@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.svc.client import AsyncSvcClient, SvcClient
+from .svc._client import AsyncSvcClient, SvcClient
 
 
 class SeedApi:

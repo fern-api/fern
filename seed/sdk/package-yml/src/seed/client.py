@@ -9,7 +9,7 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .service._client import AsyncServiceClient, ServiceClient
 
 try:
     import pydantic.v1 as pydantic  # type: ignore

@@ -5,10 +5,10 @@ from json.decoder import JSONDecodeError
 
 import httpx
 
+from .a._client import AClient, AsyncAClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.a.client import AClient, AsyncAClient
-from .resources.folder.client import AsyncFolderClient, FolderClient
+from .folder._client import AsyncFolderClient, FolderClient
 
 
 class SeedApi:

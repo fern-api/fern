@@ -10,13 +10,13 @@ import fastapi
 import starlette
 from fastapi import params
 
+from .a.b.service.service import AbstractABService
+from .a.c.service.service import AbstractACService
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .resources.a.resources.b.service.service import AbstractABService
-from .resources.a.resources.c.service.service import AbstractACService
-from .resources.folder.resources.service.service.service import AbstractFolderServiceService
-from .resources.folder.service.service import AbstractFolderService
+from .folder.service.service import AbstractFolderService
+from .folder.service.service.service import AbstractFolderServiceService
 from .service.service import AbstractRootService
 
 

@@ -5,9 +5,9 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.no_headers.client import AsyncNoHeadersClient, NoHeadersClient
-from .resources.only_literal_headers.client import AsyncOnlyLiteralHeadersClient, OnlyLiteralHeadersClient
-from .resources.with_non_literal_headers.client import AsyncWithNonLiteralHeadersClient, WithNonLiteralHeadersClient
+from .no_headers._client import AsyncNoHeadersClient, NoHeadersClient
+from .only_literal_headers._client import AsyncOnlyLiteralHeadersClient, OnlyLiteralHeadersClient
+from .with_non_literal_headers._client import AsyncWithNonLiteralHeadersClient, WithNonLiteralHeadersClient
 
 
 class SeedLiteralHeaders:

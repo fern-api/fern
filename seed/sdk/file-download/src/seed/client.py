@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .service._client import AsyncServiceClient, ServiceClient
 
 
 class SeedFileDownload:

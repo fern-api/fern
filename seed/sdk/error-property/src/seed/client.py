@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.property_based_error.client import AsyncPropertyBasedErrorClient, PropertyBasedErrorClient
+from .property_based_error._client import AsyncPropertyBasedErrorClient, PropertyBasedErrorClient
 
 
 class SeedErrorProperty:

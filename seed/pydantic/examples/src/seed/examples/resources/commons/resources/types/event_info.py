@@ -28,7 +28,7 @@ class EventInfo_Tag(pydantic.BaseModel):
 
 
 """
-from seed.examples.resources.commons import EventInfo_Metadata
+from seed.examples.commons import EventInfo_Metadata
 
 EventInfo_Metadata(
     type="metadata",

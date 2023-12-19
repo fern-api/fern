@@ -9,9 +9,9 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
 from .environment import SeedExamplesEnvironment
-from .resources.file.client import AsyncFileClient, FileClient
-from .resources.health.client import AsyncHealthClient, HealthClient
-from .resources.service.client import AsyncServiceClient, ServiceClient
+from .file._client import AsyncFileClient, FileClient
+from .health._client import AsyncHealthClient, HealthClient
+from .service._client import AsyncServiceClient, ServiceClient
 
 try:
     import pydantic.v1 as pydantic  # type: ignore

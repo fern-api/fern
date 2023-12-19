@@ -1,9 +1,9 @@
 {
     "types": {
         "type_commons/types:Tag": "\"tag-wf9as23d\"\n",
-        "type_commons/types:Metadata": "from seed.resources.commons import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    json_string='{\"foo\": \"bar\", \"baz\": \"qux\"}',\n)\n",
-        "type_commons/types:EventInfo": "from seed.resources.commons import EventInfo_Metadata\n\nEventInfo_Metadata(\n    type=\"metadata\",\n    id=\"metadata-alskjfg8\",\n    data={\"one\": \"two\"},\n    json_string='{\"one\": \"two\"}',\n)\n",
-        "type_commons/types:Data": "from seed.resources.commons import Data_String\n\nData_String(type=\"string\", value=\"data\")\n",
+        "type_commons/types:Metadata": "from seed.commons import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    json_string='{\"foo\": \"bar\", \"baz\": \"qux\"}',\n)\n",
+        "type_commons/types:EventInfo": "from seed.commons import EventInfo_Metadata\n\nEventInfo_Metadata(\n    type=\"metadata\",\n    id=\"metadata-alskjfg8\",\n    data={\"one\": \"two\"},\n    json_string='{\"one\": \"two\"}',\n)\n",
+        "type_commons/types:Data": "from seed.commons import Data_String\n\nData_String(type=\"string\", value=\"data\")\n",
         "type_file/service:Filename": "\"file.txt\"\n",
         "type_types:MovieId": "\"movie-c06a4ad7\"\n",
         "type_types:Movie": "from seed import Movie\n\nMovie(\n    id=\"movie-c06a4ad7\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    type=\"movie\",\n    tag=\"tag-wf9as23d\",\n)\n",

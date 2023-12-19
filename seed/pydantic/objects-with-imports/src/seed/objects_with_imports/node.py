@@ -15,7 +15,7 @@ except ImportError:
 class Node(pydantic.BaseModel):
     """
     from seed.objects_with_imports import Node
-    from seed.objects_with_imports.resources.commons import Metadata
+    from seed.objects_with_imports.commons import Metadata
 
     Node(
         id="node-8dvgfja2",

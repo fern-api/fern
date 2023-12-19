@@ -10,19 +10,19 @@ import fastapi
 import starlette
 from fastapi import params
 
+from .admin.service.service import AbstractAdminService
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .resources.admin.service.service import AbstractAdminService
-from .resources.homepage.service.service import AbstractHomepageService
-from .resources.migration.service.service import AbstractMigrationService
-from .resources.playlist.service.service import AbstractPlaylistService
-from .resources.problem.service.service import AbstractProblemService
-from .resources.submission.service.service import AbstractSubmissionService
-from .resources.sysprop.service.service import AbstractSyspropService
-from .resources.v_2.resources.problem.service.service import AbstractV2ProblemService
-from .resources.v_2.resources.v_3.resources.problem.service.service import AbstractV2V3ProblemService
-from .resources.v_2.service.service import AbstractV2Service
+from .homepage.service.service import AbstractHomepageService
+from .migration.service.service import AbstractMigrationService
+from .playlist.service.service import AbstractPlaylistService
+from .problem.service.service import AbstractProblemService
+from .submission.service.service import AbstractSubmissionService
+from .sysprop.service.service import AbstractSyspropService
+from .v_2.problem.service.service import AbstractV2ProblemService
+from .v_2.service.service import AbstractV2Service
+from .v_2.v_3.problem.service.service import AbstractV2V3ProblemService
 
 
 def register(

@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.dummy.client import AsyncDummyClient, DummyClient
+from .dummy._client import AsyncDummyClient, DummyClient
 
 
 class SeedStreaming:

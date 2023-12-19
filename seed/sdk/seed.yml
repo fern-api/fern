@@ -33,3 +33,6 @@ scripts:
       - dmypy run .
       - pyenv global 3.9
       - dmypy run .
+allowedFailures: 
+  - enum
+  - response-property

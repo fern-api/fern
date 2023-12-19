@@ -13,7 +13,7 @@ except ImportError:
 
 class Metadata(pydantic.BaseModel):
     """
-    from seed.examples.resources.commons import Metadata
+    from seed.examples.commons import Metadata
 
     Metadata(
         id="metadata-js8dg24b",

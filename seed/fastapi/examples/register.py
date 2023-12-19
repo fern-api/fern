@@ -13,13 +13,11 @@ from fastapi import params
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .resources.file.resources.notification.resources.service.service.service import (
-    AbstractFileNotificationServiceService,
-)
-from .resources.file.resources.service.service.service import AbstractFileServiceService
-from .resources.health.resources.service.service.service import AbstractHealthServiceService
-from .resources.service.service.service import AbstractServiceService
+from .file.notification.service.service.service import AbstractFileNotificationServiceService
+from .file.service.service.service import AbstractFileServiceService
+from .health.service.service.service import AbstractHealthServiceService
 from .service.service import AbstractRootService
+from .service.service.service import AbstractServiceService
 
 
 def register(

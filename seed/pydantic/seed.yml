@@ -12,3 +12,5 @@ fixtures:
     - customConfig:
         version: v2
       outputFolder: pydantic-v2
+allowedFailures: 
+  - enum

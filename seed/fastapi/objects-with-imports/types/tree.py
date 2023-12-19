@@ -15,7 +15,7 @@ except ImportError:
 class Tree(pydantic.BaseModel):
     """
     from seed.objects_with_imports import Node, Tree
-    from seed.objects_with_imports.resources.commons import Metadata
+    from seed.objects_with_imports.commons import Metadata
 
     Tree(
         nodes=[

@@ -17,7 +17,7 @@ except ImportError:
 class Directory(pydantic.BaseModel):
     """
     from seed.objects_with_imports import File, FileInfo
-    from seed.objects_with_imports.resources.file import Directory
+    from seed.objects_with_imports.file import Directory
 
     Directory(
         name="root",

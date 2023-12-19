@@ -11,7 +11,7 @@ class SubpackageAsyncClientDeclarationReferencer(SdkDeclarationReferencer[ir_typ
             directories=self._get_directories_for_fern_filepath(
                 fern_filepath=name.fern_filepath,
             ),
-            file=Filepath.FilepathPart(module_name="client"),
+            file=Filepath.FilepathPart(module_name="_client"),
         )
 
     def get_class_name(self, *, name: ir_types.Subpackage) -> str:

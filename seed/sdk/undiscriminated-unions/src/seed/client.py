@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .resources.union.client import AsyncUnionClient, UnionClient
+from .union._client import AsyncUnionClient, UnionClient
 
 
 class SeedUndiscriminatedUnions:
