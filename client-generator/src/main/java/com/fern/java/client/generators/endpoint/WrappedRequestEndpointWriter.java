@@ -267,7 +267,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock.Builder requestBodyCodeBlock) {
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
-            isOptional = this.httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+            isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
+                    this.httpEndpoint.getRequestBody().get());
         }
 
         requestBodyCodeBlock

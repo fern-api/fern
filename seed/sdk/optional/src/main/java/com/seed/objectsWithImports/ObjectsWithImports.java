@@ -5,20 +5,20 @@ package com.seed.objectsWithImports;
 
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.Suppliers;
-import com.seed.objectsWithImports.optional._OptionalClient;
+import com.seed.objectsWithImports.optional.OptionalClient;
 import java.util.function.Supplier;
 
 public class ObjectsWithImports {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_OptionalClient> optionalClient;
+    protected final Supplier<OptionalClient> optionalClient;
 
     public ObjectsWithImports(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.optionalClient = Suppliers.memoize(() -> new _OptionalClient(clientOptions));
+        this.optionalClient = Suppliers.memoize(() -> new OptionalClient(clientOptions));
     }
 
-    public _OptionalClient optional() {
+    public OptionalClient optional() {
         return this.optionalClient.get();
     }
 

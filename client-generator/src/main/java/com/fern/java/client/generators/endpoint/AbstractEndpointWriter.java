@@ -605,10 +605,10 @@ public abstract class AbstractEndpointWriter {
 
     private class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
-        private final boolean visitNmaedType;
+        private final boolean visitNamedType;
 
         TypeReferenceIsOptional(boolean visitNamedType) {
-            this.visitNmaedType = visitNamedType;
+            this.visitNamedType = visitNamedType;
         }
 
         @Override
@@ -618,7 +618,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitNamed(DeclaredTypeName named) {
-            if (visitNmaedType) {
+            if (visitNamedType) {
                 TypeDeclaration typeDeclaration =
                         clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
                 return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());

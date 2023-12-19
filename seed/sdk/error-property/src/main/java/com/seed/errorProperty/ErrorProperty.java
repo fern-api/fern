@@ -5,20 +5,20 @@ package com.seed.errorProperty;
 
 import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.Suppliers;
-import com.seed.errorProperty.propertybasederror._PropertyBasedErrorClient;
+import com.seed.errorProperty.propertybasederror.PropertyBasedErrorClient;
 import java.util.function.Supplier;
 
 public class ErrorProperty {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_PropertyBasedErrorClient> propertyBasedErrorClient;
+    protected final Supplier<PropertyBasedErrorClient> propertyBasedErrorClient;
 
     public ErrorProperty(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.propertyBasedErrorClient = Suppliers.memoize(() -> new _PropertyBasedErrorClient(clientOptions));
+        this.propertyBasedErrorClient = Suppliers.memoize(() -> new PropertyBasedErrorClient(clientOptions));
     }
 
-    public _PropertyBasedErrorClient propertyBasedError() {
+    public PropertyBasedErrorClient propertyBasedError() {
         return this.propertyBasedErrorClient.get();
     }
 

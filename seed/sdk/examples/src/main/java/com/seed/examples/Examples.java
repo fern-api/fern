@@ -9,9 +9,9 @@ import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.Suppliers;
-import com.seed.examples.file._FileClient;
-import com.seed.examples.health._HealthClient;
-import com.seed.examples.service._ServiceClient;
+import com.seed.examples.file.FileClient;
+import com.seed.examples.health.HealthClient;
+import com.seed.examples.service.ServiceClient;
 import java.io.IOException;
 import java.util.function.Supplier;
 import okhttp3.Headers;
@@ -23,17 +23,17 @@ import okhttp3.Response;
 public class Examples {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_FileClient> fileClient;
+    protected final Supplier<FileClient> fileClient;
 
-    protected final Supplier<_HealthClient> healthClient;
+    protected final Supplier<HealthClient> healthClient;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public Examples(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.fileClient = Suppliers.memoize(() -> new _FileClient(clientOptions));
-        this.healthClient = Suppliers.memoize(() -> new _HealthClient(clientOptions));
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.fileClient = Suppliers.memoize(() -> new FileClient(clientOptions));
+        this.healthClient = Suppliers.memoize(() -> new HealthClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
     public String echo(String request) {
@@ -71,15 +71,15 @@ public class Examples {
         }
     }
 
-    public _FileClient file() {
+    public FileClient file() {
         return this.fileClient.get();
     }
 
-    public _HealthClient health() {
+    public HealthClient health() {
         return this.healthClient.get();
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

@@ -5,28 +5,28 @@ package com.seed.audiences;
 
 import com.seed.audiences.core.ClientOptions;
 import com.seed.audiences.core.Suppliers;
-import com.seed.audiences.foldera._FolderAClient;
-import com.seed.audiences.foo._FooClient;
+import com.seed.audiences.foldera.FolderAClient;
+import com.seed.audiences.foo.FooClient;
 import java.util.function.Supplier;
 
 public class Audiences {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_FolderAClient> folderAClient;
+    protected final Supplier<FolderAClient> folderAClient;
 
-    protected final Supplier<_FooClient> fooClient;
+    protected final Supplier<FooClient> fooClient;
 
     public Audiences(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.folderAClient = Suppliers.memoize(() -> new _FolderAClient(clientOptions));
-        this.fooClient = Suppliers.memoize(() -> new _FooClient(clientOptions));
+        this.folderAClient = Suppliers.memoize(() -> new FolderAClient(clientOptions));
+        this.fooClient = Suppliers.memoize(() -> new FooClient(clientOptions));
     }
 
-    public _FolderAClient folderA() {
+    public FolderAClient folderA() {
         return this.folderAClient.get();
     }
 
-    public _FooClient foo() {
+    public FooClient foo() {
         return this.fooClient.get();
     }
 

@@ -3,7 +3,7 @@
  */
 package com.seed.basicAuth;
 
-import com.seed.basicAuth.basicauth._BasicAuthClient;
+import com.seed.basicAuth.basicauth.BasicAuthClient;
 import com.seed.basicAuth.core.ClientOptions;
 import com.seed.basicAuth.core.Suppliers;
 import java.util.function.Supplier;
@@ -11,14 +11,14 @@ import java.util.function.Supplier;
 public class BasicAuth {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_BasicAuthClient> basicAuthClient;
+    protected final Supplier<BasicAuthClient> basicAuthClient;
 
     public BasicAuth(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.basicAuthClient = Suppliers.memoize(() -> new _BasicAuthClient(clientOptions));
+        this.basicAuthClient = Suppliers.memoize(() -> new BasicAuthClient(clientOptions));
     }
 
-    public _BasicAuthClient basicAuth() {
+    public BasicAuthClient basicAuth() {
         return this.basicAuthClient.get();
     }
 

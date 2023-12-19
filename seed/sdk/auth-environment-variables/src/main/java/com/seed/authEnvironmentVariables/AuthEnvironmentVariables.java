@@ -5,20 +5,20 @@ package com.seed.authEnvironmentVariables;
 
 import com.seed.authEnvironmentVariables.core.ClientOptions;
 import com.seed.authEnvironmentVariables.core.Suppliers;
-import com.seed.authEnvironmentVariables.service._ServiceClient;
+import com.seed.authEnvironmentVariables.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class AuthEnvironmentVariables {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public AuthEnvironmentVariables(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

@@ -5,20 +5,20 @@ package com.seed.noEnvironment;
 
 import com.seed.noEnvironment.core.ClientOptions;
 import com.seed.noEnvironment.core.Suppliers;
-import com.seed.noEnvironment.dummy._DummyClient;
+import com.seed.noEnvironment.dummy.DummyClient;
 import java.util.function.Supplier;
 
 public class NoEnvironment {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_DummyClient> dummyClient;
+    protected final Supplier<DummyClient> dummyClient;
 
     public NoEnvironment(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.dummyClient = Suppliers.memoize(() -> new _DummyClient(clientOptions));
+        this.dummyClient = Suppliers.memoize(() -> new DummyClient(clientOptions));
     }
 
-    public _DummyClient dummy() {
+    public DummyClient dummy() {
         return this.dummyClient.get();
     }
 

@@ -5,52 +5,52 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.Suppliers;
-import com.seed.exhaustive.endpoints._EndpointsClient;
-import com.seed.exhaustive.inlinedrequests._InlinedRequestsClient;
-import com.seed.exhaustive.noauth._NoAuthClient;
-import com.seed.exhaustive.noreqbody._NoReqBodyClient;
-import com.seed.exhaustive.reqwithheaders._ReqWithHeadersClient;
+import com.seed.exhaustive.endpoints.EndpointsClient;
+import com.seed.exhaustive.inlinedrequests.InlinedRequestsClient;
+import com.seed.exhaustive.noauth.NoAuthClient;
+import com.seed.exhaustive.noreqbody.NoReqBodyClient;
+import com.seed.exhaustive.reqwithheaders.ReqWithHeadersClient;
 import java.util.function.Supplier;
 
 public class Exhaustive {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_EndpointsClient> endpointsClient;
+    protected final Supplier<EndpointsClient> endpointsClient;
 
-    protected final Supplier<_InlinedRequestsClient> inlinedRequestsClient;
+    protected final Supplier<InlinedRequestsClient> inlinedRequestsClient;
 
-    protected final Supplier<_NoAuthClient> noAuthClient;
+    protected final Supplier<NoAuthClient> noAuthClient;
 
-    protected final Supplier<_NoReqBodyClient> noReqBodyClient;
+    protected final Supplier<NoReqBodyClient> noReqBodyClient;
 
-    protected final Supplier<_ReqWithHeadersClient> reqWithHeadersClient;
+    protected final Supplier<ReqWithHeadersClient> reqWithHeadersClient;
 
     public Exhaustive(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.endpointsClient = Suppliers.memoize(() -> new _EndpointsClient(clientOptions));
-        this.inlinedRequestsClient = Suppliers.memoize(() -> new _InlinedRequestsClient(clientOptions));
-        this.noAuthClient = Suppliers.memoize(() -> new _NoAuthClient(clientOptions));
-        this.noReqBodyClient = Suppliers.memoize(() -> new _NoReqBodyClient(clientOptions));
-        this.reqWithHeadersClient = Suppliers.memoize(() -> new _ReqWithHeadersClient(clientOptions));
+        this.endpointsClient = Suppliers.memoize(() -> new EndpointsClient(clientOptions));
+        this.inlinedRequestsClient = Suppliers.memoize(() -> new InlinedRequestsClient(clientOptions));
+        this.noAuthClient = Suppliers.memoize(() -> new NoAuthClient(clientOptions));
+        this.noReqBodyClient = Suppliers.memoize(() -> new NoReqBodyClient(clientOptions));
+        this.reqWithHeadersClient = Suppliers.memoize(() -> new ReqWithHeadersClient(clientOptions));
     }
 
-    public _EndpointsClient endpoints() {
+    public EndpointsClient endpoints() {
         return this.endpointsClient.get();
     }
 
-    public _InlinedRequestsClient inlinedRequests() {
+    public InlinedRequestsClient inlinedRequests() {
         return this.inlinedRequestsClient.get();
     }
 
-    public _NoAuthClient noAuth() {
+    public NoAuthClient noAuth() {
         return this.noAuthClient.get();
     }
 
-    public _NoReqBodyClient noReqBody() {
+    public NoReqBodyClient noReqBody() {
         return this.noReqBodyClient.get();
     }
 
-    public _ReqWithHeadersClient reqWithHeaders() {
+    public ReqWithHeadersClient reqWithHeaders() {
         return this.reqWithHeadersClient.get();
     }
 

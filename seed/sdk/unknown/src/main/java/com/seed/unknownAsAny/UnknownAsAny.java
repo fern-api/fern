@@ -5,20 +5,20 @@ package com.seed.unknownAsAny;
 
 import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.Suppliers;
-import com.seed.unknownAsAny.unknown._UnknownClient;
+import com.seed.unknownAsAny.unknown.UnknownClient;
 import java.util.function.Supplier;
 
 public class UnknownAsAny {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_UnknownClient> unknownClient;
+    protected final Supplier<UnknownClient> unknownClient;
 
     public UnknownAsAny(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.unknownClient = Suppliers.memoize(() -> new _UnknownClient(clientOptions));
+        this.unknownClient = Suppliers.memoize(() -> new UnknownClient(clientOptions));
     }
 
-    public _UnknownClient unknown() {
+    public UnknownClient unknown() {
         return this.unknownClient.get();
     }
 

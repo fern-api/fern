@@ -3,78 +3,78 @@
  */
 package com.seed.trace;
 
-import com.seed.trace.admin._AdminClient;
+import com.seed.trace.admin.AdminClient;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.Suppliers;
-import com.seed.trace.homepage._HomepageClient;
-import com.seed.trace.migration._MigrationClient;
-import com.seed.trace.playlist._PlaylistClient;
-import com.seed.trace.problem._ProblemClient;
-import com.seed.trace.submission._SubmissionClient;
-import com.seed.trace.sysprop._SyspropClient;
-import com.seed.trace.v2._V2Client;
+import com.seed.trace.homepage.HomepageClient;
+import com.seed.trace.migration.MigrationClient;
+import com.seed.trace.playlist.PlaylistClient;
+import com.seed.trace.problem.ProblemClient;
+import com.seed.trace.submission.SubmissionClient;
+import com.seed.trace.sysprop.SyspropClient;
+import com.seed.trace.v2.V2Client;
 import java.util.function.Supplier;
 
 public class Trace {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_V2Client> v2Client;
+    protected final Supplier<V2Client> v2Client;
 
-    protected final Supplier<_AdminClient> adminClient;
+    protected final Supplier<AdminClient> adminClient;
 
-    protected final Supplier<_HomepageClient> homepageClient;
+    protected final Supplier<HomepageClient> homepageClient;
 
-    protected final Supplier<_MigrationClient> migrationClient;
+    protected final Supplier<MigrationClient> migrationClient;
 
-    protected final Supplier<_PlaylistClient> playlistClient;
+    protected final Supplier<PlaylistClient> playlistClient;
 
-    protected final Supplier<_ProblemClient> problemClient;
+    protected final Supplier<ProblemClient> problemClient;
 
-    protected final Supplier<_SubmissionClient> submissionClient;
+    protected final Supplier<SubmissionClient> submissionClient;
 
-    protected final Supplier<_SyspropClient> syspropClient;
+    protected final Supplier<SyspropClient> syspropClient;
 
     public Trace(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.v2Client = Suppliers.memoize(() -> new _V2Client(clientOptions));
-        this.adminClient = Suppliers.memoize(() -> new _AdminClient(clientOptions));
-        this.homepageClient = Suppliers.memoize(() -> new _HomepageClient(clientOptions));
-        this.migrationClient = Suppliers.memoize(() -> new _MigrationClient(clientOptions));
-        this.playlistClient = Suppliers.memoize(() -> new _PlaylistClient(clientOptions));
-        this.problemClient = Suppliers.memoize(() -> new _ProblemClient(clientOptions));
-        this.submissionClient = Suppliers.memoize(() -> new _SubmissionClient(clientOptions));
-        this.syspropClient = Suppliers.memoize(() -> new _SyspropClient(clientOptions));
+        this.v2Client = Suppliers.memoize(() -> new V2Client(clientOptions));
+        this.adminClient = Suppliers.memoize(() -> new AdminClient(clientOptions));
+        this.homepageClient = Suppliers.memoize(() -> new HomepageClient(clientOptions));
+        this.migrationClient = Suppliers.memoize(() -> new MigrationClient(clientOptions));
+        this.playlistClient = Suppliers.memoize(() -> new PlaylistClient(clientOptions));
+        this.problemClient = Suppliers.memoize(() -> new ProblemClient(clientOptions));
+        this.submissionClient = Suppliers.memoize(() -> new SubmissionClient(clientOptions));
+        this.syspropClient = Suppliers.memoize(() -> new SyspropClient(clientOptions));
     }
 
-    public _V2Client v2() {
+    public V2Client v2() {
         return this.v2Client.get();
     }
 
-    public _AdminClient admin() {
+    public AdminClient admin() {
         return this.adminClient.get();
     }
 
-    public _HomepageClient homepage() {
+    public HomepageClient homepage() {
         return this.homepageClient.get();
     }
 
-    public _MigrationClient migration() {
+    public MigrationClient migration() {
         return this.migrationClient.get();
     }
 
-    public _PlaylistClient playlist() {
+    public PlaylistClient playlist() {
         return this.playlistClient.get();
     }
 
-    public _ProblemClient problem() {
+    public ProblemClient problem() {
         return this.problemClient.get();
     }
 
-    public _SubmissionClient submission() {
+    public SubmissionClient submission() {
         return this.submissionClient.get();
     }
 
-    public _SyspropClient sysprop() {
+    public SyspropClient sysprop() {
         return this.syspropClient.get();
     }
 

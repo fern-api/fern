@@ -5,20 +5,20 @@ package com.seed.singleUrlEnvironmentNoDefault;
 
 import com.seed.singleUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentNoDefault.core.Suppliers;
-import com.seed.singleUrlEnvironmentNoDefault.dummy._DummyClient;
+import com.seed.singleUrlEnvironmentNoDefault.dummy.DummyClient;
 import java.util.function.Supplier;
 
 public class SingleUrlEnvironmentNoDefault {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_DummyClient> dummyClient;
+    protected final Supplier<DummyClient> dummyClient;
 
     public SingleUrlEnvironmentNoDefault(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.dummyClient = Suppliers.memoize(() -> new _DummyClient(clientOptions));
+        this.dummyClient = Suppliers.memoize(() -> new DummyClient(clientOptions));
     }
 
-    public _DummyClient dummy() {
+    public DummyClient dummy() {
         return this.dummyClient.get();
     }
 

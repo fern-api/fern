@@ -5,28 +5,28 @@ package com.seed.multiUrlEnvironment;
 
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.Suppliers;
-import com.seed.multiUrlEnvironment.ec2._Ec2Client;
-import com.seed.multiUrlEnvironment.s3._S3Client;
+import com.seed.multiUrlEnvironment.ec2.Ec2Client;
+import com.seed.multiUrlEnvironment.s3.S3Client;
 import java.util.function.Supplier;
 
 public class MultiUrlEnvironment {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_Ec2Client> ec2Client;
+    protected final Supplier<Ec2Client> ec2Client;
 
-    protected final Supplier<_S3Client> s3Client;
+    protected final Supplier<S3Client> s3Client;
 
     public MultiUrlEnvironment(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.ec2Client = Suppliers.memoize(() -> new _Ec2Client(clientOptions));
-        this.s3Client = Suppliers.memoize(() -> new _S3Client(clientOptions));
+        this.ec2Client = Suppliers.memoize(() -> new Ec2Client(clientOptions));
+        this.s3Client = Suppliers.memoize(() -> new S3Client(clientOptions));
     }
 
-    public _Ec2Client ec2() {
+    public Ec2Client ec2() {
         return this.ec2Client.get();
     }
 
-    public _S3Client s3() {
+    public S3Client s3() {
         return this.s3Client.get();
     }
 

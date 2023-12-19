@@ -5,20 +5,20 @@ package com.seed.bearerTokenEnvironmentVariable;
 
 import com.seed.bearerTokenEnvironmentVariable.core.ClientOptions;
 import com.seed.bearerTokenEnvironmentVariable.core.Suppliers;
-import com.seed.bearerTokenEnvironmentVariable.service._ServiceClient;
+import com.seed.bearerTokenEnvironmentVariable.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class BearerTokenEnvironmentVariable {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public BearerTokenEnvironmentVariable(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

@@ -5,20 +5,20 @@ package com.seed.bytes;
 
 import com.seed.bytes.core.ClientOptions;
 import com.seed.bytes.core.Suppliers;
-import com.seed.bytes.service._ServiceClient;
+import com.seed.bytes.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class Bytes {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public Bytes(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

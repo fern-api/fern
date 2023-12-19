@@ -260,7 +260,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         public Void visitTypeReference(HttpRequestBodyReference _typeReference) {
             boolean isOptional = false;
             if (this.endpoint.getRequestBody().isPresent()) {
-                isOptional = this.endpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+                isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
+                        this.endpoint.getRequestBody().get());
             }
             codeBlock
                     .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())

@@ -64,8 +64,7 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
     }
 
     private static String getClientName(FernFilepath fernFilepath) {
-        return "_"
-                + fernFilepath
+        return fernFilepath
                         .getAllParts()
                         .get(fernFilepath.getAllParts().size() - 1)
                         .getPascalCase()

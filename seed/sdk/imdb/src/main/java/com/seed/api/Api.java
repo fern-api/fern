@@ -5,20 +5,20 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.imdb._ImdbClient;
+import com.seed.api.imdb.ImdbClient;
 import java.util.function.Supplier;
 
 public class Api {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ImdbClient> imdbClient;
+    protected final Supplier<ImdbClient> imdbClient;
 
     public Api(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.imdbClient = Suppliers.memoize(() -> new _ImdbClient(clientOptions));
+        this.imdbClient = Suppliers.memoize(() -> new ImdbClient(clientOptions));
     }
 
-    public _ImdbClient imdb() {
+    public ImdbClient imdb() {
         return this.imdbClient.get();
     }
 

@@ -5,20 +5,20 @@ package com.seed.customAuth;
 
 import com.seed.customAuth.core.ClientOptions;
 import com.seed.customAuth.core.Suppliers;
-import com.seed.customAuth.customauth._CustomAuthClient;
+import com.seed.customAuth.customauth.CustomAuthClient;
 import java.util.function.Supplier;
 
 public class CustomAuth {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_CustomAuthClient> customAuthClient;
+    protected final Supplier<CustomAuthClient> customAuthClient;
 
     public CustomAuth(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.customAuthClient = Suppliers.memoize(() -> new _CustomAuthClient(clientOptions));
+        this.customAuthClient = Suppliers.memoize(() -> new CustomAuthClient(clientOptions));
     }
 
-    public _CustomAuthClient customAuth() {
+    public CustomAuthClient customAuth() {
         return this.customAuthClient.get();
     }
 

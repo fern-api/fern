@@ -6,52 +6,52 @@ package com.fern.sdk;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.Suppliers;
-import com.fern.sdk.endpoints._EndpointsClient;
-import com.fern.sdk.inlinedrequests._InlinedRequestsClient;
-import com.fern.sdk.noauth._NoAuthClient;
-import com.fern.sdk.noreqbody._NoReqBodyClient;
-import com.fern.sdk.reqwithheaders._ReqWithHeadersClient;
+import com.fern.sdk.endpoints.EndpointsClient;
+import com.fern.sdk.inlinedrequests.InlinedRequestsClient;
+import com.fern.sdk.noauth.NoAuthClient;
+import com.fern.sdk.noreqbody.NoReqBodyClient;
+import com.fern.sdk.reqwithheaders.ReqWithHeadersClient;
 import java.util.function.Supplier;
 
 public class Exhaustive {
   protected final ClientOptions clientOptions;
 
-  protected final Supplier<_EndpointsClient> endpointsClient;
+  protected final Supplier<EndpointsClient> endpointsClient;
 
-  protected final Supplier<_InlinedRequestsClient> inlinedRequestsClient;
+  protected final Supplier<InlinedRequestsClient> inlinedRequestsClient;
 
-  protected final Supplier<_NoAuthClient> noAuthClient;
+  protected final Supplier<NoAuthClient> noAuthClient;
 
-  protected final Supplier<_NoReqBodyClient> noReqBodyClient;
+  protected final Supplier<NoReqBodyClient> noReqBodyClient;
 
-  protected final Supplier<_ReqWithHeadersClient> reqWithHeadersClient;
+  protected final Supplier<ReqWithHeadersClient> reqWithHeadersClient;
 
   public Exhaustive(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.endpointsClient = Suppliers.memoize(() -> new _EndpointsClient(clientOptions));
-    this.inlinedRequestsClient = Suppliers.memoize(() -> new _InlinedRequestsClient(clientOptions));
-    this.noAuthClient = Suppliers.memoize(() -> new _NoAuthClient(clientOptions));
-    this.noReqBodyClient = Suppliers.memoize(() -> new _NoReqBodyClient(clientOptions));
-    this.reqWithHeadersClient = Suppliers.memoize(() -> new _ReqWithHeadersClient(clientOptions));
+    this.endpointsClient = Suppliers.memoize(() -> new EndpointsClient(clientOptions));
+    this.inlinedRequestsClient = Suppliers.memoize(() -> new InlinedRequestsClient(clientOptions));
+    this.noAuthClient = Suppliers.memoize(() -> new NoAuthClient(clientOptions));
+    this.noReqBodyClient = Suppliers.memoize(() -> new NoReqBodyClient(clientOptions));
+    this.reqWithHeadersClient = Suppliers.memoize(() -> new ReqWithHeadersClient(clientOptions));
   }
 
-  public _EndpointsClient endpoints() {
+  public EndpointsClient endpoints() {
     return this.endpointsClient.get();
   }
 
-  public _InlinedRequestsClient inlinedRequests() {
+  public InlinedRequestsClient inlinedRequests() {
     return this.inlinedRequestsClient.get();
   }
 
-  public _NoAuthClient noAuth() {
+  public NoAuthClient noAuth() {
     return this.noAuthClient.get();
   }
 
-  public _NoReqBodyClient noReqBody() {
+  public NoReqBodyClient noReqBody() {
     return this.noReqBodyClient.get();
   }
 
-  public _ReqWithHeadersClient reqWithHeaders() {
+  public ReqWithHeadersClient reqWithHeaders() {
     return this.reqWithHeadersClient.get();
   }
 

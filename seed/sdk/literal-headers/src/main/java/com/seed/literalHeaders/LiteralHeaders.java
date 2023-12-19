@@ -5,36 +5,36 @@ package com.seed.literalHeaders;
 
 import com.seed.literalHeaders.core.ClientOptions;
 import com.seed.literalHeaders.core.Suppliers;
-import com.seed.literalHeaders.noheaders._NoHeadersClient;
-import com.seed.literalHeaders.onlyliteralheaders._OnlyLiteralHeadersClient;
-import com.seed.literalHeaders.withnonliteralheaders._WithNonLiteralHeadersClient;
+import com.seed.literalHeaders.noheaders.NoHeadersClient;
+import com.seed.literalHeaders.onlyliteralheaders.OnlyLiteralHeadersClient;
+import com.seed.literalHeaders.withnonliteralheaders.WithNonLiteralHeadersClient;
 import java.util.function.Supplier;
 
 public class LiteralHeaders {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_NoHeadersClient> noHeadersClient;
+    protected final Supplier<NoHeadersClient> noHeadersClient;
 
-    protected final Supplier<_OnlyLiteralHeadersClient> onlyLiteralHeadersClient;
+    protected final Supplier<OnlyLiteralHeadersClient> onlyLiteralHeadersClient;
 
-    protected final Supplier<_WithNonLiteralHeadersClient> withNonLiteralHeadersClient;
+    protected final Supplier<WithNonLiteralHeadersClient> withNonLiteralHeadersClient;
 
     public LiteralHeaders(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.noHeadersClient = Suppliers.memoize(() -> new _NoHeadersClient(clientOptions));
-        this.onlyLiteralHeadersClient = Suppliers.memoize(() -> new _OnlyLiteralHeadersClient(clientOptions));
-        this.withNonLiteralHeadersClient = Suppliers.memoize(() -> new _WithNonLiteralHeadersClient(clientOptions));
+        this.noHeadersClient = Suppliers.memoize(() -> new NoHeadersClient(clientOptions));
+        this.onlyLiteralHeadersClient = Suppliers.memoize(() -> new OnlyLiteralHeadersClient(clientOptions));
+        this.withNonLiteralHeadersClient = Suppliers.memoize(() -> new WithNonLiteralHeadersClient(clientOptions));
     }
 
-    public _NoHeadersClient noHeaders() {
+    public NoHeadersClient noHeaders() {
         return this.noHeadersClient.get();
     }
 
-    public _OnlyLiteralHeadersClient onlyLiteralHeaders() {
+    public OnlyLiteralHeadersClient onlyLiteralHeaders() {
         return this.onlyLiteralHeadersClient.get();
     }
 
-    public _WithNonLiteralHeadersClient withNonLiteralHeaders() {
+    public WithNonLiteralHeadersClient withNonLiteralHeaders() {
         return this.withNonLiteralHeadersClient.get();
     }
 

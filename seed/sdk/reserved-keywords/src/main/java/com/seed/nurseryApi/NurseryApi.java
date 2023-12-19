@@ -5,20 +5,20 @@ package com.seed.nurseryApi;
 
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.Suppliers;
-import com.seed.nurseryApi.package_._PackageClient;
+import com.seed.nurseryApi.package_.PackageClient;
 import java.util.function.Supplier;
 
 public class NurseryApi {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_PackageClient> packageClient;
+    protected final Supplier<PackageClient> packageClient;
 
     public NurseryApi(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.packageClient = Suppliers.memoize(() -> new _PackageClient(clientOptions));
+        this.packageClient = Suppliers.memoize(() -> new PackageClient(clientOptions));
     }
 
-    public _PackageClient package_() {
+    public PackageClient package_() {
         return this.packageClient.get();
     }
 

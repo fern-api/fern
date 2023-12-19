@@ -5,20 +5,20 @@ package com.seed.idempotencyHeaders;
 
 import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.Suppliers;
-import com.seed.idempotencyHeaders.payment._PaymentClient;
+import com.seed.idempotencyHeaders.payment.PaymentClient;
 import java.util.function.Supplier;
 
 public class IdempotencyHeaders {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_PaymentClient> paymentClient;
+    protected final Supplier<PaymentClient> paymentClient;
 
     public IdempotencyHeaders(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.paymentClient = Suppliers.memoize(() -> new _PaymentClient(clientOptions));
+        this.paymentClient = Suppliers.memoize(() -> new PaymentClient(clientOptions));
     }
 
-    public _PaymentClient payment() {
+    public PaymentClient payment() {
         return this.paymentClient.get();
     }
 

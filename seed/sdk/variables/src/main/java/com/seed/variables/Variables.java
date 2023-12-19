@@ -5,20 +5,20 @@ package com.seed.variables;
 
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.Suppliers;
-import com.seed.variables.service._ServiceClient;
+import com.seed.variables.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class Variables {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public Variables(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

@@ -5,20 +5,20 @@ package com.seed.streaming;
 
 import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.Suppliers;
-import com.seed.streaming.dummy._DummyClient;
+import com.seed.streaming.dummy.DummyClient;
 import java.util.function.Supplier;
 
 public class Streaming {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_DummyClient> dummyClient;
+    protected final Supplier<DummyClient> dummyClient;
 
     public Streaming(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.dummyClient = Suppliers.memoize(() -> new _DummyClient(clientOptions));
+        this.dummyClient = Suppliers.memoize(() -> new DummyClient(clientOptions));
     }
 
-    public _DummyClient dummy() {
+    public DummyClient dummy() {
         return this.dummyClient.get();
     }
 

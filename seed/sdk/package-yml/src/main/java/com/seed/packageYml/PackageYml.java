@@ -9,7 +9,7 @@ import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
 import com.seed.packageYml.core.RequestOptions;
 import com.seed.packageYml.core.Suppliers;
-import com.seed.packageYml.service._ServiceClient;
+import com.seed.packageYml.service.ServiceClient;
 import java.io.IOException;
 import java.util.function.Supplier;
 import okhttp3.Headers;
@@ -21,11 +21,11 @@ import okhttp3.Response;
 public class PackageYml {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public PackageYml(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
     public String echo(String request) {
@@ -63,7 +63,7 @@ public class PackageYml {
         }
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

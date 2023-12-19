@@ -5,20 +5,20 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.svc._SvcClient;
+import com.seed.api.svc.SvcClient;
 import java.util.function.Supplier;
 
 public class Api {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_SvcClient> svcClient;
+    protected final Supplier<SvcClient> svcClient;
 
     public Api(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.svcClient = Suppliers.memoize(() -> new _SvcClient(clientOptions));
+        this.svcClient = Suppliers.memoize(() -> new SvcClient(clientOptions));
     }
 
-    public _SvcClient svc() {
+    public SvcClient svc() {
         return this.svcClient.get();
     }
 

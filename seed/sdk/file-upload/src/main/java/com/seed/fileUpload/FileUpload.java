@@ -5,20 +5,20 @@ package com.seed.fileUpload;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.Suppliers;
-import com.seed.fileUpload.service._ServiceClient;
+import com.seed.fileUpload.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class FileUpload {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public FileUpload(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

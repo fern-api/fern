@@ -5,20 +5,20 @@ package com.seed.fileDownload;
 
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.Suppliers;
-import com.seed.fileDownload.service._ServiceClient;
+import com.seed.fileDownload.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class FileDownload {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public FileDownload(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

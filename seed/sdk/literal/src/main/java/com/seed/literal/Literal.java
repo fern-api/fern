@@ -5,20 +5,20 @@ package com.seed.literal;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Suppliers;
-import com.seed.literal.literal._LiteralClient;
+import com.seed.literal.literal.LiteralClient;
 import java.util.function.Supplier;
 
 public class Literal {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_LiteralClient> literalClient;
+    protected final Supplier<LiteralClient> literalClient;
 
     public Literal(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.literalClient = Suppliers.memoize(() -> new _LiteralClient(clientOptions));
+        this.literalClient = Suppliers.memoize(() -> new LiteralClient(clientOptions));
     }
 
-    public _LiteralClient literal() {
+    public LiteralClient literal() {
         return this.literalClient.get();
     }
 

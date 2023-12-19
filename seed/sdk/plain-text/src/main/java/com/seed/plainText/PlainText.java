@@ -5,20 +5,20 @@ package com.seed.plainText;
 
 import com.seed.plainText.core.ClientOptions;
 import com.seed.plainText.core.Suppliers;
-import com.seed.plainText.service._ServiceClient;
+import com.seed.plainText.service.ServiceClient;
 import java.util.function.Supplier;
 
 public class PlainText {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_ServiceClient> serviceClient;
+    protected final Supplier<ServiceClient> serviceClient;
 
     public PlainText(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.serviceClient = Suppliers.memoize(() -> new _ServiceClient(clientOptions));
+        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public _ServiceClient service() {
+    public ServiceClient service() {
         return this.serviceClient.get();
     }
 

@@ -5,20 +5,20 @@ package com.seed.undiscriminatedUnions;
 
 import com.seed.undiscriminatedUnions.core.ClientOptions;
 import com.seed.undiscriminatedUnions.core.Suppliers;
-import com.seed.undiscriminatedUnions.union._UnionClient;
+import com.seed.undiscriminatedUnions.union.UnionClient;
 import java.util.function.Supplier;
 
 public class UndiscriminatedUnions {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_UnionClient> unionClient;
+    protected final Supplier<UnionClient> unionClient;
 
     public UndiscriminatedUnions(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.unionClient = Suppliers.memoize(() -> new _UnionClient(clientOptions));
+        this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
     }
 
-    public _UnionClient union() {
+    public UnionClient union() {
         return this.unionClient.get();
     }
 

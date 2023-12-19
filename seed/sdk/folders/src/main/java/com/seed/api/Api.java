@@ -3,13 +3,13 @@
  */
 package com.seed.api;
 
-import com.seed.api.a._AClient;
+import com.seed.api.a.AClient;
 import com.seed.api.core.ApiError;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.folder._FolderClient;
+import com.seed.api.folder.FolderClient;
 import java.io.IOException;
 import java.util.function.Supplier;
 import okhttp3.Headers;
@@ -21,14 +21,14 @@ import okhttp3.Response;
 public class Api {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<_AClient> aClient;
+    protected final Supplier<AClient> aClient;
 
-    protected final Supplier<_FolderClient> folderClient;
+    protected final Supplier<FolderClient> folderClient;
 
     public Api(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.aClient = Suppliers.memoize(() -> new _AClient(clientOptions));
-        this.folderClient = Suppliers.memoize(() -> new _FolderClient(clientOptions));
+        this.aClient = Suppliers.memoize(() -> new AClient(clientOptions));
+        this.folderClient = Suppliers.memoize(() -> new FolderClient(clientOptions));
     }
 
     public void foo() {
@@ -58,11 +58,11 @@ public class Api {
         }
     }
 
-    public _AClient a() {
+    public AClient a() {
         return this.aClient.get();
     }
 
-    public _FolderClient folder() {
+    public FolderClient folder() {
         return this.folderClient.get();
     }
 
