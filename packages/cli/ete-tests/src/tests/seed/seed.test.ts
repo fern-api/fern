@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runSeedCli } from "../../utils/runSeedCli";
 import { init } from "../init/init";
 
@@ -20,7 +21,15 @@ describe("seed", () => {
         const pathOfDirectory = await init();
 
         const { exitCode, stdout } = await runSeedCli(
-            ["test", "--workspace", "sdk", "--log-level", "info", "--custom-fixture", pathOfDirectory],
+            [
+                "test",
+                "--workspace",
+                "sdk",
+                "--log-level",
+                "info",
+                "--custom-fixture",
+                join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY))
+            ],
             {
                 cwd: FIXTURES_DIR
             }

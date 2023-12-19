@@ -30,6 +30,7 @@
     "fern-dev:local": "yarn workspace @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev)",
     "fern:build": "yarn workspace @fern-api/cli dist:cli:prod && echo $(yarn workspace @fern-api/cli bin fern:prod)",
     "fern-dev:build": "yarn workspace @fern-api/cli dist:cli:dev && echo $(yarn workspace @fern-api/cli bin fern:dev)",
+    "seed:build": "yarn workspace @fern-api/seed-cli dist:cli && echo $(yarn workspace @fern-api/seed-cli bin seed)",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace",
     "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
