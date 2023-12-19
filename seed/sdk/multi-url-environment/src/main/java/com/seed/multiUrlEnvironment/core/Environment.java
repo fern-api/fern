@@ -18,11 +18,11 @@ public final class Environment {
         this.s3 = s3;
     }
 
-    public String getec2URL() {
+    public String getEc2URL() {
         return this.ec2;
     }
 
-    public String gets3URL() {
+    public String getS3URL() {
         return this.s3;
     }
 }

@@ -141,7 +141,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                 String urlCamelCase =
                         environmentBaseUrlWithId.getName().getCamelCase().getSafeName();
                 String urlPascalCase =
-                        environmentBaseUrlWithId.getName().getCamelCase().getSafeName();
+                        environmentBaseUrlWithId.getName().getPascalCase().getSafeName();
                 environmentsBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)
                         .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                         .build());

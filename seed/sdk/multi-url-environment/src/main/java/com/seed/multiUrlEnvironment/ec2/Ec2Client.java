@@ -27,7 +27,7 @@ public class Ec2Client {
     }
 
     public void bootInstance(BootInstanceRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getec2URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getEc2URL())
                 .newBuilder()
                 .addPathSegments("ec2")
                 .addPathSegments("boot")

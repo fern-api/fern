@@ -27,7 +27,7 @@ public class S3Client {
     }
 
     public String getPresignedUrl(GetPresignedUrlRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().gets3URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getS3URL())
                 .newBuilder()
                 .addPathSegments("s3")
                 .addPathSegments("presigned-url")
