@@ -28,9 +28,9 @@ class ServiceClient:
         maybe_file: typing.IO,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
-        set_of_strings: typing.List[str],
+        set_of_strings: typing.Set[str],
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        optional_set_of_strings: typing.Optional[typing.List[str]] = None,
+        optional_set_of_strings: typing.Optional[typing.Set[str]] = None,
         maybe_list: MaybeList,
         optional_maybe_list: typing.Optional[MaybeList] = None,
         maybe_list_or_set: MaybeListOrSet,
@@ -51,11 +51,11 @@ class ServiceClient:
 
             - list_of_strings: typing.List[str].
 
-            - set_of_strings: typing.List[str].
+            - set_of_strings: typing.Set[str].
 
             - optional_list_of_strings: typing.Optional[typing.List[str]].
 
-            - optional_set_of_strings: typing.Optional[typing.List[str]].
+            - optional_set_of_strings: typing.Optional[typing.Set[str]].
 
             - maybe_list: MaybeList.
 
@@ -133,9 +133,9 @@ class AsyncServiceClient:
         maybe_file: typing.IO,
         maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.List[str],
-        set_of_strings: typing.List[str],
+        set_of_strings: typing.Set[str],
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        optional_set_of_strings: typing.Optional[typing.List[str]] = None,
+        optional_set_of_strings: typing.Optional[typing.Set[str]] = None,
         maybe_list: MaybeList,
         optional_maybe_list: typing.Optional[MaybeList] = None,
         maybe_list_or_set: MaybeListOrSet,
@@ -156,11 +156,11 @@ class AsyncServiceClient:
 
             - list_of_strings: typing.List[str].
 
-            - set_of_strings: typing.List[str].
+            - set_of_strings: typing.Set[str].
 
             - optional_list_of_strings: typing.Optional[typing.List[str]].
 
-            - optional_set_of_strings: typing.Optional[typing.List[str]].
+            - optional_set_of_strings: typing.Optional[typing.Set[str]].
 
             - maybe_list: MaybeList.
 

@@ -51,11 +51,25 @@ class TypeReferenceToTypeHintConverter:
                 ),
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
-            set=lambda wrapped_type: AST.TypeHint.list(
-                self.get_type_hint_for_type_reference(
-                    type_reference=wrapped_type,
-                    must_import_after_current_declaration=must_import_after_current_declaration,
-                )
+            set=lambda wrapped_type: wrapped_type.visit(
+                container=lambda type_reference: AST.TypeHint.list(
+                    self._get_type_hint_for_container(
+                        container=type_reference,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                    )
+                ),
+                named=lambda type_reference: AST.TypeHint.list(
+                    self._get_type_hint_for_named(
+                        type_name=type_reference,
+                        must_import_after_current_declaration=must_import_after_current_declaration,
+                    )
+                ),
+                primitive=lambda type_reference: AST.TypeHint.set(
+                    self._get_type_hint_for_primitive(
+                        primitive=type_reference,
+                    )
+                ),
+                unknown=lambda: AST.TypeHint.list(AST.TypeHint.any()),
             ),
             optional=lambda wrapped_type: AST.TypeHint.optional(
                 self.get_type_hint_for_type_reference(

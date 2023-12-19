@@ -64,10 +64,10 @@ class ContainerClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_and_return_set_of_primitives(self, *, request: typing.List[str]) -> typing.List[str]:
+    def get_and_return_set_of_primitives(self, *, request: typing.Set[str]) -> typing.Set[str]:
         """
         Parameters:
-            - request: typing.List[str].
+            - request: typing.Set[str].
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -77,7 +77,7 @@ class ContainerClient:
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[str], _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -217,10 +217,10 @@ class AsyncContainerClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_and_return_set_of_primitives(self, *, request: typing.List[str]) -> typing.List[str]:
+    async def get_and_return_set_of_primitives(self, *, request: typing.Set[str]) -> typing.Set[str]:
         """
         Parameters:
-            - request: typing.List[str].
+            - request: typing.Set[str].
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -230,7 +230,7 @@ class AsyncContainerClient:
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[str], _response.json())  # type: ignore
+            return pydantic.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

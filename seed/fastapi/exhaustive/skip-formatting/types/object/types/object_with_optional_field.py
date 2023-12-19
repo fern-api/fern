@@ -21,7 +21,7 @@ class ObjectWithOptionalField(pydantic.BaseModel):
     uuid: typing.Optional[uuid.UUID]
     base_64: typing.Optional[str] = pydantic.Field(alias="base64")
     list: typing.Optional[typing.List[str]]
-    set: typing.Optional[typing.List[str]]
+    set: typing.Optional[typing.Set[str]]
     map: typing.Optional[typing.Dict[int, str]]
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }

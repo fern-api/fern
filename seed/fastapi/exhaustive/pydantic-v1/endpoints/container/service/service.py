@@ -35,7 +35,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_and_return_set_of_primitives(self, *, body: typing.List[str], auth: ApiAuth) -> typing.List[str]:
+    def get_and_return_set_of_primitives(self, *, body: typing.Set[str], auth: ApiAuth) -> typing.Set[str]:
         ...
 
     @abc.abstractmethod
@@ -173,7 +173,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         )
 
         @functools.wraps(cls.get_and_return_set_of_primitives)
-        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.List[str]:
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Set[str]:
             try:
                 return cls.get_and_return_set_of_primitives(*args, **kwargs)
             except FernHTTPException as e:
@@ -190,7 +190,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-primitives",
-            response_model=typing.List[str],
+            response_model=typing.Set[str],
             description=AbstractEndpointsContainerService.get_and_return_set_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_set_of_primitives, default_tag="endpoints.container"),
         )(wrapper)

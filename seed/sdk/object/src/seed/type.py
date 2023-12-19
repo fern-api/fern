@@ -73,7 +73,7 @@ class Type(pydantic.BaseModel):
     eight: uuid.UUID
     nine: str
     ten: typing.List[int]
-    eleven: typing.List[float]
+    eleven: typing.Set[float]
     twelve: typing.Dict[str, bool]
     thirteen: typing.Optional[int]
     fourteen: typing.Any
