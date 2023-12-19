@@ -35,7 +35,7 @@ Head over to the [official Fern website](https://www.buildwithfern.com/?utm_sour
 This generator is used via the [Fern CLI](https://github.com/fern-api/fern) by defining the Postman generator:
 
 ```yml
-- name: fernapi/postman
+- name: fernapi/fern-postman
   version: 0.0.44
   output:
     location: local-file-system
