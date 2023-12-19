@@ -20,7 +20,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     ):
         super().__init__(ir=ir, generator_config=generator_config)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
-            type_declaration_referencer=type_declaration_referencer,
+            type_declaration_referencer=type_declaration_referencer, context=self
         )
         self._type_declaration_referencer = type_declaration_referencer
         self._project_module_path = project_module_path

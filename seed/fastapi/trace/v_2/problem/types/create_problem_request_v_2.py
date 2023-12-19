@@ -22,7 +22,7 @@ class CreateProblemRequestV2(pydantic.BaseModel):
     custom_files: CustomFiles = pydantic.Field(alias="customFiles")
     custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(alias="customTestCaseTemplates")
     testcases: typing.List[TestCaseV2]
-    supported_languages: typing.List[Language] = pydantic.Field(alias="supportedLanguages")
+    supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
     is_public: bool = pydantic.Field(alias="isPublic")
 
     def json(self, **kwargs: typing.Any) -> str:

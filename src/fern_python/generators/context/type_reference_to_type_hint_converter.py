@@ -5,9 +5,16 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
+from .pydantic_generator_context import PydanticGeneratorContext
+
 
 class TypeReferenceToTypeHintConverter:
-    def __init__(self, type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
+    def __init__(
+        self,
+        type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName],
+        context: PydanticGeneratorContext,
+    ):
+        self._context = context
         self._type_declaration_referencer = type_declaration_referencer
 
     def get_type_hint_for_type_reference(
@@ -27,6 +34,28 @@ class TypeReferenceToTypeHintConverter:
             primitive=self._get_type_hint_for_primitive,
             unknown=AST.TypeHint.any,
         )
+
+    def _get_set_type_hint_for_named(
+        self,
+        name: ir_types.DeclaredTypeName,
+        must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+    ) -> AST.TypeHint:
+        is_primative = self._context.get_declaration_for_type_id(name.type_id).shape.visit(
+            alias=lambda alias_td: alias_td.resolved_type.visit(
+                container=lambda c: False, named=lambda n: False, primitive=lambda p: True, unknown=lambda: False
+            ),
+            enum=lambda enum_td: True,
+            object=lambda object_td: False,
+            union=lambda union_td: False,
+            undiscriminated_union=lambda union_td: False,
+        )
+        inner_hint = self._get_type_hint_for_named(
+            type_name=name,
+            must_import_after_current_declaration=must_import_after_current_declaration,
+        )
+        if is_primative:
+            return AST.TypeHint.set(inner_hint)
+        return AST.TypeHint.list(inner_hint)
 
     def _get_type_hint_for_container(
         self,
@@ -58,16 +87,12 @@ class TypeReferenceToTypeHintConverter:
                         must_import_after_current_declaration=must_import_after_current_declaration,
                     )
                 ),
-                named=lambda type_reference: AST.TypeHint.list(
-                    self._get_type_hint_for_named(
-                        type_name=type_reference,
-                        must_import_after_current_declaration=must_import_after_current_declaration,
-                    )
+                named=lambda type_reference: self._get_set_type_hint_for_named(
+                    type_reference,
+                    must_import_after_current_declaration=must_import_after_current_declaration,
                 ),
                 primitive=lambda type_reference: AST.TypeHint.set(
-                    self._get_type_hint_for_primitive(
-                        primitive=type_reference,
-                    )
+                    self._get_type_hint_for_primitive(primitive=type_reference)
                 ),
                 unknown=lambda: AST.TypeHint.list(AST.TypeHint.any()),
             ),

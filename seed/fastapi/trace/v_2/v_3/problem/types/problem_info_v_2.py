@@ -23,7 +23,7 @@ class ProblemInfoV2(pydantic.BaseModel):
     problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
     problem_name: str = pydantic.Field(alias="problemName")
     problem_version: int = pydantic.Field(alias="problemVersion")
-    supported_languages: typing.List[Language] = pydantic.Field(alias="supportedLanguages")
+    supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
     custom_files: CustomFiles = pydantic.Field(alias="customFiles")
     generated_files: GeneratedFiles = pydantic.Field(alias="generatedFiles")
     custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(alias="customTestCaseTemplates")
