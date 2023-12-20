@@ -195,7 +195,7 @@ types:
         docs: These resources do not have an independent existence apart from the
           resource that contains them - they cannot be identified independently, and
           nor can they have their own independent transaction scope.
-        type: optional<list<ResourceList>>
+        type: unknown
       extension:
         docs: May be used to represent additional information that is not part of
           the basic definition of the resource. To make the use of extensions safe
@@ -1121,7 +1121,7 @@ types:
         type: optional<string>
       resource:
         docs: Optional Resource referred to by this reference.
-        type: optional<ResourceList>
+        type: unknown
   SampledData:
     docs: A series of measurements taken by a device, with upper and lower limits.
       There may be more than one dimension in the data.
@@ -6777,7 +6777,7 @@ types:
       resource:
         docs: The Resource for the entry. The purpose/meaning of the resource is determined
           by the Bundle.type.
-        type: optional<ResourceList>
+        type: unknown
       search:
         docs: Information about the search process that lead to the creation of this
           entry.
@@ -6957,7 +6957,7 @@ types:
       outcome:
         docs: An OperationOutcome containing hints and warnings produced as part of
           processing this entry in a batch or transaction.
-        type: optional<ResourceList>
+        type: unknown
   CapabilityStatement:
     docs: A Capability Statement documents a set of capabilities (behaviors) of a
       FHIR Server for a particular version of FHIR that may be used as a statement
@@ -30295,7 +30295,7 @@ types:
         type: optional<integer>
       resource:
         docs: Optional Resource created or modified by this operation.
-        type: optional<ResourceList>
+        type: unknown
   OperationOutcomeIssue:
     docs: A collection of error, warning, or information messages that result from
       a system action.
@@ -30775,7 +30775,7 @@ types:
         type: optional<Meta>
       resource:
         docs: If the parameter is a whole resource.
-        type: optional<ResourceList>
+        type: unknown
       part:
         docs: A named part of a multi-part parameter.
         type: optional<list<ParametersParameter>>
