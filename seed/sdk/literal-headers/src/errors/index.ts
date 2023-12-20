@@ -1,2 +1,2 @@
-export { SeedNurseryApiError } from "./SeedNurseryApiError";
-export { SeedNurseryApiTimeoutError } from "./SeedNurseryApiTimeoutError";
+export { SeedLiteralHeadersError } from "./SeedLiteralHeadersError";
+export { SeedLiteralHeadersTimeoutError } from "./SeedLiteralHeadersTimeoutError";

@@ -1900,12 +1900,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/seed-cli@npm:0.15.6-11-g299c4e433":
-  version: 0.15.6-11-g299c4e433
-  resolution: "@fern-api/seed-cli@npm:0.15.6-11-g299c4e433"
+"@fern-api/seed-cli@npm:0.16.11":
+  version: 0.16.11
+  resolution: "@fern-api/seed-cli@npm:0.16.11"
   bin:
     seed: cli.cjs
-  checksum: 594bc6176b8b404b8524f984ab9ff6575dc3f147c89de3fd8a1f5cb839fa1d1e5ff2849f1ea47e7c4802ffa54ad996f56da280370f5bd9a64d30936a3e467502
+  checksum: eccc125078a868527fac21679d9e3a4c924f6d35eeda2a9b6b569a5f44ed0be7f06da412b6f55d6096d149bb5fc5e6f75af3aab6b2fefd409b6298a4a50f425a
   languageName: node
   linkType: hard
 
@@ -6101,7 +6101,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/seed-cli": 0.15.6-11-g299c4e433
+    "@fern-api/seed-cli": 0.16.11
     "@types/is-ci": ^3.0.3
     "@types/jest": ^28.1.6
     "@types/jest-specific-snapshot": ^0.5.9

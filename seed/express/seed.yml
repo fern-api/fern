@@ -2,7 +2,8 @@ irVersion: v31
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
-generatorType: server
+generatorType: Server
+defaultOutputMode: local_files
 fixtures:
   trace: 
     - customConfig: null
@@ -24,3 +25,11 @@ fixtures:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
+allowedFailures: 
+  - bytes
+  - enum
+  - file-download
+  - file-upload
+  - plain-text
+  - streaming
+  

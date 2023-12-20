@@ -40,7 +40,7 @@ export class NoHeaders {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedNurseryApiError({
+            throw new errors.SeedLiteralHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
@@ -48,14 +48,14 @@ export class NoHeaders {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.SeedNurseryApiError({
+                throw new errors.SeedLiteralHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedNurseryApiTimeoutError();
+                throw new errors.SeedLiteralHeadersTimeoutError();
             case "unknown":
-                throw new errors.SeedNurseryApiError({
+                throw new errors.SeedLiteralHeadersError({
                     message: _response.error.errorMessage,
                 });
         }

@@ -3,7 +3,7 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedNurseryApi from "../../..";
+import * as SeedLiteralHeaders from "../../..";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
@@ -22,7 +22,7 @@ export class WithNonLiteralHeaders {
     constructor(protected readonly _options: WithNonLiteralHeaders.Options) {}
 
     public async get(
-        request: SeedNurseryApi.WithNonLiteralHeadersRequest,
+        request: SeedLiteralHeaders.WithNonLiteralHeadersRequest,
         requestOptions?: WithNonLiteralHeaders.RequestOptions
     ): Promise<void> {
         const { integer, maybeInteger, nonLiteralEndpointHeader } = request;
@@ -52,7 +52,7 @@ export class WithNonLiteralHeaders {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedNurseryApiError({
+            throw new errors.SeedLiteralHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
@@ -60,14 +60,14 @@ export class WithNonLiteralHeaders {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.SeedNurseryApiError({
+                throw new errors.SeedLiteralHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.SeedNurseryApiTimeoutError();
+                throw new errors.SeedLiteralHeadersTimeoutError();
             case "unknown":
-                throw new errors.SeedNurseryApiError({
+                throw new errors.SeedLiteralHeadersError({
                     message: _response.error.errorMessage,
                 });
         }

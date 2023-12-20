@@ -1,3 +1,3 @@
-export { SeedNurseryApiClient } from "./Client";
-export * as SeedNurseryApi from "./api";
-export { SeedNurseryApiError, SeedNurseryApiTimeoutError } from "./errors";
+export { SeedLiteralHeadersClient } from "./Client";
+export * as SeedLiteralHeaders from "./api";
+export { SeedLiteralHeadersError, SeedLiteralHeadersTimeoutError } from "./errors";

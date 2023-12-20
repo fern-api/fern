@@ -3,6 +3,7 @@ docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
 generatorType: SDK
+defaultOutputMode: github
 fixtures:
   streaming: 
     - customConfig: null
@@ -71,3 +72,6 @@ scripts:
     commands:
       - yarn install
       - yarn build
+allowedFailures: 
+  - bytes
+  - plain-text

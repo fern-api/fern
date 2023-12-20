@@ -7,7 +7,7 @@ import { NoHeaders } from "./api/resources/noHeaders/client/Client";
 import { OnlyLiteralHeaders } from "./api/resources/onlyLiteralHeaders/client/Client";
 import { WithNonLiteralHeaders } from "./api/resources/withNonLiteralHeaders/client/Client";
 
-export declare namespace SeedNurseryApiClient {
+export declare namespace SeedLiteralHeadersClient {
     interface Options {
         environment: core.Supplier<string>;
     }
@@ -18,8 +18,8 @@ export declare namespace SeedNurseryApiClient {
     }
 }
 
-export class SeedNurseryApiClient {
-    constructor(protected readonly _options: SeedNurseryApiClient.Options) {}
+export class SeedLiteralHeadersClient {
+    constructor(protected readonly _options: SeedLiteralHeadersClient.Options) {}
 
     protected _noHeaders: NoHeaders | undefined;
 
