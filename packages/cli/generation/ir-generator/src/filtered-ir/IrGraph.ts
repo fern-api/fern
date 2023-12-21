@@ -25,11 +25,13 @@ import {
     ServiceId,
     SubpackageId,
     TypeId,
-    TypeNode
+    TypeNode,
+    TypePropertiesNode
 } from "./ids";
 
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
+    private properties: Record<TypeId, TypePropertiesNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private audiences: Audiences;
@@ -43,21 +45,34 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addType(
-        declaredTypeName: DeclaredTypeName,
-        descendantTypeIds: Set<string>,
-        descendantFilepaths: Set<FernFilepath>
-    ): void {
+    public addType({
+        declaredTypeName,
+        descendantTypeIds,
+        descendantFilepaths,
+        descendantTypeIdsByAudience,
+        propertiesByAudience
+    }: {
+        declaredTypeName: DeclaredTypeName;
+        descendantTypeIds: Set<string>;
+        descendantTypeIdsByAudience: Record<AudienceId, Set<TypeId>>;
+        propertiesByAudience: Record<AudienceId, Set<string>>;
+        descendantFilepaths: Set<FernFilepath>;
+    }): void {
         const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendants: descendantTypeIds,
+            allDescendants: descendantTypeIds,
+            descendantsByAudience: descendantTypeIdsByAudience,
             referencedSubpackages: descendantFilepaths
         };
         this.types[typeId] = typeNode;
         if (this.typesReferencedByService[typeId] == null) {
             this.typesReferencedByService[typeId] = new Set();
         }
+        this.properties[typeId] = {
+            typeId,
+            propertiesByAudience
+        };
     }
 
     public markTypeForAudiences(declaredTypeName: DeclaredTypeName, audiences: string[]): void {
@@ -218,8 +233,32 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, endpointNode.referencedTypes);
         }
         this.addReferencedTypes(typeIds, this.typesNeededForAudience);
+
+        const properties: Record<TypeId, Set<string>> = {};
+
+        if (this.audiences.type === "filtered") {
+            for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
+                if (!typeIds.has(typeId)) {
+                    continue;
+                }
+                const propertiesForTypeId = new Set<string>();
+                for (const audience of this.audiences.audiences) {
+                    const propertiesForAudience = typePropertiesNode.propertiesByAudience[audience];
+                    if (propertiesForAudience != null) {
+                        propertiesForAudience.forEach((property) => {
+                            propertiesForTypeId.add(property);
+                        });
+                    }
+                }
+                if (propertiesForTypeId.size > 0) {
+                    properties[typeId] = propertiesForTypeId;
+                }
+            }
+        }
+
         return new FilteredIrImpl({
             types: typeIds,
+            properties,
             errors: errorIds,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
@@ -243,9 +282,26 @@ export class IrGraph {
             }
             types.add(typeId);
             const typeNode = this.getTypeNode(typeId);
-            typeNode.descendants.forEach((descendantTypeId) => {
-                types.add(descendantTypeId);
-            });
+
+            if (this.audiences.type === "filtered") {
+                for (const audienceId of this.audiences.audiences) {
+                    const descendantsForAudience = typeNode.descendantsByAudience[audienceId];
+                    if (descendantsForAudience != null) {
+                        descendantsForAudience.forEach((descendantTypeId) => {
+                            types.add(descendantTypeId);
+                        });
+                    } else {
+                        typeNode.allDescendants.forEach((descendantTypeId) => {
+                            types.add(descendantTypeId);
+                        });
+                        break;
+                    }
+                }
+            } else {
+                typeNode.allDescendants.forEach((descendantTypeId) => {
+                    types.add(descendantTypeId);
+                });
+            }
         }
     }
 

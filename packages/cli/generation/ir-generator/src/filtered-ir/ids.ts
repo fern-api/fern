@@ -9,8 +9,16 @@ export type SubpackageId = string;
 
 export interface TypeNode {
     typeId: TypeId;
-    descendants: Set<TypeId>;
+    allDescendants: Set<TypeId>;
+    /* Only populated if the type has properties with audiences */
+    descendantsByAudience: Record<AudienceId, Set<TypeId>>;
     referencedSubpackages: Set<FernFilepath>;
+}
+
+export interface TypePropertiesNode {
+    typeId: TypeId;
+    /* If audience not present, keep all properties */
+    propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
 export interface ErrorNode {

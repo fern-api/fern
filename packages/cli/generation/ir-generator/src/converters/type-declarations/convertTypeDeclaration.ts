@@ -1,7 +1,8 @@
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
+import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -17,6 +18,7 @@ import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRa
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;
     descendantFilepaths: Set<FernFilepath>;
+    propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
 export async function convertTypeDeclaration({
@@ -40,7 +42,24 @@ export async function convertTypeDeclaration({
         file
     });
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
+
+    const propertiesByAudience: Record<AudienceId, Set<string>> = {};
+    if (isRawObjectDefinition(typeDeclaration)) {
+        for (const [property, propertyDeclaration] of Object.entries(typeDeclaration.properties ?? {})) {
+            if (typeof propertyDeclaration === "string") {
+                continue;
+            }
+            for (const audience of propertyDeclaration.audiences ?? []) {
+                if (propertiesByAudience[audience] == null) {
+                    propertiesByAudience[audience] = new Set();
+                }
+                propertiesByAudience[audience]?.add(property);
+            }
+        }
+    }
+
     return {
+        propertiesByAudience,
         typeDeclaration: {
             ...declaration,
             name: declaredTypeName,
