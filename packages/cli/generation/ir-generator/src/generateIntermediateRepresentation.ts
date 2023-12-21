@@ -11,6 +11,7 @@ import {
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
+    Type,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { mapValues, pickBy } from "lodash-es";
@@ -166,11 +167,13 @@ export async function generateIntermediateRepresentation({
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    irGraph.addType(
-                        convertedTypeDeclaration.name,
-                        convertedTypeDeclaration.referencedTypes,
-                        subpackageFilepaths
-                    );
+                    irGraph.addType({
+                        declaredTypeName: convertedTypeDeclaration.name,
+                        descendantTypeIds: convertedTypeDeclaration.referencedTypes,
+                        descendantTypeIdsByAudience: {},
+                        propertiesByAudience: convertedTypeDeclarationWithFilepaths.propertiesByAudience,
+                        descendantFilepaths: subpackageFilepaths
+                    });
                     irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
@@ -370,9 +373,34 @@ function filterIntermediateRepresentationForAudiences(
     if (filteredIr == null) {
         return intermediateRepresentation;
     }
+    const filteredTypes = pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type));
+    const filteredTypesAndProperties = Object.fromEntries(
+        Object.entries(filteredTypes).map(([typeId, typeDeclaration]) => {
+            const filteredProperties = [];
+            if (typeDeclaration.shape.type === "object") {
+                for (const property of typeDeclaration.shape.properties) {
+                    const hasProperty = filteredIr.hasProperty(typeId, property.name.wireValue);
+                    if (hasProperty) {
+                        filteredProperties.push(property);
+                    }
+                }
+                return [
+                    typeId,
+                    {
+                        ...typeDeclaration,
+                        shape: Type.object({
+                            ...typeDeclaration.shape,
+                            properties: filteredProperties
+                        })
+                    }
+                ];
+            }
+            return [typeId, typeDeclaration];
+        })
+    );
     return {
         ...intermediateRepresentation,
-        types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),
+        types: filteredTypesAndProperties,
         errors: pickBy(intermediateRepresentation.errors, (error) => filteredIr.hasError(error)),
         services: mapValues(
             pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),

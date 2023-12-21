@@ -5,6 +5,7 @@ import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId } from "./ids";
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean;
     hasTypeId(type: string): boolean;
+    hasProperty(type: string, property: string): boolean;
     hasError(error: ErrorDeclaration): boolean;
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
@@ -15,6 +16,7 @@ export interface FilteredIr {
 
 export class FilteredIrImpl implements FilteredIr {
     private types: Set<TypeId> = new Set();
+    private properties: Record<TypeId, Set<string>>;
     private errors: Set<ErrorId> = new Set();
     private services: Set<ServiceId> = new Set();
     private endpoints: Set<EndpointId> = new Set();
@@ -25,15 +27,18 @@ export class FilteredIrImpl implements FilteredIr {
         errors,
         services,
         endpoints,
-        subpackages
+        subpackages,
+        properties
     }: {
         types: Set<TypeId>;
+        properties: Record<TypeId, Set<string>>;
         errors: Set<ErrorId>;
         services: Set<ServiceId>;
         endpoints: Set<EndpointId>;
         subpackages: Set<SubpackageId>;
     }) {
         this.types = types;
+        this.properties = properties;
         this.errors = errors;
         this.services = services;
         this.endpoints = endpoints;
@@ -57,6 +62,15 @@ export class FilteredIrImpl implements FilteredIr {
     public hasType(type: TypeDeclaration): boolean {
         const typeId = IdGenerator.generateTypeId(type.name);
         return this.types.has(typeId);
+    }
+
+    public hasProperty(typeId: string, property: string): boolean {
+        const properties = this.properties[typeId];
+        // no properties were filtered for type
+        if (properties == null) {
+            return true;
+        }
+        return properties.has(property);
     }
 
     public hasError(error: ErrorDeclaration): boolean {
