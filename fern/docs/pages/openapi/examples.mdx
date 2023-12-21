@@ -1,0 +1,95 @@
+Using examples in OpenAPI shows API consumers what requests and responses look like. They can be provided for request bodies, response bodies, and individual parameters.
+
+# How to Use Examples 
+
+## Inline examples
+
+Examples can be placed directly within the operation definition under `paths`. Here's an example:
+
+```yaml
+paths:
+  /movies:
+    post:
+      summary: Create a new movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+            examples:
+              movieExample:
+                summary: This is an example of a movie
+                value:
+                  name: Schindler's List
+                  rating: 5.0
+                  id: tt0108052
+```
+
+## Reusable examples
+
+For more general examples that apply to multiple parts of the API, you can define them under the `components/examples` section. These can be referenced elsewhere in the documentation.
+
+```yaml
+components:
+  examples:
+    MovieExample:
+      summary: Example of a movie object
+      value:
+        name: Shawshank Redemption
+        rating: 5.0
+        id: tt0111161
+
+paths:
+  /movies/{movieId}:
+    get:
+      summary: Get movie by ID
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A movie object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+              examples:
+                MovieExample:
+                  $ref: '#/components/examples/MovieExample'
+```
+
+## How Examples are used in Fern SDKs
+
+Fern SDKs use examples from your OpenAPI document to generate comments that show up in your IDE. For example, in a Node.js SDK:
+
+<CodeBlock title = "resources/movies/types
+/Movie.ts">
+```ts
+
+import * as IMDb from "../../..";
+
+/**
+ * @example
+ *     {
+ *         title: "Shawshank Redemption",
+ *         rating: "5.0",
+ *         id: "tt0111161"
+ *     }
+ */
+```
+</CodeBlock>
+
+Here's an [example in GitHub](https://github.com/FlatFilers/flatfile-node/blob/ab955a0a337c40ea00755e24df08f8c9a146c39c/src/api/resources/documents/types/DocumentResponse.ts#L8-L27) from Flatfile's Node.js SDK. 
+
+## How Examples are used in Fern Docs 
+
+In the request and response code snippets, you'll see the example values used.
+
+![Example in Fern Docs](https://fern-image-hosting.s3.amazonaws.com/movie+example.png)
+
+If you generate SDKs with Fern, the code examples for each language will also be populated with the example values. [Check out Flatfile's Docs to see this in action](https://reference.flatfile.com/api-reference/documents/create-a-document). Change the language toggle to see the examples in different languages.
+

@@ -95,6 +95,9 @@ navigation:
           - page: OpenAPI Extensions
             path: ./docs/pages/openapi/extensions.mdx
             slug: extensions
+          - page: OpenAPI Examples
+            path: ./docs/pages/openapi/examples.mdx
+            slug: examples
           - page: Exporting OpenAPI
             path: ./docs/pages/openapi/export.mdx
             slug: export
