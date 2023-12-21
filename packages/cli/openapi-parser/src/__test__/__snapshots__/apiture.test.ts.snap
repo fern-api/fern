@@ -2662,6 +2662,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "abstractPagedBodyStart",
           "key": "start",
@@ -2693,6 +2694,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsLimit",
           "key": "limit",
@@ -2706,6 +2708,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsNextPageUrl",
           "key": "nextPage_url",
@@ -2754,6 +2757,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountAllows",
           "key": "allows",
@@ -2767,6 +2771,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountElectronicStatements",
           "key": "electronicStatements",
@@ -2882,6 +2887,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceId",
           "key": "id",
@@ -2895,6 +2901,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceAvailable",
           "key": "available",
@@ -2913,6 +2920,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceCurrent",
           "key": "current",
@@ -2931,6 +2939,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceUpdatedAt",
           "key": "updatedAt",
@@ -2949,6 +2958,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceCurrentWithPending",
           "key": "currentWithPending",
@@ -2967,6 +2977,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalanceIncomplete",
           "key": "incomplete",
@@ -3000,6 +3011,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountBalancesItems",
           "key": "items",
@@ -3029,6 +3041,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsId",
           "key": "id",
@@ -3042,6 +3055,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsLabel",
           "key": "label",
@@ -3057,6 +3071,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsNickname",
           "key": "nickname",
@@ -3075,6 +3090,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsMaskedNumber",
           "key": "maskedNumber",
@@ -3088,6 +3104,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsProduct",
           "key": "product",
@@ -3101,6 +3118,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountFieldsLocation",
           "key": "location",
@@ -3147,6 +3165,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3169,6 +3188,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3193,6 +3213,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3215,6 +3236,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3237,6 +3259,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountItemAllows",
           "key": "allows",
@@ -3250,6 +3273,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3272,6 +3296,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "accountFields": {
               "differentSchema": true,
@@ -3314,6 +3339,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountJointOwnerId",
           "key": "id",
@@ -3327,6 +3353,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountJointOwnerName",
           "key": "name",
@@ -3353,6 +3380,7 @@ Note: This operation requires an identity challenge if the financial institution
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountJointOwnersItems",
           "key": "items",
@@ -3423,6 +3451,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsBillPay",
           "key": "billPay",
@@ -3436,6 +3465,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsMobileCheckDeposit",
           "key": "mobileCheckDeposit",
@@ -3449,6 +3479,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsTransferFrom",
           "key": "transferFrom",
@@ -3462,6 +3493,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsTransferTo",
           "key": "transferTo",
@@ -3475,6 +3507,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsView",
           "key": "view",
@@ -3488,6 +3521,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsViewCards",
           "key": "viewCards",
@@ -3501,6 +3535,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountPermissionsManageCards",
           "key": "manageCards",
@@ -3544,6 +3579,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountsItems",
           "key": "items",
@@ -3562,6 +3598,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountsCount",
           "key": "count",
@@ -3580,6 +3617,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "accountsPrimaryAccountId",
           "key": "primaryAccountId",
@@ -3598,6 +3636,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "abstractPagedBody": {
               "differentSchema": true,
@@ -3814,6 +3853,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressRegionName",
           "key": "regionName",
@@ -3834,6 +3874,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressRegionCode",
           "key": "regionCode",
@@ -3854,6 +3895,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressPostalCode",
           "key": "postalCode",
@@ -3869,6 +3911,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "addressFields": {
               "differentSchema": false,
@@ -3899,6 +3942,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressFieldsAddress1",
           "key": "address1",
@@ -3914,6 +3958,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressFieldsAddress2",
           "key": "address2",
@@ -3934,6 +3979,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressFieldsLocality",
           "key": "locality",
@@ -3949,6 +3995,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressFieldsCountryCode",
           "key": "countryCode",
@@ -3985,6 +4032,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemType",
           "key": "type",
@@ -4006,6 +4054,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemTitle",
           "key": "title",
@@ -4027,6 +4076,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemStatus",
           "key": "status",
@@ -4046,6 +4096,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemDetail",
           "key": "detail",
@@ -4067,6 +4118,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemInstance",
           "key": "instance",
@@ -4088,6 +4140,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemId",
           "key": "id",
@@ -4106,6 +4159,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemOccurredAt",
           "key": "occurredAt",
@@ -4124,6 +4178,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemProblems",
           "key": "problems",
@@ -4147,6 +4202,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "apiProblemAttributes",
           "key": "attributes",
@@ -4186,6 +4242,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeFactorType",
           "key": "type",
@@ -4199,6 +4256,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeFactorLabels",
           "key": "labels",
@@ -4224,6 +4282,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeFactorSecurityQuestions",
           "key": "securityQuestions",
@@ -4334,6 +4393,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeSecurityQuestionId",
           "key": "id",
@@ -4347,6 +4407,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeSecurityQuestionPrompt",
           "key": "prompt",
@@ -4373,6 +4434,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "challengeSecurityQuestionsQuestions",
           "key": "questions",
@@ -4430,6 +4492,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cutoffTimeType",
           "key": "type",
@@ -4443,6 +4506,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cutoffTimeTime",
           "key": "time",
@@ -4564,6 +4628,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cutoffTimesTimeZoneId",
           "key": "timeZoneId",
@@ -4578,6 +4643,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cutoffTimesItems",
           "key": "items",
@@ -4634,6 +4700,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsItems",
           "key": "items",
@@ -4642,6 +4709,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
@@ -4655,6 +4723,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {
             "abstractPagedBody": {
               "differentSchema": true,
@@ -4760,6 +4829,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageJointOwners",
           "key": "manageJointOwners",
@@ -4773,6 +4843,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageOverdraftAccounts",
           "key": "manageOverdraftAccounts",
@@ -4806,6 +4877,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "incompleteAccountBalancesItems",
           "key": "items",
@@ -4824,6 +4896,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "incompleteAccountBalancesIncompleteAccounts",
           "key": "incompleteAccounts",
@@ -4837,6 +4910,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "incompleteAccountBalancesRetryCount",
           "key": "retryCount",
@@ -4870,6 +4944,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "incompleteTransactionsRetryCount",
           "key": "retryCount",
@@ -4964,6 +5039,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "institutionLookupResultFound",
           "key": "found",
@@ -4977,6 +5053,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "institutionLookupResultInstitution",
           "key": "institution",
@@ -4995,6 +5072,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "institutionLookupResultIntermediaryInstitutions",
           "key": "intermediaryInstitutions",
@@ -5046,6 +5124,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationId",
           "key": "id",
@@ -5070,6 +5149,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsFirstName",
           "key": "firstName",
@@ -5085,6 +5165,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsLastName",
           "key": "lastName",
@@ -5100,6 +5181,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsTaxId",
           "key": "taxId",
@@ -5120,6 +5202,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsSharedSecret",
           "key": "sharedSecret",
@@ -5135,6 +5218,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsEmailAddress",
           "key": "emailAddress",
@@ -5150,6 +5234,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
           "key": "disallowDebitCardAccess",
@@ -5243,6 +5328,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "newTransferSchedule",
           "key": "schedule",
@@ -5267,6 +5353,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "overdraftAccountFieldsId",
           "key": "id",
@@ -5285,6 +5372,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "overdraftAccountFieldsLabel",
           "key": "label",
@@ -5305,6 +5393,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "overdraftAccountFieldsMaskedNumber",
           "key": "maskedNumber",
@@ -5359,6 +5448,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
@@ -5383,6 +5473,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "overdraftProtectionFieldsAccounts",
           "key": "accounts",
@@ -5471,6 +5562,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "productReferenceType",
           "key": "type",
@@ -5484,6 +5576,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "productReferenceCode",
           "key": "code",
@@ -5499,6 +5592,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "productReferenceLabel",
           "key": "label",
@@ -5514,6 +5608,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "productReferenceDescription",
           "key": "description",
@@ -5637,6 +5732,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requiredIdentityChallengeXFernSdkMethodName",
           "key": "x-fern-sdk-method-name",
@@ -5650,6 +5746,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requiredIdentityChallengeChallengeId",
           "key": "challengeId",
@@ -5663,6 +5760,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requiredIdentityChallengeFactors",
           "key": "factors",
@@ -5702,6 +5800,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "simpleInstitutionName",
           "key": "name",
@@ -5717,6 +5816,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "simpleInstitutionAddress",
           "key": "address",
@@ -5730,6 +5830,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "simpleInstitutionLocator",
           "key": "locator",
@@ -5745,6 +5846,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "simpleInstitutionLocatorType",
           "key": "locatorType",
@@ -5779,6 +5881,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timestampFieldsCreatedAt",
           "key": "createdAt",
@@ -5797,6 +5900,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timestampFieldsUpdatedAt",
           "key": "updatedAt",
@@ -5826,6 +5930,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCategoriesItems",
           "key": "items",
@@ -5855,6 +5960,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCategorizationLabel",
           "key": "label",
@@ -5868,6 +5974,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCategorizationId",
           "key": "id",
@@ -5911,6 +6018,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCategoryType",
           "key": "type",
@@ -5986,6 +6094,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCheckNumber",
           "key": "number",
@@ -5999,6 +6108,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCheckImageFrontUrl",
           "key": "imageFront_url",
@@ -6019,6 +6129,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCheckImageBackUrl",
           "key": "imageBack_url",
@@ -6050,6 +6161,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsId",
           "key": "id",
@@ -6065,6 +6177,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsType",
           "key": "type",
@@ -6078,6 +6191,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsSubtype",
           "key": "subtype",
@@ -6091,6 +6205,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsOccurredOn",
           "key": "occurredOn",
@@ -6106,6 +6221,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsCreatedOn",
           "key": "createdOn",
@@ -6126,6 +6242,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsPostedOn",
           "key": "postedOn",
@@ -6146,6 +6263,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsAmount",
           "key": "amount",
@@ -6159,6 +6277,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsPosted",
           "key": "posted",
@@ -6177,6 +6296,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsBalance",
           "key": "balance",
@@ -6195,6 +6315,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsMemo",
           "key": "memo",
@@ -6215,6 +6336,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsDescription",
           "key": "description",
@@ -6235,6 +6357,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsCategory",
           "key": "category",
@@ -6253,6 +6376,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsMerchant",
           "key": "merchant",
@@ -6271,6 +6395,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionFieldsCheck",
           "key": "check",
@@ -6327,6 +6452,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionMerchantName",
           "key": "name",
@@ -6347,6 +6473,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionMerchantWebsiteUrl",
           "key": "website_url",
@@ -6367,6 +6494,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionMerchantLogoUrl",
           "key": "logo_url",
@@ -6499,6 +6627,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionsItems",
           "key": "items",
@@ -6517,6 +6646,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionsCount",
           "key": "count",
@@ -6573,6 +6703,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferAccountReferenceId",
           "key": "id",
@@ -6586,6 +6717,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferAccountReferenceLabel",
           "key": "label",
@@ -6606,6 +6738,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferAccountReferenceType",
           "key": "type",
@@ -6624,6 +6757,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferAccountReferenceLocation",
           "key": "location",
@@ -6653,6 +6787,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionOccursOn",
           "key": "occursOn",
@@ -6668,6 +6803,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionReason",
           "key": "reason",
@@ -6681,6 +6817,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionCreditOn",
           "key": "creditOn",
@@ -6701,6 +6838,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionDebitOn",
           "key": "debitOn",
@@ -6823,6 +6961,7 @@ The response may include dates prior to requested the start date, as that is use
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionsRestrictedDates",
           "key": "restrictedDates",
@@ -6846,6 +6985,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferDateRestrictionsAccuracyEndsOn",
           "key": "accuracyEndsOn",
@@ -6877,6 +7017,7 @@ The response may include dates prior to requested the start date, as that is use
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferFieldsAmount",
           "key": "amount",
@@ -6895,6 +7036,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferFieldsSourceAccount",
           "key": "sourceAccount",
@@ -6913,6 +7055,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferFieldsTargetAccount",
           "key": "targetAccount",
@@ -6931,6 +7074,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferFieldsMemo",
           "key": "memo",
@@ -7130,6 +7274,7 @@ The response may include dates prior to requested the start date, as that is use
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemId",
           "key": "id",
@@ -7143,6 +7288,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemSchedule",
           "key": "schedule",
@@ -7156,6 +7302,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemState",
           "key": "state",
@@ -7169,6 +7316,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemProcessedAt",
           "key": "processedAt",
@@ -7187,6 +7335,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemUpdatedBy",
           "key": "updatedBy",
@@ -7227,6 +7376,7 @@ The response may include dates prior to requested the start date, as that is use
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemScheduleDebitsOn",
           "key": "debitsOn",
@@ -7247,6 +7397,7 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferItemScheduleCreditsOn",
           "key": "creditsOn",
@@ -7295,6 +7446,7 @@ The response may include dates prior to requested the start date, as that is use
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferPatchSchedule",
           "key": "schedule",
@@ -7367,6 +7519,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleScheduledOn",
           "key": "scheduledOn",
@@ -7387,6 +7540,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleRecurrenceType",
           "key": "recurrenceType",
@@ -7405,6 +7559,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleFrequency",
           "key": "frequency",
@@ -7418,6 +7573,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleEndsOn",
           "key": "endsOn",
@@ -7438,6 +7594,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleCount",
           "key": "count",
@@ -7456,6 +7613,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleAmountLimit",
           "key": "amountLimit",
@@ -7536,6 +7694,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleItemScheduledOn",
           "key": "scheduledOn",
@@ -7551,6 +7710,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferScheduleItemEffectiveOn",
           "key": "effectiveOn",
@@ -7586,6 +7746,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transferSchedulesItems",
           "key": "items",
@@ -7794,6 +7955,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transfersItems",
           "key": "items",
@@ -7812,6 +7974,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transfersCount",
           "key": "count",
@@ -7850,6 +8013,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "wireTransferInstitutionLocalClearingCode",
           "key": "localClearingCode",

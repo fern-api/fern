@@ -7,6 +7,8 @@ import {
 import { ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../extensions/getExtension";
 import { getGeneratedPropertyName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "../../utils/isSchemaEqual";
@@ -98,7 +100,7 @@ export function convertObject({
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
-
+        const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
         const schema = isRequired
             ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
             : SchemaWithExample.optional({
@@ -120,6 +122,7 @@ export function convertObject({
         return {
             key: propertyName,
             schema,
+            audiences,
             conflict: conflicts,
             generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
         };

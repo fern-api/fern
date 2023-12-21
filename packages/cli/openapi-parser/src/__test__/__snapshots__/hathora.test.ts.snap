@@ -86,6 +86,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -98,6 +99,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationGoogle",
                     "key": "google",
@@ -114,6 +116,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "createAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
@@ -134,6 +137,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationNickname",
                     "key": "nickname",
@@ -152,6 +156,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
@@ -174,6 +179,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createAppRequestAppName",
               "key": "appName",
@@ -258,6 +264,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "updateAppRequestAuthConfiguration",
               "key": "authConfiguration",
@@ -270,6 +277,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationGoogle",
                     "key": "google",
@@ -286,6 +294,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "updateAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
@@ -306,6 +315,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationNickname",
                     "key": "nickname",
@@ -324,6 +334,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
@@ -346,6 +357,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "updateAppRequestAppName",
               "key": "appName",
@@ -542,6 +554,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "loginAnonymousResponseToken",
               "key": "token",
@@ -611,6 +624,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "loginNicknameRequestNickname",
               "key": "nickname",
@@ -642,6 +656,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "loginNicknameResponseToken",
               "key": "token",
@@ -712,6 +727,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "loginGoogleRequestIdToken",
               "key": "idToken",
@@ -743,6 +759,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "loginGoogleResponseToken",
               "key": "token",
@@ -1842,6 +1859,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -1865,6 +1883,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestRegion",
               "key": "region",
@@ -1984,6 +2003,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createPublicLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -2007,6 +2027,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createPublicLobbyRequestRegion",
               "key": "region",
@@ -2126,6 +2147,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createLocalLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -2149,6 +2171,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createLocalLobbyRequestRegion",
               "key": "region",
@@ -2268,6 +2291,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createLobbyRequestVisibility",
               "key": "visibility",
@@ -2300,6 +2324,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createLobbyRequestInitialConfig",
               "key": "initialConfig",
@@ -2323,6 +2348,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createLobbyRequestRegion",
               "key": "region",
@@ -2586,6 +2612,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "setLobbyStateRequestState",
               "key": "state",
@@ -3424,6 +3451,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createRoomRequestRegion",
               "key": "region",
@@ -4092,6 +4120,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "activeConnectionInfoTransportType",
           "key": "transportType",
@@ -4105,6 +4134,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "activeConnectionInfoPort",
           "key": "port",
@@ -4118,6 +4148,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "activeConnectionInfoHost",
           "key": "host",
@@ -4133,6 +4164,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "activeConnectionInfoRoomId",
           "key": "roomId",
@@ -4167,6 +4199,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationDeletedBy",
           "key": "deletedBy",
@@ -4187,6 +4220,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationDeletedAt",
           "key": "deletedAt",
@@ -4205,6 +4239,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationCreatedAt",
           "key": "createdAt",
@@ -4218,6 +4253,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationCreatedBy",
           "key": "createdBy",
@@ -4233,6 +4269,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationOrgId",
           "key": "orgId",
@@ -4246,6 +4283,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationAuthConfiguration",
           "key": "authConfiguration",
@@ -4258,6 +4296,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "nameOverride": undefined,
             "properties": [
               {
+                "audiences": [],
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationGoogle",
                 "key": "google",
@@ -4274,6 +4313,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "applicationAuthConfigurationGoogleClientId",
                         "key": "clientId",
@@ -4294,6 +4334,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
               },
               {
+                "audiences": [],
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationNickname",
                 "key": "nickname",
@@ -4312,6 +4353,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
               },
               {
+                "audiences": [],
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationAnonymous",
                 "key": "anonymous",
@@ -4334,6 +4376,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationAppSecret",
           "key": "appSecret",
@@ -4349,6 +4392,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationAppId",
           "key": "appId",
@@ -4364,6 +4408,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationAppName",
           "key": "appName",
@@ -4399,6 +4444,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "applicationWithDeploymentDeployment",
           "key": "deployment",
@@ -4423,6 +4469,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildRegionalContainerTags",
           "key": "regionalContainerTags",
@@ -4439,6 +4486,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "nameOverride": undefined,
               "properties": [
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemContainerTag",
                   "key": "containerTag",
@@ -4454,6 +4502,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemRegion",
                   "key": "region",
@@ -4472,6 +4521,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildImageSize",
           "key": "imageSize",
@@ -4485,6 +4535,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildStatus",
           "key": "status",
@@ -4523,6 +4574,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildDeletedAt",
           "key": "deletedAt",
@@ -4541,6 +4593,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildFinishedAt",
           "key": "finishedAt",
@@ -4559,6 +4612,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildStartedAt",
           "key": "startedAt",
@@ -4577,6 +4631,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildCreatedAt",
           "key": "createdAt",
@@ -4590,6 +4645,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildCreatedBy",
           "key": "createdBy",
@@ -4605,6 +4661,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildBuildId",
           "key": "buildId",
@@ -4618,6 +4675,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "buildAppId",
           "key": "appId",
@@ -4689,6 +4747,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentCreatedAt",
           "key": "createdAt",
@@ -4702,6 +4761,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentCreatedBy",
           "key": "createdBy",
@@ -4717,6 +4777,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentRequestedMemoryMb",
           "key": "requestedMemoryMB",
@@ -4730,6 +4791,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentRequestedCpu",
           "key": "requestedCPU",
@@ -4743,6 +4805,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentDeploymentId",
           "key": "deploymentId",
@@ -4756,6 +4819,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentBuildId",
           "key": "buildId",
@@ -4769,6 +4833,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentAppId",
           "key": "appId",
@@ -4793,6 +4858,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentConfigEnv",
           "key": "env",
@@ -4809,6 +4875,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "nameOverride": undefined,
               "properties": [
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemValue",
                   "key": "value",
@@ -4824,6 +4891,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemName",
                   "key": "name",
@@ -4844,6 +4912,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentConfigRoomsPerProcess",
           "key": "roomsPerProcess",
@@ -4857,6 +4926,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentConfigPlanName",
           "key": "planName",
@@ -4870,6 +4940,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentConfigTransportType",
           "key": "transportType",
@@ -4883,6 +4954,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deploymentConfigContainerPort",
           "key": "containerPort",
@@ -4919,6 +4991,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "nameOverride": undefined,
         "properties": [
           {
+            "audiences": [],
             "conflict": {},
             "generatedName": "discoveryResponseItemPort",
             "key": "port",
@@ -4932,6 +5005,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
           },
           {
+            "audiences": [],
             "conflict": {},
             "generatedName": "discoveryResponseItemHost",
             "key": "host",
@@ -4947,6 +5021,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
           },
           {
+            "audiences": [],
             "conflict": {},
             "generatedName": "discoveryResponseItemRegion",
             "key": "region",
@@ -4972,6 +5047,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyState",
           "key": "state",
@@ -5000,6 +5076,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyInitialConfig",
           "key": "initialConfig",
@@ -5023,6 +5100,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyCreatedAt",
           "key": "createdAt",
@@ -5036,6 +5114,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyCreatedBy",
           "key": "createdBy",
@@ -5051,6 +5130,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyLocal",
           "key": "local",
@@ -5064,6 +5144,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyVisibility",
           "key": "visibility",
@@ -5096,6 +5177,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyRegion",
           "key": "region",
@@ -5109,6 +5191,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyRoomId",
           "key": "roomId",
@@ -5122,6 +5205,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "lobbyAppId",
           "key": "appId",
@@ -5179,6 +5263,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "metricValueValue",
           "key": "value",
@@ -5192,6 +5277,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "metricValueTimestamp",
           "key": "timestamp",
@@ -5242,6 +5328,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsAppId",
           "key": "appId",
@@ -5255,6 +5342,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsRoomId",
           "key": "roomId",
@@ -5268,6 +5356,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsStatus",
           "key": "status",
@@ -5281,6 +5370,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
           "key": "currentAllocation",
@@ -5343,6 +5433,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processEgressedBytes",
           "key": "egressedBytes",
@@ -5356,6 +5447,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processIdleSince",
           "key": "idleSince",
@@ -5374,6 +5466,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processActiveConnections",
           "key": "activeConnections",
@@ -5387,6 +5480,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processRoomSlotsAvailable",
           "key": "roomSlotsAvailable",
@@ -5400,6 +5494,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processDraining",
           "key": "draining",
@@ -5413,6 +5508,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processTerminatedAt",
           "key": "terminatedAt",
@@ -5431,6 +5527,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processStoppingAt",
           "key": "stoppingAt",
@@ -5449,6 +5546,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processStartedAt",
           "key": "startedAt",
@@ -5467,6 +5565,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processStartingAt",
           "key": "startingAt",
@@ -5480,6 +5579,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processRoomsPerProcess",
           "key": "roomsPerProcess",
@@ -5493,6 +5593,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processPort",
           "key": "port",
@@ -5506,6 +5607,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processHost",
           "key": "host",
@@ -5521,6 +5623,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processRegion",
           "key": "region",
@@ -5534,6 +5637,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processProcessId",
           "key": "processId",
@@ -5547,6 +5651,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processDeploymentId",
           "key": "deploymentId",
@@ -5560,6 +5665,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processAppId",
           "key": "appId",
@@ -5603,6 +5709,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processWithRoomsRooms",
           "key": "rooms",
@@ -5621,6 +5728,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "processWithRoomsTotalRooms",
           "key": "totalRooms",
@@ -5645,6 +5753,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
           "key": "cpu",
@@ -5668,6 +5777,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
           "key": "memory",
@@ -5691,6 +5801,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
           "key": "rate_egress",
@@ -5714,6 +5825,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
           "key": "total_egress",
@@ -5827,6 +5939,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomCurrentAllocation",
           "key": "currentAllocation",
@@ -5845,6 +5958,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomStatus",
           "key": "status",
@@ -5858,6 +5972,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAllocations",
           "key": "allocations",
@@ -5876,6 +5991,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomRoomId",
           "key": "roomId",
@@ -5889,6 +6005,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAppId",
           "key": "appId",
@@ -5913,6 +6030,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAllocationUnscheduledAt",
           "key": "unscheduledAt",
@@ -5931,6 +6049,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAllocationScheduledAt",
           "key": "scheduledAt",
@@ -5944,6 +6063,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAllocationProcessId",
           "key": "processId",
@@ -5957,6 +6077,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "roomAllocationRoomAllocationId",
           "key": "roomAllocationId",
@@ -6042,6 +6163,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "startingConnectionInfoRoomId",
           "key": "roomId",

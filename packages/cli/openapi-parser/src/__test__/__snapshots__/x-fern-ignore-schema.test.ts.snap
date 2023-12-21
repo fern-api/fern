@@ -17,6 +17,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "schemaToKeepId",
           "key": "id",
