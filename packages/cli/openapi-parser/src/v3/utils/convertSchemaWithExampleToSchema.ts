@@ -154,6 +154,7 @@ function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): Obj
         conflict: objectProperty.conflict,
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
-        schema: convertSchemaWithExampleToSchema(objectProperty.schema)
+        schema: convertSchemaWithExampleToSchema(objectProperty.schema),
+        audiences: objectProperty.audiences
     };
 }

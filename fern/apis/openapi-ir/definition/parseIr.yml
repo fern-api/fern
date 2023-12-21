@@ -163,6 +163,7 @@ types:
     properties:
       key: string
       schema: SchemaWithExample
+      audiences: list<string>
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property

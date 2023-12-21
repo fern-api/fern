@@ -82,6 +82,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseKind",
               "key": "kind",
@@ -96,6 +97,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseUid",
               "key": "uid",
@@ -111,6 +113,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseSid",
               "key": "sid",
@@ -126,6 +129,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseVersion",
               "key": "version",
@@ -139,6 +143,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseState",
               "key": "state",
@@ -151,6 +156,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateActive",
                     "key": "active",
@@ -164,6 +170,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateEntered",
                     "key": "entered",
@@ -177,6 +184,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateExited",
                     "key": "exited",
@@ -194,6 +202,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseContainerUid",
               "key": "containerUid",
@@ -214,6 +223,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseTransitioned",
               "key": "transitioned",
@@ -242,6 +252,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseType",
               "key": "type",
@@ -292,6 +303,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "findBlocksResponseFields",
               "key": "fields",
@@ -317,6 +329,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemBooleanSid",
                             "key": "sid",
@@ -332,6 +345,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemBooleanValue",
                             "key": "value",
@@ -361,6 +375,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemNumberSid",
                             "key": "sid",
@@ -376,6 +391,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemNumberValue",
                             "key": "value",
@@ -405,6 +421,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemStringSid",
                             "key": "sid",
@@ -420,6 +437,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemStringValue",
                             "key": "value",
@@ -740,6 +758,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseKind",
               "key": "kind",
@@ -754,6 +773,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseType",
               "key": "type",
@@ -768,6 +788,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseUid",
               "key": "uid",
@@ -783,6 +804,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseSid",
               "key": "sid",
@@ -798,6 +820,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseVersion",
               "key": "version",
@@ -811,6 +834,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseState",
               "key": "state",
@@ -823,6 +847,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getFlowResponseStateStopped",
                     "key": "stopped",
@@ -836,6 +861,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getFlowResponseStateStarted",
                     "key": "started",
@@ -849,6 +875,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getFlowResponseStateFinished",
                     "key": "finished",
@@ -866,6 +893,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFlowResponseBlocks",
               "key": "blocks",
@@ -886,6 +914,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemKind",
                         "key": "kind",
@@ -900,6 +929,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemUid",
                         "key": "uid",
@@ -915,6 +945,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemSid",
                         "key": "sid",
@@ -930,6 +961,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemVersion",
                         "key": "version",
@@ -943,6 +975,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemState",
                         "key": "state",
@@ -955,6 +988,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "nameOverride": undefined,
                           "properties": [
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateActive",
                               "key": "active",
@@ -968,6 +1002,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                             },
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateEntered",
                               "key": "entered",
@@ -981,6 +1016,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                             },
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateExited",
                               "key": "exited",
@@ -998,6 +1034,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemContainerUid",
                         "key": "containerUid",
@@ -1018,6 +1055,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemTransitioned",
                         "key": "transitioned",
@@ -1046,6 +1084,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemType",
                         "key": "type",
@@ -1096,6 +1135,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemFields",
                         "key": "fields",
@@ -1121,6 +1161,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "nameOverride": undefined,
                                   "properties": [
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemBooleanSid",
                                       "key": "sid",
@@ -1136,6 +1177,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemBooleanValue",
                                       "key": "value",
@@ -1165,6 +1207,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "nameOverride": undefined,
                                   "properties": [
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemNumberSid",
                                       "key": "sid",
@@ -1180,6 +1223,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemNumberValue",
                                       "key": "value",
@@ -1209,6 +1253,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "nameOverride": undefined,
                                   "properties": [
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemStringSid",
                                       "key": "sid",
@@ -1224,6 +1269,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                     {
+                                      "audiences": [],
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemStringValue",
                                       "key": "value",
@@ -1498,6 +1544,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "badRequestErrorResponseBodyCode",
           "key": "code",
@@ -1524,6 +1571,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "badRequestErrorResponseBodyDetails",
           "key": "details",
@@ -1550,6 +1598,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "blockTransitionQueryStringTransitions",
           "key": "transitions",
@@ -1570,6 +1619,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "blockTransitionQueryStringVersion",
           "key": "version",
@@ -1583,6 +1633,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "blockTransitionQueryStringUserIdentifier",
           "key": "userIdentifier",
@@ -1598,6 +1649,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "blockTransitionQueryStringGroupIdentifier",
           "key": "groupIdentifier",
@@ -1629,6 +1681,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "blockTransitionRequestParamsUid",
           "key": "uid",
@@ -1655,6 +1708,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "flowIntentQueryStringVersion",
           "key": "version",
@@ -1668,6 +1722,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "flowIntentQueryStringUserIdentifier",
           "key": "userIdentifier",
@@ -1683,6 +1738,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "flowIntentQueryStringGroupIdentifier",
           "key": "groupIdentifier",
@@ -1714,6 +1770,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "flowIntentRequestParamsUid",
           "key": "uid",
@@ -1729,6 +1786,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "flowIntentRequestParamsIntent",
           "key": "intent",
@@ -1778,6 +1836,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getBlockQueryStringVersion",
           "key": "version",
@@ -1791,6 +1850,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getBlockQueryStringUserIdentifier",
           "key": "userIdentifier",
@@ -1817,6 +1877,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getBlockRequestParamsUid",
           "key": "uid",
@@ -1843,6 +1904,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getFlowQueryStringVersion",
           "key": "version",
@@ -1856,6 +1918,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getFlowQueryStringInclude",
           "key": "include",
@@ -1875,6 +1938,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getFlowQueryStringUserIdentifier",
           "key": "userIdentifier",
@@ -1890,6 +1954,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getFlowQueryStringGroupIdentifier",
           "key": "groupIdentifier",
@@ -1921,6 +1986,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "getFlowRequestParamsSid",
           "key": "sid",
@@ -1947,6 +2013,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "healthCheckResponseBodyApplication",
           "key": "application",
@@ -1962,6 +2029,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "healthCheckResponseBodyStatus",
           "key": "status",
@@ -1986,6 +2054,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "internalServerErrorResponseBodyCode",
           "key": "code",
@@ -2000,6 +2069,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "internalServerErrorResponseBodyDetails",
           "key": "details",
@@ -2026,6 +2096,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "notFoundErrorResponseBodyCode",
           "key": "code",
@@ -2040,6 +2111,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "notFoundErrorResponseBodyDetails",
           "key": "details",
@@ -2066,6 +2138,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeoutErrorResponseBodyCode",
           "key": "code",
@@ -2080,6 +2153,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeoutErrorResponseBodyDetails",
           "key": "details",
@@ -2106,6 +2180,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "unauthorizedErrorResponseBodyCode",
           "key": "code",
@@ -2120,6 +2195,7 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "unauthorizedErrorResponseBodyDetails",
           "key": "details",

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-audiences x-fern-audiences simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "audiences": [
+              "public",
+            ],
+            "type": "optional<string>",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -118,6 +118,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "postConsumerTransactionResponseMessage",
               "key": "message",
@@ -356,6 +357,7 @@ Each consumer User entity needs three mandatory fields:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "postConsumerUserResponseMessage",
               "key": "message",
@@ -525,6 +527,7 @@ Each consumer Business entity needs three mandatory fields:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "postBusinessUserResponseMessage",
               "key": "message",
@@ -878,6 +881,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsRoutingNumber",
           "key": "routingNumber",
@@ -898,6 +902,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsAccountNumber",
           "key": "accountNumber",
@@ -918,6 +923,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsBankName",
           "key": "bankName",
@@ -938,6 +944,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsName",
           "key": "name",
@@ -958,6 +965,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsBankAddress",
           "key": "bankAddress",
@@ -976,6 +984,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "achDetailsBeneficiaryName",
           "key": "beneficiaryName",
@@ -1061,6 +1070,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressAddressLines",
           "key": "addressLines",
@@ -1074,6 +1084,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressPostcode",
           "key": "postcode",
@@ -1089,6 +1100,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressCity",
           "key": "city",
@@ -1104,6 +1116,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressState",
           "key": "state",
@@ -1124,6 +1137,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressCountry",
           "key": "country",
@@ -1139,6 +1153,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "addressTags",
           "key": "tags",
@@ -1173,6 +1188,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsAlertId",
           "key": "alertId",
@@ -1193,6 +1209,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsStatus",
           "key": "status",
@@ -1213,6 +1230,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsReasons",
           "key": "reasons",
@@ -1238,6 +1256,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsReasonDescriptionForOther",
           "key": "reasonDescriptionForOther",
@@ -1263,6 +1282,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsComment",
           "key": "comment",
@@ -1283,6 +1303,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsUserId",
           "key": "userId",
@@ -1303,6 +1324,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsTransactionIds",
           "key": "transactionIds",
@@ -1328,6 +1350,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleName",
           "key": "ruleName",
@@ -1348,6 +1371,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleDescription",
           "key": "ruleDescription",
@@ -1368,6 +1392,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleId",
           "key": "ruleId",
@@ -1388,6 +1413,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleInstanceId",
           "key": "ruleInstanceId",
@@ -1419,6 +1445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "amountAmountValue",
           "key": "amountValue",
@@ -1432,6 +1459,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "amountAmountCurrency",
           "key": "amountCurrency",
@@ -1483,6 +1511,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessBaseUserId",
           "key": "userId",
@@ -1498,6 +1527,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessBaseCreatedTimestamp",
           "key": "createdTimestamp",
@@ -1522,6 +1552,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessEntityLinkParentUserId",
           "key": "parentUserId",
@@ -1542,6 +1573,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessEntityLinkChildUserIds",
           "key": "childUserIds",
@@ -1578,6 +1610,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalUserStateDetails",
           "key": "userStateDetails",
@@ -1596,6 +1629,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalKycStatusDetails",
           "key": "kycStatusDetails",
@@ -1614,6 +1648,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalLegalEntity",
           "key": "legalEntity",
@@ -1632,6 +1667,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalShareHolders",
           "key": "shareHolders",
@@ -1655,6 +1691,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalDirectors",
           "key": "directors",
@@ -1678,6 +1715,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalTransactionLimits",
           "key": "transactionLimits",
@@ -1696,6 +1734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalRiskLevel",
           "key": "riskLevel",
@@ -1714,6 +1753,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalAllowedPaymentMethods",
           "key": "allowedPaymentMethods",
@@ -1737,6 +1777,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalLinkedEntities",
           "key": "linkedEntities",
@@ -1755,6 +1796,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalAcquisitionChannel",
           "key": "acquisitionChannel",
@@ -1773,6 +1815,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalSavedPaymentDetails",
           "key": "savedPaymentDetails",
@@ -1874,6 +1917,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalMccDetails",
           "key": "mccDetails",
@@ -1892,6 +1936,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessOptionalTags",
           "key": "tags",
@@ -1926,6 +1971,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventTimestamp",
           "key": "timestamp",
@@ -1939,6 +1985,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventUserId",
           "key": "userId",
@@ -1954,6 +2001,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventEventId",
           "key": "eventId",
@@ -1974,6 +2022,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventReason",
           "key": "reason",
@@ -1994,6 +2043,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventEventDescription",
           "key": "eventDescription",
@@ -2014,6 +2064,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
           "key": "updatedBusinessUserAttributes",
@@ -2043,6 +2094,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessUsersResponseUserId",
           "key": "userId",
@@ -2078,6 +2130,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessWithRulesResultExecutedRules",
           "key": "executedRules",
@@ -2101,6 +2154,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "businessWithRulesResultHitRules",
           "key": "hitRules",
@@ -2135,6 +2189,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardFingerprint",
           "key": "cardFingerprint",
@@ -2155,6 +2210,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardIssuedCountry",
           "key": "cardIssuedCountry",
@@ -2173,6 +2229,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsTransactionReferenceField",
           "key": "transactionReferenceField",
@@ -2193,6 +2250,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetails3DsDone",
           "key": "3dsDone",
@@ -2211,6 +2269,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsNameOnCard",
           "key": "nameOnCard",
@@ -2229,6 +2288,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardExpiry",
           "key": "cardExpiry",
@@ -2247,6 +2307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardLast4Digits",
           "key": "cardLast4Digits",
@@ -2267,6 +2328,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardBrand",
           "key": "cardBrand",
@@ -2328,6 +2390,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardFunding",
           "key": "cardFunding",
@@ -2365,6 +2428,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardAuthenticated",
           "key": "cardAuthenticated",
@@ -2383,6 +2447,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsPaymentChannel",
           "key": "paymentChannel",
@@ -2403,6 +2468,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsCardType",
           "key": "cardType",
@@ -2434,6 +2500,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardDetailsMerchantDetails",
           "key": "merchantDetails",
@@ -2463,6 +2530,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardExpiryMonth",
           "key": "month",
@@ -2481,6 +2549,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardExpiryYear",
           "key": "year",
@@ -2510,6 +2579,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsId",
           "key": "id",
@@ -2530,6 +2600,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsCategory",
           "key": "category",
@@ -2550,6 +2621,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsMcc",
           "key": "MCC",
@@ -2570,6 +2642,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsCity",
           "key": "city",
@@ -2590,6 +2663,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsCountry",
           "key": "country",
@@ -2610,6 +2684,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsState",
           "key": "state",
@@ -2630,6 +2705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cardMerchantDetailsPostCode",
           "key": "postCode",
@@ -2671,6 +2747,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsCaseId",
           "key": "caseId",
@@ -2691,6 +2768,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsStatus",
           "key": "status",
@@ -2711,6 +2789,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsReasons",
           "key": "reasons",
@@ -2736,6 +2815,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsReasonDescriptionForOther",
           "key": "reasonDescriptionForOther",
@@ -2761,6 +2841,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsComment",
           "key": "comment",
@@ -2781,6 +2862,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsUserId",
           "key": "userId",
@@ -2801,6 +2883,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseClosedDetailsTransactionIds",
           "key": "transactionIds",
@@ -2837,6 +2920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatus",
           "key": "caseStatus",
@@ -2863,6 +2947,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventTimestamp",
           "key": "timestamp",
@@ -2876,6 +2961,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatusReason",
           "key": "caseStatusReason",
@@ -2914,6 +3000,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventTransactionId",
           "key": "transactionId",
@@ -2934,6 +3021,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventUserId",
           "key": "userId",
@@ -2954,6 +3042,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventEventId",
           "key": "eventId",
@@ -2974,6 +3063,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatusReasonDescription",
           "key": "caseStatusReasonDescription",
@@ -3005,6 +3095,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsCheckNumber",
           "key": "checkNumber",
@@ -3025,6 +3116,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsCheckIdentifier",
           "key": "checkIdentifier",
@@ -3045,6 +3137,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsName",
           "key": "name",
@@ -3065,6 +3158,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsDeliveryStatus",
           "key": "deliveryStatus",
@@ -3120,6 +3214,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsEtaTimestamp",
           "key": "etaTimestamp",
@@ -3138,6 +3233,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "checkDetailsShippingAddress",
           "key": "shippingAddress",
@@ -3176,6 +3272,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
           "key": "expectedTransactionAmountPerMonth",
@@ -3194,6 +3291,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
           "key": "expectedTurnoverPerMonth",
@@ -3212,6 +3310,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyFinancialDetailsTags",
           "key": "tags",
@@ -3246,6 +3345,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsLegalName",
           "key": "legalName",
@@ -3261,6 +3361,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsBusinessIndustry",
           "key": "businessIndustry",
@@ -3286,6 +3387,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsMainProductsServicesSold",
           "key": "mainProductsServicesSold",
@@ -3311,6 +3413,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsUserSegment",
           "key": "userSegment",
@@ -3366,6 +3469,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsUserRegistrationStatus",
           "key": "userRegistrationStatus",
@@ -3384,6 +3488,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyGeneralDetailsTags",
           "key": "tags",
@@ -3418,6 +3523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsRegistrationIdentifier",
           "key": "registrationIdentifier",
@@ -3433,6 +3539,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsRegistrationCountry",
           "key": "registrationCountry",
@@ -3446,6 +3553,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsTaxIdentifier",
           "key": "taxIdentifier",
@@ -3466,6 +3574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsLegalEntityType",
           "key": "legalEntityType",
@@ -3486,6 +3595,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsDateOfRegistration",
           "key": "dateOfRegistration",
@@ -3506,6 +3616,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "companyRegistrationDetailsTags",
           "key": "tags",
@@ -3540,6 +3651,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerNameFirstName",
           "key": "firstName",
@@ -3555,6 +3667,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerNameMiddleName",
           "key": "middleName",
@@ -3575,6 +3688,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerNameLastName",
           "key": "lastName",
@@ -3606,6 +3720,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventTimestamp",
           "key": "timestamp",
@@ -3619,6 +3734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventUserId",
           "key": "userId",
@@ -3634,6 +3750,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventEventId",
           "key": "eventId",
@@ -3654,6 +3771,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventReason",
           "key": "reason",
@@ -3674,6 +3792,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventEventDescription",
           "key": "eventDescription",
@@ -3694,6 +3813,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
           "key": "updatedConsumerUserAttributes",
@@ -3723,6 +3843,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "consumerUsersResponseUserId",
           "key": "userId",
@@ -3749,6 +3870,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "contactDetailsEmailIds",
           "key": "emailIds",
@@ -3774,6 +3896,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "contactDetailsContactNumbers",
           "key": "contactNumbers",
@@ -3799,6 +3922,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "contactDetailsFaxNumbers",
           "key": "faxNumbers",
@@ -3824,6 +3948,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "contactDetailsWebsites",
           "key": "websites",
@@ -3849,6 +3974,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "contactDetailsAddresses",
           "key": "addresses",
@@ -7021,6 +7147,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "dateDay",
           "key": "day",
@@ -7034,6 +7161,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "dateMonth",
           "key": "month",
@@ -7047,6 +7175,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "dateYear",
           "key": "year",
@@ -7071,6 +7200,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataBatteryLevel",
           "key": "batteryLevel",
@@ -7089,6 +7219,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceLatitude",
           "key": "deviceLatitude",
@@ -7107,6 +7238,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceLongitude",
           "key": "deviceLongitude",
@@ -7125,6 +7257,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataIpAddress",
           "key": "ipAddress",
@@ -7145,6 +7278,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceIdentifier",
           "key": "deviceIdentifier",
@@ -7165,6 +7299,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataVpnUsed",
           "key": "vpnUsed",
@@ -7183,6 +7318,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataOperatingSystem",
           "key": "operatingSystem",
@@ -7203,6 +7339,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceMaker",
           "key": "deviceMaker",
@@ -7223,6 +7360,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceModel",
           "key": "deviceModel",
@@ -7243,6 +7381,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataDeviceYear",
           "key": "deviceYear",
@@ -7263,6 +7402,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "deviceDataAppVersion",
           "key": "appVersion",
@@ -7294,6 +7434,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleId",
           "key": "ruleId",
@@ -7309,6 +7450,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleInstanceId",
           "key": "ruleInstanceId",
@@ -7324,6 +7466,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleName",
           "key": "ruleName",
@@ -7339,6 +7482,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleDescription",
           "key": "ruleDescription",
@@ -7354,6 +7498,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleAction",
           "key": "ruleAction",
@@ -7367,6 +7512,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleHit",
           "key": "ruleHit",
@@ -7380,6 +7526,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultRuleHitMeta",
           "key": "ruleHitMeta",
@@ -7398,6 +7545,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultLabels",
           "key": "labels",
@@ -7421,6 +7569,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "executedRulesResultNature",
           "key": "nature",
@@ -7450,6 +7599,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedRulesResultRuleId",
           "key": "ruleId",
@@ -7465,6 +7615,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedRulesResultRuleName",
           "key": "ruleName",
@@ -7480,6 +7631,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedRulesResultRuleDescription",
           "key": "ruleDescription",
@@ -7495,6 +7647,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedRulesResultFailureException",
           "key": "failureException",
@@ -7519,6 +7672,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "falsePositiveDetailsIsFalsePositive",
           "key": "isFalsePositive",
@@ -7532,6 +7686,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "falsePositiveDetailsConfidenceScore",
           "key": "confidenceScore",
@@ -7565,6 +7720,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsAccountNumber",
           "key": "accountNumber",
@@ -7585,6 +7741,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsAccountType",
           "key": "accountType",
@@ -7605,6 +7762,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankName",
           "key": "bankName",
@@ -7625,6 +7783,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankCode",
           "key": "bankCode",
@@ -7645,6 +7804,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsName",
           "key": "name",
@@ -7665,6 +7825,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankAddress",
           "key": "bankAddress",
@@ -7683,6 +7844,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsSpecialInstructions",
           "key": "specialInstructions",
@@ -7703,6 +7865,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "genericBankAccountDetailsPaymentChannel",
           "key": "paymentChannel",
@@ -7734,6 +7897,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleId",
           "key": "ruleId",
@@ -7749,6 +7913,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleInstanceId",
           "key": "ruleInstanceId",
@@ -7764,6 +7929,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleName",
           "key": "ruleName",
@@ -7779,6 +7945,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleDescription",
           "key": "ruleDescription",
@@ -7794,6 +7961,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleAction",
           "key": "ruleAction",
@@ -7807,6 +7975,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleHitMeta",
           "key": "ruleHitMeta",
@@ -7825,6 +7994,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsLabels",
           "key": "labels",
@@ -7848,6 +8018,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "hitRulesDetailsNature",
           "key": "nature",
@@ -7877,6 +8048,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsBic",
           "key": "BIC",
@@ -7897,6 +8069,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsBankName",
           "key": "bankName",
@@ -7917,6 +8090,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsBankAddress",
           "key": "bankAddress",
@@ -7935,6 +8109,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsCountry",
           "key": "country",
@@ -7953,6 +8128,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsIban",
           "key": "IBAN",
@@ -7973,6 +8149,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsName",
           "key": "name",
@@ -7993,6 +8170,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsTags",
           "key": "tags",
@@ -8011,6 +8189,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsBankBranchCode",
           "key": "bankBranchCode",
@@ -8031,6 +8210,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ibanDetailsPaymentChannel",
           "key": "paymentChannel",
@@ -8111,6 +8291,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "kycStatusDetailsReason",
           "key": "reason",
@@ -8131,6 +8312,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "kycStatusDetailsStatus",
           "key": "status",
@@ -8160,6 +8342,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentDocumentType",
           "key": "documentType",
@@ -8175,6 +8358,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentDocumentNumber",
           "key": "documentNumber",
@@ -8190,6 +8374,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentDocumentIssuedDate",
           "key": "documentIssuedDate",
@@ -8208,6 +8393,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentDocumentExpirationDate",
           "key": "documentExpirationDate",
@@ -8226,6 +8412,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentDocumentIssuedCountry",
           "key": "documentIssuedCountry",
@@ -8239,6 +8426,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentTags",
           "key": "tags",
@@ -8262,6 +8450,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalDocumentNameOnDocument",
           "key": "nameOnDocument",
@@ -8291,6 +8480,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalEntityCompanyGeneralDetails",
           "key": "companyGeneralDetails",
@@ -8304,6 +8494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalEntityCompanyFinancialDetails",
           "key": "companyFinancialDetails",
@@ -8322,6 +8513,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalEntityCompanyRegistrationDetails",
           "key": "companyRegistrationDetails",
@@ -8340,6 +8532,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalEntityReasonForAccountOpening",
           "key": "reasonForAccountOpening",
@@ -8365,6 +8558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "legalEntityContactDetails",
           "key": "contactDetails",
@@ -8394,6 +8588,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listDataMetadata",
           "key": "metadata",
@@ -8412,6 +8607,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listDataItems",
           "key": "items",
@@ -8446,6 +8642,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listExistedListId",
           "key": "listId",
@@ -8461,6 +8658,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listExistedHeader",
           "key": "header",
@@ -8474,6 +8672,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listExistedItems",
           "key": "items",
@@ -8503,6 +8702,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderListId",
           "key": "listId",
@@ -8518,6 +8718,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderListType",
           "key": "listType",
@@ -8531,6 +8732,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderSubtype",
           "key": "subtype",
@@ -8544,6 +8746,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderMetadata",
           "key": "metadata",
@@ -8562,6 +8765,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderCreatedTimestamp",
           "key": "createdTimestamp",
@@ -8575,6 +8779,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listHeaderSize",
           "key": "size",
@@ -8599,6 +8804,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listItemKey",
           "key": "key",
@@ -8614,6 +8820,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listItemMetadata",
           "key": "metadata",
@@ -8661,6 +8868,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listMetadataName",
           "key": "name",
@@ -8681,6 +8889,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listMetadataDescription",
           "key": "description",
@@ -8701,6 +8910,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listMetadataStatus",
           "key": "status",
@@ -8719,6 +8929,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "listMetadataChecksum",
           "key": "checksum",
@@ -8852,6 +9063,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "mccDetailsCode",
           "key": "code",
@@ -8865,6 +9077,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "mccDetailsDescription",
           "key": "description",
@@ -8896,6 +9109,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "mpesaDetailsBusinessShortCode",
           "key": "businessShortCode",
@@ -8911,6 +9125,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "mpesaDetailsTransactionType",
           "key": "transactionType",
@@ -8955,6 +9170,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "mpesaDetailsPhoneNumber",
           "key": "phoneNumber",
@@ -8990,6 +9206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pepStatusIsPepHit",
           "key": "isPepHit",
@@ -9003,6 +9220,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "pepStatusPepCountry",
           "key": "pepCountry",
@@ -9097,6 +9315,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "personGeneralDetails",
           "key": "generalDetails",
@@ -9110,6 +9329,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "personLegalDocuments",
           "key": "legalDocuments",
@@ -9133,6 +9353,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "personContactDetails",
           "key": "contactDetails",
@@ -9151,6 +9372,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "personPepStatus",
           "key": "pepStatus",
@@ -9174,6 +9396,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "personTags",
           "key": "tags",
@@ -9247,6 +9470,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "riskScoringResultKycRiskScore",
           "key": "kycRiskScore",
@@ -9260,6 +9484,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "riskScoringResultTransactionRiskScore",
           "key": "transactionRiskScore",
@@ -9273,6 +9498,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "riskScoringResultCustomerRiskAssessment",
           "key": "customerRiskAssessment",
@@ -9335,6 +9561,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ruleFailureExceptionExceptionName",
           "key": "exceptionName",
@@ -9350,6 +9577,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ruleFailureExceptionExceptionDescription",
           "key": "exceptionDescription",
@@ -9397,6 +9625,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ruleHitMetaHitDirections",
           "key": "hitDirections",
@@ -9420,6 +9649,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ruleHitMetaFalsePositiveDetails",
           "key": "falsePositiveDetails",
@@ -9438,6 +9668,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "ruleHitMetaSanctionsDetails",
           "key": "sanctionsDetails",
@@ -9586,6 +9817,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "rulesResultsExecutedRules",
           "key": "executedRules",
@@ -9604,6 +9836,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "rulesResultsHitRules",
           "key": "hitRules",
@@ -9633,6 +9866,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsSwiftCode",
           "key": "swiftCode",
@@ -9653,6 +9887,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsAccountNumber",
           "key": "accountNumber",
@@ -9673,6 +9908,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsAccountType",
           "key": "accountType",
@@ -9693,6 +9929,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsBankName",
           "key": "bankName",
@@ -9713,6 +9950,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsName",
           "key": "name",
@@ -9733,6 +9971,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsBankAddress",
           "key": "bankAddress",
@@ -9751,6 +9990,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "swiftDetailsSpecialInstructions",
           "key": "specialInstructions",
@@ -9791,6 +10031,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sanctionsDetailsName",
           "key": "name",
@@ -9806,6 +10047,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sanctionsDetailsSearchId",
           "key": "searchId",
@@ -9821,6 +10063,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sanctionsDetailsEntityType",
           "key": "entityType",
@@ -9907,6 +10150,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "tagKey",
           "key": "key",
@@ -9922,6 +10166,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "tagValue",
           "key": "value",
@@ -9975,6 +10220,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountDetailsTransactionAmount",
           "key": "transactionAmount",
@@ -9988,6 +10234,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountDetailsTransactionCurrency",
           "key": "transactionCurrency",
@@ -10001,6 +10248,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountDetailsCountry",
           "key": "country",
@@ -10030,6 +10278,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountLimitDay",
           "key": "day",
@@ -10048,6 +10297,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountLimitWeek",
           "key": "week",
@@ -10066,6 +10316,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountLimitMonth",
           "key": "month",
@@ -10084,6 +10335,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionAmountLimitYear",
           "key": "year",
@@ -10113,6 +10365,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionBaseType",
           "key": "type",
@@ -10131,6 +10384,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionBaseTransactionId",
           "key": "transactionId",
@@ -10146,6 +10400,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionBaseTimestamp",
           "key": "timestamp",
@@ -10159,6 +10414,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionBaseOriginUserId",
           "key": "originUserId",
@@ -10179,6 +10435,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionBaseDestinationUserId",
           "key": "destinationUserId",
@@ -10210,6 +10467,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCountLimitDay",
           "key": "day",
@@ -10228,6 +10486,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCountLimitWeek",
           "key": "week",
@@ -10246,6 +10505,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCountLimitMonth",
           "key": "month",
@@ -10264,6 +10524,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionCountLimitYear",
           "key": "year",
@@ -10293,6 +10554,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventTransactionState",
           "key": "transactionState",
@@ -10306,6 +10568,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventTimestamp",
           "key": "timestamp",
@@ -10319,6 +10582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventTransactionId",
           "key": "transactionId",
@@ -10334,6 +10598,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventEventId",
           "key": "eventId",
@@ -10354,6 +10619,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventReason",
           "key": "reason",
@@ -10374,6 +10640,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventEventDescription",
           "key": "eventDescription",
@@ -10394,6 +10661,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventUpdatedTransactionAttributes",
           "key": "updatedTransactionAttributes",
@@ -10412,6 +10680,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventMetaData",
           "key": "metaData",
@@ -10450,6 +10719,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventMonitoringResultEventId",
           "key": "eventId",
@@ -10465,6 +10735,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionEventMonitoringResultTransaction",
           "key": "transaction",
@@ -10489,6 +10760,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitTransactionCountLimit",
           "key": "transactionCountLimit",
@@ -10507,6 +10779,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitTransactionAmountLimit",
           "key": "transactionAmountLimit",
@@ -10525,6 +10798,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitAverageTransactionAmountLimit",
           "key": "averageTransactionAmountLimit",
@@ -10554,6 +10828,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
           "key": "maximumDailyTransactionLimit",
@@ -10572,6 +10847,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
           "key": "maximumWeeklyTransactionLimit",
@@ -10590,6 +10866,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
           "key": "maximumMonthlyTransactionLimit",
@@ -10608,6 +10885,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
           "key": "maximumQuarterlyTransactionLimit",
@@ -10626,6 +10904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumTransactionLimit",
           "key": "maximumTransactionLimit",
@@ -10644,6 +10923,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
           "key": "maximumYearlyTransactionLimit",
@@ -10662,6 +10942,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionLimitsPaymentMethodLimits",
           "key": "paymentMethodLimits",
@@ -10678,6 +10959,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "nameOverride": undefined,
               "properties": [
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsAch",
                   "key": "ACH",
@@ -10696,6 +10978,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsCard",
                   "key": "CARD",
@@ -10714,6 +10997,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsIban",
                   "key": "IBAN",
@@ -10732,6 +11016,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
                   "key": "UPI",
@@ -10750,6 +11035,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
                   "key": "GENERIC_BANK_ACCOUNT",
@@ -10768,6 +11054,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
                   "key": "MPESA",
@@ -10786,6 +11073,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
                   "key": "SWIFT",
@@ -10804,6 +11092,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
                   "key": "WALLET",
@@ -10822,6 +11111,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
                   "key": "CHECK",
@@ -10865,6 +11155,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionMonitoringResultTransactionId",
           "key": "transactionId",
@@ -10993,6 +11284,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableTransactionState",
           "key": "transactionState",
@@ -11011,6 +11303,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableOriginAmountDetails",
           "key": "originAmountDetails",
@@ -11029,6 +11322,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableDestinationAmountDetails",
           "key": "destinationAmountDetails",
@@ -11047,6 +11341,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableOriginPaymentDetails",
           "key": "originPaymentDetails",
@@ -11143,6 +11438,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableDestinationPaymentDetails",
           "key": "destinationPaymentDetails",
@@ -11239,6 +11535,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableRelatedTransactionIds",
           "key": "relatedTransactionIds",
@@ -11264,6 +11561,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableProductType",
           "key": "productType",
@@ -11284,6 +11582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatablePromotionCodeUsed",
           "key": "promotionCodeUsed",
@@ -11302,6 +11601,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableReference",
           "key": "reference",
@@ -11322,6 +11622,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableDeviceData",
           "key": "deviceData",
@@ -11340,6 +11641,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionUpdatableTags",
           "key": "tags",
@@ -11383,6 +11685,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionWithRulesResultExecutedRules",
           "key": "executedRules",
@@ -11401,6 +11704,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transactionWithRulesResultHitRules",
           "key": "hitRules",
@@ -11430,6 +11734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "upiDetailsUpiId",
           "key": "upiID",
@@ -11445,6 +11750,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "upiDetailsBankProvider",
           "key": "bankProvider",
@@ -11465,6 +11771,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "upiDetailsInterfaceProvider",
           "key": "interfaceProvider",
@@ -11485,6 +11792,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "upiDetailsName",
           "key": "name",
@@ -11552,6 +11860,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userBaseUserId",
           "key": "userId",
@@ -11567,6 +11876,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userBaseUserDetails",
           "key": "userDetails",
@@ -11585,6 +11895,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userBaseCreatedTimestamp",
           "key": "createdTimestamp",
@@ -11609,6 +11920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userDetailsName",
           "key": "name",
@@ -11622,6 +11934,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userDetailsDateOfBirth",
           "key": "dateOfBirth",
@@ -11642,6 +11955,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userDetailsCountryOfResidence",
           "key": "countryOfResidence",
@@ -11660,6 +11974,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userDetailsCountryOfNationality",
           "key": "countryOfNationality",
@@ -11678,6 +11993,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userDetailsGender",
           "key": "gender",
@@ -11735,6 +12051,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userMonitoringResultUserId",
           "key": "userId",
@@ -11761,6 +12078,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalUserStateDetails",
           "key": "userStateDetails",
@@ -11779,6 +12097,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalKycStatusDetails",
           "key": "kycStatusDetails",
@@ -11797,6 +12116,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalLegalDocuments",
           "key": "legalDocuments",
@@ -11820,6 +12140,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalContactDetails",
           "key": "contactDetails",
@@ -11838,6 +12159,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalTransactionLimits",
           "key": "transactionLimits",
@@ -11856,6 +12178,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalRiskLevel",
           "key": "riskLevel",
@@ -11874,6 +12197,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalAcquisitionChannel",
           "key": "acquisitionChannel",
@@ -11892,6 +12216,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalReasonForAccountOpening",
           "key": "reasonForAccountOpening",
@@ -11917,6 +12242,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalUserSegment",
           "key": "userSegment",
@@ -11948,6 +12274,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalPepStatus",
           "key": "pepStatus",
@@ -11971,6 +12298,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userOptionalTags",
           "key": "tags",
@@ -12095,6 +12423,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userStateDetailsUserId",
           "key": "userId",
@@ -12115,6 +12444,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userStateDetailsReason",
           "key": "reason",
@@ -12135,6 +12465,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userStateDetailsState",
           "key": "state",
@@ -12168,6 +12499,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userWithRulesResultExecutedRules",
           "key": "executedRules",
@@ -12191,6 +12523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userWithRulesResultHitRules",
           "key": "hitRules",
@@ -12225,6 +12558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsWalletType",
           "key": "walletType",
@@ -12240,6 +12574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsWalletId",
           "key": "walletId",
@@ -12260,6 +12595,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsPaymentChannel",
           "key": "paymentChannel",
@@ -12280,6 +12616,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsName",
           "key": "name",
@@ -12300,6 +12637,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsTags",
           "key": "tags",
@@ -12318,6 +12656,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "walletDetailsWalletPhoneNumber",
           "key": "walletPhoneNumber",
@@ -12358,6 +12697,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "webhookEventId",
           "key": "id",
@@ -12373,6 +12713,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "webhookEventType",
           "key": "type",
@@ -12386,6 +12727,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "webhookEventData",
           "key": "data",
@@ -12399,6 +12741,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "webhookEventCreatedTimestamp",
           "key": "createdTimestamp",

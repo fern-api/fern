@@ -94,11 +94,19 @@ export function buildObjectTypeDeclaration({
                 });
             }
         }
-        properties[property.key] = buildTypeReference({
+        const typeReference = buildTypeReference({
             schema: property.schema,
             context,
             fileContainingReference: declarationFile
         });
+        if (property.audiences.length > 0) {
+            properties[property.key] =
+                typeof typeReference === "string"
+                    ? { type: typeReference, audiences: property.audiences }
+                    : { ...typeReference, audiences: property.audiences };
+        } else {
+            properties[property.key] = typeReference;
+        }
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
 

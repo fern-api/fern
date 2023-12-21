@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-audiences`
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    BaseUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          x-fern-audiences: [ "public" ]
