@@ -54,9 +54,6 @@ it("generate IR", async () => {
         if (workspace.type === "openapi") {
             throw new Error("Convert OpenAPI to Fern workspace before generating IR");
         }
-        if (workspace.name !== "audiences") {
-            continue;
-        }
 
         const intermediateRepresentation = await generateIntermediateRepresentation({
             workspace,
