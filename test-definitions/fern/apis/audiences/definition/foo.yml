@@ -16,6 +16,13 @@ service:
         name: FindRequest
         query-parameters:
           optionalString: OptionalString
+        body: 
+          properties: 
+            publicProperty: 
+              type: optional<string>
+              audiences: 
+                - public
+            privateProperty: optional<integer>
       response: ImportingType
 
 types:

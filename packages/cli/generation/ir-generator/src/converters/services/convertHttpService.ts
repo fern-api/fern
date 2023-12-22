@@ -77,7 +77,6 @@ export async function convertHttpService({
                     file,
                     variableResolver
                 });
-
                 const httpEndpoint: HttpEndpoint = {
                     ...(await convertDeclaration(endpoint)),
                     id: "",

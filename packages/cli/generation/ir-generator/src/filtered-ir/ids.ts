@@ -21,6 +21,12 @@ export interface TypePropertiesNode {
     propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
+export interface InlinedRequestPropertiesNode {
+    endpointId: EndpointId;
+    /* If audience not present, keep all properties */
+    propertiesByAudience: Record<AudienceId, Set<string>>;
+}
+
 export interface ErrorNode {
     errorId: ErrorId;
     referencedTypes: Set<TypeId>;

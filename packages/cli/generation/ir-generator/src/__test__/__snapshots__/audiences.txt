@@ -504,7 +504,67 @@ exports[`generate IR 1`] = `
               },
             },
           ],
-          "requestBody": null,
+          "requestBody": {
+            "contentType": null,
+            "extends": [],
+            "name": {
+              "camelCase": {
+                "safeName": "findRequest",
+                "unsafeName": "findRequest",
+              },
+              "originalName": "FindRequest",
+              "pascalCase": {
+                "safeName": "FindRequest",
+                "unsafeName": "FindRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FIND_REQUEST",
+                "unsafeName": "FIND_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "find_request",
+                "unsafeName": "find_request",
+              },
+            },
+            "properties": [
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "publicProperty",
+                      "unsafeName": "publicProperty",
+                    },
+                    "originalName": "publicProperty",
+                    "pascalCase": {
+                      "safeName": "PublicProperty",
+                      "unsafeName": "PublicProperty",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PUBLIC_PROPERTY",
+                      "unsafeName": "PUBLIC_PROPERTY",
+                    },
+                    "snakeCase": {
+                      "safeName": "public_property",
+                      "unsafeName": "public_property",
+                    },
+                  },
+                  "wireValue": "publicProperty",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "optional",
+                    "optional": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                  },
+                },
+              },
+            ],
+            "type": "inlinedRequestBody",
+          },
           "response": {
             "type": "json",
             "value": {

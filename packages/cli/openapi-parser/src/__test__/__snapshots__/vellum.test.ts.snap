@@ -1223,6 +1223,7 @@ Upload a document to be indexed and used for search.
         "name": "UploadDocumentBodyRequest",
         "properties": [
           {
+            "audiences": [],
             "description": undefined,
             "key": "add_to_index_names",
             "schema": {
@@ -1250,6 +1251,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "audiences": [],
             "description": undefined,
             "key": "external_id",
             "schema": {
@@ -1272,6 +1274,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "audiences": [],
             "description": undefined,
             "key": "label",
             "schema": {
@@ -1296,6 +1299,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "audiences": [],
             "description": undefined,
             "key": "keywords",
             "schema": {
