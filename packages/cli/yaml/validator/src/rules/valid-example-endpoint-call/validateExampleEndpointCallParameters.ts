@@ -34,9 +34,10 @@ export function validateExampleEndpointCallParameters<T>({
             });
 
             const isOptional =
-                resolvedType != null &&
-                resolvedType._type === "container" &&
-                resolvedType.container._type === "optional";
+                (resolvedType != null &&
+                    resolvedType._type === "container" &&
+                    resolvedType.container._type === "optional") ||
+                resolvedType?._type === "unknown";
 
             if (!isOptional) {
                 acc.push(key);
