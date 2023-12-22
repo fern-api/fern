@@ -224,7 +224,7 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    const rawEndpointSchema = service.endpoints[httpEndpoint.id];
+                    const rawEndpointSchema = service.endpoints[httpEndpoint.name.originalName];
                     irGraph.addEndpoint(convertedHttpService, httpEndpoint, rawEndpointSchema);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });

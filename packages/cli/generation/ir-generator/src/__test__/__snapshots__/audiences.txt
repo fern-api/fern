@@ -562,41 +562,6 @@ exports[`generate IR 1`] = `
                   },
                 },
               },
-              {
-                "docs": null,
-                "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "privateProperty",
-                      "unsafeName": "privateProperty",
-                    },
-                    "originalName": "privateProperty",
-                    "pascalCase": {
-                      "safeName": "PrivateProperty",
-                      "unsafeName": "PrivateProperty",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "PRIVATE_PROPERTY",
-                      "unsafeName": "PRIVATE_PROPERTY",
-                    },
-                    "snakeCase": {
-                      "safeName": "private_property",
-                      "unsafeName": "private_property",
-                    },
-                  },
-                  "wireValue": "privateProperty",
-                },
-                "valueType": {
-                  "_type": "container",
-                  "container": {
-                    "_type": "optional",
-                    "optional": {
-                      "_type": "primitive",
-                      "primitive": "INTEGER",
-                    },
-                  },
-                },
-              },
             ],
             "type": "inlinedRequestBody",
           },
