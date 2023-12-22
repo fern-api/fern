@@ -311,25 +311,24 @@ function getRequest({
                     context
                 });
 
-                if (
-                    typeof propertyTypeReference === "string" &&
-                    !usedNames.has(property.key) &&
-                    property.audiences.length <= 0
-                ) {
+                if (!usedNames.has(property.key) && property.audiences.length <= 0) {
                     return [property.key, propertyTypeReference];
                 }
 
-                const typeReferenceWithName: RawSchemas.ObjectPropertySchema = {
+                const typeReference: RawSchemas.ObjectPropertySchema = {
                     type: getTypeFromTypeReference(propertyTypeReference),
-                    docs: getDocsFromTypeReference(propertyTypeReference),
-                    name: property.generatedName
+                    docs: getDocsFromTypeReference(propertyTypeReference)
                 };
 
-                if (property.audiences.length > 0) {
-                    typeReferenceWithName.audiences = property.audiences;
+                if (usedNames.has(property.key)) {
+                    typeReference.name = property.generatedName;
                 }
 
-                return [property.key, typeReferenceWithName];
+                if (property.audiences.length > 0) {
+                    typeReference.audiences = property.audiences;
+                }
+
+                return [property.key, typeReference];
             })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
