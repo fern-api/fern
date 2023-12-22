@@ -11,7 +11,8 @@ export async function getAllYamlFiles(context: TaskContext): Promise<AbsoluteFil
         context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
     const filepaths = await glob("*/definition/**/*.yml", {
-        cwd: fernDirectory
+        cwd: fernDirectory,
+        absolute: true
     });
     return filepaths.map(AbsoluteFilePath.of);
 }
