@@ -1,5 +1,6 @@
 import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
 import { assertNever, noop } from "@fern-api/core-utils";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ContainerType,
     DeclaredServiceName,
@@ -15,6 +16,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { IdGenerator } from "../IdGenerator";
+import { getPropertiesForAudience } from "../utils/getPropertiesForAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
     AudienceId,
@@ -22,6 +24,7 @@ import {
     EndpointNode,
     ErrorId,
     ErrorNode,
+    InlinedRequestPropertiesNode,
     ServiceId,
     SubpackageId,
     TypeId,
@@ -32,6 +35,7 @@ import {
 export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
     private properties: Record<TypeId, TypePropertiesNode> = {};
+    private requestProperties: Record<EndpointId, InlinedRequestPropertiesNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private audiences: Audiences;
@@ -105,7 +109,11 @@ export class IrGraph {
         this.errors[errorId] = errorNode;
     }
 
-    public addEndpoint(service: HttpService, httpEndpoint: HttpEndpoint): void {
+    public addEndpoint(
+        service: HttpService,
+        httpEndpoint: HttpEndpoint,
+        rawEndpoint?: RawSchemas.HttpEndpointSchema
+    ): void {
         const serviceId = IdGenerator.generateServiceId(service.name);
         const endpointId = httpEndpoint.id;
         const referencedTypes = new Set<TypeId>();
@@ -128,6 +136,21 @@ export class IrGraph {
                     }
                     for (const property of inlinedRequestBody.properties) {
                         populateReferencesFromTypeReference(property.valueType, referencedTypes, referencedSubpackages);
+                    }
+                    if (
+                        rawEndpoint != null &&
+                        typeof rawEndpoint.request === "object" &&
+                        typeof rawEndpoint.request.body === "object" &&
+                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                        isInlineRequestBody(rawEndpoint.request.body)
+                    ) {
+                        const propertiesByAudience = getPropertiesForAudience(
+                            rawEndpoint.request.body.properties ?? {}
+                        );
+                        this.requestProperties[endpointId] = {
+                            endpointId,
+                            propertiesByAudience
+                        };
                     }
                 },
                 reference: ({ requestBodyType }) => {
@@ -235,6 +258,7 @@ export class IrGraph {
         this.addReferencedTypes(typeIds, this.typesNeededForAudience);
 
         const properties: Record<TypeId, Set<string>> = {};
+        const requestProperties: Record<EndpointId, Set<string>> = {};
 
         if (this.audiences.type === "filtered") {
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
@@ -254,12 +278,31 @@ export class IrGraph {
                     properties[typeId] = propertiesForTypeId;
                 }
             }
+
+            for (const [endpointId, requestPropertiesNode] of Object.entries(this.requestProperties)) {
+                if (!this.endpointsNeededForAudience.has(endpointId)) {
+                    continue;
+                }
+                const propertiesForEndpoint = new Set<string>();
+                for (const audience of this.audiences.audiences) {
+                    const propertiesForAudience = requestPropertiesNode.propertiesByAudience[audience];
+                    if (propertiesForAudience != null) {
+                        propertiesForAudience.forEach((property) => {
+                            propertiesForEndpoint.add(property);
+                        });
+                    }
+                }
+                if (propertiesForEndpoint.size > 0) {
+                    requestProperties[endpointId] = propertiesForEndpoint;
+                }
+            }
         }
 
         return new FilteredIrImpl({
             types: typeIds,
             properties,
             errors: errorIds,
+            requestProperties,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
             subpackages: this.subpackagesNeededForAudience

@@ -5,6 +5,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { getPropertiesForAudience } from "../../utils/getPropertiesForAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -43,19 +44,9 @@ export async function convertTypeDeclaration({
     });
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
 
-    const propertiesByAudience: Record<AudienceId, Set<string>> = {};
+    let propertiesByAudience: Record<AudienceId, Set<string>> = {};
     if (isRawObjectDefinition(typeDeclaration)) {
-        for (const [property, propertyDeclaration] of Object.entries(typeDeclaration.properties ?? {})) {
-            if (typeof propertyDeclaration === "string") {
-                continue;
-            }
-            for (const audience of propertyDeclaration.audiences ?? []) {
-                if (propertiesByAudience[audience] == null) {
-                    propertiesByAudience[audience] = new Set();
-                }
-                propertiesByAudience[audience]?.add(property);
-            }
-        }
+        propertiesByAudience = getPropertiesForAudience(typeDeclaration.properties ?? {});
     }
 
     return {

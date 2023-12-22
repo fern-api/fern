@@ -80,7 +80,7 @@ export async function convertHttpService({
 
                 const httpEndpoint: HttpEndpoint = {
                     ...(await convertDeclaration(endpoint)),
-                    id: "",
+                    id: endpointKey,
                     name: file.casingsGenerator.generateName(endpointKey),
                     displayName: endpoint["display-name"],
                     auth: endpoint.auth ?? serviceDefinition.auth,

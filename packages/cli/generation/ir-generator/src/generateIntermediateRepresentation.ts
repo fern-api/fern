@@ -224,7 +224,8 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    irGraph.addEndpoint(convertedHttpService, httpEndpoint);
+                    const rawEndpointSchema = service.endpoints[httpEndpoint.id];
+                    irGraph.addEndpoint(convertedHttpService, httpEndpoint, rawEndpointSchema);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {
@@ -398,6 +399,7 @@ function filterIntermediateRepresentationForAudiences(
             return [typeId, typeDeclaration];
         })
     );
+
     return {
         ...intermediateRepresentation,
         types: filteredTypesAndProperties,
@@ -406,7 +408,22 @@ function filterIntermediateRepresentationForAudiences(
             pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),
             (httpService) => ({
                 ...httpService,
-                endpoints: httpService.endpoints.filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
+                endpoints: httpService.endpoints
+                    .filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
+                    .map((httpEndpoint) => {
+                        if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
+                            return {
+                                ...httpEndpoint,
+                                requestBody: {
+                                    ...httpEndpoint.requestBody,
+                                    properties: httpEndpoint.requestBody.properties.filter((property) => {
+                                        return filteredIr.hasRequestProperty(httpEndpoint.id, property.name.wireValue);
+                                    })
+                                }
+                            };
+                        }
+                        return httpEndpoint;
+                    })
             })
         ),
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(
