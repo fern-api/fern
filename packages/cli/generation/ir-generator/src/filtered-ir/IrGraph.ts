@@ -141,7 +141,6 @@ export class IrGraph {
                         rawEndpoint != null &&
                         typeof rawEndpoint.request === "object" &&
                         typeof rawEndpoint.request.body === "object" &&
-                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                         isInlineRequestBody(rawEndpoint.request.body)
                     ) {
                         const propertiesByAudience = getPropertiesForAudience(
