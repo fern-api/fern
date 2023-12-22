@@ -691,6 +691,9 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 description: "Only run the command on the provided API"
             }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern write-definition"
+            });
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
