@@ -10,3 +10,13 @@ types:
     union:
       - ContainerValue
       - FieldValue
+  SelfReferentialContainerArray:
+    properties:
+      items: list<SelfReferentialContainerValue>
+  StringContainer:
+    type: string
+  SelfReferentialContainerValue:
+    discriminated: false
+    union:
+      - StringContainer
+      - SelfReferentialContainerArray
