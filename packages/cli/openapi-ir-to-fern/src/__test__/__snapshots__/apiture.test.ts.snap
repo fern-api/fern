@@ -79,7 +79,7 @@ exports[`open api parser apiture simple 1`] = `
             },
             "response": {
               "docs": "OK. The response is a representation of the customer's account.",
-              "type": "root.Account",
+              "type": "root.accountV201",
             },
           },
           "listAccountBalances": {
@@ -126,7 +126,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             },
             "response": {
               "docs": "OK. The response contains the balances for all the accounts in the \`?accounts=\` query parameter.",
-              "type": "root.AccountBalances",
+              "type": "root.accountBalancesV110",
             },
           },
           "listAccounts": {
@@ -147,7 +147,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "allows": {
                   "allow-multiple": true,
                   "docs": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
-                  "type": "optional<root.AccountAllowsFilter>",
+                  "type": "optional<root.accountAllowsFilterV100>",
                 },
                 "limit": {
                   "docs": "The maximum number of items to return in this paged response.",
@@ -160,7 +160,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "productType": {
                   "allow-multiple": true,
                   "docs": "Include only accounts whose \`product.type\` is in pipe-delimited set. For example, to list only savings, checking, and CD accounts, use <br>\`?productType=savings|checking|cd\`.",
-                  "type": "optional<root.ProductType>",
+                  "type": "optional<root.productTypeV200>",
                 },
                 "start": {
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
@@ -170,7 +170,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             },
             "response": {
               "docs": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-              "type": "root.Accounts",
+              "type": "root.accountsV201",
             },
           },
           "listEligibleAchAccounts": {
@@ -193,7 +193,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "allows": {
                   "allow-multiple": true,
                   "docs": "Filter the result to accounts that have corresponding \`true\` values in \`account.allows\`. For example \`?allows=transferTo,transferFrom,view\` returns only accounts where \`account.allows.transferTo\`, \`account.allows.transferFrom\`, and \`account.allows.view\` are all \`true\` for the caller.",
-                  "type": "optional<root.AccountAllowsFilter>",
+                  "type": "optional<root.accountAllowsFilterV100>",
                 },
                 "customerId": {
                   "docs": "The optional identifier of a business customer. This is an opaque string. An agent who is operating on behalf of a business can use this to access the resources of that business customer. The agent must have entitlements to act on behalf of the business; if not, the operation returns a 403 Forbidden response. For other situations, omit this value, else this _must_ match the authenticated caller's customer ID (not their access ID).",
@@ -205,7 +205,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 },
                 "secCode": {
                   "docs": "Filter the result to accounts that allow ACH transfers of the given Standard Entry Class (SEC) codes.",
-                  "type": "root.AchSecCode",
+                  "type": "root.achSecCodeV100",
                 },
                 "start": {
                   "docs": "The location of the next item in the collection. This is an opaque cursor supplied by the API service. Omit this to start at the beginning of the collection. The client does not define this value; the API services automatically pass the \`?start=\` parameter on the \`nextPage_url\`.",
@@ -215,7 +215,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             },
             "response": {
               "docs": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-              "type": "root.Accounts",
+              "type": "root.accountsV201",
             },
           },
         },
@@ -276,7 +276,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
             },
             "response": {
               "docs": "OK.",
-              "type": "root.CutoffTimes",
+              "type": "root.cutoffTimesV100",
             },
           },
           "getTransferDateRestrictions": {
@@ -336,7 +336,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "risk": {
                   "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
-                  "type": "optional<root.AchAccountRisk>",
+                  "type": "optional<root.achAccountRiskV100>",
                 },
                 "startsOn": {
                   "docs": "The start of the range of dates to include in the response, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
@@ -344,13 +344,13 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "type": {
                   "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that \`Credit\` and \`Debit\` here are relative to the account at the _external_ financial institution.",
-                  "type": "optional<root.TransferTypeForDateRestrictions>",
+                  "type": "optional<root.transferRestrictionTransferTypeV100>",
                 },
               },
             },
             "response": {
               "docs": "OK.",
-              "type": "root.TransferDateRestrictions",
+              "type": "root.transferDateRestrictionsV100",
             },
           },
           "listTransferSchedule": {
@@ -406,7 +406,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "direction": {
                   "docs": "The direction of the transfer from the institution to the customer used for adjusting transfer dates due to banking holidays. For \`debit\`, dates are adjusted to the next business day. For \`credit\`, dates are adjusted to the previous business day.",
-                  "type": "root.TransferScheduleDirection",
+                  "type": "root.transferScheduleDirectionV100",
                 },
                 "endsOn": {
                   "docs": "The date to use to conclude calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
@@ -414,7 +414,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "frequency": {
                   "docs": "The interval at which the money movement recurs.",
-                  "type": "root.TransferFrequency",
+                  "type": "root.transferFrequencyV100",
                 },
                 "startsOn": {
                   "docs": "The date to use to begin calculations of the transfer schedule in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
@@ -424,7 +424,7 @@ This information provides hints to clients, allowing bank customers to select tr
             },
             "response": {
               "docs": "OK.",
-              "type": "root.TransferSchedules",
+              "type": "root.transferScheduleListV100",
             },
           },
           "lookUpInstitutionByLocator": {
@@ -456,13 +456,13 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "locatorType": {
                   "docs": "Indicates what type of value the \`locator\` query parameter is.",
-                  "type": "root.InstitutionLocatorType",
+                  "type": "root.institutionLocatorTypeV100",
                 },
               },
             },
             "response": {
               "docs": "OK.",
-              "type": "root.InstitutionLookupResult",
+              "type": "root.institutionLookupResultV101",
             },
           },
         },
@@ -500,18 +500,18 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "request": {
               "body": {
                 "extends": [
-                  "root.AbstractBody",
-                  "root.JointOwnerInvitationFields",
+                  "root.abstractBodyV020",
+                  "root.jointOwnerInvitationFieldsV100",
                 ],
                 "properties": {},
               },
               "headers": undefined,
-              "name": "NewJointOwnerInvitation",
+              "name": "newJointOwnerInvitationV100",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "OK.",
-              "type": "root.JointOwnerInvitation",
+              "type": "root.jointOwnerInvitationV100",
             },
           },
         },
@@ -544,7 +544,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
             "response": {
               "docs": "OK.",
-              "type": "root.OverdraftProtection",
+              "type": "root.overdraftProtectionSettingsV100",
             },
           },
           "listEligibleOverdraftAccounts": {
@@ -585,7 +585,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             },
             "response": {
               "docs": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-              "type": "root.EligibleOverdraftAccounts",
+              "type": "root.eligibleOverdraftAccountsV100",
             },
           },
           "patchOverdraftAccounts": {
@@ -612,18 +612,18 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             "request": {
               "body": {
                 "extends": [
-                  "root.AbstractBody",
-                  "root.OverdraftProtectionFields",
+                  "root.abstractBodyV020",
+                  "root.overdraftProtectionFieldsV100",
                 ],
                 "properties": {},
               },
               "headers": undefined,
-              "name": "OverdraftProtectionPatch",
+              "name": "overdraftProtectionPatchV100",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "OK.",
-              "type": "root.OverdraftProtection",
+              "type": "root.overdraftProtectionSettingsV100",
             },
           },
         },
@@ -761,18 +761,18 @@ The default response lists only recent transactions. Normally, this is transacti
                 "subtype": {
                   "allow-multiple": true,
                   "docs": "Filter transactions to only those whose \`subtype\` is in this pipe-separated list.",
-                  "type": "optional<root.TransactionSubType>",
+                  "type": "optional<root.transactionSubtypeV100>",
                 },
                 "type": {
                   "allow-multiple": true,
                   "docs": "Filter transactions to only those whose \`type\` is in this pipe-separated list.",
-                  "type": "optional<root.TransactionType>",
+                  "type": "optional<root.transactionTypeV200>",
                 },
               },
             },
             "response": {
               "docs": "OK.",
-              "type": "root.Transactions",
+              "type": "root.transactionCollectionV211",
             },
           },
         },
@@ -803,13 +803,13 @@ Note: This operation requires an identity challenge if the financial institution
             "request": {
               "body": {
                 "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
+                  "root.abstractBodyV020",
+                  "root.transferFieldsV301",
                 ],
                 "properties": {
                   "schedule": {
                     "docs": "When the transfer should occur and any recurrence.",
-                    "type": "root.TransferSchedule",
+                    "type": "root.transferScheduleV200",
                   },
                 },
               },
@@ -820,12 +820,12 @@ Note: This operation requires an identity challenge if the financial institution
                   "type": "optional<root.challengeToken>",
                 },
               },
-              "name": "NewTransfer",
+              "name": "newTransferV301",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Created.",
-              "type": "root.Transfer",
+              "type": "root.transferV400",
             },
           },
           "deleteTransfer": {
@@ -877,7 +877,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "response": {
               "docs": "OK.",
-              "type": "root.Transfer",
+              "type": "root.transferV400",
             },
           },
           "listTransfers": {
@@ -923,7 +923,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "response": {
               "docs": "OK.",
-              "type": "root.Transfers",
+              "type": "root.transferCollectionV400",
             },
           },
           "patchTransfer": {
@@ -950,13 +950,13 @@ Note: This operation requires an identity challenge if the financial institution
             "request": {
               "body": {
                 "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
+                  "root.abstractBodyV020",
+                  "root.transferFieldsV301",
                 ],
                 "properties": {
                   "schedule": {
                     "docs": "When the transfer should occur and any recurrence.",
-                    "type": "optional<root.TransferSchedule>",
+                    "type": "optional<root.transferScheduleV200>",
                   },
                 },
               },
@@ -967,12 +967,12 @@ Note: This operation requires an identity challenge if the financial institution
                   "type": "optional<root.challengeToken>",
                 },
               },
-              "name": "TransferPatch",
+              "name": "transferPatchRequestV310",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "OK.",
-              "type": "root.Transfer",
+              "type": "root.transferV400",
             },
           },
         },
@@ -983,56 +983,77 @@ Note: This operation requires an identity challenge if the financial institution
     "errors": {
       "BadRequestError": {
         "status-code": 400,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "ConflictError": {
         "status-code": 409,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "ForbiddenError": {
         "status-code": 403,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "NotFoundError": {
         "status-code": 404,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "ServiceUnavailableError": {
         "status-code": 503,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "TooManyRequestsError": {
         "status-code": 429,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "UnauthorizedError": {
         "status-code": 401,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "ProblemResponse",
+        "type": "problemResponseV030",
       },
     },
     "types": {
-      "AbstractBody": {
-        "docs": "An abstract schema used to define other request and response body model schemas.",
-        "properties": {},
-      },
-      "AbstractPagedBody": {
-        "docs": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
-        "extends": [
-          "AbstractBody",
-          "AbstractPagedBodyFields",
-        ],
+      "AccountJointOwners": {
+        "docs": undefined,
         "properties": {
-          "start": {
-            "docs": "The opaque cursor that specifies the starting location of this page of items.",
-            "type": "optional<string>",
+          "items": {
+            "docs": "An array containing account joint owner items.",
+            "type": "list<accountJointOwnerV100>",
           },
         },
       },
-      "AbstractPagedBodyFields": {
+      "CheckNumberRange": {
+        "docs": "A numeric range for a checking account check number.",
+        "type": "positiveIntegerRange",
+      },
+      "EligibleOverdraftAccountItem": {
+        "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
+        "type": "overdraftAccountFieldsV100",
+      },
+      "OverdraftAccountItem": {
+        "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
+        "type": "overdraftAccountFieldsV100",
+      },
+      "ReadOnlyResourceId": {
+        "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
+        "type": "resourceId",
+      },
+      "TransactionCategories": {
+        "docs": undefined,
+        "properties": {
+          "items": {
+            "docs": "An array containing transaction category items.",
+            "type": "list<transactionCategoryV110>",
+          },
+        },
+      },
+      "abstractBodyV020": {
+        "docs": "An abstract schema used to define other request and response body model schemas.",
+        "properties": {},
+      },
+      "abstractPagedBodyFieldsV110": {
         "docs": "Common properties of collection page responses.",
         "properties": {
           "limit": {
@@ -1045,24 +1066,20 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
       },
-      "Account": {
-        "docs": "An internal customer account.",
+      "abstractPagedBodyV040": {
+        "docs": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
         "extends": [
-          "AbstractBody",
-          "AccountFields",
+          "abstractBodyV020",
+          "abstractPagedBodyFieldsV110",
         ],
         "properties": {
-          "allows": {
-            "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
-            "type": "FullAccountPermissions",
-          },
-          "electronicStatements": {
-            "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
-            "type": "boolean",
+          "start": {
+            "docs": "The opaque cursor that specifies the starting location of this page of items.",
+            "type": "optional<string>",
           },
         },
       },
-      "AccountAllowsFilter": {
+      "accountAllowsFilterV100": {
         "docs": "Values for the \`?allows=\` filter in [\`listAccounts\`](#op-listAccounts).
 
 <strong><code>accountAllowsFilter</code></strong> strings may have one of the following
@@ -1114,7 +1131,7 @@ Note: This operation requires an identity challenge if the financial institution
           "manageCards",
         ],
       },
-      "AccountBalance": {
+      "accountBalanceV100": {
         "docs": "The current balances of the given account.",
         "properties": {
           "available": {
@@ -1143,19 +1160,19 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
       },
-      "AccountBalances": {
+      "accountBalancesV110": {
         "docs": "An array of account balances by account ID.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "items": {
             "docs": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
-            "type": "list<AccountBalance>",
+            "type": "list<accountBalanceV100>",
           },
         },
       },
-      "AccountFields": {
+      "accountFieldsV101": {
         "docs": "Fragment schema use to build other account schemas.",
         "properties": {
           "id": {
@@ -1168,17 +1185,21 @@ Note: This operation requires an identity challenge if the financial institution
           },
           "location": {
             "docs": "Indicates where an account is held.",
-            "type": "AccountLocation",
+            "type": "accountLocationV100",
           },
           "maskedNumber": "maskedAccountNumber",
           "nickname": "optional<accountNickname>",
-          "product": "ProductReference",
+          "product": "productReferenceV100",
         },
       },
-      "AccountItem": {
+      "accountIds": {
+        "docs": "An array of account IDs.",
+        "type": "list<resourceId>",
+      },
+      "accountItemV201": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
-          "allows": "AccountPermissions",
+          "allows": "accountPermissionsV030",
           "id": {
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
@@ -1189,17 +1210,17 @@ Note: This operation requires an identity challenge if the financial institution
           },
           "location": {
             "docs": "Indicates where an account is held.",
-            "type": "optional<AccountLocation>",
+            "type": "optional<accountLocationV100>",
           },
           "maskedNumber": "optional<maskedAccountNumber>",
           "nickname": "optional<accountNickname>",
-          "product": "optional<ProductReference>",
+          "product": "optional<productReferenceV100>",
         },
       },
-      "AccountJointOwner": {
+      "accountJointOwnerV100": {
         "docs": "Representation of account joint owner resources.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "id": "ReadOnlyResourceId",
@@ -1209,16 +1230,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
       },
-      "AccountJointOwners": {
-        "docs": undefined,
-        "properties": {
-          "items": {
-            "docs": "An array containing account joint owner items.",
-            "type": "list<AccountJointOwner>",
-          },
-        },
-      },
-      "AccountLocation": {
+      "accountLocationV100": {
         "docs": "Indicates where an account is held:
   * \`internal\` accounts at the current financial institution;
   * \`external\` accounts at another financial institution;
@@ -1230,7 +1242,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "outside",
         ],
       },
-      "AccountPermissions": {
+      "accountNickname": {
+        "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
+        "type": "string",
+      },
+      "accountPermissionsV030": {
         "docs": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
         "properties": {
           "billPay": {
@@ -1263,11 +1279,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "Accounts": {
+      "accountRoutingNumber": {
+        "docs": "An account ABA routing and transit number.",
+        "type": "string",
+      },
+      "accountV201": {
+        "docs": "An internal customer account.",
+        "extends": [
+          "abstractBodyV020",
+          "accountFieldsV101",
+        ],
+        "properties": {
+          "allows": {
+            "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
+            "type": "fullAccountPermissionsV100",
+          },
+          "electronicStatements": {
+            "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
+            "type": "boolean",
+          },
+        },
+      },
+      "accountsV201": {
         "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
         "extends": [
-          "AbstractBody",
-          "AbstractPagedBodyFields",
+          "abstractBodyV020",
+          "abstractPagedBodyFieldsV110",
         ],
         "properties": {
           "count": {
@@ -1276,7 +1313,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
           "items": {
             "docs": "The array of items in this page of accounts. This array may be empty.",
-            "type": "list<AccountItem>",
+            "type": "list<accountItemV201>",
           },
           "nextPage_url": {
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -1292,7 +1329,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "AchAccountRisk": {
+      "achAccountRiskV100": {
         "docs": "Describes the risk level of a payment batch's settlement account.
 
 <strong><code>achAccountRisk</code></strong> strings may have one of the following
@@ -1329,7 +1366,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "sameDay",
         ],
       },
-      "AchSecCode": {
+      "achSecCodeV100": {
         "docs": "The ACH transfer type.
 
 <strong><code>achSecCode</code></strong> strings may have one of the following
@@ -1386,27 +1423,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "web",
         ],
       },
-      "Address": {
-        "docs": "A postal address that can hold a US address or an international (non-US) postal addresses.",
-        "extends": [
-          "AddressFields",
-        ],
-        "properties": {
-          "postalCode": {
-            "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
-            "type": "string",
-          },
-          "regionCode": {
-            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
-            "type": "optional<string>",
-          },
-          "regionName": {
-            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "AddressFields": {
+      "addressFieldsV110": {
         "docs": "Properties of a simple address, used to compose other addresses.",
         "properties": {
           "address1": {
@@ -1427,7 +1444,31 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "ApiProblem": {
+      "addressV110": {
+        "docs": "A postal address that can hold a US address or an international (non-US) postal addresses.",
+        "extends": [
+          "addressFieldsV110",
+        ],
+        "properties": {
+          "postalCode": {
+            "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
+            "type": "string",
+          },
+          "regionCode": {
+            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
+            "type": "optional<string>",
+          },
+          "regionName": {
+            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "amountRange": {
+        "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
+        "type": "string",
+      },
+      "apiProblemV110": {
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
           "attributes": {
@@ -1454,7 +1495,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
           "problems": {
             "docs": "Optional root-causes if there are multiple problems in the request or API call processing.",
-            "type": "optional<list<ApiProblem>>",
+            "type": "optional<list<apiProblemV110>>",
           },
           "status": {
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
@@ -1473,18 +1514,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "ChallengeFactor": {
-        "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
-        "properties": {
-          "labels": {
-            "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
-            "type": "optional<list<string>>",
-          },
-          "securityQuestions": "optional<ChallengeSecurityQuestions>",
-          "type": "ChallengeFactorType",
-        },
-      },
-      "ChallengeFactorType": {
+      "challengeFactorTypeV100": {
         "docs": "The name of challenge factor.
 
 <strong><code>challengeFactorType</code></strong> strings may have one of the following
@@ -1526,7 +1556,22 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "authenticatorToken",
         ],
       },
-      "ChallengeSecurityQuestion": {
+      "challengeFactorV100": {
+        "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
+        "properties": {
+          "labels": {
+            "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
+            "type": "optional<list<string>>",
+          },
+          "securityQuestions": "optional<challengeSecurityQuestionsV100>",
+          "type": "challengeFactorTypeV100",
+        },
+      },
+      "challengePromptId": {
+        "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
+        "type": "string",
+      },
+      "challengeSecurityQuestionV100": {
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
           "id": {
@@ -1539,30 +1584,51 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "ChallengeSecurityQuestions": {
+      "challengeSecurityQuestionsV100": {
         "docs": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
         "properties": {
           "questions": {
             "docs": "The array of security questions.",
-            "type": "list<ChallengeSecurityQuestion>",
+            "type": "list<challengeSecurityQuestionV100>",
           },
         },
       },
-      "CheckNumberRange": {
-        "docs": "A numeric range for a checking account check number.",
-        "type": "positiveIntegerRange",
+      "challengeToken": {
+        "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
+        "type": "string",
       },
-      "CutoffTime": {
+      "creditOrDebitValue": {
+        "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
+        "type": "string",
+      },
+      "cutoffTimeV100": {
         "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
         "properties": {
           "time": {
             "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "type": "string",
           },
-          "type": "CutoffTimeType",
+          "type": "cutoffTypeTypeV100",
         },
       },
-      "CutoffTimeType": {
+      "cutoffTimesV100": {
+        "docs": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
+        "extends": [
+          "abstractBodyV020",
+        ],
+        "properties": {
+          "items": {
+            "docs": "A list of cutoff times for a financial institution.",
+            "type": "list<cutoffTimeV100>",
+          },
+          "timeZoneId": {
+            "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
+The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
+            "type": "timeZoneId",
+          },
+        },
+      },
+      "cutoffTypeTypeV100": {
         "docs": "Indicates the type of a cutoff time.
 
 <strong><code>cutoffTimeType</code></strong> strings may have one of the following
@@ -1609,32 +1675,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "billPay",
         ],
       },
-      "CutoffTimes": {
-        "docs": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
-        "extends": [
-          "AbstractBody",
-        ],
-        "properties": {
-          "items": {
-            "docs": "A list of cutoff times for a financial institution.",
-            "type": "list<CutoffTime>",
-          },
-          "timeZoneId": {
-            "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
-The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
-            "type": "timeZoneId",
-          },
-        },
+      "dateRange": {
+        "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
+        "type": "string",
       },
-      "EligibleOverdraftAccountItem": {
-        "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
-        "type": "OverdraftAccountFields",
-      },
-      "EligibleOverdraftAccounts": {
+      "eligibleOverdraftAccountsV100": {
         "docs": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
         "extends": [
-          "AbstractBody",
-          "AbstractPagedBodyFields",
+          "abstractBodyV020",
+          "abstractPagedBodyFieldsV110",
         ],
         "properties": {
           "items": "unknown",
@@ -1652,7 +1701,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "ExternalAccountVerificationMethod": {
+      "externalAccountVerificationMethodV110": {
         "docs": "The method used to verify the customer has access to the external account.
 
 <strong><code>externalAccountVerificationMethod</code></strong> strings may have one of the following
@@ -1684,10 +1733,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "manual",
         ],
       },
-      "FullAccountPermissions": {
+      "fullAccountNumber": {
+        "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+        "type": "string",
+      },
+      "fullAccountPermissionsV100": {
         "docs": "Flags which indicate the permissions the current authorized user has on this account resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in [\`account\`](#schema-account) response from the [\`getAccount\`](#op-getAccount) operation. See [\`accountPermissions\`](#schema-accountPermissions) for the subset of permission in \`account.allows\` flags in the [\`listAccounts\`](#op-listAccounts) response.",
         "extends": [
-          "AccountPermissions",
+          "accountPermissionsV030",
         ],
         "properties": {
           "manageJointOwners": {
@@ -1700,10 +1753,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "IncompleteAccountBalances": {
+      "incompleteAccountBalanceV110": {
         "docs": "An array of account balances by account ID, some of which are incomplete. Use the values in \`incompleteAccounts\` and \`retryCount\` to retry the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "incompleteAccounts": {
@@ -1712,7 +1765,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "items": {
             "docs": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
-            "type": "list<AccountBalance>",
+            "type": "list<accountBalanceV100>",
           },
           "retryCount": {
             "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
@@ -1720,10 +1773,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "IncompleteTransactions": {
+      "incompleteTransactionsV100": {
         "docs": "Response when requesting transactions that are not yet available.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "retryCount": {
@@ -1732,7 +1785,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "InstitutionLocatorType": {
+      "institutionId": {
+        "docs": "The unique immutable identifier of a financial institution.",
+        "type": "string",
+      },
+      "institutionLocatorTypeV100": {
         "docs": "Indicates the type of the institution \`locator\`.
 
 <strong><code>institutionLocatorType</code></strong> strings may have one of the following
@@ -1764,10 +1821,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "ibanAccountNumber",
         ],
       },
-      "InstitutionLookupResult": {
+      "institutionLookupResultV101": {
         "docs": "Successful institution lookup result.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "found": {
@@ -1776,28 +1833,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "institution": {
             "docs": "The name and other information about the financial institution, if found.",
-            "type": "optional<SimpleInstitution>",
+            "type": "optional<simpleInstitutionV101>",
           },
           "intermediaryInstitutions": {
             "docs": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
-            "type": "optional<list<SimpleInstitution>>",
+            "type": "optional<list<simpleInstitutionV101>>",
           },
         },
       },
-      "JointOwnerInvitation": {
-        "docs": "A joint owner invitation.",
-        "extends": [
-          "AbstractBody",
-          "JointOwnerInvitationFields",
-        ],
-        "properties": {
-          "id": {
-            "docs": "The unique ID of the invitation.",
-            "type": "ReadOnlyResourceId",
-          },
-        },
-      },
-      "JointOwnerInvitationFields": {
+      "jointOwnerInvitationFieldsV100": {
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
@@ -1826,7 +1870,28 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "OverdraftAccountFields": {
+      "jointOwnerInvitationV100": {
+        "docs": "A joint owner invitation.",
+        "extends": [
+          "abstractBodyV020",
+          "jointOwnerInvitationFieldsV100",
+        ],
+        "properties": {
+          "id": {
+            "docs": "The unique ID of the invitation.",
+            "type": "ReadOnlyResourceId",
+          },
+        },
+      },
+      "maskedAccountNumber": {
+        "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
+        "type": "string",
+      },
+      "monetaryValue": {
+        "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
+        "type": "string",
+      },
+      "overdraftAccountFieldsV100": {
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
           "id": {
@@ -1840,15 +1905,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "maskedNumber": "optional<maskedAccountNumber>",
         },
       },
-      "OverdraftAccountItem": {
-        "docs": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
-        "type": "OverdraftAccountFields",
+      "overdraftProtectionFieldsV100": {
+        "docs": "Fields used to compose other overdraft protection schemas.",
+        "properties": {
+          "accounts": "optional<unknown>",
+        },
       },
-      "OverdraftProtection": {
+      "overdraftProtectionSettingsV100": {
         "docs": "Representation of the overdraft protection settings, consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
         "extends": [
-          "AbstractBody",
-          "OverdraftProtectionFields",
+          "abstractBodyV020",
+          "overdraftProtectionFieldsV100",
         ],
         "properties": {
           "maximumOverdraftAccounts": {
@@ -1857,21 +1924,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "OverdraftProtectionFields": {
-        "docs": "Fields used to compose other overdraft protection schemas.",
-        "properties": {
-          "accounts": "optional<unknown>",
-        },
+      "positiveIntegerRange": {
+        "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
+        "type": "string",
       },
-      "ProblemResponse": {
+      "problemResponseV030": {
         "docs": "API problem or error response, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "extends": [
-          "AbstractBody",
-          "ApiProblem",
+          "abstractBodyV020",
+          "apiProblemV110",
         ],
         "properties": {},
       },
-      "ProductReference": {
+      "productReferenceV100": {
         "docs": "A reference to a banking product.",
         "properties": {
           "code": {
@@ -1888,11 +1953,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "type": {
             "docs": "The type of account.",
-            "type": "ProductType",
+            "type": "productTypeV200",
           },
         },
       },
-      "ProductType": {
+      "productTypeV200": {
         "docs": "The type (or category) of bank account.
 
 <strong><code>productType</code></strong> strings may have one of the following
@@ -1939,11 +2004,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "creditCard",
         ],
       },
-      "ReadOnlyResourceId": {
-        "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
-        "type": "resourceId",
+      "readOnlyTimestamp": {
+        "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+        "type": "datetime",
       },
-      "RequiredIdentityChallenge": {
+      "requiredChallengeV100": {
         "docs": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
         "properties": {
           "challengeId": {
@@ -1952,7 +2017,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "factors": {
             "docs": "A list of challenge factors. The user must complete one of these challenge factors. The \`labels\` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an \`sms\` factor and a \`voice\` factor.",
-            "type": "list<ChallengeFactor>",
+            "type": "list<challengeFactorV100>",
           },
           "x-fern-sdk-method-name": {
             "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
@@ -1960,12 +2025,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "SimpleInstitution": {
+      "resourceId": {
+        "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
+        "type": "string",
+      },
+      "simpleInstitutionV101": {
         "docs": "A simple representation of a financial institution.",
         "properties": {
           "address": {
             "docs": "The financial institution's postal mailing address.",
-            "type": "Address",
+            "type": "addressV110",
           },
           "locator": {
             "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
@@ -1973,7 +2042,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "locatorType": {
             "docs": "Indicates the type of this institution's \`locator\`.",
-            "type": "InstitutionLocatorType",
+            "type": "institutionLocatorTypeV100",
           },
           "name": {
             "docs": "The financial institution's name.",
@@ -1981,7 +2050,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "TimestampFields": {
+      "timeZoneId": {
+        "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
+        "type": "string",
+      },
+      "timestampFieldsV100": {
         "docs": "Timestamps which describe when a resource was created or last updated.",
         "properties": {
           "createdAt": {
@@ -1994,16 +2067,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "TransactionCategories": {
-        "docs": undefined,
-        "properties": {
-          "items": {
-            "docs": "An array containing transaction category items.",
-            "type": "list<TransactionCategory>",
-          },
-        },
-      },
-      "TransactionCategorization": {
+      "transactionCategorizationV121": {
         "docs": "The transaction categorization.",
         "properties": {
           "id": {
@@ -2013,17 +2077,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "label": "transactionCategoryLabel",
         },
       },
-      "TransactionCategory": {
-        "docs": "Representation of transaction category resources.",
-        "extends": [
-          "AbstractBody",
-          "TransactionCategorization",
-        ],
-        "properties": {
-          "type": "TransactionCategoryType",
-        },
+      "transactionCategoryLabel": {
+        "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+        "type": "string",
       },
-      "TransactionCategoryType": {
+      "transactionCategoryV100": {
         "docs": "Classifies a transaction category as applying to either debit or credit transactions.
 
 <strong><code>transactionCategoryType</code></strong> strings may have one of the following
@@ -2050,7 +2108,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "debit",
         ],
       },
-      "TransactionCheck": {
+      "transactionCategoryV110": {
+        "docs": "Representation of transaction category resources.",
+        "extends": [
+          "abstractBodyV020",
+          "transactionCategorizationV121",
+        ],
+        "properties": {
+          "type": "transactionCategoryV100",
+        },
+      },
+      "transactionCheckV200": {
         "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
         "properties": {
           "imageBack_url": {
@@ -2067,7 +2135,23 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "TransactionFields": {
+      "transactionCollectionV211": {
+        "docs": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
+        "extends": [
+          "abstractPagedBodyV040",
+        ],
+        "properties": {
+          "count": {
+            "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
+            "type": "optional<integer>",
+          },
+          "items": {
+            "docs": "An array containing a page of transaction items.",
+            "type": "list<transactionItemV211>",
+          },
+        },
+      },
+      "transactionFieldsV211": {
         "docs": "Common fields of the transaction resource used to build other model schemas.",
         "properties": {
           "amount": {
@@ -2080,9 +2164,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "category": {
             "docs": "The transaction category, if assigned.",
-            "type": "optional<TransactionCategorization>",
+            "type": "optional<transactionCategorizationV121>",
           },
-          "check": "optional<TransactionCheck>",
+          "check": "optional<transactionCheckV200>",
           "createdOn": {
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -2099,7 +2183,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
           },
-          "merchant": "optional<TransactionMerchant>",
+          "merchant": "optional<transactionMerchantV100>",
           "occurredOn": {
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
@@ -2114,23 +2198,23 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "subtype": {
             "docs": "The transaction's kind of debit or credit.",
-            "type": "TransactionSubType",
+            "type": "transactionSubtypeV100",
           },
           "type": {
             "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
-            "type": "TransactionType",
+            "type": "transactionTypeV200",
           },
         },
       },
-      "TransactionItem": {
+      "transactionItemV211": {
         "docs": "Summary representation of a transaction resource in transactions collections.",
         "extends": [
-          "AbstractBody",
-          "TransactionFields",
+          "abstractBodyV020",
+          "transactionFieldsV211",
         ],
         "properties": {},
       },
-      "TransactionMerchant": {
+      "transactionMerchantV100": {
         "docs": "Describes the merchant associated with a transaction.",
         "properties": {
           "logo_url": {
@@ -2147,7 +2231,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "TransactionSubType": {
+      "transactionSubtypeV100": {
         "docs": "If the type is \`debit\` or \`credit\`, the subtype conveys further transaction type details.
 
 <strong><code>transactionSubType</code></strong> strings may have one of the following
@@ -2174,7 +2258,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "other",
         ],
       },
-      "TransactionType": {
+      "transactionTypeV200": {
         "docs": "Distinguishes between balance, debit, or credit transactions.
 
 <strong><code>transactionType</code></strong> strings may have one of the following
@@ -2206,31 +2290,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "credit",
         ],
       },
-      "Transactions": {
-        "docs": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
-        "extends": [
-          "AbstractPagedBody",
-        ],
-        "properties": {
-          "count": {
-            "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
-            "type": "optional<integer>",
-          },
-          "items": {
-            "docs": "An array containing a page of transaction items.",
-            "type": "list<TransactionItem>",
-          },
-        },
-      },
-      "Transfer": {
-        "docs": "Representation of a transfer resource.",
-        "extends": [
-          "AbstractBody",
-          "TransferItem",
-        ],
-        "properties": {},
-      },
-      "TransferAccountReference": {
+      "transferAccountReferenceV201": {
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {
           "id": {
@@ -2243,36 +2303,31 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "location": {
             "docs": "Indicates where an account is held.",
-            "type": "optional<AccountLocation>",
+            "type": "optional<accountLocationV100>",
           },
           "type": {
             "docs": "The product type of the account.",
-            "type": "optional<ProductType>",
+            "type": "optional<productTypeV200>",
           },
         },
       },
-      "TransferDateRestriction": {
-        "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
+      "transferCollectionV400": {
+        "docs": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
+        "extends": [
+          "abstractPagedBodyV040",
+        ],
         "properties": {
-          "creditOn": {
-            "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
-            "type": "optional<string>",
+          "count": {
+            "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
+            "type": "optional<integer>",
           },
-          "debitOn": {
-            "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
-            "type": "optional<string>",
-          },
-          "occursOn": {
-            "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
-            "type": "string",
-          },
-          "reason": {
-            "docs": "Indicates why this date is restricted.",
-            "type": "TransferDateRestrictionType",
+          "items": {
+            "docs": "An array containing a page of transfer items.",
+            "type": "list<transferItemV400>",
           },
         },
       },
-      "TransferDateRestrictionType": {
+      "transferDateRestrictionTypeV100": {
         "docs": "Indicates why a transfer date is restricted.
 
 <strong><code>transferDateRestrictionType</code></strong> strings may have one of the following
@@ -2319,11 +2374,32 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "other",
         ],
       },
-      "TransferDateRestrictions": {
+      "transferDateRestrictionV100": {
+        "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
+        "properties": {
+          "creditOn": {
+            "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
+            "type": "optional<string>",
+          },
+          "debitOn": {
+            "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
+            "type": "optional<string>",
+          },
+          "occursOn": {
+            "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
+            "type": "string",
+          },
+          "reason": {
+            "docs": "Indicates why this date is restricted.",
+            "type": "transferDateRestrictionTypeV100",
+          },
+        },
+      },
+      "transferDateRestrictionsV100": {
         "docs": "A list of the financial institution's transfer date restrictions. This is a list of weekdays and specific dates when the institution cannot perform the requested transfers.
 The response may include dates prior to requested the start date, as that is useful for populating a calendar that shows the current month and the last few days of the previous month.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "accuracyEndsOn": {
@@ -2332,11 +2408,11 @@ The response may include dates prior to requested the start date, as that is use
           },
           "restrictedDates": {
             "docs": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
-            "type": "optional<list<TransferDateRestriction>>",
+            "type": "optional<list<transferDateRestrictionV100>>",
           },
         },
       },
-      "TransferFields": {
+      "transferFieldsV301": {
         "docs": "Common fields of the transfer resource used to build other model schemas.",
         "properties": {
           "amount": {
@@ -2349,15 +2425,15 @@ The response may include dates prior to requested the start date, as that is use
           },
           "sourceAccount": {
             "docs": "The source account where the funds are withdrawn.",
-            "type": "optional<TransferAccountReference>",
+            "type": "optional<transferAccountReferenceV201>",
           },
           "targetAccount": {
             "docs": "The target account where the funds are deposited.",
-            "type": "optional<TransferAccountReference>",
+            "type": "optional<transferAccountReferenceV201>",
           },
         },
       },
-      "TransferFrequency": {
+      "transferFrequencyV100": {
         "docs": "For recurring transfers, the interval at which the money movement recurs.
 
 <strong><code>transferFrequency</code></strong> strings may have one of the following
@@ -2439,39 +2515,10 @@ The response may include dates prior to requested the start date, as that is use
           "yearly",
         ],
       },
-      "TransferItem": {
-        "docs": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
-        "extends": [
-          "TransferFields",
-          "TimestampFields",
-        ],
-        "properties": {
-          "id": {
-            "docs": "The unique identifier for this transfer resource. This is an immutable opaque string.",
-            "type": "ReadOnlyResourceId",
-          },
-          "processedAt": {
-            "docs": "The date/time the transfer was processed.",
-            "type": "optional<datetime>",
-          },
-          "schedule": {
-            "docs": "When the transfer should occur and any recurrence.",
-            "type": "TransferItemSchedule",
-          },
-          "state": {
-            "docs": "The state of this transfer resource.",
-            "type": "TransferState",
-          },
-          "updatedBy": {
-            "docs": "The full name of the banking customer who last updated the transfer.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "TransferItemSchedule": {
+      "transferItemScheduleV100": {
         "docs": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
         "extends": [
-          "TransferSchedule",
+          "transferScheduleV200",
         ],
         "properties": {
           "creditsOn": {
@@ -2484,7 +2531,36 @@ The response may include dates prior to requested the start date, as that is use
           },
         },
       },
-      "TransferRecurrenceType": {
+      "transferItemV400": {
+        "docs": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
+        "extends": [
+          "transferFieldsV301",
+          "timestampFieldsV100",
+        ],
+        "properties": {
+          "id": {
+            "docs": "The unique identifier for this transfer resource. This is an immutable opaque string.",
+            "type": "ReadOnlyResourceId",
+          },
+          "processedAt": {
+            "docs": "The date/time the transfer was processed.",
+            "type": "optional<datetime>",
+          },
+          "schedule": {
+            "docs": "When the transfer should occur and any recurrence.",
+            "type": "transferItemScheduleV100",
+          },
+          "state": {
+            "docs": "The state of this transfer resource.",
+            "type": "transferStateV200",
+          },
+          "updatedBy": {
+            "docs": "The full name of the banking customer who last updated the transfer.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "transferRecurrenceTypeV100": {
         "docs": "Describes whether the transfer amount in the transfer varies or is fixed when the transfer recurs. This is ignored if the transfer frequency is \`once\`.
 
 <strong><code>transferRecurrenceType</code></strong> strings may have one of the following
@@ -2511,32 +2587,52 @@ The response may include dates prior to requested the start date, as that is use
           "variable",
         ],
       },
-      "TransferSchedule": {
-        "docs": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
+      "transferRestrictionTransferTypeV100": {
+        "docs": "Indicates the type of transfer. This determines what business rules and adjustments to make to the date restrictions.
 
-For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
-        "properties": {
-          "amountLimit": {
-            "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
-            "type": "optional<monetaryValue>",
-          },
-          "count": {
-            "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
-            "type": "optional<integer>",
-          },
-          "endsOn": {
-            "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
-            "type": "optional<string>",
-          },
-          "frequency": "TransferFrequency",
-          "recurrenceType": "optional<TransferRecurrenceType>",
-          "scheduledOn": {
-            "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
-            "type": "optional<string>",
-          },
-        },
+<strong><code>transferTypeForDateRestrictions</code></strong> strings may have one of the following
+[enumerated values](https://dx.apiture.com/docs/api-documentation/concepts/label-groups#enumerations):
+
+<table>
+<tr>
+  <th>Value</th><th>Description</th>
+</tr>
+
+<tr>
+    <td><strong><code>internal</code></strong></td><td>Internal: <p>Internal account to internal account transfer</p>
+</td>
+    </tr>
+<tr>
+    <td><strong><code>ach</code></strong></td><td>ACH: <p>An ACH transfer that includes both debit and credit transfers</p>
+</td>
+    </tr>
+<tr>
+    <td><strong><code>achCredit</code></strong></td><td>ACH Credit: <p>An ACH transfer debiting an internal account and crediting an external account</p>
+</td>
+    </tr>
+<tr>
+    <td><strong><code>achDebit</code></strong></td><td>ACH Debit: <p>An ACH transfer debiting an external account and crediting an internal account</p>
+</td>
+    </tr>
+<tr>
+    <td><strong><code>domesticWireTransfer</code></strong></td><td>Domestic Wire Transfer</td>
+    </tr>
+<tr>
+    <td><strong><code>internationalWireTransfer</code></strong></td><td>International Wire Transfer</td>
+    </tr>
+</table>
+
+",
+        "enum": [
+          "internal",
+          "ach",
+          "achDebit",
+          "achCredit",
+          "domesticWireTransfer",
+          "internationalWireTransfer",
+        ],
       },
-      "TransferScheduleDirection": {
+      "transferScheduleDirectionV100": {
         "docs": "Provides the direction in which a transfer flows.
 
 <strong><code>transferScheduleDirection</code></strong> strings may have one of the following
@@ -2568,7 +2664,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "both",
         ],
       },
-      "TransferScheduleItem": {
+      "transferScheduleItemV100": {
         "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
         "properties": {
           "effectiveOn": {
@@ -2581,19 +2677,44 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           },
         },
       },
-      "TransferSchedules": {
+      "transferScheduleListV100": {
         "docs": "List of transfer methods. The items in the list are ordered in the \`items\` array.",
         "extends": [
-          "AbstractBody",
+          "abstractBodyV020",
         ],
         "properties": {
           "items": {
             "docs": "An array containing upcoming transfer schedule items.",
-            "type": "list<TransferScheduleItem>",
+            "type": "list<transferScheduleItemV100>",
           },
         },
       },
-      "TransferState": {
+      "transferScheduleV200": {
+        "docs": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
+
+For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
+        "properties": {
+          "amountLimit": {
+            "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
+            "type": "optional<monetaryValue>",
+          },
+          "count": {
+            "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
+            "type": "optional<integer>",
+          },
+          "endsOn": {
+            "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
+            "type": "optional<string>",
+          },
+          "frequency": "transferFrequencyV100",
+          "recurrenceType": "optional<transferRecurrenceTypeV100>",
+          "scheduledOn": {
+            "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "transferStateV200": {
         "docs": "The state of a transfer resource.
 
 <strong><code>transferState</code></strong> strings may have one of the following
@@ -2645,71 +2766,18 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "other",
         ],
       },
-      "TransferTypeForDateRestrictions": {
-        "docs": "Indicates the type of transfer. This determines what business rules and adjustments to make to the date restrictions.
-
-<strong><code>transferTypeForDateRestrictions</code></strong> strings may have one of the following
-[enumerated values](https://dx.apiture.com/docs/api-documentation/concepts/label-groups#enumerations):
-
-<table>
-<tr>
-  <th>Value</th><th>Description</th>
-</tr>
-
-<tr>
-    <td><strong><code>internal</code></strong></td><td>Internal: <p>Internal account to internal account transfer</p>
-</td>
-    </tr>
-<tr>
-    <td><strong><code>ach</code></strong></td><td>ACH: <p>An ACH transfer that includes both debit and credit transfers</p>
-</td>
-    </tr>
-<tr>
-    <td><strong><code>achCredit</code></strong></td><td>ACH Credit: <p>An ACH transfer debiting an internal account and crediting an external account</p>
-</td>
-    </tr>
-<tr>
-    <td><strong><code>achDebit</code></strong></td><td>ACH Debit: <p>An ACH transfer debiting an external account and crediting an internal account</p>
-</td>
-    </tr>
-<tr>
-    <td><strong><code>domesticWireTransfer</code></strong></td><td>Domestic Wire Transfer</td>
-    </tr>
-<tr>
-    <td><strong><code>internationalWireTransfer</code></strong></td><td>International Wire Transfer</td>
-    </tr>
-</table>
-
-",
-        "enum": [
-          "internal",
-          "ach",
-          "achDebit",
-          "achCredit",
-          "domesticWireTransfer",
-          "internationalWireTransfer",
-        ],
-      },
-      "Transfers": {
-        "docs": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
+      "transferV400": {
+        "docs": "Representation of a transfer resource.",
         "extends": [
-          "AbstractPagedBody",
+          "abstractBodyV020",
+          "transferItemV400",
         ],
-        "properties": {
-          "count": {
-            "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
-            "type": "optional<integer>",
-          },
-          "items": {
-            "docs": "An array containing a page of transfer items.",
-            "type": "list<TransferItem>",
-          },
-        },
+        "properties": {},
       },
-      "WireTransferInstitution": {
+      "wireTransferInstitutionV100": {
         "docs": "A representation of a financial institution used for wire transfers.",
         "extends": [
-          "SimpleInstitution",
+          "simpleInstitutionV101",
         ],
         "properties": {
           "localClearingCode": {
@@ -2717,74 +2785,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "type": "optional<string>",
           },
         },
-      },
-      "accountIds": {
-        "docs": "An array of account IDs.",
-        "type": "list<resourceId>",
-      },
-      "accountNickname": {
-        "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
-        "type": "string",
-      },
-      "accountRoutingNumber": {
-        "docs": "An account ABA routing and transit number.",
-        "type": "string",
-      },
-      "amountRange": {
-        "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
-        "type": "string",
-      },
-      "challengePromptId": {
-        "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
-        "type": "string",
-      },
-      "challengeToken": {
-        "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
-        "type": "string",
-      },
-      "creditOrDebitValue": {
-        "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
-        "type": "string",
-      },
-      "dateRange": {
-        "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
-        "type": "string",
-      },
-      "fullAccountNumber": {
-        "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
-        "type": "string",
-      },
-      "institutionId": {
-        "docs": "The unique immutable identifier of a financial institution.",
-        "type": "string",
-      },
-      "maskedAccountNumber": {
-        "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
-        "type": "string",
-      },
-      "monetaryValue": {
-        "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
-        "type": "string",
-      },
-      "positiveIntegerRange": {
-        "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
-        "type": "string",
-      },
-      "readOnlyTimestamp": {
-        "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
-        "type": "datetime",
-      },
-      "resourceId": {
-        "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
-        "type": "string",
-      },
-      "timeZoneId": {
-        "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
-        "type": "string",
-      },
-      "transactionCategoryLabel": {
-        "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
-        "type": "string",
       },
     },
   },

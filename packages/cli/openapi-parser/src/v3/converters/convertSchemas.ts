@@ -1,6 +1,6 @@
 import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
-import { isEqual } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../extensions/extensions";
@@ -69,7 +69,9 @@ export function convertSchemaObject(
     breadcrumbs: string[],
     propertiesToExclude: Set<string> = new Set()
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const nameOverride =
+        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
+        (schema.title != null ? camelCase(schema.title) : undefined);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;

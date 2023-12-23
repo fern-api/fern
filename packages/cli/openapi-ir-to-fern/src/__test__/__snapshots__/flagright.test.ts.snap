@@ -69,7 +69,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           },
           "response": {
             "docs": "OK",
-            "type": "TransactionWithRulesResult",
+            "type": "transactionWithRulesResult",
           },
         },
         "get-consumer-user": {
@@ -94,7 +94,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           },
           "response": {
             "docs": "OK",
-            "type": "User",
+            "type": "user",
           },
         },
         "post-business-user": {
@@ -178,7 +178,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Timestamp of the event",
                   "type": "double",
                 },
-                "updatedBusinessUserAttributes": "optional<BusinessOptional>",
+                "updatedBusinessUserAttributes": "optional<businessOptional>",
                 "userId": {
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
@@ -186,12 +186,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
             },
             "headers": undefined,
-            "name": "BusinessUserEvent",
+            "name": "businessUserEvent",
             "query-parameters": undefined,
           },
           "response": {
             "docs": "Created",
-            "type": "BusinessWithRulesResult",
+            "type": "businessWithRulesResult",
           },
         },
         "post-consumer-transaction": {
@@ -268,7 +268,7 @@ Each consumer User entity needs three mandatory fields:
           "method": "POST",
           "path": "/consumer/users",
           "request": {
-            "body": "User",
+            "body": "user",
           },
           "response": {
             "docs": "Created",
@@ -317,7 +317,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Unique event ID",
                   "type": "optional<string>",
                 },
-                "metaData": "optional<DeviceData>",
+                "metaData": "optional<deviceData>",
                 "reason": {
                   "docs": "Reason for the event or a state change",
                   "type": "optional<string>",
@@ -330,8 +330,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                 },
-                "transactionState": "TransactionState",
-                "updatedTransactionAttributes": "optional<TransactionUpdatable>",
+                "transactionState": "transactionState",
+                "updatedTransactionAttributes": "optional<transactionUpdatable>",
               },
             },
             "headers": undefined,
@@ -340,7 +340,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "response": {
             "docs": "Created",
-            "type": "TransactionEventMonitoringResult",
+            "type": "",
           },
         },
         "post-user-event": {
@@ -392,7 +392,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Timestamp of the event",
                   "type": "double",
                 },
-                "updatedConsumerUserAttributes": "optional<UserOptional>",
+                "updatedConsumerUserAttributes": "optional<userOptional>",
                 "userId": {
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
@@ -400,238 +400,50 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
             },
             "headers": undefined,
-            "name": "ConsumerUserEvent",
+            "name": "consumerUserEvent",
             "query-parameters": undefined,
           },
           "response": {
             "docs": "Created",
-            "type": "UserWithRulesResult",
+            "type": "userWithRulesResult",
           },
         },
       },
     },
     "types": {
-      "ACHPaymentMethod": "literal<"ACH">",
-      "AchDetails": {
-        "docs": "Model for ACH payment method",
-        "properties": {
-          "accountNumber": {
-            "docs": "Bank account number of the individual",
-            "type": "optional<string>",
-          },
-          "bankAddress": "optional<Address>",
-          "bankName": {
-            "docs": "Name of the bank",
-            "type": "optional<string>",
-          },
-          "beneficiaryName": {
-            "docs": "Beneficiary name of the account",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Name of the account holder",
-            "type": "optional<string>",
-          },
-          "routingNumber": {
-            "docs": "Routing number of the bank",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "AcquisitionChannel": {
-        "docs": "Model for User acquisition channel",
-        "enum": [
-          "ORGANIC",
-          "PAID",
-          "REFERRAL",
-          "OFFLINE",
-          "GATHERING",
-          "UNKNOWN",
-        ],
-      },
-      "Address": {
-        "docs": "Model for standardized address",
-        "properties": {
-          "addressLines": {
-            "docs": "Address lines of the user's residence address",
-            "type": "list<unknown>",
-          },
-          "city": {
-            "docs": "City of the user's residence address",
-            "type": "string",
-          },
-          "country": {
-            "docs": "User's country of residence",
-            "type": "string",
-          },
-          "postcode": {
-            "docs": "Post code of the user's residence address",
-            "type": "string",
-          },
-          "state": {
-            "docs": "State of the user's residence address",
-            "type": "optional<string>",
-          },
-          "tags": {
-            "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
-          },
-        },
-      },
-      "AlertClosedDetails": {
+      "": {
         "docs": undefined,
+        "extends": [
+          "rulesResults",
+        ],
         "properties": {
-          "alertId": "optional<string>",
-          "comment": "optional<string>",
-          "reasonDescriptionForOther": "optional<list<string>>",
-          "reasons": "optional<list<string>>",
-          "ruleDescription": "optional<string>",
-          "ruleId": "optional<string>",
-          "ruleInstanceId": "optional<string>",
-          "ruleName": "optional<string>",
-          "status": "optional<string>",
-          "transactionIds": "optional<list<string>>",
-          "userId": "optional<string>",
+          "eventId": "string",
+          "transaction": "Transaction",
         },
       },
-      "Amount": {
-        "docs": "Model for amount",
-        "properties": {
-          "amountCurrency": "CurrencyCode",
-          "amountValue": {
-            "docs": "Numerical value of the transaction",
-            "type": "double",
-          },
-        },
-      },
+      "ACHPaymentMethod": "literal<"ACH">",
       "Business": {
         "docs": undefined,
         "extends": [
-          "BusinessBase",
-          "BusinessOptional",
+          "businessBase",
+          "businessOptional",
         ],
         "properties": {},
-      },
-      "BusinessBase": {
-        "docs": "Model for a business user base fields",
-        "properties": {
-          "createdTimestamp": {
-            "docs": "Timestamp when the user was created",
-            "type": "double",
-          },
-          "userId": {
-            "docs": "Unique user ID for the user",
-            "type": "string",
-          },
-        },
-      },
-      "BusinessEntityLink": {
-        "docs": undefined,
-        "properties": {
-          "childUserIds": "optional<list<string>>",
-          "parentUserId": "optional<string>",
-        },
-      },
-      "BusinessOptional": {
-        "docs": "Model for a business user - optional fields",
-        "properties": {
-          "acquisitionChannel": "optional<AcquisitionChannel>",
-          "allowedPaymentMethods": "optional<list<PaymentMethod>>",
-          "directors": {
-            "docs": "Director(s) of the company. Must be at least one",
-            "type": "optional<list<Person>>",
-          },
-          "kycStatusDetails": "optional<KycStatusDetails>",
-          "legalEntity": "optional<LegalEntity>",
-          "linkedEntities": "optional<BusinessEntityLink>",
-          "mccDetails": "optional<MccDetails>",
-          "riskLevel": "optional<RiskLevel>",
-          "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
-          "shareHolders": {
-            "docs": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
-            "type": "optional<list<Person>>",
-          },
-          "tags": {
-            "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
-          },
-          "transactionLimits": "optional<TransactionLimits>",
-          "userStateDetails": "optional<UserStateDetails>",
-        },
       },
       "BusinessOptionalSavedPaymentDetailsItem": {
         "base-properties": {},
         "discriminant": "method",
         "docs": undefined,
         "union": {
-          "ACH": "AchDetails",
-          "CARD": "CardDetails",
-          "CHECK": "CheckDetails",
-          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
-          "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
-          "WALLET": "WalletDetails",
-        },
-      },
-      "BusinessUsersResponse": {
-        "docs": "Model for business user risk score response",
-        "properties": {
-          "userId": {
-            "docs": "user ID the risk score pertains to",
-            "type": "string",
-          },
-        },
-      },
-      "BusinessWithRulesResult": {
-        "docs": "Model for business payload with rules result",
-        "extends": [
-          "Business",
-        ],
-        "properties": {
-          "executedRules": "optional<list<ExecutedRulesResult>>",
-          "hitRules": "optional<list<HitRulesDetails>>",
-        },
-      },
-      "CardDetails": {
-        "docs": "Model for credit or debit card details",
-        "properties": {
-          "3dsDone": {
-            "docs": "Whether 3ds was successfully enforced for the transaction",
-            "name": "_3dsDone",
-            "type": "optional<boolean>",
-          },
-          "cardAuthenticated": {
-            "docs": "Authentication of Card",
-            "type": "optional<boolean>",
-          },
-          "cardBrand": {
-            "docs": "Brand of Card",
-            "type": "optional<CardDetailsCardBrand>",
-          },
-          "cardExpiry": "optional<CardExpiry>",
-          "cardFingerprint": {
-            "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
-            "type": "optional<string>",
-          },
-          "cardFunding": {
-            "docs": "Funding of Card",
-            "type": "optional<CardDetailsCardFunding>",
-          },
-          "cardIssuedCountry": "optional<CountryCode>",
-          "cardLast4Digits": {
-            "docs": "Last 4 digits of Card",
-            "type": "optional<string>",
-          },
-          "cardType": "optional<CardDetailsCardType>",
-          "merchantDetails": "optional<CardMerchantDetails>",
-          "nameOnCard": "optional<ConsumerName>",
-          "paymentChannel": "optional<string>",
-          "transactionReferenceField": {
-            "docs": "Reference for the transaction",
-            "type": "optional<string>",
-          },
+          "ACH": "achDetails",
+          "CARD": "cardDetails",
+          "CHECK": "checkDetails",
+          "GENERIC_BANK_ACCOUNT": "genericBankAccountDetails",
+          "IBAN": "ibanDetails",
+          "MPESA": "mpesaDetails",
+          "SWIFT": "swiftDetails",
+          "UPI": "upiDetails",
+          "WALLET": "walletDetails",
         },
       },
       "CardDetailsCardBrand": {
@@ -660,14 +472,431 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "PHYSICAL",
         ],
       },
-      "CardExpiry": {
+      "CardPaymentMethod": "literal<"CARD">",
+      "CaseManagementEventCaseStatus": {
+        "docs": "Status of a case. E.g. Open, Closed etc.",
+        "enum": [
+          "CLOSED",
+          "HIT",
+        ],
+      },
+      "CaseManagementEventCaseStatusReason": {
+        "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
+        "enum": [
+          "FALSE_POSITIVE",
+          "INVESTIGATION_COMPLETED",
+          "DOCUMENTS_COLLECTED",
+          "OTHER",
+        ],
+      },
+      "CheckDetailsDeliveryStatus": {
+        "enum": [
+          "COMPLETED",
+          "PENDING",
+          "SETTLED",
+          "CANCELED",
+          "REFUND",
+          "DECLINED",
+        ],
+      },
+      "CheckPaymentMethod": "literal<"CHECK">",
+      "CompanyGeneralDetailsUserSegment": {
+        "docs": "Segmentation of the business user",
+        "enum": [
+          "SOLE_PROPRIETORSHIP",
+          "SMB",
+          "SMALL",
+          "MEDIUM",
+          "LARGE",
+          "UNKNOWN",
+        ],
+      },
+      "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
+      "IBANPaymentMethod": "literal<"IBAN">",
+      "ListKeyMetadata": "map<string, unknown>",
+      "ListSubtype": {
+        "enum": [
+          "USER_ID",
+          "CARD_FINGERPRINT_NUMBER",
+          "IBAN_NUMBER",
+          "BANK_ACCOUNT_NUMBER",
+          "ACH_ACCOUNT_NUMBER",
+          "SWIFT_ACCOUNT_NUMBER",
+          "BIC",
+          "BANK_SWIFT_CODE",
+          "UPI_IDENTIFYING_NUMBER",
+          "IP_ADDRESS",
+          "STRING",
+        ],
+      },
+      "ListType": {
+        "enum": [
+          "WHITELIST",
+          "BLACKLIST",
+          "FLAGRIGHT_LIBRARY",
+        ],
+      },
+      "MpesaDetailsTransactionType": {
+        "docs": "Type of transaction",
+        "enum": [
+          "CustomerPayBillOnline",
+          "CustomerBuyGoodsOnline",
+          "SalaryPayment",
+          "BusinessPayment",
+          "PromotionPayment",
+        ],
+      },
+      "MpesaPaymentMethod": "literal<"MPESA">",
+      "PostBusinessUserResponse": {
+        "docs": undefined,
+        "extends": [
+          "rulesResults",
+        ],
+        "properties": {
+          "message": "optional<string>",
+          "userId": {
+            "docs": "user ID the risk score pertains to",
+            "type": "string",
+          },
+        },
+      },
+      "PostConsumerTransactionResponse": {
+        "docs": undefined,
+        "extends": [
+          "TransactionMonitoringResult",
+        ],
+        "properties": {
+          "message": "optional<string>",
+        },
+      },
+      "PostConsumerUserResponse": {
+        "docs": undefined,
+        "extends": [
+          "rulesResults",
+        ],
+        "properties": {
+          "message": "optional<string>",
+          "userId": {
+            "docs": "user ID the risk score pertains to",
+            "type": "string",
+          },
+        },
+      },
+      "RuleHitMeta": {
+        "docs": "Details of rule execution, for internal purposes only",
+        "properties": {
+          "falsePositiveDetails": "optional<falsePositiveDetails>",
+          "hitDirections": "optional<list<ruleHitDirection>>",
+          "sanctionsDetails": "optional<list<sanctionsDetails>>",
+        },
+      },
+      "SWIFTPaymentMethod": "literal<"SWIFT">",
+      "Thing": {
+        "docs": undefined,
+        "properties": {
+          "publishedAt": "optional<string>",
+        },
+      },
+      "Transaction": {
+        "docs": undefined,
+        "extends": [
+          "transactionBase",
+          "transactionUpdatable",
+        ],
+        "properties": {},
+      },
+      "TransactionLimitsPaymentMethodLimits": {
+        "docs": undefined,
+        "properties": {
+          "ACH": "optional<transactionLimit>",
+          "CARD": "optional<transactionLimit>",
+          "CHECK": "optional<transactionLimit>",
+          "GENERIC_BANK_ACCOUNT": "optional<transactionLimit>",
+          "IBAN": "optional<transactionLimit>",
+          "MPESA": "optional<transactionLimit>",
+          "SWIFT": "optional<transactionLimit>",
+          "UPI": "optional<transactionLimit>",
+          "WALLET": "optional<transactionLimit>",
+        },
+      },
+      "TransactionMonitoringResult": {
+        "docs": undefined,
+        "extends": [
+          "rulesResults",
+        ],
+        "properties": {
+          "transactionId": {
+            "docs": "Transaction ID that the results pertain to",
+            "type": "string",
+          },
+        },
+      },
+      "TransactionUpdatableDestinationPaymentDetails": {
+        "base-properties": {},
+        "discriminant": "method",
+        "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "union": {
+          "ACH": "achDetails",
+          "CARD": "cardDetails",
+          "CHECK": "checkDetails",
+          "GENERIC_BANK_ACCOUNT": "genericBankAccountDetails",
+          "IBAN": "ibanDetails",
+          "MPESA": "mpesaDetails",
+          "SWIFT": "swiftDetails",
+          "UPI": "upiDetails",
+          "WALLET": "walletDetails",
+        },
+      },
+      "TransactionUpdatableOriginPaymentDetails": {
+        "base-properties": {},
+        "discriminant": "method",
+        "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "union": {
+          "ACH": "achDetails",
+          "CARD": "cardDetails",
+          "CHECK": "checkDetails",
+          "GENERIC_BANK_ACCOUNT": "genericBankAccountDetails",
+          "IBAN": "ibanDetails",
+          "MPESA": "mpesaDetails",
+          "SWIFT": "swiftDetails",
+          "UPI": "upiDetails",
+          "WALLET": "walletDetails",
+        },
+      },
+      "UPIPaymentMethod": "literal<"UPI">",
+      "UserDetailsGender": {
+        "docs": "Gender of the individual - Male, Female or Non-Binary",
+        "enum": [
+          "M",
+          "F",
+          "NB",
+        ],
+      },
+      "UserMonitoringResult": {
+        "docs": undefined,
+        "extends": [
+          "rulesResults",
+        ],
+        "properties": {
+          "userId": {
+            "docs": "User ID that the results pertain to",
+            "type": "string",
+          },
+        },
+      },
+      "UserOptionalUserSegment": {
+        "enum": [
+          "RETAIL",
+          "PROFESSIONAL",
+        ],
+      },
+      "WalletPaymentMethod": "literal<"WALLET">",
+      "achDetails": {
+        "docs": "Model for ACH payment method",
+        "properties": {
+          "accountNumber": {
+            "docs": "Bank account number of the individual",
+            "type": "optional<string>",
+          },
+          "bankAddress": "optional<address>",
+          "bankName": {
+            "docs": "Name of the bank",
+            "type": "optional<string>",
+          },
+          "beneficiaryName": {
+            "docs": "Beneficiary name of the account",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "Name of the account holder",
+            "type": "optional<string>",
+          },
+          "routingNumber": {
+            "docs": "Routing number of the bank",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "acquisitionChannel": {
+        "docs": "Model for User acquisition channel",
+        "enum": [
+          "ORGANIC",
+          "PAID",
+          "REFERRAL",
+          "OFFLINE",
+          "GATHERING",
+          "UNKNOWN",
+        ],
+      },
+      "address": {
+        "docs": "Model for standardized address",
+        "properties": {
+          "addressLines": {
+            "docs": "Address lines of the user's residence address",
+            "type": "list<unknown>",
+          },
+          "city": {
+            "docs": "City of the user's residence address",
+            "type": "string",
+          },
+          "country": {
+            "docs": "User's country of residence",
+            "type": "string",
+          },
+          "postcode": {
+            "docs": "Post code of the user's residence address",
+            "type": "string",
+          },
+          "state": {
+            "docs": "State of the user's residence address",
+            "type": "optional<string>",
+          },
+          "tags": {
+            "docs": "Additional information that can be added via tags",
+            "type": "optional<list<tag>>",
+          },
+        },
+      },
+      "alertClosedDetails": {
+        "docs": undefined,
+        "properties": {
+          "alertId": "optional<string>",
+          "comment": "optional<string>",
+          "reasonDescriptionForOther": "optional<list<string>>",
+          "reasons": "optional<list<string>>",
+          "ruleDescription": "optional<string>",
+          "ruleId": "optional<string>",
+          "ruleInstanceId": "optional<string>",
+          "ruleName": "optional<string>",
+          "status": "optional<string>",
+          "transactionIds": "optional<list<string>>",
+          "userId": "optional<string>",
+        },
+      },
+      "amount": {
+        "docs": "Model for amount",
+        "properties": {
+          "amountCurrency": "currencyCode",
+          "amountValue": {
+            "docs": "Numerical value of the transaction",
+            "type": "double",
+          },
+        },
+      },
+      "businessBase": {
+        "docs": "Model for a business user base fields",
+        "properties": {
+          "createdTimestamp": {
+            "docs": "Timestamp when the user was created",
+            "type": "double",
+          },
+          "userId": {
+            "docs": "Unique user ID for the user",
+            "type": "string",
+          },
+        },
+      },
+      "businessEntityLink": {
+        "docs": undefined,
+        "properties": {
+          "childUserIds": "optional<list<string>>",
+          "parentUserId": "optional<string>",
+        },
+      },
+      "businessOptional": {
+        "docs": "Model for a business user - optional fields",
+        "properties": {
+          "acquisitionChannel": "optional<acquisitionChannel>",
+          "allowedPaymentMethods": "optional<list<paymentMethod>>",
+          "directors": {
+            "docs": "Director(s) of the company. Must be at least one",
+            "type": "optional<list<person>>",
+          },
+          "kycStatusDetails": "optional<kycStatusDetails>",
+          "legalEntity": "optional<legalEntity>",
+          "linkedEntities": "optional<businessEntityLink>",
+          "mccDetails": "optional<mccDetails>",
+          "riskLevel": "optional<riskLevel>",
+          "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
+          "shareHolders": {
+            "docs": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
+            "type": "optional<list<person>>",
+          },
+          "tags": {
+            "docs": "Additional information that can be added via tags",
+            "type": "optional<list<tag>>",
+          },
+          "transactionLimits": "optional<transactionLimits>",
+          "userStateDetails": "optional<userStateDetails>",
+        },
+      },
+      "businessUsersResponse": {
+        "docs": "Model for business user risk score response",
+        "properties": {
+          "userId": {
+            "docs": "user ID the risk score pertains to",
+            "type": "string",
+          },
+        },
+      },
+      "businessWithRulesResult": {
+        "docs": "Model for business payload with rules result",
+        "extends": [
+          "Business",
+        ],
+        "properties": {
+          "executedRules": "optional<list<executedRulesResult>>",
+          "hitRules": "optional<list<hitRulesDetails>>",
+        },
+      },
+      "cardDetails": {
+        "docs": "Model for credit or debit card details",
+        "properties": {
+          "3dsDone": {
+            "docs": "Whether 3ds was successfully enforced for the transaction",
+            "name": "_3dsDone",
+            "type": "optional<boolean>",
+          },
+          "cardAuthenticated": {
+            "docs": "Authentication of Card",
+            "type": "optional<boolean>",
+          },
+          "cardBrand": {
+            "docs": "Brand of Card",
+            "type": "optional<CardDetailsCardBrand>",
+          },
+          "cardExpiry": "optional<cardExpiry>",
+          "cardFingerprint": {
+            "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
+            "type": "optional<string>",
+          },
+          "cardFunding": {
+            "docs": "Funding of Card",
+            "type": "optional<CardDetailsCardFunding>",
+          },
+          "cardIssuedCountry": "optional<countryCode>",
+          "cardLast4Digits": {
+            "docs": "Last 4 digits of Card",
+            "type": "optional<string>",
+          },
+          "cardType": "optional<CardDetailsCardType>",
+          "merchantDetails": "optional<cardMerchantDetails>",
+          "nameOnCard": "optional<consumerName>",
+          "paymentChannel": "optional<string>",
+          "transactionReferenceField": {
+            "docs": "Reference for the transaction",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "cardExpiry": {
         "docs": undefined,
         "properties": {
           "month": "optional<double>",
           "year": "optional<double>",
         },
       },
-      "CardMerchantDetails": {
+      "cardMerchantDetails": {
         "docs": undefined,
         "properties": {
           "MCC": "optional<string>",
@@ -679,8 +908,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "state": "optional<string>",
         },
       },
-      "CardPaymentMethod": "literal<"CARD">",
-      "CaseClosedDetails": {
+      "caseClosedDetails": {
         "docs": undefined,
         "properties": {
           "caseId": "optional<string>",
@@ -692,7 +920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "userId": "optional<string>",
         },
       },
-      "CaseManagementEvent": {
+      "caseManagementEvent": {
         "docs": "Model for case management events",
         "properties": {
           "caseStatus": {
@@ -725,23 +953,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "CaseManagementEventCaseStatus": {
-        "docs": "Status of a case. E.g. Open, Closed etc.",
-        "enum": [
-          "CLOSED",
-          "HIT",
-        ],
-      },
-      "CaseManagementEventCaseStatusReason": {
-        "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
-        "enum": [
-          "FALSE_POSITIVE",
-          "INVESTIGATION_COMPLETED",
-          "DOCUMENTS_COLLECTED",
-          "OTHER",
-        ],
-      },
-      "CheckDetails": {
+      "checkDetails": {
         "docs": undefined,
         "properties": {
           "checkIdentifier": "optional<string>",
@@ -749,32 +961,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "deliveryStatus": "optional<CheckDetailsDeliveryStatus>",
           "etaTimestamp": "optional<double>",
           "name": "optional<string>",
-          "shippingAddress": "optional<Address>",
+          "shippingAddress": "optional<address>",
         },
       },
-      "CheckDetailsDeliveryStatus": {
-        "enum": [
-          "COMPLETED",
-          "PENDING",
-          "SETTLED",
-          "CANCELED",
-          "REFUND",
-          "DECLINED",
-        ],
-      },
-      "CheckPaymentMethod": "literal<"CHECK">",
-      "CompanyFinancialDetails": {
+      "companyFinancialDetails": {
         "docs": "Model for business user company financial details",
         "properties": {
-          "expectedTransactionAmountPerMonth": "optional<Amount>",
-          "expectedTurnoverPerMonth": "optional<Amount>",
+          "expectedTransactionAmountPerMonth": "optional<amount>",
+          "expectedTurnoverPerMonth": "optional<amount>",
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
         },
       },
-      "CompanyGeneralDetails": {
+      "companyGeneralDetails": {
         "docs": "Model for business user company general details",
         "properties": {
           "businessIndustry": {
@@ -791,27 +992,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
-          "userRegistrationStatus": "optional<UserRegistrationStatus>",
+          "userRegistrationStatus": "optional<userRegistrationStatus>",
           "userSegment": {
             "docs": "Segmentation of the business user",
             "type": "optional<CompanyGeneralDetailsUserSegment>",
           },
         },
       },
-      "CompanyGeneralDetailsUserSegment": {
-        "docs": "Segmentation of the business user",
-        "enum": [
-          "SOLE_PROPRIETORSHIP",
-          "SMB",
-          "SMALL",
-          "MEDIUM",
-          "LARGE",
-          "UNKNOWN",
-        ],
-      },
-      "CompanyRegistrationDetails": {
+      "companyRegistrationDetails": {
         "docs": "Model for business user company registration details",
         "properties": {
           "dateOfRegistration": "optional<string>",
@@ -819,14 +1009,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Type of legal entity. Ex: Limited Liability",
             "type": "optional<string>",
           },
-          "registrationCountry": "CountryCode",
+          "registrationCountry": "countryCode",
           "registrationIdentifier": {
             "docs": "Commercial registry registration number for the company in its registration country",
             "type": "string",
           },
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
           "taxIdentifier": {
             "docs": "Tax ID number of the registered entity",
@@ -834,7 +1024,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ConsumerName": {
+      "consumerName": {
         "docs": "Model for a generic consumer name",
         "properties": {
           "firstName": {
@@ -851,7 +1041,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ConsumerUsersResponse": {
+      "consumerUsersResponse": {
         "docs": "Model for consumer user risk score response",
         "properties": {
           "userId": {
@@ -860,12 +1050,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ContactDetails": {
+      "contactDetails": {
         "docs": "Model for business user contact information details",
         "properties": {
           "addresses": {
             "docs": "Address(es) of the company",
-            "type": "optional<list<Address>>",
+            "type": "optional<list<address>>",
           },
           "contactNumbers": {
             "docs": "Phone numbers to contact a given business customer",
@@ -885,7 +1075,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "CountryCode": {
+      "countryCode": {
         "enum": [
           "AF",
           "AL",
@@ -1142,7 +1332,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         ],
       },
-      "CurrencyCode": {
+      "currencyCode": {
         "enum": [
           {
             "name": "OneInch",
@@ -1419,7 +1609,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ZWL",
         ],
       },
-      "Date": {
+      "date": {
         "docs": "Model for date",
         "properties": {
           "day": {
@@ -1436,7 +1626,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "DeviceData": {
+      "deviceData": {
         "docs": "Model for device data",
         "properties": {
           "appVersion": {
@@ -1485,12 +1675,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ExecutedRulesResult": {
+      "executedRulesResult": {
         "docs": "Model for list of executed rules",
         "properties": {
-          "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<RuleNature>",
-          "ruleAction": "RuleAction",
+          "labels": "optional<list<ruleLabels>>",
+          "nature": "optional<ruleNatureType>",
+          "ruleAction": "ruleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
@@ -1508,10 +1698,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "FailedRulesResult": {
+      "failedRulesResult": {
         "docs": "Model for list of rules failed execution. It means rules could not be run",
         "properties": {
-          "failureException": "RuleFailureException",
+          "failureException": "ruleFailureException",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
@@ -1526,15 +1716,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "FalsePositiveDetails": {
+      "falsePositiveDetails": {
         "docs": undefined,
         "properties": {
           "confidenceScore": "double",
           "isFalsePositive": "boolean",
         },
       },
-      "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
-      "GenericBankAccountDetails": {
+      "genericBankAccountDetails": {
         "docs": "Model for any generic bank account",
         "properties": {
           "accountNumber": {
@@ -1545,7 +1734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Bank account type. E.g. Checking, Savings etc.",
             "type": "optional<string>",
           },
-          "bankAddress": "optional<Address>",
+          "bankAddress": "optional<address>",
           "bankCode": {
             "docs": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
             "type": "optional<string>",
@@ -1565,12 +1754,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "HitRulesDetails": {
+      "hitRulesDetails": {
         "docs": "Model for list of hit rules",
         "properties": {
-          "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<RuleNature>",
-          "ruleAction": "RuleAction",
+          "labels": "optional<list<ruleLabels>>",
+          "nature": "optional<ruleNatureType>",
+          "ruleAction": "ruleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
@@ -1587,8 +1776,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "IBANPaymentMethod": "literal<"IBAN">",
-      "IbanDetails": {
+      "ibanDetails": {
         "docs": "Standardized model for Bank Details",
         "properties": {
           "BIC": {
@@ -1599,7 +1787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Account number of the user. Can be account number, IBAN number etc.",
             "type": "optional<string>",
           },
-          "bankAddress": "optional<Address>",
+          "bankAddress": "optional<address>",
           "bankBranchCode": {
             "docs": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
             "type": "optional<string>",
@@ -1608,16 +1796,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Name of the bank",
             "type": "optional<string>",
           },
-          "country": "optional<CountryCode>",
+          "country": "optional<countryCode>",
           "name": {
             "docs": "Name of the bank account holder",
             "type": "optional<string>",
           },
           "paymentChannel": "optional<string>",
-          "tags": "optional<Tag>",
+          "tags": "optional<tag>",
         },
       },
-      "KycStatus": {
+      "kycStatus": {
         "enum": [
           "SUCCESSFUL",
           "FAILED",
@@ -1626,21 +1814,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "MANUAL_REVIEW",
         ],
       },
-      "KycStatusDetails": {
+      "kycStatusDetails": {
         "docs": undefined,
         "properties": {
           "reason": "optional<string>",
-          "status": "optional<KycStatus>",
+          "status": "optional<kycStatus>",
         },
       },
-      "LegalDocument": {
+      "legalDocument": {
         "docs": "LegalDocument model generalizes User's identity document type (ex: Passport)",
         "properties": {
           "documentExpirationDate": {
             "docs": "User's identity document expiration date (UNIX timestamp in milliseconds)",
             "type": "optional<double>",
           },
-          "documentIssuedCountry": "CountryCode",
+          "documentIssuedCountry": "countryCode",
           "documentIssuedDate": {
             "docs": "User's identity document issuance date (UNIX timestamp in milliseconds)",
             "type": "optional<double>",
@@ -1653,67 +1841,66 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User's identity document type such as passport, national ID etc.",
             "type": "string",
           },
-          "nameOnDocument": "optional<ConsumerName>",
+          "nameOnDocument": "optional<consumerName>",
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
         },
       },
-      "LegalEntity": {
+      "legalEntity": {
         "docs": "Model for business user legal entity details",
         "properties": {
-          "companyFinancialDetails": "optional<CompanyFinancialDetails>",
-          "companyGeneralDetails": "CompanyGeneralDetails",
-          "companyRegistrationDetails": "optional<CompanyRegistrationDetails>",
-          "contactDetails": "optional<ContactDetails>",
+          "companyFinancialDetails": "optional<companyFinancialDetails>",
+          "companyGeneralDetails": "companyGeneralDetails",
+          "companyRegistrationDetails": "optional<companyRegistrationDetails>",
+          "contactDetails": "optional<contactDetails>",
           "reasonForAccountOpening": {
             "docs": "Reason for opening the account at financial institution",
             "type": "optional<list<string>>",
           },
         },
       },
-      "ListData": {
+      "listData": {
         "docs": "Payload of a list, new or existed",
         "properties": {
           "items": {
             "docs": "List items",
-            "type": "optional<list<ListItem>>",
+            "type": "optional<list<listItem>>",
           },
-          "metadata": "optional<ListMetadata>",
+          "metadata": "optional<listMetadata>",
         },
       },
-      "ListExisted": {
+      "listExisted": {
         "docs": "List with ID and header",
         "properties": {
-          "header": "ListHeader",
+          "header": "listHeader",
           "items": {
             "docs": "List items",
-            "type": "list<ListItem>",
+            "type": "list<listItem>",
           },
           "listId": "string",
         },
       },
-      "ListHeader": {
+      "listHeader": {
         "docs": undefined,
         "properties": {
           "createdTimestamp": "double",
           "listId": "string",
           "listType": "ListType",
-          "metadata": "optional<ListMetadata>",
+          "metadata": "optional<listMetadata>",
           "size": "double",
           "subtype": "ListSubtype",
         },
       },
-      "ListItem": {
+      "listItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
           "metadata": "optional<ListKeyMetadata>",
         },
       },
-      "ListKeyMetadata": "map<string, unknown>",
-      "ListMetadata": {
+      "listMetadata": {
         "docs": undefined,
         "properties": {
           "checksum": "optional<string>",
@@ -1728,29 +1915,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "status": "optional<boolean>",
         },
       },
-      "ListSubtype": {
-        "enum": [
-          "USER_ID",
-          "CARD_FINGERPRINT_NUMBER",
-          "IBAN_NUMBER",
-          "BANK_ACCOUNT_NUMBER",
-          "ACH_ACCOUNT_NUMBER",
-          "SWIFT_ACCOUNT_NUMBER",
-          "BIC",
-          "BANK_SWIFT_CODE",
-          "UPI_IDENTIFYING_NUMBER",
-          "IP_ADDRESS",
-          "STRING",
-        ],
-      },
-      "ListType": {
-        "enum": [
-          "WHITELIST",
-          "BLACKLIST",
-          "FLAGRIGHT_LIBRARY",
-        ],
-      },
-      "MccDetails": {
+      "mccDetails": {
         "docs": undefined,
         "properties": {
           "code": {
@@ -1763,7 +1928,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "MpesaDetails": {
+      "mpesaDetails": {
         "docs": "Model for Mpesa payment method",
         "properties": {
           "businessShortCode": {
@@ -1780,18 +1945,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "MpesaDetailsTransactionType": {
-        "docs": "Type of transaction",
-        "enum": [
-          "CustomerPayBillOnline",
-          "CustomerBuyGoodsOnline",
-          "SalaryPayment",
-          "BusinessPayment",
-          "PromotionPayment",
-        ],
-      },
-      "MpesaPaymentMethod": "literal<"MPESA">",
-      "PaymentMethod": {
+      "paymentMethod": {
         "enum": [
           "ACH",
           "CARD",
@@ -1804,65 +1958,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CHECK",
         ],
       },
-      "PepStatus": {
+      "pepStatus": {
         "docs": undefined,
         "properties": {
           "isPepHit": "boolean",
           "pepCountry": "optional<string>",
         },
       },
-      "Person": {
+      "person": {
         "docs": "Model for a generic individual - different from User model by not having userId field",
         "properties": {
-          "contactDetails": "optional<ContactDetails>",
-          "generalDetails": "UserDetails",
+          "contactDetails": "optional<contactDetails>",
+          "generalDetails": "userDetails",
           "legalDocuments": {
             "docs": "User's legal identity documents - See Document Model for details",
-            "type": "optional<list<LegalDocument>>",
+            "type": "optional<list<legalDocument>>",
           },
-          "pepStatus": "optional<list<PepStatus>>",
+          "pepStatus": "optional<list<pepStatus>>",
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
         },
       },
-      "PostBusinessUserResponse": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "message": "optional<string>",
-          "userId": {
-            "docs": "user ID the risk score pertains to",
-            "type": "string",
-          },
-        },
-      },
-      "PostConsumerTransactionResponse": {
-        "docs": undefined,
-        "extends": [
-          "TransactionMonitoringResult",
-        ],
-        "properties": {
-          "message": "optional<string>",
-        },
-      },
-      "PostConsumerUserResponse": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "message": "optional<string>",
-          "userId": {
-            "docs": "user ID the risk score pertains to",
-            "type": "string",
-          },
-        },
-      },
-      "RiskLevel": {
+      "riskLevel": {
         "enum": [
           "VERY_HIGH",
           "HIGH",
@@ -1871,7 +1990,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "VERY_LOW",
         ],
       },
-      "RiskScoringResult": {
+      "riskScoringResult": {
         "docs": "Model for results from Risk Scoring",
         "properties": {
           "customerRiskAssessment": {
@@ -1888,7 +2007,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "RuleAction": {
+      "ruleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "enum": [
           "ALLOW",
@@ -1897,7 +2016,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SUSPEND",
         ],
       },
-      "RuleFailureException": {
+      "ruleFailureException": {
         "docs": undefined,
         "properties": {
           "exceptionDescription": {
@@ -1910,21 +2029,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "RuleHitDirection": {
+      "ruleHitDirection": {
         "enum": [
           "ORIGIN",
           "DESTINATION",
         ],
       },
-      "RuleHitMeta": {
-        "docs": "Details of rule execution, for internal purposes only",
-        "properties": {
-          "falsePositiveDetails": "optional<FalsePositiveDetails>",
-          "hitDirections": "optional<list<RuleHitDirection>>",
-          "sanctionsDetails": "optional<list<SanctionsDetails>>",
-        },
-      },
-      "RuleLabels": {
+      "ruleLabels": {
         "enum": [
           "UNEXPECTED_BEHAVIOR",
           "ILLICIT_GAINS_CHECK",
@@ -1940,7 +2051,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SANCTIONS_PEP_ADVERSE_MEDIA",
         ],
       },
-      "RuleNature": {
+      "ruleNatureType": {
         "enum": [
           "AML",
           "FRAUD",
@@ -1948,29 +2059,28 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SCREENING",
         ],
       },
-      "RulesResults": {
+      "rulesResults": {
         "docs": undefined,
         "properties": {
           "executedRules": {
             "docs": "Unique transaction identifier",
-            "type": "list<ExecutedRulesResult>",
+            "type": "list<executedRulesResult>",
           },
           "hitRules": {
             "docs": "Unique transaction identifier",
-            "type": "list<HitRulesDetails>",
+            "type": "list<hitRulesDetails>",
           },
         },
       },
-      "SWIFTPaymentMethod": "literal<"SWIFT">",
-      "SanctionsDetails": {
+      "sanctionsDetails": {
         "docs": undefined,
         "properties": {
-          "entityType": "optional<SanctionsDetailsEntityType>",
+          "entityType": "optional<sanctionsDetailsEntityType>",
           "name": "string",
           "searchId": "string",
         },
       },
-      "SanctionsDetailsEntityType": {
+      "sanctionsDetailsEntityType": {
         "enum": [
           "CONSUMER_NAME",
           "LEGAL_NAME",
@@ -1982,7 +2092,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BANK_NAME",
         ],
       },
-      "SwiftDetails": {
+      "swiftDetails": {
         "docs": "Model for SWIFT payment method",
         "properties": {
           "accountNumber": {
@@ -1993,7 +2103,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Account type. E.g. Checking, Savings etc.",
             "type": "optional<string>",
           },
-          "bankAddress": "optional<Address>",
+          "bankAddress": "optional<address>",
           "bankName": {
             "docs": "Name of the bank",
             "type": "optional<string>",
@@ -2012,7 +2122,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "Tag": {
+      "tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
           "key": {
@@ -2025,41 +2135,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "Thing": {
-        "docs": undefined,
-        "properties": {
-          "publishedAt": "optional<string>",
-        },
-      },
-      "Transaction": {
-        "docs": undefined,
-        "extends": [
-          "TransactionBase",
-          "TransactionUpdatable",
-        ],
-        "properties": {},
-      },
-      "TransactionAmountDetails": {
+      "transactionAmountDetails": {
         "docs": "Model for transaction amount details",
         "properties": {
-          "country": "optional<CountryCode>",
+          "country": "optional<countryCode>",
           "transactionAmount": {
             "docs": "Amount of the transaction",
             "type": "double",
           },
-          "transactionCurrency": "CurrencyCode",
+          "transactionCurrency": "currencyCode",
         },
       },
-      "TransactionAmountLimit": {
+      "transactionAmountLimit": {
         "docs": undefined,
         "properties": {
-          "day": "optional<Amount>",
-          "month": "optional<Amount>",
-          "week": "optional<Amount>",
-          "year": "optional<Amount>",
+          "day": "optional<amount>",
+          "month": "optional<amount>",
+          "week": "optional<amount>",
+          "year": "optional<amount>",
         },
       },
-      "TransactionBase": {
+      "transactionBase": {
         "docs": "Model for transaction base Payload",
         "properties": {
           "destinationUserId": {
@@ -2078,10 +2174,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Unique transaction identifier",
             "type": "string",
           },
-          "type": "optional<TransactionType>",
+          "type": "optional<transactionType>",
         },
       },
-      "TransactionCountLimit": {
+      "transactionCountLimit": {
         "docs": undefined,
         "properties": {
           "day": "optional<double>",
@@ -2090,63 +2186,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "year": "optional<double>",
         },
       },
-      "TransactionEventMonitoringResult": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "eventId": "string",
-          "transaction": "Transaction",
-        },
-      },
-      "TransactionLimit": {
+      "transactionLimit": {
         "docs": undefined,
         "properties": {
-          "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
-          "transactionAmountLimit": "optional<TransactionAmountLimit>",
-          "transactionCountLimit": "optional<TransactionCountLimit>",
+          "averageTransactionAmountLimit": "optional<transactionAmountLimit>",
+          "transactionAmountLimit": "optional<transactionAmountLimit>",
+          "transactionCountLimit": "optional<transactionCountLimit>",
         },
       },
-      "TransactionLimits": {
+      "transactionLimits": {
         "docs": "Model for transaction limits for a given user",
         "properties": {
-          "maximumDailyTransactionLimit": "optional<Amount>",
-          "maximumMonthlyTransactionLimit": "optional<Amount>",
-          "maximumQuarterlyTransactionLimit": "optional<Amount>",
-          "maximumTransactionLimit": "optional<Amount>",
-          "maximumWeeklyTransactionLimit": "optional<Amount>",
-          "maximumYearlyTransactionLimit": "optional<Amount>",
+          "maximumDailyTransactionLimit": "optional<amount>",
+          "maximumMonthlyTransactionLimit": "optional<amount>",
+          "maximumQuarterlyTransactionLimit": "optional<amount>",
+          "maximumTransactionLimit": "optional<amount>",
+          "maximumWeeklyTransactionLimit": "optional<amount>",
+          "maximumYearlyTransactionLimit": "optional<amount>",
           "paymentMethodLimits": "optional<TransactionLimitsPaymentMethodLimits>",
         },
       },
-      "TransactionLimitsPaymentMethodLimits": {
-        "docs": undefined,
-        "properties": {
-          "ACH": "optional<TransactionLimit>",
-          "CARD": "optional<TransactionLimit>",
-          "CHECK": "optional<TransactionLimit>",
-          "GENERIC_BANK_ACCOUNT": "optional<TransactionLimit>",
-          "IBAN": "optional<TransactionLimit>",
-          "MPESA": "optional<TransactionLimit>",
-          "SWIFT": "optional<TransactionLimit>",
-          "UPI": "optional<TransactionLimit>",
-          "WALLET": "optional<TransactionLimit>",
-        },
-      },
-      "TransactionMonitoringResult": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "transactionId": {
-            "docs": "Transaction ID that the results pertain to",
-            "type": "string",
-          },
-        },
-      },
-      "TransactionState": {
+      "transactionState": {
         "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
         "enum": [
           "CREATED",
@@ -2159,7 +2219,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SUCCESSFUL",
         ],
       },
-      "TransactionType": {
+      "transactionType": {
         "enum": [
           "DEPOSIT",
           "TRANSFER",
@@ -2169,16 +2229,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "OTHER",
         ],
       },
-      "TransactionUpdatable": {
+      "transactionUpdatable": {
         "docs": "Model for transaction additional payload",
         "properties": {
-          "destinationAmountDetails": "optional<TransactionAmountDetails>",
+          "destinationAmountDetails": "optional<transactionAmountDetails>",
           "destinationPaymentDetails": {
             "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
             "type": "optional<TransactionUpdatableDestinationPaymentDetails>",
           },
-          "deviceData": "optional<DeviceData>",
-          "originAmountDetails": "optional<TransactionAmountDetails>",
+          "deviceData": "optional<deviceData>",
+          "originAmountDetails": "optional<transactionAmountDetails>",
           "originPaymentDetails": {
             "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
             "type": "optional<TransactionUpdatableOriginPaymentDetails>",
@@ -2201,55 +2261,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
-          "transactionState": "optional<TransactionState>",
+          "transactionState": "optional<transactionState>",
         },
       },
-      "TransactionUpdatableDestinationPaymentDetails": {
-        "base-properties": {},
-        "discriminant": "method",
-        "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
-        "union": {
-          "ACH": "AchDetails",
-          "CARD": "CardDetails",
-          "CHECK": "CheckDetails",
-          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
-          "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
-          "WALLET": "WalletDetails",
-        },
-      },
-      "TransactionUpdatableOriginPaymentDetails": {
-        "base-properties": {},
-        "discriminant": "method",
-        "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
-        "union": {
-          "ACH": "AchDetails",
-          "CARD": "CardDetails",
-          "CHECK": "CheckDetails",
-          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
-          "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
-          "WALLET": "WalletDetails",
-        },
-      },
-      "TransactionWithRulesResult": {
+      "transactionWithRulesResult": {
         "docs": "Model for transaction payload with rules result",
         "extends": [
           "Transaction",
         ],
         "properties": {
-          "executedRules": "list<ExecutedRulesResult>",
-          "hitRules": "list<HitRulesDetails>",
+          "executedRules": "list<executedRulesResult>",
+          "hitRules": "list<hitRulesDetails>",
         },
       },
-      "UPIPaymentMethod": "literal<"UPI">",
-      "UpiDetails": {
+      "upiDetails": {
         "docs": "Model for UPI payment method",
         "properties": {
           "bankProvider": {
@@ -2270,33 +2297,33 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "User": {
+      "user": {
         "docs": "Model for User details",
         "extends": [
-          "UserBase",
-          "UserOptional",
+          "userBase",
+          "userOptional",
         ],
         "properties": {},
       },
-      "UserBase": {
+      "userBase": {
         "docs": "Model for User details",
         "properties": {
           "createdTimestamp": {
             "docs": "Timestamp when userId is created",
             "type": "double",
           },
-          "userDetails": "optional<UserDetails>",
+          "userDetails": "optional<userDetails>",
           "userId": {
             "docs": "Unique user ID",
             "type": "string",
           },
         },
       },
-      "UserDetails": {
+      "userDetails": {
         "docs": "Model for consumer user personal details",
         "properties": {
-          "countryOfNationality": "optional<CountryCode>",
-          "countryOfResidence": "optional<CountryCode>",
+          "countryOfNationality": "optional<countryCode>",
+          "countryOfResidence": "optional<countryCode>",
           "dateOfBirth": {
             "docs": "Date of birth of the user (YYYY-MM-DD)",
             "type": "optional<string>",
@@ -2305,64 +2332,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Gender of the individual - Male, Female or Non-Binary",
             "type": "optional<UserDetailsGender>",
           },
-          "name": "ConsumerName",
+          "name": "consumerName",
         },
       },
-      "UserDetailsGender": {
-        "docs": "Gender of the individual - Male, Female or Non-Binary",
-        "enum": [
-          "M",
-          "F",
-          "NB",
-        ],
-      },
-      "UserMonitoringResult": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "userId": {
-            "docs": "User ID that the results pertain to",
-            "type": "string",
-          },
-        },
-      },
-      "UserOptional": {
+      "userOptional": {
         "docs": "Model for User details",
         "properties": {
-          "acquisitionChannel": "optional<AcquisitionChannel>",
-          "contactDetails": "optional<ContactDetails>",
-          "kycStatusDetails": "optional<KycStatusDetails>",
+          "acquisitionChannel": "optional<acquisitionChannel>",
+          "contactDetails": "optional<contactDetails>",
+          "kycStatusDetails": "optional<kycStatusDetails>",
           "legalDocuments": {
             "docs": "User's legal identity documents - See Document Model for details",
-            "type": "optional<list<LegalDocument>>",
+            "type": "optional<list<legalDocument>>",
           },
-          "pepStatus": "optional<list<PepStatus>>",
+          "pepStatus": "optional<list<pepStatus>>",
           "reasonForAccountOpening": "optional<list<string>>",
-          "riskLevel": "optional<RiskLevel>",
+          "riskLevel": "optional<riskLevel>",
           "tags": {
             "docs": "Additional information that can be added via tags",
-            "type": "optional<list<Tag>>",
+            "type": "optional<list<tag>>",
           },
-          "transactionLimits": "optional<TransactionLimits>",
+          "transactionLimits": "optional<transactionLimits>",
           "userSegment": "optional<UserOptionalUserSegment>",
-          "userStateDetails": "optional<UserStateDetails>",
+          "userStateDetails": "optional<userStateDetails>",
         },
       },
-      "UserOptionalUserSegment": {
-        "enum": [
-          "RETAIL",
-          "PROFESSIONAL",
-        ],
-      },
-      "UserRegistrationStatus": {
+      "userRegistrationStatus": {
         "enum": [
           "REGISTERED",
           "UNREGISTERED",
         ],
       },
-      "UserState": {
+      "userState": {
         "enum": [
           "UNACCEPTABLE",
           "UNDECIDED",
@@ -2376,25 +2377,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "BLOCKED",
         ],
       },
-      "UserStateDetails": {
+      "userStateDetails": {
         "docs": undefined,
         "properties": {
           "reason": "optional<string>",
-          "state": "UserState",
+          "state": "userState",
           "userId": "optional<string>",
         },
       },
-      "UserWithRulesResult": {
+      "userWithRulesResult": {
         "docs": "Model for consumer user payload with rules result",
         "extends": [
-          "User",
+          "user",
         ],
         "properties": {
-          "executedRules": "optional<list<ExecutedRulesResult>>",
-          "hitRules": "optional<list<HitRulesDetails>>",
+          "executedRules": "optional<list<executedRulesResult>>",
+          "hitRules": "optional<list<hitRulesDetails>>",
         },
       },
-      "WalletDetails": {
+      "walletDetails": {
         "docs": "Standardized model for a Generic wallet transaction",
         "properties": {
           "name": {
@@ -2405,7 +2406,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Payment Channel used through wallet",
             "type": "optional<string>",
           },
-          "tags": "optional<Tag>",
+          "tags": "optional<tag>",
           "walletId": {
             "docs": "Unique ID of the wallet",
             "type": "optional<string>",
@@ -2420,17 +2421,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "WalletPaymentMethod": "literal<"WALLET">",
-      "WebhookEvent": {
+      "webhookEvent": {
         "docs": undefined,
         "properties": {
           "createdTimestamp": "double",
-          "data": "UserStateDetails",
+          "data": "userStateDetails",
           "id": "string",
-          "type": "WebhookEventType",
+          "type": "webhookEventType",
         },
       },
-      "WebhookEventType": {
+      "webhookEventType": {
         "enum": [
           "CASE_CLOSED",
           "USER_STATE_UPDATED",

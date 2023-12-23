@@ -878,7 +878,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for ACH payment method",
       "generatedName": "AchDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "achDetails",
       "properties": [
         {
           "audiences": [],
@@ -1020,7 +1020,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User acquisition channel",
       "generatedName": "AcquisitionChannel",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "acquisitionChannel",
       "type": "enum",
       "values": [
         {
@@ -1067,7 +1067,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for standardized address",
       "generatedName": "Address",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "address",
       "properties": [
         {
           "audiences": [],
@@ -1185,7 +1185,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "AlertClosedDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "alertClosedDetails",
       "properties": [
         {
           "audiences": [],
@@ -1442,7 +1442,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for amount",
       "generatedName": "Amount",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "amount",
       "properties": [
         {
           "audiences": [],
@@ -1508,7 +1508,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a business user base fields",
       "generatedName": "BusinessBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessBase",
       "properties": [
         {
           "audiences": [],
@@ -1549,7 +1549,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "BusinessEntityLink",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessEntityLink",
       "properties": [
         {
           "audiences": [],
@@ -1607,7 +1607,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a business user - optional fields",
       "generatedName": "BusinessOptional",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessOptional",
       "properties": [
         {
           "audiences": [],
@@ -1968,7 +1968,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user-related events",
       "generatedName": "BusinessUserEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessUserEvent",
       "properties": [
         {
           "audiences": [],
@@ -2091,7 +2091,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user risk score response",
       "generatedName": "BusinessUsersResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessUsersResponse",
       "properties": [
         {
           "audiences": [],
@@ -2127,7 +2127,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business payload with rules result",
       "generatedName": "BusinessWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "businessWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -2186,7 +2186,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for credit or debit card details",
       "generatedName": "CardDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "cardDetails",
       "properties": [
         {
           "audiences": [],
@@ -2527,7 +2527,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CardExpiry",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "cardExpiry",
       "properties": [
         {
           "audiences": [],
@@ -2576,7 +2576,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CardMerchantDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "cardMerchantDetails",
       "properties": [
         {
           "audiences": [],
@@ -2744,7 +2744,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CaseClosedDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "caseClosedDetails",
       "properties": [
         {
           "audiences": [],
@@ -2917,7 +2917,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for case management events",
       "generatedName": "CaseManagementEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "caseManagementEvent",
       "properties": [
         {
           "audiences": [],
@@ -3092,7 +3092,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CheckDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "checkDetails",
       "properties": [
         {
           "audiences": [],
@@ -3269,7 +3269,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company financial details",
       "generatedName": "CompanyFinancialDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "companyFinancialDetails",
       "properties": [
         {
           "audiences": [],
@@ -3342,7 +3342,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company general details",
       "generatedName": "CompanyGeneralDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "companyGeneralDetails",
       "properties": [
         {
           "audiences": [],
@@ -3520,7 +3520,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company registration details",
       "generatedName": "CompanyRegistrationDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "companyRegistrationDetails",
       "properties": [
         {
           "audiences": [],
@@ -3648,7 +3648,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a generic consumer name",
       "generatedName": "ConsumerName",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "consumerName",
       "properties": [
         {
           "audiences": [],
@@ -3717,7 +3717,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user-related events",
       "generatedName": "ConsumerUserEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "consumerUserEvent",
       "properties": [
         {
           "audiences": [],
@@ -3840,7 +3840,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user risk score response",
       "generatedName": "ConsumerUsersResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "consumerUsersResponse",
       "properties": [
         {
           "audiences": [],
@@ -3867,7 +3867,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user contact information details",
       "generatedName": "ContactDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "contactDetails",
       "properties": [
         {
           "audiences": [],
@@ -4004,7 +4004,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CountryCode",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "countryCode",
       "type": "enum",
       "values": [
         {
@@ -5513,7 +5513,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CurrencyCode",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "currencyCode",
       "type": "enum",
       "values": [
         {
@@ -7144,7 +7144,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for date",
       "generatedName": "Date",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "date",
       "properties": [
         {
           "audiences": [],
@@ -7197,7 +7197,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for device data",
       "generatedName": "DeviceData",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "deviceData",
       "properties": [
         {
           "audiences": [],
@@ -7431,7 +7431,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of executed rules",
       "generatedName": "ExecutedRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "executedRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -7596,7 +7596,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of rules failed execution. It means rules could not be run",
       "generatedName": "FailedRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "failedRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -7669,7 +7669,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "FalsePositiveDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "falsePositiveDetails",
       "properties": [
         {
           "audiences": [],
@@ -7717,7 +7717,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for any generic bank account",
       "generatedName": "GenericBankAccountDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "genericBankAccountDetails",
       "properties": [
         {
           "audiences": [],
@@ -7894,7 +7894,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of hit rules",
       "generatedName": "HitRulesDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "hitRulesDetails",
       "properties": [
         {
           "audiences": [],
@@ -8045,7 +8045,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Standardized model for Bank Details",
       "generatedName": "IbanDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ibanDetails",
       "properties": [
         {
           "audiences": [],
@@ -8247,7 +8247,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "KycStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "kycStatus",
       "type": "enum",
       "values": [
         {
@@ -8288,7 +8288,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "KycStatusDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "kycStatusDetails",
       "properties": [
         {
           "audiences": [],
@@ -8339,7 +8339,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "LegalDocument model generalizes User's identity document type (ex: Passport)",
       "generatedName": "LegalDocument",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "legalDocument",
       "properties": [
         {
           "audiences": [],
@@ -8477,7 +8477,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user legal entity details",
       "generatedName": "LegalEntity",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "legalEntity",
       "properties": [
         {
           "audiences": [],
@@ -8585,7 +8585,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Payload of a list, new or existed",
       "generatedName": "ListData",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "listData",
       "properties": [
         {
           "audiences": [],
@@ -8639,7 +8639,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "List with ID and header",
       "generatedName": "ListExisted",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "listExisted",
       "properties": [
         {
           "audiences": [],
@@ -8699,7 +8699,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListHeader",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "listHeader",
       "properties": [
         {
           "audiences": [],
@@ -8801,7 +8801,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListItem",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "listItem",
       "properties": [
         {
           "audiences": [],
@@ -8865,7 +8865,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListMetadata",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "listMetadata",
       "properties": [
         {
           "audiences": [],
@@ -9060,7 +9060,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "MccDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "mccDetails",
       "properties": [
         {
           "audiences": [],
@@ -9106,7 +9106,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for Mpesa payment method",
       "generatedName": "MpesaDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "mpesaDetails",
       "properties": [
         {
           "audiences": [],
@@ -9203,7 +9203,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "PepStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "pepStatus",
       "properties": [
         {
           "audiences": [],
@@ -9247,7 +9247,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "PaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "paymentMethod",
       "type": "enum",
       "values": [
         {
@@ -9312,7 +9312,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a generic individual - different from User model by not having userId field",
       "generatedName": "Person",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "person",
       "properties": [
         {
           "audiences": [],
@@ -9426,7 +9426,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RiskLevel",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "riskLevel",
       "type": "enum",
       "values": [
         {
@@ -9467,7 +9467,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for results from Risk Scoring",
       "generatedName": "RiskScoringResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "riskScoringResult",
       "properties": [
         {
           "audiences": [],
@@ -9523,7 +9523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
       "generatedName": "RuleAction",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ruleAction",
       "type": "enum",
       "values": [
         {
@@ -9558,7 +9558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleFailureException",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ruleFailureException",
       "properties": [
         {
           "audiences": [],
@@ -9599,7 +9599,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleHitDirection",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ruleHitDirection",
       "type": "enum",
       "values": [
         {
@@ -9698,7 +9698,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleLabels",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ruleLabels",
       "type": "enum",
       "values": [
         {
@@ -9779,7 +9779,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleNature",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ruleNatureType",
       "type": "enum",
       "values": [
         {
@@ -9814,7 +9814,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RulesResults",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "rulesResults",
       "properties": [
         {
           "audiences": [],
@@ -9863,7 +9863,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for SWIFT payment method",
       "generatedName": "SwiftDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "swiftDetails",
       "properties": [
         {
           "audiences": [],
@@ -10028,7 +10028,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "SanctionsDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "sanctionsDetails",
       "properties": [
         {
           "audiences": [],
@@ -10088,7 +10088,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "SanctionsDetailsEntityType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "sanctionsDetailsEntityType",
       "type": "enum",
       "values": [
         {
@@ -10147,7 +10147,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Generic key-value pair model to append a custom variable being sent to Flagright API",
       "generatedName": "Tag",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "tag",
       "properties": [
         {
           "audiences": [],
@@ -10217,7 +10217,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction amount details",
       "generatedName": "TransactionAmountDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionAmountDetails",
       "properties": [
         {
           "audiences": [],
@@ -10275,7 +10275,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionAmountLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionAmountLimit",
       "properties": [
         {
           "audiences": [],
@@ -10362,7 +10362,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction base Payload",
       "generatedName": "TransactionBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionBase",
       "properties": [
         {
           "audiences": [],
@@ -10464,7 +10464,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionCountLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionCountLimit",
       "properties": [
         {
           "audiences": [],
@@ -10716,7 +10716,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionEventMonitoringResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "",
       "properties": [
         {
           "audiences": [],
@@ -10757,7 +10757,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionLimit",
       "properties": [
         {
           "audiences": [],
@@ -10825,7 +10825,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction limits for a given user",
       "generatedName": "TransactionLimits",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionLimits",
       "properties": [
         {
           "audiences": [],
@@ -11177,7 +11177,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
       "generatedName": "TransactionState",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionState",
       "type": "enum",
       "values": [
         {
@@ -11234,7 +11234,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionType",
       "type": "enum",
       "values": [
         {
@@ -11281,7 +11281,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction additional payload",
       "generatedName": "TransactionUpdatable",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionUpdatable",
       "properties": [
         {
           "audiences": [],
@@ -11682,7 +11682,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction payload with rules result",
       "generatedName": "TransactionWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "transactionWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -11731,7 +11731,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for UPI payment method",
       "generatedName": "UpiDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "upiDetails",
       "properties": [
         {
           "audiences": [],
@@ -11847,7 +11847,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "User",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "user",
       "properties": [],
       "type": "object",
     },
@@ -11857,7 +11857,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "UserBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userBase",
       "properties": [
         {
           "audiences": [],
@@ -11917,7 +11917,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user personal details",
       "generatedName": "UserDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userDetails",
       "properties": [
         {
           "audiences": [],
@@ -12075,7 +12075,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "UserOptional",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userOptional",
       "properties": [
         {
           "audiences": [],
@@ -12328,7 +12328,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserRegistrationStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userRegistrationStatus",
       "type": "enum",
       "values": [
         {
@@ -12349,7 +12349,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserState",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userState",
       "type": "enum",
       "values": [
         {
@@ -12420,7 +12420,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserStateDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userStateDetails",
       "properties": [
         {
           "audiences": [],
@@ -12496,7 +12496,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user payload with rules result",
       "generatedName": "UserWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "userWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -12555,7 +12555,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Standardized model for a Generic wallet transaction",
       "generatedName": "WalletDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "walletDetails",
       "properties": [
         {
           "audiences": [],
@@ -12694,7 +12694,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "WebhookEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "webhookEvent",
       "properties": [
         {
           "audiences": [],
@@ -12761,7 +12761,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "WebhookEventType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "webhookEventType",
       "type": "enum",
       "values": [
         {

@@ -1405,7 +1405,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": undefined,
             "generatedName": "FlowIntentRequestIntent",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "flowIntent",
             "type": "enum",
             "values": [
               {
@@ -1541,7 +1541,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "BadRequestErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "badRequestErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -1794,7 +1794,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": undefined,
             "generatedName": "FlowIntentRequestParamsIntent",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "flowIntent",
             "type": "enum",
             "values": [
               {
@@ -2051,7 +2051,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "InternalServerErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "internalServerErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2093,7 +2093,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "NotFoundErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "notFoundErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2135,7 +2135,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "TimeoutErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "timeoutErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2177,7 +2177,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "UnauthorizedErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "unauthorizedErrorResponseBody",
       "properties": [
         {
           "audiences": [],

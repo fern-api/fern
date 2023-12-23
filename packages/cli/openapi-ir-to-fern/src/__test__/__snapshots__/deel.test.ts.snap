@@ -4096,16 +4096,9 @@ exports[`open api parser deel simple 1`] = `
           "offset": "optional<AgreementsParamOffset>",
         },
       },
-      "AlternateEmailItem": {
-        "docs": undefined,
-        "properties": {
-          "email": "optional<EmailType>",
-          "isVerified": "boolean",
-        },
-      },
       "AlternateEmailList": {
         "docs": "List of alternate email addresses.",
-        "type": "list<AlternateEmailItem>",
+        "type": "list<rootSchema>",
       },
       "ApiError": {
         "docs": undefined,
@@ -6851,12 +6844,6 @@ exports[`open api parser deel simple 1`] = `
           "refunded",
         ],
       },
-      "InvoiceContractor": {
-        "docs": undefined,
-        "properties": {
-          "name": "string",
-        },
-      },
       "InvoiceDownloadContainer": {
         "docs": undefined,
         "properties": {
@@ -7481,24 +7468,7 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
-      "PaymentWorker": {
-        "docs": undefined,
-        "properties": {
-          "contract_id": {
-            "docs": "The worker's Deel contract Id.",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Worker's full name.",
-            "type": "string",
-          },
-          "picUrl": {
-            "docs": "URL to worker's Deel avatar.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "PaymentWorkerList": "list<PaymentWorker>",
+      "PaymentWorkerList": "list<theWorkerForThePayment>",
       "People": {
         "docs": "People object representing a Deel",
         "properties": {
@@ -8531,6 +8501,36 @@ exports[`open api parser deel simple 1`] = `
           "legal_entity": "optional<WorkerLegalEntity>",
           "nationality": {
             "docs": "Worker's nationality.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "contractor": {
+        "docs": undefined,
+        "properties": {
+          "name": "string",
+        },
+      },
+      "rootSchema": {
+        "docs": undefined,
+        "properties": {
+          "email": "optional<EmailType>",
+          "isVerified": "boolean",
+        },
+      },
+      "theWorkerForThePayment": {
+        "docs": undefined,
+        "properties": {
+          "contract_id": {
+            "docs": "The worker's Deel contract Id.",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "Worker's full name.",
+            "type": "string",
+          },
+          "picUrl": {
+            "docs": "URL to worker's Deel avatar.",
             "type": "optional<string>",
           },
         },

@@ -56,7 +56,7 @@ exports[`open api parser axle simple 1`] = `
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<root.Account>",
+            "data": "optional<root.account>",
             "success": "optional<root.Success>",
           },
         },
@@ -128,14 +128,14 @@ exports[`open api parser axle simple 1`] = `
         "GetCarrierResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<root.Carrier>",
+            "data": "optional<root.carrier>",
             "success": "optional<root.Success>",
           },
         },
         "GetCarriersResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<list<root.Carrier>>",
+            "data": "optional<list<root.carrier>>",
             "success": "optional<root.Success>",
           },
         },
@@ -166,7 +166,7 @@ exports[`open api parser axle simple 1`] = `
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
                   },
-                  "user": "optional<root.User>",
+                  "user": "optional<root.user>",
                   "webhookUri": {
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
@@ -260,7 +260,7 @@ exports[`open api parser axle simple 1`] = `
         "GetPolicyResponse": {
           "docs": undefined,
           "properties": {
-            "data": "optional<root.Policy>",
+            "data": "optional<root.policy>",
             "success": "optional<root.Success>",
           },
         },
@@ -332,7 +332,36 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
   },
   "packageMarkerFile": {
     "types": {
-      "Account": {
+      "CoverageCode": {
+        "enum": [
+          "BI",
+          "PD",
+          "UMBI",
+          "UMPD",
+          "UIMBI",
+          "UIMPD",
+          "COLL",
+          "COMP",
+        ],
+      },
+      "PolicyType": {
+        "enum": [
+          "auto",
+          "motorcycle",
+        ],
+      },
+      "Success": {
+        "docs": "Indicates whether the operation was performed successfully.",
+        "type": "boolean",
+      },
+      "ThirdPartyType": {
+        "enum": [
+          "lienholder",
+          "lessor",
+          "interest",
+        ],
+      },
+      "account": {
         "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
         "properties": {
           "carrier": "string",
@@ -347,7 +376,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "refreshedAt": "string",
         },
       },
-      "Address": {
+      "address": {
         "docs": undefined,
         "properties": {
           "addressLine1": "optional<string>",
@@ -358,10 +387,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "state": "optional<string>",
         },
       },
-      "Carrier": {
+      "carrier": {
         "docs": undefined,
         "properties": {
-          "address": "Address",
+          "address": "address",
           "domain": "string",
           "id": "string",
           "logoUrl": "optional<string>",
@@ -370,7 +399,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "phone": "string",
         },
       },
-      "Coverage": {
+      "coverage": {
         "docs": undefined,
         "properties": {
           "code": "CoverageCode",
@@ -381,19 +410,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
         },
       },
-      "CoverageCode": {
-        "enum": [
-          "BI",
-          "PD",
-          "UMBI",
-          "UMPD",
-          "UIMBI",
-          "UIMPD",
-          "COLL",
-          "COMP",
-        ],
-      },
-      "Error": {
+      "error": {
         "docs": undefined,
         "properties": {
           "message": {
@@ -403,7 +420,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "success": "optional<Success>",
         },
       },
-      "Insured": {
+      "insured": {
         "docs": undefined,
         "properties": {
           "dateOfBirth": "optional<string>",
@@ -417,15 +434,15 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "type": "optional<string>",
         },
       },
-      "Policy": {
+      "policy": {
         "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
         "properties": {
           "account": "string",
-          "address": "Address",
+          "address": "address",
           "carrier": "string",
           "coverages": {
             "docs": "",
-            "type": "list<Coverage>",
+            "type": "list<coverage>",
           },
           "createdAt": "string",
           "effectiveDate": "string",
@@ -433,58 +450,41 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "id": "string",
           "insureds": {
             "docs": "",
-            "type": "list<Insured>",
+            "type": "list<insured>",
           },
           "isActive": "boolean",
           "modifiedAt": "string",
           "policyNumber": "string",
           "properties": {
             "docs": "",
-            "type": "list<Property>",
+            "type": "list<property>",
           },
           "refreshedAt": "string",
           "thirdParties": {
             "docs": "",
-            "type": "list<ThirdParty>",
+            "type": "list<thirdParty>",
           },
           "type": "PolicyType",
         },
       },
-      "PolicyType": {
-        "enum": [
-          "auto",
-          "motorcycle",
-        ],
-      },
-      "Property": {
+      "property": {
         "docs": undefined,
         "properties": {
-          "data": "Vehicle",
+          "data": "vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
         },
       },
-      "Success": {
-        "docs": "Indicates whether the operation was performed successfully.",
-        "type": "boolean",
-      },
-      "ThirdParty": {
+      "thirdParty": {
         "docs": undefined,
         "properties": {
-          "address": "optional<Address>",
+          "address": "optional<address>",
           "name": "string",
           "property": "optional<string>",
           "type": "ThirdPartyType",
         },
       },
-      "ThirdPartyType": {
-        "enum": [
-          "lienholder",
-          "lessor",
-          "interest",
-        ],
-      },
-      "User": {
+      "user": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
@@ -509,7 +509,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           },
         },
       },
-      "Vehicle": {
+      "vehicle": {
         "docs": undefined,
         "properties": {
           "bodyStyle": "optional<string>",

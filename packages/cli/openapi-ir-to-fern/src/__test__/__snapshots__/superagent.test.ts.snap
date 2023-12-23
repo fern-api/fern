@@ -33,7 +33,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Agent",
+              "name": "agent",
               "query-parameters": undefined,
             },
             "response": {
@@ -126,7 +126,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "PredictAgent",
+              "name": "predictAgent",
               "query-parameters": undefined,
             },
             "response": {
@@ -161,7 +161,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "ApiToken",
+              "name": "apiToken",
               "query-parameters": undefined,
             },
             "response": {
@@ -242,7 +242,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "SignIn",
+              "name": "signIn",
               "query-parameters": undefined,
             },
             "response": {
@@ -269,7 +269,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "SignUp",
+              "name": "signUp",
               "query-parameters": undefined,
             },
             "response": {
@@ -310,7 +310,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Document",
+              "name": "document",
               "query-parameters": undefined,
             },
             "response": {
@@ -392,7 +392,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Prompt",
+              "name": "prompt",
               "query-parameters": undefined,
             },
             "response": {
@@ -494,7 +494,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Tool",
+              "name": "tool",
               "query-parameters": undefined,
             },
             "response": {
@@ -613,24 +613,10 @@ exports[`open api parser superagent simple 1`] = `
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "HttpValidationError",
+        "type": "httpValidationError",
       },
     },
     "types": {
-      "HttpValidationError": {
-        "docs": undefined,
-        "properties": {
-          "detail": "optional<list<ValidationError>>",
-        },
-      },
-      "ValidationError": {
-        "docs": undefined,
-        "properties": {
-          "loc": "list<ValidationErrorLocItem>",
-          "msg": "string",
-          "type": "string",
-        },
-      },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
@@ -638,6 +624,20 @@ exports[`open api parser superagent simple 1`] = `
           "string",
           "integer",
         ],
+      },
+      "httpValidationError": {
+        "docs": undefined,
+        "properties": {
+          "detail": "optional<list<validationError>>",
+        },
+      },
+      "validationError": {
+        "docs": undefined,
+        "properties": {
+          "loc": "list<ValidationErrorLocItem>",
+          "msg": "string",
+          "type": "string",
+        },
       },
     },
   },
