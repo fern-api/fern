@@ -85,8 +85,8 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
             if (securityScheme.scopesEnum != null) {
-                context.builder.addType(RelativeFilePath.of("__packaqe__.yml"), {
-                    name: "OauthScheme",
+                context.builder.addType(RelativeFilePath.of("__package__.yml"), {
+                    name: "OauthScope",
                     schema: buildEnumTypeDeclaration(securityScheme.scopesEnum).schema
                 });
             }

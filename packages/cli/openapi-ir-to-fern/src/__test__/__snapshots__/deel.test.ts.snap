@@ -3,89 +3,6 @@
 exports[`open api parser deel simple 1`] = `
 {
   "definitionFiles": {
-    "__packaqe__.yml": {
-      "types": {
-        "OauthScheme": {
-          "enum": [
-            {
-              "docs": "View payments and invoices in your organization.",
-              "name": "AccountingRead",
-              "value": "accounting:read",
-            },
-            {
-              "docs": "Create and edit payments and invoices.",
-              "name": "AccountingWrite",
-              "value": "accounting:write",
-            },
-            {
-              "docs": "View contracts in your organization.",
-              "name": "ContractsRead",
-              "value": "contracts:read",
-            },
-            {
-              "docs": "Create and amend contracts.",
-              "name": "ContractsWrite",
-              "value": "contracts:write",
-            },
-            {
-              "docs": "View invoices of your workforce.",
-              "name": "InvoiceAdjustmentsRead",
-              "value": "invoice-adjustments:read",
-            },
-            {
-              "docs": "Create, edit, review, and delete invoice adjustments.",
-              "name": "InvoiceAdjustmentsWrite",
-              "value": "invoice-adjustments:write",
-            },
-            {
-              "docs": "View milestones of your contractors.",
-              "name": "MilestonesRead",
-              "value": "milestones:read",
-            },
-            {
-              "docs": "Create, edit, review, and delete milestones.",
-              "name": "MilestonesWrite",
-              "value": "milestones:write",
-            },
-            {
-              "docs": "View basic information about your organizations, teams, legal entities and agreements.",
-              "name": "OrganizationsRead",
-              "value": "organizations:read",
-            },
-            {
-              "docs": "View your off-cycle payments.",
-              "name": "OffCyclePaymentsRead",
-              "value": "off-cycle-payments:read",
-            },
-            {
-              "docs": "Create, edit, review your off-cycle payments.",
-              "name": "OffCyclePaymentsWrite",
-              "value": "off-cycle-payments:write",
-            },
-            {
-              "docs": "View work submitted for time-based contracts.",
-              "name": "TimesheetsRead",
-              "value": "timesheets:read",
-            },
-            {
-              "docs": "Create, edit, review, and delete timesheets.",
-              "name": "TimesheetsWrite",
-              "value": "timesheets:write",
-            },
-            {
-              "docs": "View your pay-as-you-go tasks.",
-              "name": "TasksRead",
-              "value": "tasks:read",
-            },
-            {
-              "docs": "Create, edit, review and delete your pay-as-you-go tasks.",
-              "name": "TasksWrite",
-              "value": "tasks:write",
-            },
-          ],
-        },
-      },
-    },
     "accounting.yml": {
       "docs": "End-points to retrieve paid invoices and reciepts.",
       "imports": {
@@ -7207,6 +7124,85 @@ exports[`open api parser deel simple 1`] = `
       "NoticePeriod": {
         "docs": "Days before to notice the termination of contract for eather party.",
         "type": "double",
+      },
+      "OauthScope": {
+        "enum": [
+          {
+            "docs": "View payments and invoices in your organization.",
+            "name": "AccountingRead",
+            "value": "accounting:read",
+          },
+          {
+            "docs": "Create and edit payments and invoices.",
+            "name": "AccountingWrite",
+            "value": "accounting:write",
+          },
+          {
+            "docs": "View contracts in your organization.",
+            "name": "ContractsRead",
+            "value": "contracts:read",
+          },
+          {
+            "docs": "Create and amend contracts.",
+            "name": "ContractsWrite",
+            "value": "contracts:write",
+          },
+          {
+            "docs": "View invoices of your workforce.",
+            "name": "InvoiceAdjustmentsRead",
+            "value": "invoice-adjustments:read",
+          },
+          {
+            "docs": "Create, edit, review, and delete invoice adjustments.",
+            "name": "InvoiceAdjustmentsWrite",
+            "value": "invoice-adjustments:write",
+          },
+          {
+            "docs": "View milestones of your contractors.",
+            "name": "MilestonesRead",
+            "value": "milestones:read",
+          },
+          {
+            "docs": "Create, edit, review, and delete milestones.",
+            "name": "MilestonesWrite",
+            "value": "milestones:write",
+          },
+          {
+            "docs": "View basic information about your organizations, teams, legal entities and agreements.",
+            "name": "OrganizationsRead",
+            "value": "organizations:read",
+          },
+          {
+            "docs": "View your off-cycle payments.",
+            "name": "OffCyclePaymentsRead",
+            "value": "off-cycle-payments:read",
+          },
+          {
+            "docs": "Create, edit, review your off-cycle payments.",
+            "name": "OffCyclePaymentsWrite",
+            "value": "off-cycle-payments:write",
+          },
+          {
+            "docs": "View work submitted for time-based contracts.",
+            "name": "TimesheetsRead",
+            "value": "timesheets:read",
+          },
+          {
+            "docs": "Create, edit, review, and delete timesheets.",
+            "name": "TimesheetsWrite",
+            "value": "timesheets:write",
+          },
+          {
+            "docs": "View your pay-as-you-go tasks.",
+            "name": "TasksRead",
+            "value": "tasks:read",
+          },
+          {
+            "docs": "Create, edit, review and delete your pay-as-you-go tasks.",
+            "name": "TasksWrite",
+            "value": "tasks:write",
+          },
+        ],
       },
       "OffCyclePayment": {
         "docs": undefined,
