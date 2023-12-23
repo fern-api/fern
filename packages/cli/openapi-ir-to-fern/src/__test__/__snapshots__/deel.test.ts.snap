@@ -5,7 +5,7 @@ exports[`open api parser deel simple 1`] = `
   "definitionFiles": {
     "__packaqe__.yml": {
       "types": {
-        "OauthScheme": {
+        "OauthScope": {
           "enum": [
             {
               "docs": "View payments and invoices in your organization.",
