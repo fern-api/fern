@@ -661,7 +661,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "GetActionResponse",
             "groupName": undefined,
-            "nameOverride": "Responsegetactionv1actionsget",
+            "nameOverride": "Response Get Action V 1 Actions Get",
             "schemas": {
               "action_dtmf": {
                 "description": undefined,
@@ -816,7 +816,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "CreateActionResponse",
             "groupName": undefined,
-            "nameOverride": "Responsecreateactionv1actionscreatepost",
+            "nameOverride": "Response Create Action V 1 Actions Create Post",
             "schemas": {
               "action_dtmf": {
                 "description": undefined,
@@ -912,7 +912,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "UpdateActionResponse",
             "groupName": undefined,
-            "nameOverride": "Responseupdateactionv1actionsupdatepost",
+            "nameOverride": "Response Update Action V 1 Actions Update Post",
             "schemas": {
               "action_dtmf": {
                 "description": undefined,
@@ -1241,7 +1241,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "GetVoiceResponse",
             "groupName": undefined,
-            "nameOverride": "Responsegetvoicev1voicesget",
+            "nameOverride": "Response Get Voice V 1 Voices Get",
             "schemas": {
               "voice_azure": {
                 "description": undefined,
@@ -1404,7 +1404,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "CreateVoiceResponse",
             "groupName": undefined,
-            "nameOverride": "Responsecreatevoicev1voicescreatepost",
+            "nameOverride": "Response Create Voice V 1 Voices Create Post",
             "schemas": {
               "voice_azure": {
                 "description": undefined,
@@ -1508,7 +1508,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "discriminantProperty": "type",
             "generatedName": "UpdateVoiceResponse",
             "groupName": undefined,
-            "nameOverride": "Responseupdatevoicev1voicesupdatepost",
+            "nameOverride": "Response Update Voice V 1 Voices Update Post",
             "schemas": {
               "voice_azure": {
                 "description": undefined,
@@ -1859,7 +1859,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "ActionPage",
       "groupName": undefined,
-      "nameOverride": "Actionpage",
+      "nameOverride": "Action Page",
       "properties": [
         {
           "audiences": [],
@@ -1962,7 +1962,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "discriminantProperty": "type",
         "generatedName": "ActionParamsRequest",
         "groupName": undefined,
-        "nameOverride": "Actionparamsrequest",
+        "nameOverride": "Action Params Request",
         "schemas": {
           "action_dtmf": {
             "description": undefined,
@@ -2000,7 +2000,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "discriminantProperty": "type",
         "generatedName": "ActionUpdateParamsRequest",
         "groupName": undefined,
-        "nameOverride": "Actionupdateparamsrequest",
+        "nameOverride": "Action Update Params Request",
         "schemas": {
           "action_dtmf": {
             "description": undefined,
@@ -2294,7 +2294,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AgentPage",
       "groupName": undefined,
-      "nameOverride": "Agentpage",
+      "nameOverride": "Agent Page",
       "properties": [
         {
           "audiences": [],
@@ -2366,7 +2366,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AgentParams",
       "groupName": undefined,
-      "nameOverride": "Agentparams",
+      "nameOverride": "Agent Params",
       "properties": [
         {
           "audiences": [],
@@ -2629,7 +2629,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "AgentParamsVectorDatabase",
                 "groupName": undefined,
-                "nameOverride": "Vectordatabase",
+                "nameOverride": "Vector Database",
                 "schemas": [
                   {
                     "description": undefined,
@@ -2684,7 +2684,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AgentUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Agentupdateparams",
+      "nameOverride": "Agent Update Params",
       "properties": [
         {
           "audiences": [],
@@ -2963,7 +2963,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "AgentUpdateParamsInitialMessage",
                 "groupName": undefined,
-                "nameOverride": "Initialmessage",
+                "nameOverride": "Initial Message",
                 "schemas": [
                   {
                     "description": undefined,
@@ -3053,7 +3053,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "AgentUpdateParamsVectorDatabase",
                 "groupName": undefined,
-                "nameOverride": "Vectordatabase",
+                "nameOverride": "Vector Database",
                 "schemas": [
                   {
                     "description": undefined,
@@ -3102,7 +3102,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "AgentUpdateParamsInterruptSensitivity",
                 "groupName": undefined,
-                "nameOverride": "Interruptsensitivity",
+                "nameOverride": "Interrupt Sensitivity",
                 "schemas": [
                   {
                     "description": undefined,
@@ -3136,7 +3136,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AzureVoice",
       "groupName": undefined,
-      "nameOverride": "Azurevoice",
+      "nameOverride": "Azure Voice",
       "properties": [
         {
           "audiences": [],
@@ -3233,7 +3233,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AzureVoiceParams",
       "groupName": undefined,
-      "nameOverride": "Azurevoiceparams",
+      "nameOverride": "Azure Voice Params",
       "properties": [
         {
           "audiences": [],
@@ -3298,7 +3298,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "AzureVoiceUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Azurevoiceupdateparams",
+      "nameOverride": "Azure Voice Update Params",
       "properties": [
         {
           "audiences": [],
@@ -3314,7 +3314,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "AzureVoiceUpdateParamsVoiceName",
                 "groupName": undefined,
-                "nameOverride": "Voicename",
+                "nameOverride": "Voice Name",
                 "schemas": [
                   {
                     "description": undefined,
@@ -3651,7 +3651,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "CallPage",
       "groupName": undefined,
-      "nameOverride": "Callpage",
+      "nameOverride": "Call Page",
       "properties": [
         {
           "audiences": [],
@@ -3721,7 +3721,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": "An enumeration.",
       "generatedName": "CallStatus",
       "groupName": undefined,
-      "nameOverride": "Callstatus",
+      "nameOverride": "Call Status",
       "type": "enum",
       "values": [
         {
@@ -3756,7 +3756,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateCallAgentParams",
       "groupName": undefined,
-      "nameOverride": "Createcallagentparams",
+      "nameOverride": "Create Call Agent Params",
       "properties": [
         {
           "audiences": [],
@@ -4024,7 +4024,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "CreateCallAgentParamsVectorDatabase",
                 "groupName": undefined,
-                "nameOverride": "Vectordatabase",
+                "nameOverride": "Vector Database",
                 "schemas": [
                   {
                     "description": undefined,
@@ -4079,7 +4079,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateCallRequest",
       "groupName": undefined,
-      "nameOverride": "Createcallrequest",
+      "nameOverride": "Create Call Request",
       "properties": [
         {
           "audiences": [],
@@ -4158,7 +4158,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "DtmfAction",
       "groupName": undefined,
-      "nameOverride": "Dtmfaction",
+      "nameOverride": "DTMF Action",
       "properties": [
         {
           "audiences": [],
@@ -4220,7 +4220,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "DtmfActionParams",
       "groupName": undefined,
-      "nameOverride": "Dtmfactionparams",
+      "nameOverride": "DTMF Action Params",
       "properties": [
         {
           "audiences": [],
@@ -4250,7 +4250,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "DtmfActionUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Dtmfactionupdateparams",
+      "nameOverride": "DTMF Action Update Params",
       "properties": [
         {
           "audiences": [],
@@ -4300,7 +4300,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "ElevenLabsVoice",
       "groupName": undefined,
-      "nameOverride": "Elevenlabsvoice",
+      "nameOverride": "Eleven Labs Voice",
       "properties": [
         {
           "audiences": [],
@@ -4413,7 +4413,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "ElevenLabsVoiceParams",
       "groupName": undefined,
-      "nameOverride": "Elevenlabsvoiceparams",
+      "nameOverride": "Eleven Labs Voice Params",
       "properties": [
         {
           "audiences": [],
@@ -4494,7 +4494,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "ElevenLabsVoiceUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Elevenlabsvoiceupdateparams",
+      "nameOverride": "Eleven Labs Voice Update Params",
       "properties": [
         {
           "audiences": [],
@@ -4510,7 +4510,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "ElevenLabsVoiceUpdateParamsVoiceId",
                 "groupName": undefined,
-                "nameOverride": "Voiceid",
+                "nameOverride": "Voice Id",
                 "schemas": [
                   {
                     "description": undefined,
@@ -4590,7 +4590,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "ElevenLabsVoiceUpdateParamsSimilarityBoost",
                 "groupName": undefined,
-                "nameOverride": "Similarityboost",
+                "nameOverride": "Similarity Boost",
                 "schemas": [
                   {
                     "description": undefined,
@@ -4629,7 +4629,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "ElevenLabsVoiceUpdateParamsApiKey",
                 "groupName": undefined,
-                "nameOverride": "Apikey",
+                "nameOverride": "Api Key",
                 "schemas": [
                   {
                     "description": undefined,
@@ -4665,7 +4665,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "EmptyActionConfig",
       "groupName": undefined,
-      "nameOverride": "Emptyactionconfig",
+      "nameOverride": "Empty Action Config",
       "properties": [],
       "type": "object",
     },
@@ -4675,7 +4675,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "EndConversationAction",
       "groupName": undefined,
-      "nameOverride": "Endconversationaction",
+      "nameOverride": "End Conversation Action",
       "properties": [
         {
           "audiences": [],
@@ -4737,7 +4737,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "EndConversationActionParams",
       "groupName": undefined,
-      "nameOverride": "Endconversationactionparams",
+      "nameOverride": "End Conversation Action Params",
       "properties": [
         {
           "audiences": [],
@@ -4767,7 +4767,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "EndConversationActionUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Endconversationactionupdateparams",
+      "nameOverride": "End Conversation Action Update Params",
       "properties": [
         {
           "audiences": [],
@@ -4815,7 +4815,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": "An enumeration.",
       "generatedName": "EventType",
       "groupName": undefined,
-      "nameOverride": "Eventtype",
+      "nameOverride": "Event Type",
       "type": "enum",
       "values": [
         {
@@ -4860,7 +4860,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": "An enumeration.",
       "generatedName": "HttpMethod",
       "groupName": undefined,
-      "nameOverride": "Httpmethod",
+      "nameOverride": "HTTP Method",
       "type": "enum",
       "values": [
         {
@@ -4883,7 +4883,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "HttpValidationError",
       "groupName": undefined,
-      "nameOverride": "Httpvalidationerror",
+      "nameOverride": "HTTP Validation Error",
       "properties": [
         {
           "audiences": [],
@@ -4916,7 +4916,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": "An enumeration.",
       "generatedName": "InterruptSensitivity",
       "groupName": undefined,
-      "nameOverride": "Interruptsensitivity",
+      "nameOverride": "Interrupt Sensitivity",
       "type": "enum",
       "values": [
         {
@@ -4966,7 +4966,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "NormalizedAgent",
       "groupName": undefined,
-      "nameOverride": "Normalizedagent",
+      "nameOverride": "Normalized Agent",
       "properties": [
         {
           "audiences": [],
@@ -5128,7 +5128,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "NormalizedAgentVectorDatabase",
                 "groupName": undefined,
-                "nameOverride": "Vectordatabase",
+                "nameOverride": "Vector Database",
                 "schemas": [
                   {
                     "description": undefined,
@@ -5183,7 +5183,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "NormalizedCall",
       "groupName": undefined,
-      "nameOverride": "Normalizedcall",
+      "nameOverride": "Normalized Call",
       "properties": [
         {
           "audiences": [],
@@ -5408,7 +5408,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "NormalizedPhoneNumber",
       "groupName": undefined,
-      "nameOverride": "Normalizedphonenumber",
+      "nameOverride": "Normalized Phone Number",
       "properties": [
         {
           "audiences": [],
@@ -5523,7 +5523,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PhoneNumber",
       "groupName": undefined,
-      "nameOverride": "Phonenumber",
+      "nameOverride": "Phone Number",
       "properties": [
         {
           "audiences": [],
@@ -5636,7 +5636,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PhoneNumberPage",
       "groupName": undefined,
-      "nameOverride": "Phonenumberpage",
+      "nameOverride": "Phone Number Page",
       "properties": [
         {
           "audiences": [],
@@ -5708,7 +5708,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PineconeVectorDatabase",
       "groupName": undefined,
-      "nameOverride": "Pineconevectordatabase",
+      "nameOverride": "Pinecone Vector Database",
       "properties": [
         {
           "audiences": [],
@@ -5814,7 +5814,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PineconeVectorDatabaseParams",
       "groupName": undefined,
-      "nameOverride": "Pineconevectordatabaseparams",
+      "nameOverride": "Pinecone Vector Database Params",
       "properties": [
         {
           "audiences": [],
@@ -5888,7 +5888,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PineconeVectorDatabaseUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Pineconevectordatabaseupdateparams",
+      "nameOverride": "Pinecone Vector Database Update Params",
       "properties": [
         {
           "audiences": [],
@@ -5960,7 +5960,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiKey",
                 "groupName": undefined,
-                "nameOverride": "Apikey",
+                "nameOverride": "Api Key",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6001,7 +6001,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiEnvironment",
                 "groupName": undefined,
-                "nameOverride": "Apienvironment",
+                "nameOverride": "Api Environment",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6035,7 +6035,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": "An enumeration.",
       "generatedName": "PlanType",
       "groupName": undefined,
-      "nameOverride": "Plantype",
+      "nameOverride": "Plan Type",
       "type": "enum",
       "values": [
         {
@@ -6064,7 +6064,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PlayHtVoice",
       "groupName": undefined,
-      "nameOverride": "Playhtvoice",
+      "nameOverride": "Play Ht Voice",
       "properties": [
         {
           "audiences": [],
@@ -6155,7 +6155,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PlayHtVoiceParams",
       "groupName": undefined,
-      "nameOverride": "Playhtvoiceparams",
+      "nameOverride": "Play Ht Voice Params",
       "properties": [
         {
           "audiences": [],
@@ -6214,7 +6214,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "PlayHtVoiceUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Playhtvoiceupdateparams",
+      "nameOverride": "Play Ht Voice Update Params",
       "properties": [
         {
           "audiences": [],
@@ -6230,7 +6230,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "PlayHtVoiceUpdateParamsVoiceId",
                 "groupName": undefined,
-                "nameOverride": "Voiceid",
+                "nameOverride": "Voice Id",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6271,7 +6271,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "PlayHtVoiceUpdateParamsApiUserId",
                 "groupName": undefined,
-                "nameOverride": "Apiuserid",
+                "nameOverride": "Api User Id",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6312,7 +6312,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "PlayHtVoiceUpdateParamsApiKey",
                 "groupName": undefined,
-                "nameOverride": "Apikey",
+                "nameOverride": "Api Key",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6348,7 +6348,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "RimeVoice",
       "groupName": undefined,
-      "nameOverride": "Rimevoice",
+      "nameOverride": "Rime Voice",
       "properties": [
         {
           "audiences": [],
@@ -6407,7 +6407,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "RimeVoiceParams",
       "groupName": undefined,
-      "nameOverride": "Rimevoiceparams",
+      "nameOverride": "Rime Voice Params",
       "properties": [
         {
           "audiences": [],
@@ -6434,7 +6434,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "RimeVoiceUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Rimevoiceupdateparams",
+      "nameOverride": "Rime Voice Update Params",
       "properties": [
         {
           "audiences": [],
@@ -6486,7 +6486,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransferCallAction",
       "groupName": undefined,
-      "nameOverride": "Transfercallaction",
+      "nameOverride": "Transfer Call Action",
       "properties": [
         {
           "audiences": [],
@@ -6543,7 +6543,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransferCallActionParams",
       "groupName": undefined,
-      "nameOverride": "Transfercallactionparams",
+      "nameOverride": "Transfer Call Action Params",
       "properties": [
         {
           "audiences": [],
@@ -6568,7 +6568,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransferCallActionUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Transfercallactionupdateparams",
+      "nameOverride": "Transfer Call Action Update Params",
       "properties": [
         {
           "audiences": [],
@@ -6618,7 +6618,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransferCallConfig",
       "groupName": undefined,
-      "nameOverride": "Transfercallconfig",
+      "nameOverride": "Transfer Call Config",
       "properties": [
         {
           "audiences": [],
@@ -6655,7 +6655,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "UpdateNumberRequest",
       "groupName": undefined,
-      "nameOverride": "Updatenumberrequest",
+      "nameOverride": "Update Number Request",
       "properties": [
         {
           "audiences": [],
@@ -6712,7 +6712,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "description": undefined,
                 "generatedName": "UpdateNumberRequestInboundAgent",
                 "groupName": undefined,
-                "nameOverride": "Inboundagent",
+                "nameOverride": "Inbound Agent",
                 "schemas": [
                   {
                     "description": undefined,
@@ -6825,7 +6825,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "ValidationError",
       "groupName": undefined,
-      "nameOverride": "Validationerror",
+      "nameOverride": "Validation Error",
       "properties": [
         {
           "audiences": [],
@@ -6909,7 +6909,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "VoicePage",
       "groupName": undefined,
-      "nameOverride": "Voicepage",
+      "nameOverride": "Voice Page",
       "properties": [
         {
           "audiences": [],
@@ -7020,7 +7020,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "discriminantProperty": "type",
         "generatedName": "VoiceParamsRequest",
         "groupName": undefined,
-        "nameOverride": "Voiceparamsrequest",
+        "nameOverride": "Voice Params Request",
         "schemas": {
           "voice_azure": {
             "description": undefined,
@@ -7066,7 +7066,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "discriminantProperty": "type",
         "generatedName": "VoiceUpdateParamsRequest",
         "groupName": undefined,
-        "nameOverride": "Voiceupdateparamsrequest",
+        "nameOverride": "Voice Update Params Request",
         "schemas": {
           "voice_azure": {
             "description": undefined,
@@ -7208,7 +7208,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "WebhookPage",
       "groupName": undefined,
-      "nameOverride": "Webhookpage",
+      "nameOverride": "Webhook Page",
       "properties": [
         {
           "audiences": [],
@@ -7280,7 +7280,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "WebhookParams",
       "groupName": undefined,
-      "nameOverride": "Webhookparams",
+      "nameOverride": "Webhook Params",
       "properties": [
         {
           "audiences": [],
@@ -7345,7 +7345,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "generatedName": "WebhookUpdateParams",
       "groupName": undefined,
-      "nameOverride": "Webhookupdateparams",
+      "nameOverride": "Webhook Update Params",
       "properties": [
         {
           "audiences": [],

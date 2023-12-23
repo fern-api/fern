@@ -51,16 +51,16 @@ exports[`open api parser permit simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "operations": "list<root.Tenantcreate>",
+                  "operations": "list<root.Tenant Create>",
                 },
               },
               "headers": undefined,
-              "name": "Tenantcreatebulkoperation",
+              "name": "Tenant Create Bulk Operation",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Tenantcreatebulkoperationresult",
+              "type": "root.Tenant Create Bulk Operation Result",
             },
           },
           "bulk_create_users": {
@@ -101,16 +101,16 @@ exports[`open api parser permit simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "operations": "list<root.Usercreate>",
+                  "operations": "list<root.User Create>",
                 },
               },
               "headers": undefined,
-              "name": "Usercreatebulkoperation",
+              "name": "User Create Bulk Operation",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Usercreatebulkoperationresult",
+              "type": "root.User Create Bulk Operation Result",
             },
           },
           "bulk_delete_tenants": {
@@ -155,12 +155,12 @@ exports[`open api parser permit simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Tenantdeletebulkoperation",
+              "name": "Tenant Delete Bulk Operation",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Tenantdeletebulkoperationresult",
+              "type": "root.Tenant Delete Bulk Operation Result",
             },
           },
           "bulk_delete_users": {
@@ -205,12 +205,12 @@ exports[`open api parser permit simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Userdeletebulkoperation",
+              "name": "User Delete Bulk Operation",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Userdeletebulkoperationresult",
+              "type": "root.User Delete Bulk Operation Result",
             },
           },
           "bulk_replace_users": {
@@ -251,16 +251,16 @@ exports[`open api parser permit simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "operations": "list<root.Usercreate>",
+                  "operations": "list<root.User Create>",
                 },
               },
               "headers": undefined,
-              "name": "Userreplacebulkoperation",
+              "name": "User Replace Bulk Operation",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Userreplacebulkoperationresult",
+              "type": "root.User Replace Bulk Operation Result",
             },
           },
         },
@@ -334,12 +334,12 @@ If the permission is already granted, it is skipped.",
                 },
               },
               "headers": undefined,
-              "name": "Conditionsetrulecreate",
+              "name": "Condition Set Rule Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Conditionsetruleread>",
+              "type": "list<root.Condition Set Rule Read>",
             },
           },
           "list_set_permissions": {
@@ -405,7 +405,7 @@ If the permission is already granted, it is skipped.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Conditionsetruleread>",
+              "type": "list<root.Condition Set Rule Read>",
             },
           },
           "unassign_set_permissions": {
@@ -455,7 +455,7 @@ If the permission is not granted, it is skipped.",
                 },
               },
               "headers": undefined,
-              "name": "Conditionsetruleremove",
+              "name": "Condition Set Rule Remove",
               "query-parameters": undefined,
             },
           },
@@ -536,17 +536,17 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                   "resource_id": "optional<string>",
                   "type": {
                     "docs": "the type of the set: UserSet or ResourceSet",
-                    "type": "optional<root.Conditionsettype>",
+                    "type": "optional<root.Condition Set Type>",
                   },
                 },
               },
               "headers": undefined,
-              "name": "Conditionsetcreate",
+              "name": "Condition Set Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Conditionsetread",
+              "type": "root.Condition Set Read",
             },
           },
           "delete_condition_set": {
@@ -612,7 +612,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Conditionsetread",
+              "type": "root.Condition Set Read",
             },
           },
           "get_condition_set_ancestors": {
@@ -668,7 +668,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Conditionsetread>",
+              "type": "list<root.Condition Set Read>",
             },
           },
           "get_condition_set_descendants": {
@@ -724,7 +724,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Conditionsetread>",
+              "type": "list<root.Condition Set Read>",
             },
           },
           "list_condition_sets": {
@@ -767,13 +767,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 },
                 "type": {
                   "docs": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
-                  "type": "optional<root.Conditionsettype>",
+                  "type": "optional<root.Condition Set Type>",
                 },
               },
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Responselistconditionsetsv2schemaprojidenvidconditionsetsget",
+              "type": "Response List Condition Sets V 2 Schema Proj Id Env Id Condition Sets Get",
             },
           },
           "update_condition_set": {
@@ -819,23 +819,23 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Conditionsetupdate",
+              "name": "Condition Set Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Conditionsetread",
+              "type": "root.Condition Set Read",
             },
           },
         },
       },
       "types": {
-        "Responselistconditionsetsv2schemaprojidenvidconditionsetsget": {
+        "Response List Condition Sets V 2 Schema Proj Id Env Id Condition Sets Get": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Paginatedresultconditionsetread",
-            "list<root.Conditionsetread>",
+            "root.Paginated Result Condition Set Read",
+            "list<root.Condition Set Read>",
           ],
         },
       },
@@ -898,25 +898,25 @@ allowed.",
                 "properties": {
                   "conflict_strategy": {
                     "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
-                    "type": "optional<Conflictstrategy>",
+                    "type": "optional<Conflict Strategy>",
                   },
                   "scope": {
                     "docs": "Filters to include and exclude copied objects",
-                    "type": "optional<root.Environmentcopyscope>",
+                    "type": "optional<root.Environment Copy Scope>",
                   },
                   "target_env": {
                     "docs": "If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier",
-                    "type": "root.Environmentcopytarget",
+                    "type": "root.Environment Copy Target",
                   },
                 },
               },
               "headers": undefined,
-              "name": "Environmentcopy",
+              "name": "Environment Copy",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Environmentread",
+              "type": "root.Environment Read",
             },
           },
           "create_environment": {
@@ -935,11 +935,11 @@ allowed.",
               },
             },
             "request": {
-              "body": "root.Environmentcreate",
+              "body": "root.Environment Create",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Environmentread",
+              "type": "root.Environment Read",
             },
           },
           "delete_environment": {
@@ -995,7 +995,7 @@ allowed.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Environmentread",
+              "type": "root.Environment Read",
             },
           },
           "list_environments": {
@@ -1041,7 +1041,7 @@ allowed.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Environmentread>",
+              "type": "list<root.Environment Read>",
             },
           },
           "stats_environments": {
@@ -1065,7 +1065,7 @@ allowed.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Environmentstats",
+              "type": "root.Environment Stats",
             },
           },
           "update_environment": {
@@ -1100,7 +1100,7 @@ allowed.",
                   },
                   "jwks": {
                     "docs": "jwks for element frontend only login",
-                    "type": "optional<root.Jwksobj>",
+                    "type": "optional<root.Jwks Obj>",
                   },
                   "name": {
                     "docs": "The name of the environment",
@@ -1113,18 +1113,18 @@ allowed.",
                 },
               },
               "headers": undefined,
-              "name": "Environmentupdate",
+              "name": "Environment Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Environmentread",
+              "type": "root.Environment Read",
             },
           },
         },
       },
       "types": {
-        "Conflictstrategy": {
+        "Conflict Strategy": {
           "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
           "enum": [
             "fail",
@@ -1177,12 +1177,12 @@ authenticated actor (i.e: human team member or api key).",
                 },
               },
               "headers": undefined,
-              "name": "Organizationcreate",
+              "name": "Organization Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Organizationreadwithapikey",
+              "type": "root.Organization Read With API Key",
             },
           },
           "delete_organization": {
@@ -1224,7 +1224,7 @@ if such org exists and can be accessed by the authenticated actor.",
             "path": "/v2/orgs/active/org",
             "response": {
               "docs": "Successful Response",
-              "type": "root.Organizationread",
+              "type": "root.Organization Read",
             },
           },
           "get_organization": {
@@ -1245,7 +1245,7 @@ if such org exists and can be accessed by the authenticated actor.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Organizationread",
+              "type": "root.Organization Read",
             },
           },
           "list_organizations": {
@@ -1284,7 +1284,7 @@ authenticated actor (i.e: human team member or api key).",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Organizationread>",
+              "type": "list<root.Organization Read>",
             },
           },
           "update_organization": {
@@ -1316,12 +1316,12 @@ authenticated actor (i.e: human team member or api key).",
                 },
               },
               "headers": undefined,
-              "name": "Organizationupdate",
+              "name": "Organization Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Organizationread",
+              "type": "root.Organization Read",
             },
           },
         },
@@ -1381,12 +1381,12 @@ Every project is a separate silo, and has its own unique set of environments and
                 },
               },
               "headers": undefined,
-              "name": "Projectcreate",
+              "name": "Project Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Projectread",
+              "type": "root.Project Read",
             },
           },
           "delete_project": {
@@ -1433,7 +1433,7 @@ Every project is a separate silo, and has its own unique set of environments and
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Projectread",
+              "type": "root.Project Read",
             },
           },
           "list_projects": {
@@ -1471,7 +1471,7 @@ Every project is a separate silo, and has its own unique set of environments and
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Projectread>",
+              "type": "list<root.Project Read>",
             },
           },
           "update_project": {
@@ -1511,12 +1511,12 @@ Every project is a separate silo, and has its own unique set of environments and
                 },
               },
               "headers": undefined,
-              "name": "Projectupdate",
+              "name": "Project Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Projectread",
+              "type": "root.Project Read",
             },
           },
         },
@@ -1581,12 +1581,12 @@ to a role as one action.
                 },
               },
               "headers": undefined,
-              "name": "Resourceactiongroupcreate",
+              "name": "Resource Action Group Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactiongroupread",
+              "type": "root.Resource Action Group Read",
             },
           },
           "delete_resource_action_group": {
@@ -1661,7 +1661,7 @@ This includes any permissions granted to perform the action.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactiongroupread",
+              "type": "root.Resource Action Group Read",
             },
           },
           "list_resource_action_groups": {
@@ -1717,7 +1717,7 @@ This includes any permissions granted to perform the action.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceactiongroupread>",
+              "type": "list<root.Resource Action Group Read>",
             },
           },
           "update_resource_action_group": {
@@ -1767,12 +1767,12 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceactiongroupupdate",
+              "name": "Resource Action Group Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactiongroupread",
+              "type": "root.Resource Action Group Read",
             },
           },
         },
@@ -1836,12 +1836,12 @@ Each (resource, action) pair defines a unique permission level.
                 },
               },
               "headers": undefined,
-              "name": "Resourceactioncreate",
+              "name": "Resource Action Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactionread",
+              "type": "root.Resource Action Read",
             },
           },
           "delete_resource_action": {
@@ -1916,7 +1916,7 @@ This includes any permissions granted to perform the action.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactionread",
+              "type": "root.Resource Action Read",
             },
           },
           "list_resource_actions": {
@@ -1972,7 +1972,7 @@ This includes any permissions granted to perform the action.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceactionread>",
+              "type": "list<root.Resource Action Read>",
             },
           },
           "update_resource_action": {
@@ -2021,12 +2021,12 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceactionupdate",
+              "name": "Resource Action Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceactionread",
+              "type": "root.Resource Action Read",
             },
           },
         },
@@ -2075,11 +2075,11 @@ define a boolean \`private\` attributes that we can now use in our policies.
               },
             },
             "request": {
-              "body": "root.Resourceattributecreate",
+              "body": "root.Resource Attribute Create",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
           "delete_resource_attribute": {
@@ -2169,7 +2169,7 @@ attribute to evaluate as \`undefined\`.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
           "list_resource_attributes": {
@@ -2225,7 +2225,7 @@ attribute to evaluate as \`undefined\`.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceattributeread>",
+              "type": "list<root.Resource Attribute Read>",
             },
           },
           "update_resource_attribute": {
@@ -2257,11 +2257,11 @@ Fields that will be provided will be completely overwritten.",
               },
             },
             "request": {
-              "body": "root.Resourceattributeupdate",
+              "body": "root.Resource Attribute Update",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
         },
@@ -2326,12 +2326,12 @@ and will return the existing instance object in the response body.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceinstancecreate",
+              "name": "Resource Instance Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceinstanceread",
+              "type": "root.Resource Instance Read",
             },
           },
           "delete_resource_instance": {
@@ -2396,7 +2396,7 @@ and will return the existing instance object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceinstanceread",
+              "type": "root.Resource Instance Read",
             },
           },
           "list_resource_instances": {
@@ -2447,7 +2447,7 @@ and will return the existing instance object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceinstanceread>",
+              "type": "list<root.Resource Instance Read>",
             },
           },
           "update_resource_instance": {
@@ -2484,12 +2484,12 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceinstanceupdate",
+              "name": "Resource Instance Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceinstanceread",
+              "type": "root.Resource Instance Read",
             },
           },
         },
@@ -2544,11 +2544,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "request": {
-              "body": "root.Addrolepermissions",
+              "body": "root.Add Role Permissions",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceroleread",
+              "type": "root.Resource Role Read",
             },
           },
           "create_resource_role": {
@@ -2604,12 +2604,12 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
               },
               "headers": undefined,
-              "name": "Resourcerolecreate",
+              "name": "Resource Role Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceroleread",
+              "type": "root.Resource Role Read",
             },
           },
           "delete_resource_role": {
@@ -2684,7 +2684,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceroleread",
+              "type": "root.Resource Role Read",
             },
           },
           "get_resource_role_ancestors": {
@@ -2716,7 +2716,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourcerolelist",
+              "type": "root.Resource Role List",
             },
           },
           "get_resource_role_descendants": {
@@ -2748,7 +2748,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourcerolelist",
+              "type": "root.Resource Role List",
             },
           },
           "list_resource_roles": {
@@ -2804,7 +2804,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceroleread>",
+              "type": "list<root.Resource Role Read>",
             },
           },
           "remove_permissions_from_resource_role": {
@@ -2837,11 +2837,11 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "request": {
-              "body": "root.Removerolepermissions",
+              "body": "root.Remove Role Permissions",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceroleread",
+              "type": "root.Resource Role Read",
             },
           },
           "update_resource_role": {
@@ -2898,12 +2898,12 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceroleupdate",
+              "name": "Resource Role Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceroleread",
+              "type": "root.Resource Role Read",
             },
           },
         },
@@ -2958,11 +2958,11 @@ A resource may also contain:
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                    "type": "map<string, root.Actionblockeditable>",
+                    "type": "map<string, root.Action Block Editable>",
                   },
                   "attributes": {
                     "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                    "type": "optional<map<string, root.Attributeblockeditable>>",
+                    "type": "optional<map<string, root.Attribute Block Editable>>",
                   },
                   "description": {
                     "docs": "An optional longer description of what this resource respresents in your system",
@@ -2983,12 +2983,12 @@ A resource may also contain:
                 },
               },
               "headers": undefined,
-              "name": "Resourcecreate",
+              "name": "Resource Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceread",
+              "type": "root.Resource Read",
             },
           },
           "delete_resource": {
@@ -3053,7 +3053,7 @@ A resource may also contain:
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceread",
+              "type": "root.Resource Read",
             },
           },
           "list_resources": {
@@ -3102,7 +3102,7 @@ A resource may also contain:
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Responselistresourcesv2schemaprojidenvidresourcesget",
+              "type": "Response List Resources V 2 Schema Proj Id Env Id Resources Get",
             },
           },
           "replace_resource": {
@@ -3142,11 +3142,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                    "type": "map<string, root.Actionblockeditable>",
+                    "type": "map<string, root.Action Block Editable>",
                   },
                   "attributes": {
                     "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                    "type": "optional<map<string, root.Attributeblockeditable>>",
+                    "type": "optional<map<string, root.Attribute Block Editable>>",
                   },
                   "description": {
                     "docs": "An optional longer description of what this resource respresents in your system",
@@ -3163,12 +3163,12 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 },
               },
               "headers": undefined,
-              "name": "Resourcereplace",
+              "name": "Resource Replace",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceread",
+              "type": "root.Resource Read",
             },
           },
           "update_resource": {
@@ -3203,11 +3203,11 @@ Fields that will be provided will be completely overwritten.",
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                    "type": "optional<map<string, root.Actionblockeditable>>",
+                    "type": "optional<map<string, root.Action Block Editable>>",
                   },
                   "attributes": {
                     "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                    "type": "optional<map<string, root.Attributeblockeditable>>",
+                    "type": "optional<map<string, root.Attribute Block Editable>>",
                   },
                   "description": {
                     "docs": "An optional longer description of what this resource respresents in your system",
@@ -3224,23 +3224,23 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Resourceupdate",
+              "name": "Resource Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceread",
+              "type": "root.Resource Read",
             },
           },
         },
       },
       "types": {
-        "Responselistresourcesv2schemaprojidenvidresourcesget": {
+        "Response List Resources V 2 Schema Proj Id Env Id Resources Get": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Paginatedresultresourceread",
-            "list<root.Resourceread>",
+            "root.Paginated Result Resource Read",
+            "list<root.Resource Read>",
           ],
         },
       },
@@ -3282,11 +3282,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "request": {
-              "body": "root.Roleassignmentcreate",
+              "body": "root.Role Assignment Create",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleassignmentread",
+              "type": "root.Role Assignment Read",
             },
           },
           "bulk_assign_role": {
@@ -3323,11 +3323,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "request": {
-              "body": "list<root.Roleassignmentcreate>",
+              "body": "list<root.Role Assignment Create>",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Bulkroleassignmentreport",
+              "type": "root.Bulk Role Assignment Report",
             },
           },
           "bulk_unassign_role": {
@@ -3364,11 +3364,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "request": {
-              "body": "list<root.Roleassignmentremove>",
+              "body": "list<root.Role Assignment Remove>",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Bulkroleunassignmentreport",
+              "type": "root.Bulk Role Un Assignment Report",
             },
           },
           "list_role_assignments": {
@@ -3435,7 +3435,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Roleassignmentread>",
+              "type": "list<root.Role Assignment Read>",
             },
           },
           "unassign_role": {
@@ -3462,7 +3462,7 @@ If the role is not actually assigned, will return 404.",
               },
             },
             "request": {
-              "body": "root.Roleassignmentremove",
+              "body": "root.Role Assignment Remove",
             },
           },
         },
@@ -3512,11 +3512,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "request": {
-              "body": "root.Addrolepermissions",
+              "body": "root.Add Role Permissions",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleread",
+              "type": "root.Role Read",
             },
           },
           "create_role": {
@@ -3568,12 +3568,12 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
               },
               "headers": undefined,
-              "name": "Rolecreate",
+              "name": "Role Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleread",
+              "type": "root.Role Read",
             },
           },
           "delete_role": {
@@ -3639,7 +3639,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleread",
+              "type": "root.Role Read",
             },
           },
           "get_role_ancestors": {
@@ -3667,7 +3667,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Rolelist",
+              "type": "root.Role List",
             },
           },
           "get_role_descendants": {
@@ -3695,7 +3695,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Rolelist",
+              "type": "root.Role List",
             },
           },
           "list_roles": {
@@ -3740,7 +3740,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Responselistrolesv2schemaprojidenvidrolesget",
+              "type": "Response List Roles V 2 Schema Proj Id Env Id Roles Get",
             },
           },
           "remove_permissions_from_role": {
@@ -3769,11 +3769,11 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "request": {
-              "body": "root.Removerolepermissions",
+              "body": "root.Remove Role Permissions",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleread",
+              "type": "root.Role Read",
             },
           },
           "update_role": {
@@ -3826,23 +3826,23 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Roleupdate",
+              "name": "Role Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleread",
+              "type": "root.Role Read",
             },
           },
         },
       },
       "types": {
-        "Responselistrolesv2schemaprojidenvidrolesget": {
+        "Response List Roles V 2 Schema Proj Id Env Id Roles Get": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Paginatedresultroleread",
-            "list<root.Roleread>",
+            "root.Paginated Result Role Read",
+            "list<root.Role Read>",
           ],
         },
       },
@@ -3890,11 +3890,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "request": {
-              "body": "root.Tenantcreate",
+              "body": "root.Tenant Create",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Tenantread",
+              "type": "root.Tenant Read",
             },
           },
           "delete_tenant": {
@@ -4001,7 +4001,7 @@ and will return the existing tenant object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Tenantread",
+              "type": "root.Tenant Read",
             },
           },
           "list_tenant_users": {
@@ -4050,7 +4050,7 @@ and will return the existing tenant object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Paginatedresultuserread",
+              "type": "root.Paginated Result User Read",
             },
           },
           "list_tenants": {
@@ -4095,7 +4095,7 @@ and will return the existing tenant object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Responselisttenantsv2factsprojidenvidtenantsget",
+              "type": "Response List Tenants V 2 Facts Proj Id Env Id Tenants Get",
             },
           },
           "update_tenant": {
@@ -4140,23 +4140,23 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Tenantupdate",
+              "name": "Tenant Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Tenantread",
+              "type": "root.Tenant Read",
             },
           },
         },
       },
       "types": {
-        "Responselisttenantsv2factsprojidenvidtenantsget": {
+        "Response List Tenants V 2 Facts Proj Id Env Id Tenants Get": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Paginatedresulttenantread",
-            "list<root.Tenantread>",
+            "root.Paginated Result Tenant Read",
+            "list<root.Tenant Read>",
           ],
         },
       },
@@ -4202,7 +4202,7 @@ define a string \`owner\` attribute that we can now use in our policies.
               },
             },
             "request": {
-              "body": "root.Resourceattributecreate",
+              "body": "root.Resource Attribute Create",
               "name": "CreateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": "optional<string>",
@@ -4210,7 +4210,7 @@ define a string \`owner\` attribute that we can now use in our policies.
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
           "delete_user_attribute": {
@@ -4298,7 +4298,7 @@ attribute to evaluate as \`undefined\`.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
           "list_user_attributes": {
@@ -4350,7 +4350,7 @@ attribute to evaluate as \`undefined\`.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "list<root.Resourceattributeread>",
+              "type": "list<root.Resource Attribute Read>",
             },
           },
           "update_user_attribute": {
@@ -4378,7 +4378,7 @@ Fields that will be provided will be completely overwritten.",
               },
             },
             "request": {
-              "body": "root.Resourceattributeupdate",
+              "body": "root.Resource Attribute Update",
               "name": "UpdateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": "optional<string>",
@@ -4386,7 +4386,7 @@ Fields that will be provided will be completely overwritten.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Resourceattributeread",
+              "type": "root.Resource Attribute Read",
             },
           },
         },
@@ -4449,12 +4449,12 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                 },
               },
               "headers": undefined,
-              "name": "Userrolecreate",
+              "name": "User Role Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Roleassignmentread",
+              "type": "root.Role Assignment Read",
             },
           },
           "create_user": {
@@ -4481,11 +4481,11 @@ and will return the existing user object in the response body.",
               },
             },
             "request": {
-              "body": "root.Usercreate",
+              "body": "root.User Create",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Userread",
+              "type": "root.User Read",
             },
           },
           "delete_user": {
@@ -4550,7 +4550,7 @@ and will return the existing user object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Userread",
+              "type": "root.User Read",
             },
           },
           "list_users": {
@@ -4595,7 +4595,7 @@ and will return the existing user object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Paginatedresultuserread",
+              "type": "root.Paginated Result User Read",
             },
           },
           "replace_user": {
@@ -4622,11 +4622,11 @@ and will return the existing user object in the response body.",
               },
             },
             "request": {
-              "body": "root.Usercreate",
+              "body": "root.User Create",
             },
             "response": {
               "docs": "An existing user was replaced",
-              "type": "root.Userread",
+              "type": "root.User Read",
             },
           },
           "unassign_role_from_user": {
@@ -4670,7 +4670,7 @@ If the role is not actually assigned, will return 404.",
                 },
               },
               "headers": undefined,
-              "name": "Userroleremove",
+              "name": "User Role Remove",
               "query-parameters": undefined,
             },
           },
@@ -4720,12 +4720,12 @@ Fields that will be provided will be completely overwritten.",
                 },
               },
               "headers": undefined,
-              "name": "Userupdate",
+              "name": "User Update",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.Userread",
+              "type": "root.User Read",
             },
           },
         },
@@ -4736,11 +4736,11 @@ Fields that will be provided will be completely overwritten.",
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "Httpvalidationerror",
+        "type": "HTTP Validation Error",
       },
     },
     "types": {
-      "Actionblockeditable": {
+      "Action Block Editable": {
         "docs": undefined,
         "properties": {
           "attributes": "optional<map<string, unknown>>",
@@ -4754,7 +4754,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Actionblockread": {
+      "Action Block Read": {
         "docs": undefined,
         "properties": {
           "attributes": "optional<map<string, unknown>>",
@@ -4776,7 +4776,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Addrolepermissions": {
+      "Add Role Permissions": {
         "docs": undefined,
         "properties": {
           "permissions": {
@@ -4785,7 +4785,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Attributeblockeditable": {
+      "Attribute Block Editable": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -4794,11 +4794,11 @@ Fields that will be provided will be completely overwritten.",
           },
           "type": {
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-            "type": "Attributetype",
+            "type": "Attribute Type",
           },
         },
       },
-      "Attributeblockread": {
+      "Attribute Block Read": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -4815,11 +4815,11 @@ Fields that will be provided will be completely overwritten.",
           },
           "type": {
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-            "type": "Attributetype",
+            "type": "Attribute Type",
           },
         },
       },
-      "Attributetype": {
+      "Attribute Type": {
         "docs": "supported attribute primitives",
         "enum": [
           "bool",
@@ -4830,19 +4830,19 @@ Fields that will be provided will be completely overwritten.",
           "json",
         ],
       },
-      "Bulkroleassignmentreport": {
+      "Bulk Role Assignment Report": {
         "docs": undefined,
         "properties": {
           "assignments_created": "optional<integer>",
         },
       },
-      "Bulkroleunassignmentreport": {
+      "Bulk Role Un Assignment Report": {
         "docs": undefined,
         "properties": {
           "assignments_removed": "optional<integer>",
         },
       },
-      "Conditionsetread": {
+      "Condition Set Read": {
         "docs": undefined,
         "properties": {
           "autogenerated": {
@@ -4886,11 +4886,11 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Unique id of the project that the condition set belongs to.",
             "type": "string",
           },
-          "resource": "optional<Resourceread>",
+          "resource": "optional<Resource Read>",
           "resource_id": "optional<string>",
           "type": {
             "docs": "the type of the set: UserSet or ResourceSet",
-            "type": "optional<Conditionsettype>",
+            "type": "optional<Condition Set Type>",
           },
           "updated_at": {
             "docs": "Date and time when the condition set was last updated/modified (ISO_8601 format).",
@@ -4898,7 +4898,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Conditionsetruleread": {
+      "Condition Set Rule Read": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -4943,35 +4943,35 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Conditionsettype": {
+      "Condition Set Type": {
         "docs": "An enumeration.",
         "enum": [
           "userset",
           "resourceset",
         ],
       },
-      "Environmentcopyscope": {
+      "Environment Copy Scope": {
         "docs": undefined,
         "properties": {
           "resource_sets": {
             "docs": "Resource sets to copy",
-            "type": "optional<Environmentcopyscopefilters>",
+            "type": "optional<Environment Copy Scope Filters>",
           },
           "resources": {
             "docs": "Resources to copy",
-            "type": "optional<Environmentcopyscopefilters>",
+            "type": "optional<Environment Copy Scope Filters>",
           },
           "roles": {
             "docs": "Roles to copy",
-            "type": "optional<Environmentcopyscopefilters>",
+            "type": "optional<Environment Copy Scope Filters>",
           },
           "user_sets": {
             "docs": "User sets to copy",
-            "type": "optional<Environmentcopyscopefilters>",
+            "type": "optional<Environment Copy Scope Filters>",
           },
         },
       },
-      "Environmentcopyscopefilters": {
+      "Environment Copy Scope Filters": {
         "docs": undefined,
         "properties": {
           "exclude": {
@@ -4984,7 +4984,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Environmentcopytarget": {
+      "Environment Copy Target": {
         "docs": undefined,
         "properties": {
           "existing": {
@@ -4993,11 +4993,11 @@ Fields that will be provided will be completely overwritten.",
           },
           "new": {
             "docs": "Description of the environment to create. This environment must not already exist.",
-            "type": "optional<Environmentcreate>",
+            "type": "optional<Environment Create>",
           },
         },
       },
-      "Environmentcreate": {
+      "Environment Create": {
         "docs": undefined,
         "properties": {
           "custom_branch_name": {
@@ -5010,7 +5010,7 @@ Fields that will be provided will be completely overwritten.",
           },
           "jwks": {
             "docs": "jwks for element frontend only login",
-            "type": "optional<Jwksobj>",
+            "type": "optional<Jwks Obj>",
           },
           "key": {
             "docs": "A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.",
@@ -5026,7 +5026,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Environmentread": {
+      "Environment Read": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -5047,7 +5047,7 @@ Fields that will be provided will be completely overwritten.",
           },
           "jwks": {
             "docs": "jwks for element frontend only login",
-            "type": "optional<Jwksobj>",
+            "type": "optional<Jwks Obj>",
           },
           "key": {
             "docs": "A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.",
@@ -5075,7 +5075,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Environmentstats": {
+      "Environment Stats": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -5096,7 +5096,7 @@ Fields that will be provided will be completely overwritten.",
           },
           "jwks": {
             "docs": "jwks for element frontend only login",
-            "type": "optional<Jwksobj>",
+            "type": "optional<Jwks Obj>",
           },
           "key": {
             "docs": "A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.",
@@ -5110,7 +5110,7 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Unique id of the organization that the environment belongs to.",
             "type": "string",
           },
-          "pdp_configs": "list<Pdpconfigread>",
+          "pdp_configs": "list<PDP Config Read>",
           "project_id": {
             "docs": "Unique id of the project that the environment belongs to.",
             "type": "string",
@@ -5126,13 +5126,13 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Httpvalidationerror": {
+      "HTTP Validation Error": {
         "docs": undefined,
         "properties": {
-          "detail": "optional<list<Validationerror>>",
+          "detail": "optional<list<Validation Error>>",
         },
       },
-      "Identityread": {
+      "Identity Read": {
         "docs": undefined,
         "properties": {
           "auth0_info": {
@@ -5161,7 +5161,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Inviteread": {
+      "Invite Read": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -5194,15 +5194,15 @@ Fields that will be provided will be completely overwritten.",
           },
           "role": {
             "docs": "The role the member will be assigned with",
-            "type": "optional<Memberaccesslevel>",
+            "type": "optional<Member Access Level>",
           },
           "status": {
             "docs": "The status of the invite (pending, failed, etc)",
-            "type": "Invitestatus",
+            "type": "Invite Status",
           },
         },
       },
-      "Invitestatus": {
+      "Invite Status": {
         "docs": "An enumeration.",
         "enum": [
           "pending",
@@ -5211,7 +5211,7 @@ Fields that will be provided will be completely overwritten.",
           "canceled",
         ],
       },
-      "Jwksobj": {
+      "Jwks Obj": {
         "docs": undefined,
         "properties": {
           "keys": {
@@ -5220,7 +5220,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Memberaccesslevel": {
+      "Member Access Level": {
         "docs": "An enumeration.",
         "enum": [
           "admin",
@@ -5229,7 +5229,7 @@ Fields that will be provided will be completely overwritten.",
           "no_access",
         ],
       },
-      "Memberaccessobj": {
+      "Member Access Obj": {
         "docs": "An enumeration.",
         "enum": [
           "org",
@@ -5237,7 +5237,7 @@ Fields that will be provided will be completely overwritten.",
           "env",
         ],
       },
-      "Onboardingstep": {
+      "Onboarding Step": {
         "docs": "An enumeration.",
         "enum": [
           "create_organization",
@@ -5250,7 +5250,75 @@ Fields that will be provided will be completely overwritten.",
           "done",
         ],
       },
-      "Organizationread": {
+      "Org Member Read With Grants": {
+        "docs": undefined,
+        "properties": {
+          "created_at": {
+            "docs": "Date and time when the account member was created (ISO_8601 format).",
+            "type": "datetime",
+          },
+          "email": {
+            "docs": "Email of the user controlling this account",
+            "type": "string",
+          },
+          "email_verified": {
+            "docs": "Whether this email address is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.",
+            "type": "boolean",
+          },
+          "family_name": {
+            "docs": "Last name of the user",
+            "type": "optional<string>",
+          },
+          "given_name": {
+            "docs": "First name of the user",
+            "type": "optional<string>",
+          },
+          "grants": "list<Permission>",
+          "id": {
+            "docs": "Unique id of the account member",
+            "type": "string",
+          },
+          "identities": "list<Identity Read>",
+          "invite": "optional<Invite Read>",
+          "is_onboarding": {
+            "docs": "Whether or not this user is currently onboarding, needs to be replaced by a user journey object",
+            "type": "boolean",
+          },
+          "is_superuser": {
+            "docs": "Whether or not this user has special access to permit.io organizations",
+            "type": "boolean",
+          },
+          "last_ip": {
+            "docs": "Last IP address from which this user logged in.",
+            "type": "optional<string>",
+          },
+          "last_login": {
+            "docs": "Last date and time this user logged in (ISO_8601 format).",
+            "type": "optional<datetime>",
+          },
+          "logins_count": {
+            "docs": "Total number of logins this user has performed.",
+            "type": "optional<integer>",
+          },
+          "name": {
+            "docs": "Name of this user",
+            "type": "optional<string>",
+          },
+          "onboarding_step": {
+            "docs": "the step the user is currently going through in onboarding",
+            "type": "Onboarding Step",
+          },
+          "picture": {
+            "docs": "URL to picture, photo, or avatar of the user that controls this account.",
+            "type": "optional<string>",
+          },
+          "settings": {
+            "docs": "Custom permit.io dashboard settings, such as preferred theme, etc.",
+            "type": "map<string, unknown>",
+          },
+        },
+      },
+      "Organization Read": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -5283,7 +5351,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Organizationreadwithapikey": {
+      "Organization Read With API Key": {
         "docs": undefined,
         "properties": {
           "api_key_id": "optional<string>",
@@ -5318,141 +5386,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "Orgmemberreadwithgrants": {
-        "docs": undefined,
-        "properties": {
-          "created_at": {
-            "docs": "Date and time when the account member was created (ISO_8601 format).",
-            "type": "datetime",
-          },
-          "email": {
-            "docs": "Email of the user controlling this account",
-            "type": "string",
-          },
-          "email_verified": {
-            "docs": "Whether this email address is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.",
-            "type": "boolean",
-          },
-          "family_name": {
-            "docs": "Last name of the user",
-            "type": "optional<string>",
-          },
-          "given_name": {
-            "docs": "First name of the user",
-            "type": "optional<string>",
-          },
-          "grants": "list<Permission>",
-          "id": {
-            "docs": "Unique id of the account member",
-            "type": "string",
-          },
-          "identities": "list<Identityread>",
-          "invite": "optional<Inviteread>",
-          "is_onboarding": {
-            "docs": "Whether or not this user is currently onboarding, needs to be replaced by a user journey object",
-            "type": "boolean",
-          },
-          "is_superuser": {
-            "docs": "Whether or not this user has special access to permit.io organizations",
-            "type": "boolean",
-          },
-          "last_ip": {
-            "docs": "Last IP address from which this user logged in.",
-            "type": "optional<string>",
-          },
-          "last_login": {
-            "docs": "Last date and time this user logged in (ISO_8601 format).",
-            "type": "optional<datetime>",
-          },
-          "logins_count": {
-            "docs": "Total number of logins this user has performed.",
-            "type": "optional<integer>",
-          },
-          "name": {
-            "docs": "Name of this user",
-            "type": "optional<string>",
-          },
-          "onboarding_step": {
-            "docs": "the step the user is currently going through in onboarding",
-            "type": "Onboardingstep",
-          },
-          "picture": {
-            "docs": "URL to picture, photo, or avatar of the user that controls this account.",
-            "type": "optional<string>",
-          },
-          "settings": {
-            "docs": "Custom permit.io dashboard settings, such as preferred theme, etc.",
-            "type": "map<string, unknown>",
-          },
-        },
-      },
-      "Paginatedresultconditionsetread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Condition Sets",
-            "type": "list<Conditionsetread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Paginatedresultresourceread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Resources",
-            "type": "list<Resourceread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Paginatedresultresourceroleread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Resource Roles",
-            "type": "list<Resourceroleread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Paginatedresultroleread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Roles",
-            "type": "list<Roleread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Paginatedresulttenantread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Tenants",
-            "type": "list<Tenantread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Paginatedresultuserread": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": "List of Users",
-            "type": "list<Userread>",
-          },
-          "page_count": "optional<integer>",
-          "total_count": "integer",
-        },
-      },
-      "Pdpconfigread": {
+      "PDP Config Read": {
         "docs": undefined,
         "properties": {
           "client_secret": "string",
@@ -5472,14 +5406,80 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
+      "Paginated Result Condition Set Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Condition Sets",
+            "type": "list<Condition Set Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
+      "Paginated Result Resource Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Resources",
+            "type": "list<Resource Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
+      "Paginated Result Resource Role Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Resource Roles",
+            "type": "list<Resource Role Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
+      "Paginated Result Role Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Roles",
+            "type": "list<Role Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
+      "Paginated Result Tenant Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Tenants",
+            "type": "list<Tenant Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
+      "Paginated Result User Read": {
+        "docs": undefined,
+        "properties": {
+          "data": {
+            "docs": "List of Users",
+            "type": "list<User Read>",
+          },
+          "page_count": "optional<integer>",
+          "total_count": "integer",
+        },
+      },
       "Permission": {
         "docs": undefined,
         "properties": {
-          "access_level": "Memberaccesslevel",
+          "access_level": "Member Access Level",
           "environment_id": "optional<string>",
           "environment_key": "optional<string>",
           "environment_name": "optional<string>",
-          "object_type": "Memberaccessobj",
+          "object_type": "Member Access Obj",
           "organization_id": "string",
           "organization_key": "optional<string>",
           "organization_name": "optional<string>",
@@ -5488,7 +5488,7 @@ Fields that will be provided will be completely overwritten.",
           "project_name": "optional<string>",
         },
       },
-      "Projectread": {
+      "Project Read": {
         "docs": undefined,
         "properties": {
           "active_policy_repo_id": {
@@ -5538,7 +5538,7 @@ Fields that will be provided will be completely overwritten.",
 The actions represents the ways you can interact with a protected resource.",
         "type": "map<string, unknown>",
       },
-      "Removerolepermissions": {
+      "Remove Role Permissions": {
         "docs": undefined,
         "properties": {
           "permissions": {
@@ -5547,7 +5547,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourceactiongroupread": {
+      "Resource Action Group Read": {
         "docs": undefined,
         "properties": {
           "actions": "optional<list<string>>",
@@ -5597,7 +5597,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourceactionread": {
+      "Resource Action Read": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -5650,7 +5650,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourceattributecreate": {
+      "Resource Attribute Create": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -5663,11 +5663,11 @@ The actions represents the ways you can interact with a protected resource.",
           },
           "type": {
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-            "type": "Attributetype",
+            "type": "Attribute Type",
           },
         },
       },
-      "Resourceattributeread": {
+      "Resource Attribute Read": {
         "docs": undefined,
         "properties": {
           "built_in": {
@@ -5712,7 +5712,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
           "type": {
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-            "type": "Attributetype",
+            "type": "Attribute Type",
           },
           "updated_at": {
             "docs": "Date and time when the attribute was last updated/modified (ISO_8601 format).",
@@ -5720,7 +5720,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourceattributeupdate": {
+      "Resource Attribute Update": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -5729,11 +5729,11 @@ The actions represents the ways you can interact with a protected resource.",
           },
           "type": {
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-            "type": "optional<Attributetype>",
+            "type": "optional<Attribute Type>",
           },
         },
       },
-      "Resourceinstanceread": {
+      "Resource Instance Read": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -5786,7 +5786,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourceread": {
+      "Resource Read": {
         "docs": undefined,
         "properties": {
           "action_groups": "optional<map<string, list<string>>>",
@@ -5795,11 +5795,11 @@ The actions represents the ways you can interact with a protected resource.",
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-            "type": "optional<map<string, Actionblockread>>",
+            "type": "optional<map<string, Action Block Read>>",
           },
           "attributes": {
             "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-            "type": "optional<map<string, Attributeblockread>>",
+            "type": "optional<map<string, Attribute Block Read>>",
           },
           "created_at": {
             "docs": "Date and time when the resource was created (ISO_8601 format).",
@@ -5843,13 +5843,13 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Resourcerolelist": {
+      "Resource Role List": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
         },
       },
-      "Resourceroleread": {
+      "Resource Role Read": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -5906,7 +5906,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Roleassignmentcreate": {
+      "Role Assignment Create": {
         "docs": undefined,
         "properties": {
           "role": {
@@ -5923,7 +5923,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Roleassignmentread": {
+      "Role Assignment Read": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -5972,7 +5972,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Roleassignmentremove": {
+      "Role Assignment Remove": {
         "docs": undefined,
         "properties": {
           "role": {
@@ -5989,7 +5989,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Roleblock": {
+      "Role Block": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -6002,13 +6002,13 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Rolelist": {
+      "Role List": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
         },
       },
-      "Roleread": {
+      "Role Read": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -6065,8 +6065,8 @@ The actions represents the ways you can interact with a protected resource.",
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "list<Roleread>",
-          "Paginatedresultroleread",
+          "list<Role Read>",
+          "Paginated Result Role Read",
         ],
       },
       "RolesBlock": {
@@ -6077,7 +6077,7 @@ The actions represents the ways you can interact with a protected resource.",
         "docs": undefined,
         "properties": {
           "has_decision_logs": "boolean",
-          "members": "list<Orgmemberreadwithgrants>",
+          "members": "list<Org Member Read With Grants>",
           "policies": "integer",
           "resources": "integer",
           "roles": "integer",
@@ -6085,7 +6085,7 @@ The actions represents the ways you can interact with a protected resource.",
           "users": "integer",
         },
       },
-      "Tenantcreate": {
+      "Tenant Create": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -6106,15 +6106,15 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Tenantcreatebulkoperationresult": {
+      "Tenant Create Bulk Operation Result": {
         "docs": undefined,
         "properties": {},
       },
-      "Tenantdeletebulkoperationresult": {
+      "Tenant Delete Bulk Operation Result": {
         "docs": undefined,
         "properties": {},
       },
-      "Tenantread": {
+      "Tenant Read": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -6163,7 +6163,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Usercreate": {
+      "User Create": {
         "docs": undefined,
         "properties": {
           "attributes": {
@@ -6188,15 +6188,15 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Usercreatebulkoperationresult": {
+      "User Create Bulk Operation Result": {
         "docs": undefined,
         "properties": {},
       },
-      "Userdeletebulkoperationresult": {
+      "User Delete Bulk Operation Result": {
         "docs": undefined,
         "properties": {},
       },
-      "Userintenant": {
+      "User In Tenant": {
         "docs": undefined,
         "properties": {
           "roles": {
@@ -6205,7 +6205,7 @@ The actions represents the ways you can interact with a protected resource.",
           },
           "status": {
             "docs": "Whether the user has signed in or not",
-            "type": "Userstatus",
+            "type": "User Status",
           },
           "tenant": {
             "docs": "The tenant key which the user is associated with",
@@ -6213,10 +6213,10 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Userread": {
+      "User Read": {
         "docs": undefined,
         "properties": {
-          "associated_tenants": "optional<list<Userintenant>>",
+          "associated_tenants": "optional<list<User In Tenant>>",
           "attributes": {
             "docs": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
             "type": "optional<map<string, unknown>>",
@@ -6253,14 +6253,14 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "Unique id of the project that the user belongs to.",
             "type": "string",
           },
-          "roles": "optional<list<Userrole>>",
+          "roles": "optional<list<User Role>>",
         },
       },
-      "Userreplacebulkoperationresult": {
+      "User Replace Bulk Operation Result": {
         "docs": undefined,
         "properties": {},
       },
-      "Userrole": {
+      "User Role": {
         "docs": undefined,
         "properties": {
           "role": {
@@ -6273,12 +6273,20 @@ The actions represents the ways you can interact with a protected resource.",
           },
         },
       },
-      "Userstatus": {
+      "User Status": {
         "docs": "An enumeration.",
         "enum": [
           "active",
           "pending",
         ],
+      },
+      "Validation Error": {
+        "docs": undefined,
+        "properties": {
+          "loc": "list<ValidationErrorLocItem>",
+          "msg": "string",
+          "type": "string",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
@@ -6287,14 +6295,6 @@ The actions represents the ways you can interact with a protected resource.",
           "string",
           "integer",
         ],
-      },
-      "Validationerror": {
-        "docs": undefined,
-        "properties": {
-          "loc": "list<ValidationErrorLocItem>",
-          "msg": "string",
-          "type": "string",
-        },
       },
     },
   },

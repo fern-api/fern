@@ -126,7 +126,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Predictagent",
+              "name": "Predict Agent",
               "query-parameters": undefined,
             },
             "response": {
@@ -161,7 +161,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Apitoken",
+              "name": "Api Token",
               "query-parameters": undefined,
             },
             "response": {
@@ -242,7 +242,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Signin",
+              "name": "Sign In",
               "query-parameters": undefined,
             },
             "response": {
@@ -269,7 +269,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Signup",
+              "name": "Sign Up",
               "query-parameters": undefined,
             },
             "response": {
@@ -613,14 +613,22 @@ exports[`open api parser superagent simple 1`] = `
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "Httpvalidationerror",
+        "type": "HTTP Validation Error",
       },
     },
     "types": {
-      "Httpvalidationerror": {
+      "HTTP Validation Error": {
         "docs": undefined,
         "properties": {
-          "detail": "optional<list<Validationerror>>",
+          "detail": "optional<list<Validation Error>>",
+        },
+      },
+      "Validation Error": {
+        "docs": undefined,
+        "properties": {
+          "loc": "list<ValidationErrorLocItem>",
+          "msg": "string",
+          "type": "string",
         },
       },
       "ValidationErrorLocItem": {
@@ -630,14 +638,6 @@ exports[`open api parser superagent simple 1`] = `
           "string",
           "integer",
         ],
-      },
-      "Validationerror": {
-        "docs": undefined,
-        "properties": {
-          "loc": "list<ValidationErrorLocItem>",
-          "msg": "string",
-          "type": "string",
-        },
       },
     },
   },

@@ -445,7 +445,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "refreshedAt": "string",
           "thirdParties": {
             "docs": "",
-            "type": "list<Thirdparty>",
+            "type": "list<Third Party>",
           },
           "type": "PolicyType",
         },
@@ -468,14 +468,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "Indicates whether the operation was performed successfully.",
         "type": "boolean",
       },
-      "ThirdPartyType": {
-        "enum": [
-          "lienholder",
-          "lessor",
-          "interest",
-        ],
-      },
-      "Thirdparty": {
+      "Third Party": {
         "docs": undefined,
         "properties": {
           "address": "optional<Address>",
@@ -483,6 +476,13 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "ThirdPartyType",
         },
+      },
+      "ThirdPartyType": {
+        "enum": [
+          "lienholder",
+          "lessor",
+          "interest",
+        ],
       },
       "User": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
