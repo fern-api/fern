@@ -1,10 +1,13 @@
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
+import { EnumSchema } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import { getExtension } from "../extensions/getExtension";
+import { convertSchemaWithExampleToSchema } from "../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../utils/isReferenceObject";
+import { convertEnum } from "./schema/convertEnum";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject
@@ -39,9 +42,43 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
             tokenVariableName: undefined
         });
     } else if (securityScheme.type === "oauth2") {
-        return SecurityScheme.bearer({
-            tokenVariableName: undefined
+        return SecurityScheme.oauth({
+            scopesEnum: getScopes(securityScheme)
         });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
+}
+
+function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme): EnumSchema | undefined {
+    const scopes =
+        oauthSecurityScheme.flows.authorizationCode?.scopes ??
+        oauthSecurityScheme.flows.clientCredentials?.scopes ??
+        oauthSecurityScheme.flows.implicit?.scopes ??
+        oauthSecurityScheme.flows.password?.scopes;
+    if (scopes != null) {
+        const schemaWithExample = convertEnum({
+            nameOverride: undefined,
+            generatedName: "OauthScope",
+            enumValues: Object.keys(scopes),
+            fernEnum: Object.fromEntries(
+                Object.entries(scopes).map(([scope, description]) => {
+                    return [
+                        scope,
+                        {
+                            description
+                        }
+                    ];
+                })
+            ),
+            description: undefined,
+            enumVarNames: undefined,
+            wrapAsNullable: false,
+            groupName: undefined
+        });
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        if (schema.type === "enum") {
+            return schema;
+        }
+    }
+    return undefined;
 }
