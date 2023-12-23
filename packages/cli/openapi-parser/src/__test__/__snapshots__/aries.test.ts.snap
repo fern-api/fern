@@ -53826,7 +53826,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AmlRecord",
       "groupName": undefined,
-      "nameOverride": "amlRecord",
+      "nameOverride": "Amlrecord",
       "properties": [
         {
           "audiences": [],
@@ -53915,7 +53915,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ActionMenuFetchResult",
       "groupName": undefined,
-      "nameOverride": "actionMenuFetchResult",
+      "nameOverride": "Actionmenufetchresult",
       "properties": [
         {
           "audiences": [],
@@ -53971,7 +53971,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminConfig",
       "groupName": undefined,
-      "nameOverride": "adminConfig",
+      "nameOverride": "Adminconfig",
       "properties": [
         {
           "audiences": [],
@@ -54003,7 +54003,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminMediationDeny",
       "groupName": undefined,
-      "nameOverride": "adminMediationDeny",
+      "nameOverride": "Adminmediationdeny",
       "properties": [
         {
           "audiences": [],
@@ -54066,7 +54066,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminModules",
       "groupName": undefined,
-      "nameOverride": "adminModules",
+      "nameOverride": "Adminmodules",
       "properties": [
         {
           "audiences": [],
@@ -54139,7 +54139,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminStatus",
       "groupName": undefined,
-      "nameOverride": "adminStatus",
+      "nameOverride": "Adminstatus",
       "properties": [
         {
           "audiences": [],
@@ -54239,7 +54239,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminStatusLiveliness",
       "groupName": undefined,
-      "nameOverride": "adminStatusLiveliness",
+      "nameOverride": "Adminstatusliveliness",
       "properties": [
         {
           "audiences": [],
@@ -54269,7 +54269,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AdminStatusReadiness",
       "groupName": undefined,
-      "nameOverride": "adminStatusReadiness",
+      "nameOverride": "Adminstatusreadiness",
       "properties": [
         {
           "audiences": [],
@@ -54299,7 +54299,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachDecorator",
       "groupName": undefined,
-      "nameOverride": "attachDecorator",
+      "nameOverride": "Attachdecorator",
       "properties": [
         {
           "audiences": [],
@@ -54448,7 +54448,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachDecoratorData",
       "groupName": undefined,
-      "nameOverride": "attachDecoratorData",
+      "nameOverride": "Attachdecoratordata",
       "properties": [
         {
           "audiences": [],
@@ -54575,7 +54575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachDecoratorData1Jws",
       "groupName": undefined,
-      "nameOverride": "attachDecoratorData1Jws",
+      "nameOverride": "Attachdecoratordata1jws",
       "properties": [
         {
           "audiences": [],
@@ -54733,7 +54733,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachDecoratorDataJwsHeader",
       "groupName": undefined,
-      "nameOverride": "attachDecoratorDataJwsHeader",
+      "nameOverride": "Attachdecoratordatajwsheader",
       "properties": [
         {
           "audiences": [],
@@ -54768,7 +54768,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachmentDef",
       "groupName": undefined,
-      "nameOverride": "attachmentDef",
+      "nameOverride": "Attachmentdef",
       "properties": [
         {
           "audiences": [],
@@ -54832,7 +54832,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttributeMimeTypesResult",
       "groupName": undefined,
-      "nameOverride": "attributeMimeTypesResult",
+      "nameOverride": "Attributemimetypesresult",
       "properties": [
         {
           "audiences": [],
@@ -54907,7 +54907,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ClaimFormat",
       "groupName": undefined,
-      "nameOverride": "claimFormat",
+      "nameOverride": "Claimformat",
       "properties": [
         {
           "audiences": [],
@@ -54924,7 +54924,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatJwt",
               "groupName": undefined,
-              "nameOverride": "jwt",
+              "nameOverride": "Jwt",
               "properties": [],
               "type": "object",
             },
@@ -54945,7 +54945,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatJwtVc",
               "groupName": undefined,
-              "nameOverride": "jwtVc",
+              "nameOverride": "Jwtvc",
               "properties": [],
               "type": "object",
             },
@@ -54966,7 +54966,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatJwtVp",
               "groupName": undefined,
-              "nameOverride": "jwtVp",
+              "nameOverride": "Jwtvp",
               "properties": [],
               "type": "object",
             },
@@ -54987,7 +54987,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatLdp",
               "groupName": undefined,
-              "nameOverride": "ldp",
+              "nameOverride": "Ldp",
               "properties": [],
               "type": "object",
             },
@@ -55008,7 +55008,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatLdpVc",
               "groupName": undefined,
-              "nameOverride": "ldpVc",
+              "nameOverride": "Ldpvc",
               "properties": [],
               "type": "object",
             },
@@ -55029,7 +55029,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatLdpVp",
               "groupName": undefined,
-              "nameOverride": "ldpVp",
+              "nameOverride": "Ldpvp",
               "properties": [],
               "type": "object",
             },
@@ -55044,7 +55044,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ClearPendingRevocationsRequest",
       "groupName": undefined,
-      "nameOverride": "clearPendingRevocationsRequest",
+      "nameOverride": "Clearpendingrevocationsrequest",
       "properties": [
         {
           "audiences": [],
@@ -55096,7 +55096,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnRecord",
       "groupName": undefined,
-      "nameOverride": "connRecord",
+      "nameOverride": "Connrecord",
       "properties": [
         {
           "audiences": [],
@@ -55612,7 +55612,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionInvitation",
       "groupName": undefined,
-      "nameOverride": "connectionInvitation",
+      "nameOverride": "Connectioninvitation",
       "properties": [
         {
           "audiences": [],
@@ -55806,7 +55806,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionList",
       "groupName": undefined,
-      "nameOverride": "connectionList",
+      "nameOverride": "Connectionlist",
       "properties": [
         {
           "audiences": [],
@@ -55841,7 +55841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionMetadata",
       "groupName": undefined,
-      "nameOverride": "connectionMetadata",
+      "nameOverride": "Connectionmetadata",
       "properties": [
         {
           "audiences": [],
@@ -55873,7 +55873,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionMetadataSetRequest",
       "groupName": undefined,
-      "nameOverride": "connectionMetadataSetRequest",
+      "nameOverride": "Connectionmetadatasetrequest",
       "properties": [
         {
           "audiences": [],
@@ -55918,7 +55918,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionStaticRequest",
       "groupName": undefined,
-      "nameOverride": "connectionStaticRequest",
+      "nameOverride": "Connectionstaticrequest",
       "properties": [
         {
           "audiences": [],
@@ -56097,7 +56097,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ConnectionStaticResult",
       "groupName": undefined,
-      "nameOverride": "connectionStaticResult",
+      "nameOverride": "Connectionstaticresult",
       "properties": [
         {
           "audiences": [],
@@ -56202,7 +56202,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Constraints",
       "groupName": undefined,
-      "nameOverride": "constraints",
+      "nameOverride": "Constraints",
       "properties": [
         {
           "audiences": [],
@@ -56286,7 +56286,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusActive",
               "groupName": undefined,
-              "nameOverride": "statusActive",
+              "nameOverride": "Statusactive",
               "type": "enum",
               "values": [
                 {
@@ -56324,7 +56324,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusRevoked",
               "groupName": undefined,
-              "nameOverride": "statusRevoked",
+              "nameOverride": "Statusrevoked",
               "type": "enum",
               "values": [
                 {
@@ -56362,7 +56362,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusSuspended",
               "groupName": undefined,
-              "nameOverride": "statusSuspended",
+              "nameOverride": "Statussuspended",
               "type": "enum",
               "values": [
                 {
@@ -56400,7 +56400,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "SubjectIsIssuer",
               "generatedName": "ConstraintsSubjectIsIssuer",
               "groupName": undefined,
-              "nameOverride": "subjectIsIssuer",
+              "nameOverride": "Subjectisissuer",
               "type": "enum",
               "values": [
                 {
@@ -56428,7 +56428,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateInvitationRequest",
       "groupName": undefined,
-      "nameOverride": "createInvitationRequest",
+      "nameOverride": "Createinvitationrequest",
       "properties": [
         {
           "audiences": [],
@@ -56575,7 +56575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateWalletRequest",
       "groupName": undefined,
-      "nameOverride": "createWalletRequest",
+      "nameOverride": "Createwalletrequest",
       "properties": [
         {
           "audiences": [],
@@ -56830,7 +56830,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateWalletResponse",
       "groupName": undefined,
-      "nameOverride": "createWalletResponse",
+      "nameOverride": "Createwalletresponse",
       "properties": [
         {
           "audiences": [],
@@ -56989,7 +56989,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateWalletTokenRequest",
       "groupName": undefined,
-      "nameOverride": "createWalletTokenRequest",
+      "nameOverride": "Createwallettokenrequest",
       "properties": [
         {
           "audiences": [],
@@ -57021,7 +57021,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CreateWalletTokenResponse",
       "groupName": undefined,
-      "nameOverride": "createWalletTokenResponse",
+      "nameOverride": "Createwallettokenresponse",
       "properties": [
         {
           "audiences": [],
@@ -57053,7 +57053,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredAttrSpec",
       "groupName": undefined,
-      "nameOverride": "credAttrSpec",
+      "nameOverride": "Credattrspec",
       "properties": [
         {
           "audiences": [],
@@ -57122,7 +57122,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredDefValue",
       "groupName": undefined,
-      "nameOverride": "credDefValue",
+      "nameOverride": "Creddefvalue",
       "properties": [
         {
           "audiences": [],
@@ -57171,7 +57171,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredDefValuePrimary",
       "groupName": undefined,
-      "nameOverride": "credDefValuePrimary",
+      "nameOverride": "Creddefvalueprimary",
       "properties": [
         {
           "audiences": [],
@@ -57285,7 +57285,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredDefValueRevocation",
       "groupName": undefined,
-      "nameOverride": "credDefValueRevocation",
+      "nameOverride": "Creddefvaluerevocation",
       "properties": [
         {
           "audiences": [],
@@ -57543,7 +57543,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredInfoList",
       "groupName": undefined,
-      "nameOverride": "credInfoList",
+      "nameOverride": "Credinfolist",
       "properties": [
         {
           "audiences": [],
@@ -57578,7 +57578,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredRevIndyRecordsResult",
       "groupName": undefined,
-      "nameOverride": "credRevIndyRecordsResult",
+      "nameOverride": "Credrevindyrecordsresult",
       "properties": [
         {
           "audiences": [],
@@ -57610,7 +57610,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredRevRecordDetailsResult",
       "groupName": undefined,
-      "nameOverride": "credRevRecordDetailsResult",
+      "nameOverride": "Credrevrecorddetailsresult",
       "properties": [
         {
           "audiences": [],
@@ -57645,7 +57645,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredRevRecordResult",
       "groupName": undefined,
-      "nameOverride": "credRevRecordResult",
+      "nameOverride": "Credrevrecordresult",
       "properties": [
         {
           "audiences": [],
@@ -57675,7 +57675,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredRevokedResult",
       "groupName": undefined,
-      "nameOverride": "credRevokedResult",
+      "nameOverride": "Credrevokedresult",
       "properties": [
         {
           "audiences": [],
@@ -57705,7 +57705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Credential",
       "groupName": undefined,
-      "nameOverride": "credential",
+      "nameOverride": "Credential",
       "properties": [
         {
           "audiences": [],
@@ -57891,7 +57891,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialDefinition",
       "groupName": undefined,
-      "nameOverride": "credentialDefinition",
+      "nameOverride": "Credentialdefinition",
       "properties": [
         {
           "audiences": [],
@@ -58034,7 +58034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialDefinitionGetResult",
       "groupName": undefined,
-      "nameOverride": "credentialDefinitionGetResult",
+      "nameOverride": "Credentialdefinitiongetresult",
       "properties": [
         {
           "audiences": [],
@@ -58064,7 +58064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialDefinitionSendRequest",
       "groupName": undefined,
-      "nameOverride": "credentialDefinitionSendRequest",
+      "nameOverride": "Credentialdefinitionsendrequest",
       "properties": [
         {
           "audiences": [],
@@ -58155,7 +58155,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialDefinitionSendResult",
       "groupName": undefined,
-      "nameOverride": "credentialDefinitionSendResult",
+      "nameOverride": "Credentialdefinitionsendresult",
       "properties": [
         {
           "audiences": [],
@@ -58195,7 +58195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialDefinitionsCreatedResult",
       "groupName": undefined,
-      "nameOverride": "credentialDefinitionsCreatedResult",
+      "nameOverride": "Credentialdefinitionscreatedresult",
       "properties": [
         {
           "audiences": [],
@@ -58232,7 +58232,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialOffer",
       "groupName": undefined,
-      "nameOverride": "credentialOffer",
+      "nameOverride": "Credentialoffer",
       "properties": [
         {
           "audiences": [],
@@ -58349,7 +58349,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialPreview",
       "groupName": undefined,
-      "nameOverride": "credentialPreview",
+      "nameOverride": "Credentialpreview",
       "properties": [
         {
           "audiences": [],
@@ -58400,7 +58400,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialProposal",
       "groupName": undefined,
-      "nameOverride": "credentialProposal",
+      "nameOverride": "Credentialproposal",
       "properties": [
         {
           "audiences": [],
@@ -58624,7 +58624,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "CredentialStatusOptions",
       "groupName": undefined,
-      "nameOverride": "credentialStatusOptions",
+      "nameOverride": "Credentialstatusoptions",
       "properties": [
         {
           "audiences": [],
@@ -58659,7 +58659,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Did",
       "groupName": undefined,
-      "nameOverride": "did",
+      "nameOverride": "Did",
       "properties": [
         {
           "audiences": [],
@@ -58803,7 +58803,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidCreate",
       "groupName": undefined,
-      "nameOverride": "didCreate",
+      "nameOverride": "Didcreate",
       "properties": [
         {
           "audiences": [],
@@ -58875,7 +58875,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidCreateOptions",
       "groupName": undefined,
-      "nameOverride": "didCreateOptions",
+      "nameOverride": "Didcreateoptions",
       "properties": [
         {
           "audiences": [],
@@ -58907,7 +58907,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
             "generatedName": "DidCreateOptionsKeyType",
             "groupName": undefined,
-            "nameOverride": "keyType",
+            "nameOverride": "Keytype",
             "type": "enum",
             "values": [
               {
@@ -58942,7 +58942,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidEndpoint",
       "groupName": undefined,
-      "nameOverride": "didEndpoint",
+      "nameOverride": "Didendpoint",
       "properties": [
         {
           "audiences": [],
@@ -58990,7 +58990,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidEndpointWithType",
       "groupName": undefined,
-      "nameOverride": "didEndpointWithType",
+      "nameOverride": "Didendpointwithtype",
       "properties": [
         {
           "audiences": [],
@@ -59076,7 +59076,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidList",
       "groupName": undefined,
-      "nameOverride": "didList",
+      "nameOverride": "Didlist",
       "properties": [
         {
           "audiences": [],
@@ -59111,7 +59111,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidResult",
       "groupName": undefined,
-      "nameOverride": "didResult",
+      "nameOverride": "Didresult",
       "properties": [
         {
           "audiences": [],
@@ -59141,7 +59141,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DidxRequest",
       "groupName": undefined,
-      "nameOverride": "didxRequest",
+      "nameOverride": "Didxrequest",
       "properties": [
         {
           "audiences": [],
@@ -59258,7 +59258,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifField",
       "groupName": undefined,
-      "nameOverride": "difField",
+      "nameOverride": "Diffield",
       "properties": [
         {
           "audiences": [],
@@ -59339,7 +59339,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Preference",
               "generatedName": "DifFieldPredicate",
               "groupName": undefined,
-              "nameOverride": "predicate",
+              "nameOverride": "Predicate",
               "type": "enum",
               "values": [
                 {
@@ -59388,7 +59388,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifHolder",
       "groupName": undefined,
-      "nameOverride": "difHolder",
+      "nameOverride": "Difholder",
       "properties": [
         {
           "audiences": [],
@@ -59403,7 +59403,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Preference",
               "generatedName": "DifHolderDirective",
               "groupName": undefined,
-              "nameOverride": "directive",
+              "nameOverride": "Directive",
               "type": "enum",
               "values": [
                 {
@@ -59457,7 +59457,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifOptions",
       "groupName": undefined,
-      "nameOverride": "difOptions",
+      "nameOverride": "Difoptions",
       "properties": [
         {
           "audiences": [],
@@ -59510,7 +59510,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifPresSpec",
       "groupName": undefined,
-      "nameOverride": "difPresSpec",
+      "nameOverride": "Difpresspec",
       "properties": [
         {
           "audiences": [],
@@ -59567,7 +59567,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Mapping of input_descriptor id to list of stored W3C credential record_id",
               "generatedName": "DifPresSpecRecordIds",
               "groupName": undefined,
-              "nameOverride": "recordIds",
+              "nameOverride": "Recordids",
               "properties": [],
               "type": "object",
             },
@@ -59588,7 +59588,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
               "generatedName": "DifPresSpecRevealDoc",
               "groupName": undefined,
-              "nameOverride": "revealDoc",
+              "nameOverride": "Revealdoc",
               "properties": [],
               "type": "object",
             },
@@ -59603,7 +59603,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifProofProposal",
       "groupName": undefined,
-      "nameOverride": "difProofProposal",
+      "nameOverride": "Difproofproposal",
       "properties": [
         {
           "audiences": [],
@@ -59657,7 +59657,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "DifProofRequest",
       "groupName": undefined,
-      "nameOverride": "difProofRequest",
+      "nameOverride": "Difproofrequest",
       "properties": [
         {
           "audiences": [],
@@ -59701,7 +59701,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Date",
       "groupName": undefined,
-      "nameOverride": "date",
+      "nameOverride": "Date",
       "properties": [
         {
           "audiences": [],
@@ -59726,7 +59726,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Disclose",
       "groupName": undefined,
-      "nameOverride": "disclose",
+      "nameOverride": "Disclose",
       "properties": [
         {
           "audiences": [],
@@ -59798,7 +59798,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Disclosures",
       "groupName": undefined,
-      "nameOverride": "disclosures",
+      "nameOverride": "Disclosures",
       "properties": [
         {
           "audiences": [],
@@ -59880,7 +59880,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Doc",
       "groupName": undefined,
-      "nameOverride": "doc",
+      "nameOverride": "Doc",
       "properties": [
         {
           "audiences": [],
@@ -59929,7 +59929,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "EndorserInfo",
       "groupName": undefined,
-      "nameOverride": "endorserInfo",
+      "nameOverride": "Endorserinfo",
       "properties": [
         {
           "audiences": [],
@@ -59977,7 +59977,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "EndpointsResult",
       "groupName": undefined,
-      "nameOverride": "endpointsResult",
+      "nameOverride": "Endpointsresult",
       "properties": [
         {
           "audiences": [],
@@ -60030,7 +60030,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Filter",
       "groupName": undefined,
-      "nameOverride": "filter",
+      "nameOverride": "Filter",
       "properties": [
         {
           "audiences": [],
@@ -60340,7 +60340,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Generated",
       "groupName": undefined,
-      "nameOverride": "generated",
+      "nameOverride": "Generated",
       "properties": [
         {
           "audiences": [],
@@ -60414,7 +60414,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "GetDidEndpointResponse",
       "groupName": undefined,
-      "nameOverride": "getDidEndpointResponse",
+      "nameOverride": "Getdidendpointresponse",
       "properties": [
         {
           "audiences": [],
@@ -60451,7 +60451,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "GetDidVerkeyResponse",
       "groupName": undefined,
-      "nameOverride": "getDidVerkeyResponse",
+      "nameOverride": "Getdidverkeyresponse",
       "properties": [
         {
           "audiences": [],
@@ -60488,7 +60488,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "GetNymRoleResponse",
       "groupName": undefined,
-      "nameOverride": "getNymRoleResponse",
+      "nameOverride": "Getnymroleresponse",
       "properties": [
         {
           "audiences": [],
@@ -60573,7 +60573,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyAttrValue",
       "groupName": undefined,
-      "nameOverride": "indyAttrValue",
+      "nameOverride": "Indyattrvalue",
       "properties": [
         {
           "audiences": [],
@@ -60616,7 +60616,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyCredAbstract",
       "groupName": undefined,
-      "nameOverride": "indyCredAbstract",
+      "nameOverride": "Indycredabstract",
       "properties": [
         {
           "audiences": [],
@@ -60697,7 +60697,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyCredInfo",
       "groupName": undefined,
-      "nameOverride": "indyCredInfo",
+      "nameOverride": "Indycredinfo",
       "properties": [
         {
           "audiences": [],
@@ -60859,7 +60859,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyCredPrecis",
       "groupName": undefined,
-      "nameOverride": "indyCredPrecis",
+      "nameOverride": "Indycredprecis",
       "properties": [
         {
           "audiences": [],
@@ -60950,7 +60950,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyCredRequest",
       "groupName": undefined,
-      "nameOverride": "indyCredRequest",
+      "nameOverride": "Indycredrequest",
       "properties": [
         {
           "audiences": [],
@@ -60963,7 +60963,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Blinded master secret",
             "generatedName": "IndyCredRequestBlindedMs",
             "groupName": undefined,
-            "nameOverride": "blindedMs",
+            "nameOverride": "Blindedms",
             "properties": [],
             "type": "object",
           },
@@ -60979,7 +60979,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Blinded master secret correctness proof",
             "generatedName": "IndyCredRequestBlindedMsCorrectnessProof",
             "groupName": undefined,
-            "nameOverride": "blindedMsCorrectnessProof",
+            "nameOverride": "Blindedmscorrectnessproof",
             "properties": [],
             "type": "object",
           },
@@ -61041,7 +61041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyCredential",
       "groupName": undefined,
-      "nameOverride": "indyCredential",
+      "nameOverride": "Indycredential",
       "properties": [
         {
           "audiences": [],
@@ -61078,7 +61078,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "description": "Revocation registry state",
                 "generatedName": "IndyCredentialRevReg",
                 "groupName": undefined,
-                "nameOverride": "revReg",
+                "nameOverride": "Revreg",
                 "properties": [],
                 "type": "object",
               },
@@ -61138,7 +61138,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential signature",
             "generatedName": "IndyCredentialSignature",
             "groupName": undefined,
-            "nameOverride": "signature",
+            "nameOverride": "Signature",
             "properties": [],
             "type": "object",
           },
@@ -61154,7 +61154,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential signature correctness proof",
             "generatedName": "IndyCredentialSignatureCorrectnessProof",
             "groupName": undefined,
-            "nameOverride": "signatureCorrectnessProof",
+            "nameOverride": "Signaturecorrectnessproof",
             "properties": [],
             "type": "object",
           },
@@ -61207,7 +61207,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "description": "Witness for revocation proof",
                 "generatedName": "IndyCredentialWitness",
                 "groupName": undefined,
-                "nameOverride": "witness",
+                "nameOverride": "Witness",
                 "properties": [],
                 "type": "object",
               },
@@ -61231,7 +61231,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyEqProof",
       "groupName": undefined,
-      "nameOverride": "indyEqProof",
+      "nameOverride": "Indyeqproof",
       "properties": [
         {
           "audiences": [],
@@ -61398,7 +61398,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyGeProof",
       "groupName": undefined,
-      "nameOverride": "indyGeProof",
+      "nameOverride": "Indygeproof",
       "properties": [
         {
           "audiences": [],
@@ -61578,7 +61578,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyGeProofPred",
       "groupName": undefined,
-      "nameOverride": "indyGeProofPred",
+      "nameOverride": "Indygeproofpred",
       "properties": [
         {
           "audiences": [],
@@ -61614,7 +61614,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Predicate type",
               "generatedName": "IndyGeProofPredPType",
               "groupName": undefined,
-              "nameOverride": "pType",
+              "nameOverride": "Ptype",
               "type": "enum",
               "values": [
                 {
@@ -61673,7 +61673,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyKeyCorrectnessProof",
       "groupName": undefined,
-      "nameOverride": "indyKeyCorrectnessProof",
+      "nameOverride": "Indykeycorrectnessproof",
       "properties": [
         {
           "audiences": [],
@@ -61742,7 +61742,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyNonRevocProof",
       "groupName": undefined,
-      "nameOverride": "indyNonRevocProof",
+      "nameOverride": "Indynonrevocproof",
       "properties": [
         {
           "audiences": [],
@@ -61825,7 +61825,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyNonRevocationInterval",
       "groupName": undefined,
-      "nameOverride": "indyNonRevocationInterval",
+      "nameOverride": "Indynonrevocationinterval",
       "properties": [
         {
           "audiences": [],
@@ -61874,7 +61874,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyPresAttrSpec",
       "groupName": undefined,
-      "nameOverride": "indyPresAttrSpec",
+      "nameOverride": "Indypresattrspec",
       "properties": [
         {
           "audiences": [],
@@ -61985,7 +61985,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyPresPredSpec",
       "groupName": undefined,
-      "nameOverride": "indyPresPredSpec",
+      "nameOverride": "Indyprespredspec",
       "properties": [
         {
           "audiences": [],
@@ -62086,7 +62086,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyPresPreview",
       "groupName": undefined,
-      "nameOverride": "indyPresPreview",
+      "nameOverride": "Indyprespreview",
       "properties": [
         {
           "audiences": [],
@@ -62156,7 +62156,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyPresSpec",
       "groupName": undefined,
-      "nameOverride": "indyPresSpec",
+      "nameOverride": "Indypresspec",
       "properties": [
         {
           "audiences": [],
@@ -62275,7 +62275,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyPrimaryProof",
       "groupName": undefined,
-      "nameOverride": "indyPrimaryProof",
+      "nameOverride": "Indyprimaryproof",
       "properties": [
         {
           "audiences": [],
@@ -62347,7 +62347,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProof",
       "groupName": undefined,
-      "nameOverride": "indyProof",
+      "nameOverride": "Indyproof",
       "properties": [
         {
           "audiences": [],
@@ -62420,7 +62420,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofIdentifier",
       "groupName": undefined,
-      "nameOverride": "indyProofIdentifier",
+      "nameOverride": "Indyproofidentifier",
       "properties": [
         {
           "audiences": [],
@@ -62523,7 +62523,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofProof",
       "groupName": undefined,
-      "nameOverride": "indyProofProof",
+      "nameOverride": "Indyproofproof",
       "properties": [
         {
           "audiences": [],
@@ -62577,7 +62577,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofProofAggregatedProof",
       "groupName": undefined,
-      "nameOverride": "indyProofProofAggregatedProof",
+      "nameOverride": "Indyproofproofaggregatedproof",
       "properties": [
         {
           "audiences": [],
@@ -62638,7 +62638,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofProofProofsProof",
       "groupName": undefined,
-      "nameOverride": "indyProofProofProofsProof",
+      "nameOverride": "Indyproofproofproofsproof",
       "properties": [
         {
           "audiences": [],
@@ -62716,7 +62716,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofReqAttrSpec",
       "groupName": undefined,
-      "nameOverride": "indyProofReqAttrSpec",
+      "nameOverride": "Indyproofreqattrspec",
       "properties": [
         {
           "audiences": [],
@@ -62834,7 +62834,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofReqAttrSpecNonRevoked",
       "groupName": undefined,
-      "nameOverride": "indyProofReqAttrSpecNonRevoked",
+      "nameOverride": "Indyproofreqattrspecnonrevoked",
       "properties": [
         {
           "audiences": [],
@@ -62896,7 +62896,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofReqPredSpec",
       "groupName": undefined,
-      "nameOverride": "indyProofReqPredSpec",
+      "nameOverride": "Indyproofreqpredspec",
       "properties": [
         {
           "audiences": [],
@@ -63036,7 +63036,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofReqPredSpecNonRevoked",
       "groupName": undefined,
-      "nameOverride": "indyProofReqPredSpecNonRevoked",
+      "nameOverride": "Indyproofreqpredspecnonrevoked",
       "properties": [
         {
           "audiences": [],
@@ -63098,7 +63098,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequest",
       "groupName": undefined,
-      "nameOverride": "indyProofRequest",
+      "nameOverride": "Indyproofrequest",
       "properties": [
         {
           "audiences": [],
@@ -63249,7 +63249,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequestNonRevoked",
       "groupName": undefined,
-      "nameOverride": "indyProofRequestNonRevoked",
+      "nameOverride": "Indyproofrequestnonrevoked",
       "properties": [
         {
           "audiences": [],
@@ -63311,7 +63311,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequestedProof",
       "groupName": undefined,
-      "nameOverride": "indyProofRequestedProof",
+      "nameOverride": "Indyproofrequestedproof",
       "properties": [
         {
           "audiences": [],
@@ -63450,7 +63450,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Proof requested proof self-attested attributes",
               "generatedName": "IndyProofRequestedProofSelfAttestedAttrs",
               "groupName": undefined,
-              "nameOverride": "selfAttestedAttrs",
+              "nameOverride": "Selfattestedattrs",
               "properties": [],
               "type": "object",
             },
@@ -63471,7 +63471,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Unrevealed attributes",
               "generatedName": "IndyProofRequestedProofUnrevealedAttrs",
               "groupName": undefined,
-              "nameOverride": "unrevealedAttrs",
+              "nameOverride": "Unrevealedattrs",
               "properties": [],
               "type": "object",
             },
@@ -63486,7 +63486,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequestedProofPredicate",
       "groupName": undefined,
-      "nameOverride": "indyProofRequestedProofPredicate",
+      "nameOverride": "Indyproofrequestedproofpredicate",
       "properties": [
         {
           "audiences": [],
@@ -63516,7 +63516,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequestedProofRevealedAttr",
       "groupName": undefined,
-      "nameOverride": "indyProofRequestedProofRevealedAttr",
+      "nameOverride": "Indyproofrequestedproofrevealedattr",
       "properties": [
         {
           "audiences": [],
@@ -63588,7 +63588,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyProofRequestedProofRevealedAttrGroup",
       "groupName": undefined,
-      "nameOverride": "indyProofRequestedProofRevealedAttrGroup",
+      "nameOverride": "Indyproofrequestedproofrevealedattrgroup",
       "properties": [
         {
           "audiences": [],
@@ -63668,7 +63668,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRequestedCredsRequestedAttr",
       "groupName": undefined,
-      "nameOverride": "indyRequestedCredsRequestedAttr",
+      "nameOverride": "Indyrequestedcredsrequestedattr",
       "properties": [
         {
           "audiences": [],
@@ -63714,7 +63714,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRequestedCredsRequestedPred",
       "groupName": undefined,
-      "nameOverride": "indyRequestedCredsRequestedPred",
+      "nameOverride": "Indyrequestedcredsrequestedpred",
       "properties": [
         {
           "audiences": [],
@@ -63760,7 +63760,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegDef",
       "groupName": undefined,
-      "nameOverride": "indyRevRegDef",
+      "nameOverride": "Indyrevregdef",
       "properties": [
         {
           "audiences": [],
@@ -63894,7 +63894,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegDefValue",
       "groupName": undefined,
-      "nameOverride": "indyRevRegDefValue",
+      "nameOverride": "Indyrevregdefvalue",
       "properties": [
         {
           "audiences": [],
@@ -63909,7 +63909,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Issuance type",
               "generatedName": "IndyRevRegDefValueIssuanceType",
               "groupName": undefined,
-              "nameOverride": "issuanceType",
+              "nameOverride": "Issuancetype",
               "type": "enum",
               "values": [
                 {
@@ -64017,7 +64017,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegDefValuePublicKeys",
       "groupName": undefined,
-      "nameOverride": "indyRevRegDefValuePublicKeys",
+      "nameOverride": "Indyrevregdefvaluepublickeys",
       "properties": [
         {
           "audiences": [],
@@ -64047,7 +64047,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegDefValuePublicKeysAccumKey",
       "groupName": undefined,
-      "nameOverride": "indyRevRegDefValuePublicKeysAccumKey",
+      "nameOverride": "Indyrevregdefvaluepublickeysaccumkey",
       "properties": [
         {
           "audiences": [],
@@ -64095,7 +64095,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegEntry",
       "groupName": undefined,
-      "nameOverride": "indyRevRegEntry",
+      "nameOverride": "Indyrevregentry",
       "properties": [
         {
           "audiences": [],
@@ -64146,7 +64146,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IndyRevRegEntryValue",
       "groupName": undefined,
-      "nameOverride": "indyRevRegEntryValue",
+      "nameOverride": "Indyrevregentryvalue",
       "properties": [
         {
           "audiences": [],
@@ -64231,7 +64231,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "InputDescriptors",
       "groupName": undefined,
-      "nameOverride": "inputDescriptors",
+      "nameOverride": "Inputdescriptors",
       "properties": [
         {
           "audiences": [],
@@ -64314,7 +64314,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Metadata dictionary",
               "generatedName": "InputDescriptorsMetadata",
               "groupName": undefined,
-              "nameOverride": "metadata",
+              "nameOverride": "Metadata",
               "properties": [],
               "type": "object",
             },
@@ -64416,7 +64416,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "InvitationCreateRequest",
       "groupName": undefined,
-      "nameOverride": "invitationCreateRequest",
+      "nameOverride": "Invitationcreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -64627,7 +64627,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "InvitationMessage",
       "groupName": undefined,
-      "nameOverride": "invitationMessage",
+      "nameOverride": "Invitationmessage",
       "properties": [
         {
           "audiences": [],
@@ -64837,7 +64837,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "InvitationRecord",
       "groupName": undefined,
-      "nameOverride": "invitationRecord",
+      "nameOverride": "Invitationrecord",
       "properties": [
         {
           "audiences": [],
@@ -65041,7 +65041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "InvitationResult",
       "groupName": undefined,
-      "nameOverride": "invitationResult",
+      "nameOverride": "Invitationresult",
       "properties": [
         {
           "audiences": [],
@@ -65131,7 +65131,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IssuerCredRevRecord",
       "groupName": undefined,
-      "nameOverride": "issuerCredRevRecord",
+      "nameOverride": "Issuercredrevrecord",
       "properties": [
         {
           "audiences": [],
@@ -65331,7 +65331,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "IssuerRevRegRecord",
       "groupName": undefined,
-      "nameOverride": "issuerRevRegRecord",
+      "nameOverride": "Issuerrevregrecord",
       "properties": [
         {
           "audiences": [],
@@ -65713,7 +65713,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Keylist",
       "groupName": undefined,
-      "nameOverride": "keylist",
+      "nameOverride": "Keylist",
       "properties": [
         {
           "audiences": [],
@@ -65748,7 +65748,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistQuery",
       "groupName": undefined,
-      "nameOverride": "keylistQuery",
+      "nameOverride": "Keylistquery",
       "properties": [
         {
           "audiences": [],
@@ -65841,7 +65841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistQueryFilterRequest",
       "groupName": undefined,
-      "nameOverride": "keylistQueryFilterRequest",
+      "nameOverride": "Keylistqueryfilterrequest",
       "properties": [
         {
           "audiences": [],
@@ -65873,7 +65873,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistQueryPaginate",
       "groupName": undefined,
-      "nameOverride": "keylistQueryPaginate",
+      "nameOverride": "Keylistquerypaginate",
       "properties": [
         {
           "audiences": [],
@@ -65930,7 +65930,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistUpdate",
       "groupName": undefined,
-      "nameOverride": "keylistUpdate",
+      "nameOverride": "Keylistupdate",
       "properties": [
         {
           "audiences": [],
@@ -66007,7 +66007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistUpdateRequest",
       "groupName": undefined,
-      "nameOverride": "keylistUpdateRequest",
+      "nameOverride": "Keylistupdaterequest",
       "properties": [
         {
           "audiences": [],
@@ -66042,7 +66042,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "KeylistUpdateRule",
       "groupName": undefined,
-      "nameOverride": "keylistUpdateRule",
+      "nameOverride": "Keylistupdaterule",
       "properties": [
         {
           "audiences": [],
@@ -66096,7 +66096,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "LdProofVcDetail",
       "groupName": undefined,
-      "nameOverride": "ldProofVcDetail",
+      "nameOverride": "Ldproofvcdetail",
       "properties": [
         {
           "audiences": [],
@@ -66135,7 +66135,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "LdProofVcDetailOptions",
       "groupName": undefined,
-      "nameOverride": "ldProofVcDetailOptions",
+      "nameOverride": "Ldproofvcdetailoptions",
       "properties": [
         {
           "audiences": [],
@@ -66289,7 +66289,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "LedgerConfigInstance",
       "groupName": undefined,
-      "nameOverride": "ledgerConfigInstance",
+      "nameOverride": "Ledgerconfiginstance",
       "properties": [
         {
           "audiences": [],
@@ -66403,7 +66403,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "LedgerConfigList",
       "groupName": undefined,
-      "nameOverride": "ledgerConfigList",
+      "nameOverride": "Ledgerconfiglist",
       "properties": [
         {
           "audiences": [],
@@ -66451,7 +66451,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "LinkedDataProof",
       "groupName": undefined,
-      "nameOverride": "linkedDataProof",
+      "nameOverride": "Linkeddataproof",
       "properties": [
         {
           "audiences": [],
@@ -66631,7 +66631,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationCreateRequest",
       "groupName": undefined,
-      "nameOverride": "mediationCreateRequest",
+      "nameOverride": "Mediationcreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -66694,7 +66694,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationDeny",
       "groupName": undefined,
-      "nameOverride": "mediationDeny",
+      "nameOverride": "Mediationdeny",
       "properties": [
         {
           "audiences": [],
@@ -66799,7 +66799,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationGrant",
       "groupName": undefined,
-      "nameOverride": "mediationGrant",
+      "nameOverride": "Mediationgrant",
       "properties": [
         {
           "audiences": [],
@@ -66899,7 +66899,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationIdMatchInfo",
       "groupName": undefined,
-      "nameOverride": "mediationIdMatchInfo",
+      "nameOverride": "Mediationidmatchinfo",
       "properties": [
         {
           "audiences": [],
@@ -66931,7 +66931,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationList",
       "groupName": undefined,
-      "nameOverride": "mediationList",
+      "nameOverride": "Mediationlist",
       "properties": [
         {
           "audiences": [],
@@ -66966,7 +66966,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MediationRecord",
       "groupName": undefined,
-      "nameOverride": "mediationRecord",
+      "nameOverride": "Mediationrecord",
       "properties": [
         {
           "audiences": [],
@@ -67192,7 +67192,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Menu",
       "groupName": undefined,
-      "nameOverride": "menu",
+      "nameOverride": "Menu",
       "properties": [
         {
           "audiences": [],
@@ -67327,7 +67327,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MenuForm",
       "groupName": undefined,
-      "nameOverride": "menuForm",
+      "nameOverride": "Menuform",
       "properties": [
         {
           "audiences": [],
@@ -67425,7 +67425,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MenuFormParam",
       "groupName": undefined,
-      "nameOverride": "menuFormParam",
+      "nameOverride": "Menuformparam",
       "properties": [
         {
           "audiences": [],
@@ -67550,7 +67550,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MenuJson",
       "groupName": undefined,
-      "nameOverride": "menuJson",
+      "nameOverride": "Menujson",
       "properties": [
         {
           "audiences": [],
@@ -67643,7 +67643,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "MenuOption",
       "groupName": undefined,
-      "nameOverride": "menuOption",
+      "nameOverride": "Menuoption",
       "properties": [
         {
           "audiences": [],
@@ -67763,7 +67763,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "OobRecord",
       "groupName": undefined,
-      "nameOverride": "oobRecord",
+      "nameOverride": "Oobrecord",
       "properties": [
         {
           "audiences": [],
@@ -68052,7 +68052,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PerformRequest",
       "groupName": undefined,
-      "nameOverride": "performRequest",
+      "nameOverride": "Performrequest",
       "properties": [
         {
           "audiences": [],
@@ -68120,7 +68120,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PingRequest",
       "groupName": undefined,
-      "nameOverride": "pingRequest",
+      "nameOverride": "Pingrequest",
       "properties": [
         {
           "audiences": [],
@@ -68157,7 +68157,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PingRequestResponse",
       "groupName": undefined,
-      "nameOverride": "pingRequestResponse",
+      "nameOverride": "Pingrequestresponse",
       "properties": [
         {
           "audiences": [],
@@ -68189,7 +68189,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PresentationDefinition",
       "groupName": undefined,
-      "nameOverride": "presentationDefinition",
+      "nameOverride": "Presentationdefinition",
       "properties": [
         {
           "audiences": [],
@@ -68330,7 +68330,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PresentationProposal",
       "groupName": undefined,
-      "nameOverride": "presentationProposal",
+      "nameOverride": "Presentationproposal",
       "properties": [
         {
           "audiences": [],
@@ -68423,7 +68423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PresentationRequest",
       "groupName": undefined,
-      "nameOverride": "presentationRequest",
+      "nameOverride": "Presentationrequest",
       "properties": [
         {
           "audiences": [],
@@ -68521,7 +68521,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ProtocolDescriptor",
       "groupName": undefined,
-      "nameOverride": "protocolDescriptor",
+      "nameOverride": "Protocoldescriptor",
       "properties": [
         {
           "audiences": [],
@@ -68579,7 +68579,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "PublishRevocations",
       "groupName": undefined,
-      "nameOverride": "publishRevocations",
+      "nameOverride": "Publishrevocations",
       "properties": [
         {
           "audiences": [],
@@ -68631,7 +68631,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Queries",
       "groupName": undefined,
-      "nameOverride": "queries",
+      "nameOverride": "Queries",
       "properties": [
         {
           "audiences": [],
@@ -68708,7 +68708,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Query",
       "groupName": undefined,
-      "nameOverride": "query",
+      "nameOverride": "Query",
       "properties": [
         {
           "audiences": [],
@@ -68803,7 +68803,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "QueryItem",
       "groupName": undefined,
-      "nameOverride": "queryItem",
+      "nameOverride": "Queryitem",
       "properties": [
         {
           "audiences": [],
@@ -68814,7 +68814,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "feature type",
             "generatedName": "QueryItemFeatureType",
             "groupName": undefined,
-            "nameOverride": "featureType",
+            "nameOverride": "Featuretype",
             "type": "enum",
             "values": [
               {
@@ -68857,7 +68857,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RawEncoded",
       "groupName": undefined,
-      "nameOverride": "rawEncoded",
+      "nameOverride": "Rawencoded",
       "properties": [
         {
           "audiences": [],
@@ -68910,7 +68910,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ReceiveInvitationRequest",
       "groupName": undefined,
-      "nameOverride": "receiveInvitationRequest",
+      "nameOverride": "Receiveinvitationrequest",
       "properties": [
         {
           "audiences": [],
@@ -69104,7 +69104,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RemoveWalletRequest",
       "groupName": undefined,
-      "nameOverride": "removeWalletRequest",
+      "nameOverride": "Removewalletrequest",
       "properties": [
         {
           "audiences": [],
@@ -69136,7 +69136,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ResolutionResult",
       "groupName": undefined,
-      "nameOverride": "resolutionResult",
+      "nameOverride": "Resolutionresult",
       "properties": [
         {
           "audiences": [],
@@ -69179,7 +69179,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegCreateRequest",
       "groupName": undefined,
-      "nameOverride": "revRegCreateRequest",
+      "nameOverride": "Revregcreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -69230,7 +69230,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegIssuedResult",
       "groupName": undefined,
-      "nameOverride": "revRegIssuedResult",
+      "nameOverride": "Revregissuedresult",
       "properties": [
         {
           "audiences": [],
@@ -69260,7 +69260,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegResult",
       "groupName": undefined,
-      "nameOverride": "revRegResult",
+      "nameOverride": "Revregresult",
       "properties": [
         {
           "audiences": [],
@@ -69290,7 +69290,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegUpdateTailsFileUri",
       "groupName": undefined,
-      "nameOverride": "revRegUpdateTailsFileUri",
+      "nameOverride": "Revregupdatetailsfileuri",
       "properties": [
         {
           "audiences": [],
@@ -69317,7 +69317,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegWalletUpdatedResult",
       "groupName": undefined,
-      "nameOverride": "revRegWalletUpdatedResult",
+      "nameOverride": "Revregwalletupdatedresult",
       "properties": [
         {
           "audiences": [],
@@ -69391,7 +69391,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevRegsCreated",
       "groupName": undefined,
-      "nameOverride": "revRegsCreated",
+      "nameOverride": "Revregscreated",
       "properties": [
         {
           "audiences": [],
@@ -69446,7 +69446,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RevokeRequest",
       "groupName": undefined,
-      "nameOverride": "revokeRequest",
+      "nameOverride": "Revokerequest",
       "properties": [
         {
           "audiences": [],
@@ -69653,7 +69653,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "RouteRecord",
       "groupName": undefined,
-      "nameOverride": "routeRecord",
+      "nameOverride": "Routerecord",
       "properties": [
         {
           "audiences": [],
@@ -69827,7 +69827,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "Schema",
       "groupName": undefined,
-      "nameOverride": "schema",
+      "nameOverride": "Schema",
       "properties": [
         {
           "audiences": [],
@@ -69967,7 +69967,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemaGetResult",
       "groupName": undefined,
-      "nameOverride": "schemaGetResult",
+      "nameOverride": "Schemagetresult",
       "properties": [
         {
           "audiences": [],
@@ -69997,7 +69997,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemaInputDescriptor",
       "groupName": undefined,
-      "nameOverride": "schemaInputDescriptor",
+      "nameOverride": "Schemainputdescriptor",
       "properties": [
         {
           "audiences": [],
@@ -70048,7 +70048,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemaSendRequest",
       "groupName": undefined,
-      "nameOverride": "schemaSendRequest",
+      "nameOverride": "Schemasendrequest",
       "properties": [
         {
           "audiences": [],
@@ -70112,7 +70112,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemaSendResult",
       "groupName": undefined,
-      "nameOverride": "schemaSendResult",
+      "nameOverride": "Schemasendresult",
       "properties": [
         {
           "audiences": [],
@@ -70166,7 +70166,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemasCreatedResult",
       "groupName": undefined,
-      "nameOverride": "schemasCreatedResult",
+      "nameOverride": "Schemascreatedresult",
       "properties": [
         {
           "audiences": [],
@@ -70203,7 +70203,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SchemasInputDescriptorFilter",
       "groupName": undefined,
-      "nameOverride": "schemasInputDescriptorFilter",
+      "nameOverride": "Schemasinputdescriptorfilter",
       "properties": [
         {
           "audiences": [],
@@ -70262,7 +70262,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SendMenu",
       "groupName": undefined,
-      "nameOverride": "sendMenu",
+      "nameOverride": "Sendmenu",
       "properties": [
         {
           "audiences": [],
@@ -70295,7 +70295,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SendMessage",
       "groupName": undefined,
-      "nameOverride": "sendMessage",
+      "nameOverride": "Sendmessage",
       "properties": [
         {
           "audiences": [],
@@ -70327,7 +70327,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "ServiceDecorator",
       "groupName": undefined,
-      "nameOverride": "serviceDecorator",
+      "nameOverride": "Servicedecorator",
       "properties": [
         {
           "audiences": [],
@@ -70401,7 +70401,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SignRequest",
       "groupName": undefined,
-      "nameOverride": "signRequest",
+      "nameOverride": "Signrequest",
       "properties": [
         {
           "audiences": [],
@@ -70442,7 +70442,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SignResponse",
       "groupName": undefined,
-      "nameOverride": "signResponse",
+      "nameOverride": "Signresponse",
       "properties": [
         {
           "audiences": [],
@@ -70495,7 +70495,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SignatureOptions",
       "groupName": undefined,
-      "nameOverride": "signatureOptions",
+      "nameOverride": "Signatureoptions",
       "properties": [
         {
           "audiences": [],
@@ -70601,7 +70601,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SignedDoc",
       "groupName": undefined,
-      "nameOverride": "signedDoc",
+      "nameOverride": "Signeddoc",
       "properties": [
         {
           "audiences": [],
@@ -70634,7 +70634,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "SubmissionRequirements",
       "groupName": undefined,
-      "nameOverride": "submissionRequirements",
+      "nameOverride": "Submissionrequirements",
       "properties": [
         {
           "audiences": [],
@@ -70793,7 +70793,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Selection",
               "generatedName": "SubmissionRequirementsRule",
               "groupName": undefined,
-              "nameOverride": "rule",
+              "nameOverride": "Rule",
               "type": "enum",
               "values": [
                 {
@@ -70821,7 +70821,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TaaAccept",
       "groupName": undefined,
-      "nameOverride": "taaAccept",
+      "nameOverride": "Taaaccept",
       "properties": [
         {
           "audiences": [],
@@ -70895,7 +70895,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TaaAcceptance",
       "groupName": undefined,
-      "nameOverride": "taaAcceptance",
+      "nameOverride": "Taaacceptance",
       "properties": [
         {
           "audiences": [],
@@ -70946,7 +70946,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TaaInfo",
       "groupName": undefined,
-      "nameOverride": "taaInfo",
+      "nameOverride": "Taainfo",
       "properties": [
         {
           "audiences": [],
@@ -71033,7 +71033,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TaaRecord",
       "groupName": undefined,
-      "nameOverride": "taaRecord",
+      "nameOverride": "Taarecord",
       "properties": [
         {
           "audiences": [],
@@ -71107,7 +71107,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TaaResult",
       "groupName": undefined,
-      "nameOverride": "taaResult",
+      "nameOverride": "Taaresult",
       "properties": [
         {
           "audiences": [],
@@ -71137,7 +71137,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TailsDeleteResponse",
       "groupName": undefined,
-      "nameOverride": "tailsDeleteResponse",
+      "nameOverride": "Tailsdeleteresponse",
       "properties": [
         {
           "audiences": [],
@@ -71169,7 +71169,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransactionJobs",
       "groupName": undefined,
-      "nameOverride": "transactionJobs",
+      "nameOverride": "Transactionjobs",
       "properties": [
         {
           "audiences": [],
@@ -71256,7 +71256,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransactionList",
       "groupName": undefined,
-      "nameOverride": "transactionList",
+      "nameOverride": "Transactionlist",
       "properties": [
         {
           "audiences": [],
@@ -71291,7 +71291,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TransactionRecord",
       "groupName": undefined,
-      "nameOverride": "transactionRecord",
+      "nameOverride": "Transactionrecord",
       "properties": [
         {
           "audiences": [],
@@ -71648,7 +71648,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TxnOrCredentialDefinitionSendResult",
       "groupName": undefined,
-      "nameOverride": "txnOrCredentialDefinitionSendResult",
+      "nameOverride": "Txnorcredentialdefinitionsendresult",
       "properties": [
         {
           "audiences": [],
@@ -71705,7 +71705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TxnOrPublishRevocationsResult",
       "groupName": undefined,
-      "nameOverride": "txnOrPublishRevocationsResult",
+      "nameOverride": "Txnorpublishrevocationsresult",
       "properties": [
         {
           "audiences": [],
@@ -71762,7 +71762,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TxnOrRegisterLedgerNymResponse",
       "groupName": undefined,
-      "nameOverride": "txnOrRegisterLedgerNymResponse",
+      "nameOverride": "Txnorregisterledgernymresponse",
       "properties": [
         {
           "audiences": [],
@@ -71819,7 +71819,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TxnOrRevRegResult",
       "groupName": undefined,
-      "nameOverride": "txnOrRevRegResult",
+      "nameOverride": "Txnorrevregresult",
       "properties": [
         {
           "audiences": [],
@@ -71876,7 +71876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "TxnOrSchemaSendResult",
       "groupName": undefined,
-      "nameOverride": "txnOrSchemaSendResult",
+      "nameOverride": "Txnorschemasendresult",
       "properties": [
         {
           "audiences": [],
@@ -71941,7 +71941,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "UpdateWalletRequest",
       "groupName": undefined,
-      "nameOverride": "updateWalletRequest",
+      "nameOverride": "Updatewalletrequest",
       "properties": [
         {
           "audiences": [],
@@ -72058,7 +72058,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialBoundOfferRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialBoundOfferRequest",
+      "nameOverride": "V10credentialboundofferrequest",
       "properties": [
         {
           "audiences": [],
@@ -72096,7 +72096,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialConnFreeOfferRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialConnFreeOfferRequest",
+      "nameOverride": "V10credentialconnfreeofferrequest",
       "properties": [
         {
           "audiences": [],
@@ -72220,7 +72220,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialCreate",
       "groupName": undefined,
-      "nameOverride": "v10CredentialCreate",
+      "nameOverride": "V10credentialcreate",
       "properties": [
         {
           "audiences": [],
@@ -72435,7 +72435,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialExchange",
       "groupName": undefined,
-      "nameOverride": "v10CredentialExchange",
+      "nameOverride": "V10credentialexchange",
       "properties": [
         {
           "audiences": [],
@@ -72994,7 +72994,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "v10CredentialExchangeListResult",
+      "nameOverride": "V10credentialexchangelistresult",
       "properties": [
         {
           "audiences": [],
@@ -73077,7 +73077,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialFreeOfferRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialFreeOfferRequest",
+      "nameOverride": "V10credentialfreeofferrequest",
       "properties": [
         {
           "audiences": [],
@@ -73217,7 +73217,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialIssueRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialIssueRequest",
+      "nameOverride": "V10credentialissuerequest",
       "properties": [
         {
           "audiences": [],
@@ -73254,7 +73254,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialProblemReportRequest",
+      "nameOverride": "V10credentialproblemreportrequest",
       "properties": [
         {
           "audiences": [],
@@ -73281,7 +73281,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProposalRequestMand",
       "groupName": undefined,
-      "nameOverride": "v10CredentialProposalRequestMand",
+      "nameOverride": "V10credentialproposalrequestmand",
       "properties": [
         {
           "audiences": [],
@@ -73512,7 +73512,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProposalRequestOpt",
       "groupName": undefined,
-      "nameOverride": "v10CredentialProposalRequestOpt",
+      "nameOverride": "V10credentialproposalrequestopt",
       "properties": [
         {
           "audiences": [],
@@ -73748,7 +73748,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialStoreRequest",
       "groupName": undefined,
-      "nameOverride": "v10CredentialStoreRequest",
+      "nameOverride": "V10credentialstorerequest",
       "properties": [
         {
           "audiences": [],
@@ -73780,7 +73780,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10DiscoveryExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "v10DiscoveryExchangeListResult",
+      "nameOverride": "V10discoveryexchangelistresult",
       "properties": [
         {
           "audiences": [],
@@ -73823,7 +73823,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10DiscoveryRecord",
       "groupName": undefined,
-      "nameOverride": "v10DiscoveryRecord",
+      "nameOverride": "V10discoveryrecord",
       "properties": [
         {
           "audiences": [],
@@ -74051,7 +74051,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationCreateRequestRequest",
       "groupName": undefined,
-      "nameOverride": "v10PresentationCreateRequestRequest",
+      "nameOverride": "V10presentationcreaterequestrequest",
       "properties": [
         {
           "audiences": [],
@@ -74140,7 +74140,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationExchange",
       "groupName": undefined,
-      "nameOverride": "v10PresentationExchange",
+      "nameOverride": "V10presentationexchange",
       "properties": [
         {
           "audiences": [],
@@ -74553,7 +74553,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationExchangeList",
       "groupName": undefined,
-      "nameOverride": "v10PresentationExchangeList",
+      "nameOverride": "V10presentationexchangelist",
       "properties": [
         {
           "audiences": [],
@@ -74620,7 +74620,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "v10PresentationProblemReportRequest",
+      "nameOverride": "V10presentationproblemreportrequest",
       "properties": [
         {
           "audiences": [],
@@ -74647,7 +74647,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationProposalRequest",
       "groupName": undefined,
-      "nameOverride": "v10PresentationProposalRequest",
+      "nameOverride": "V10presentationproposalrequest",
       "properties": [
         {
           "audiences": [],
@@ -74752,7 +74752,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationSendRequestRequest",
       "groupName": undefined,
-      "nameOverride": "v10PresentationSendRequestRequest",
+      "nameOverride": "V10presentationsendrequestrequest",
       "properties": [
         {
           "audiences": [],
@@ -74857,7 +74857,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationSendRequestToProposal",
       "groupName": undefined,
-      "nameOverride": "v10PresentationSendRequestToProposal",
+      "nameOverride": "V10presentationsendrequesttoproposal",
       "properties": [
         {
           "audiences": [],
@@ -74906,7 +74906,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredAttrSpec",
       "groupName": undefined,
-      "nameOverride": "v20CredAttrSpec",
+      "nameOverride": "V20credattrspec",
       "properties": [
         {
           "audiences": [],
@@ -74975,7 +74975,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredBoundOfferRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredBoundOfferRequest",
+      "nameOverride": "V20credboundofferrequest",
       "properties": [
         {
           "audiences": [],
@@ -75040,7 +75040,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExFree",
       "groupName": undefined,
-      "nameOverride": "v20CredExFree",
+      "nameOverride": "V20credexfree",
       "properties": [
         {
           "audiences": [],
@@ -75190,7 +75190,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecord",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecord",
+      "nameOverride": "V20credexrecord",
       "properties": [
         {
           "audiences": [],
@@ -75694,7 +75694,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordByFormat",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecordByFormat",
+      "nameOverride": "V20credexrecordbyformat",
       "properties": [
         {
           "audiences": [],
@@ -75711,7 +75711,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredIssue",
               "groupName": undefined,
-              "nameOverride": "credIssue",
+              "nameOverride": "Credissue",
               "properties": [],
               "type": "object",
             },
@@ -75732,7 +75732,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredOffer",
               "groupName": undefined,
-              "nameOverride": "credOffer",
+              "nameOverride": "Credoffer",
               "properties": [],
               "type": "object",
             },
@@ -75753,7 +75753,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredProposal",
               "groupName": undefined,
-              "nameOverride": "credProposal",
+              "nameOverride": "Credproposal",
               "properties": [],
               "type": "object",
             },
@@ -75774,7 +75774,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredRequest",
               "groupName": undefined,
-              "nameOverride": "credRequest",
+              "nameOverride": "Credrequest",
               "properties": [],
               "type": "object",
             },
@@ -75789,7 +75789,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordDetail",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecordDetail",
+      "nameOverride": "V20credexrecorddetail",
       "properties": [
         {
           "audiences": [],
@@ -75865,7 +75865,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordIndy",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecordIndy",
+      "nameOverride": "V20credexrecordindy",
       "properties": [
         {
           "audiences": [],
@@ -76065,7 +76065,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordLdProof",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecordLdProof",
+      "nameOverride": "V20credexrecordldproof",
       "properties": [
         {
           "audiences": [],
@@ -76202,7 +76202,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordListResult",
       "groupName": undefined,
-      "nameOverride": "v20CredExRecordListResult",
+      "nameOverride": "V20credexrecordlistresult",
       "properties": [
         {
           "audiences": [],
@@ -76285,7 +76285,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilter",
       "groupName": undefined,
-      "nameOverride": "v20CredFilter",
+      "nameOverride": "V20credfilter",
       "properties": [
         {
           "audiences": [],
@@ -76334,7 +76334,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilterIndy",
       "groupName": undefined,
-      "nameOverride": "v20CredFilterIndy",
+      "nameOverride": "V20credfilterindy",
       "properties": [
         {
           "audiences": [],
@@ -76471,7 +76471,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilterLdProof",
       "groupName": undefined,
-      "nameOverride": "v20CredFilterLdProof",
+      "nameOverride": "V20credfilterldproof",
       "properties": [
         {
           "audiences": [],
@@ -76512,7 +76512,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFormat",
       "groupName": undefined,
-      "nameOverride": "v20CredFormat",
+      "nameOverride": "V20credformat",
       "properties": [
         {
           "audiences": [],
@@ -76555,7 +76555,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssue",
       "groupName": undefined,
-      "nameOverride": "v20CredIssue",
+      "nameOverride": "V20credissue",
       "properties": [
         {
           "audiences": [],
@@ -76693,7 +76693,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssueProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredIssueProblemReportRequest",
+      "nameOverride": "V20credissueproblemreportrequest",
       "properties": [
         {
           "audiences": [],
@@ -76720,7 +76720,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssueRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredIssueRequest",
+      "nameOverride": "V20credissuerequest",
       "properties": [
         {
           "audiences": [],
@@ -76757,7 +76757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOffer",
       "groupName": undefined,
-      "nameOverride": "v20CredOffer",
+      "nameOverride": "V20credoffer",
       "properties": [
         {
           "audiences": [],
@@ -76914,7 +76914,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOfferConnFreeRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredOfferConnFreeRequest",
+      "nameOverride": "V20credofferconnfreerequest",
       "properties": [
         {
           "audiences": [],
@@ -77041,7 +77041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOfferRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredOfferRequest",
+      "nameOverride": "V20credofferrequest",
       "properties": [
         {
           "audiences": [],
@@ -77184,7 +77184,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredPreview",
       "groupName": undefined,
-      "nameOverride": "v20CredPreview",
+      "nameOverride": "V20credpreview",
       "properties": [
         {
           "audiences": [],
@@ -77235,7 +77235,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredProposal",
       "groupName": undefined,
-      "nameOverride": "v20CredProposal",
+      "nameOverride": "V20credproposal",
       "properties": [
         {
           "audiences": [],
@@ -77379,7 +77379,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredRequest",
+      "nameOverride": "V20credrequest",
       "properties": [
         {
           "audiences": [],
@@ -77496,7 +77496,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequestFree",
       "groupName": undefined,
-      "nameOverride": "v20CredRequestFree",
+      "nameOverride": "V20credrequestfree",
       "properties": [
         {
           "audiences": [],
@@ -77635,7 +77635,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequestRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredRequestRequest",
+      "nameOverride": "V20credrequestrequest",
       "properties": [
         {
           "audiences": [],
@@ -77672,7 +77672,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredStoreRequest",
       "groupName": undefined,
-      "nameOverride": "v20CredStoreRequest",
+      "nameOverride": "V20credstorerequest",
       "properties": [
         {
           "audiences": [],
@@ -77704,7 +77704,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "v20DiscoveryExchangeListResult",
+      "nameOverride": "V20discoveryexchangelistresult",
       "properties": [
         {
           "audiences": [],
@@ -77747,7 +77747,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryExchangeResult",
       "groupName": undefined,
-      "nameOverride": "v20DiscoveryExchangeResult",
+      "nameOverride": "V20discoveryexchangeresult",
       "properties": [
         {
           "audiences": [],
@@ -77777,7 +77777,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryRecord",
       "groupName": undefined,
-      "nameOverride": "v20DiscoveryRecord",
+      "nameOverride": "V20discoveryrecord",
       "properties": [
         {
           "audiences": [],
@@ -77987,7 +77987,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20IssueCredSchemaCore",
       "groupName": undefined,
-      "nameOverride": "v20IssueCredSchemaCore",
+      "nameOverride": "V20issuecredschemacore",
       "properties": [
         {
           "audiences": [],
@@ -78113,7 +78113,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20Pres",
       "groupName": undefined,
-      "nameOverride": "v20Pres",
+      "nameOverride": "V20pres",
       "properties": [
         {
           "audiences": [],
@@ -78230,7 +78230,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresCreateRequestRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresCreateRequestRequest",
+      "nameOverride": "V20prescreaterequestrequest",
       "properties": [
         {
           "audiences": [],
@@ -78319,7 +78319,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecord",
       "groupName": undefined,
-      "nameOverride": "v20PresExRecord",
+      "nameOverride": "V20presexrecord",
       "properties": [
         {
           "audiences": [],
@@ -78785,7 +78785,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecordByFormat",
       "groupName": undefined,
-      "nameOverride": "v20PresExRecordByFormat",
+      "nameOverride": "V20presexrecordbyformat",
       "properties": [
         {
           "audiences": [],
@@ -78802,7 +78802,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20PresExRecordByFormatPres",
               "groupName": undefined,
-              "nameOverride": "pres",
+              "nameOverride": "Pres",
               "properties": [],
               "type": "object",
             },
@@ -78823,7 +78823,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20PresExRecordByFormatPresProposal",
               "groupName": undefined,
-              "nameOverride": "presProposal",
+              "nameOverride": "Presproposal",
               "properties": [],
               "type": "object",
             },
@@ -78844,7 +78844,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20PresExRecordByFormatPresRequest",
               "groupName": undefined,
-              "nameOverride": "presRequest",
+              "nameOverride": "Presrequest",
               "properties": [],
               "type": "object",
             },
@@ -78859,7 +78859,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecordList",
       "groupName": undefined,
-      "nameOverride": "v20PresExRecordList",
+      "nameOverride": "V20presexrecordlist",
       "properties": [
         {
           "audiences": [],
@@ -78926,7 +78926,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresFormat",
       "groupName": undefined,
-      "nameOverride": "v20PresFormat",
+      "nameOverride": "V20presformat",
       "properties": [
         {
           "audiences": [],
@@ -78969,7 +78969,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresProblemReportRequest",
+      "nameOverride": "V20presproblemreportrequest",
       "properties": [
         {
           "audiences": [],
@@ -78996,7 +78996,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposal",
       "groupName": undefined,
-      "nameOverride": "v20PresProposal",
+      "nameOverride": "V20presproposal",
       "properties": [
         {
           "audiences": [],
@@ -79108,7 +79108,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposalByFormat",
       "groupName": undefined,
-      "nameOverride": "v20PresProposalByFormat",
+      "nameOverride": "V20presproposalbyformat",
       "properties": [
         {
           "audiences": [],
@@ -79173,7 +79173,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposalRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresProposalRequest",
+      "nameOverride": "V20presproposalrequest",
       "properties": [
         {
           "audiences": [],
@@ -79278,7 +79278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresRequest",
+      "nameOverride": "V20presrequest",
       "properties": [
         {
           "audiences": [],
@@ -79409,7 +79409,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresRequestByFormat",
       "groupName": undefined,
-      "nameOverride": "v20PresRequestByFormat",
+      "nameOverride": "V20presrequestbyformat",
       "properties": [
         {
           "audiences": [],
@@ -79474,7 +79474,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresSendRequestRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresSendRequestRequest",
+      "nameOverride": "V20pressendrequestrequest",
       "properties": [
         {
           "audiences": [],
@@ -79579,7 +79579,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresSpecByFormatRequest",
       "groupName": undefined,
-      "nameOverride": "v20PresSpecByFormatRequest",
+      "nameOverride": "V20presspecbyformatrequest",
       "properties": [
         {
           "audiences": [],
@@ -79681,7 +79681,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresentationSendRequestToProposal",
       "groupName": undefined,
-      "nameOverride": "v20PresentationSendRequestToProposal",
+      "nameOverride": "V20presentationsendrequesttoproposal",
       "properties": [
         {
           "audiences": [],
@@ -79730,7 +79730,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "VcRecord",
       "groupName": undefined,
-      "nameOverride": "vcRecord",
+      "nameOverride": "Vcrecord",
       "properties": [
         {
           "audiences": [],
@@ -79991,7 +79991,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "VcRecordList",
       "groupName": undefined,
-      "nameOverride": "vcRecordList",
+      "nameOverride": "Vcrecordlist",
       "properties": [
         {
           "audiences": [],
@@ -80026,7 +80026,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "VerifyRequest",
       "groupName": undefined,
-      "nameOverride": "verifyRequest",
+      "nameOverride": "Verifyrequest",
       "properties": [
         {
           "audiences": [],
@@ -80080,7 +80080,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "VerifyResponse",
       "groupName": undefined,
-      "nameOverride": "verifyResponse",
+      "nameOverride": "Verifyresponse",
       "properties": [
         {
           "audiences": [],
@@ -80126,7 +80126,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "W3CCredentialsListRequest",
       "groupName": undefined,
-      "nameOverride": "w3CCredentialsListRequest",
+      "nameOverride": "W3ccredentialslistrequest",
       "properties": [
         {
           "audiences": [],
@@ -80364,7 +80364,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "WalletList",
       "groupName": undefined,
-      "nameOverride": "walletList",
+      "nameOverride": "Walletlist",
       "properties": [
         {
           "audiences": [],
@@ -80417,7 +80417,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "WalletRecord",
       "groupName": undefined,
-      "nameOverride": "walletRecord",
+      "nameOverride": "Walletrecord",
       "properties": [
         {
           "audiences": [],
@@ -80555,7 +80555,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "WriteLedgerRequest",
       "groupName": undefined,
-      "nameOverride": "writeLedgerRequest",
+      "nameOverride": "Writeledgerrequest",
       "properties": [
         {
           "audiences": [],

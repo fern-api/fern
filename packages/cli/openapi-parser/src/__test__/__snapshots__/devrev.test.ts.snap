@@ -4426,7 +4426,7 @@ organizations.
       "description": "The response to getting an artifact's download URL.",
       "generatedName": "ArtifactsLocateResponse",
       "groupName": undefined,
-      "nameOverride": "artifactsLocateResponse",
+      "nameOverride": "Artifactslocateresponse",
       "properties": [
         {
           "audiences": [],
@@ -4472,7 +4472,7 @@ organizations.
       "description": "The request to prepare a URL to upload a file.",
       "generatedName": "ArtifactsPrepareRequest",
       "groupName": undefined,
-      "nameOverride": "artifactsPrepareRequest",
+      "nameOverride": "Artifactspreparerequest",
       "properties": [
         {
           "audiences": [],
@@ -4499,7 +4499,7 @@ organizations.
       "description": "The response to preparing a URL to upload a file.",
       "generatedName": "ArtifactsPrepareResponse",
       "groupName": undefined,
-      "nameOverride": "artifactsPrepareResponse",
+      "nameOverride": "Artifactsprepareresponse",
       "properties": [
         {
           "audiences": [],
@@ -4561,7 +4561,7 @@ organizations.
       "description": undefined,
       "generatedName": "ArtifactsPrepareResponseFormData",
       "groupName": undefined,
-      "nameOverride": "artifactsPrepareResponseFormData",
+      "nameOverride": "Artifactsprepareresponseformdata",
       "properties": [
         {
           "audiences": [],
@@ -4604,7 +4604,7 @@ organizations.
       "description": undefined,
       "generatedName": "AtomBase",
       "groupName": undefined,
-      "nameOverride": "atomBase",
+      "nameOverride": "Atombase",
       "properties": [
         {
           "audiences": [],
@@ -4728,7 +4728,7 @@ organizations.
       "description": undefined,
       "generatedName": "AtomBaseSummary",
       "groupName": undefined,
-      "nameOverride": "atomBaseSummary",
+      "nameOverride": "Atombasesummary",
       "properties": [
         {
           "audiences": [],
@@ -4841,7 +4841,7 @@ authentication connection that is set up for a Dev organization.
         "discriminantProperty": "type",
         "generatedName": "AuthConnection",
         "groupName": undefined,
-        "nameOverride": "authConnection",
+        "nameOverride": "Authconnection",
         "schemas": {
           "google_apps": {
             "description": undefined,
@@ -4896,7 +4896,7 @@ authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsAzureAd",
       "groupName": undefined,
-      "nameOverride": "authConnectionOptionsAzureAd",
+      "nameOverride": "Authconnectionoptionsazuread",
       "properties": [
         {
           "audiences": [],
@@ -4972,7 +4972,7 @@ authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsGoogleApps",
       "groupName": undefined,
-      "nameOverride": "authConnectionOptionsGoogleApps",
+      "nameOverride": "Authconnectionoptionsgoogleapps",
       "properties": [
         {
           "audiences": [],
@@ -5050,7 +5050,7 @@ authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsOidc",
       "groupName": undefined,
-      "nameOverride": "authConnectionOptionsOidc",
+      "nameOverride": "Authconnectionoptionsoidc",
       "properties": [
         {
           "audiences": [],
@@ -5126,7 +5126,7 @@ authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsSaml",
       "groupName": undefined,
-      "nameOverride": "authConnectionOptionsSaml",
+      "nameOverride": "Authconnectionoptionssaml",
       "properties": [
         {
           "audiences": [],
@@ -5269,7 +5269,7 @@ for each authentication connection will depend on the type value.
       "description": undefined,
       "generatedName": "AuthToken",
       "groupName": undefined,
-      "nameOverride": "authToken",
+      "nameOverride": "Authtoken",
       "properties": [
         {
           "audiences": [],
@@ -5621,7 +5621,7 @@ type.
 ",
       "generatedName": "AuthTokensCreateRequest",
       "groupName": undefined,
-      "nameOverride": "authTokensCreateRequest",
+      "nameOverride": "Authtokenscreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -5849,7 +5849,7 @@ requested token type.
 ",
       "generatedName": "AuthTokensCreateResponse",
       "groupName": undefined,
-      "nameOverride": "authTokensCreateResponse",
+      "nameOverride": "Authtokenscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -5976,7 +5976,7 @@ of values in which the order of values does not matter.
       "description": "The request to revoke the token.",
       "generatedName": "AuthTokensDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "authTokensDeleteRequest",
+      "nameOverride": "Authtokensdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -6011,7 +6011,7 @@ JTI claim of the token in the authorization header.
       "description": "The response to get the token metadata.",
       "generatedName": "AuthTokensGetResponse",
       "groupName": undefined,
-      "nameOverride": "authTokensGetResponse",
+      "nameOverride": "Authtokensgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -6036,7 +6036,7 @@ JTI claim of the token in the authorization header.
       "description": "The response to list the token metadata.",
       "generatedName": "AuthTokensListResponse",
       "groupName": undefined,
-      "nameOverride": "authTokensListResponse",
+      "nameOverride": "Authtokenslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -6066,7 +6066,7 @@ JTI claim of the token in the authorization header.
       "description": "Carries Rev org info.",
       "generatedName": "AuthTokensOrgTraits",
       "groupName": undefined,
-      "nameOverride": "authTokensOrgTraits",
+      "nameOverride": "Authtokensorgtraits",
       "properties": [
         {
           "audiences": [],
@@ -6121,7 +6121,7 @@ issue a Rev session token.
 ",
       "generatedName": "AuthTokensRevInfo",
       "groupName": undefined,
-      "nameOverride": "authTokensRevInfo",
+      "nameOverride": "Authtokensrevinfo",
       "properties": [
         {
           "audiences": [],
@@ -6230,7 +6230,7 @@ that match with the provided token type.
 ",
       "generatedName": "AuthTokensSelfDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "authTokensSelfDeleteRequest",
+      "nameOverride": "Authtokensselfdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -6260,7 +6260,7 @@ that match with the provided token type.
       "description": "A request to update the token metadata.",
       "generatedName": "AuthTokensUpdateRequest",
       "groupName": undefined,
-      "nameOverride": "authTokensUpdateRequest",
+      "nameOverride": "Authtokensupdaterequest",
       "properties": [
         {
           "audiences": [],
@@ -6304,7 +6304,7 @@ that match with the provided token type.
       "description": "Response for the request to update the token metadata.",
       "generatedName": "AuthTokensUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "authTokensUpdateResponse",
+      "nameOverride": "Authtokensupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -6329,7 +6329,7 @@ that match with the provided token type.
       "description": "Carries Rev user info.",
       "generatedName": "AuthTokensUserTraits",
       "groupName": undefined,
-      "nameOverride": "authTokensUserTraits",
+      "nameOverride": "Authtokensusertraits",
       "properties": [
         {
           "audiences": [],
@@ -6448,7 +6448,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "discriminantProperty": "type",
         "generatedName": "DevOrgAuthConnectionsCreateRequest",
         "groupName": undefined,
-        "nameOverride": "devOrgAuthConnectionsCreateRequest",
+        "nameOverride": "Devorgauthconnectionscreaterequest",
         "schemas": {
           "google_apps": {
             "description": undefined,
@@ -6530,7 +6530,7 @@ connection.
 ",
       "generatedName": "DevOrgAuthConnectionsCreateResponse",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsCreateResponse",
+      "nameOverride": "Devorgauthconnectionscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -6558,7 +6558,7 @@ enabled cannot be deleted.
 ",
       "generatedName": "DevOrgAuthConnectionsDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsDeleteRequest",
+      "nameOverride": "Devorgauthconnectionsdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -6587,7 +6587,7 @@ authentication connection.
 ",
       "generatedName": "DevOrgAuthConnectionsGetResponse",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsGetResponse",
+      "nameOverride": "Devorgauthconnectionsgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -6614,7 +6614,7 @@ authentication connections configured for a Dev organization.
 ",
       "generatedName": "DevOrgAuthConnectionsListResponse",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsListResponse",
+      "nameOverride": "Devorgauthconnectionslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -6648,7 +6648,7 @@ organization.
 ",
       "generatedName": "DevOrgAuthConnectionsToggleRequest",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsToggleRequest",
+      "nameOverride": "Devorgauthconnectionstogglerequest",
       "properties": [
         {
           "audiences": [],
@@ -6738,7 +6738,7 @@ organization.
         "discriminantProperty": "type",
         "generatedName": "DevOrgAuthConnectionsUpdateRequest",
         "groupName": undefined,
-        "nameOverride": "devOrgAuthConnectionsUpdateRequest",
+        "nameOverride": "Devorgauthconnectionsupdaterequest",
         "schemas": {
           "google_apps": {
             "description": undefined,
@@ -6835,7 +6835,7 @@ connection.
 ",
       "generatedName": "DevOrgAuthConnectionsUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "devOrgAuthConnectionsUpdateResponse",
+      "nameOverride": "Devorgauthconnectionsupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -6869,7 +6869,7 @@ connection.
       "description": undefined,
       "generatedName": "DevUser",
       "groupName": undefined,
-      "nameOverride": "devUser",
+      "nameOverride": "Devuser",
       "properties": [
         {
           "audiences": [],
@@ -6912,7 +6912,7 @@ connection.
       "description": "The response to listing the Dev users.",
       "generatedName": "DevUsersListResponse",
       "groupName": undefined,
-      "nameOverride": "devUsersListResponse",
+      "nameOverride": "Devuserslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -6989,7 +6989,7 @@ sort order. If not set, then no prior elements exist.
 ",
       "generatedName": "DevUsersSelfResponse",
       "groupName": undefined,
-      "nameOverride": "devUsersSelfResponse",
+      "nameOverride": "Devusersselfresponse",
       "properties": [
         {
           "audiences": [],
@@ -7041,7 +7041,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "Enhancement",
       "groupName": undefined,
-      "nameOverride": "enhancement",
+      "nameOverride": "Enhancement",
       "properties": [
         {
           "audiences": [],
@@ -7088,7 +7088,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorBadRequest",
       "groupName": undefined,
-      "nameOverride": "errorBadRequest",
+      "nameOverride": "Errorbadrequest",
       "properties": [
         {
           "audiences": [],
@@ -7131,7 +7131,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorBadRequestInvalidEnumValue",
       "groupName": undefined,
-      "nameOverride": "errorBadRequestInvalidEnumValue",
+      "nameOverride": "Errorbadrequestinvalidenumvalue",
       "properties": [
         {
           "audiences": [],
@@ -7195,7 +7195,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorBadRequestMissingRequiredField",
       "groupName": undefined,
-      "nameOverride": "errorBadRequestMissingRequiredField",
+      "nameOverride": "Errorbadrequestmissingrequiredfield",
       "properties": [
         {
           "audiences": [],
@@ -7279,7 +7279,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorBadRequestValueNotPermitted",
       "groupName": undefined,
-      "nameOverride": "errorBadRequestValueNotPermitted",
+      "nameOverride": "Errorbadrequestvaluenotpermitted",
       "properties": [
         {
           "audiences": [],
@@ -7327,7 +7327,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorBase",
       "groupName": undefined,
-      "nameOverride": "errorBase",
+      "nameOverride": "Errorbase",
       "properties": [
         {
           "audiences": [],
@@ -7368,7 +7368,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorForbidden",
       "groupName": undefined,
-      "nameOverride": "errorForbidden",
+      "nameOverride": "Errorforbidden",
       "properties": [
         {
           "audiences": [],
@@ -7429,7 +7429,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "ErrorInternalServerError",
       "groupName": undefined,
-      "nameOverride": "errorInternalServerError",
+      "nameOverride": "Errorinternalservererror",
       "properties": [
         {
           "audiences": [],
@@ -7513,7 +7513,7 @@ inquiry.
       "description": undefined,
       "generatedName": "ErrorNotFound",
       "groupName": undefined,
-      "nameOverride": "errorNotFound",
+      "nameOverride": "Errornotfound",
       "properties": [
         {
           "audiences": [],
@@ -7574,7 +7574,7 @@ inquiry.
       "description": undefined,
       "generatedName": "ErrorServiceUnavailable",
       "groupName": undefined,
-      "nameOverride": "errorServiceUnavailable",
+      "nameOverride": "Errorserviceunavailable",
       "properties": [
         {
           "audiences": [],
@@ -7635,7 +7635,7 @@ inquiry.
       "description": undefined,
       "generatedName": "ErrorTooManyRequests",
       "groupName": undefined,
-      "nameOverride": "errorTooManyRequests",
+      "nameOverride": "Errortoomanyrequests",
       "properties": [
         {
           "audiences": [],
@@ -7716,7 +7716,7 @@ inquiry.
       "description": undefined,
       "generatedName": "ErrorUnauthorized",
       "groupName": undefined,
-      "nameOverride": "errorUnauthorized",
+      "nameOverride": "Errorunauthorized",
       "properties": [
         {
           "audiences": [],
@@ -7768,7 +7768,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventPartCreated",
       "groupName": undefined,
-      "nameOverride": "eventPartCreated",
+      "nameOverride": "Eventpartcreated",
       "properties": [
         {
           "audiences": [],
@@ -7793,7 +7793,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventPartDeleted",
       "groupName": undefined,
-      "nameOverride": "eventPartDeleted",
+      "nameOverride": "Eventpartdeleted",
       "properties": [
         {
           "audiences": [],
@@ -7820,7 +7820,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventPartUpdated",
       "groupName": undefined,
-      "nameOverride": "eventPartUpdated",
+      "nameOverride": "Eventpartupdated",
       "properties": [
         {
           "audiences": [],
@@ -7845,7 +7845,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventRevOrgCreated",
       "groupName": undefined,
-      "nameOverride": "eventRevOrgCreated",
+      "nameOverride": "Eventrevorgcreated",
       "properties": [
         {
           "audiences": [],
@@ -7870,7 +7870,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventRevOrgDeleted",
       "groupName": undefined,
-      "nameOverride": "eventRevOrgDeleted",
+      "nameOverride": "Eventrevorgdeleted",
       "properties": [
         {
           "audiences": [],
@@ -7897,7 +7897,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventRevOrgUpdated",
       "groupName": undefined,
-      "nameOverride": "eventRevOrgUpdated",
+      "nameOverride": "Eventrevorgupdated",
       "properties": [
         {
           "audiences": [],
@@ -7922,7 +7922,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTagCreated",
       "groupName": undefined,
-      "nameOverride": "eventTagCreated",
+      "nameOverride": "Eventtagcreated",
       "properties": [
         {
           "audiences": [],
@@ -7947,7 +7947,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTagDeleted",
       "groupName": undefined,
-      "nameOverride": "eventTagDeleted",
+      "nameOverride": "Eventtagdeleted",
       "properties": [
         {
           "audiences": [],
@@ -7974,7 +7974,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTagUpdated",
       "groupName": undefined,
-      "nameOverride": "eventTagUpdated",
+      "nameOverride": "Eventtagupdated",
       "properties": [
         {
           "audiences": [],
@@ -7999,7 +7999,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTimelineEntryCreated",
       "groupName": undefined,
-      "nameOverride": "eventTimelineEntryCreated",
+      "nameOverride": "Eventtimelineentrycreated",
       "properties": [
         {
           "audiences": [],
@@ -8024,7 +8024,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTimelineEntryDeleted",
       "groupName": undefined,
-      "nameOverride": "eventTimelineEntryDeleted",
+      "nameOverride": "Eventtimelineentrydeleted",
       "properties": [
         {
           "audiences": [],
@@ -8051,7 +8051,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventTimelineEntryUpdated",
       "groupName": undefined,
-      "nameOverride": "eventTimelineEntryUpdated",
+      "nameOverride": "Eventtimelineentryupdated",
       "properties": [
         {
           "audiences": [],
@@ -8076,7 +8076,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWebhookCreated",
       "groupName": undefined,
-      "nameOverride": "eventWebhookCreated",
+      "nameOverride": "Eventwebhookcreated",
       "properties": [
         {
           "audiences": [],
@@ -8101,7 +8101,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWebhookDeleted",
       "groupName": undefined,
-      "nameOverride": "eventWebhookDeleted",
+      "nameOverride": "Eventwebhookdeleted",
       "properties": [
         {
           "audiences": [],
@@ -8128,7 +8128,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWebhookUpdated",
       "groupName": undefined,
-      "nameOverride": "eventWebhookUpdated",
+      "nameOverride": "Eventwebhookupdated",
       "properties": [
         {
           "audiences": [],
@@ -8153,7 +8153,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWorkCreated",
       "groupName": undefined,
-      "nameOverride": "eventWorkCreated",
+      "nameOverride": "Eventworkcreated",
       "properties": [
         {
           "audiences": [],
@@ -8178,7 +8178,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWorkDeleted",
       "groupName": undefined,
-      "nameOverride": "eventWorkDeleted",
+      "nameOverride": "Eventworkdeleted",
       "properties": [
         {
           "audiences": [],
@@ -8205,7 +8205,7 @@ inquiry.
       "description": undefined,
       "generatedName": "EventWorkUpdated",
       "groupName": undefined,
-      "nameOverride": "eventWorkUpdated",
+      "nameOverride": "Eventworkupdated",
       "properties": [
         {
           "audiences": [],
@@ -8281,7 +8281,7 @@ inquiry.
       "description": undefined,
       "generatedName": "Issue",
       "groupName": undefined,
-      "nameOverride": "issue",
+      "nameOverride": "Issue",
       "properties": [
         {
           "audiences": [],
@@ -8379,7 +8379,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "OrgBase",
       "groupName": undefined,
-      "nameOverride": "orgBase",
+      "nameOverride": "Orgbase",
       "properties": [
         {
           "audiences": [],
@@ -8420,7 +8420,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "OrgBaseSummary",
       "groupName": undefined,
-      "nameOverride": "orgBaseSummary",
+      "nameOverride": "Orgbasesummary",
       "properties": [
         {
           "audiences": [],
@@ -8481,7 +8481,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "OrgSummary",
         "groupName": undefined,
-        "nameOverride": "orgSummary",
+        "nameOverride": "Orgsummary",
         "schemas": {
           "rev_org": {
             "description": undefined,
@@ -8512,7 +8512,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "Part",
         "groupName": undefined,
-        "nameOverride": "part",
+        "nameOverride": "Part",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -8566,7 +8566,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartBase",
       "groupName": undefined,
-      "nameOverride": "partBase",
+      "nameOverride": "Partbase",
       "properties": [
         {
           "audiences": [],
@@ -8690,7 +8690,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartBaseSummary",
       "groupName": undefined,
-      "nameOverride": "partBaseSummary",
+      "nameOverride": "Partbasesummary",
       "properties": [
         {
           "audiences": [],
@@ -8718,7 +8718,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "PartSummary",
         "groupName": undefined,
-        "nameOverride": "partSummary",
+        "nameOverride": "Partsummary",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -8847,7 +8847,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "PartsCreateRequest",
         "groupName": undefined,
-        "nameOverride": "partsCreateRequest",
+        "nameOverride": "Partscreaterequest",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -8892,7 +8892,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsCreateRequestCapability",
       "groupName": undefined,
-      "nameOverride": "partsCreateRequestCapability",
+      "nameOverride": "Partscreaterequestcapability",
       "properties": [
         {
           "audiences": [],
@@ -8924,7 +8924,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsCreateRequestEnhancement",
       "groupName": undefined,
-      "nameOverride": "partsCreateRequestEnhancement",
+      "nameOverride": "Partscreaterequestenhancement",
       "properties": [
         {
           "audiences": [],
@@ -8977,7 +8977,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsCreateRequestFeature",
       "groupName": undefined,
-      "nameOverride": "partsCreateRequestFeature",
+      "nameOverride": "Partscreaterequestfeature",
       "properties": [
         {
           "audiences": [],
@@ -9027,7 +9027,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsCreateResponse",
       "groupName": undefined,
-      "nameOverride": "partsCreateResponse",
+      "nameOverride": "Partscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -9052,7 +9052,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "partsDeleteRequest",
+      "nameOverride": "Partsdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -9097,7 +9097,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsGetResponse",
       "groupName": undefined,
-      "nameOverride": "partsGetResponse",
+      "nameOverride": "Partsgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -9122,7 +9122,7 @@ always be returned in the specified sort-by order.
       "description": undefined,
       "generatedName": "PartsListResponse",
       "groupName": undefined,
-      "nameOverride": "partsListResponse",
+      "nameOverride": "Partslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -9265,7 +9265,7 @@ sort order. If not set, then no prior elements exist.
         "discriminantProperty": "type",
         "generatedName": "PartsUpdateRequest",
         "groupName": undefined,
-        "nameOverride": "partsUpdateRequest",
+        "nameOverride": "Partsupdaterequest",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -9336,7 +9336,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "PartsUpdateRequestEnhancement",
       "groupName": undefined,
-      "nameOverride": "partsUpdateRequestEnhancement",
+      "nameOverride": "Partsupdaterequestenhancement",
       "properties": [
         {
           "audiences": [],
@@ -9384,7 +9384,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "PartsUpdateRequestOwnedBy",
       "groupName": undefined,
-      "nameOverride": "partsUpdateRequestOwnedBy",
+      "nameOverride": "Partsupdaterequestownedby",
       "properties": [
         {
           "audiences": [],
@@ -9441,7 +9441,7 @@ empty.
       "description": undefined,
       "generatedName": "PartsUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "partsUpdateResponse",
+      "nameOverride": "Partsupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -9491,7 +9491,7 @@ empty.
       "description": undefined,
       "generatedName": "RevOrg",
       "groupName": undefined,
-      "nameOverride": "revOrg",
+      "nameOverride": "Revorg",
       "properties": [
         {
           "audiences": [],
@@ -9579,7 +9579,7 @@ organization.
 ",
       "generatedName": "RevOrgsCreateRequest",
       "groupName": undefined,
-      "nameOverride": "revOrgsCreateRequest",
+      "nameOverride": "Revorgscreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -9713,7 +9713,7 @@ records.
 ",
       "generatedName": "RevOrgsCreateResponse",
       "groupName": undefined,
-      "nameOverride": "revOrgsCreateResponse",
+      "nameOverride": "Revorgscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -9738,7 +9738,7 @@ records.
       "description": "Request object to delete a Rev organization.",
       "generatedName": "RevOrgsDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "revOrgsDeleteRequest",
+      "nameOverride": "Revorgsdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -9783,7 +9783,7 @@ records.
       "description": "The response to getting a Rev organization's information.",
       "generatedName": "RevOrgsGetResponse",
       "groupName": undefined,
-      "nameOverride": "revOrgsGetResponse",
+      "nameOverride": "Revorgsgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -9809,7 +9809,7 @@ records.
 ",
       "generatedName": "RevOrgsListResponse",
       "groupName": undefined,
-      "nameOverride": "revOrgsListResponse",
+      "nameOverride": "Revorgslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -9886,7 +9886,7 @@ sort order. If not set, then no prior elements exist.
 ",
       "generatedName": "RevOrgsUpdateRequest",
       "groupName": undefined,
-      "nameOverride": "revOrgsUpdateRequest",
+      "nameOverride": "Revorgsupdaterequest",
       "properties": [
         {
           "audiences": [],
@@ -10040,7 +10040,7 @@ records.
       "description": "Response object to updating Rev organization's information.",
       "generatedName": "RevOrgsUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "revOrgsUpdateResponse",
+      "nameOverride": "Revorgsupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -10074,7 +10074,7 @@ records.
       "description": undefined,
       "generatedName": "RevUserSummary",
       "groupName": undefined,
-      "nameOverride": "revUserSummary",
+      "nameOverride": "Revusersummary",
       "properties": [
         {
           "audiences": [],
@@ -10130,7 +10130,7 @@ system-generated identifier will be assigned to the user.
       "description": undefined,
       "generatedName": "SetTagWithValue",
       "groupName": undefined,
-      "nameOverride": "setTagWithValue",
+      "nameOverride": "Settagwithvalue",
       "properties": [
         {
           "audiences": [],
@@ -10180,7 +10180,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": "Describes the current stage of a work item.",
       "generatedName": "Stage",
       "groupName": undefined,
-      "nameOverride": "stage",
+      "nameOverride": "Stage",
       "properties": [
         {
           "audiences": [],
@@ -10207,7 +10207,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": "Sets an object's initial stage.",
       "generatedName": "StageInit",
       "groupName": undefined,
-      "nameOverride": "stageInit",
+      "nameOverride": "Stageinit",
       "properties": [
         {
           "audiences": [],
@@ -10239,7 +10239,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": "Updates an object's stage.",
       "generatedName": "StageUpdate",
       "groupName": undefined,
-      "nameOverride": "stageUpdate",
+      "nameOverride": "Stageupdate",
       "properties": [
         {
           "audiences": [],
@@ -10289,7 +10289,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": undefined,
       "generatedName": "Tag",
       "groupName": undefined,
-      "nameOverride": "tag",
+      "nameOverride": "Tag",
       "properties": [
         {
           "audiences": [],
@@ -10380,7 +10380,7 @@ unique.
       "description": undefined,
       "generatedName": "TagSummary",
       "groupName": undefined,
-      "nameOverride": "tagSummary",
+      "nameOverride": "Tagsummary",
       "properties": [
         {
           "audiences": [],
@@ -10410,7 +10410,7 @@ unique.
       "description": undefined,
       "generatedName": "TagWithValue",
       "groupName": undefined,
-      "nameOverride": "tagWithValue",
+      "nameOverride": "Tagwithvalue",
       "properties": [
         {
           "audiences": [],
@@ -10456,7 +10456,7 @@ unique.
       "description": "The request to create a new tag.",
       "generatedName": "TagsCreateRequest",
       "groupName": undefined,
-      "nameOverride": "tagsCreateRequest",
+      "nameOverride": "Tagscreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -10533,7 +10533,7 @@ permitted.
       "description": "The response to creating a new tag.",
       "generatedName": "TagsCreateResponse",
       "groupName": undefined,
-      "nameOverride": "tagsCreateResponse",
+      "nameOverride": "Tagscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -10558,7 +10558,7 @@ permitted.
       "description": "The request to delete a tag.",
       "generatedName": "TagsDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "tagsDeleteRequest",
+      "nameOverride": "Tagsdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -10603,7 +10603,7 @@ permitted.
       "description": "The response to getting a tag's information.",
       "generatedName": "TagsGetResponse",
       "groupName": undefined,
-      "nameOverride": "tagsGetResponse",
+      "nameOverride": "Tagsgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -10628,7 +10628,7 @@ permitted.
       "description": "The response to listing the tags.",
       "generatedName": "TagsListResponse",
       "groupName": undefined,
-      "nameOverride": "tagsListResponse",
+      "nameOverride": "Tagslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -10704,7 +10704,7 @@ sort order. If not set, then no prior elements exist.
       "description": "Specifies an update to a tag's allowed values.",
       "generatedName": "TagsUpdateAllowedValues",
       "groupName": undefined,
-      "nameOverride": "tagsUpdateAllowedValues",
+      "nameOverride": "Tagsupdateallowedvalues",
       "properties": [
         {
           "audiences": [],
@@ -10741,7 +10741,7 @@ sort order. If not set, then no prior elements exist.
       "description": "The request to update a tag.",
       "generatedName": "TagsUpdateRequest",
       "groupName": undefined,
-      "nameOverride": "tagsUpdateRequest",
+      "nameOverride": "Tagsupdaterequest",
       "properties": [
         {
           "audiences": [],
@@ -10831,7 +10831,7 @@ tags.
       "description": "The response for updating a tag.",
       "generatedName": "TagsUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "tagsUpdateResponse",
+      "nameOverride": "Tagsupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -10865,7 +10865,7 @@ tags.
       "description": undefined,
       "generatedName": "Ticket",
       "groupName": undefined,
-      "nameOverride": "ticket",
+      "nameOverride": "Ticket",
       "properties": [
         {
           "audiences": [],
@@ -10975,7 +10975,7 @@ tags.
       "description": undefined,
       "generatedName": "TimelineComment",
       "groupName": undefined,
-      "nameOverride": "timelineComment",
+      "nameOverride": "Timelinecomment",
       "properties": [
         {
           "audiences": [],
@@ -11133,7 +11133,7 @@ will appear in the response.
         "discriminantProperty": "type",
         "generatedName": "TimelineEntriesCreateRequest",
         "groupName": undefined,
-        "nameOverride": "timelineEntriesCreateRequest",
+        "nameOverride": "Timelineentriescreaterequest",
         "schemas": {
           "timeline_comment": {
             "description": undefined,
@@ -11154,7 +11154,7 @@ will appear in the response.
       "description": undefined,
       "generatedName": "TimelineEntriesCreateRequestTimelineComment",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesCreateRequestTimelineComment",
+      "nameOverride": "Timelineentriescreaterequesttimelinecomment",
       "properties": [
         {
           "audiences": [],
@@ -11269,7 +11269,7 @@ will appear in the response.
       "description": "The response to creating a timeline entry for an object.",
       "generatedName": "TimelineEntriesCreateResponse",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesCreateResponse",
+      "nameOverride": "Timelineentriescreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -11294,7 +11294,7 @@ will appear in the response.
       "description": "The request to getting a timeline entry.",
       "generatedName": "TimelineEntriesGetResponse",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesGetResponse",
+      "nameOverride": "Timelineentriesgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -11319,7 +11319,7 @@ will appear in the response.
       "description": "The response to listing timeline entries for an object.",
       "generatedName": "TimelineEntriesListResponse",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesListResponse",
+      "nameOverride": "Timelineentrieslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -11410,7 +11410,7 @@ sort order. If not set, then no prior elements exist.
         "discriminantProperty": "type",
         "generatedName": "TimelineEntriesUpdateRequest",
         "groupName": undefined,
-        "nameOverride": "timelineEntriesUpdateRequest",
+        "nameOverride": "Timelineentriesupdaterequest",
         "schemas": {
           "timeline_comment": {
             "description": undefined,
@@ -11431,7 +11431,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "TimelineEntriesUpdateRequestTimelineComment",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesUpdateRequestTimelineComment",
+      "nameOverride": "Timelineentriesupdaterequesttimelinecomment",
       "properties": [
         {
           "audiences": [],
@@ -11530,7 +11530,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesUpdateRequestTimelineCommentArtifacts",
+      "nameOverride": "Timelineentriesupdaterequesttimelinecommentartifacts",
       "properties": [
         {
           "audiences": [],
@@ -11633,7 +11633,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "description": "The response to updating a timeline entry.",
       "generatedName": "TimelineEntriesUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "timelineEntriesUpdateResponse",
+      "nameOverride": "Timelineentriesupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -11659,7 +11659,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "discriminantProperty": "type",
         "generatedName": "TimelineEntry",
         "groupName": undefined,
-        "nameOverride": "timelineEntry",
+        "nameOverride": "Timelineentry",
         "schemas": {
           "timeline_comment": {
             "description": undefined,
@@ -11718,7 +11718,7 @@ default visibility.
       "description": undefined,
       "generatedName": "UserBase",
       "groupName": undefined,
-      "nameOverride": "userBase",
+      "nameOverride": "Userbase",
       "properties": [
         {
           "audiences": [],
@@ -11866,7 +11866,7 @@ default visibility.
       "description": undefined,
       "generatedName": "UserBaseSummary",
       "groupName": undefined,
-      "nameOverride": "userBaseSummary",
+      "nameOverride": "Userbasesummary",
       "properties": [
         {
           "audiences": [],
@@ -12019,7 +12019,7 @@ default visibility.
         "discriminantProperty": "type",
         "generatedName": "UserSummary",
         "groupName": undefined,
-        "nameOverride": "userSummary",
+        "nameOverride": "Usersummary",
         "schemas": {
           "dev_user": {
             "description": undefined,
@@ -12092,7 +12092,7 @@ default visibility.
       "description": undefined,
       "generatedName": "Webhook",
       "groupName": undefined,
-      "nameOverride": "webhook",
+      "nameOverride": "Webhook",
       "properties": [
         {
           "audiences": [],
@@ -12173,7 +12173,7 @@ default visibility.
       "description": undefined,
       "generatedName": "WebhookEventRequest",
       "groupName": undefined,
-      "nameOverride": "webhookEventRequest",
+      "nameOverride": "Webhookeventrequest",
       "properties": [
         {
           "audiences": [],
@@ -12619,7 +12619,7 @@ seconds.
       "description": undefined,
       "generatedName": "WebhookEventResponse",
       "groupName": undefined,
-      "nameOverride": "webhookEventResponse",
+      "nameOverride": "Webhookeventresponse",
       "properties": [
         {
           "audiences": [],
@@ -12776,7 +12776,7 @@ be set for other request types.
       "description": undefined,
       "generatedName": "WebhookEventVerify",
       "groupName": undefined,
-      "nameOverride": "webhookEventVerify",
+      "nameOverride": "Webhookeventverify",
       "properties": [
         {
           "audiences": [],
@@ -12830,7 +12830,7 @@ be set for other request types.
       "description": "The request to create a new webhook.",
       "generatedName": "WebhooksCreateRequest",
       "groupName": undefined,
-      "nameOverride": "webhooksCreateRequest",
+      "nameOverride": "Webhookscreaterequest",
       "properties": [
         {
           "audiences": [],
@@ -12906,7 +12906,7 @@ response.
       "description": "The response to creating a new webhook.",
       "generatedName": "WebhooksCreateResponse",
       "groupName": undefined,
-      "nameOverride": "webhooksCreateResponse",
+      "nameOverride": "Webhookscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -12931,7 +12931,7 @@ response.
       "description": "The request to delete a webhook.",
       "generatedName": "WebhooksDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "webhooksDeleteRequest",
+      "nameOverride": "Webhooksdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -12976,7 +12976,7 @@ response.
       "description": "The response to getting the information for the webhook.",
       "generatedName": "WebhooksGetResponse",
       "groupName": undefined,
-      "nameOverride": "webhooksGetResponse",
+      "nameOverride": "Webhooksgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -13001,7 +13001,7 @@ response.
       "description": "The response to listing the webhooks.",
       "generatedName": "WebhooksListResponse",
       "groupName": undefined,
-      "nameOverride": "webhooksListResponse",
+      "nameOverride": "Webhookslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -13052,7 +13052,7 @@ response.
       "description": "The request to update a webhook.",
       "generatedName": "WebhooksUpdateRequest",
       "groupName": undefined,
-      "nameOverride": "webhooksUpdateRequest",
+      "nameOverride": "Webhooksupdaterequest",
       "properties": [
         {
           "audiences": [],
@@ -13167,7 +13167,7 @@ won't receive any object events until successfully verified.
       "description": undefined,
       "generatedName": "WebhooksUpdateRequestEventTypes",
       "groupName": undefined,
-      "nameOverride": "webhooksUpdateRequestEventTypes",
+      "nameOverride": "Webhooksupdaterequesteventtypes",
       "properties": [
         {
           "audiences": [],
@@ -13259,7 +13259,7 @@ event types. Note this is mutually exclusive with 'add' and
       "description": "The response to updating the webhook.",
       "generatedName": "WebhooksUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "webhooksUpdateResponse",
+      "nameOverride": "Webhooksupdateresponse",
       "properties": [
         {
           "audiences": [],
@@ -13285,7 +13285,7 @@ event types. Note this is mutually exclusive with 'add' and
         "discriminantProperty": "type",
         "generatedName": "Work",
         "groupName": undefined,
-        "nameOverride": "work",
+        "nameOverride": "Work",
         "schemas": {
           "issue": {
             "description": undefined,
@@ -13323,7 +13323,7 @@ event types. Note this is mutually exclusive with 'add' and
       "description": undefined,
       "generatedName": "WorkBase",
       "groupName": undefined,
-      "nameOverride": "workBase",
+      "nameOverride": "Workbase",
       "properties": [
         {
           "audiences": [],
@@ -13708,7 +13708,7 @@ issues.
         "discriminantProperty": "type",
         "generatedName": "WorksCreateRequest",
         "groupName": undefined,
-        "nameOverride": "worksCreateRequest",
+        "nameOverride": "Workscreaterequest",
         "schemas": {
           "issue": {
             "description": undefined,
@@ -13737,7 +13737,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksCreateRequestIssue",
       "groupName": undefined,
-      "nameOverride": "worksCreateRequestIssue",
+      "nameOverride": "Workscreaterequestissue",
       "properties": [
         {
           "audiences": [],
@@ -13788,7 +13788,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksCreateRequestTicket",
       "groupName": undefined,
-      "nameOverride": "worksCreateRequestTicket",
+      "nameOverride": "Workscreaterequestticket",
       "properties": [
         {
           "audiences": [],
@@ -13860,7 +13860,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksCreateResponse",
       "groupName": undefined,
-      "nameOverride": "worksCreateResponse",
+      "nameOverride": "Workscreateresponse",
       "properties": [
         {
           "audiences": [],
@@ -13885,7 +13885,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksDeleteRequest",
       "groupName": undefined,
-      "nameOverride": "worksDeleteRequest",
+      "nameOverride": "Worksdeleterequest",
       "properties": [
         {
           "audiences": [],
@@ -13930,7 +13930,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksExportResponse",
       "groupName": undefined,
-      "nameOverride": "worksExportResponse",
+      "nameOverride": "Worksexportresponse",
       "properties": [
         {
           "audiences": [],
@@ -13960,7 +13960,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksGetResponse",
       "groupName": undefined,
-      "nameOverride": "worksGetResponse",
+      "nameOverride": "Worksgetresponse",
       "properties": [
         {
           "audiences": [],
@@ -13985,7 +13985,7 @@ issues.
       "description": undefined,
       "generatedName": "WorksListResponse",
       "groupName": undefined,
-      "nameOverride": "worksListResponse",
+      "nameOverride": "Workslistresponse",
       "properties": [
         {
           "audiences": [],
@@ -14232,7 +14232,7 @@ sort order. If not set, then no prior elements exist.
         "discriminantProperty": "type",
         "generatedName": "WorksUpdateRequest",
         "groupName": undefined,
-        "nameOverride": "worksUpdateRequest",
+        "nameOverride": "Worksupdaterequest",
         "schemas": {
           "issue": {
             "description": undefined,
@@ -14269,7 +14269,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "WorksUpdateRequestArtifactIds",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestArtifactIds",
+      "nameOverride": "Worksupdaterequestartifactids",
       "properties": [
         {
           "audiences": [],
@@ -14306,7 +14306,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "WorksUpdateRequestIssue",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestIssue",
+      "nameOverride": "Worksupdaterequestissue",
       "properties": [
         {
           "audiences": [],
@@ -14362,7 +14362,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "WorksUpdateRequestOwnedBy",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestOwnedBy",
+      "nameOverride": "Worksupdaterequestownedby",
       "properties": [
         {
           "audiences": [],
@@ -14401,7 +14401,7 @@ empty.
       "description": undefined,
       "generatedName": "WorksUpdateRequestReportedBy",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestReportedBy",
+      "nameOverride": "Worksupdaterequestreportedby",
       "properties": [
         {
           "audiences": [],
@@ -14439,7 +14439,7 @@ empty.
       "description": undefined,
       "generatedName": "WorksUpdateRequestTags",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestTags",
+      "nameOverride": "Worksupdaterequesttags",
       "properties": [
         {
           "audiences": [],
@@ -14474,7 +14474,7 @@ empty.
       "description": undefined,
       "generatedName": "WorksUpdateRequestTicket",
       "groupName": undefined,
-      "nameOverride": "worksUpdateRequestTicket",
+      "nameOverride": "Worksupdaterequestticket",
       "properties": [
         {
           "audiences": [],
@@ -14553,7 +14553,7 @@ empty.
       "description": undefined,
       "generatedName": "WorksUpdateResponse",
       "groupName": undefined,
-      "nameOverride": "worksUpdateResponse",
+      "nameOverride": "Worksupdateresponse",
       "properties": [
         {
           "audiences": [],
