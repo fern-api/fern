@@ -4098,7 +4098,7 @@ exports[`open api parser deel simple 1`] = `
       },
       "AlternateEmailList": {
         "docs": "List of alternate email addresses.",
-        "type": "list<Root Schema>",
+        "type": "list<RootSchema>",
       },
       "ApiError": {
         "docs": undefined,
@@ -7474,7 +7474,7 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
-      "PaymentWorkerList": "list<The Worker For The Payment>",
+      "PaymentWorkerList": "list<TheWorker For The Payment>",
       "People": {
         "docs": "People object representing a Deel",
         "properties": {
@@ -7941,7 +7941,7 @@ exports[`open api parser deel simple 1`] = `
           "data": "ResponseEstimateFirstPayment",
         },
       },
-      "Root Schema": {
+      "RootSchema": {
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
@@ -8088,7 +8088,7 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
-      "The Worker For The Payment": {
+      "TheWorker For The Payment": {
         "docs": undefined,
         "properties": {
           "contract_id": {

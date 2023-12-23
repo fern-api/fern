@@ -126,7 +126,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Predict Agent",
+              "name": "PredictAgent",
               "query-parameters": undefined,
             },
             "response": {
@@ -161,7 +161,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Api Token",
+              "name": "ApiToken",
               "query-parameters": undefined,
             },
             "response": {
@@ -242,7 +242,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Sign In",
+              "name": "SignIn",
               "query-parameters": undefined,
             },
             "response": {
@@ -269,7 +269,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Sign Up",
+              "name": "SignUp",
               "query-parameters": undefined,
             },
             "response": {
@@ -613,17 +613,17 @@ exports[`open api parser superagent simple 1`] = `
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "HTTP Validation Error",
+        "type": "HTTPValidation Error",
       },
     },
     "types": {
-      "HTTP Validation Error": {
+      "HTTPValidation Error": {
         "docs": undefined,
         "properties": {
-          "detail": "optional<list<Validation Error>>",
+          "detail": "optional<list<ValidationError>>",
         },
       },
-      "Validation Error": {
+      "ValidationError": {
         "docs": undefined,
         "properties": {
           "loc": "list<ValidationErrorLocItem>",

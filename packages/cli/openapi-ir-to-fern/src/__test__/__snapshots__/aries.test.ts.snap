@@ -101,7 +101,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Action Menu Fetch Result",
+              "type": "root.ActionMenu Fetch Result",
             },
           },
           "perform_action_by_conn_id": {
@@ -145,7 +145,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Perform Request",
+              "name": "PerformRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -244,7 +244,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Send Menu",
+              "name": "SendMenu",
               "query-parameters": undefined,
             },
             "response": {
@@ -302,7 +302,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Send Message",
+              "name": "SendMessage",
               "query-parameters": undefined,
             },
             "response": {
@@ -388,7 +388,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "accept_connection_request": {
@@ -448,7 +448,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "create_connection_invitation": {
@@ -525,7 +525,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Create Invitation Request",
+              "name": "CreateInvitation Request",
               "query-parameters": {
                 "alias": {
                   "docs": "Alias",
@@ -547,7 +547,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Invitation Result",
+              "type": "root.InvitationResult",
             },
           },
           "create_static_connection": {
@@ -637,12 +637,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Connection Static Request",
+              "name": "ConnectionStatic Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Connection Static Result",
+              "type": "root.ConnectionStatic Result",
             },
           },
           "delete_connection_record": {
@@ -705,7 +705,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Endpoints Result",
+              "type": "root.EndpointsResult",
             },
           },
           "get_connection_metadata": {
@@ -744,7 +744,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Connection Metadata",
+              "type": "root.ConnectionMetadata",
             },
           },
           "get_connection_record": {
@@ -795,7 +795,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "get_matching_connections": {
@@ -887,7 +887,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Connection List",
+              "type": "root.ConnectionList",
             },
           },
           "receive_connection_invitation": {
@@ -979,7 +979,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Receive Invitation Request",
+              "name": "ReceiveInvitation Request",
               "query-parameters": {
                 "alias": {
                   "docs": "Alias",
@@ -997,7 +997,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "set_connection_metadata": {
@@ -1037,12 +1037,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Connection Metadata Set Request",
+              "name": "ConnectionMetadata Set Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Connection Metadata",
+              "type": "root.ConnectionMetadata",
             },
           },
           "set_inbound_connection": {
@@ -1188,7 +1188,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Credential Definitions Created Result",
+              "type": "root.CredentialDefinitions Created Result",
             },
           },
           "get_credential_definition": {
@@ -1251,7 +1251,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Credential Definition Get Result",
+              "type": "root.CredentialDefinition Get Result",
             },
           },
           "publish_credential_definition": {
@@ -1311,7 +1311,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Credential Definition Send Request",
+              "name": "CredentialDefinition Send Request",
               "query-parameters": {
                 "conn_id": {
                   "docs": "Connection identifier",
@@ -1325,7 +1325,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Txn Or Credential Definition Send Result",
+              "type": "root.TxnOr Credential Definition Send Result",
             },
           },
           "write_credential_definition": {
@@ -1388,7 +1388,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Credential Definition Get Result",
+              "type": "root.CredentialDefinition Get Result",
             },
           },
         },
@@ -1491,7 +1491,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Attribute Mime Types Result",
+              "type": "root.AttributeMime Types Result",
             },
           },
           "get_credential_record": {
@@ -1527,7 +1527,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Indy Cred Info",
+              "type": "root.IndyCred Info",
             },
           },
           "get_credentials": {
@@ -1576,7 +1576,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Cred Info List",
+              "type": "root.CredInfo List",
             },
           },
           "get_revocation_status": {
@@ -1619,7 +1619,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Cred Revoked Result",
+              "type": "root.CredRevoked Result",
             },
           },
           "get_w3c_credential": {
@@ -1668,7 +1668,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.VC Record",
+              "type": "root.VCRecord",
             },
           },
           "get_w3c_credentials": {
@@ -1757,7 +1757,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "W 3 C Credentials List Request",
+              "name": "W3 C Credentials List Request",
               "query-parameters": {
                 "count": {
                   "docs": "Maximum number to retrieve",
@@ -1775,7 +1775,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.VC Record List",
+              "type": "root.VCRecord List",
             },
           },
         },
@@ -1852,7 +1852,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "accept_didex_request": {
@@ -1916,7 +1916,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "create_didex_request": {
@@ -1990,7 +1990,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
           "receive_didex_request": {
@@ -2090,7 +2090,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "DIDX Request",
+              "name": "DIDXRequest",
               "query-parameters": {
                 "alias": {
                   "docs": "Alias for connection",
@@ -2112,7 +2112,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Conn Record",
+              "type": "root.ConnRecord",
             },
           },
         },
@@ -2172,7 +2172,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Discovery Exchange List Result",
+              "type": "root.V10 Discovery Exchange List Result",
             },
           },
           "get_v10_features_query": {
@@ -2223,7 +2223,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Discovery Record",
+              "type": "root.V10 Discovery Record",
             },
           },
         },
@@ -2287,7 +2287,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Discovery Exchange List Result",
+              "type": "root.V20 Discovery Exchange List Result",
             },
           },
           "get_v20_features_queries": {
@@ -2344,7 +2344,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Discovery Exchange Result",
+              "type": "root.V20 Discovery Exchange Result",
             },
           },
         },
@@ -2396,7 +2396,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "create_transaction_request": {
@@ -2429,7 +2429,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "get_transaction_list": {
@@ -2464,7 +2464,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/transactions",
             "response": {
               "docs": "",
-              "type": "root.Transaction List",
+              "type": "root.TransactionList",
             },
           },
           "get_transaction_record": {
@@ -2503,7 +2503,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "publish_endorsed_transaction": {
@@ -2542,7 +2542,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "refuse_transaction": {
@@ -2581,7 +2581,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "resend_transaction_request": {
@@ -2620,7 +2620,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Record",
+              "type": "root.TransactionRecord",
             },
           },
           "set_endorser_info_for_conn_id": {
@@ -2650,7 +2650,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Endorser Info",
+              "type": "root.EndorserInfo",
             },
           },
           "set_endorser_role_for_conn_id": {
@@ -2694,7 +2694,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Transaction Jobs",
+              "type": "root.TransactionJobs",
             },
           },
         },
@@ -2941,7 +2941,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Credential definition identifier",
                     "type": "optional<string>",
                   },
-                  "credential_proposal": "root.Credential Preview",
+                  "credential_proposal": "root.CredentialPreview",
                   "issuer_did": {
                     "docs": "Credential issuer DID",
                     "type": "optional<string>",
@@ -2969,12 +2969,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Create",
+              "name": "V10 Credential Create",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "create_free_credential_offer": {
@@ -3140,7 +3140,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Credential definition identifier",
                     "type": "string",
                   },
-                  "credential_preview": "root.Credential Preview",
+                  "credential_preview": "root.CredentialPreview",
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
                     "type": "optional<boolean>",
@@ -3148,12 +3148,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Conn Free Offer Request",
+              "name": "V10 Credential Conn Free Offer Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "delete_cred_ex_record": {
@@ -3328,7 +3328,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "get_matching_cred_ex_records": {
@@ -3493,7 +3493,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange List Result",
+              "type": "root.V10 Credential Exchange List Result",
             },
           },
           "issue_credential_to_holder": {
@@ -3646,12 +3646,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Issue Request",
+              "name": "V10 Credential Issue Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "report_cred_ex_problem": {
@@ -3673,7 +3673,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Problem Report Request",
+              "name": "V10 Credential Problem Report Request",
               "query-parameters": undefined,
             },
             "response": {
@@ -3848,12 +3848,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Bound Offer Request",
+              "name": "V10 Credential Bound Offer Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "send_credential_request": {
@@ -3998,7 +3998,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "send_free_credential": {
@@ -4170,7 +4170,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Credential definition identifier",
                     "type": "optional<string>",
                   },
-                  "credential_proposal": "root.Credential Preview",
+                  "credential_proposal": "root.CredentialPreview",
                   "issuer_did": {
                     "docs": "Credential issuer DID",
                     "type": "optional<string>",
@@ -4198,12 +4198,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Proposal Request Mand",
+              "name": "V10 Credential Proposal Request Mand",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "send_free_credential_offer": {
@@ -4374,7 +4374,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Credential definition identifier",
                     "type": "string",
                   },
-                  "credential_preview": "root.Credential Preview",
+                  "credential_preview": "root.CredentialPreview",
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
                     "type": "optional<boolean>",
@@ -4382,12 +4382,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Free Offer Request",
+              "name": "V10 Credential Free Offer Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "send_free_credential_proposal": {
@@ -4559,7 +4559,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Credential definition identifier",
                     "type": "optional<string>",
                   },
-                  "credential_proposal": "optional<root.Credential Preview>",
+                  "credential_proposal": "optional<root.CredentialPreview>",
                   "issuer_did": {
                     "docs": "Credential issuer DID",
                     "type": "optional<string>",
@@ -4587,12 +4587,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Proposal Request Opt",
+              "name": "V10 Credential Proposal Request Opt",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
           "store_received_credential": {
@@ -4742,12 +4742,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Credential Store Request",
+              "name": "V10 Credential Store Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Credential Exchange",
+              "type": "root.V10 Credential Exchange",
             },
           },
         },
@@ -5085,7 +5085,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Human-readable comment",
                     "type": "optional<string>",
                   },
-                  "credential_preview": "optional<root.V 20 Cred Preview>",
+                  "credential_preview": "optional<root.V20 Cred Preview>",
                   "filter": "root.V20CredBoundOfferRequestFilter",
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
@@ -5094,12 +5094,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Issue Cred Schema Core",
+              "name": "V20 Issue Cred Schema Core",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "create_free_credential_offer": {
@@ -5405,7 +5405,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Human-readable comment",
                     "type": "optional<string>",
                   },
-                  "credential_preview": "optional<root.V 20 Cred Preview>",
+                  "credential_preview": "optional<root.V20 Cred Preview>",
                   "filter": "root.V20CredBoundOfferRequestFilter",
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
@@ -5414,12 +5414,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Offer Conn Free Request",
+              "name": "V20 Cred Offer Conn Free Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "delete_cred_ex_record": {
@@ -5717,7 +5717,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record Detail",
+              "type": "root.V20 Cred Ex Record Detail",
             },
           },
           "get_matching_cred_ex_records-v2": {
@@ -6005,7 +6005,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record List Result",
+              "type": "root.V20 Cred Ex Record List Result",
             },
           },
           "issue_credential_to_holder": {
@@ -6281,12 +6281,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Issue Request",
+              "name": "V20 Cred Issue Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record Detail",
+              "type": "root.V20 Cred Ex Record Detail",
             },
           },
           "report_cred_ex_problem": {
@@ -6308,7 +6308,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Issue Problem Report Request",
+              "name": "V20 Cred Issue Problem Report Request",
               "query-parameters": undefined,
             },
             "response": {
@@ -6620,12 +6620,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Bound Offer Request",
+              "name": "V20 Cred Bound Offer Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "send_credential_request": {
@@ -6883,12 +6883,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Request Request",
+              "name": "V20 Cred Request Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "send_free_credential": {
@@ -7181,11 +7181,11 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/issue-credential-2.0/send",
             "request": {
-              "body": "root.V 20 Cred Ex Free",
+              "body": "root.V20 Cred Ex Free",
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "send_free_credential_offer": {
@@ -7496,7 +7496,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Connection identifier",
                     "type": "string",
                   },
-                  "credential_preview": "optional<root.V 20 Cred Preview>",
+                  "credential_preview": "optional<root.V20 Cred Preview>",
                   "filter": "root.V20CredBoundOfferRequestFilter",
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
@@ -7505,12 +7505,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Offer Request",
+              "name": "V20 Cred Offer Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "send_free_credential_proposal": {
@@ -7803,11 +7803,11 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/issue-credential-2.0/send-proposal",
             "request": {
-              "body": "root.V 20 Cred Ex Free",
+              "body": "root.V20 Cred Ex Free",
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "send_free_credential_request": {
@@ -8110,12 +8110,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Request Free",
+              "name": "V20 Cred Request Free",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record",
+              "type": "root.V20 Cred Ex Record",
             },
           },
           "store_received_credential": {
@@ -8388,12 +8388,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Cred Store Request",
+              "name": "V20 Cred Store Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Cred Ex Record Detail",
+              "type": "root.V20 Cred Ex Record Detail",
             },
           },
         },
@@ -8476,12 +8476,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Sign Request",
+              "name": "SignRequest",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Sign Response",
+              "type": "root.SignResponse",
             },
           },
           "verify": {
@@ -8501,12 +8501,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Verify Request",
+              "name": "VerifyRequest",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Verify Response",
+              "type": "root.VerifyResponse",
             },
           },
         },
@@ -8548,7 +8548,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "TAA Accept",
+              "name": "TAAAccept",
               "query-parameters": undefined,
             },
             "response": {
@@ -8588,7 +8588,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Get Nym Role Response",
+              "type": "root.GetNym Role Response",
             },
           },
           "get_did_verkey": {
@@ -8623,7 +8623,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Get DID Verkey Response",
+              "type": "root.GetDID Verkey Response",
             },
           },
           "get_multiple_ledger_config": {
@@ -8647,7 +8647,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/ledger/multiple/config",
             "response": {
               "docs": "",
-              "type": "root.Ledger Config List",
+              "type": "root.LedgerConfig List",
             },
           },
           "get_published_did_endpoint": {
@@ -8687,7 +8687,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Get DID Endpoint Response",
+              "type": "root.GetDID Endpoint Response",
             },
           },
           "get_taa": {
@@ -8715,7 +8715,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/ledger/taa",
             "response": {
               "docs": "",
-              "type": "root.TAA Result",
+              "type": "root.TAAResult",
             },
           },
           "get_write_ledger": {
@@ -8737,7 +8737,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/ledger/multiple/get-write-ledger",
             "response": {
               "docs": "",
-              "type": "root.Write Ledger Request",
+              "type": "root.WriteLedger Request",
             },
           },
           "register_nym": {
@@ -8804,7 +8804,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Txn Or Register Ledger Nym Response",
+              "type": "root.TxnOr Register Ledger Nym Response",
             },
           },
           "rotate_public_did_keypair": {
@@ -8868,7 +8868,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "delete_mediation_record": {
@@ -8885,7 +8885,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "deny_mediation_request": {
@@ -8930,12 +8930,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Admin Mediation Deny",
+              "name": "AdminMediation Deny",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Deny",
+              "type": "root.MediationDeny",
             },
           },
           "get_default_mediator": {
@@ -8946,7 +8946,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "get_keylists": {
@@ -9030,7 +9030,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation List",
+              "type": "root.MediationList",
             },
           },
           "get_mediation_record": {
@@ -9047,7 +9047,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "grant_mediation_request": {
@@ -9081,7 +9081,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Grant",
+              "type": "root.MediationGrant",
             },
           },
           "request_mediation_for_connection": {
@@ -9110,12 +9110,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Mediation Create Request",
+              "name": "MediationCreate Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "send_keylist_query_to_mediator": {
@@ -9160,7 +9160,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Keylist Query Filter Request",
+              "name": "KeylistQuery Filter Request",
               "query-parameters": {
                 "paginate_limit": {
                   "docs": "limit number of results",
@@ -9174,7 +9174,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Keylist Query",
+              "type": "root.KeylistQuery",
             },
           },
           "send_keylist_update_to_mediator": {
@@ -9221,16 +9221,16 @@ exports[`open api parser aries simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "updates": "optional<list<root.Keylist Update Rule>>",
+                  "updates": "optional<list<root.KeylistUpdate Rule>>",
                 },
               },
               "headers": undefined,
-              "name": "Keylist Update Request",
+              "name": "KeylistUpdate Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Keylist Update",
+              "type": "root.KeylistUpdate",
             },
           },
           "set_default_mediator": {
@@ -9247,7 +9247,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Mediation Record",
+              "type": "root.MediationRecord",
             },
           },
           "update_keylist_for_conn_id": {
@@ -9296,12 +9296,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Mediation Id Match Info",
+              "name": "MediationId Match Info",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Keylist Update",
+              "type": "root.KeylistUpdate",
             },
           },
         },
@@ -9411,12 +9411,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Create Wallet Request",
+              "name": "CreateWallet Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Create Wallet Response",
+              "type": "root.CreateWallet Response",
             },
           },
           "delete_wallet": {
@@ -9456,7 +9456,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Remove Wallet Request",
+              "name": "RemoveWallet Request",
               "query-parameters": undefined,
             },
             "response": {
@@ -9500,12 +9500,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Create Wallet Token Request",
+              "name": "CreateWallet Token Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Create Wallet Token Response",
+              "type": "root.CreateWallet Token Response",
             },
           },
           "get_matching_wallets": {
@@ -9546,7 +9546,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Wallet List",
+              "type": "root.WalletList",
             },
           },
           "get_wallet_record": {
@@ -9582,7 +9582,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Wallet Record",
+              "type": "root.WalletRecord",
             },
           },
           "update_wallet": {
@@ -9645,12 +9645,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Update Wallet Request",
+              "name": "UpdateWallet Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Wallet Record",
+              "type": "root.WalletRecord",
             },
           },
         },
@@ -9795,7 +9795,7 @@ exports[`open api parser aries simple 1`] = `
                   },
                   "attachments": {
                     "docs": "Optional invitation attachments",
-                    "type": "optional<list<root.Attachment Def>>",
+                    "type": "optional<list<root.AttachmentDef>>",
                   },
                   "handshake_protocols": "optional<list<string>>",
                   "mediation_id": {
@@ -9821,7 +9821,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Invitation Create Request",
+              "name": "InvitationCreate Request",
               "query-parameters": {
                 "auto_accept": {
                   "docs": "Auto-accept connection (defaults to configuration)",
@@ -9835,7 +9835,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Invitation Record",
+              "type": "root.InvitationRecord",
             },
           },
           "receive_oob_invitation": {
@@ -9958,7 +9958,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/out-of-band/receive-invitation",
             "request": {
-              "body": "root.Invitation Message",
+              "body": "root.InvitationMessage",
               "name": "ReceiveOobInvitationRequest",
               "query-parameters": {
                 "alias": {
@@ -9981,7 +9981,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Oob Record",
+              "type": "root.OobRecord",
             },
           },
         },
@@ -10152,7 +10152,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "comment": "optional<string>",
-                  "proof_request": "root.Indy Proof Request",
+                  "proof_request": "root.IndyProof Request",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -10160,12 +10160,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Presentation Create Request Request",
+              "name": "V10 Presentation Create Request Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "delete_pres_ex_record": {
@@ -10355,7 +10355,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange List",
+              "type": "root.V10 Presentation Exchange List",
             },
           },
           "get_pres_ex_credentials": {
@@ -10423,7 +10423,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "list<root.Indy Cred Precis>",
+              "type": "list<root.IndyCred Precis>",
             },
           },
           "get_pres_ex_record": {
@@ -10563,7 +10563,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "report_pres_ex_problem": {
@@ -10585,7 +10585,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Presentation Problem Report Request",
+              "name": "V10 Presentation Problem Report Request",
               "query-parameters": undefined,
             },
             "response": {
@@ -10747,7 +10747,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Connection identifier",
                     "type": "string",
                   },
-                  "proof_request": "root.Indy Proof Request",
+                  "proof_request": "root.IndyProof Request",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -10755,12 +10755,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Presentation Send Request Request",
+              "name": "V10 Presentation Send Request Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "send_presentation_proposal": {
@@ -10921,7 +10921,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Connection identifier",
                     "type": "string",
                   },
-                  "presentation_proposal": "root.Indy Pres Preview",
+                  "presentation_proposal": "root.IndyPres Preview",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -10929,12 +10929,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Presentation Proposal Request",
+              "name": "V10 Presentation Proposal Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "send_proof_presentation": {
@@ -11078,11 +11078,11 @@ exports[`open api parser aries simple 1`] = `
               },
             },
             "request": {
-              "body": "root.Indy Pres Spec",
+              "body": "root.IndyPres Spec",
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "send_proof_presentation_request": {
@@ -11237,12 +11237,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 10 Presentation Send Request To Proposal",
+              "name": "V10 Presentation Send Request To Proposal",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
           "verify_received_presentation": {
@@ -11382,7 +11382,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 10 Presentation Exchange",
+              "type": "root.V10 Presentation Exchange",
             },
           },
         },
@@ -11646,7 +11646,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "comment": "optional<string>",
-                  "presentation_request": "root.V 20 Pres Request By Format",
+                  "presentation_request": "root.V20 Pres Request By Format",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -11654,12 +11654,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Pres Create Request Request",
+              "name": "V20 Pres Create Request Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "delete_pres_ex_record": {
@@ -11880,7 +11880,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record List",
+              "type": "root.V20 Pres Ex Record List",
             },
           },
           "get_pres_ex_credentials-v2": {
@@ -11948,7 +11948,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "list<root.Indy Cred Precis>",
+              "type": "list<root.IndyCred Precis>",
             },
           },
           "get_pres_ex_record": {
@@ -12119,7 +12119,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "report_pres_ex_problem": {
@@ -12141,7 +12141,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Pres Problem Report Request",
+              "name": "V20 Pres Problem Report Request",
               "query-parameters": undefined,
             },
             "response": {
@@ -12381,7 +12381,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Connection identifier",
                     "type": "string",
                   },
-                  "presentation_request": "root.V 20 Pres Request By Format",
+                  "presentation_request": "root.V20 Pres Request By Format",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -12389,12 +12389,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Pres Send Request Request",
+              "name": "V20 Pres Send Request Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "send_presentation_proposal": {
@@ -12620,7 +12620,7 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Connection identifier",
                     "type": "string",
                   },
-                  "presentation_proposal": "root.V 20 Pres Proposal By Format",
+                  "presentation_proposal": "root.V20 Pres Proposal By Format",
                   "trace": {
                     "docs": "Whether to trace event (default false)",
                     "type": "optional<boolean>",
@@ -12628,12 +12628,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Pres Proposal Request",
+              "name": "V20 Pres Proposal Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "send_proof_presentation": {
@@ -12862,12 +12862,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Pres Spec By Format Request",
+              "name": "V20 Pres Spec By Format Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "send_proof_presentation_request": {
@@ -13053,12 +13053,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "V 20 Presentation Send Request To Proposal",
+              "name": "V20 Presentation Send Request To Proposal",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
           "verify_received_presentation": {
@@ -13229,7 +13229,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.V 20 Pres Ex Record",
+              "type": "root.V20 Pres Ex Record",
             },
           },
         },
@@ -13313,7 +13313,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Resolution Result",
+              "type": "root.ResolutionResult",
             },
           },
         },
@@ -13356,12 +13356,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Clear Pending Revocations Request",
+              "name": "ClearPending Revocations Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Publish Revocations",
+              "type": "root.PublishRevocations",
             },
           },
           "create_revocation_registry": {
@@ -13438,12 +13438,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Rev Reg Create Request",
+              "name": "RevReg Create Request",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "delete_tails_file": {
@@ -13478,7 +13478,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Tails Delete Response",
+              "type": "root.TailsDelete Response",
             },
           },
           "download_tails_file": {
@@ -13565,7 +13565,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "get_created_registries": {
@@ -13606,7 +13606,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Regs Created",
+              "type": "root.RevRegs Created",
             },
           },
           "get_credential_revocation_record": {
@@ -13656,7 +13656,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Cred Rev Record Result",
+              "type": "root.CredRev Record Result",
             },
           },
           "get_issued_credential_details": {
@@ -13699,7 +13699,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Cred Rev Record Details Result",
+              "type": "root.CredRev Record Details Result",
             },
           },
           "get_issued_credentials_count": {
@@ -13731,7 +13731,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Issued Result",
+              "type": "root.RevReg Issued Result",
             },
           },
           "get_published_credential_details": {
@@ -13761,7 +13761,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Cred Rev Indy Records Result",
+              "type": "root.CredRev Indy Records Result",
             },
           },
           "get_revocation_registry": {
@@ -13831,7 +13831,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "publish_revocation_registry_definition": {
@@ -13926,7 +13926,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Txn Or Rev Reg Result",
+              "type": "root.TxnOr Rev Reg Result",
             },
           },
           "publish_revocation_registry_entry": {
@@ -14009,7 +14009,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "publish_revocations": {
@@ -14041,11 +14041,11 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/revocation/publish-revocations",
             "request": {
-              "body": "root.Publish Revocations",
+              "body": "root.PublishRevocations",
             },
             "response": {
               "docs": "",
-              "type": "root.Txn Or Publish Revocations Result",
+              "type": "root.TxnOr Publish Revocations Result",
             },
           },
           "revoke_issued_credential": {
@@ -14113,7 +14113,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Revoke Request",
+              "name": "RevokeRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -14199,7 +14199,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "update_revocation_entry_state": {
@@ -14240,7 +14240,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Wallet Updated Result",
+              "type": "root.RevReg Wallet Updated Result",
             },
           },
           "update_revocation_registry": {
@@ -14320,12 +14320,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Rev Reg Update Tails File Uri",
+              "name": "RevReg Update Tails File Uri",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Rev Reg Result",
+              "type": "root.RevReg Result",
             },
           },
           "upload_tails_file": {
@@ -14442,7 +14442,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Schemas Created Result",
+              "type": "root.SchemasCreated Result",
             },
           },
           "get_schema": {
@@ -14483,7 +14483,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Schema Get Result",
+              "type": "root.SchemaGet Result",
             },
           },
           "publish_schema": {
@@ -14551,7 +14551,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Schema Send Request",
+              "name": "SchemaSend Request",
               "query-parameters": {
                 "conn_id": {
                   "docs": "Connection identifier",
@@ -14565,7 +14565,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Txn Or Schema Send Result",
+              "type": "root.TxnOr Schema Send Result",
             },
           },
           "write_schema_record_to_wallet": {
@@ -14606,7 +14606,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.Schema Get Result",
+              "type": "root.SchemaGet Result",
             },
           },
         },
@@ -14639,7 +14639,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/status/config",
             "response": {
               "docs": "",
-              "type": "root.Admin Config",
+              "type": "root.AdminConfig",
             },
           },
           "get_liveliness": {
@@ -14663,7 +14663,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/status/live",
             "response": {
               "docs": "",
-              "type": "root.Admin Status Liveliness",
+              "type": "root.AdminStatus Liveliness",
             },
           },
           "get_loaded_plugins": {
@@ -14685,7 +14685,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/plugins",
             "response": {
               "docs": "",
-              "type": "root.Admin Modules",
+              "type": "root.AdminModules",
             },
           },
           "get_readiness": {
@@ -14709,7 +14709,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/status/ready",
             "response": {
               "docs": "",
-              "type": "root.Admin Status Readiness",
+              "type": "root.AdminStatus Readiness",
             },
           },
           "get_status": {
@@ -14731,7 +14731,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/status",
             "response": {
               "docs": "",
-              "type": "root.Admin Status",
+              "type": "root.AdminStatus",
             },
           },
           "reset_statistics": {
@@ -14826,12 +14826,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "Ping Request",
+              "name": "PingRequest",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.Ping Request Response",
+              "type": "root.PingRequest Response",
             },
           },
         },
@@ -14894,12 +14894,12 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "DID Create",
+              "name": "DIDCreate",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.DID Result",
+              "type": "root.DIDResult",
             },
           },
           "get_did_endpoint": {
@@ -14935,7 +14935,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.DID Endpoint",
+              "type": "root.DIDEndpoint",
             },
           },
           "get_dids": {
@@ -14996,7 +14996,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.DID List",
+              "type": "root.DIDList",
             },
           },
           "get_public_did": {
@@ -15026,7 +15026,7 @@ exports[`open api parser aries simple 1`] = `
             "path": "/wallet/did/public",
             "response": {
               "docs": "",
-              "type": "root.DID Result",
+              "type": "root.DIDResult",
             },
           },
           "rotate_keypair": {
@@ -15101,7 +15101,7 @@ exports[`open api parser aries simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "DID Endpoint With Type",
+              "name": "DIDEndpoint With Type",
               "query-parameters": {
                 "conn_id": {
                   "docs": "Connection identifier",
@@ -15168,7 +15168,7 @@ exports[`open api parser aries simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.DID Result",
+              "type": "root.DIDResult",
             },
           },
         },
@@ -15254,13 +15254,13 @@ exports[`open api parser aries simple 1`] = `
           },
           "response": {
             "docs": "",
-            "type": "Transaction Record",
+            "type": "TransactionRecord",
           },
         },
       },
     },
     "types": {
-      "AML Record": {
+      "AMLRecord": {
         "docs": undefined,
         "properties": {
           "aml": "optional<map<string, string>>",
@@ -15268,7 +15268,7 @@ exports[`open api parser aries simple 1`] = `
           "version": "optional<string>",
         },
       },
-      "Action Menu Fetch Result": {
+      "ActionMenu Fetch Result": {
         "docs": undefined,
         "properties": {
           "result": "optional<ActionMenuFetchResultResult>",
@@ -15279,7 +15279,7 @@ exports[`open api parser aries simple 1`] = `
         "type": "Menu",
       },
       "ActionMenuModulesResult": "map<string, unknown>",
-      "Admin Config": {
+      "AdminConfig": {
         "docs": undefined,
         "properties": {
           "config": {
@@ -15288,7 +15288,11 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Admin Modules": {
+      "AdminConfigConfig": {
+        "docs": "Configuration settings",
+        "properties": {},
+      },
+      "AdminModules": {
         "docs": undefined,
         "properties": {
           "result": {
@@ -15297,7 +15301,9 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Admin Status": {
+      "AdminReset": "map<string, unknown>",
+      "AdminShutdown": "map<string, unknown>",
+      "AdminStatus": {
         "docs": undefined,
         "properties": {
           "conductor": {
@@ -15318,7 +15324,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Admin Status Liveliness": {
+      "AdminStatus Liveliness": {
         "docs": undefined,
         "properties": {
           "alive": {
@@ -15327,7 +15333,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Admin Status Readiness": {
+      "AdminStatus Readiness": {
         "docs": undefined,
         "properties": {
           "ready": {
@@ -15336,12 +15342,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "AdminConfigConfig": {
-        "docs": "Configuration settings",
-        "properties": {},
-      },
-      "AdminReset": "map<string, unknown>",
-      "AdminShutdown": "map<string, unknown>",
       "AdminStatusConductor": {
         "docs": "Conductor statistics",
         "properties": {},
@@ -15350,7 +15350,7 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Timing results",
         "properties": {},
       },
-      "Attach Decorator": {
+      "AttachDecorator": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -15361,7 +15361,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Byte count of data included by reference",
             "type": "optional<integer>",
           },
-          "data": "Attach Decorator Data",
+          "data": "AttachDecorator Data",
           "description": {
             "docs": "Human-readable description of content",
             "type": "optional<string>",
@@ -15380,7 +15380,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Attach Decorator Data": {
+      "AttachDecorator Data": {
         "docs": undefined,
         "properties": {
           "base64": {
@@ -15402,10 +15402,10 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Attach Decorator Data 1 JWS": {
+      "AttachDecorator Data 1 JWS": {
         "docs": undefined,
         "properties": {
-          "header": "Attach Decorator Data JWS Header",
+          "header": "AttachDecorator Data JWS Header",
           "protected": {
             "docs": "protected JWS header",
             "type": "optional<string>",
@@ -15416,7 +15416,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Attach Decorator Data JWS Header": {
+      "AttachDecorator Data JWS Header": {
         "docs": undefined,
         "properties": {
           "kid": {
@@ -15428,7 +15428,7 @@ exports[`open api parser aries simple 1`] = `
       "AttachDecoratorDataJWS": {
         "docs": undefined,
         "properties": {
-          "header": "optional<Attach Decorator Data JWS Header>",
+          "header": "optional<AttachDecorator Data JWS Header>",
           "protected": {
             "docs": "protected JWS header",
             "type": "optional<string>",
@@ -15439,7 +15439,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "signatures": {
             "docs": "List of signatures",
-            "type": "optional<list<Attach Decorator Data 1 JWS>>",
+            "type": "optional<list<AttachDecorator Data 1 JWS>>",
           },
         },
       },
@@ -15447,7 +15447,7 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Detached Java Web Signature",
         "type": "AttachDecoratorDataJWS",
       },
-      "Attachment Def": {
+      "AttachmentDef": {
         "docs": undefined,
         "properties": {
           "id": {
@@ -15473,33 +15473,33 @@ exports[`open api parser aries simple 1`] = `
           },
         ],
       },
-      "Attribute Mime Types Result": {
+      "AttributeMime Types Result": {
         "docs": undefined,
         "properties": {
           "results": "optional<map<string, optional<string>>>",
         },
       },
       "BasicMessageModuleResponse": "map<string, unknown>",
-      "Blinded Ms": {
+      "BlindedMs": {
         "docs": "Blinded master secret",
         "properties": {},
       },
-      "Blinded Ms Correctness Proof": {
+      "BlindedMs Correctness Proof": {
         "docs": "Blinded master secret correctness proof",
         "properties": {},
       },
-      "Claim Format": {
+      "ClaimFormat": {
         "docs": undefined,
         "properties": {
           "jwt": "optional<Jwt>",
-          "jwt_vc": "optional<Jwt Vc>",
-          "jwt_vp": "optional<Jwt Vp>",
+          "jwt_vc": "optional<JwtVc>",
+          "jwt_vp": "optional<JwtVp>",
           "ldp": "optional<Ldp>",
-          "ldp_vc": "optional<Ldp Vc>",
-          "ldp_vp": "optional<Ldp Vp>",
+          "ldp_vc": "optional<LdpVc>",
+          "ldp_vp": "optional<LdpVp>",
         },
       },
-      "Conn Record": {
+      "ConnRecord": {
         "docs": undefined,
         "properties": {
           "accept": {
@@ -15630,7 +15630,7 @@ exports[`open api parser aries simple 1`] = `
           "responder",
         ],
       },
-      "Connection Invitation": {
+      "ConnectionInvitation": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -15667,16 +15667,16 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Connection List": {
+      "ConnectionList": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "List of connection records",
-            "type": "optional<list<Conn Record>>",
+            "type": "optional<list<ConnRecord>>",
           },
         },
       },
-      "Connection Metadata": {
+      "ConnectionMetadata": {
         "docs": undefined,
         "properties": {
           "results": {
@@ -15685,7 +15685,12 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Connection Static Result": {
+      "ConnectionMetadataResults": {
+        "docs": "Dictionary of metadata associated with connection.",
+        "properties": {},
+      },
+      "ConnectionModuleResponse": "map<string, unknown>",
+      "ConnectionStatic Result": {
         "docs": undefined,
         "properties": {
           "my_did": {
@@ -15700,7 +15705,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "My verification key",
             "type": "string",
           },
-          "record": "Conn Record",
+          "record": "ConnRecord",
           "their_did": {
             "docs": "Remote DID",
             "type": "string",
@@ -15711,30 +15716,25 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "ConnectionMetadataResults": {
-        "docs": "Dictionary of metadata associated with connection.",
-        "properties": {},
-      },
-      "ConnectionModuleResponse": "map<string, unknown>",
       "Constraints": {
         "docs": undefined,
         "properties": {
-          "fields": "optional<list<DIF Field>>",
-          "is_holder": "optional<list<DIF Holder>>",
+          "fields": "optional<list<DIFField>>",
+          "is_holder": "optional<list<DIFHolder>>",
           "limit_disclosure": {
             "docs": "LimitDisclosure",
             "type": "optional<string>",
           },
-          "status_active": "optional<Status Active>",
-          "status_revoked": "optional<Status Revoked>",
-          "status_suspended": "optional<Status Suspended>",
+          "status_active": "optional<StatusActive>",
+          "status_revoked": "optional<StatusRevoked>",
+          "status_suspended": "optional<StatusSuspended>",
           "subject_is_issuer": {
             "docs": "SubjectIsIssuer",
-            "type": "optional<Subject Is Issuer>",
+            "type": "optional<SubjectIs Issuer>",
           },
         },
       },
-      "Create Wallet Response": {
+      "CreateWallet Response": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -15767,7 +15767,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Create Wallet Token Response": {
+      "CreateWallet Token Response": {
         "docs": undefined,
         "properties": {
           "token": {
@@ -15787,7 +15787,7 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Settings for this wallet.",
         "properties": {},
       },
-      "Cred Attr Spec": {
+      "CredAttr Spec": {
         "docs": undefined,
         "properties": {
           "mime-type": {
@@ -15804,14 +15804,14 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Cred Def Value": {
+      "CredDef Value": {
         "docs": undefined,
         "properties": {
           "primary": "optional<CredDefValuePrimary>",
           "revocation": "optional<CredDefValueRevocation>",
         },
       },
-      "Cred Def Value Primary": {
+      "CredDef Value Primary": {
         "docs": undefined,
         "properties": {
           "n": "optional<string>",
@@ -15821,7 +15821,7 @@ exports[`open api parser aries simple 1`] = `
           "z": "optional<string>",
         },
       },
-      "Cred Def Value Revocation": {
+      "CredDef Value Revocation": {
         "docs": undefined,
         "properties": {
           "g": "optional<string>",
@@ -15837,29 +15837,37 @@ exports[`open api parser aries simple 1`] = `
           "y": "optional<string>",
         },
       },
-      "Cred Info List": {
+      "CredDefValuePrimary": {
+        "docs": "Primary value for credential definition",
+        "type": "CredDef Value Primary",
+      },
+      "CredDefValueRevocation": {
+        "docs": "Revocation value for credential definition",
+        "type": "CredDef Value Revocation",
+      },
+      "CredInfo List": {
         "docs": undefined,
         "properties": {
-          "results": "optional<list<Indy Cred Info>>",
+          "results": "optional<list<IndyCred Info>>",
         },
       },
-      "Cred Issue": {
+      "CredIssue": {
         "docs": undefined,
         "properties": {},
       },
-      "Cred Offer": {
+      "CredOffer": {
         "docs": undefined,
         "properties": {},
       },
-      "Cred Proposal": {
+      "CredProposal": {
         "docs": undefined,
         "properties": {},
       },
-      "Cred Request": {
+      "CredRequest": {
         "docs": undefined,
         "properties": {},
       },
-      "Cred Rev Indy Records Result": {
+      "CredRev Indy Records Result": {
         "docs": undefined,
         "properties": {
           "rev_reg_delta": {
@@ -15868,19 +15876,23 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Cred Rev Record Details Result": {
+      "CredRev Record Details Result": {
         "docs": undefined,
         "properties": {
-          "results": "optional<list<Issuer Cred Rev Record>>",
+          "results": "optional<list<IssuerCred Rev Record>>",
         },
       },
-      "Cred Rev Record Result": {
+      "CredRev Record Result": {
         "docs": undefined,
         "properties": {
-          "result": "optional<Issuer Cred Rev Record>",
+          "result": "optional<IssuerCred Rev Record>",
         },
       },
-      "Cred Revoked Result": {
+      "CredRevIndyRecordsResultRevRegDelta": {
+        "docs": "Indy revocation registry delta",
+        "properties": {},
+      },
+      "CredRevoked Result": {
         "docs": undefined,
         "properties": {
           "revoked": {
@@ -15888,18 +15900,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
-      },
-      "CredDefValuePrimary": {
-        "docs": "Primary value for credential definition",
-        "type": "Cred Def Value Primary",
-      },
-      "CredDefValueRevocation": {
-        "docs": "Revocation value for credential definition",
-        "type": "Cred Def Value Revocation",
-      },
-      "CredRevIndyRecordsResultRevRegDelta": {
-        "docs": "Indy revocation registry delta",
-        "properties": {},
       },
       "Credential": {
         "docs": undefined,
@@ -15929,7 +15929,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Credential Definition": {
+      "CredentialDefinition": {
         "docs": undefined,
         "properties": {
           "id": {
@@ -15955,13 +15955,13 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Credential Definition Get Result": {
+      "CredentialDefinition Get Result": {
         "docs": undefined,
         "properties": {
-          "credential_definition": "optional<Credential Definition>",
+          "credential_definition": "optional<CredentialDefinition>",
         },
       },
-      "Credential Definition Send Result": {
+      "CredentialDefinition Send Result": {
         "docs": undefined,
         "properties": {
           "credential_definition_id": {
@@ -15970,13 +15970,17 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Credential Definitions Created Result": {
+      "CredentialDefinitionValue": {
+        "docs": "Credential definition primary and revocation values",
+        "type": "CredDef Value",
+      },
+      "CredentialDefinitions Created Result": {
         "docs": undefined,
         "properties": {
           "credential_definition_ids": "optional<list<string>>",
         },
       },
-      "Credential Offer": {
+      "CredentialOffer": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -15991,21 +15995,25 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "credential_preview": "optional<Credential Preview>",
-          "offers~attach": "list<Attach Decorator>",
+          "credential_preview": "optional<CredentialPreview>",
+          "offers~attach": "list<AttachDecorator>",
         },
       },
-      "Credential Preview": {
+      "CredentialPreview": {
         "docs": undefined,
         "properties": {
           "@type": {
             "docs": "Message type identifier",
             "type": "optional<string>",
           },
-          "attributes": "list<Cred Attr Spec>",
+          "attributes": "list<CredAttr Spec>",
         },
       },
-      "Credential Proposal": {
+      "CredentialProof": {
+        "docs": "The proof of the credential",
+        "type": "LinkedData Proof",
+      },
+      "CredentialProposal": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -16021,7 +16029,7 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<string>",
           },
           "cred_def_id": "optional<string>",
-          "credential_proposal": "optional<Credential Preview>",
+          "credential_proposal": "optional<CredentialPreview>",
           "issuer_did": "optional<string>",
           "schema_id": "optional<string>",
           "schema_issuer_did": "optional<string>",
@@ -16029,7 +16037,7 @@ exports[`open api parser aries simple 1`] = `
           "schema_version": "optional<string>",
         },
       },
-      "Credential Status Options": {
+      "CredentialStatus Options": {
         "docs": undefined,
         "properties": {
           "type": {
@@ -16037,14 +16045,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "string",
           },
         },
-      },
-      "CredentialDefinitionValue": {
-        "docs": "Credential definition primary and revocation values",
-        "type": "Cred Def Value",
-      },
-      "CredentialProof": {
-        "docs": "The proof of the credential",
-        "type": "Linked Data Proof",
       },
       "DID": {
         "docs": undefined,
@@ -16071,7 +16071,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "DID Create Options": {
+      "DIDCreate Options": {
         "docs": undefined,
         "properties": {
           "did": {
@@ -16080,11 +16080,11 @@ exports[`open api parser aries simple 1`] = `
           },
           "key_type": {
             "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
-            "type": "Key Type",
+            "type": "KeyType",
           },
         },
       },
-      "DID Endpoint": {
+      "DIDEndpoint": {
         "docs": undefined,
         "properties": {
           "did": {
@@ -16097,7 +16097,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "DID List": {
+      "DIDList": {
         "docs": undefined,
         "properties": {
           "results": {
@@ -16106,13 +16106,13 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "DID Result": {
+      "DIDResult": {
         "docs": undefined,
         "properties": {
           "result": "optional<DID>",
         },
       },
-      "DIF Field": {
+      "DIFField": {
         "docs": undefined,
         "properties": {
           "filter": "optional<Filter>",
@@ -16131,7 +16131,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "DIF Holder": {
+      "DIFHolder": {
         "docs": undefined,
         "properties": {
           "directive": {
@@ -16141,7 +16141,7 @@ exports[`open api parser aries simple 1`] = `
           "field_id": "optional<list<string>>",
         },
       },
-      "DIF Options": {
+      "DIFOptions": {
         "docs": undefined,
         "properties": {
           "challenge": {
@@ -16154,41 +16154,41 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "DIF Pres Spec": {
+      "DIFPres Spec": {
         "docs": undefined,
         "properties": {
           "issuer_id": {
             "docs": "Issuer identifier to sign the presentation, if different from current public DID",
             "type": "optional<string>",
           },
-          "presentation_definition": "optional<Presentation Definition>",
+          "presentation_definition": "optional<PresentationDefinition>",
           "record_ids": {
             "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
-            "type": "optional<Record Ids>",
+            "type": "optional<RecordIds>",
           },
           "reveal_doc": {
             "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
-            "type": "optional<Reveal Doc>",
+            "type": "optional<RevealDoc>",
           },
         },
       },
-      "DIF Proof Proposal": {
+      "DIFProof Proposal": {
         "docs": undefined,
         "properties": {
-          "input_descriptors": "optional<list<Input Descriptors>>",
-          "options": "optional<DIF Options>",
+          "input_descriptors": "optional<list<InputDescriptors>>",
+          "options": "optional<DIFOptions>",
         },
       },
-      "DIF Proof Request": {
+      "DIFProof Request": {
         "docs": undefined,
         "properties": {
-          "options": "optional<DIF Options>",
-          "presentation_definition": "Presentation Definition",
+          "options": "optional<DIFOptions>",
+          "presentation_definition": "PresentationDefinition",
         },
       },
       "DidCreateOptions": {
         "docs": "To define a key type and/or a did depending on chosen DID method.",
-        "type": "DID Create Options",
+        "type": "DIDCreate Options",
       },
       "DidKeyType": {
         "docs": "Key type associated with the DID",
@@ -16207,7 +16207,7 @@ exports[`open api parser aries simple 1`] = `
       },
       "DidxRequestDidDocAttach": {
         "docs": "As signed attachment, DID Doc associated with DID",
-        "type": "Attach Decorator",
+        "type": "AttachDecorator",
       },
       "Directive": {
         "docs": "Preference",
@@ -16229,7 +16229,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "protocols": {
             "docs": "List of protocol descriptors",
-            "type": "list<Protocol Descriptor>",
+            "type": "list<ProtocolDescriptor>",
           },
         },
       },
@@ -16266,9 +16266,9 @@ exports[`open api parser aries simple 1`] = `
       },
       "DocOptions": {
         "docs": "Signature options",
-        "type": "Signature Options",
+        "type": "SignatureOptions",
       },
-      "Endorser Info": {
+      "EndorserInfo": {
         "docs": undefined,
         "properties": {
           "endorser_did": {
@@ -16281,7 +16281,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Endpoints Result": {
+      "EndpointsResult": {
         "docs": undefined,
         "properties": {
           "my_endpoint": {
@@ -16294,7 +16294,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Feature Type": {
+      "FeatureType": {
         "docs": "feature type",
         "enum": [
           "protocol",
@@ -16362,7 +16362,7 @@ exports[`open api parser aries simple 1`] = `
           "remainder": "optional<string>",
         },
       },
-      "Get DID Endpoint Response": {
+      "GetDID Endpoint Response": {
         "docs": undefined,
         "properties": {
           "endpoint": {
@@ -16371,7 +16371,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Get DID Verkey Response": {
+      "GetDID Verkey Response": {
         "docs": undefined,
         "properties": {
           "verkey": {
@@ -16380,7 +16380,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Get Nym Role Response": {
+      "GetNym Role Response": {
         "docs": undefined,
         "properties": {
           "role": {
@@ -16401,7 +16401,7 @@ exports[`open api parser aries simple 1`] = `
         ],
       },
       "HolderModuleResponse": "map<string, unknown>",
-      "Indy Attr Value": {
+      "IndyAttr Value": {
         "docs": undefined,
         "properties": {
           "encoded": {
@@ -16414,7 +16414,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Cred Abstract": {
+      "IndyCred Abstract": {
         "docs": undefined,
         "properties": {
           "cred_def_id": {
@@ -16432,7 +16432,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Cred Info": {
+      "IndyCred Info": {
         "docs": undefined,
         "properties": {
           "attrs": {
@@ -16461,7 +16461,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Cred Precis": {
+      "IndyCred Precis": {
         "docs": undefined,
         "properties": {
           "cred_info": "optional<IndyCredPrecisCredInfo>",
@@ -16469,16 +16469,16 @@ exports[`open api parser aries simple 1`] = `
           "presentation_referents": "optional<list<string>>",
         },
       },
-      "Indy Cred Request": {
+      "IndyCred Request": {
         "docs": undefined,
         "properties": {
           "blinded_ms": {
             "docs": "Blinded master secret",
-            "type": "Blinded Ms",
+            "type": "BlindedMs",
           },
           "blinded_ms_correctness_proof": {
             "docs": "Blinded master secret correctness proof",
-            "type": "Blinded Ms Correctness Proof",
+            "type": "BlindedMs Correctness Proof",
           },
           "cred_def_id": {
             "docs": "Credential definition identifier",
@@ -16494,7 +16494,19 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Credential": {
+      "IndyCredAbstractKeyCorrectnessProof": {
+        "docs": "Key correctness proof",
+        "type": "IndyKey Correctness Proof",
+      },
+      "IndyCredPrecisCredInfo": {
+        "docs": "Credential info",
+        "type": "IndyCred Info",
+      },
+      "IndyCredPrecisInterval": {
+        "docs": "Non-revocation interval from presentation request",
+        "type": "IndyNon Revocation Interval",
+      },
+      "IndyCredential": {
         "docs": undefined,
         "properties": {
           "cred_def_id": {
@@ -16503,7 +16515,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "rev_reg": {
             "docs": "Revocation registry state",
-            "type": "optional<Rev Reg>",
+            "type": "optional<RevReg>",
           },
           "rev_reg_id": {
             "docs": "Revocation registry identifier",
@@ -16519,7 +16531,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "signature_correctness_proof": {
             "docs": "Credential signature correctness proof",
-            "type": "Signature Correctness Proof",
+            "type": "SignatureCorrectness Proof",
           },
           "values": {
             "docs": "Credential attributes",
@@ -16531,7 +16543,11 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy EQ Proof": {
+      "IndyCredentialValuesValue": {
+        "docs": "Attribute value",
+        "type": "IndyAttr Value",
+      },
+      "IndyEQ Proof": {
         "docs": undefined,
         "properties": {
           "a_prime": "optional<string>",
@@ -16542,18 +16558,18 @@ exports[`open api parser aries simple 1`] = `
           "v": "optional<string>",
         },
       },
-      "Indy GE Proof": {
+      "IndyGE Proof": {
         "docs": undefined,
         "properties": {
           "alpha": "optional<string>",
           "mj": "optional<string>",
-          "predicate": "optional<Indy GE Proof Pred>",
+          "predicate": "optional<IndyGE Proof Pred>",
           "r": "optional<map<string, string>>",
           "t": "optional<map<string, string>>",
           "u": "optional<map<string, string>>",
         },
       },
-      "Indy GE Proof Pred": {
+      "IndyGE Proof Pred": {
         "docs": undefined,
         "properties": {
           "attr_name": {
@@ -16562,7 +16578,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "p_type": {
             "docs": "Predicate type",
-            "type": "optional<P Type>",
+            "type": "optional<PType>",
           },
           "value": {
             "docs": "Predicate threshold value",
@@ -16570,7 +16586,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Key Correctness Proof": {
+      "IndyKey Correctness Proof": {
         "docs": undefined,
         "properties": {
           "c": {
@@ -16587,14 +16603,14 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Non Revoc Proof": {
+      "IndyNon Revoc Proof": {
         "docs": undefined,
         "properties": {
           "c_list": "optional<map<string, string>>",
           "x_list": "optional<map<string, string>>",
         },
       },
-      "Indy Non Revocation Interval": {
+      "IndyNon Revocation Interval": {
         "docs": undefined,
         "properties": {
           "from": {
@@ -16607,7 +16623,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Pres Attr Spec": {
+      "IndyPres Attr Spec": {
         "docs": undefined,
         "properties": {
           "cred_def_id": "optional<string>",
@@ -16629,7 +16645,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Pres Pred Spec": {
+      "IndyPres Pred Spec": {
         "docs": undefined,
         "properties": {
           "cred_def_id": {
@@ -16650,27 +16666,27 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Indy Pres Preview": {
+      "IndyPres Preview": {
         "docs": undefined,
         "properties": {
           "@type": {
             "docs": "Message type identifier",
             "type": "optional<string>",
           },
-          "attributes": "list<Indy Pres Attr Spec>",
-          "predicates": "list<Indy Pres Pred Spec>",
+          "attributes": "list<IndyPres Attr Spec>",
+          "predicates": "list<IndyPres Pred Spec>",
         },
       },
-      "Indy Pres Spec": {
+      "IndyPres Spec": {
         "docs": undefined,
         "properties": {
           "requested_attributes": {
             "docs": "Nested object mapping proof request attribute referents to requested-attribute specifiers",
-            "type": "map<string, Indy Requested Creds Requested Attr>",
+            "type": "map<string, IndyRequested Creds Requested Attr>",
           },
           "requested_predicates": {
             "docs": "Nested object mapping proof request predicate referents to requested-predicate specifiers",
-            "type": "map<string, Indy Requested Creds Requested Pred>",
+            "type": "map<string, IndyRequested Creds Requested Pred>",
           },
           "self_attested_attributes": {
             "docs": "Self-attested attributes to build into proof",
@@ -16681,376 +16697,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<boolean>",
           },
         },
-      },
-      "Indy Primary Proof": {
-        "docs": undefined,
-        "properties": {
-          "eq_proof": "optional<IndyPrimaryProofEqProof>",
-          "ge_proofs": {
-            "docs": "Indy GE proofs",
-            "type": "optional<list<Indy GE Proof>>",
-          },
-        },
-      },
-      "Indy Proof": {
-        "docs": undefined,
-        "properties": {
-          "identifiers": {
-            "docs": "Indy proof.identifiers content",
-            "type": "optional<list<Indy Proof Identifier>>",
-          },
-          "proof": "optional<IndyProofProof>",
-          "requested_proof": "optional<IndyProofRequestedProof>",
-        },
-      },
-      "Indy Proof Identifier": {
-        "docs": undefined,
-        "properties": {
-          "cred_def_id": {
-            "docs": "Credential definition identifier",
-            "type": "optional<string>",
-          },
-          "rev_reg_id": {
-            "docs": "Revocation registry identifier",
-            "type": "optional<string>",
-          },
-          "schema_id": {
-            "docs": "Schema identifier",
-            "type": "optional<string>",
-          },
-          "timestamp": {
-            "docs": "Timestamp epoch",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Proof": {
-        "docs": undefined,
-        "properties": {
-          "aggregated_proof": "optional<IndyProofProofAggregatedProof>",
-          "proofs": {
-            "docs": "Indy proof proofs",
-            "type": "optional<list<Indy Proof Proof Proofs Proof>>",
-          },
-        },
-      },
-      "Indy Proof Proof Aggregated Proof": {
-        "docs": undefined,
-        "properties": {
-          "c_hash": {
-            "docs": "c_hash value",
-            "type": "optional<string>",
-          },
-          "c_list": {
-            "docs": "c_list value",
-            "type": "optional<list<list<integer>>>",
-          },
-        },
-      },
-      "Indy Proof Proof Proofs Proof": {
-        "docs": undefined,
-        "properties": {
-          "non_revoc_proof": "optional<IndyProofProofProofsProofNonRevocProof>",
-          "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
-        },
-      },
-      "Indy Proof Req Attr Spec": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "Attribute name",
-            "type": "optional<string>",
-          },
-          "names": {
-            "docs": "Attribute name group",
-            "type": "optional<list<string>>",
-          },
-          "non_revoked": "optional<IndyProofReqAttrSpecNonRevoked>",
-          "restrictions": {
-            "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
-            "type": "optional<list<map<string, string>>>",
-          },
-        },
-      },
-      "Indy Proof Req Attr Spec Non Revoked": {
-        "docs": undefined,
-        "properties": {
-          "from": {
-            "docs": "Earliest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-          "to": {
-            "docs": "Latest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Req Pred Spec": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "Attribute name",
-            "type": "string",
-          },
-          "non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
-          "p_type": {
-            "docs": "Predicate type ('<', '<=', '>=', or '>')",
-            "type": "IndyProofReqPredSpecPType",
-          },
-          "p_value": {
-            "docs": "Threshold value",
-            "type": "integer",
-          },
-          "restrictions": {
-            "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
-            "type": "optional<list<map<string, string>>>",
-          },
-        },
-      },
-      "Indy Proof Req Pred Spec Non Revoked": {
-        "docs": undefined,
-        "properties": {
-          "from": {
-            "docs": "Earliest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-          "to": {
-            "docs": "Latest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Request": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "Proof request name",
-            "type": "optional<string>",
-          },
-          "non_revoked": "optional<IndyProofRequestNonRevoked>",
-          "nonce": {
-            "docs": "Nonce",
-            "type": "optional<string>",
-          },
-          "requested_attributes": {
-            "docs": "Requested attribute specifications of proof request",
-            "type": "map<string, Indy Proof Req Attr Spec>",
-          },
-          "requested_predicates": {
-            "docs": "Requested predicate specifications of proof request",
-            "type": "map<string, Indy Proof Req Pred Spec>",
-          },
-          "version": {
-            "docs": "Proof request version",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Indy Proof Request Non Revoked": {
-        "docs": undefined,
-        "properties": {
-          "from": {
-            "docs": "Earliest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-          "to": {
-            "docs": "Latest time of interest in non-revocation interval",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Requested Proof": {
-        "docs": undefined,
-        "properties": {
-          "predicates": {
-            "docs": "Proof requested proof predicates.",
-            "type": "optional<map<string, Indy Proof Requested Proof Predicate>>",
-          },
-          "revealed_attr_groups": {
-            "docs": "Proof requested proof revealed attribute groups",
-            "type": "optional<map<string, optional<Indy Proof Requested Proof Revealed Attr Group>>>",
-          },
-          "revealed_attrs": {
-            "docs": "Proof requested proof revealed attributes",
-            "type": "optional<map<string, optional<Indy Proof Requested Proof Revealed Attr>>>",
-          },
-          "self_attested_attrs": {
-            "docs": "Proof requested proof self-attested attributes",
-            "type": "optional<Self Attested Attrs>",
-          },
-          "unrevealed_attrs": {
-            "docs": "Unrevealed attributes",
-            "type": "optional<Unrevealed Attrs>",
-          },
-        },
-      },
-      "Indy Proof Requested Proof Predicate": {
-        "docs": undefined,
-        "properties": {
-          "sub_proof_index": {
-            "docs": "Sub-proof index",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Requested Proof Revealed Attr": {
-        "docs": undefined,
-        "properties": {
-          "encoded": {
-            "docs": "Encoded value",
-            "type": "optional<string>",
-          },
-          "raw": {
-            "docs": "Raw value",
-            "type": "optional<string>",
-          },
-          "sub_proof_index": {
-            "docs": "Sub-proof index",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Proof Requested Proof Revealed Attr Group": {
-        "docs": undefined,
-        "properties": {
-          "sub_proof_index": {
-            "docs": "Sub-proof index",
-            "type": "optional<integer>",
-          },
-          "values": {
-            "docs": "Indy proof requested proof revealed attr groups group value",
-            "type": "optional<map<string, Raw Encoded>>",
-          },
-        },
-      },
-      "Indy Requested Creds Requested Attr": {
-        "docs": undefined,
-        "properties": {
-          "cred_id": {
-            "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
-            "type": "string",
-          },
-          "revealed": {
-            "docs": "Whether to reveal attribute in proof (default true)",
-            "type": "optional<boolean>",
-          },
-        },
-      },
-      "Indy Requested Creds Requested Pred": {
-        "docs": undefined,
-        "properties": {
-          "cred_id": {
-            "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
-            "type": "string",
-          },
-          "timestamp": {
-            "docs": "Epoch timestamp of interest for non-revocation proof",
-            "type": "optional<integer>",
-          },
-        },
-      },
-      "Indy Rev Reg Def": {
-        "docs": undefined,
-        "properties": {
-          "credDefId": {
-            "docs": "Credential definition identifier",
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": "Indy revocation registry identifier",
-            "type": "optional<string>",
-          },
-          "revocDefType": "optional<literal<"CL_ACCUM">>",
-          "tag": {
-            "docs": "Revocation registry tag",
-            "type": "optional<string>",
-          },
-          "value": "optional<IndyRevRegDefValue>",
-          "ver": {
-            "docs": "Version of revocation registry definition",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Indy Rev Reg Def Value": {
-        "docs": undefined,
-        "properties": {
-          "issuanceType": {
-            "docs": "Issuance type",
-            "type": "optional<Issuance Type>",
-          },
-          "maxCredNum": {
-            "docs": "Maximum number of credentials; registry size",
-            "type": "optional<integer>",
-          },
-          "publicKeys": "optional<IndyRevRegDefValuePublicKeys>",
-          "tailsHash": {
-            "docs": "Tails hash value",
-            "type": "optional<string>",
-          },
-          "tailsLocation": {
-            "docs": "Tails file location",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Indy Rev Reg Def Value Public Keys": {
-        "docs": undefined,
-        "properties": {
-          "accumKey": "optional<Indy Rev Reg Def Value Public Keys Accum Key>",
-        },
-      },
-      "Indy Rev Reg Def Value Public Keys Accum Key": {
-        "docs": undefined,
-        "properties": {
-          "z": {
-            "docs": "Value for z",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Indy Rev Reg Entry": {
-        "docs": undefined,
-        "properties": {
-          "value": "optional<IndyRevRegEntryValue>",
-          "ver": {
-            "docs": "Version of revocation registry entry",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Indy Rev Reg Entry Value": {
-        "docs": undefined,
-        "properties": {
-          "accum": {
-            "docs": "Accumulator value",
-            "type": "optional<string>",
-          },
-          "prevAccum": {
-            "docs": "Previous accumulator value",
-            "type": "optional<string>",
-          },
-          "revoked": {
-            "docs": "Revoked credential revocation identifiers",
-            "type": "optional<list<integer>>",
-          },
-        },
-      },
-      "IndyCredAbstractKeyCorrectnessProof": {
-        "docs": "Key correctness proof",
-        "type": "Indy Key Correctness Proof",
-      },
-      "IndyCredPrecisCredInfo": {
-        "docs": "Credential info",
-        "type": "Indy Cred Info",
-      },
-      "IndyCredPrecisInterval": {
-        "docs": "Non-revocation interval from presentation request",
-        "type": "Indy Non Revocation Interval",
-      },
-      "IndyCredentialValuesValue": {
-        "docs": "Attribute value",
-        "type": "Indy Attr Value",
       },
       "IndyPresPredSpecPredicate": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
@@ -17073,27 +16719,268 @@ exports[`open api parser aries simple 1`] = `
           },
         ],
       },
+      "IndyPrimary Proof": {
+        "docs": undefined,
+        "properties": {
+          "eq_proof": "optional<IndyPrimaryProofEqProof>",
+          "ge_proofs": {
+            "docs": "Indy GE proofs",
+            "type": "optional<list<IndyGE Proof>>",
+          },
+        },
+      },
       "IndyPrimaryProof_eq_proof": {
         "docs": "Indy equality proof",
-        "type": "optional<Indy EQ Proof>",
+        "type": "optional<IndyEQ Proof>",
+      },
+      "IndyProof": {
+        "docs": undefined,
+        "properties": {
+          "identifiers": {
+            "docs": "Indy proof.identifiers content",
+            "type": "optional<list<IndyProof Identifier>>",
+          },
+          "proof": "optional<IndyProofProof>",
+          "requested_proof": "optional<IndyProofRequestedProof>",
+        },
+      },
+      "IndyProof Identifier": {
+        "docs": undefined,
+        "properties": {
+          "cred_def_id": {
+            "docs": "Credential definition identifier",
+            "type": "optional<string>",
+          },
+          "rev_reg_id": {
+            "docs": "Revocation registry identifier",
+            "type": "optional<string>",
+          },
+          "schema_id": {
+            "docs": "Schema identifier",
+            "type": "optional<string>",
+          },
+          "timestamp": {
+            "docs": "Timestamp epoch",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Proof": {
+        "docs": undefined,
+        "properties": {
+          "aggregated_proof": "optional<IndyProofProofAggregatedProof>",
+          "proofs": {
+            "docs": "Indy proof proofs",
+            "type": "optional<list<IndyProof Proof Proofs Proof>>",
+          },
+        },
+      },
+      "IndyProof Proof Aggregated Proof": {
+        "docs": undefined,
+        "properties": {
+          "c_hash": {
+            "docs": "c_hash value",
+            "type": "optional<string>",
+          },
+          "c_list": {
+            "docs": "c_list value",
+            "type": "optional<list<list<integer>>>",
+          },
+        },
+      },
+      "IndyProof Proof Proofs Proof": {
+        "docs": undefined,
+        "properties": {
+          "non_revoc_proof": "optional<IndyProofProofProofsProofNonRevocProof>",
+          "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
+        },
+      },
+      "IndyProof Req Attr Spec": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "Attribute name",
+            "type": "optional<string>",
+          },
+          "names": {
+            "docs": "Attribute name group",
+            "type": "optional<list<string>>",
+          },
+          "non_revoked": "optional<IndyProofReqAttrSpecNonRevoked>",
+          "restrictions": {
+            "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
+            "type": "optional<list<map<string, string>>>",
+          },
+        },
+      },
+      "IndyProof Req Attr Spec Non Revoked": {
+        "docs": undefined,
+        "properties": {
+          "from": {
+            "docs": "Earliest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+          "to": {
+            "docs": "Latest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Req Pred Spec": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "Attribute name",
+            "type": "string",
+          },
+          "non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
+          "p_type": {
+            "docs": "Predicate type ('<', '<=', '>=', or '>')",
+            "type": "IndyProofReqPredSpecPType",
+          },
+          "p_value": {
+            "docs": "Threshold value",
+            "type": "integer",
+          },
+          "restrictions": {
+            "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
+            "type": "optional<list<map<string, string>>>",
+          },
+        },
+      },
+      "IndyProof Req Pred Spec Non Revoked": {
+        "docs": undefined,
+        "properties": {
+          "from": {
+            "docs": "Earliest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+          "to": {
+            "docs": "Latest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Request": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "Proof request name",
+            "type": "optional<string>",
+          },
+          "non_revoked": "optional<IndyProofRequestNonRevoked>",
+          "nonce": {
+            "docs": "Nonce",
+            "type": "optional<string>",
+          },
+          "requested_attributes": {
+            "docs": "Requested attribute specifications of proof request",
+            "type": "map<string, IndyProof Req Attr Spec>",
+          },
+          "requested_predicates": {
+            "docs": "Requested predicate specifications of proof request",
+            "type": "map<string, IndyProof Req Pred Spec>",
+          },
+          "version": {
+            "docs": "Proof request version",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "IndyProof Request Non Revoked": {
+        "docs": undefined,
+        "properties": {
+          "from": {
+            "docs": "Earliest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+          "to": {
+            "docs": "Latest time of interest in non-revocation interval",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Requested Proof": {
+        "docs": undefined,
+        "properties": {
+          "predicates": {
+            "docs": "Proof requested proof predicates.",
+            "type": "optional<map<string, IndyProof Requested Proof Predicate>>",
+          },
+          "revealed_attr_groups": {
+            "docs": "Proof requested proof revealed attribute groups",
+            "type": "optional<map<string, optional<IndyProof Requested Proof Revealed Attr Group>>>",
+          },
+          "revealed_attrs": {
+            "docs": "Proof requested proof revealed attributes",
+            "type": "optional<map<string, optional<IndyProof Requested Proof Revealed Attr>>>",
+          },
+          "self_attested_attrs": {
+            "docs": "Proof requested proof self-attested attributes",
+            "type": "optional<SelfAttested Attrs>",
+          },
+          "unrevealed_attrs": {
+            "docs": "Unrevealed attributes",
+            "type": "optional<UnrevealedAttrs>",
+          },
+        },
+      },
+      "IndyProof Requested Proof Predicate": {
+        "docs": undefined,
+        "properties": {
+          "sub_proof_index": {
+            "docs": "Sub-proof index",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Requested Proof Revealed Attr": {
+        "docs": undefined,
+        "properties": {
+          "encoded": {
+            "docs": "Encoded value",
+            "type": "optional<string>",
+          },
+          "raw": {
+            "docs": "Raw value",
+            "type": "optional<string>",
+          },
+          "sub_proof_index": {
+            "docs": "Sub-proof index",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyProof Requested Proof Revealed Attr Group": {
+        "docs": undefined,
+        "properties": {
+          "sub_proof_index": {
+            "docs": "Sub-proof index",
+            "type": "optional<integer>",
+          },
+          "values": {
+            "docs": "Indy proof requested proof revealed attr groups group value",
+            "type": "optional<map<string, RawEncoded>>",
+          },
+        },
       },
       "IndyProofProof": {
         "docs": "Indy proof.proof content",
-        "type": "Indy Proof Proof",
+        "type": "IndyProof Proof",
       },
       "IndyProofProofAggregatedProof": {
         "docs": "Indy proof aggregated proof",
-        "type": "Indy Proof Proof Aggregated Proof",
+        "type": "IndyProof Proof Aggregated Proof",
       },
       "IndyProofProofProofsProofPrimaryProof": {
         "docs": "Indy primary proof",
-        "type": "Indy Primary Proof",
+        "type": "IndyPrimary Proof",
       },
       "IndyProofProofProofsProof_non_revoc_proof": {
         "docs": "Indy non-revocation proof",
-        "type": "optional<Indy Non Revoc Proof>",
+        "type": "optional<IndyNon Revoc Proof>",
       },
-      "IndyProofReqAttrSpec_non_revoked": "optional<Indy Proof Req Attr Spec Non Revoked>",
+      "IndyProofReqAttrSpec_non_revoked": "optional<IndyProof Req Attr Spec Non Revoked>",
       "IndyProofReqPredSpecPType": {
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
         "enum": [
@@ -17115,25 +17002,138 @@ exports[`open api parser aries simple 1`] = `
           },
         ],
       },
-      "IndyProofReqPredSpec_non_revoked": "optional<Indy Proof Req Pred Spec Non Revoked>",
-      "IndyProofRequest_non_revoked": "optional<Indy Proof Request Non Revoked>",
+      "IndyProofReqPredSpec_non_revoked": "optional<IndyProof Req Pred Spec Non Revoked>",
+      "IndyProofRequest_non_revoked": "optional<IndyProof Request Non Revoked>",
       "IndyProofRequestedProof": {
         "docs": "Indy proof.requested_proof content",
-        "type": "Indy Proof Requested Proof",
+        "type": "IndyProof Requested Proof",
+      },
+      "IndyRequested Creds Requested Attr": {
+        "docs": undefined,
+        "properties": {
+          "cred_id": {
+            "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
+            "type": "string",
+          },
+          "revealed": {
+            "docs": "Whether to reveal attribute in proof (default true)",
+            "type": "optional<boolean>",
+          },
+        },
+      },
+      "IndyRequested Creds Requested Pred": {
+        "docs": undefined,
+        "properties": {
+          "cred_id": {
+            "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
+            "type": "string",
+          },
+          "timestamp": {
+            "docs": "Epoch timestamp of interest for non-revocation proof",
+            "type": "optional<integer>",
+          },
+        },
+      },
+      "IndyRev Reg Def": {
+        "docs": undefined,
+        "properties": {
+          "credDefId": {
+            "docs": "Credential definition identifier",
+            "type": "optional<string>",
+          },
+          "id": {
+            "docs": "Indy revocation registry identifier",
+            "type": "optional<string>",
+          },
+          "revocDefType": "optional<literal<"CL_ACCUM">>",
+          "tag": {
+            "docs": "Revocation registry tag",
+            "type": "optional<string>",
+          },
+          "value": "optional<IndyRevRegDefValue>",
+          "ver": {
+            "docs": "Version of revocation registry definition",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "IndyRev Reg Def Value": {
+        "docs": undefined,
+        "properties": {
+          "issuanceType": {
+            "docs": "Issuance type",
+            "type": "optional<IssuanceType>",
+          },
+          "maxCredNum": {
+            "docs": "Maximum number of credentials; registry size",
+            "type": "optional<integer>",
+          },
+          "publicKeys": "optional<IndyRevRegDefValuePublicKeys>",
+          "tailsHash": {
+            "docs": "Tails hash value",
+            "type": "optional<string>",
+          },
+          "tailsLocation": {
+            "docs": "Tails file location",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "IndyRev Reg Def Value Public Keys": {
+        "docs": undefined,
+        "properties": {
+          "accumKey": "optional<IndyRev Reg Def Value Public Keys Accum Key>",
+        },
+      },
+      "IndyRev Reg Def Value Public Keys Accum Key": {
+        "docs": undefined,
+        "properties": {
+          "z": {
+            "docs": "Value for z",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "IndyRev Reg Entry": {
+        "docs": undefined,
+        "properties": {
+          "value": "optional<IndyRevRegEntryValue>",
+          "ver": {
+            "docs": "Version of revocation registry entry",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "IndyRev Reg Entry Value": {
+        "docs": undefined,
+        "properties": {
+          "accum": {
+            "docs": "Accumulator value",
+            "type": "optional<string>",
+          },
+          "prevAccum": {
+            "docs": "Previous accumulator value",
+            "type": "optional<string>",
+          },
+          "revoked": {
+            "docs": "Revoked credential revocation identifiers",
+            "type": "optional<list<integer>>",
+          },
+        },
       },
       "IndyRevRegDefValue": {
         "docs": "Revocation registry definition value",
-        "type": "Indy Rev Reg Def Value",
+        "type": "IndyRev Reg Def Value",
       },
       "IndyRevRegDefValuePublicKeys": {
         "docs": "Public keys",
-        "type": "Indy Rev Reg Def Value Public Keys",
+        "type": "IndyRev Reg Def Value Public Keys",
       },
       "IndyRevRegEntryValue": {
         "docs": "Revocation registry entry value",
-        "type": "Indy Rev Reg Entry Value",
+        "type": "IndyRev Reg Entry Value",
       },
-      "Input Descriptors": {
+      "InputDescriptors": {
         "docs": undefined,
         "properties": {
           "constraints": "optional<Constraints>",
@@ -17159,10 +17159,10 @@ exports[`open api parser aries simple 1`] = `
       },
       "InputDescriptorsSchema": {
         "docs": "Accepts a list of schema or a dict containing filters like oneof_filter.",
-        "type": "Schemas Input Descriptor Filter",
+        "type": "SchemasInput Descriptor Filter",
       },
       "IntroModuleResponse": "map<string, unknown>",
-      "Invitation Message": {
+      "InvitationMessage": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17188,12 +17188,12 @@ exports[`open api parser aries simple 1`] = `
           },
           "requests~attach": {
             "docs": "Optional request attachment",
-            "type": "optional<list<Attach Decorator>>",
+            "type": "optional<list<AttachDecorator>>",
           },
           "services": "optional<list<map<string, unknown>>>",
         },
       },
-      "Invitation Record": {
+      "InvitationRecord": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -17231,25 +17231,25 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Invitation Result": {
+      "InvitationRecordInvitation": {
+        "docs": "Out of band invitation message",
+        "type": "InvitationMessage",
+      },
+      "InvitationResult": {
         "docs": undefined,
         "properties": {
           "connection_id": {
             "docs": "Connection identifier",
             "type": "optional<string>",
           },
-          "invitation": "optional<Connection Invitation>",
+          "invitation": "optional<ConnectionInvitation>",
           "invitation_url": {
             "docs": "Invitation URL",
             "type": "optional<string>",
           },
         },
       },
-      "InvitationRecordInvitation": {
-        "docs": "Out of band invitation message",
-        "type": "Invitation Message",
-      },
-      "Issuance Type": {
+      "IssuanceType": {
         "docs": "Issuance type",
         "enum": [
           "ISSUANCE_ON_DEMAND",
@@ -17257,7 +17257,7 @@ exports[`open api parser aries simple 1`] = `
         ],
       },
       "IssueCredentialModuleResponse": "map<string, unknown>",
-      "Issuer Cred Rev Record": {
+      "IssuerCred Rev Record": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -17298,7 +17298,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Issuer Rev Reg Record": {
+      "IssuerRev Reg Record": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -17364,25 +17364,25 @@ exports[`open api parser aries simple 1`] = `
       },
       "IssuerRevRegRecordRevocRegDef": {
         "docs": "Revocation registry definition",
-        "type": "Indy Rev Reg Def",
+        "type": "IndyRev Reg Def",
       },
       "IssuerRevRegRecordRevocRegEntry": {
         "docs": "Revocation registry entry",
-        "type": "Indy Rev Reg Entry",
+        "type": "IndyRev Reg Entry",
       },
       "Jwt": {
         "docs": undefined,
         "properties": {},
       },
-      "Jwt Vc": {
+      "JwtVc": {
         "docs": undefined,
         "properties": {},
       },
-      "Jwt Vp": {
+      "JwtVp": {
         "docs": undefined,
         "properties": {},
       },
-      "Key Type": {
+      "KeyType": {
         "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
         "enum": [
           "ed25519",
@@ -17394,11 +17394,11 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "results": {
             "docs": "List of keylist records",
-            "type": "optional<list<Route Record>>",
+            "type": "optional<list<RouteRecord>>",
           },
         },
       },
-      "Keylist Query": {
+      "KeylistQuery": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17416,7 +17416,7 @@ exports[`open api parser aries simple 1`] = `
           "paginate": "optional<KeylistQueryPaginate>",
         },
       },
-      "Keylist Query Paginate": {
+      "KeylistQuery Paginate": {
         "docs": undefined,
         "properties": {
           "limit": {
@@ -17429,7 +17429,15 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Keylist Update": {
+      "KeylistQueryFilter": {
+        "docs": "Query dictionary object",
+        "properties": {},
+      },
+      "KeylistQueryPaginate": {
+        "docs": "Pagination info",
+        "type": "KeylistQuery Paginate",
+      },
+      "KeylistUpdate": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17442,11 +17450,11 @@ exports[`open api parser aries simple 1`] = `
           },
           "updates": {
             "docs": "List of update rules",
-            "type": "optional<list<Keylist Update Rule>>",
+            "type": "optional<list<KeylistUpdate Rule>>",
           },
         },
       },
-      "Keylist Update Rule": {
+      "KeylistUpdate Rule": {
         "docs": undefined,
         "properties": {
           "action": {
@@ -17459,14 +17467,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "KeylistQueryFilter": {
-        "docs": "Query dictionary object",
-        "properties": {},
-      },
-      "KeylistQueryPaginate": {
-        "docs": "Pagination info",
-        "type": "Keylist Query Paginate",
-      },
       "KeylistUpdateRuleAction": {
         "docs": "Action for specific key",
         "enum": [
@@ -17474,14 +17474,14 @@ exports[`open api parser aries simple 1`] = `
           "remove",
         ],
       },
-      "LD Proof VC Detail": {
+      "LDProof VC Detail": {
         "docs": undefined,
         "properties": {
           "credential": "LdProofVcDetailCredential",
           "options": "LdProofVcDetailOptions",
         },
       },
-      "LD Proof VC Detail Options": {
+      "LDProof VC Detail Options": {
         "docs": undefined,
         "properties": {
           "challenge": {
@@ -17513,25 +17513,25 @@ exports[`open api parser aries simple 1`] = `
       },
       "LdProofVcDetailOptions": {
         "docs": "Options for specifying how the linked data proof is created.",
-        "type": "LD Proof VC Detail Options",
+        "type": "LDProof VC Detail Options",
       },
       "LdProofVcDetailOptionsCredentialStatus": {
         "docs": "The credential status mechanism to use for the credential. Omitting the property indicates the issued credential will not include a credential status",
-        "type": "Credential Status Options",
+        "type": "CredentialStatus Options",
       },
       "Ldp": {
         "docs": undefined,
         "properties": {},
       },
-      "Ldp Vc": {
+      "LdpVc": {
         "docs": undefined,
         "properties": {},
       },
-      "Ldp Vp": {
+      "LdpVp": {
         "docs": undefined,
         "properties": {},
       },
-      "Ledger Config Instance": {
+      "LedgerConfig Instance": {
         "docs": undefined,
         "properties": {
           "genesis_file": {
@@ -17556,14 +17556,14 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Ledger Config List": {
+      "LedgerConfig List": {
         "docs": undefined,
         "properties": {
-          "ledger_config_list": "list<Ledger Config Instance>",
+          "ledger_config_list": "list<LedgerConfig Instance>",
         },
       },
       "LedgerModulesResult": "map<string, unknown>",
-      "Linked Data Proof": {
+      "LinkedData Proof": {
         "docs": undefined,
         "properties": {
           "challenge": {
@@ -17604,7 +17604,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Mediation Deny": {
+      "MediationDeny": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17619,7 +17619,7 @@ exports[`open api parser aries simple 1`] = `
           "recipient_terms": "optional<list<string>>",
         },
       },
-      "Mediation Grant": {
+      "MediationGrant": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17637,16 +17637,16 @@ exports[`open api parser aries simple 1`] = `
           "routing_keys": "optional<list<string>>",
         },
       },
-      "Mediation List": {
+      "MediationList": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "List of mediation records",
-            "type": "optional<list<Mediation Record>>",
+            "type": "optional<list<MediationRecord>>",
           },
         },
       },
-      "Mediation Record": {
+      "MediationRecord": {
         "docs": undefined,
         "properties": {
           "connection_id": "string",
@@ -17691,7 +17691,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "options": {
             "docs": "List of menu options",
-            "type": "list<Menu Option>",
+            "type": "list<MenuOption>",
           },
           "title": {
             "docs": "Menu title",
@@ -17699,7 +17699,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Menu Form": {
+      "MenuForm": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -17708,7 +17708,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "params": {
             "docs": "List of form parameters",
-            "type": "optional<list<Menu Form Param>>",
+            "type": "optional<list<MenuForm Param>>",
           },
           "submit-label": {
             "docs": "Alternative label for form submit button",
@@ -17720,7 +17720,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Menu Form Param": {
+      "MenuForm Param": {
         "docs": undefined,
         "properties": {
           "default": {
@@ -17749,7 +17749,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Menu Json": {
+      "MenuJson": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -17762,7 +17762,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "options": {
             "docs": "List of menu options",
-            "type": "list<Menu Option>",
+            "type": "list<MenuOption>",
           },
           "title": {
             "docs": "Menu title",
@@ -17770,7 +17770,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Menu Option": {
+      "MenuOption": {
         "docs": undefined,
         "properties": {
           "description": {
@@ -17781,7 +17781,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Whether to show option as disabled",
             "type": "optional<boolean>",
           },
-          "form": "optional<Menu Form>",
+          "form": "optional<MenuForm>",
           "name": {
             "docs": "Menu option name (unique identifier)",
             "type": "string",
@@ -17797,7 +17797,7 @@ exports[`open api parser aries simple 1`] = `
         "properties": {},
       },
       "MultitenantModuleResponse": "map<string, unknown>",
-      "Oob Record": {
+      "OobRecord": {
         "docs": undefined,
         "properties": {
           "attach_thread_id": {
@@ -17833,7 +17833,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Out of band message exchange state",
             "type": "OobRecordState",
           },
-          "their_service": "optional<Service Decorator>",
+          "their_service": "optional<ServiceDecorator>",
           "trace": {
             "docs": "Record trace information, based on agent configuration",
             "type": "optional<boolean>",
@@ -17875,7 +17875,7 @@ exports[`open api parser aries simple 1`] = `
           "deleted",
         ],
       },
-      "P Type": {
+      "PType": {
         "docs": "Predicate type",
         "enum": [
           "LT",
@@ -17884,7 +17884,7 @@ exports[`open api parser aries simple 1`] = `
           "GT",
         ],
       },
-      "Ping Request Response": {
+      "PingRequest Response": {
         "docs": undefined,
         "properties": {
           "thread_id": {
@@ -17904,23 +17904,23 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {},
       },
-      "Pres Proposal": {
+      "PresProposal": {
         "docs": undefined,
         "properties": {},
       },
-      "Pres Request": {
+      "PresRequest": {
         "docs": undefined,
         "properties": {},
       },
-      "Presentation Definition": {
+      "PresentationDefinition": {
         "docs": undefined,
         "properties": {
-          "format": "optional<Claim Format>",
+          "format": "optional<ClaimFormat>",
           "id": {
             "docs": "Unique Resource Identifier",
             "type": "optional<string>",
           },
-          "input_descriptors": "optional<list<Input Descriptors>>",
+          "input_descriptors": "optional<list<InputDescriptors>>",
           "name": {
             "docs": "Human-friendly name that describes what the presentation definition pertains to",
             "type": "optional<string>",
@@ -17929,10 +17929,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Describes the purpose for which the Presentation Definition's inputs are being requested",
             "type": "optional<string>",
           },
-          "submission_requirements": "optional<list<Submission Requirements>>",
+          "submission_requirements": "optional<list<SubmissionRequirements>>",
         },
       },
-      "Presentation Proposal": {
+      "PresentationProposal": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17947,10 +17947,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "presentation_proposal": "Indy Pres Preview",
+          "presentation_proposal": "IndyPres Preview",
         },
       },
-      "Presentation Request": {
+      "PresentationRequest": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -17965,10 +17965,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "request_presentations~attach": "list<Attach Decorator>",
+          "request_presentations~attach": "list<AttachDecorator>",
         },
       },
-      "Protocol Descriptor": {
+      "ProtocolDescriptor": {
         "docs": undefined,
         "properties": {
           "pid": "string",
@@ -17978,7 +17978,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Publish Revocations": {
+      "PublishRevocations": {
         "docs": undefined,
         "properties": {
           "rrid2crid": {
@@ -17998,7 +17998,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Message type",
             "type": "optional<string>",
           },
-          "queries": "optional<list<Query Item>>",
+          "queries": "optional<list<QueryItem>>",
         },
       },
       "Query": {
@@ -18016,12 +18016,12 @@ exports[`open api parser aries simple 1`] = `
           "query": "string",
         },
       },
-      "Query Item": {
+      "QueryItem": {
         "docs": undefined,
         "properties": {
           "feature-type": {
             "docs": "feature type",
-            "type": "Feature Type",
+            "type": "FeatureType",
           },
           "match": {
             "docs": "match",
@@ -18029,7 +18029,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Raw Encoded": {
+      "RawEncoded": {
         "docs": undefined,
         "properties": {
           "encoded": {
@@ -18042,11 +18042,11 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Record Ids": {
+      "RecordIds": {
         "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
         "properties": {},
       },
-      "Resolution Result": {
+      "ResolutionResult": {
         "docs": undefined,
         "properties": {
           "did_document": {
@@ -18067,11 +18067,11 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Resolution metadata",
         "properties": {},
       },
-      "Rev Reg": {
+      "RevReg": {
         "docs": "Revocation registry state",
         "properties": {},
       },
-      "Rev Reg Issued Result": {
+      "RevReg Issued Result": {
         "docs": undefined,
         "properties": {
           "result": {
@@ -18080,13 +18080,13 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Rev Reg Result": {
+      "RevReg Result": {
         "docs": undefined,
         "properties": {
-          "result": "optional<Issuer Rev Reg Record>",
+          "result": "optional<IssuerRev Reg Record>",
         },
       },
-      "Rev Reg Wallet Updated Result": {
+      "RevReg Wallet Updated Result": {
         "docs": undefined,
         "properties": {
           "accum_calculated": {
@@ -18103,12 +18103,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Rev Regs Created": {
-        "docs": undefined,
-        "properties": {
-          "rev_reg_ids": "optional<list<string>>",
-        },
-      },
       "RevRegWalletUpdatedResultAccumCalculated": {
         "docs": "Calculated accumulator for phantom revocations",
         "properties": {},
@@ -18121,12 +18115,18 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Indy revocation registry delta",
         "properties": {},
       },
-      "Reveal Doc": {
+      "RevRegs Created": {
+        "docs": undefined,
+        "properties": {
+          "rev_reg_ids": "optional<list<string>>",
+        },
+      },
+      "RevealDoc": {
         "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
         "properties": {},
       },
       "RevocationModuleResponse": "map<string, unknown>",
-      "Route Record": {
+      "RouteRecord": {
         "docs": undefined,
         "properties": {
           "connection_id": "optional<string>",
@@ -18184,13 +18184,13 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Schema Get Result": {
+      "SchemaGet Result": {
         "docs": undefined,
         "properties": {
           "schema": "optional<Schema>",
         },
       },
-      "Schema Input Descriptor": {
+      "SchemaInput Descriptor": {
         "docs": undefined,
         "properties": {
           "required": {
@@ -18203,7 +18203,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Schema Send Result": {
+      "SchemaSend Result": {
         "docs": undefined,
         "properties": {
           "schema": "optional<SchemaSendResultSchema>",
@@ -18217,31 +18217,31 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Schema definition",
         "type": "Schema",
       },
-      "Schemas Created Result": {
+      "SchemasCreated Result": {
         "docs": undefined,
         "properties": {
           "schema_ids": "optional<list<string>>",
         },
       },
-      "Schemas Input Descriptor Filter": {
+      "SchemasInput Descriptor Filter": {
         "docs": undefined,
         "properties": {
           "oneof_filter": {
             "docs": "oneOf",
             "type": "optional<boolean>",
           },
-          "uri_groups": "optional<list<list<Schema Input Descriptor>>>",
+          "uri_groups": "optional<list<list<SchemaInput Descriptor>>>",
         },
       },
-      "Self Attested Attrs": {
+      "SelfAttested Attrs": {
         "docs": "Proof requested proof self-attested attributes",
         "properties": {},
       },
       "SendMenuMenu": {
         "docs": "Menu to send to connection",
-        "type": "Menu Json",
+        "type": "MenuJson",
       },
-      "Service Decorator": {
+      "ServiceDecorator": {
         "docs": undefined,
         "properties": {
           "recipientKeys": {
@@ -18258,7 +18258,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Sign Response": {
+      "SignResponse": {
         "docs": undefined,
         "properties": {
           "error": {
@@ -18279,11 +18279,11 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Credential signature",
         "properties": {},
       },
-      "Signature Correctness Proof": {
+      "SignatureCorrectness Proof": {
         "docs": "Credential signature correctness proof",
         "properties": {},
       },
-      "Signature Options": {
+      "SignatureOptions": {
         "docs": undefined,
         "properties": {
           "challenge": "optional<string>",
@@ -18293,7 +18293,7 @@ exports[`open api parser aries simple 1`] = `
           "verificationMethod": "string",
         },
       },
-      "Signed Doc": {
+      "SignedDoc": {
         "docs": undefined,
         "properties": {
           "proof": "SignedDocProof",
@@ -18301,37 +18301,37 @@ exports[`open api parser aries simple 1`] = `
       },
       "SignedDocProof": {
         "docs": "Linked data proof",
-        "type": "Signature Options",
+        "type": "SignatureOptions",
       },
-      "Status Active": {
+      "StatusActive": {
         "enum": [
           "required",
           "allowed",
           "disallowed",
         ],
       },
-      "Status Revoked": {
+      "StatusRevoked": {
         "enum": [
           "required",
           "allowed",
           "disallowed",
         ],
       },
-      "Status Suspended": {
+      "StatusSuspended": {
         "enum": [
           "required",
           "allowed",
           "disallowed",
         ],
       },
-      "Subject Is Issuer": {
+      "SubjectIs Issuer": {
         "docs": "SubjectIsIssuer",
         "enum": [
           "required",
           "preferred",
         ],
       },
-      "Submission Requirements": {
+      "SubmissionRequirements": {
         "docs": undefined,
         "properties": {
           "count": {
@@ -18342,7 +18342,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "From",
             "type": "optional<string>",
           },
-          "from_nested": "optional<list<Submission Requirements>>",
+          "from_nested": "optional<list<SubmissionRequirements>>",
           "max": {
             "docs": "Max Value",
             "type": "optional<integer>",
@@ -18365,23 +18365,23 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "TAA Acceptance": {
+      "TAAAcceptance": {
         "docs": undefined,
         "properties": {
           "mechanism": "optional<string>",
           "time": "optional<integer>",
         },
       },
-      "TAA Info": {
+      "TAAInfo": {
         "docs": undefined,
         "properties": {
-          "aml_record": "optional<AML Record>",
-          "taa_accepted": "optional<TAA Acceptance>",
-          "taa_record": "optional<TAA Record>",
+          "aml_record": "optional<AMLRecord>",
+          "taa_accepted": "optional<TAAAcceptance>",
+          "taa_record": "optional<TAARecord>",
           "taa_required": "optional<boolean>",
         },
       },
-      "TAA Record": {
+      "TAARecord": {
         "docs": undefined,
         "properties": {
           "digest": "optional<string>",
@@ -18389,19 +18389,19 @@ exports[`open api parser aries simple 1`] = `
           "version": "optional<string>",
         },
       },
-      "TAA Result": {
+      "TAAResult": {
         "docs": undefined,
         "properties": {
-          "result": "optional<TAA Info>",
+          "result": "optional<TAAInfo>",
         },
       },
-      "Tails Delete Response": {
+      "TailsDelete Response": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
         },
       },
-      "Transaction Jobs": {
+      "TransactionJobs": {
         "docs": undefined,
         "properties": {
           "transaction_my_job": {
@@ -18414,16 +18414,32 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "Transaction List": {
+      "TransactionJobsTransactionMyJob": {
+        "docs": "My transaction related job",
+        "enum": [
+          "TRANSACTION_AUTHOR",
+          "TRANSACTION_ENDORSER",
+          "reset",
+        ],
+      },
+      "TransactionJobsTransactionTheirJob": {
+        "docs": "Their transaction related job",
+        "enum": [
+          "TRANSACTION_AUTHOR",
+          "TRANSACTION_ENDORSER",
+          "reset",
+        ],
+      },
+      "TransactionList": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "List of transaction records",
-            "type": "optional<list<Transaction Record>>",
+            "type": "optional<list<TransactionRecord>>",
           },
         },
       },
-      "Transaction Record": {
+      "TransactionRecord": {
         "docs": undefined,
         "properties": {
           "_type": {
@@ -18470,22 +18486,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "TransactionJobsTransactionMyJob": {
-        "docs": "My transaction related job",
-        "enum": [
-          "TRANSACTION_AUTHOR",
-          "TRANSACTION_ENDORSER",
-          "reset",
-        ],
-      },
-      "TransactionJobsTransactionTheirJob": {
-        "docs": "Their transaction related job",
-        "enum": [
-          "TRANSACTION_AUTHOR",
-          "TRANSACTION_ENDORSER",
-          "reset",
-        ],
-      },
       "TransactionRecordMessagesAttachItem": {
         "docs": undefined,
         "properties": {},
@@ -18506,21 +18506,21 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {},
       },
-      "Txn Or Credential Definition Send Result": {
+      "TxnOr Credential Definition Send Result": {
         "docs": undefined,
         "properties": {
-          "sent": "optional<Credential Definition Send Result>",
+          "sent": "optional<CredentialDefinition Send Result>",
           "txn": "optional<TxnOrCredentialDefinitionSendResultTxn>",
         },
       },
-      "Txn Or Publish Revocations Result": {
+      "TxnOr Publish Revocations Result": {
         "docs": undefined,
         "properties": {
-          "sent": "optional<Publish Revocations>",
+          "sent": "optional<PublishRevocations>",
           "txn": "optional<TxnOrPublishRevocationsResultTxn>",
         },
       },
-      "Txn Or Register Ledger Nym Response": {
+      "TxnOr Register Ledger Nym Response": {
         "docs": undefined,
         "properties": {
           "success": {
@@ -18530,14 +18530,14 @@ exports[`open api parser aries simple 1`] = `
           "txn": "optional<TxnOrRegisterLedgerNymResponseTxn>",
         },
       },
-      "Txn Or Rev Reg Result": {
+      "TxnOr Rev Reg Result": {
         "docs": undefined,
         "properties": {
-          "sent": "optional<Rev Reg Result>",
+          "sent": "optional<RevReg Result>",
           "txn": "optional<TxnOrRevRegResultTxn>",
         },
       },
-      "Txn Or Schema Send Result": {
+      "TxnOr Schema Send Result": {
         "docs": undefined,
         "properties": {
           "sent": "optional<TxnOrSchemaSendResultSent>",
@@ -18546,33 +18546,33 @@ exports[`open api parser aries simple 1`] = `
       },
       "TxnOrCredentialDefinitionSendResultTxn": {
         "docs": "Credential definition transaction to endorse",
-        "type": "Transaction Record",
+        "type": "TransactionRecord",
       },
       "TxnOrPublishRevocationsResultTxn": {
         "docs": "Revocation registry revocations transaction to endorse",
-        "type": "Transaction Record",
+        "type": "TransactionRecord",
       },
       "TxnOrRegisterLedgerNymResponseTxn": {
         "docs": "DID transaction to endorse",
-        "type": "Transaction Record",
+        "type": "TransactionRecord",
       },
       "TxnOrRevRegResultTxn": {
         "docs": "Revocation registry definition transaction to endorse",
-        "type": "Transaction Record",
+        "type": "TransactionRecord",
       },
       "TxnOrSchemaSendResultSent": {
         "docs": "Content sent",
-        "type": "Schema Send Result",
+        "type": "SchemaSend Result",
       },
       "TxnOrSchemaSendResultTxn": {
         "docs": "Schema transaction to endorse",
-        "type": "Transaction Record",
+        "type": "TransactionRecord",
       },
-      "Unrevealed Attrs": {
+      "UnrevealedAttrs": {
         "docs": "Unrevealed attributes",
         "properties": {},
       },
-      "V 10 Credential Exchange": {
+      "V10 Credential Exchange": {
         "docs": undefined,
         "properties": {
           "auto_issue": {
@@ -18663,22 +18663,22 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 10 Credential Exchange List Result": {
+      "V10 Credential Exchange List Result": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "Aries#0036 v1.0 credential exchange records",
-            "type": "optional<list<V 10 Credential Exchange>>",
+            "type": "optional<list<V10 Credential Exchange>>",
           },
         },
       },
-      "V 10 Discovery Exchange List Result": {
+      "V10 Discovery Exchange List Result": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<V10DiscoveryExchangeListResultResultsInner>>",
         },
       },
-      "V 10 Discovery Record": {
+      "V10 Discovery Record": {
         "docs": undefined,
         "properties": {
           "connection_id": {
@@ -18713,7 +18713,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 10 Presentation Exchange": {
+      "V10 Presentation Exchange": {
         "docs": undefined,
         "properties": {
           "auto_present": {
@@ -18775,16 +18775,112 @@ exports[`open api parser aries simple 1`] = `
           "verified_msgs": "optional<list<string>>",
         },
       },
-      "V 10 Presentation Exchange List": {
+      "V10 Presentation Exchange List": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "Aries RFC 37 v1.0 presentation exchange records",
-            "type": "optional<list<V 10 Presentation Exchange>>",
+            "type": "optional<list<V10 Presentation Exchange>>",
           },
         },
       },
-      "V 20 Cred Attr Spec": {
+      "V10CredentialBoundOfferRequestCounterProposal": {
+        "docs": "Optional counter-proposal",
+        "type": "CredentialProposal",
+      },
+      "V10CredentialExchangeCredential": {
+        "docs": "Credential as stored",
+        "type": "IndyCred Info",
+      },
+      "V10CredentialExchangeCredentialOffer": {
+        "docs": "(Indy) credential offer",
+        "type": "IndyCred Abstract",
+      },
+      "V10CredentialExchangeCredentialOfferDict": {
+        "docs": "Credential offer message",
+        "type": "CredentialOffer",
+      },
+      "V10CredentialExchangeCredentialProposalDict": {
+        "docs": "Credential proposal message",
+        "type": "CredentialProposal",
+      },
+      "V10CredentialExchangeCredentialRequest": {
+        "docs": "(Indy) credential request",
+        "type": "IndyCred Request",
+      },
+      "V10CredentialExchangeCredentialRequestMetadata": {
+        "docs": "(Indy) credential request metadata",
+        "properties": {},
+      },
+      "V10CredentialExchangeInitiator": {
+        "docs": "Issue-credential exchange initiator: self or external",
+        "enum": [
+          "self",
+          "external",
+        ],
+      },
+      "V10CredentialExchangeRawCredential": {
+        "docs": "Credential as received, prior to storage in holder wallet",
+        "type": "IndyCredential",
+      },
+      "V10CredentialExchangeRole": {
+        "docs": "Issue-credential exchange role: holder or issuer",
+        "enum": [
+          "holder",
+          "issuer",
+        ],
+      },
+      "V10DiscoveryExchangeListResultResultsInner": {
+        "docs": "Discover Features v1.0 exchange record",
+        "type": "V10 Discovery Record",
+      },
+      "V10DiscoveryRecordDisclose": {
+        "docs": "Disclose message",
+        "type": "Disclose",
+      },
+      "V10DiscoveryRecordQueryMsg": {
+        "docs": "Query message",
+        "type": "Query",
+      },
+      "V10PresentProofModuleResponse": "map<string, unknown>",
+      "V10PresentationExchangeInitiator": {
+        "docs": "Present-proof exchange initiator: self or external",
+        "enum": [
+          "self",
+          "external",
+        ],
+      },
+      "V10PresentationExchangePresentation": {
+        "docs": "(Indy) presentation (also known as proof)",
+        "type": "IndyProof",
+      },
+      "V10PresentationExchangePresentationProposalDict": {
+        "docs": "Presentation proposal message",
+        "type": "PresentationProposal",
+      },
+      "V10PresentationExchangePresentationRequest": {
+        "docs": "(Indy) presentation request (also known as proof request)",
+        "type": "IndyProof Request",
+      },
+      "V10PresentationExchangePresentationRequestDict": {
+        "docs": "Presentation request message",
+        "type": "PresentationRequest",
+      },
+      "V10PresentationExchangeRole": {
+        "docs": "Present-proof exchange role: prover or verifier",
+        "enum": [
+          "prover",
+          "verifier",
+        ],
+      },
+      "V10PresentationExchangeVerified": {
+        "docs": "Whether presentation is verified: true or false",
+        "enum": [
+          "true",
+          "false",
+        ],
+      },
+      "V20 Cred Attr Spec": {
         "docs": undefined,
         "properties": {
           "mime-type": {
@@ -18801,7 +18897,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Ex Free": {
+      "V20 Cred Ex Free": {
         "docs": undefined,
         "properties": {
           "auto_remove": {
@@ -18816,7 +18912,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Connection identifier",
             "type": "string",
           },
-          "credential_preview": "optional<V 20 Cred Preview>",
+          "credential_preview": "optional<V20 Cred Preview>",
           "filter": "V20CredBoundOfferRequestFilter",
           "trace": {
             "docs": "Record trace information, based on agent configuration",
@@ -18828,7 +18924,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Ex Record": {
+      "V20 Cred Ex Record": {
         "docs": undefined,
         "properties": {
           "auto_issue": {
@@ -18895,24 +18991,24 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Ex Record By Format": {
+      "V20 Cred Ex Record By Format": {
         "docs": undefined,
         "properties": {
-          "cred_issue": "optional<Cred Issue>",
-          "cred_offer": "optional<Cred Offer>",
-          "cred_proposal": "optional<Cred Proposal>",
-          "cred_request": "optional<Cred Request>",
+          "cred_issue": "optional<CredIssue>",
+          "cred_offer": "optional<CredOffer>",
+          "cred_proposal": "optional<CredProposal>",
+          "cred_request": "optional<CredRequest>",
         },
       },
-      "V 20 Cred Ex Record Detail": {
+      "V20 Cred Ex Record Detail": {
         "docs": undefined,
         "properties": {
           "cred_ex_record": "optional<V20CredExRecordDetailCredExRecord>",
-          "indy": "optional<V 20 Cred Ex Record Indy>",
-          "ld_proof": "optional<V 20 Cred Ex Record LD Proof>",
+          "indy": "optional<V20 Cred Ex Record Indy>",
+          "ld_proof": "optional<V20 Cred Ex Record LD Proof>",
         },
       },
-      "V 20 Cred Ex Record Indy": {
+      "V20 Cred Ex Record Indy": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -18953,7 +19049,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Ex Record LD Proof": {
+      "V20 Cred Ex Record LD Proof": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -18982,23 +19078,23 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Ex Record List Result": {
+      "V20 Cred Ex Record List Result": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "Credential exchange records and corresponding detail records",
-            "type": "optional<list<V 20 Cred Ex Record Detail>>",
+            "type": "optional<list<V20 Cred Ex Record Detail>>",
           },
         },
       },
-      "V 20 Cred Filter": {
+      "V20 Cred Filter": {
         "docs": undefined,
         "properties": {
           "indy": "optional<V20CredFilterIndy>",
           "ld_proof": "optional<V20CredFilterLdProof>",
         },
       },
-      "V 20 Cred Filter Indy": {
+      "V20 Cred Filter Indy": {
         "docs": undefined,
         "properties": {
           "cred_def_id": {
@@ -19027,13 +19123,13 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Filter LD Proof": {
+      "V20 Cred Filter LD Proof": {
         "docs": undefined,
         "properties": {
           "ld_proof": "V20CredFilterLdProof",
         },
       },
-      "V 20 Cred Format": {
+      "V20 Cred Format": {
         "docs": undefined,
         "properties": {
           "attach_id": {
@@ -19046,7 +19142,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Issue": {
+      "V20 Cred Issue": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19063,11 +19159,11 @@ exports[`open api parser aries simple 1`] = `
           },
           "credentials~attach": {
             "docs": "Credential attachments",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
           "formats": {
             "docs": "Acceptable attachment formats",
-            "type": "list<V 20 Cred Format>",
+            "type": "list<V20 Cred Format>",
           },
           "replacement_id": {
             "docs": "Issuer-unique identifier to coordinate credential replacement",
@@ -19075,7 +19171,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Offer": {
+      "V20 Cred Offer": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19090,14 +19186,14 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "credential_preview": "optional<V 20 Cred Preview>",
+          "credential_preview": "optional<V20 Cred Preview>",
           "formats": {
             "docs": "Acceptable credential formats",
-            "type": "list<V 20 Cred Format>",
+            "type": "list<V20 Cred Format>",
           },
           "offers~attach": {
             "docs": "Offer attachments",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
           "replacement_id": {
             "docs": "Issuer-unique identifier to coordinate credential replacement",
@@ -19105,17 +19201,17 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Cred Preview": {
+      "V20 Cred Preview": {
         "docs": undefined,
         "properties": {
           "@type": {
             "docs": "Message type identifier",
             "type": "optional<string>",
           },
-          "attributes": "list<V 20 Cred Attr Spec>",
+          "attributes": "list<V20 Cred Attr Spec>",
         },
       },
-      "V 20 Cred Proposal": {
+      "V20 Cred Proposal": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19133,15 +19229,15 @@ exports[`open api parser aries simple 1`] = `
           "credential_preview": "optional<V20CredProposalCredentialPreview>",
           "filters~attach": {
             "docs": "Credential filter per acceptable format on corresponding identifier",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
           "formats": {
             "docs": "Attachment formats",
-            "type": "list<V 20 Cred Format>",
+            "type": "list<V20 Cred Format>",
           },
         },
       },
-      "V 20 Cred Request": {
+      "V20 Cred Request": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19158,27 +19254,27 @@ exports[`open api parser aries simple 1`] = `
           },
           "formats": {
             "docs": "Acceptable attachment formats",
-            "type": "list<V 20 Cred Format>",
+            "type": "list<V20 Cred Format>",
           },
           "requests~attach": {
             "docs": "Request attachments",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
         },
       },
-      "V 20 Discovery Exchange List Result": {
+      "V20 Discovery Exchange List Result": {
         "docs": undefined,
         "properties": {
           "results": "optional<list<V20DiscoveryExchangeListResultResultsInner>>",
         },
       },
-      "V 20 Discovery Exchange Result": {
+      "V20 Discovery Exchange Result": {
         "docs": undefined,
         "properties": {
           "results": "optional<V20DiscoveryExchangeListResultResultsInner>",
         },
       },
-      "V 20 Discovery Record": {
+      "V20 Discovery Record": {
         "docs": undefined,
         "properties": {
           "connection_id": {
@@ -19213,7 +19309,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Pres": {
+      "V20 Pres": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19230,12 +19326,12 @@ exports[`open api parser aries simple 1`] = `
           },
           "formats": {
             "docs": "Acceptable attachment formats",
-            "type": "list<V 20 Pres Format>",
+            "type": "list<V20 Pres Format>",
           },
-          "presentations~attach": "list<Attach Decorator>",
+          "presentations~attach": "list<AttachDecorator>",
         },
       },
-      "V 20 Pres Ex Record": {
+      "V20 Pres Ex Record": {
         "docs": undefined,
         "properties": {
           "auto_present": {
@@ -19297,24 +19393,24 @@ exports[`open api parser aries simple 1`] = `
           "verified_msgs": "optional<list<string>>",
         },
       },
-      "V 20 Pres Ex Record By Format": {
+      "V20 Pres Ex Record By Format": {
         "docs": undefined,
         "properties": {
           "pres": "optional<Pres>",
-          "pres_proposal": "optional<Pres Proposal>",
-          "pres_request": "optional<Pres Request>",
+          "pres_proposal": "optional<PresProposal>",
+          "pres_request": "optional<PresRequest>",
         },
       },
-      "V 20 Pres Ex Record List": {
+      "V20 Pres Ex Record List": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "Presentation exchange records",
-            "type": "optional<list<V 20 Pres Ex Record>>",
+            "type": "optional<list<V20 Pres Ex Record>>",
           },
         },
       },
-      "V 20 Pres Format": {
+      "V20 Pres Format": {
         "docs": undefined,
         "properties": {
           "attach_id": {
@@ -19327,7 +19423,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Pres Proposal": {
+      "V20 Pres Proposal": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19342,21 +19438,21 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "formats": "list<V 20 Pres Format>",
+          "formats": "list<V20 Pres Format>",
           "proposals~attach": {
             "docs": "Attachment per acceptable format on corresponding identifier",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
         },
       },
-      "V 20 Pres Proposal By Format": {
+      "V20 Pres Proposal By Format": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresProposalByFormatDif>",
           "indy": "optional<V20PresProposalByFormatIndy>",
         },
       },
-      "V 20 Pres Request": {
+      "V20 Pres Request": {
         "docs": undefined,
         "properties": {
           "@id": {
@@ -19371,10 +19467,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Human-readable comment",
             "type": "optional<string>",
           },
-          "formats": "list<V 20 Pres Format>",
+          "formats": "list<V20 Pres Format>",
           "request_presentations~attach": {
             "docs": "Attachment per acceptable format on corresponding identifier",
-            "type": "list<Attach Decorator>",
+            "type": "list<AttachDecorator>",
           },
           "will_confirm": {
             "docs": "Whether verifier will send confirmation ack",
@@ -19382,144 +19478,48 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "V 20 Pres Request By Format": {
+      "V20 Pres Request By Format": {
         "docs": undefined,
         "properties": {
           "dif": "optional<V20PresRequestByFormatDif>",
           "indy": "optional<V20PresRequestByFormatIndy>",
         },
       },
-      "V10CredentialBoundOfferRequestCounterProposal": {
-        "docs": "Optional counter-proposal",
-        "type": "Credential Proposal",
-      },
-      "V10CredentialExchangeCredential": {
-        "docs": "Credential as stored",
-        "type": "Indy Cred Info",
-      },
-      "V10CredentialExchangeCredentialOffer": {
-        "docs": "(Indy) credential offer",
-        "type": "Indy Cred Abstract",
-      },
-      "V10CredentialExchangeCredentialOfferDict": {
-        "docs": "Credential offer message",
-        "type": "Credential Offer",
-      },
-      "V10CredentialExchangeCredentialProposalDict": {
-        "docs": "Credential proposal message",
-        "type": "Credential Proposal",
-      },
-      "V10CredentialExchangeCredentialRequest": {
-        "docs": "(Indy) credential request",
-        "type": "Indy Cred Request",
-      },
-      "V10CredentialExchangeCredentialRequestMetadata": {
-        "docs": "(Indy) credential request metadata",
-        "properties": {},
-      },
-      "V10CredentialExchangeInitiator": {
-        "docs": "Issue-credential exchange initiator: self or external",
-        "enum": [
-          "self",
-          "external",
-        ],
-      },
-      "V10CredentialExchangeRawCredential": {
-        "docs": "Credential as received, prior to storage in holder wallet",
-        "type": "Indy Credential",
-      },
-      "V10CredentialExchangeRole": {
-        "docs": "Issue-credential exchange role: holder or issuer",
-        "enum": [
-          "holder",
-          "issuer",
-        ],
-      },
-      "V10DiscoveryExchangeListResultResultsInner": {
-        "docs": "Discover Features v1.0 exchange record",
-        "type": "V 10 Discovery Record",
-      },
-      "V10DiscoveryRecordDisclose": {
-        "docs": "Disclose message",
-        "type": "Disclose",
-      },
-      "V10DiscoveryRecordQueryMsg": {
-        "docs": "Query message",
-        "type": "Query",
-      },
-      "V10PresentProofModuleResponse": "map<string, unknown>",
-      "V10PresentationExchangeInitiator": {
-        "docs": "Present-proof exchange initiator: self or external",
-        "enum": [
-          "self",
-          "external",
-        ],
-      },
-      "V10PresentationExchangePresentation": {
-        "docs": "(Indy) presentation (also known as proof)",
-        "type": "Indy Proof",
-      },
-      "V10PresentationExchangePresentationProposalDict": {
-        "docs": "Presentation proposal message",
-        "type": "Presentation Proposal",
-      },
-      "V10PresentationExchangePresentationRequest": {
-        "docs": "(Indy) presentation request (also known as proof request)",
-        "type": "Indy Proof Request",
-      },
-      "V10PresentationExchangePresentationRequestDict": {
-        "docs": "Presentation request message",
-        "type": "Presentation Request",
-      },
-      "V10PresentationExchangeRole": {
-        "docs": "Present-proof exchange role: prover or verifier",
-        "enum": [
-          "prover",
-          "verifier",
-        ],
-      },
-      "V10PresentationExchangeVerified": {
-        "docs": "Whether presentation is verified: true or false",
-        "enum": [
-          "true",
-          "false",
-        ],
-      },
       "V20CredBoundOfferRequestCounterPreview": {
         "docs": "Optional content for counter-proposal",
-        "type": "V 20 Cred Preview",
+        "type": "V20 Cred Preview",
       },
       "V20CredBoundOfferRequestFilter": {
         "docs": "Credential specification criteria by format",
-        "type": "V 20 Cred Filter",
+        "type": "V20 Cred Filter",
       },
       "V20CredExRecordByFormat": {
         "docs": "Attachment content by format for proposal, offer, request, and issue",
-        "type": "V 20 Cred Ex Record By Format",
+        "type": "V20 Cred Ex Record By Format",
       },
       "V20CredExRecordCredIssue": {
         "docs": "Serialized credential issue message",
-        "type": "V 20 Cred Issue",
+        "type": "V20 Cred Issue",
       },
       "V20CredExRecordCredOffer": {
         "docs": "Credential offer message",
-        "type": "V 20 Cred Offer",
+        "type": "V20 Cred Offer",
       },
       "V20CredExRecordCredPreview": {
         "docs": "Credential preview from credential proposal",
-        "type": "V 20 Cred Preview",
+        "type": "V20 Cred Preview",
       },
       "V20CredExRecordCredProposal": {
         "docs": "Credential proposal message",
-        "type": "V 20 Cred Proposal",
+        "type": "V20 Cred Proposal",
       },
       "V20CredExRecordCredRequest": {
         "docs": "Serialized credential request message",
-        "type": "V 20 Cred Request",
+        "type": "V20 Cred Request",
       },
       "V20CredExRecordDetailCredExRecord": {
         "docs": "Credential exchange record",
-        "type": "V 20 Cred Ex Record",
+        "type": "V20 Cred Ex Record",
       },
       "V20CredExRecordIndyCredRequestMetadata": {
         "docs": "Credential request metadata for indy holder",
@@ -19585,23 +19585,23 @@ exports[`open api parser aries simple 1`] = `
       },
       "V20CredFilterIndy": {
         "docs": "Credential filter for indy",
-        "type": "V 20 Cred Filter Indy",
+        "type": "V20 Cred Filter Indy",
       },
       "V20CredFilterLdProof": {
         "docs": "Credential filter for linked data proof",
-        "type": "LD Proof VC Detail",
+        "type": "LDProof VC Detail",
       },
       "V20CredProposalCredentialPreview": {
         "docs": "Credential preview",
-        "type": "V 20 Cred Preview",
+        "type": "V20 Cred Preview",
       },
       "V20CredRequestFreeFilter": {
         "docs": "Credential specification criteria by format",
-        "type": "V 20 Cred Filter LD Proof",
+        "type": "V20 Cred Filter LD Proof",
       },
       "V20DiscoveryExchangeListResultResultsInner": {
         "docs": "Discover Features v2.0 exchange record",
-        "type": "V 20 Discovery Record",
+        "type": "V20 Discovery Record",
       },
       "V20DiscoveryRecordDisclosures": {
         "docs": "Disclosures message",
@@ -19614,7 +19614,7 @@ exports[`open api parser aries simple 1`] = `
       "V20IssueCredentialModuleResponse": "map<string, unknown>",
       "V20PresExRecordByFormat": {
         "docs": "Attachment content by format for proposal, request, and presentation",
-        "type": "V 20 Pres Ex Record By Format",
+        "type": "V20 Pres Ex Record By Format",
       },
       "V20PresExRecordInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -19625,15 +19625,15 @@ exports[`open api parser aries simple 1`] = `
       },
       "V20PresExRecordPres": {
         "docs": "Presentation message",
-        "type": "V 20 Pres",
+        "type": "V20 Pres",
       },
       "V20PresExRecordPresProposal": {
         "docs": "Presentation proposal message",
-        "type": "V 20 Pres Proposal",
+        "type": "V20 Pres Proposal",
       },
       "V20PresExRecordPresRequest": {
         "docs": "Presentation request message",
-        "type": "V 20 Pres Request",
+        "type": "V20 Pres Request",
       },
       "V20PresExRecordRole": {
         "docs": "Present-proof exchange role: prover or verifier",
@@ -19683,30 +19683,30 @@ exports[`open api parser aries simple 1`] = `
       },
       "V20PresProposalByFormatDif": {
         "docs": "Presentation proposal for DIF",
-        "type": "DIF Proof Proposal",
+        "type": "DIFProof Proposal",
       },
       "V20PresProposalByFormatIndy": {
         "docs": "Presentation proposal for indy",
-        "type": "Indy Proof Request",
+        "type": "IndyProof Request",
       },
       "V20PresRequestByFormatDif": {
         "docs": "Presentation request for DIF",
-        "type": "DIF Proof Request",
+        "type": "DIFProof Request",
       },
       "V20PresRequestByFormatIndy": {
         "docs": "Presentation request for indy",
-        "type": "Indy Proof Request",
+        "type": "IndyProof Request",
       },
       "V20PresSpecByFormatRequestDif": {
         "docs": "Optional Presentation specification for DIF, overrides the PresentionExchange record's PresRequest",
-        "type": "DIF Pres Spec",
+        "type": "DIFPres Spec",
       },
       "V20PresSpecByFormatRequestIndy": {
         "docs": "Presentation specification for indy",
-        "type": "Indy Pres Spec",
+        "type": "IndyPres Spec",
       },
       "V20PresentProofModuleResponse": "map<string, unknown>",
-      "VC Record": {
+      "VCRecord": {
         "docs": undefined,
         "properties": {
           "contexts": "optional<list<string>>",
@@ -19733,17 +19733,21 @@ exports[`open api parser aries simple 1`] = `
           "subject_ids": "optional<list<string>>",
         },
       },
-      "VC Record List": {
+      "VCRecord List": {
         "docs": undefined,
         "properties": {
-          "results": "optional<list<VC Record>>",
+          "results": "optional<list<VCRecord>>",
         },
       },
       "VcRecordCredValue": {
         "docs": "(JSON-serializable) credential value",
         "properties": {},
       },
-      "Verify Response": {
+      "VerifyRequestDoc": {
+        "docs": "Signed document",
+        "type": "SignedDoc",
+      },
+      "VerifyResponse": {
         "docs": undefined,
         "properties": {
           "error": {
@@ -19753,20 +19757,17 @@ exports[`open api parser aries simple 1`] = `
           "valid": "boolean",
         },
       },
-      "VerifyRequestDoc": {
-        "docs": "Signed document",
-        "type": "Signed Doc",
-      },
-      "Wallet List": {
+      "WalletList": {
         "docs": undefined,
         "properties": {
           "results": {
             "docs": "List of wallet records",
-            "type": "optional<list<Wallet Record>>",
+            "type": "optional<list<WalletRecord>>",
           },
         },
       },
-      "Wallet Record": {
+      "WalletModuleResponse": "map<string, unknown>",
+      "WalletRecord": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -19795,7 +19796,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "WalletModuleResponse": "map<string, unknown>",
       "WalletRecordKeyManagementMode": {
         "docs": "Mode regarding management of wallet key",
         "enum": [
@@ -19811,7 +19811,7 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Witness for revocation proof",
         "properties": {},
       },
-      "Write Ledger Request": {
+      "WriteLedger Request": {
         "docs": undefined,
         "properties": {
           "ledger_id": "optional<string>",

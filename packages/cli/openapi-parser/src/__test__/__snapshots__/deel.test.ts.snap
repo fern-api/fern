@@ -9907,7 +9907,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "AlternateEmailItem",
       "groupName": undefined,
-      "nameOverride": "Root Schema",
+      "nameOverride": "RootSchema",
       "properties": [
         {
           "audiences": [],
@@ -28643,7 +28643,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "PaymentWorker",
       "groupName": undefined,
-      "nameOverride": "The Worker For The Payment",
+      "nameOverride": "TheWorker For The Payment",
       "properties": [
         {
           "audiences": [],

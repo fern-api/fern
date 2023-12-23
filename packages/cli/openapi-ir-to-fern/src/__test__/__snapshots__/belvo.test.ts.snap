@@ -1876,15 +1876,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "CreateBankAccountResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
+            "root.Brazil🇧🇷 OFPI",
             "root.BankAccountPseResponse",
           ],
         },
@@ -1892,7 +1892,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
+            "root.Brazil🇧🇷 OFPI",
             "root.BankAccountPseResponse",
           ],
         },
@@ -2154,24 +2154,24 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "CreateCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "DetailCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
       },
@@ -4418,24 +4418,24 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.🇲🇽 SAT Mexico",
-            "root.🇨🇴 DIAN Colombia",
+            "root.🇲🇽SAT Mexico",
+            "root.🇨🇴DIAN Colombia",
           ],
         },
         "PatchInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.🇲🇽 SAT Mexico",
-            "root.🇨🇴 DIAN Colombia",
+            "root.🇲🇽SAT Mexico",
+            "root.🇨🇴DIAN Colombia",
           ],
         },
         "RetrieveInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.🇲🇽 SAT Mexico",
-            "root.🇨🇴 DIAN Colombia",
+            "root.🇲🇽SAT Mexico",
+            "root.🇨🇴DIAN Colombia",
           ],
         },
       },
@@ -5868,11 +5868,11 @@ A payment intent captures all payment information (such as the amount to be char
             "method": "POST",
             "path": "/payments/payment-intents",
             "request": {
-              "body": "root.Colombia 🇨🇴 PSE",
+              "body": "root.Colombia🇨🇴 PSE",
             },
             "response": {
               "docs": "OK (Created)",
-              "type": "root.Colombia 🇨🇴 PSE",
+              "type": "root.Colombia🇨🇴 PSE",
             },
           },
           "DetailPaymentIntent": {
@@ -5893,7 +5893,7 @@ A payment intent captures all payment information (such as the amount to be char
             },
             "response": {
               "docs": "OK",
-              "type": "root.Colombia 🇨🇴 PSE",
+              "type": "root.Colombia🇨🇴 PSE",
             },
           },
           "ListPaymentIntents": {
@@ -6052,7 +6052,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
 **Note:** You'll need to send this parameter set to \`true\` when the payment intent next_step returns \`ready_to_confirm: true\`, meaning the payment intent is ready to be confirmed.",
                     "type": "optional<boolean>",
                   },
-                  "payment_method_details": "root.PATCH Payment Method Details",
+                  "payment_method_details": "root.PATCHPayment Method Details",
                 },
               },
               "headers": undefined,
@@ -6061,7 +6061,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             },
             "response": {
               "docs": "OK (Created)",
-              "type": "root.Colombia 🇨🇴 PSE",
+              "type": "root.Colombia🇨🇴 PSE",
             },
           },
         },
@@ -6228,24 +6228,24 @@ During the payment intent flow, you need to fill in the payment intent with requ
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "CreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "DetailCreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Brazil 🇧🇷 OFPI",
-            "root.Colombia 🇨🇴 PSE",
+            "root.Brazil🇧🇷 OFPI",
+            "root.Colombia🇨🇴 PSE",
           ],
         },
         "ListPaymentLinksRequestOrdering": {
@@ -9085,7 +9085,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 },
               },
               "headers": undefined,
-              "name": "Tax Declarations",
+              "name": "TaxDeclarations",
               "query-parameters": {
                 "fields": {
                   "docs": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
@@ -9109,24 +9109,24 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Individual Tax Declaration",
-            "root.Business Tax Declaration",
+            "root.IndividualTax Declaration",
+            "root.BusinessTax Declaration",
           ],
         },
         "ListTaxDeclarationsResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Tax Declaration Individual",
-            "root.Tax Declaration Business",
+            "root.TaxDeclaration Individual",
+            "root.TaxDeclaration Business",
           ],
         },
         "RetrieveTaxDeclarationsResponseItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Business Tax Declaration",
-            "root.Individual Tax Declaration",
+            "root.BusinessTax Declaration",
+            "root.IndividualTax Declaration",
           ],
         },
       },
@@ -9825,38 +9825,38 @@ client.tax_returns.list(params: {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Tax Return Personal",
-            "root.Tax Return Personal Monthly",
-            "root.Tax Return Business",
-            "root.Tax Return Business Monthly",
+            "root.TaxReturn Personal",
+            "root.TaxReturn Personal Monthly",
+            "root.TaxReturn Business",
+            "root.TaxReturn Business Monthly",
           ],
         },
         "ListTaxReturnsResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Tax Return Personal",
-            "root.Tax Return Personal Monthly",
-            "root.Tax Return Personal Business",
-            "root.Tax Return Personal Business Monthly",
+            "root.TaxReturn Personal",
+            "root.TaxReturn Personal Monthly",
+            "root.TaxReturn Personal Business",
+            "root.TaxReturn Personal Business Monthly",
           ],
         },
         "RetrieveTaxReturnsRequestBody": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Monthly Tax Returns",
-            "root.Yearly Tax Returns",
+            "root.MonthlyTax Returns",
+            "root.YearlyTax Returns",
           ],
         },
         "RetrieveTaxReturnsResponseItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.Tax Return Personal",
-            "root.Tax Return Personal Monthly",
-            "root.Tax Return Business",
-            "root.Tax Return Business Monthly",
+            "root.TaxReturn Personal",
+            "root.TaxReturn Personal Monthly",
+            "root.TaxReturn Business",
+            "root.TaxReturn Business Monthly",
           ],
         },
       },
@@ -10132,16 +10132,16 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.SAT 🇲🇽 Mexico",
-            "root.DIAN 🇨🇴 Colombia",
+            "root.SAT🇲🇽 Mexico",
+            "root.DIAN🇨🇴 Colombia",
           ],
         },
         "RetrieveTaxStatusResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.SAT 🇲🇽 Mexico",
-            "root.DIAN 🇨🇴 Colombia",
+            "root.SAT🇲🇽 Mexico",
+            "root.DIAN🇨🇴 Colombia",
           ],
         },
       },
@@ -11267,11 +11267,11 @@ If you try to access older information than what we can access, we will return a
       },
       "ForbiddenError": {
         "status-code": 403,
-        "type": "list<Access To Belvo API Denied>",
+        "type": "list<AccessTo Belvo API Denied>",
       },
       "InternalServerError": {
         "status-code": 500,
-        "type": "list<Unexpected Error>",
+        "type": "list<UnexpectedError>",
       },
       "NotFoundError": {
         "status-code": 404,
@@ -11291,7 +11291,7 @@ If you try to access older information than what we can access, we will return a
       },
     },
     "types": {
-      "Access To Belvo API Denied": {
+      "AccessTo Belvo API Denied": {
         "docs": "This error occurs when you try to access Belvo's resource without the correct permissions.",
         "properties": {
           "code": {
@@ -11832,17 +11832,17 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Invalid Access Mode",
-          "Too Many Sessions",
-          "Login Error",
-          "Session Expired",
-          "Validation Error",
-          "Institution Down",
-          "Institution Unavailable",
-          "Institution Inactive",
-          "Unsupported Operation",
-          "Invalid Link",
-          "Unconfirmed Link",
+          "InvalidAccess Mode",
+          "TooMany Sessions",
+          "LoginError",
+          "SessionExpired",
+          "ValidationError",
+          "InstitutionDown",
+          "InstitutionUnavailable",
+          "InstitutionInactive",
+          "UnsupportedOperation",
+          "InvalidLink",
+          "UnconfirmedLink",
         ],
       },
       "Balance": {
@@ -11906,13 +11906,13 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "Bank Account Information PSE": {
+      "BankAccount Information PSE": {
         "docs": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
         "properties": {
           "bank_account_information": "optional<BankAccountInformationContentPse>",
         },
       },
-      "Bank Account PSE": {
+      "BankAccount PSE": {
         "docs": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
         "properties": {
           "bank_account": {
@@ -11942,8 +11942,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "OFPI PIX Account Information",
-          "OFPI PIX Keys",
+          "OFPIPIX Account Information",
+          "OFPIPIX Keys",
         ],
       },
       "BankAccountPaginatedResponse": {
@@ -11974,12 +11974,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Brazil 🇧🇷 OFPI",
+          "Brazil🇧🇷 OFPI",
           "BankAccountPseResponse",
         ],
       },
-      "BankAccountPseResponse": "Business Bank Account",
-      "Beneficiary Bank Account": {
+      "BankAccountPseResponse": "BusinessBank Account",
+      "BeneficiaryBank Account": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -11999,7 +11999,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "institution": "PaymentInstitution",
         },
       },
-      "Beneficiary Bank Account PSE": {
+      "BeneficiaryBank Account PSE": {
         "docs": undefined,
         "properties": {
           "holder": "optional<Business>",
@@ -12021,11 +12021,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "OFPI PIX Account Information",
-          "OFPI PIX Keys",
+          "OFPIPIX Account Information",
+          "OFPIPIX Keys",
         ],
       },
-      "Brazil 🇧🇷 OFPI": {
+      "Brazil🇧🇷 OFPI": {
         "docs": undefined,
         "properties": {
           "access_token": {
@@ -12034,7 +12034,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** You'll need the \`access_token\` to make [Get details for a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) requests.",
             "type": "optional<string>",
           },
-          "callback_urls": "Payment Link Callback UR Ls",
+          "callback_urls": "PaymentLink Callback UR Ls",
           "created_at": {
             "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
             "type": "datetime",
@@ -12056,7 +12056,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
           },
-          "payment_intent": "optional<Brazil 🇧🇷 OFPI>",
+          "payment_intent": "optional<Brazil🇧🇷 OFPI>",
           "payment_url": {
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
@@ -12076,7 +12076,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "EnumBankAccountHolderTypePse",
         },
       },
-      "Business Bank Account": {
+      "BusinessBank Account": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -12119,7 +12119,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           },
         },
       },
-      "Business Tax Declaration": {
+      "BusinessTax Declaration": {
         "docs": undefined,
         "properties": {
           "annual_costs_and_deductions_statement": "AnnualCostsAndDeductionsStatementBusiness",
@@ -12396,7 +12396,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "FAILED",
         ],
       },
-      "Colombia 🇨🇴 PSE": {
+      "Colombia🇨🇴 PSE": {
         "docs": undefined,
         "properties": {
           "allowed_payment_method_types": {
@@ -12434,8 +12434,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "discriminated": false,
         "docs": "Information regarding the bank account.",
         "union": [
-          "OFPI PIX Account Information",
-          "OFPI PIX Keys",
+          "OFPIPIX Account Information",
+          "OFPIPIX Keys",
         ],
       },
       "CreatePaymentIntentPseAmount": {
@@ -12499,11 +12499,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Brazil 🇧🇷 OFPI",
-          "Colombia 🇨🇴 PSE",
+          "Brazil🇧🇷 OFPI",
+          "Colombia🇨🇴 PSE",
         ],
       },
-      "DIAN 🇨🇴 Colombia": {
+      "DIAN🇨🇴 Colombia": {
         "docs": undefined,
         "properties": {
           "address": "optional<TaxStatusAddressDian>",
@@ -12572,10 +12572,10 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "tax_payer_information": "optional<TaxStatusTaxPayerInformationDian>",
         },
       },
-      "Display Open Finance Brazil Confirmation Required": {
+      "DisplayOpen Finance Brazil Confirmation Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "beneficiary_bank_account": "optional<Beneficiary Bank Account>",
+          "beneficiary_bank_account": "optional<BeneficiaryBank Account>",
           "payer_identifier": {
             "docs": "The payer's ID.",
             "type": "optional<string>",
@@ -12587,7 +12587,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display Open Finance Brazil Payment Method Information": {
+      "DisplayOpen Finance Brazil Payment Method Information": {
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
           "institutions": {
@@ -12596,16 +12596,16 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display PSE Colombia Confirmation Required": {
+      "DisplayPSE Colombia Confirmation Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "payer_institution": "optional<PaymentInstitution>",
         },
       },
-      "Display PSE Confirmation Required": {
+      "DisplayPSE Confirmation Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "pse_display_confirmation_required": "optional<Display PSE Colombia Confirmation Required>",
+          "pse_display_confirmation_required": "optional<DisplayPSE Colombia Confirmation Required>",
           "ready_to_confirm": {
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
@@ -12619,10 +12619,10 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display PSE Credentials Required": {
+      "DisplayPSE Credentials Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "pse_display_credentials_required": "optional<Display PSE Confirmation Required>",
+          "pse_display_credentials_required": "optional<DisplayPSE Confirmation Required>",
           "ready_to_confirm": {
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
@@ -12636,10 +12636,10 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display PSE Customer Bank Accounts": {
+      "DisplayPSE Customer Bank Accounts": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "pse_display_customer_bank_accounts": "optional<Display PSE Payment Method Information>",
+          "pse_display_customer_bank_accounts": "optional<DisplayPSE Payment Method Information>",
           "ready_to_confirm": {
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
@@ -12653,7 +12653,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display PSE Needs Redirect": {
+      "DisplayPSE Needs Redirect": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_needs_redirect": "optional<NeedsRedirectContentPse>",
@@ -12670,17 +12670,17 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
       },
-      "Display PSE Payment Method Information": {
+      "DisplayPSE Payment Method Information": {
         "docs": "Object detailing what payment method information you need to display.",
         "properties": {
-          "beneficiary_bank_account": "optional<Beneficiary Bank Account PSE>",
+          "beneficiary_bank_account": "optional<BeneficiaryBank Account PSE>",
           "customer_bank_accounts": {
             "docs": "Array of customer bank account objects.",
             "type": "optional<list<PaymentMethodInfoCustomerBankAccountsPse>>",
           },
         },
       },
-      "Display PSE Token Required": {
+      "DisplayPSE Token Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "pse_display_token_required": "optional<DisplayTokenRequiredContentPse>",
@@ -14340,7 +14340,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "Individual Tax Declaration": {
+      "IndividualTax Declaration": {
         "docs": undefined,
         "properties": {
           "annual_income_statement": "AnnualIncomeStatementIndividual",
@@ -14452,7 +14452,18 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
           },
         },
       },
-      "Institution Down": {
+      "InstitutionAccount": {
+        "docs": "Details regarding the institution.",
+        "properties": {
+          "name": {
+            "docs": "The name of the institution, as designated by Belvo.
+Please see our [Institutions](https://developers.belvo.com/docs/institution) DevPortal article for a detailed list of institution names.",
+            "type": "optional<string>",
+          },
+          "type": "optional<EnumInstitutionType>",
+        },
+      },
+      "InstitutionDown": {
         "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
         "properties": {
           "code": {
@@ -14473,63 +14484,6 @@ For \`institution_down\` errors, the description is:
             "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
             "type": "optional<string>",
           },
-        },
-      },
-      "Institution Inactive": {
-        "docs": "This error occurs when we (Belvo) have deactivated the institution in our API.",
-        "properties": {
-          "code": {
-            "docs": "A unique error code (\`institution_inactive\`) that allows you to classify and handle the error programmatically.
-
-ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_inactive" target="_blank">400 institution_inactive errors</a>.",
-            "type": "optional<string>",
-          },
-          "message": {
-            "docs": "A short description of the error. 
-
-For \`institution_inactive\` errors, the description is:
-  
-  - \`The institution has been temporarily deactivated\`.",
-            "type": "optional<string>",
-          },
-          "request_id": {
-            "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Institution Unavailable": {
-        "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
-        "properties": {
-          "code": {
-            "docs": "A unique error code (\`institution_unavailable\`) that allows you to classify and handle the error programmatically.
-
-ℹ️ Check our DevPortal for more information on how handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_unavailable" target="_blank">400 institution_unavailable errors</a>.",
-            "type": "optional<string>",
-          },
-          "message": {
-            "docs": "A short description of the error.
-
-For \`institution_unavailable\` errors, the description is:
-  
-  - \`The financial institution is unavailable\`.",
-            "type": "optional<string>",
-          },
-          "request_id": {
-            "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "InstitutionAccount": {
-        "docs": "Details regarding the institution.",
-        "properties": {
-          "name": {
-            "docs": "The name of the institution, as designated by Belvo.
-Please see our [Institutions](https://developers.belvo.com/docs/institution) DevPortal article for a detailed list of institution names.",
-            "type": "optional<string>",
-          },
-          "type": "optional<EnumInstitutionType>",
         },
       },
       "InstitutionFormField": {
@@ -14574,6 +14528,52 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
           "values": {
             "docs": "Array of additional form field values.",
             "type": "optional<list<InstitutionsFormFieldValues>>",
+          },
+        },
+      },
+      "InstitutionInactive": {
+        "docs": "This error occurs when we (Belvo) have deactivated the institution in our API.",
+        "properties": {
+          "code": {
+            "docs": "A unique error code (\`institution_inactive\`) that allows you to classify and handle the error programmatically.
+
+ℹ️ Check our DevPortal for more information on how to handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_inactive" target="_blank">400 institution_inactive errors</a>.",
+            "type": "optional<string>",
+          },
+          "message": {
+            "docs": "A short description of the error. 
+
+For \`institution_inactive\` errors, the description is:
+  
+  - \`The institution has been temporarily deactivated\`.",
+            "type": "optional<string>",
+          },
+          "request_id": {
+            "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "InstitutionUnavailable": {
+        "docs": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
+        "properties": {
+          "code": {
+            "docs": "A unique error code (\`institution_unavailable\`) that allows you to classify and handle the error programmatically.
+
+ℹ️ Check our DevPortal for more information on how handle <a href="https://developers.belvo.com/docs/belvo-api-errors#400-institution_unavailable" target="_blank">400 institution_unavailable errors</a>.",
+            "type": "optional<string>",
+          },
+          "message": {
+            "docs": "A short description of the error.
+
+For \`institution_unavailable\` errors, the description is:
+  
+  - \`The financial institution is unavailable\`.",
+            "type": "optional<string>",
+          },
+          "request_id": {
+            "docs": "A 32-character unique ID of the request (matching a regex pattern of: \`[a-f0-9]{32}\`). Provide this ID when contacting the Belvo support team to accelerate investigations.",
+            "type": "optional<string>",
           },
         },
       },
@@ -14680,7 +14680,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "Invalid Access Mode": {
+      "InvalidAccess Mode": {
         "docs": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
         "properties": {
           "code": {
@@ -14703,7 +14703,7 @@ For \`invalid_access_mode_switch\` errors, the description is:
           },
         },
       },
-      "Invalid Credentials": {
+      "InvalidCredentials": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
         "properties": {
           "error_code": {
@@ -14716,7 +14716,7 @@ For \`invalid_access_mode_switch\` errors, the description is:
           },
         },
       },
-      "Invalid Link": {
+      "InvalidLink": {
         "docs": "This error occurs when you try to access an account but the user credentials are no longer valid, prompting an error from the institution.",
         "properties": {
           "code": {
@@ -14739,7 +14739,7 @@ For \`invalid_link\` errors, the description is:
           },
         },
       },
-      "Invalid Period": {
+      "InvalidPeriod": {
         "docs": "This error occurs when you request incomes for a link within a given date range, however, the period between \`date_from\` and \`date_to\` is less than 90 days.",
         "properties": {
           "code": {
@@ -14762,7 +14762,7 @@ For \`invalid_period\` errors, the description is:
           },
         },
       },
-      "Invalid Token": {
+      "InvalidToken": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the MFA token your customer provides is invalid.",
         "properties": {
           "error_code": {
@@ -15612,8 +15612,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "🇲🇽 SAT Mexico",
-          "🇨🇴 DIAN Colombia",
+          "🇲🇽SAT Mexico",
+          "🇨🇴DIAN Colombia",
         ],
       },
       "Link": {
@@ -15657,7 +15657,7 @@ A unique 44-character string that can be used to identify a user at a given inst
           "status": "optional<EnumLinkStatus>",
         },
       },
-      "Login Error": {
+      "LoginError": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_credentials_required\` next step.",
         "properties": {
           "error_code": {
@@ -15670,7 +15670,7 @@ A unique 44-character string that can be used to identify a user at a given inst
           },
         },
       },
-      "Login Two Factor Error": {
+      "LoginTwo Factor Error": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_token_required\` next step.",
         "properties": {
           "error_code": {
@@ -15683,7 +15683,7 @@ A unique 44-character string that can be used to identify a user at a given inst
           },
         },
       },
-      "Monthly Tax Returns": {
+      "MonthlyTax Returns": {
         "docs": "Request body for monthly tax returns",
         "properties": {
           "attach_pdf": {
@@ -15975,10 +15975,10 @@ For \`not_found\` errors, the description is:
           "open_finance": "optional<ChargePaymentMethodDetailsOfpiContent>",
         },
       },
-      "OFPI Display Confirmation Required": {
+      "OFPIDisplay Confirmation Required": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "open_finance_display_confirmation_required": "optional<Display Open Finance Brazil Confirmation Required>",
+          "open_finance_display_confirmation_required": "optional<DisplayOpen Finance Brazil Confirmation Required>",
           "ready_to_confirm": {
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
@@ -15992,10 +15992,10 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI Display Payment Method Information": {
+      "OFPIDisplay Payment Method Information": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
-          "open_finance_display_payment_method_information": "optional<Display Open Finance Brazil Payment Method Information>",
+          "open_finance_display_payment_method_information": "optional<DisplayOpen Finance Brazil Payment Method Information>",
           "ready_to_confirm": {
             "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
 
@@ -16009,7 +16009,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI Needs Redirect": {
+      "OFPINeeds Redirect": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_needs_redirect": "optional<NeedsRedirectContent>",
@@ -16025,7 +16025,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI PIX Account Information": {
+      "OFPIPIX Account Information": {
         "docs": undefined,
         "properties": {
           "account_type": "EnumBankAccountPixAccountTypeOfpi",
@@ -16040,7 +16040,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI PIX Keys": {
+      "OFPIPIX Keys": {
         "docs": undefined,
         "properties": {
           "country": "EnumPaymentsCountry",
@@ -16050,7 +16050,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI Payment Failed": {
+      "OFPIPayment Failed": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_failed": "optional<DisplayPaymentFailed>",
@@ -16067,7 +16067,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI Payment Processing": {
+      "OFPIPayment Processing": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_processing": "optional<DisplayPaymentProcessing>",
@@ -16084,7 +16084,7 @@ For \`not_found\` errors, the description is:
           },
         },
       },
-      "OFPI Payment Succeeded": {
+      "OFPIPayment Succeeded": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
         "properties": {
           "open_finance_display_payment_succeeded": "optional<DisplayPaymentSucceeded>",
@@ -16214,7 +16214,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "PATCH Payment Method Details": {
+      "PATCHPayment Method Details": {
         "docs": undefined,
         "properties": {
           "pse": "optional<PatchPaymentMethodDetailsPse>",
@@ -16321,7 +16321,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
         },
       },
-      "Payment Error": {
+      "PaymentError": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened during the payment intent process.",
         "properties": {
           "error_code": {
@@ -16331,23 +16331,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "error_message": {
             "docs": "A short description of the error.",
             "type": "string",
-          },
-        },
-      },
-      "Payment Link Callback UR Ls": {
-        "docs": undefined,
-        "properties": {
-          "cancel": {
-            "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.
-
-**Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
-            "type": "optional<string>",
-          },
-          "success": {
-            "docs": "The URL that the user should be redirected to when they complete the payment process successfully.
-
-**Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
-            "type": "optional<string>",
           },
         },
       },
@@ -16402,12 +16385,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "OFPI Display Payment Method Information",
-          "OFPI Needs Redirect",
-          "OFPI Display Confirmation Required",
-          "OFPI Payment Processing",
-          "OFPI Payment Succeeded",
-          "OFPI Payment Failed",
+          "OFPIDisplay Payment Method Information",
+          "OFPINeeds Redirect",
+          "OFPIDisplay Confirmation Required",
+          "OFPIPayment Processing",
+          "OFPIPayment Succeeded",
+          "OFPIPayment Failed",
         ],
       },
       "PaymentIntentOfpiPaymentMethodDetails": {
@@ -16438,7 +16421,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "results": {
             "docs": "Array of payment intent objects.",
-            "type": "optional<list<Colombia 🇨🇴 PSE>>",
+            "type": "optional<list<Colombia🇨🇴 PSE>>",
           },
         },
       },
@@ -16525,25 +16508,42 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Invalid Credentials",
-          "Invalid Token",
-          "Login Error",
-          "Login Two Factor Error",
-          "Payment Error",
-          "Session Expired",
+          "InvalidCredentials",
+          "InvalidToken",
+          "LoginError",
+          "LoginTwo Factor Error",
+          "PaymentError",
+          "SessionExpired",
         ],
       },
       "PaymentIntentPseNextStep": {
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Display PSE Payment Method Information",
-          "Display PSE Credentials Required",
-          "Display PSE Needs Redirect",
-          "Display PSE Token Required",
-          "Display PSE Customer Bank Accounts",
-          "Display PSE Confirmation Required",
+          "DisplayPSE Payment Method Information",
+          "DisplayPSE Credentials Required",
+          "DisplayPSE Needs Redirect",
+          "DisplayPSE Token Required",
+          "DisplayPSE Customer Bank Accounts",
+          "DisplayPSE Confirmation Required",
         ],
+      },
+      "PaymentLink Callback UR Ls": {
+        "docs": undefined,
+        "properties": {
+          "cancel": {
+            "docs": "The URL that the user should be redirected to if they decide to cancel the payment process or if an error occurs.
+
+**Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
+            "type": "optional<string>",
+          },
+          "success": {
+            "docs": "The URL that the user should be redirected to when they complete the payment process successfully.
+
+**Note:** Not required if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
+            "type": "optional<string>",
+          },
+        },
       },
       "PaymentLinkPaginatedResponse": {
         "docs": undefined,
@@ -16573,8 +16573,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "Brazil 🇧🇷 OFPI",
-          "Colombia 🇨🇴 PSE",
+          "Brazil🇧🇷 OFPI",
+          "Colombia🇨🇴 PSE",
         ],
       },
       "PaymentMethodInfoCustomerBankAccountsPse": {
@@ -16695,7 +16695,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "union": [
           "TransactionBankAccountOfpi",
-          "Colombia 🇨🇴 PSE",
+          "Colombia🇨🇴 PSE",
         ],
       },
       "PaymentWebhook": {
@@ -16726,23 +16726,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "url": {
             "docs": "The URL where webhook events should be sent to.",
             "type": "string",
-          },
-        },
-      },
-      "Payments Way": {
-        "docs": undefined,
-        "properties": {
-          "form_id": {
-            "docs": "Your unique Payments Way form ID.
-
-**Note:** Belvo provides you with the Payments Way form ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
-            "type": "integer",
-          },
-          "terminal_id": {
-            "docs": "Your unique Payments Way terminal ID.
-
-**Note:** Belvo provides you with the Payments Way terminal ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
-            "type": "integer",
           },
         },
       },
@@ -16791,6 +16774,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "results": {
             "docs": "Array of transaction objects.",
             "type": "optional<list<PaymentTransaction>>",
+          },
+        },
+      },
+      "PaymentsWay": {
+        "docs": undefined,
+        "properties": {
+          "form_id": {
+            "docs": "Your unique Payments Way form ID.
+
+**Note:** Belvo provides you with the Payments Way form ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
+            "type": "integer",
+          },
+          "terminal_id": {
+            "docs": "Your unique Payments Way terminal ID.
+
+**Note:** Belvo provides you with the Payments Way terminal ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
+            "type": "integer",
           },
         },
       },
@@ -17476,7 +17476,7 @@ If the account has not been open long enough to have the transaction data for a 
           },
         },
       },
-      "SAT 🇲🇽 Mexico": {
+      "SAT🇲🇽 Mexico": {
         "docs": undefined,
         "properties": {
           "address": "optional<TaxStatusAddressSat>",
@@ -17589,7 +17589,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "Session Expired": {
+      "SessionExpired": {
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error occurs when you try to send a PATCH request after the session has already expired (the session expires after 10 minutes).",
         "properties": {
           "error_code": {
@@ -17617,264 +17617,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "token": {
             "docs": "The OTP token generated by the bank.",
             "type": "optional<string>",
-          },
-        },
-      },
-      "Tax Declaration Business": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Business Tax Declaration objects.",
-            "type": "optional<list<Business Tax Declaration>>",
-          },
-        },
-      },
-      "Tax Declaration Individual": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Individual Tax Declaration objects.",
-            "type": "optional<list<Individual Tax Declaration>>",
-          },
-        },
-      },
-      "Tax Return Business": {
-        "docs": undefined,
-        "properties": {
-          "cifras_cierre_ejercicio": {
-            "docs": "Details regarding key numbers at the end of the fiscal exercise.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "collected_at": {
-            "docs": "The ISO-8601 timestamp when the data point was collected.",
-            "type": "optional<datetime>",
-          },
-          "conciliacion_entre_resultado_contable_fiscal": {
-            "docs": "Details regarding the accounting reconciliation.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "created_at": {
-            "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-            "type": "optional<datetime>",
-          },
-          "datos_adicionales": {
-            "docs": "Additional data regarding the tax return.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "deducciones_autorizadas": {
-            "docs": "Details regarding the legal entity's deductions.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "detalle_pago_r1_isr_personas_morales": {
-            "docs": "Details of the tax payment.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "determinacion_del_impuesto_sobre_la_renta": {
-            "docs": "Details regarding the final tax return.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "dividendos_o_utilidades_distribuidos": {
-            "docs": "Details regarding distributed dividends.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "estado_posicion_financiera_balance": {
-            "docs": "Details regarding balance sheet of the legal entity.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "estado_resultados": {
-            "docs": "Detailed information about the legal entity's yearly profit and loss.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "id": {
-            "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
-            "type": "optional<string>",
-          },
-          "informacion_general": {
-            "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
-            "type": "optional<map<string, unknown>>",
-          },
-          "pdf": {
-            "docs": "Tax return PDF as a binary.",
-            "type": "optional<string>",
-          },
-          "receipt_pdf": {
-            "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Tax Return Business Monthly": {
-        "docs": undefined,
-        "properties": {
-          "collected_at": {
-            "docs": "The ISO-8601 timestamp when the data point was collected.",
-            "type": "optional<datetime>",
-          },
-          "created_at": {
-            "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-            "type": "optional<datetime>",
-          },
-          "detalle_pago_isr": {
-            "docs": "Information on the monthly provisional payments for the income tax.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "detalle_pago_iva": {
-            "docs": "Information on the monthly provisional payments for the VAT tax.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "determinacion_isr": {
-            "docs": "Information used to calculate the provisional income tax for the period.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "determinacion_iva": {
-            "docs": "Information used to calculate the provisional VAT tax for the period.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "id": {
-            "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
-            "type": "optional<string>",
-          },
-          "informacion_general": {
-            "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
-            "type": "optional<map<string, unknown>>",
-          },
-          "pdf": {
-            "docs": "Tax return PDF as a binary.",
-            "type": "optional<string>",
-          },
-          "receipt_pdf": {
-            "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
-            "type": "optional<string>",
-          },
-          "type": {
-            "docs": "The type of tax return. Can be either monthly or annual.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "Tax Return Personal": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Personal Tax Return objects.",
-            "type": "optional<list<Tax Return Personal>>",
-          },
-        },
-      },
-      "Tax Return Personal Business": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Business Tax Return objects.",
-            "type": "optional<list<Tax Return Business>>",
-          },
-        },
-      },
-      "Tax Return Personal Business Monthly": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Monthly Business Tax Return objects.",
-            "type": "optional<list<Tax Return Business Monthly>>",
-          },
-        },
-      },
-      "Tax Return Personal Monthly": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": "The total number of results in your Belvo account.",
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
-
-In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
-",
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": "Array of Monthly Personal Tax Return objects.",
-            "type": "optional<list<Tax Return Personal Monthly>>",
           },
         },
       },
@@ -18015,6 +17757,54 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "results": {
             "docs": "Array of tax compliance status objects.",
             "type": "optional<list<TaxComplianceStatus>>",
+          },
+        },
+      },
+      "TaxDeclaration Business": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Business Tax Declaration objects.",
+            "type": "optional<list<BusinessTax Declaration>>",
+          },
+        },
+      },
+      "TaxDeclaration Individual": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Individual Tax Declaration objects.",
+            "type": "optional<list<IndividualTax Declaration>>",
           },
         },
       },
@@ -18200,6 +17990,216 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "results": {
             "docs": "Array of tax retentions objects.",
             "type": "optional<list<TaxRetentions>>",
+          },
+        },
+      },
+      "TaxReturn Business": {
+        "docs": undefined,
+        "properties": {
+          "cifras_cierre_ejercicio": {
+            "docs": "Details regarding key numbers at the end of the fiscal exercise.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "conciliacion_entre_resultado_contable_fiscal": {
+            "docs": "Details regarding the accounting reconciliation.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "created_at": {
+            "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+            "type": "optional<datetime>",
+          },
+          "datos_adicionales": {
+            "docs": "Additional data regarding the tax return.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "deducciones_autorizadas": {
+            "docs": "Details regarding the legal entity's deductions.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "detalle_pago_r1_isr_personas_morales": {
+            "docs": "Details of the tax payment.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "determinacion_del_impuesto_sobre_la_renta": {
+            "docs": "Details regarding the final tax return.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "dividendos_o_utilidades_distribuidos": {
+            "docs": "Details regarding distributed dividends.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "estado_posicion_financiera_balance": {
+            "docs": "Details regarding balance sheet of the legal entity.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "estado_resultados": {
+            "docs": "Detailed information about the legal entity's yearly profit and loss.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "id": {
+            "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+            "type": "optional<string>",
+          },
+          "informacion_general": {
+            "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
+            "type": "optional<map<string, unknown>>",
+          },
+          "pdf": {
+            "docs": "Tax return PDF as a binary.",
+            "type": "optional<string>",
+          },
+          "receipt_pdf": {
+            "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "TaxReturn Business Monthly": {
+        "docs": undefined,
+        "properties": {
+          "collected_at": {
+            "docs": "The ISO-8601 timestamp when the data point was collected.",
+            "type": "optional<datetime>",
+          },
+          "created_at": {
+            "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+            "type": "optional<datetime>",
+          },
+          "detalle_pago_isr": {
+            "docs": "Information on the monthly provisional payments for the income tax.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "detalle_pago_iva": {
+            "docs": "Information on the monthly provisional payments for the VAT tax.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "determinacion_isr": {
+            "docs": "Information used to calculate the provisional income tax for the period.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "determinacion_iva": {
+            "docs": "Information used to calculate the provisional VAT tax for the period.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "id": {
+            "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+            "type": "optional<string>",
+          },
+          "informacion_general": {
+            "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
+            "type": "optional<map<string, unknown>>",
+          },
+          "pdf": {
+            "docs": "Tax return PDF as a binary.",
+            "type": "optional<string>",
+          },
+          "receipt_pdf": {
+            "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+            "type": "optional<string>",
+          },
+          "type": {
+            "docs": "The type of tax return. Can be either monthly or annual.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "TaxReturn Personal": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Personal Tax Return objects.",
+            "type": "optional<list<TaxReturn Personal>>",
+          },
+        },
+      },
+      "TaxReturn Personal Business": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Business Tax Return objects.",
+            "type": "optional<list<TaxReturn Business>>",
+          },
+        },
+      },
+      "TaxReturn Personal Business Monthly": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Monthly Business Tax Return objects.",
+            "type": "optional<list<TaxReturn Business Monthly>>",
+          },
+        },
+      },
+      "TaxReturn Personal Monthly": {
+        "docs": undefined,
+        "properties": {
+          "count": {
+            "docs": "The total number of results in your Belvo account.",
+            "type": "optional<integer>",
+          },
+          "next": {
+            "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+            "type": "optional<string>",
+          },
+          "previous": {
+            "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+            "type": "optional<string>",
+          },
+          "results": {
+            "docs": "Array of Monthly Personal Tax Return objects.",
+            "type": "optional<list<TaxReturn Personal Monthly>>",
           },
         },
       },
@@ -18470,8 +18470,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "SAT 🇲🇽 Mexico",
-          "DIAN 🇨🇴 Colombia",
+          "SAT🇲🇽 Mexico",
+          "DIAN🇨🇴 Colombia",
         ],
       },
       "TaxStatusRegimensDian": {
@@ -18694,7 +18694,7 @@ You will still need to make a PATCH call to complete the request.",
           },
         },
       },
-      "Too Many Sessions": {
+      "TooMany Sessions": {
         "docs": "This error occurs when:
 
   - a user is attempting to log in to their institution via Belvo while also already being logged in to their institution on a web browser or mobile app.
@@ -18917,7 +18917,7 @@ For \`authentication_failed\` errors, the description is:
           },
         },
       },
-      "Unconfirmed Link": {
+      "UnconfirmedLink": {
         "docs": "This error occurs when you try to access a link that was paused previously (and as such is not active now).
 A Link's status is set to \`unconfirmed_link\` when your user has not completed the Link creation process successfully (for example, they might not provide a valid MFA token).",
         "properties": {
@@ -18941,7 +18941,7 @@ For \`unconfirmed_link\` errors, the description is:
           },
         },
       },
-      "Unexpected Error": {
+      "UnexpectedError": {
         "docs": "This error occurs when we (Belvo) have encountered an internal system error (sorry about that) or due to an unsupported response from the institution.",
         "properties": {
           "code": {
@@ -18964,7 +18964,7 @@ For \`unexpected_error\` errors, the description is:
           },
         },
       },
-      "Unsupported Operation": {
+      "UnsupportedOperation": {
         "docs": "This error occurs when you try to access some data operation that Belvo does not support for an institution. For example, trying to access the Balances resource for fiscal institutions.",
         "properties": {
           "code": {
@@ -18987,7 +18987,7 @@ For \`unsupported_operation\` errors, the description is:
           },
         },
       },
-      "Validation Error": {
+      "ValidationError": {
         "docs": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
         "properties": {
           "code": {
@@ -19021,7 +19021,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
         },
       },
-      "Yearly Tax Returns": {
+      "YearlyTax Returns": {
         "docs": "Request body for yearly tax returns",
         "properties": {
           "attach_pdf": {
@@ -19056,7 +19056,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
         },
       },
-      "🇨🇴 DIAN Colombia": {
+      "🇨🇴DIAN Colombia": {
         "docs": undefined,
         "properties": {
           "cancelation_status": {
@@ -19237,7 +19237,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
         },
       },
-      "🇲🇽 SAT Mexico": {
+      "🇲🇽SAT Mexico": {
         "docs": undefined,
         "properties": {
           "cancelation_status": {

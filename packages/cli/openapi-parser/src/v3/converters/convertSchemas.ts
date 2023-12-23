@@ -71,7 +71,7 @@ export function convertSchemaObject(
 ): SchemaWithExample {
     const nameOverride =
         getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
-        (schema.title != null ? startCase(schema.title) : undefined);
+        (schema.title != null ? startCase(schema.title).replace(" ", "") : undefined);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
