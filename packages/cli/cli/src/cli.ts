@@ -684,13 +684,16 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "write-definition",
-        false, // hide from help message
+        "Write underlying Fern Definition for OpenAPI specs and API Dependencies.",
         (yargs) =>
             yargs.option("api", {
                 string: true,
                 description: "Only run the command on the provided API"
             }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern write-definition"
+            });
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,

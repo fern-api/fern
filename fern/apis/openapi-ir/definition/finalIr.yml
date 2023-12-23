@@ -305,6 +305,7 @@ types:
         type: string
         docs: |
           A unique name for the property.
+      audiences: list<string>
 
   ObjectPropertyConflictInfo:
     properties:

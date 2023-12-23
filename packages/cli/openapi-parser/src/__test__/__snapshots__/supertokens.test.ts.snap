@@ -98,6 +98,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createTotpDeviceRequestUserId",
               "key": "userId",
@@ -111,6 +112,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createTotpDeviceRequestDeviceName",
               "key": "deviceName",
@@ -126,6 +128,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createTotpDeviceRequestSkew",
               "key": "skew",
@@ -139,6 +142,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createTotpDeviceRequestPeriod",
               "key": "period",
@@ -187,6 +191,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createTotpDeviceResponseOkSecret",
                     "key": "secret",
@@ -317,6 +322,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestUserId",
               "key": "userId",
@@ -330,6 +336,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestExistingDeviceName",
               "key": "existingDeviceName",
@@ -345,6 +352,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestNewDeviceName",
               "key": "newDeviceName",
@@ -550,6 +558,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getTotpDevicesResponseOkDevices",
                     "key": "devices",
@@ -570,6 +579,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                           "nameOverride": undefined,
                           "properties": [
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemName",
                               "key": "name",
@@ -590,6 +600,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               },
                             },
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemPeriod",
                               "key": "period",
@@ -608,6 +619,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               },
                             },
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemSkew",
                               "key": "skew",
@@ -626,6 +638,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               },
                             },
                             {
+                              "audiences": [],
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemVerified",
                               "key": "verified",
@@ -770,6 +783,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeTotpDeviceRequestUserId",
               "key": "userId",
@@ -783,6 +797,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeTotpDeviceRequestDeviceName",
               "key": "deviceName",
@@ -823,6 +838,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "removeTotpDeviceResponseOkDidDeviceExist",
                     "key": "didDeviceExist",
@@ -961,6 +977,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestUserId",
               "key": "userId",
@@ -974,6 +991,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestTotp",
               "key": "totp",
@@ -989,6 +1007,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestAllowUnverifiedDevices",
               "key": "allowUnverifiedDevices",
@@ -1037,6 +1056,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifyTotpCodeResponseLimitReachedErrorRetryAfterMs",
                     "key": "retryAfterMs",
@@ -1185,6 +1205,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestUserId",
               "key": "userId",
@@ -1198,6 +1219,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestDeviceName",
               "key": "deviceName",
@@ -1213,6 +1235,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestTotp",
               "key": "totp",
@@ -1263,6 +1286,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifyTotpDeviceResponseLimitReachedErrorRetryAfterMs",
                     "key": "retryAfterMs",
@@ -1292,6 +1316,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifyTotpDeviceResponseOkWasAlreadyVerified",
                     "key": "wasAlreadyVerified",
@@ -1503,6 +1528,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkSuperTokensUserId",
                     "key": "superTokensUserId",
@@ -1516,6 +1542,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkExternalUserId",
                     "key": "externalUserId",
@@ -1531,6 +1558,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkExternalUserIdInfo",
                     "key": "externalUserIdInfo",
@@ -1671,6 +1699,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestSuperTokensUserId",
               "key": "superTokensUserId",
@@ -1684,6 +1713,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestExternalUserId",
               "key": "externalUserId",
@@ -1699,6 +1729,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestExternalUserIdInfo",
               "key": "externalUserIdInfo",
@@ -1719,6 +1750,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestForce",
               "key": "force",
@@ -1782,6 +1814,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesSuperTokensUserIdExist",
                     "key": "doesSuperTokensUserIdExist",
@@ -1800,6 +1833,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesExternalUserIdExist",
                     "key": "doesExternalUserIdExist",
@@ -1962,6 +1996,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestUserId",
               "key": "userId",
@@ -1975,6 +2010,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestUserIdType",
               "key": "userIdType",
@@ -2012,6 +2048,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestForce",
               "key": "force",
@@ -2046,6 +2083,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingResponseStatus",
               "key": "status",
@@ -2064,6 +2102,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingResponseDidMappingExist",
               "key": "didMappingExist",
@@ -2187,6 +2226,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserId",
               "key": "userId",
@@ -2200,6 +2240,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserIdType",
               "key": "userIdType",
@@ -2237,6 +2278,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestExternalUserIdInfo",
               "key": "externalUserIdInfo",
@@ -2408,6 +2450,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
                     "key": "preAuthSessionId",
@@ -2421,6 +2464,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodeLinkCode",
                     "key": "linkCode",
@@ -2445,6 +2489,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
                     "key": "preAuthSessionId",
@@ -2458,6 +2503,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdDeviceId",
                     "key": "deviceId",
@@ -2471,6 +2517,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
                     "key": "userInputCode",
@@ -2512,6 +2559,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserStatus",
                     "key": "status",
@@ -2530,6 +2578,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserCreatedNewUser",
                     "key": "createdNewUser",
@@ -2548,6 +2597,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserUser",
                     "key": "user",
@@ -2577,6 +2627,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
                     "key": "status",
@@ -2608,6 +2659,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountFailedCodeInputAttemptCount",
                     "key": "failedCodeInputAttemptCount",
@@ -2626,6 +2678,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountMaximumCodeInputAttempts",
                     "key": "maximumCodeInputAttempts",
@@ -2655,6 +2708,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseStatusStatus",
                     "key": "status",
@@ -2792,6 +2846,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyEmailEmail",
                     "key": "email",
@@ -2805,6 +2860,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyEmailUserInputCode",
                     "key": "userInputCode",
@@ -2834,6 +2890,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
                     "key": "phoneNumber",
@@ -2847,6 +2904,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberUserInputCode",
                     "key": "userInputCode",
@@ -2876,6 +2934,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyDeviceIdDeviceId",
                     "key": "deviceId",
@@ -2889,6 +2948,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyDeviceIdUserInputCode",
                     "key": "userInputCode",
@@ -2935,6 +2995,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdStatus",
                     "key": "status",
@@ -2953,6 +3014,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdPreAuthSessionId",
                     "key": "preAuthSessionId",
@@ -2971,6 +3033,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdCodeId",
                     "key": "codeId",
@@ -2989,6 +3052,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdDeviceId",
                     "key": "deviceId",
@@ -3007,6 +3071,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdUserInputCode",
                     "key": "userInputCode",
@@ -3025,6 +3090,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdLinkCode",
                     "key": "linkCode",
@@ -3043,6 +3109,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdTimeCreated",
                     "key": "timeCreated",
@@ -3061,6 +3128,7 @@ Passing the optional deviceId signifies a resend code flow.
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdCodeLifetime",
                     "key": "codeLifetime",
@@ -3090,6 +3158,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseOneStatus",
                     "key": "status",
@@ -3261,6 +3330,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessRevokeCodeRequestCodeId",
               "key": "codeId",
@@ -3290,6 +3360,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessRevokeCodeResponseStatus",
               "key": "status",
@@ -3608,6 +3679,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessListCodesResponseStatus",
               "key": "status",
@@ -3626,6 +3698,7 @@ Passing the optional deviceId signifies a resend code flow.
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessListCodesResponseDevices",
               "key": "devices",
@@ -3646,6 +3719,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemPreAuthSessionId",
                         "key": "preAuthSessionId",
@@ -3664,6 +3738,7 @@ Passing the optional deviceId signifies a resend code flow.
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemFailedCodeInputAttemptCount",
                         "key": "failedCodeInputAttemptCount",
@@ -3682,6 +3757,7 @@ Passing the optional deviceId signifies a resend code flow.
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemEmail",
                         "key": "email",
@@ -3700,6 +3776,7 @@ Passing the optional deviceId signifies a resend code flow.
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemPhoneNumber",
                         "key": "phoneNumber",
@@ -3718,6 +3795,7 @@ Passing the optional deviceId signifies a resend code flow.
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemCodes",
                         "key": "codes",
@@ -3738,6 +3816,7 @@ Passing the optional deviceId signifies a resend code flow.
                               "nameOverride": undefined,
                               "properties": [
                                 {
+                                  "audiences": [],
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeId",
                                   "key": "codeId",
@@ -3756,6 +3835,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   },
                                 },
                                 {
+                                  "audiences": [],
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemTimeCreated",
                                   "key": "timeCreated",
@@ -3774,6 +3854,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   },
                                 },
                                 {
+                                  "audiences": [],
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeLifetime",
                                   "key": "codeLifetime",
@@ -3916,6 +3997,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
                     "key": "email",
@@ -3940,6 +4022,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
                     "key": "phoneNumber",
@@ -3974,6 +4057,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessRevokeAllCodesOfUserResponseStatus",
               "key": "status",
@@ -4163,6 +4247,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseUserStatus",
                     "key": "status",
@@ -4181,6 +4266,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseUserUser",
                     "key": "user",
@@ -4210,6 +4296,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseOneStatus",
                     "key": "status",
@@ -4385,6 +4472,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestUserId",
               "key": "userId",
@@ -4398,6 +4486,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestEmail",
               "key": "email",
@@ -4427,6 +4516,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestPhoneNumber",
               "key": "phoneNumber",
@@ -4472,6 +4562,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "passwordlessPutUserResponseStatus",
               "key": "status",
@@ -4620,6 +4711,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordSigninRequestEmail",
               "key": "email",
@@ -4638,6 +4730,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordSigninRequestPassword",
               "key": "password",
@@ -4681,6 +4774,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordSigninResponseOkUser",
                     "key": "user",
@@ -4817,6 +4911,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordSignupRequestEmail",
               "key": "email",
@@ -4835,6 +4930,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordSignupRequestPassword",
               "key": "password",
@@ -4888,6 +4984,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordSignupResponseOkUser",
                     "key": "user",
@@ -5061,6 +5158,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseUserStatus",
                     "key": "status",
@@ -5079,6 +5177,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseUserUser",
                     "key": "user",
@@ -5108,6 +5207,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseOneStatus",
                     "key": "status",
@@ -5290,6 +5390,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestUserId",
               "key": "userId",
@@ -5308,6 +5409,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestEmail",
               "key": "email",
@@ -5326,6 +5428,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestPassword",
               "key": "password",
@@ -5360,6 +5463,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordPutUserResponseStatus",
               "key": "status",
@@ -5502,6 +5606,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetTokenRequestUserId",
               "key": "userId",
@@ -5545,6 +5650,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordGetPasswordResetTokenResponseOkToken",
                     "key": "token",
@@ -5817,6 +5923,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseStatus",
               "key": "status",
@@ -5835,6 +5942,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseUsers",
               "key": "users",
@@ -5858,6 +5966,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
@@ -5981,6 +6090,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestMethod",
               "key": "method",
@@ -6000,6 +6110,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestToken",
               "key": "token",
@@ -6018,6 +6129,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestNewPassword",
               "key": "newPassword",
@@ -6063,6 +6175,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailPasswordGetPasswordResetResponseOkUserId",
                     "key": "userId",
@@ -6228,6 +6341,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetUserCountResponseStatus",
               "key": "status",
@@ -6246,6 +6360,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailPasswordGetUserCountResponseCount",
               "key": "count",
@@ -6436,6 +6551,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportRequestEmail",
               "key": "email",
@@ -6454,6 +6570,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportRequestPasswordHash",
               "key": "passwordHash",
@@ -6474,6 +6591,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportRequestHashingAlgorithm",
               "key": "hashingAlgorithm",
@@ -6527,6 +6645,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportResponseStatus",
               "key": "status",
@@ -6545,6 +6664,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportResponseUser",
               "key": "user",
@@ -6563,6 +6683,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userImportResponseDidUserAlreadyExist",
               "key": "didUserAlreadyExist",
@@ -6773,6 +6894,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestThirdPartyId",
               "key": "thirdPartyId",
@@ -6791,6 +6913,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestThirdPartyUserId",
               "key": "thirdPartyUserId",
@@ -6809,6 +6932,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestEmail",
               "key": "email",
@@ -6843,6 +6967,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseStatus",
               "key": "status",
@@ -6861,6 +6986,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseCreatedNewUser",
               "key": "createdNewUser",
@@ -6879,6 +7005,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseUser",
               "key": "user",
@@ -7068,6 +7195,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseUserStatus",
                     "key": "status",
@@ -7086,6 +7214,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseUserUser",
                     "key": "user",
@@ -7115,6 +7244,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseOneStatus",
                     "key": "status",
@@ -7345,6 +7475,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUsersByEmailResponseStatus",
               "key": "status",
@@ -7363,6 +7494,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUsersByEmailResponseUsers",
               "key": "users",
@@ -7640,6 +7772,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseStatus",
               "key": "status",
@@ -7658,6 +7791,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseUser",
               "key": "user",
@@ -7681,6 +7815,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
@@ -7832,6 +7967,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUserCountResponseStatus",
               "key": "status",
@@ -7850,6 +7986,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "thirdPartyGetUserCountResponseCount",
               "key": "count",
@@ -8005,6 +8142,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyTokenResponseOkToken",
                     "key": "token",
@@ -8183,6 +8321,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyTokenRemoveResponseStatus",
               "key": "status",
@@ -8396,6 +8535,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyGetResponseStatus",
               "key": "status",
@@ -8414,6 +8554,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyGetResponseIsVerified",
               "key": "isVerified",
@@ -8537,6 +8678,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyRequestMethod",
               "key": "method",
@@ -8556,6 +8698,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyRequestToken",
               "key": "token",
@@ -8609,6 +8752,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyResponseOkUserId",
                     "key": "userId",
@@ -8627,6 +8771,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyResponseOkEmail",
                     "key": "email",
@@ -8805,6 +8950,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "emailVerificationVerifyRemoveResponseStatus",
               "key": "status",
@@ -8976,6 +9122,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataReadResponseStatus",
               "key": "status",
@@ -8994,6 +9141,7 @@ Note that there is an invisible character at the end of the path, this was to av
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataReadResponseMetadata",
               "key": "metadata",
@@ -9155,6 +9303,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataUpdateRequestUserId",
               "key": "userId",
@@ -9173,6 +9322,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataUpdateRequestMetadataUpdate",
               "key": "metadataUpdate",
@@ -9207,6 +9357,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataUpdateResponseStatus",
               "key": "status",
@@ -9225,6 +9376,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataUpdateResponseMetadata",
               "key": "metadata",
@@ -9378,6 +9530,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataDeleteRequestUserId",
               "key": "userId",
@@ -9412,6 +9565,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userMetadataDeleteResponseStatus",
               "key": "status",
@@ -9535,6 +9689,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "addUserRoleRequestUserId",
               "key": "userId",
@@ -9548,6 +9703,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "addUserRoleRequestRole",
               "key": "role",
@@ -9586,6 +9742,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "addUserRoleResponseOkDidUserAlreadyHaveRole",
                     "key": "didUserAlreadyHaveRole",
@@ -9722,6 +9879,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeUserRoleRequestUserId",
               "key": "userId",
@@ -9735,6 +9893,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeUserRoleRequestRole",
               "key": "role",
@@ -9773,6 +9932,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "removeUserRoleResponseOkDidUserHaveRole",
                     "key": "didUserHaveRole",
@@ -9968,6 +10128,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUserRolesResponseStatus",
               "key": "status",
@@ -9986,6 +10147,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUserRolesResponseRoles",
               "key": "roles",
@@ -10140,6 +10302,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getRoleUsersResponseOkUsers",
                     "key": "users",
@@ -10330,6 +10493,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putRoleRequestRole",
               "key": "role",
@@ -10343,6 +10507,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putRoleRequestPermissions",
               "key": "permissions",
@@ -10384,6 +10549,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putRoleResponseStatus",
               "key": "status",
@@ -10402,6 +10568,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putRoleResponseCreatedNewRole",
               "key": "createdNewRole",
@@ -10551,6 +10718,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getRolePermissionsResponseOkPermissions",
                     "key": "permissions",
@@ -10694,6 +10862,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeRolePermissionsRequestRole",
               "key": "role",
@@ -10707,6 +10876,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeRolePermissionsRequestPermissions",
               "key": "permissions",
@@ -10933,6 +11103,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getPermissionRolesResponseStatus",
               "key": "status",
@@ -10951,6 +11122,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getPermissionRolesResponseRoles",
               "key": "roles",
@@ -11118,6 +11290,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeRoleRequestRole",
               "key": "role",
@@ -11147,6 +11320,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeRoleResponseStatus",
               "key": "status",
@@ -11165,6 +11339,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "removeRoleResponseDidRoleExist",
               "key": "didRoleExist",
@@ -11320,6 +11495,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getRolesResponseStatus",
               "key": "status",
@@ -11338,6 +11514,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getRolesResponseRoles",
               "key": "roles",
@@ -11497,6 +11674,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserDataInDatabase",
                     "key": "userDataInDatabase",
@@ -11515,6 +11693,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserDataInJwt",
                     "key": "userDataInJWT",
@@ -11533,6 +11712,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserId",
                     "key": "userId",
@@ -11551,6 +11731,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkExpiry",
                     "key": "expiry",
@@ -11569,6 +11750,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkTimeCreated",
                     "key": "timeCreated",
@@ -11587,6 +11769,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkSessionHandle",
                     "key": "sessionHandle",
@@ -11845,6 +12028,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionRequestUserId",
               "key": "userId",
@@ -11863,6 +12047,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionRequestUserDataInJwt",
               "key": "userDataInJWT",
@@ -11881,6 +12066,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionRequestUserDataInDatabase",
               "key": "userDataInDatabase",
@@ -11899,6 +12085,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
@@ -11917,6 +12104,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionRequestUseDynamicSigningKey",
               "key": "useDynamicSigningKey",
@@ -11951,6 +12139,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionResponseStatus",
               "key": "status",
@@ -11969,6 +12158,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionResponseSession",
               "key": "session",
@@ -11987,6 +12177,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionResponseAccessToken",
               "key": "accessToken",
@@ -12005,6 +12196,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionResponseRefreshToken",
               "key": "refreshToken",
@@ -12023,6 +12215,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createNewSessionResponseAntiCsrfToken",
               "key": "antiCsrfToken",
@@ -12153,6 +12346,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "deleteSessionRequestBodySessionHandlesSessionHandles",
                     "key": "sessionHandles",
@@ -12182,6 +12376,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "deleteSessionRequestBodyUserIdUserId",
                     "key": "userId",
@@ -12221,6 +12416,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteSessionResponseStatus",
               "key": "status",
@@ -12239,6 +12435,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteSessionResponseSessionHandlesRevoked",
               "key": "sessionHandlesRevoked",
@@ -12362,6 +12559,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifySessionRequestAccessToken",
               "key": "accessToken",
@@ -12380,6 +12578,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifySessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
@@ -12398,6 +12597,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifySessionRequestDoAntiCsrfCheck",
               "key": "doAntiCsrfCheck",
@@ -12416,6 +12616,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifySessionRequestCheckDatabase",
               "key": "checkDatabase",
@@ -12434,6 +12635,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifySessionRequestAntiCsrfToken",
               "key": "antiCsrfToken",
@@ -12477,6 +12679,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifySessionResponseOkSession",
                     "key": "session",
@@ -12495,6 +12698,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifySessionResponseOkAccessToken",
                     "key": "accessToken",
@@ -12524,6 +12728,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifySessionResponseTryRefreshTokenMessage",
                     "key": "message",
@@ -12660,6 +12865,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "refreshSessionRequestRefreshToken",
               "key": "refreshToken",
@@ -12673,6 +12879,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "refreshSessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
@@ -12686,6 +12893,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "refreshSessionRequestAntiCsrfToken",
               "key": "antiCsrfToken",
@@ -12729,6 +12937,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkSession",
                     "key": "session",
@@ -12747,6 +12956,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkAccessToken",
                     "key": "accessToken",
@@ -12765,6 +12975,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkRefreshToken",
                     "key": "refreshToken",
@@ -12783,6 +12994,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkAntiCsrfToken",
                     "key": "antiCsrfToken",
@@ -12812,6 +13024,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "refreshSessionResponseTokenTheftDetectedSession",
                     "key": "session",
@@ -12828,6 +13041,7 @@ e.g.:
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "refreshSessionResponseTokenTheftDetectedSessionHandle",
                             "key": "handle",
@@ -12846,6 +13060,7 @@ e.g.:
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "refreshSessionResponseTokenTheftDetectedSessionUserId",
                             "key": "userId",
@@ -13051,6 +13266,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUserSessionHandlesResponseStatus",
               "key": "status",
@@ -13069,6 +13285,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUserSessionHandlesResponseSessionHandles",
               "key": "sessionHandles",
@@ -13192,6 +13409,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "regenerateSessionRequestAccessToken",
               "key": "accessToken",
@@ -13210,6 +13428,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "regenerateSessionRequestUserDataInJwt",
               "key": "userDataInJWT",
@@ -13253,6 +13472,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "regenerateSessionResponseOkSession",
                     "key": "session",
@@ -13271,6 +13491,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "regenerateSessionResponseOkAccessToken",
                     "key": "accessToken",
@@ -13436,6 +13657,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getSessionDataResponseOkUserDataInDatabase",
                     "key": "userDataInDatabase",
@@ -13572,6 +13794,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putSessionDataRequestSessionHandle",
               "key": "sessionHandle",
@@ -13590,6 +13813,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putSessionDataRequestUserDataInDatabase",
               "key": "userDataInDatabase",
@@ -13747,6 +13971,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createSignedJwtRequestPayload",
               "key": "payload",
@@ -13765,6 +13990,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createSignedJwtRequestAlgorithm",
               "key": "algorithm",
@@ -13783,6 +14009,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createSignedJwtRequestJwksDomain",
               "key": "jwksDomain",
@@ -13801,6 +14028,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createSignedJwtRequestValidity",
               "key": "validity",
@@ -13819,6 +14047,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createSignedJwtRequestUseStaticSigningKey",
               "key": "useStaticSigningKey",
@@ -13862,6 +14091,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createSignedJwtResponseOkJwt",
                     "key": "jwt",
@@ -13984,6 +14214,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "retrieveJwksResponseKeys",
               "key": "keys",
@@ -14141,6 +14372,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getJwtDataResponseOkUserDataInJwt",
                     "key": "userDataInJWT",
@@ -14277,6 +14509,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putJwtDataRequestSessionHandle",
               "key": "sessionHandle",
@@ -14295,6 +14528,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "putJwtDataRequestUserDataInJwt",
               "key": "userDataInJWT",
@@ -14454,6 +14688,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createDashboardUserRequestEmail",
               "key": "email",
@@ -14474,6 +14709,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "createDashboardUserRequestPassword",
               "key": "password",
@@ -14539,6 +14775,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createDashboardUserResponseOkUser",
                     "key": "user",
@@ -14555,6 +14792,7 @@ e.g.:
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserUserId",
                             "key": "userId",
@@ -14575,6 +14813,7 @@ e.g.:
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserEmail",
                             "key": "email",
@@ -14595,6 +14834,7 @@ e.g.:
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserTimeCreated",
                             "key": "timeCreated",
@@ -14629,6 +14869,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "createDashboardUserResponsePasswordWeakErrorMessage",
                     "key": "message",
@@ -14766,6 +15007,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailEmail",
                     "key": "email",
@@ -14786,6 +15028,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailNewPassword",
                     "key": "newPassword",
@@ -14806,6 +15049,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailNewEmail",
                     "key": "newEmail",
@@ -14837,6 +15081,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdUserId",
                     "key": "userId",
@@ -14857,6 +15102,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdNewPassword",
                     "key": "newPassword",
@@ -14877,6 +15123,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdNewEmail",
                     "key": "newEmail",
@@ -14947,6 +15194,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserResponseOkUser",
                     "key": "user",
@@ -14963,6 +15211,7 @@ e.g.:
                         "nameOverride": undefined,
                         "properties": [
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserUserId",
                             "key": "userId",
@@ -14983,6 +15232,7 @@ e.g.:
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserEmail",
                             "key": "email",
@@ -15003,6 +15253,7 @@ e.g.:
                             },
                           },
                           {
+                            "audiences": [],
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserTimeCreated",
                             "key": "timeCreated",
@@ -15037,6 +15288,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "updateDashboardUserResponsePasswordWeakErrorMessage",
                     "key": "message",
@@ -15259,6 +15511,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteDashboardUserResponseStatus",
               "key": "status",
@@ -15277,6 +15530,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteDashboardUserResponseDidUserExist",
               "key": "didUserExist",
@@ -15458,6 +15712,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getAllDashboardUsersResponseStatus",
               "key": "status",
@@ -15477,6 +15732,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getAllDashboardUsersResponseUsers",
               "key": "users",
@@ -15497,6 +15753,7 @@ e.g.:
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemEmail",
                         "key": "email",
@@ -15517,6 +15774,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemUserId",
                         "key": "userId",
@@ -15537,6 +15795,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemTimeCreated",
                         "key": "timeCreated",
@@ -15555,6 +15814,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemIsSuspended",
                         "key": "isSuspended",
@@ -15684,6 +15944,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "verifyDashboardUserSessionRequestSessionId",
               "key": "sessionId",
@@ -15749,6 +16010,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "verifyDashboardUserSessionResponseUserSuspendedErrorMessage",
                     "key": "message",
@@ -15931,6 +16193,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "revokeDashboardUsersSessionResponseStatus",
               "key": "status",
@@ -16054,6 +16317,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "signInDashboardUserRequestEmail",
               "key": "email",
@@ -16074,6 +16338,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "signInDashboardUserRequestPassword",
               "key": "password",
@@ -16129,6 +16394,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "signInDashboardUserResponseOkSessionId",
                     "key": "sessionId",
@@ -16160,6 +16426,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "signInDashboardUserResponseUserSuspendedErrorMessage",
                     "key": "message",
@@ -16373,6 +16640,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getAllSessionsForDashboardUserResponseSessions",
               "key": "sessions",
@@ -16393,6 +16661,7 @@ e.g.:
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemUserId",
                         "key": "userId",
@@ -16411,6 +16680,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemSessionId",
                         "key": "sessionId",
@@ -16431,6 +16701,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemTimeCreated",
                         "key": "timeCreated",
@@ -16449,6 +16720,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemExpiry",
                         "key": "expiry",
@@ -16550,6 +16822,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getApiVersionResponseVersions",
               "key": "versions",
@@ -16701,6 +16974,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getConfigResponseOkPath",
                     "key": "path",
@@ -17084,6 +17358,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getTelemetryResponseTelemetryIdExists",
                     "key": "exists",
@@ -17104,6 +17379,7 @@ e.g.:
                     },
                   },
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getTelemetryResponseTelemetryIdTelemetryId",
                     "key": "telemetryId",
@@ -17135,6 +17411,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getTelemetryResponseOneExists",
                     "key": "exists",
@@ -17302,6 +17579,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUsersCountResponseStatus",
               "key": "status",
@@ -17320,6 +17598,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUsersCountResponseCount",
               "key": "count",
@@ -17475,6 +17754,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getActiveUsersCountResponseStatus",
               "key": "status",
@@ -17493,6 +17773,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getActiveUsersCountResponseCount",
               "key": "count",
@@ -17849,6 +18130,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUsersResponseStatus",
               "key": "status",
@@ -17867,6 +18149,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUsersResponseUsers",
               "key": "users",
@@ -17887,6 +18170,7 @@ e.g.:
                     "nameOverride": undefined,
                     "properties": [
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getUsersResponseUsersItemRecipeId",
                         "key": "recipeId",
@@ -17919,6 +18203,7 @@ e.g.:
                         },
                       },
                       {
+                        "audiences": [],
                         "conflict": {},
                         "generatedName": "getUsersResponseUsersItemUser",
                         "key": "user",
@@ -17966,6 +18251,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
@@ -18098,6 +18384,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteUserRequestUserId",
               "key": "userId",
@@ -18132,6 +18419,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteUserResponseStatus",
               "key": "status",
@@ -18255,6 +18543,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getSearchTagsResponseStatus",
               "key": "status",
@@ -18273,6 +18562,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getSearchTagsResponseTags",
               "key": "tags",
@@ -18403,6 +18693,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFeatureFlagResponseStatus",
               "key": "status",
@@ -18421,6 +18712,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFeatureFlagResponseFeatures",
               "key": "features",
@@ -18446,6 +18738,7 @@ e.g.:
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "getFeatureFlagResponseUsageStats",
               "key": "usageStats",
@@ -18578,6 +18871,7 @@ e.g.:
                 "nameOverride": undefined,
                 "properties": [
                   {
+                    "audiences": [],
                     "conflict": {},
                     "generatedName": "getLicenseResponseOkLicenseKey",
                     "key": "licenseKey",
@@ -18687,6 +18981,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "setLicenseRequestLicenseKey",
               "key": "licenseKey",
@@ -18860,6 +19155,7 @@ e.g.:
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "deleteLicenseResponseStatus",
               "key": "status",
@@ -19011,6 +19307,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cookieInfoToken",
           "key": "token",
@@ -19029,6 +19326,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cookieInfoExpiry",
           "key": "expiry",
@@ -19047,6 +19345,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "cookieInfoCreatedTime",
           "key": "createdTime",
@@ -19123,6 +19422,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emailVerificationVerifyTokenRequestUserId",
           "key": "userId",
@@ -19141,6 +19441,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emailVerificationVerifyTokenRequestEmail",
           "key": "email",
@@ -19232,6 +19533,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jwkAlg",
           "key": "alg",
@@ -19250,6 +19552,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jwkKty",
           "key": "kty",
@@ -19270,6 +19573,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jwkUse",
           "key": "use",
@@ -19290,6 +19594,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jwkKid",
           "key": "kid",
@@ -19310,6 +19615,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jwkX5C",
           "key": "x5c",
@@ -19422,6 +19728,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "passwordlessUserId",
           "key": "id",
@@ -19440,6 +19747,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "passwordlessUserEmail",
           "key": "email",
@@ -19458,6 +19766,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "passwordlessUserPhoneNumber",
           "key": "phoneNumber",
@@ -19476,6 +19785,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "passwordlessUserTimeJoined",
           "key": "timeJoined",
@@ -19544,6 +19854,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sessionHandle",
           "key": "handle",
@@ -19562,6 +19873,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sessionUserId",
           "key": "userId",
@@ -19580,6 +19892,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sessionUserDataInJwt",
           "key": "userDataInJWT",
@@ -19641,6 +19954,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "thirdPartyEmailId",
           "key": "id",
@@ -19680,6 +19994,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "thirdPartyUserId",
           "key": "id",
@@ -19698,6 +20013,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "thirdPartyUserTimeJoined",
           "key": "timeJoined",
@@ -19716,6 +20032,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "thirdPartyUserEmail",
           "key": "email",
@@ -19734,6 +20051,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "thirdPartyUserThirdParty",
           "key": "thirdParty",
@@ -19750,6 +20068,7 @@ e.g.:
               "nameOverride": undefined,
               "properties": [
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "thirdPartyUserThirdPartyId",
                   "key": "id",
@@ -19768,6 +20087,7 @@ e.g.:
                   },
                 },
                 {
+                  "audiences": [],
                   "conflict": {},
                   "generatedName": "thirdPartyUserThirdPartyUserId",
                   "key": "userId",
@@ -19856,6 +20176,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "unauthorisedMessageResponseMessage",
           "key": "message",
@@ -19914,6 +20235,7 @@ e.g.:
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
@@ -19932,6 +20254,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userEmail",
           "key": "email",
@@ -19950,6 +20273,7 @@ e.g.:
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userTimeJoined",
           "key": "timeJoined",

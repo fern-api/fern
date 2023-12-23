@@ -157,6 +157,9 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "while",
         "with",
         "yield",
+        "float",
+        "int",
+        "complex",
         // the following aren't actually reserved, but we treat them as unavailable
         "self"
     ]),

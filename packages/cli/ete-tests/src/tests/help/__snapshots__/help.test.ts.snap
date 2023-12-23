@@ -12,6 +12,8 @@ Commands:
   fern-dev check                Validates your Fern Definition. Logs errors.
   fern-dev login                Log in to Fern via GitHub
   fern-dev format               Formats your Fern Definition
+  fern-dev write-definition     Write underlying Fern Definition for OpenAPI
+                                specs and API Dependencies.
   fern-dev upgrade              Upgrades version in fern.config.json. Also
                                 upgrades generators in generators.yml to their
                                 minimum-compatible versions.

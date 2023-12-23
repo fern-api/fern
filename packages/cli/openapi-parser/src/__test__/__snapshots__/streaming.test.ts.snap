@@ -31,6 +31,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userStreamRequestId",
               "key": "id",
@@ -51,6 +52,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userStreamRequestStream",
               "key": "stream",
@@ -136,6 +138,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userRequestId",
               "key": "id",
@@ -156,6 +159,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userRequestStream",
               "key": "stream",
@@ -219,6 +223,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2StreamRequestId",
               "key": "id",
@@ -239,6 +244,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2StreamRequestStream",
               "key": "stream",
@@ -332,6 +338,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2RequestId",
               "key": "id",
@@ -352,6 +359,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2RequestStream",
               "key": "stream",
@@ -415,6 +423,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamRequestId",
               "key": "id",
@@ -435,6 +444,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamRequestStream",
               "key": "stream",
@@ -465,6 +475,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseId",
               "key": "id",
@@ -485,6 +496,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseInline",
               "key": "inline",
@@ -503,6 +515,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
@@ -579,6 +592,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3RequestId",
               "key": "id",
@@ -599,6 +613,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3RequestStream",
               "key": "stream",
@@ -629,6 +644,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3ResponseId",
               "key": "id",
@@ -649,6 +665,7 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3ResponseInline",
               "key": "inline",
@@ -695,6 +712,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseStreamUserId",
           "key": "id",
@@ -726,6 +744,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseUserId",
           "key": "id",
@@ -757,6 +776,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
@@ -777,6 +797,7 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserName",
           "key": "name",
@@ -797,6 +818,7 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
@@ -827,6 +849,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
@@ -847,6 +870,7 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userName",
           "key": "name",
@@ -867,6 +891,7 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",

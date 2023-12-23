@@ -310,16 +310,25 @@ function getRequest({
                     fileContainingReference: declarationFile,
                     context
                 });
-                return [
-                    property.key,
-                    usedNames.has(property.key)
-                        ? {
-                              type: getTypeFromTypeReference(propertyTypeReference),
-                              docs: getDocsFromTypeReference(propertyTypeReference),
-                              name: property.generatedName
-                          }
-                        : propertyTypeReference
-                ];
+
+                if (!usedNames.has(property.key) && property.audiences.length <= 0) {
+                    return [property.key, propertyTypeReference];
+                }
+
+                const typeReference: RawSchemas.ObjectPropertySchema = {
+                    type: getTypeFromTypeReference(propertyTypeReference),
+                    docs: getDocsFromTypeReference(propertyTypeReference)
+                };
+
+                if (usedNames.has(property.key)) {
+                    typeReference.name = property.generatedName;
+                }
+
+                if (property.audiences.length > 0) {
+                    typeReference.audiences = property.audiences;
+                }
+
+                return [property.key, typeReference];
             })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {

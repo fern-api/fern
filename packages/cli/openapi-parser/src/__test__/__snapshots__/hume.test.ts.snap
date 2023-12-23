@@ -500,6 +500,7 @@ exports[`open api parser hume parse open api 1`] = `
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestModels",
           "key": "models",
@@ -518,6 +519,7 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestTranscription",
           "key": "transcription",
@@ -536,6 +538,7 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestUrls",
           "key": "urls",
@@ -563,6 +566,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestCallbackUrl",
           "key": "callback_url",
@@ -583,6 +587,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestNotify",
           "key": "notify",
@@ -795,6 +800,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxX",
           "key": "x",
@@ -808,6 +814,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxY",
           "key": "y",
@@ -821,6 +828,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxW",
           "key": "w",
@@ -834,6 +842,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxH",
           "key": "h",
@@ -858,6 +867,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionTime",
           "key": "time",
@@ -871,6 +881,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionEmotions",
           "key": "emotions",
@@ -889,6 +900,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionDescriptions",
           "key": "descriptions",
@@ -918,6 +930,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedCreatedTimestampMs",
           "key": "created_timestamp_ms",
@@ -931,6 +944,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedStartedTimestampMs",
           "key": "started_timestamp_ms",
@@ -944,6 +958,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedEndedTimestampMs",
           "key": "ended_timestamp_ms",
@@ -957,6 +972,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedNumPredictions",
           "key": "num_predictions",
@@ -970,6 +986,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedNumErrors",
           "key": "num_errors",
@@ -994,6 +1011,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "descriptionsScoreName",
           "key": "name",
@@ -1009,6 +1027,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "descriptionsScoreScore",
           "key": "score",
@@ -1056,6 +1075,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emotionScoreName",
           "key": "name",
@@ -1071,6 +1091,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emotionScoreScore",
           "key": "score",
@@ -1115,6 +1136,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "errorMessage",
           "key": "message",
@@ -1130,6 +1152,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "errorFile",
           "key": "file",
@@ -1156,6 +1179,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceFpsPred",
           "key": "fps_pred",
@@ -1174,6 +1198,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceProbThreshold",
           "key": "prob_threshold",
@@ -1192,6 +1217,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceIdentifyFaces",
           "key": "identify_faces",
@@ -1210,6 +1236,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceMinFaceSize",
           "key": "min_face_size",
@@ -1228,6 +1255,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceFacs",
           "key": "facs",
@@ -1246,6 +1274,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceDescriptions",
           "key": "descriptions",
@@ -1264,6 +1293,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceSaveFaces",
           "key": "save_faces",
@@ -1293,6 +1323,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionFrame",
           "key": "frame",
@@ -1306,6 +1337,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionTime",
           "key": "time",
@@ -1319,6 +1351,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionProb",
           "key": "prob",
@@ -1332,6 +1365,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionBox",
           "key": "box",
@@ -1345,6 +1379,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionEmotions",
           "key": "emotions",
@@ -1363,6 +1398,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionFacs",
           "key": "facs",
@@ -1386,6 +1422,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionDescriptions",
           "key": "descriptions",
@@ -1420,6 +1457,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facemeshPredictionEmotions",
           "key": "emotions",
@@ -1449,6 +1487,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facsScoreName",
           "key": "name",
@@ -1464,6 +1503,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facsScoreScore",
           "key": "score",
@@ -1490,6 +1530,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedCreatedTimestampMs",
           "key": "created_timestamp_ms",
@@ -1503,6 +1544,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedStartedTimestampMs",
           "key": "started_timestamp_ms",
@@ -1516,6 +1558,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedEndedTimestampMs",
           "key": "ended_timestamp_ms",
@@ -1529,6 +1572,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedMessage",
           "key": "message",
@@ -1555,6 +1599,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileFilename",
           "key": "filename",
@@ -1575,6 +1620,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileContentType",
           "key": "content_type",
@@ -1595,6 +1641,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileMd5Sum",
           "key": "md5sum",
@@ -1654,6 +1701,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionId",
           "key": "id",
@@ -1669,6 +1717,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionPredictions",
           "key": "predictions",
@@ -1698,6 +1747,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionId",
           "key": "id",
@@ -1713,6 +1763,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionPredictions",
           "key": "predictions",
@@ -1742,6 +1793,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionId",
           "key": "id",
@@ -1757,6 +1809,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionPredictions",
           "key": "predictions",
@@ -1786,6 +1839,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionId",
           "key": "id",
@@ -1801,6 +1855,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionPredictions",
           "key": "predictions",
@@ -1830,6 +1885,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionId",
           "key": "id",
@@ -1845,6 +1901,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionPredictions",
           "key": "predictions",
@@ -1874,6 +1931,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionId",
           "key": "id",
@@ -1889,6 +1947,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionPredictions",
           "key": "predictions",
@@ -1918,6 +1977,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "inProgressCreatedTimestampMs",
           "key": "created_timestamp_ms",
@@ -1931,6 +1991,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "inProgressStartedTimestampMs",
           "key": "started_timestamp_ms",
@@ -1955,6 +2016,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobIdJobId",
           "key": "job_id",
@@ -1981,6 +2043,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestUserId",
           "key": "user_id",
@@ -1996,6 +2059,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestJobId",
           "key": "job_id",
@@ -2011,6 +2075,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestRequest",
           "key": "request",
@@ -2024,6 +2089,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestState",
           "key": "state",
@@ -2048,6 +2114,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageGranularity",
           "key": "granularity",
@@ -2066,6 +2133,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageIdentifySpeakers",
           "key": "identify_speakers",
@@ -2084,6 +2152,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageSentiment",
           "key": "sentiment",
@@ -2102,6 +2171,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageToxicity",
           "key": "toxicity",
@@ -2131,6 +2201,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionText",
           "key": "text",
@@ -2146,6 +2217,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionPosition",
           "key": "position",
@@ -2159,6 +2231,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionTime",
           "key": "time",
@@ -2177,6 +2250,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionConfidence",
           "key": "confidence",
@@ -2195,6 +2269,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionSpeakerConfidence",
           "key": "speaker_confidence",
@@ -2213,6 +2288,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionEmotions",
           "key": "emotions",
@@ -2231,6 +2307,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionSentiment",
           "key": "sentiment",
@@ -2256,6 +2333,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionToxicity",
           "key": "toxicity",
@@ -2290,6 +2368,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsFace",
           "key": "face",
@@ -2308,6 +2387,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsBurst",
           "key": "burst",
@@ -2326,6 +2406,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsProsody",
           "key": "prosody",
@@ -2344,6 +2425,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsLanguage",
           "key": "language",
@@ -2362,6 +2444,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsNer",
           "key": "ner",
@@ -2380,6 +2463,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsFacemesh",
           "key": "facemesh",
@@ -2409,6 +2493,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsFace",
           "key": "face",
@@ -2427,6 +2512,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsBurst",
           "key": "burst",
@@ -2445,6 +2531,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsProsody",
           "key": "prosody",
@@ -2463,6 +2550,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsLanguage",
           "key": "language",
@@ -2481,6 +2569,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsNer",
           "key": "ner",
@@ -2499,6 +2588,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsFacemesh",
           "key": "facemesh",
@@ -2528,6 +2618,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerIdentifySpeakers",
           "key": "identify_speakers",
@@ -2557,6 +2648,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEntity",
           "key": "entity",
@@ -2572,6 +2664,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionPosition",
           "key": "position",
@@ -2585,6 +2678,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEntityConfidence",
           "key": "entity_confidence",
@@ -2598,6 +2692,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionSupport",
           "key": "support",
@@ -2611,6 +2706,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionUri",
           "key": "uri",
@@ -2626,6 +2722,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionLinkWord",
           "key": "link_word",
@@ -2641,6 +2738,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionTime",
           "key": "time",
@@ -2659,6 +2757,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionConfidence",
           "key": "confidence",
@@ -2677,6 +2776,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionSpeakerConfidence",
           "key": "speaker_confidence",
@@ -2695,6 +2795,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEmotions",
           "key": "emotions",
@@ -2742,6 +2843,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "positionIntervalBegin",
           "key": "begin",
@@ -2755,6 +2857,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "positionIntervalEnd",
           "key": "end",
@@ -2779,6 +2882,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionFile",
           "key": "file",
@@ -2794,6 +2898,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionModels",
           "key": "models",
@@ -2818,6 +2923,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
           "key": "metadata",
@@ -2836,6 +2942,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -2865,6 +2972,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionMetadata",
           "key": "metadata",
@@ -2883,6 +2991,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -2912,6 +3021,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
           "key": "metadata",
@@ -2930,6 +3040,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -2959,6 +3070,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
           "key": "metadata",
@@ -2977,6 +3089,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -3006,6 +3119,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
           "key": "metadata",
@@ -3024,6 +3138,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -3053,6 +3168,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
           "key": "metadata",
@@ -3071,6 +3187,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
           "key": "grouped_predictions",
@@ -3100,6 +3217,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyGranularity",
           "key": "granularity",
@@ -3118,6 +3236,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyIdentifySpeakers",
           "key": "identify_speakers",
@@ -3136,6 +3255,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyWindow",
           "key": "window",
@@ -3165,6 +3285,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionText",
           "key": "text",
@@ -3185,6 +3306,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionTime",
           "key": "time",
@@ -3198,6 +3320,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionConfidence",
           "key": "confidence",
@@ -3216,6 +3339,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionSpeakerConfidence",
           "key": "speaker_confidence",
@@ -3234,6 +3358,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionEmotions",
           "key": "emotions",
@@ -3263,6 +3388,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "queuedCreatedTimestampMs",
           "key": "created_timestamp_ms",
@@ -3287,6 +3413,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestModels",
           "key": "models",
@@ -3305,6 +3432,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestTranscription",
           "key": "transcription",
@@ -3323,6 +3451,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestUrls",
           "key": "urls",
@@ -3350,6 +3479,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestCallbackUrl",
           "key": "callback_url",
@@ -3370,6 +3500,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestNotify",
           "key": "notify",
@@ -3388,6 +3519,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestFiles",
           "key": "files",
@@ -3417,6 +3549,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "resultsPredictions",
           "key": "predictions",
@@ -3435,6 +3568,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "resultsErrors",
           "key": "errors",
@@ -3464,6 +3598,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sentimentScoreName",
           "key": "name",
@@ -3479,6 +3614,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sentimentScoreScore",
           "key": "score",
@@ -3562,6 +3698,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultSource",
           "key": "source",
@@ -3575,6 +3712,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultResults",
           "key": "results",
@@ -3593,6 +3731,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultError",
           "key": "error",
@@ -3817,6 +3956,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeIntervalBegin",
           "key": "begin",
@@ -3830,6 +3970,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeIntervalEnd",
           "key": "end",
@@ -3854,6 +3995,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "toxicityScoreName",
           "key": "name",
@@ -3869,6 +4011,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "toxicityScoreScore",
           "key": "score",
@@ -3895,6 +4038,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionLanguage",
           "key": "language",
@@ -3924,6 +4068,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionMetadataConfidence",
           "key": "confidence",
@@ -3937,6 +4082,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionMetadataDetectedLanguage",
           "key": "detected_language",
@@ -3966,6 +4112,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "urlUrl",
           "key": "url",
@@ -4013,6 +4160,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "windowLength",
           "key": "length",
@@ -4031,6 +4179,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "windowStep",
           "key": "step",

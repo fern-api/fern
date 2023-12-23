@@ -1,9 +1,11 @@
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
+import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { getPropertiesForAudience } from "../../utils/getPropertiesForAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -17,6 +19,7 @@ import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRa
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;
     descendantFilepaths: Set<FernFilepath>;
+    propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
 export async function convertTypeDeclaration({
@@ -40,7 +43,14 @@ export async function convertTypeDeclaration({
         file
     });
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
+
+    let propertiesByAudience: Record<AudienceId, Set<string>> = {};
+    if (isRawObjectDefinition(typeDeclaration)) {
+        propertiesByAudience = getPropertiesForAudience(typeDeclaration.properties ?? {});
+    }
+
     return {
+        propertiesByAudience,
         typeDeclaration: {
             ...declaration,
             name: declaredTypeName,
