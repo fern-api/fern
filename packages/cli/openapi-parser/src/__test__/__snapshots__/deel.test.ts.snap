@@ -28643,7 +28643,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "PaymentWorker",
       "groupName": undefined,
-      "nameOverride": "TheWorker For The Payment",
+      "nameOverride": "TheWorkerForThePayment",
       "properties": [
         {
           "audiences": [],

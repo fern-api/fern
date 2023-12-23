@@ -7474,7 +7474,7 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
-      "PaymentWorkerList": "list<TheWorker For The Payment>",
+      "PaymentWorkerList": "list<TheWorkerForThePayment>",
       "People": {
         "docs": "People object representing a Deel",
         "properties": {
@@ -8088,7 +8088,7 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
-      "TheWorker For The Payment": {
+      "TheWorkerForThePayment": {
         "docs": undefined,
         "properties": {
           "contract_id": {

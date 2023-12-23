@@ -1541,7 +1541,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "BadRequestErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": "BadRequest Error Response Body",
+      "nameOverride": "BadRequestErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2051,7 +2051,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "InternalServerErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": "InternalServer Error Response Body",
+      "nameOverride": "InternalServerErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2093,7 +2093,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "NotFoundErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": "NotFound Error Response Body",
+      "nameOverride": "NotFoundErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2135,7 +2135,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "TimeoutErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": "TimeoutError Response Body",
+      "nameOverride": "TimeoutErrorResponseBody",
       "properties": [
         {
           "audiences": [],
@@ -2177,7 +2177,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": undefined,
       "generatedName": "UnauthorizedErrorResponseBody",
       "groupName": undefined,
-      "nameOverride": "UnauthorizedError Response Body",
+      "nameOverride": "UnauthorizedErrorResponseBody",
       "properties": [
         {
           "audiences": [],

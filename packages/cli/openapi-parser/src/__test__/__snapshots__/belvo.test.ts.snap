@@ -40356,7 +40356,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "description": "This error occurs when you try to access Belvo's resource without the correct permissions.",
       "generatedName": "AccessToResourceDenied",
       "groupName": undefined,
-      "nameOverride": "AccessTo Belvo API Denied",
+      "nameOverride": "AccessToBelvoApiDenied",
       "properties": [
         {
           "audiences": [],
@@ -43144,7 +43144,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "BankAccountBusinessPse",
       "groupName": undefined,
-      "nameOverride": "BusinessBank Account",
+      "nameOverride": "BusinessBankAccount",
       "properties": [
         {
           "audiences": [],
@@ -43333,7 +43333,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": undefined,
       "generatedName": "BankAccountDetailsOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPIPIX Account Information",
+      "nameOverride": "OfpiPixAccountInformation",
       "properties": [
         {
           "audiences": [],
@@ -43404,7 +43404,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": undefined,
       "generatedName": "BankAccountDetailsOfpiPix",
       "groupName": undefined,
-      "nameOverride": "OFPIPIX Keys",
+      "nameOverride": "OfpiPixKeys",
       "properties": [
         {
           "audiences": [],
@@ -43445,7 +43445,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": undefined,
       "generatedName": "BankAccountDetailsOpenFinance",
       "groupName": undefined,
-      "nameOverride": "OFPIPIX Account Information",
+      "nameOverride": "OfpiPixAccountInformation",
       "properties": [
         {
           "audiences": [],
@@ -43516,7 +43516,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": undefined,
       "generatedName": "BankAccountDetailsOpenFinancePix",
       "groupName": undefined,
-      "nameOverride": "OFPIPIX Keys",
+      "nameOverride": "OfpiPixKeys",
       "properties": [
         {
           "audiences": [],
@@ -43557,7 +43557,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": "Details regarding the business bank account holder.",
       "generatedName": "BankAccountHolderRequestOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPI",
+      "nameOverride": "Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -43648,7 +43648,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
       "generatedName": "BankAccountInformationPse",
       "groupName": undefined,
-      "nameOverride": "BankAccount Information PSE",
+      "nameOverride": "BankAccountInformationPse",
       "properties": [
         {
           "audiences": [],
@@ -43678,7 +43678,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": undefined,
       "generatedName": "BankAccountOfpiResponse",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -43969,7 +43969,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "BeneficiaryBankAccountOfpi",
       "groupName": undefined,
-      "nameOverride": "BeneficiaryBank Account",
+      "nameOverride": "BeneficiaryBankAccount",
       "properties": [
         {
           "audiences": [],
@@ -44093,7 +44093,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "BeneficiaryBankAccountPse",
       "groupName": undefined,
-      "nameOverride": "BeneficiaryBank Account PSE",
+      "nameOverride": "BeneficiaryBankAccountPse",
       "properties": [
         {
           "audiences": [],
@@ -45271,7 +45271,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the payment method.",
       "generatedName": "ChargePaymentMethodDetailsOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPI",
+      "nameOverride": "Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -45354,7 +45354,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the payment method.",
       "generatedName": "ChargePaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -45437,7 +45437,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreateBankAccountOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -45512,7 +45512,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreateBankAccountPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -45599,7 +45599,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreateCustomerOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -45759,7 +45759,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreateCustomerPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -45919,7 +45919,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreatePaymentIntentPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -46081,7 +46081,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreatePaymentLinkOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -46258,7 +46258,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CreatePaymentLinkPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -46440,7 +46440,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CustomerOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -46778,7 +46778,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "CustomerPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -46996,7 +46996,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "DisplayConfirmationRequiredContentPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Colombia Confirmation Required",
+      "nameOverride": "DisplayPseColombiaConfirmationRequired",
       "properties": [
         {
           "audiences": [],
@@ -47026,7 +47026,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "DisplayConfirmationRequiredOfpi",
       "groupName": undefined,
-      "nameOverride": "DisplayOpen Finance Brazil Confirmation Required",
+      "nameOverride": "DisplayOpenFinanceBrazilConfirmationRequired",
       "properties": [
         {
           "audiences": [],
@@ -47117,7 +47117,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object containing form fields for the required credentials (for example, \`username\` or \`password\`) in this step.",
       "generatedName": "DisplayCredentialsRequiredContentPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Confirmation Required",
+      "nameOverride": "DisplayPseConfirmationRequired",
       "properties": [
         {
           "audiences": [],
@@ -47147,7 +47147,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object detailing what payment method information you need to display.",
       "generatedName": "DisplayCustomerBankAccountsContentPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Payment Method Information",
+      "nameOverride": "DisplayPsePaymentMethodInformation",
       "properties": [
         {
           "audiences": [],
@@ -47231,7 +47231,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object detailing what payment method information you need to display.",
       "generatedName": "DisplayPaymentMethodInformationContentOfpi",
       "groupName": undefined,
-      "nameOverride": "DisplayOpen Finance Brazil Payment Method Information",
+      "nameOverride": "DisplayOpenFinanceBrazilPaymentMethodInformation",
       "properties": [
         {
           "audiences": [],
@@ -47266,7 +47266,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object detailing what payment method information you need to display.",
       "generatedName": "DisplayPaymentMethodInformationContentPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Payment Method Information",
+      "nameOverride": "DisplayPsePaymentMethodInformation",
       "properties": [
         {
           "audiences": [],
@@ -51915,7 +51915,7 @@ We return one of the following enum values:
       "description": "Details regarding the business bank account holder.",
       "generatedName": "HolderBusinessPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -51998,7 +51998,7 @@ We return one of the following enum values:
       "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
       "generatedName": "HolderInformationBusinessOfpi",
       "groupName": undefined,
-      "nameOverride": "BUSINESS",
+      "nameOverride": "Business",
       "properties": [
         {
           "audiences": [],
@@ -52055,7 +52055,7 @@ We return one of the following enum values:
       "description": undefined,
       "generatedName": "HolderInformationBusinessOfpiResponse",
       "groupName": undefined,
-      "nameOverride": "BUSINESS",
+      "nameOverride": "Business",
       "properties": [
         {
           "audiences": [],
@@ -52112,7 +52112,7 @@ We return one of the following enum values:
       "description": undefined,
       "generatedName": "HolderInformationBusinessPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -52141,7 +52141,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": undefined,
       "generatedName": "HolderInformationBusinessPseResponse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -52170,7 +52170,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
       "generatedName": "HolderInformationIndividualOfpi",
       "groupName": undefined,
-      "nameOverride": "INDIVIDUAL",
+      "nameOverride": "Individual",
       "properties": [
         {
           "audiences": [],
@@ -52243,7 +52243,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": undefined,
       "generatedName": "HolderInformationIndividualOfpiResponse",
       "groupName": undefined,
-      "nameOverride": "INDIVIDUAL",
+      "nameOverride": "Individual",
       "properties": [
         {
           "audiences": [],
@@ -52316,7 +52316,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": "Details regarding the bank account holder.",
       "generatedName": "HolderResponseOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPI",
+      "nameOverride": "Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -54612,7 +54612,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
       "generatedName": "InvalidAccessMode",
       "groupName": undefined,
-      "nameOverride": "InvalidAccess Mode",
+      "nameOverride": "InvalidAccessMode",
       "properties": [
         {
           "audiences": [],
@@ -56397,7 +56397,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "InvoiceDian",
       "groupName": undefined,
-      "nameOverride": "🇨🇴DIAN Colombia",
+      "nameOverride": "🇨🇴DianColombia",
       "properties": [
         {
           "audiences": [],
@@ -57711,7 +57711,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
       "description": undefined,
       "generatedName": "InvoiceWithIdSat",
       "groupName": undefined,
-      "nameOverride": "🇲🇽SAT Mexico",
+      "nameOverride": "🇲🇽SatMexico",
       "properties": [
         {
           "audiences": [],
@@ -60678,7 +60678,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_token_required\` next step.",
       "generatedName": "LastErrorTwoFactor",
       "groupName": undefined,
-      "nameOverride": "LoginTwo Factor Error",
+      "nameOverride": "LoginTwoFactorError",
       "properties": [
         {
           "audiences": [],
@@ -61710,7 +61710,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayConfirmationRequiredOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPIDisplay Confirmation Required",
+      "nameOverride": "OfpiDisplayConfirmationRequired",
       "properties": [
         {
           "audiences": [],
@@ -61818,7 +61818,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayConfirmationRequiredPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Confirmation Required",
+      "nameOverride": "DisplayPseConfirmationRequired",
       "properties": [
         {
           "audiences": [],
@@ -61944,7 +61944,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayCredentialsRequiredPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Credentials Required",
+      "nameOverride": "DisplayPseCredentialsRequired",
       "properties": [
         {
           "audiences": [],
@@ -62070,7 +62070,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayCustomerBankAccountsPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Customer Bank Accounts",
+      "nameOverride": "DisplayPseCustomerBankAccounts",
       "properties": [
         {
           "audiences": [],
@@ -62196,7 +62196,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayNeedsRedirectPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Needs Redirect",
+      "nameOverride": "DisplayPseNeedsRedirect",
       "properties": [
         {
           "audiences": [],
@@ -62322,7 +62322,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayPaymentFailed",
       "groupName": undefined,
-      "nameOverride": "OFPIPayment Failed",
+      "nameOverride": "OfpiPaymentFailed",
       "properties": [
         {
           "audiences": [],
@@ -62430,7 +62430,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayPaymentMethodInformation",
       "groupName": undefined,
-      "nameOverride": "OFPIDisplay Payment Method Information",
+      "nameOverride": "OfpiDisplayPaymentMethodInformation",
       "properties": [
         {
           "audiences": [],
@@ -62538,7 +62538,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
       "generatedName": "NextStepDisplayPaymentMethodInformationPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Payment Method Information",
+      "nameOverride": "DisplayPsePaymentMethodInformation",
       "properties": [
         {
           "audiences": [],
@@ -62664,7 +62664,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayPaymentProcessing",
       "groupName": undefined,
-      "nameOverride": "OFPIPayment Processing",
+      "nameOverride": "OfpiPaymentProcessing",
       "properties": [
         {
           "audiences": [],
@@ -62772,7 +62772,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayPaymentSucceeded",
       "groupName": undefined,
-      "nameOverride": "OFPIPayment Succeeded",
+      "nameOverride": "OfpiPaymentSucceeded",
       "properties": [
         {
           "audiences": [],
@@ -62880,7 +62880,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepDisplayTokenRequiredPse",
       "groupName": undefined,
-      "nameOverride": "DisplayPSE Token Required",
+      "nameOverride": "DisplayPseTokenRequired",
       "properties": [
         {
           "audiences": [],
@@ -63010,7 +63010,7 @@ For \`login_error\` errors, the description can be one of the following:
       "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
       "generatedName": "NextStepNeedsRedirect",
       "groupName": undefined,
-      "nameOverride": "OFPINeeds Redirect",
+      "nameOverride": "OfpiNeedsRedirect",
       "properties": [
         {
           "audiences": [],
@@ -64077,7 +64077,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "PatchPaymentIntentsBodyPse",
       "groupName": undefined,
-      "nameOverride": "PATCHPayment Method Details",
+      "nameOverride": "PatchPaymentMethodDetails",
       "properties": [
         {
           "audiences": [],
@@ -64233,7 +64233,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "PaymentIntentOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -65095,7 +65095,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the OFPI payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
       "groupName": undefined,
-      "nameOverride": "BUSINESS",
+      "nameOverride": "Business",
       "properties": [
         {
           "audiences": [],
@@ -65120,7 +65120,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the OFPI payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsIndividualOfpi",
       "groupName": undefined,
-      "nameOverride": "INDIVIDUAL",
+      "nameOverride": "Individual",
       "properties": [
         {
           "audiences": [],
@@ -65145,7 +65145,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the PSE payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -65175,7 +65175,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentIntentPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -65641,7 +65641,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentIntentsPaymentMethodDetailsBodyPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -65703,7 +65703,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with payment method details to create a payment intent.",
       "generatedName": "PaymentIntentsPaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -65728,7 +65728,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentLinkCallbackUrls",
       "groupName": undefined,
-      "nameOverride": "PaymentLink Callback UR Ls",
+      "nameOverride": "PaymentLinkCallbackUrLs",
       "properties": [
         {
           "audiences": [],
@@ -65787,7 +65787,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** This field will return an empty object if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
       "generatedName": "PaymentLinkCallbackUrlsResponse",
       "groupName": undefined,
-      "nameOverride": "PaymentLink Callback UR Ls",
+      "nameOverride": "PaymentLinkCallbackUrLs",
       "properties": [
         {
           "audiences": [],
@@ -65840,7 +65840,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentLinkListOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -66042,7 +66042,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentLinkListPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -66244,7 +66244,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentLinkOfpi",
       "groupName": undefined,
-      "nameOverride": "Brazil🇧🇷 OFPI",
+      "nameOverride": "Brazil🇧🇷Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -66576,7 +66576,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "PaymentLinkPse",
       "groupName": undefined,
-      "nameOverride": "Colombia🇨🇴 PSE",
+      "nameOverride": "Colombia🇨🇴Pse",
       "properties": [
         {
           "audiences": [],
@@ -66776,7 +66776,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentLinksPaymentMethodDetailsBodyOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPB",
+      "nameOverride": "Ofpb",
       "properties": [
         {
           "audiences": [],
@@ -66824,7 +66824,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentLinksPaymentMethodDetailsBodyPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -66886,7 +66886,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with information required by Open Finance Payments in Brazil to create a payment intent.",
       "generatedName": "PaymentMethodDetailsOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPI",
+      "nameOverride": "Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -66911,7 +66911,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with information required by PSE to create a payment intent.",
       "generatedName": "PaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -67322,7 +67322,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Information about the payment method selected.",
       "generatedName": "PaymentMethodInformationOfpi",
       "groupName": undefined,
-      "nameOverride": "OFPI",
+      "nameOverride": "Ofpi",
       "properties": [
         {
           "audiences": [],
@@ -67354,7 +67354,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note**: If no payment method information is associated, we return an empty array.",
       "generatedName": "PaymentMethodInformationPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -67891,7 +67891,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "ProvidersPse",
       "groupName": undefined,
-      "nameOverride": "PSE",
+      "nameOverride": "Pse",
       "properties": [
         {
           "audiences": [],
@@ -71669,7 +71669,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxDeclarationBusiness",
       "groupName": undefined,
-      "nameOverride": "BusinessTax Declaration",
+      "nameOverride": "BusinessTaxDeclaration",
       "properties": [
         {
           "audiences": [],
@@ -71861,7 +71861,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxDeclarationBusinessPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxDeclaration Business",
+      "nameOverride": "TaxDeclarationBusiness",
       "properties": [
         {
           "audiences": [],
@@ -71973,7 +71973,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "TaxDeclarationIndividual",
       "groupName": undefined,
-      "nameOverride": "IndividualTax Declaration",
+      "nameOverride": "IndividualTaxDeclaration",
       "properties": [
         {
           "audiences": [],
@@ -72165,7 +72165,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "TaxDeclarationIndividualPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxDeclaration Individual",
+      "nameOverride": "TaxDeclarationIndividual",
       "properties": [
         {
           "audiences": [],
@@ -73343,7 +73343,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnBusiness",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Business",
+      "nameOverride": "TaxReturnBusiness",
       "properties": [
         {
           "audiences": [],
@@ -73760,7 +73760,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnBusinessMonthly",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Business Monthly",
+      "nameOverride": "TaxReturnBusinessMonthly",
       "properties": [
         {
           "audiences": [],
@@ -74043,7 +74043,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnPersonal",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal",
+      "nameOverride": "TaxReturnPersonal",
       "properties": [
         {
           "audiences": [],
@@ -74413,7 +74413,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnPersonalMonthly",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal Monthly",
+      "nameOverride": "TaxReturnPersonalMonthly",
       "properties": [
         {
           "audiences": [],
@@ -74633,7 +74633,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnsBusinessMonthlyPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal Business Monthly",
+      "nameOverride": "TaxReturnPersonalBusinessMonthly",
       "properties": [
         {
           "audiences": [],
@@ -74745,7 +74745,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "TaxReturnsBusinessPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal Business",
+      "nameOverride": "TaxReturnPersonalBusiness",
       "properties": [
         {
           "audiences": [],
@@ -74857,7 +74857,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Request body for monthly tax returns",
       "generatedName": "TaxReturnsMonthlyRequest",
       "groupName": undefined,
-      "nameOverride": "MonthlyTax Returns",
+      "nameOverride": "MonthlyTaxReturns",
       "properties": [
         {
           "audiences": [],
@@ -74976,7 +74976,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxReturnsPersonalMonthlyPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal Monthly",
+      "nameOverride": "TaxReturnPersonalMonthly",
       "properties": [
         {
           "audiences": [],
@@ -75088,7 +75088,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "TaxReturnsPersonalPaginated",
       "groupName": undefined,
-      "nameOverride": "TaxReturn Personal",
+      "nameOverride": "TaxReturnPersonal",
       "properties": [
         {
           "audiences": [],
@@ -75200,7 +75200,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Request body for yearly tax returns",
       "generatedName": "TaxReturnsYearlyRequest",
       "groupName": undefined,
-      "nameOverride": "YearlyTax Returns",
+      "nameOverride": "YearlyTaxReturns",
       "properties": [
         {
           "audiences": [],
@@ -76013,7 +76013,7 @@ By default, Belvo returns the yearly (annual) tax returns.
       "description": undefined,
       "generatedName": "TaxStatusDian",
       "groupName": undefined,
-      "nameOverride": "DIAN🇨🇴 Colombia",
+      "nameOverride": "Dian🇨🇴Colombia",
       "properties": [
         {
           "audiences": [],
@@ -77237,7 +77237,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "description": undefined,
       "generatedName": "TaxStatusSat",
       "groupName": undefined,
-      "nameOverride": "SAT🇲🇽 Mexico",
+      "nameOverride": "Sat🇲🇽Mexico",
       "properties": [
         {
           "audiences": [],
@@ -78460,7 +78460,7 @@ You will still need to make a PATCH call to complete the request.",
   - you make a request for information while Belvo is scraping data from the institution for that user.",
       "generatedName": "TooManySessionsError",
       "groupName": undefined,
-      "nameOverride": "TooMany Sessions",
+      "nameOverride": "TooManySessions",
       "properties": [
         {
           "audiences": [],
@@ -78914,7 +78914,7 @@ For \`too_many_sessions\` errors, the description is:
       "description": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
       "generatedName": "TransactionBankAccountBodyPse",
       "groupName": undefined,
-      "nameOverride": "BankAccount PSE",
+      "nameOverride": "BankAccountPse",
       "properties": [
         {
           "audiences": [],
@@ -78963,7 +78963,7 @@ For \`too_many_sessions\` errors, the description is:
         "description": "Object containing the payer's bank account information.",
         "generatedName": "TransactionBankAccountPse",
         "groupName": undefined,
-        "nameOverride": "Colombia🇨🇴 PSE",
+        "nameOverride": "Colombia🇨🇴Pse",
         "schemas": [
           {
             "description": undefined,
