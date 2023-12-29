@@ -102,19 +102,50 @@ async function convertOutputMode({
 }): Promise<FernFiddle.OutputMode> {
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
-        return FernFiddle.OutputMode.github({
-            owner: generator.github.repository.slice(0, indexOfFirstSlash),
-            repo: generator.github.repository.slice(indexOfFirstSlash + 1),
-            makePr: generator.github.mode === "pull-request",
-            license:
-                generator.github.license != null
-                    ? await getGithubLicense({
-                          absolutePathToGeneratorsConfiguration,
-                          githubLicense: generator.github.license
-                      })
-                    : undefined,
-            publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined
-        });
+        const owner = generator.github.repository.slice(0, indexOfFirstSlash);
+        const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
+        const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const license =
+            generator.github.license != null
+                ? await getGithubLicense({
+                      absolutePathToGeneratorsConfiguration,
+                      githubLicense: generator.github.license
+                  })
+                : undefined;
+        const mode = generator.github.mode ?? "release";
+        switch (mode) {
+            case "commit":
+            case "release":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({
+                        owner,
+                        repo,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "pull-request":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner,
+                        repo,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "push":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner,
+                        repo,
+                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
+                        license,
+                        publishInfo
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
     }
     if (generator.output == null) {
         return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} });

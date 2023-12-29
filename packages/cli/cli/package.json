@@ -66,7 +66,7 @@
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.351",
+    "@fern-fern/fiddle-sdk": "^0.0.379",
     "@fern-fern/ir-sdk": "0.0.3277",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.27.2",
