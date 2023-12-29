@@ -32,7 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.362",
+    "@fern-fern/fiddle-sdk": "^0.0.369",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
     "zod": "^3.22.3"

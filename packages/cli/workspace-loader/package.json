@@ -39,7 +39,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
-    "@fern-fern/fiddle-sdk": "^0.0.362",
+    "@fern-fern/fiddle-sdk": "^0.0.369",
     "@fern-fern/openapi-ir-model": "0.0.139",
     "axios": "^0.27.2",
     "glob": "^7.2.0",
