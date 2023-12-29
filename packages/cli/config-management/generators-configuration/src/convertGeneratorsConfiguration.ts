@@ -106,6 +106,7 @@ async function convertOutputMode({
             owner: generator.github.repository.slice(0, indexOfFirstSlash),
             repo: generator.github.repository.slice(indexOfFirstSlash + 1),
             makePr: generator.github.mode === "pull-request",
+            branch: generator.github.mode === "pull-request" ? generator.github.branch : undefined,
             license:
                 generator.github.license != null
                     ? await getGithubLicense({

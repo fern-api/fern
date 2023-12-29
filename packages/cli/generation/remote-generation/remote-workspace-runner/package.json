@@ -42,7 +42,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
-    "@fern-fern/fiddle-sdk": "^0.0.351",
+    "@fern-fern/fiddle-sdk": "^0.0.362",
     "@fern-fern/ir-sdk": "0.0.3277",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
