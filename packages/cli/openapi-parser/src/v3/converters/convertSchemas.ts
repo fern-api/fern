@@ -404,14 +404,20 @@ export function convertSchemaObject(
             });
         }
 
+        const hasNullValue =
+            schema.anyOf.filter((schema) => {
+                return !isReferenceObject(schema) && (schema.type as string) === "null";
+            }).length > 0;
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
             breadcrumbs,
             description,
-            wrapAsNullable,
+            wrapAsNullable: wrapAsNullable || hasNullValue,
             context,
-            subtypes: schema.anyOf,
+            subtypes: schema.anyOf.filter((schema) => {
+                return isReferenceObject(schema) || (schema.type as string) !== "null";
+            }),
             groupName
         });
     }
