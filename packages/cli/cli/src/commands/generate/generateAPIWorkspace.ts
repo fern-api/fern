@@ -25,7 +25,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
-    token: FernToken;
+    token?: FernToken;
     useLocalDocker: boolean;
     keepDocker: boolean;
 }): Promise<void> {
@@ -59,6 +59,11 @@ export async function generateWorkspace({
             context
         });
     } else {
+        if (!token) {
+            return context.failAndThrow(
+                `Must provide token if 'useLocalDocker' is false`
+            );
+        }
         await runRemoteGenerationForAPIWorkspace({
             workspace,
             organization,
