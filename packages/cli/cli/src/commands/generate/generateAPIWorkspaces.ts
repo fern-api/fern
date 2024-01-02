@@ -27,7 +27,7 @@ export async function generateAPIWorkspaces({
         token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
         });
-        
+
         if (token.type === "user") {
             await cliContext.runTask(async (context) => {
                 await createOrganizationIfDoesNotExist({
@@ -38,7 +38,6 @@ export async function generateAPIWorkspaces({
             });
         }
     }
-
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,

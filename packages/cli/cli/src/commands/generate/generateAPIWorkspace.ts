@@ -60,9 +60,7 @@ export async function generateWorkspace({
         });
     } else {
         if (!token) {
-            return context.failAndThrow(
-                `Must provide token if 'useLocalDocker' is false`
-            );
+            return context.failAndThrow(`Must provide token if 'useLocalDocker' is false`);
         }
         await runRemoteGenerationForAPIWorkspace({
             workspace,
