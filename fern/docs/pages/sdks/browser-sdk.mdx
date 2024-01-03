@@ -57,3 +57,13 @@ groups:
 ## Configuration options
 
 You can customize the behavior of the TypeScript Browser generator in `generators.yml`. [View the options available](https://docs.buildwithfern.com/sdks/typescript-node) which are the same as the options for the TypeScript Node generator.
+
+## `X-Fern-*` headers & CORS `Access-Control-Allow-Headers`
+
+By default, Fern adds the following headers to all requests:
+
+- `X-Fern-Language`
+- `X-Fern-SDK-Name`
+- `X-Fern-SDK-Version`
+
+Validate that your `Access-Control-Allow-Headers` is configured to permit these headers.
