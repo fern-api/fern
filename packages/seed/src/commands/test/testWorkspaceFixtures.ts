@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, SNIPPET_JSON_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
@@ -12,11 +12,21 @@ import path from "path";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
+import { readSnippets } from "../../readSnippets";
 import { Semaphore } from "../../Semaphore";
+import { SnippetTestBuilder } from "../../SnippetTestBuilder";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
+
 export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
+
+interface TestCase {
+    directory: string;
+    scriptPrelude: string;
+    extraVolumes: string[];
+    cleanup: () => Promise<void>;
+}
 
 type TestResult = TestSuccess | TestFailure;
 
@@ -227,33 +237,69 @@ async function testWithWriteToDisk({
             outputMode,
             fixtureName: fixture
         });
-        for (const script of scripts ?? []) {
-            const scriptFile = await tmp.file();
-            await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
-            taskContext.logger.info(`Running script ${scriptFile.path}`);
-            const command = await loggingExeca(
-                taskContext.logger,
-                "docker",
-                [
-                    "run",
-                    "-v",
-                    `${outputDir}:/generated`,
-                    "-v",
-                    `${scriptFile.path}:/test.sh`,
-                    script.docker,
-                    "/bin/sh",
-                    "/test.sh"
-                ],
-                {
-                    doNotPipeOutput: true
+        if (scripts == null || scripts.length === 0) {
+            return { type: "success", fixture };
+        }
+        const testCases: TestCase[] = [
+            {
+                directory: `${outputDir}`,
+                scriptPrelude: "cd /generated",
+                extraVolumes: [],
+                cleanup: async () => { /* no-op */ },
+            },
+        ];
+        if (language != null) {
+            const snippets = await readSnippets({
+                logger: taskContext.logger,
+                snippetsFilepath: path.join(outputDir, SNIPPET_JSON_FILENAME),
+            });
+            if (snippets != null) {
+                const snippetTestBuilder = new SnippetTestBuilder(language);
+                const snippetTestDirectories = await snippetTestBuilder.buildSnippetTests(snippets);
+                for (const snippetTestDirectory of snippetTestDirectories) {
+                        testCases.push(
+                            {
+                                directory: `${snippetTestDirectory.path}`,
+                                scriptPrelude: "cp -r /snippets /generated && cd /generated",
+                                extraVolumes: [`${snippetTestDirectory.path}:/snippets`],
+                                cleanup: snippetTestDirectory.cleanup,
+                            },
+                        );
                 }
-            );
-            if (command.failed) {
-                taskContext.logger.error("Failed to run script. See ouptut below");
-                taskContext.logger.error(command.stdout);
-                taskContext.logger.error(command.stderr);
-                return { type: "failure", reason: "Failed to run script...", fixture };
             }
+        }
+        for (const testCase of testCases) {
+            const extraVolumes = testCase.extraVolumes.flatMap((extraVolume) => ["-v", extraVolume]);
+            for (const script of scripts) {
+                const scriptFile = await tmp.file();
+                await writeFile(scriptFile.path, [testCase.scriptPrelude, ...script.commands].join("\n"));
+                taskContext.logger.info(`Running script ${scriptFile.path} on directory ${testCase.directory}`);
+                const command = await loggingExeca(
+                    taskContext.logger,
+                    "docker",
+                    [
+                        "run",
+                        "-v",
+                        `${outputDir}:/generated`,
+                        "-v",
+                        `${scriptFile.path}:/test.sh`,
+                        ...extraVolumes,
+                        script.docker,
+                        "/bin/sh",
+                        "/test.sh"
+                    ],
+                    {
+                        doNotPipeOutput: true
+                    }
+                );
+                if (command.failed) {
+                    taskContext.logger.error("Failed to run script. See ouptut below");
+                    taskContext.logger.error(command.stdout);
+                    taskContext.logger.error(command.stderr);
+                    return { type: "failure", reason: "Failed to run script...", fixture };
+                }
+            }
+            await testCase.cleanup();
         }
         return { type: "success", fixture };
     } catch (err) {

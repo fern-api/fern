@@ -2420,7 +2420,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.372
+    "@fern-fern/generator-exec-sdk": 0.0.509
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2755,6 +2755,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.351
+    "@fern-fern/generator-exec-sdk": 0.0.509
     "@fern-fern/seed-config": 0.0.14
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
@@ -2989,16 +2990,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:0.0.372":
-  version: 0.0.372
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.372"
+"@fern-fern/generator-exec-sdk@npm:0.0.509":
+  version: 0.0.509
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.509"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: b7905c3fd5a2128a9134ddc55111036a70bd6dd25b6c8763fa53ff333ee81daa5a764f536effc2eff9bbdc7ec6e9050014dbbc7a5071262b67d9e6327c6de845
+  checksum: 73bc662399614b70c8fb8aaa449362faadacc02c6941b66032a3a4f55332acbac13f8532cbfa521c1695643a8cf1a28250f3dd72d237af374f80dba3878483a3
   languageName: node
   linkType: hard
 
