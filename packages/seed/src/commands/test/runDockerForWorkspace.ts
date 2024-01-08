@@ -113,6 +113,8 @@ function getGithubPublishInfo({
             });
         case "go":
             return undefined;
+        case "ruby":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -148,6 +150,8 @@ function getPublishInfo({
             });
         case "go":
             throw new Error("Seed doesn't support publish mode in Go!");
+        case "ruby":
+            throw new Error("Seed doesn't support publish mode in Ruby!");
         default:
             assertNever(language);
     }
