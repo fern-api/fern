@@ -31,7 +31,9 @@ export const V2_TO_V1_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v2): IrVersions.V1.ir.IntermediateRepresentation => {

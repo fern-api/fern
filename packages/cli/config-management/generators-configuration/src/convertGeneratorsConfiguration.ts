@@ -245,5 +245,8 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("go")) {
         return GenerationLanguage.GO;
     }
+    if (generatorName.includes("ruby")) {
+        return GenerationLanguage.RUBY;
+    }
     return undefined;
 }

@@ -168,6 +168,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core"\
       },\
       {\
+        "name": "@fern-api/fern-ruby-model",\
+        "reference": "workspace:packages/generators/ruby/model"\
+      },\
+      {\
+        "name": "@fern-api/fern-ruby-sdk",\
+        "reference": "workspace:packages/generators/ruby/sdk"\
+      },\
+      {\
         "name": "@fern-api/scripts",\
         "reference": "workspace:packages/scripts"\
       },\
@@ -191,6 +199,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/docs-preview", ["workspace:packages/cli/docs-preview"]],\
       ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
+      ["@fern-api/fern-ruby-model", ["workspace:packages/generators/ruby/model"]],\
+      ["@fern-api/fern-ruby-sdk", ["workspace:packages/generators/ruby/sdk"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
       ["@fern-api/generators-configuration", ["workspace:packages/cli/config-management/generators-configuration"]],\
       ["@fern-api/init", ["workspace:packages/cli/init"]],\
@@ -3929,6 +3939,40 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-api/fern-ruby-model", [\
+        ["workspace:packages/generators/ruby/model", {\
+          "packageLocation": "./packages/generators/ruby/model/",\
+          "packageDependencies": [\
+            ["@fern-api/fern-ruby-model", "workspace:packages/generators/ruby/model"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/fern-ruby-sdk", [\
+        ["workspace:packages/generators/ruby/sdk", {\
+          "packageLocation": "./packages/generators/ruby/sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/fern-ruby-sdk", "workspace:packages/generators/ruby/sdk"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
         }]\
       ]],\
       ["@fern-api/fs-utils", [\

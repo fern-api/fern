@@ -33,7 +33,9 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "0.3.6-rc1-2-g6050f7f8",
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: "0.0.0",
-        [GeneratorName.GO_SDK]: "0.0.0"
+        [GeneratorName.GO_SDK]: "0.0.0",
+        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v20, context): IrVersions.V19.ir.IntermediateRepresentation => {

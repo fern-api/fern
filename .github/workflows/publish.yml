@@ -1,0 +1,64 @@
+name: publish
+on:
+  release:
+    types: [released]
+  push:
+    branches: [main]
+
+jobs:
+  # TODO: run seed tests and check
+  #   check:
+  #     uses: ./.github/workflows/check.yml
+  application-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          version=`./scripts/git-version.sh`
+          echo "::set-output name=version::$version"
+
+  publish-ruby-sdk-docker:
+    runs-on: ubuntu-latest
+    needs: application-version
+    strategy:
+      matrix:
+        package:
+          - "ruby-sdk"
+          - "ruby-model"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: fernapi/fern-${{ matrix.package }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ needs.application-version.outputs.version }}
+            type=sha
+            latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./packages/generators/docker/Dockerfile.${{ matrix.package }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

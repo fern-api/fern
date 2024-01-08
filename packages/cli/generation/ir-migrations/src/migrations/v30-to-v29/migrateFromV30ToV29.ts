@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration";
 
 export const V30_TO_V29_MIGRATION: IrMigration<
     IrVersions.V30.ir.IntermediateRepresentation,
@@ -29,7 +29,9 @@ export const V30_TO_V29_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "0.6.5-1-g0ef31b7a",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V29.IntermediateRepresentation.jsonOrThrow(ir, {
