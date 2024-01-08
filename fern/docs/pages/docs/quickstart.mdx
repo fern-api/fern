@@ -15,7 +15,7 @@ Open the [Fern Docs Starter](https://github.com/fern-api/docs-starter) GitHub re
 1. From the Fern Docs Starter GitHub repository, click the `Use this template` button. You must be logged into GitHub.
 2. Create a new repository. Name it anything you like; `docs` is a common naming choice.
 
-### Step 2: Clone and open in your preferred code ditor
+### Step 2: Clone and open in your preferred code editor
 
 Clone your newly created repository and open it in your favorite code editor.
 
@@ -52,7 +52,7 @@ As this is a global command, you can run it from any location. The CLI commands 
 
 If you will be using [Fern Definitions](https://docs.buildwithfern.com/api-definition/fern-definition/overview) to describe your API, skip to [Step 6](#step-6-generate-your-documentation).
 
-If you will be using the [OpenAPI Specification](https://docs.buildwithfern.com/api-definition/openapi/extensions) (OAS), follow these steps:
+If you will be using the [OpenAPI Specification](https://chat.openai.com/share/47bcc007-17d8-483a-ab5a-91c10c4a73e1) (OAS), follow these steps:
 1. Delete the `definition` folder, then run:
 
 ```bash
@@ -99,11 +99,13 @@ Further tailor your documentation to match your brand by adjusting settings in t
 
 To re-publish the updates to your documentation, run `fern generate --docs` again.
 
+To preview updates to your documentation before publishing changes, run `fern generate --docs --preview`.
+
 Fern has a built-in component library for you to use. [Explore the components.](https://docs.buildwithfern.com/generate-docs/component-library/)
 
 ### Step 8: Set up a custom domain
 
-If you wish to use a custom domain like `docs.your-organization.com` or a subdirectory like `your-organization.com/docs`, you can subscribe to the [Starter plan](https://buildwithfern.com/pricing). Once subscribed, update `docs.yml` with the custom domain configuration:
+If you wish to use a custom subdomain like `https://docs.your-organization.com` or a subpath like `https://your-organization.com/docs`, you can subscribe to the [Starter plan](https://buildwithfern.com/pricing). Once subscribed, update `docs.yml` with the custom domain configuration:
 
 ``` yaml
  - url: your-organization.docs.buildwithfern.com
@@ -112,4 +114,4 @@ If you wish to use a custom domain like `docs.your-organization.com` or a subdir
 
 ### Step 9: Explore advanced features
 
-For advanced documentation features and options, view the [Fern Docs](https://docs.buildwithfern.com/).
+For advanced documentation features and options, view the full [configuration docs](https://docs.buildwithfern.com/generate-docs/overview/configuration).
