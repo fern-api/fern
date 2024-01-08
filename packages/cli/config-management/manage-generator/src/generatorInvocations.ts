@@ -76,7 +76,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         output: {
             location: "local-file-system",
             path: "../generated/ruby"
-        },
+        }
     },
     [GeneratorName.OPENAPI]: {
         version: "0.0.28",
