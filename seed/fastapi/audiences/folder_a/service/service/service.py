@@ -64,7 +64,7 @@ class AbstractFolderAServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_direct_thread.__globals__)
 
         router.get(
-            path="/",
+            path="",
             response_model=Response,
             description=AbstractFolderAServiceService.get_direct_thread.__doc__,
             **get_route_args(cls.get_direct_thread, default_tag="folder_a.service"),

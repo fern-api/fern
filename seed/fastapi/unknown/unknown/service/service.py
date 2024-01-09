@@ -65,7 +65,7 @@ class AbstractUnknownService(AbstractFernService):
         wrapper.__globals__.update(cls.post.__globals__)
 
         router.post(
-            path="/",
+            path="",
             response_model=typing.List[typing.Any],
             description=AbstractUnknownService.post.__doc__,
             **get_route_args(cls.post, default_tag="unknown"),

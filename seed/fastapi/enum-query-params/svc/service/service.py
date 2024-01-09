@@ -66,7 +66,7 @@ class AbstractSvcService(AbstractFernService):
         wrapper.__globals__.update(cls.test.__globals__)
 
         router.get(
-            path="//test",
+            path="/test",
             response_model=str,
             description=AbstractSvcService.test.__doc__,
             **get_route_args(cls.test, default_tag="svc"),

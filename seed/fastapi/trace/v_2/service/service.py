@@ -66,7 +66,7 @@ class AbstractV2Service(AbstractFernService):
         wrapper.__globals__.update(cls.test.__globals__)
 
         router.get(
-            path="/",
+            path="",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractV2Service.test.__doc__,

@@ -66,7 +66,7 @@ class AbstractDummyService(AbstractFernService):
         wrapper.__globals__.update(cls.get_dummy.__globals__)
 
         router.get(
-            path="//dummy",
+            path="/dummy",
             response_model=str,
             description=AbstractDummyService.get_dummy.__doc__,
             **get_route_args(cls.get_dummy, default_tag="dummy"),

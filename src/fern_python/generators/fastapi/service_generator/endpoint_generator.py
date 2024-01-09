@@ -120,7 +120,10 @@ class EndpointGenerator:
         if endpoint_part.startswith("/"):
             endpoint_part = endpoint_part[1:]
 
-        endpoint_path = f"{api_prefix_part}/{service_part}/{endpoint_part}"
+        endpoint_path = ""
+        for part in [api_prefix_part, service_part, endpoint_part]:
+            if len(part) > 0:
+                endpoint_path = f"{endpoint_path}/{part}"
         if endpoint_path.endswith("/"):
             endpoint_path = endpoint_path[:-1]
         return endpoint_path

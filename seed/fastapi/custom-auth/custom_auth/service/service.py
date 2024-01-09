@@ -81,7 +81,7 @@ class AbstractCustomAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.get_with_custom_auth.__globals__)
 
         router.get(
-            path="//custom-auth",
+            path="/custom-auth",
             response_model=bool,
             description=AbstractCustomAuthService.get_with_custom_auth.__doc__,
             **get_route_args(cls.get_with_custom_auth, default_tag="custom_auth"),
@@ -121,7 +121,7 @@ class AbstractCustomAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.post_with_custom_auth.__globals__)
 
         router.post(
-            path="//custom-auth",
+            path="/custom-auth",
             response_model=bool,
             description=AbstractCustomAuthService.post_with_custom_auth.__doc__,
             **get_route_args(cls.post_with_custom_auth, default_tag="custom_auth"),

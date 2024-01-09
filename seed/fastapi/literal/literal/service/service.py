@@ -81,7 +81,7 @@ class AbstractLiteralService(AbstractFernService):
         wrapper.__globals__.update(cls.create_options.__globals__)
 
         router.post(
-            path="//options",
+            path="/options",
             response_model=CreateOptionsResponse,
             description=AbstractLiteralService.create_options.__doc__,
             **get_route_args(cls.create_options, default_tag="literal"),
@@ -117,7 +117,7 @@ class AbstractLiteralService(AbstractFernService):
         wrapper.__globals__.update(cls.get_options.__globals__)
 
         router.post(
-            path="//options",
+            path="/options",
             response_model=Options,
             description=AbstractLiteralService.get_options.__doc__,
             **get_route_args(cls.get_options, default_tag="literal"),
@@ -153,7 +153,7 @@ class AbstractLiteralService(AbstractFernService):
         wrapper.__globals__.update(cls.get_undiscriminated_options.__globals__)
 
         router.post(
-            path="//options",
+            path="/options",
             response_model=UndiscriminatedOptions,
             description=AbstractLiteralService.get_undiscriminated_options.__doc__,
             **get_route_args(cls.get_undiscriminated_options, default_tag="literal"),

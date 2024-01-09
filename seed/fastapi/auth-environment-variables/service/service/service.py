@@ -69,7 +69,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_with_api_key.__globals__)
 
         router.get(
-            path="//apiKey",
+            path="/apiKey",
             response_model=str,
             description=AbstractServiceService.get_with_api_key.__doc__,
             **get_route_args(cls.get_with_api_key, default_tag="service"),

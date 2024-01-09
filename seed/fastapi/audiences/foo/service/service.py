@@ -66,7 +66,7 @@ class AbstractFooService(AbstractFernService):
         wrapper.__globals__.update(cls.find.__globals__)
 
         router.post(
-            path="/",
+            path="",
             response_model=ImportingType,
             description=AbstractFooService.find.__doc__,
             **get_route_args(cls.find, default_tag="foo"),
