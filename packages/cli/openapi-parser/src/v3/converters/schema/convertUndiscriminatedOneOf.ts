@@ -29,8 +29,20 @@ export function convertUndiscriminatedOneOf({
 }): SchemaWithExample {
     const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
-    const convertedSubtypes = subtypes.map((schema, index) => {
-        return convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`]);
+    const convertedSubtypes = subtypes.flatMap((schema, index) => {
+        if (!isReferenceObject(schema) && schema.enum != null) {
+            return schema.enum.map((enumValue) => {
+                return SchemaWithExample.literal({
+                    value: {
+                        type: "string",
+                        string: enumValue
+                    },
+                    groupName: undefined,
+                    description: undefined
+                });
+            });
+        }
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
