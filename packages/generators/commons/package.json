@@ -30,7 +30,8 @@
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-api/logger": "0.4.23",
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
-    "tmp-promise": "^3.0.3"
+    "tmp-promise": "^3.0.3",
+    "zod": "^3.14.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

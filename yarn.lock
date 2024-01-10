@@ -2228,6 +2228,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model"
   dependencies:
+    "@fern-api/fs-utils": 0.0.248-7-gb4189be0
+    "@fern-api/generator-cli": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2236,6 +2241,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -2279,7 +2285,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-cli@workspace:packages/generators/cli":
+"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:packages/generators/cli":
   version: 0.0.0-use.local
   resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
   dependencies:
@@ -2315,6 +2321,7 @@ __metadata:
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
+    zod: ^3.14.3
   languageName: unknown
   linkType: soft
 
@@ -15698,7 +15705,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.3":
+"zod@npm:^3.14.3, zod@npm:^3.22.3":
   version: 3.22.4
   resolution: "zod@npm:3.22.4"
   checksum: 80bfd7f8039b24fddeb0718a2ec7c02aa9856e4838d6aa4864335a047b6b37a3273b191ef335bf0b2002e5c514ef261ffcda5a589fb084a48c336ffc4cdbab7f
