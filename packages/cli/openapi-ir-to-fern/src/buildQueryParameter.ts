@@ -161,7 +161,7 @@ function getQueryParameterTypeReference({
                     schema: { enum: literalValues }
                 });
                 return {
-                    value: schema.value.oneOf.generatedName,
+                    value: `optional<${schema.value.oneOf.generatedName}>`,
                     allowMultiple: false
                 };
             }
