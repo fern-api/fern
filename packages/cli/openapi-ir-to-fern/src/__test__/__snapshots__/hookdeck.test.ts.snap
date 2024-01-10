@@ -54,11 +54,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetAttemptsRequest",
               "query-parameters": {
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetAttemptsRequestDir",
                 "event_id": "optional<string>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetAttemptsRequestOrderBy",
                 "prev": "optional<string>",
               },
             },
@@ -67,6 +67,19 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.EventAttemptPaginatedResult",
             },
           },
+        },
+      },
+      "types": {
+        "GetAttemptsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetAttemptsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
         },
       },
     },
@@ -178,7 +191,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetBookmarksRequest",
               "query-parameters": {
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetBookmarksRequestDir",
                 "event_data_id": "optional<string>",
                 "id": "optional<string>",
                 "label": "optional<string>",
@@ -186,7 +199,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetBookmarksRequestOrderBy",
                 "prev": "optional<string>",
                 "webhook_id": "optional<string>",
               },
@@ -290,6 +303,17 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "GetBookmarksRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetBookmarksRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "TriggerBookmarkRequestTarget": {
           "docs": "Bookmark target",
           "enum": [
@@ -411,12 +435,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "cancelled_at": "optional<datetime>",
                 "completed_at": "optional<datetime>",
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetEventBulkRetriesRequestDir",
                 "id": "optional<string>",
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetEventBulkRetriesRequestOrderBy",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -752,6 +776,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "list<string>",
           ],
         },
+        "GetEventBulkRetriesRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetEventBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "bulkRetryIgnoredEvents.yml": {
@@ -862,12 +897,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "cancelled_at": "optional<datetime>",
                 "completed_at": "optional<datetime>",
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetIgnoredEventBulkRetriesRequestDir",
                 "id": "optional<string>",
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetIgnoredEventBulkRetriesRequestOrderBy",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -928,6 +963,17 @@ exports[`open api parser hookdeck simple 1`] = `
           "union": [
             "string",
             "list<string>",
+          ],
+        },
+        "GetIgnoredEventBulkRetriesRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetIgnoredEventBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
           ],
         },
       },
@@ -1049,12 +1095,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "cancelled_at": "optional<datetime>",
                 "completed_at": "optional<datetime>",
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetRequestBulkRetriesRequestDir",
                 "id": "optional<string>",
                 "in_progress": "optional<boolean>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetRequestBulkRetriesRequestOrderBy",
                 "prev": "optional<string>",
                 "query_partial_match": "optional<boolean>",
               },
@@ -1295,6 +1341,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "rejected",
           ],
         },
+        "GetRequestBulkRetriesRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetRequestBulkRetriesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
       },
     },
     "connections.yml": {
@@ -1424,13 +1481,13 @@ exports[`open api parser hookdeck simple 1`] = `
                 "archived": "optional<boolean>",
                 "archived_at": "optional<datetime>",
                 "destination_id": "optional<string>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetConnectionsRequestDir",
                 "full_name": "optional<string>",
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetConnectionsRequestOrderBy",
                 "paused_at": "optional<datetime>",
                 "prev": "optional<string>",
                 "source_id": "optional<string>",
@@ -1652,6 +1709,17 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
+        "GetConnectionsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetConnectionsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "UpdateConnectionRequestRuleset": {
           "docs": "Ruleset input object",
           "properties": {
@@ -1841,12 +1909,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "archived": "optional<boolean>",
                 "archived_at": "optional<datetime>",
                 "cli_path": "optional<string>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetDestinationsRequestDir",
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetDestinationsRequestOrderBy",
                 "prev": "optional<string>",
                 "url": "optional<string>",
               },
@@ -1982,6 +2050,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "hour",
           ],
         },
+        "GetDestinationsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetDestinationsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
         "UpdateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
@@ -2060,7 +2139,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "cli_user_id": "optional<string>",
                 "created_at": "optional<datetime>",
                 "destination_id": "optional<string>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetEventsRequestDir",
                 "error_code": "optional<string>",
                 "event_data_id": "optional<string>",
                 "headers": "optional<string>",
@@ -2070,7 +2149,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "last_attempt_at": "optional<datetime>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"last_attempt_at">>",
+                "order_by": "GetEventsRequestOrderBy",
                 "parsed_query": "optional<string>",
                 "path": "optional<string>",
                 "prev": "optional<string>",
@@ -2137,6 +2216,21 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.RetriedEvent",
             },
           },
+        },
+      },
+      "types": {
+        "GetEventsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetEventsRequestOrderBy": {
+          "enum": [
+            "last_attempt_at",
+            "next_attempt_at",
+            "created_at",
+          ],
         },
       },
     },
@@ -2514,12 +2608,12 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetIssueTriggersRequest",
               "query-parameters": {
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetIssueTriggersRequestDir",
                 "disabled_at": "optional<datetime>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetIssueTriggersRequestOrderBy",
                 "prev": "optional<string>",
                 "type": "optional<root.IssueType>",
               },
@@ -2615,6 +2709,18 @@ exports[`open api parser hookdeck simple 1`] = `
             "root.IssueTriggerBackpressureConfigs",
           ],
         },
+        "GetIssueTriggersRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetIssueTriggersRequestOrderBy": {
+          "enum": [
+            "created_at",
+            "type",
+          ],
+        },
         "UpdateIssueTriggerRequestConfigs": {
           "discriminated": false,
           "docs": "Configuration object for the specific issue type selected",
@@ -2705,7 +2811,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "name": "GetIssueCountRequest",
               "query-parameters": {
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetIssueCountRequestDir",
                 "dismissed_at": "optional<datetime>",
                 "first_seen_at": "optional<datetime>",
                 "id": "optional<string>",
@@ -2714,10 +2820,10 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "merged_with": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetIssueCountRequestOrderBy",
                 "prev": "optional<string>",
-                "status": "optional<literal<"OPENED">>",
-                "type": "optional<literal<"delivery">>",
+                "status": "GetIssueCountRequestStatus",
+                "type": "GetIssueCountRequestType",
               },
             },
             "response": {
@@ -2750,7 +2856,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "name": "GetIssuesRequest",
               "query-parameters": {
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetIssuesRequestDir",
                 "dismissed_at": "optional<datetime>",
                 "first_seen_at": "optional<datetime>",
                 "id": "optional<string>",
@@ -2759,10 +2865,10 @@ exports[`open api parser hookdeck simple 1`] = `
                 "limit": "optional<integer>",
                 "merged_with": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetIssuesRequestOrderBy",
                 "prev": "optional<string>",
-                "status": "optional<literal<"OPENED">>",
-                "type": "optional<literal<"delivery">>",
+                "status": "GetIssuesRequestStatus",
+                "type": "GetIssuesRequestType",
               },
             },
             "response": {
@@ -2804,6 +2910,66 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "GetIssueCountRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetIssueCountRequestOrderBy": {
+          "enum": [
+            "created_at",
+            "first_seen_at",
+            "last_seen_at",
+            "opened_at",
+            "status",
+          ],
+        },
+        "GetIssueCountRequestStatus": {
+          "enum": [
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
+          ],
+        },
+        "GetIssueCountRequestType": {
+          "enum": [
+            "delivery",
+            "transformation",
+            "backpressure",
+          ],
+        },
+        "GetIssuesRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetIssuesRequestOrderBy": {
+          "enum": [
+            "created_at",
+            "first_seen_at",
+            "last_seen_at",
+            "opened_at",
+            "status",
+          ],
+        },
+        "GetIssuesRequestStatus": {
+          "enum": [
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
+          ],
+        },
+        "GetIssuesRequestType": {
+          "enum": [
+            "delivery",
+            "transformation",
+            "backpressure",
+          ],
+        },
         "UpdateIssueRequestStatus": {
           "docs": "New status",
           "enum": [
@@ -2926,7 +3092,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "cli_user_id": "optional<string>",
                 "created_at": "optional<datetime>",
                 "destination_id": "optional<string>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetRequestEventsRequestDir",
                 "error_code": "optional<string>",
                 "event_data_id": "optional<string>",
                 "headers": "optional<string>",
@@ -2936,7 +3102,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "last_attempt_at": "optional<datetime>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"last_attempt_at">>",
+                "order_by": "GetRequestEventsRequestOrderBy",
                 "parsed_query": "optional<string>",
                 "path": "optional<string>",
                 "prev": "optional<string>",
@@ -2982,11 +3148,11 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetRequestIgnoredEventsRequest",
               "query-parameters": {
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetRequestIgnoredEventsRequestDir",
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetRequestIgnoredEventsRequestOrderBy",
                 "prev": "optional<string>",
               },
             },
@@ -3042,7 +3208,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "body": "optional<string>",
                 "bulk_retry_id": "optional<string>",
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetRequestsRequestDir",
                 "events_count": "optional<integer>",
                 "headers": "optional<string>",
                 "id": "optional<string>",
@@ -3051,7 +3217,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "ingested_at": "optional<datetime>",
                 "limit": "optional<integer>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"ingested_at">>",
+                "order_by": "GetRequestsRequestOrderBy",
                 "parsed_query": "optional<string>",
                 "path": "optional<string>",
                 "prev": "optional<string>",
@@ -3101,6 +3267,42 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "types": {
+        "GetRequestEventsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetRequestEventsRequestOrderBy": {
+          "enum": [
+            "last_attempt_at",
+            "next_attempt_at",
+            "created_at",
+          ],
+        },
+        "GetRequestIgnoredEventsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetRequestIgnoredEventsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
+        "GetRequestsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetRequestsRequestOrderBy": {
+          "enum": [
+            "ingested_at",
+            "created_at",
+          ],
+        },
         "GetRequestsRequestStatus": {
           "enum": [
             "accepted",
@@ -3212,12 +3414,12 @@ exports[`open api parser hookdeck simple 1`] = `
               "query-parameters": {
                 "archived": "optional<boolean>",
                 "archived_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetRulesetsRequestDir",
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetRulesetsRequestOrderBy",
                 "prev": "optional<string>",
               },
             },
@@ -3319,6 +3521,19 @@ exports[`open api parser hookdeck simple 1`] = `
           },
         },
       },
+      "types": {
+        "GetRulesetsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetRulesetsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
+      },
     },
     "sources.yml": {
       "docs": "A source represents any third party that sends webhooks to Hookdeck.",
@@ -3418,13 +3633,13 @@ exports[`open api parser hookdeck simple 1`] = `
               "query-parameters": {
                 "archived": "optional<boolean>",
                 "archived_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetSourcesRequestDir",
                 "id": "optional<string>",
                 "integration_id": "optional<string>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetSourcesRequestOrderBy",
                 "prev": "optional<string>",
               },
             },
@@ -3514,6 +3729,19 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "root.Source",
             },
           },
+        },
+      },
+      "types": {
+        "GetSourcesRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetSourcesRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
         },
       },
     },
@@ -3628,12 +3856,12 @@ exports[`open api parser hookdeck simple 1`] = `
               "name": "GetTransformationExecutionsRequest",
               "query-parameters": {
                 "created_at": "optional<datetime>",
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetTransformationExecutionsRequestDir",
                 "issue_id": "optional<string>",
                 "limit": "optional<integer>",
-                "log_level": "optional<literal<"debug">>",
+                "log_level": "GetTransformationExecutionsRequestLogLevel",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetTransformationExecutionsRequestOrderBy",
                 "prev": "optional<string>",
                 "webhook_id": "optional<string>",
               },
@@ -3667,12 +3895,12 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "name": "GetTransformationsRequest",
               "query-parameters": {
-                "dir": "optional<literal<"asc">>",
+                "dir": "GetTransformationsRequestDir",
                 "id": "optional<string>",
                 "limit": "optional<integer>",
                 "name": "optional<string>",
                 "next": "optional<string>",
-                "order_by": "optional<literal<"created_at">>",
+                "order_by": "GetTransformationsRequestOrderBy",
                 "prev": "optional<string>",
               },
             },
@@ -3828,6 +4056,37 @@ exports[`open api parser hookdeck simple 1`] = `
           "union": [
             "string",
             "double",
+          ],
+        },
+        "GetTransformationExecutionsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetTransformationExecutionsRequestLogLevel": {
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal",
+          ],
+        },
+        "GetTransformationExecutionsRequestOrderBy": {
+          "enum": [
+            "created_at",
+          ],
+        },
+        "GetTransformationsRequestDir": {
+          "enum": [
+            "asc",
+            "desc",
+          ],
+        },
+        "GetTransformationsRequestOrderBy": {
+          "enum": [
+            "created_at",
           ],
         },
         "TestTransformationRequestEnv": {

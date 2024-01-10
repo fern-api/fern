@@ -83,7 +83,26 @@ function getQueryParameterTypeReference({
                 allowMultiple: true
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
-            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            // Try to generated enum from literal values
+            const literalValues = [];
+            for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
+                if (schema.type === "literal" && schema.value.type === "string") {
+                    literalValues.push(schema.value.string);
+                }
+            }
+
+            if (literalValues.length > 0) {
+                context.builder.addType(fileContainingReference, {
+                    name: schema.generatedName,
+                    schema: { enum: literalValues }
+                });
+                return {
+                    value: schema.generatedName,
+                    allowMultiple: false
+                };
+            }
+
+            // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
                     schema,
@@ -128,7 +147,26 @@ function getQueryParameterTypeReference({
                 allowMultiple: true
             };
         } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
-            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            // Try to generated enum from literal values
+            const literalValues = [];
+            for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
+                if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
+                    literalValues.push(oneOfSchema.value.string);
+                }
+            }
+
+            if (literalValues.length > 0) {
+                context.builder.addType(fileContainingReference, {
+                    name: schema.value.oneOf.generatedName,
+                    schema: { enum: literalValues }
+                });
+                return {
+                    value: schema.value.oneOf.generatedName,
+                    allowMultiple: false
+                };
+            }
+
+            // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
                     schema: Schema.optional({ value: oneOfSchema, description: undefined, groupName: undefined }),
