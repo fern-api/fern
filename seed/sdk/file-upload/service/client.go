@@ -11,6 +11,7 @@ import (
 	io "io"
 	multipart "mime/multipart"
 	http "net/http"
+	url "net/url"
 )
 
 type Client struct {
@@ -137,6 +138,63 @@ func (c *Client) JustFile(ctx context.Context, file io.Reader) error {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "just-file"
+
+	requestBuffer := bytes.NewBuffer(nil)
+	writer := multipart.NewWriter(requestBuffer)
+	fileFilename := "file_filename"
+	if named, ok := file.(interface{ Name() string }); ok {
+		fileFilename = named.Name()
+	}
+	filePart, err := writer.CreateFormFile("file", fileFilename)
+	if err != nil {
+		return err
+	}
+	if _, err := io.Copy(filePart, file); err != nil {
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		return err
+	}
+	c.header.Set("Content-Type", writer.FormDataContentType())
+
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:     endpointURL,
+			Method:  http.MethodPost,
+			Headers: c.header,
+			Request: requestBuffer,
+		},
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) JustFileWithQueryParams(ctx context.Context, file io.Reader, request *fern.JustFileWithQueryParamsRequet) error {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "just-file-with-query-params"
+
+	queryParams := make(url.Values)
+	if request.MaybeString != nil {
+		queryParams.Add("maybeString", fmt.Sprintf("%v", *request.MaybeString))
+	}
+	queryParams.Add("integer", fmt.Sprintf("%v", request.Integer))
+	if request.MaybeInteger != nil {
+		queryParams.Add("maybeInteger", fmt.Sprintf("%v", *request.MaybeInteger))
+	}
+	for _, value := range request.ListOfStrings {
+		queryParams.Add("listOfStrings", fmt.Sprintf("%v", value))
+	}
+	for _, value := range request.OptionalListOfStrings {
+		queryParams.Add("optionalListOfStrings", fmt.Sprintf("%v", *value))
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
 
 	requestBuffer := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(requestBuffer)

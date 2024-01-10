@@ -893,10 +893,7 @@ func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint) bool {
 		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
 	}
-	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
-		return !fileUploadHasBodyProperties(irEndpoint.RequestBody.FileUpload)
-	}
-	return false
+	return !needsRequestParameter(irEndpoint)
 }
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least

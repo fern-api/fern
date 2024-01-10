@@ -1670,6 +1670,9 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 	if endpoint.SdkRequest == nil {
 		return false
 	}
+	if len(endpoint.QueryParameters) > 0 {
+		return true
+	}
 	if endpoint.RequestBody != nil {
 		return endpoint.RequestBody.FileUpload == nil || fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload)
 	}

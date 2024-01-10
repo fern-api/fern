@@ -8,6 +8,14 @@ import (
 	core "github.com/file-upload/fern/core"
 )
 
+type JustFileWithQueryParamsRequet struct {
+	MaybeString           *string   `json:"-"`
+	Integer               int       `json:"-"`
+	MaybeInteger          *int      `json:"-"`
+	ListOfStrings         []string  `json:"-"`
+	OptionalListOfStrings []*string `json:"-"`
+}
+
 type MyRequest struct {
 	MaybeString            *string         `json:"maybeString,omitempty"`
 	Integer                int             `json:"integer"`
