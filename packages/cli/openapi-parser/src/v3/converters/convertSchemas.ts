@@ -38,7 +38,14 @@ export function convertSchema(
         }
         return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
     } else {
-        return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs, propertiesToExclude);
+        return convertSchemaObject(
+            schema,
+            wrapAsNullable,
+            context,
+            breadcrumbs,
+            propertiesToExclude,
+            referencedAsRequest
+        );
     }
 }
 
@@ -67,7 +74,8 @@ export function convertSchemaObject(
     wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
-    propertiesToExclude: Set<string> = new Set()
+    propertiesToExclude: Set<string> = new Set(),
+    referencedAsRequest = false
 ): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
@@ -309,7 +317,13 @@ export function convertSchemaObject(
                 groupName
             });
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
-            const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
+            const convertedSchema = convertSchema(
+                schema.oneOf[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         } else if (schema.oneOf.length > 1) {
             if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
@@ -375,7 +389,13 @@ export function convertSchemaObject(
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
-            const convertedSchema = convertSchema(schema.anyOf[0], wrapAsNullable, context, breadcrumbs);
+            const convertedSchema = convertSchema(
+                schema.anyOf[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         }
 
@@ -428,7 +448,13 @@ export function convertSchemaObject(
         if (schema.allOf != null) {
             const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
             if (maybeSingularAllOf != null) {
-                const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsNullable, context, breadcrumbs);
+                const convertedSchema = convertSchema(
+                    maybeSingularAllOf,
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    referencedAsRequest
+                );
                 return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
             }
         }
