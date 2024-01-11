@@ -21,7 +21,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
 
     // TODO: This (as an abstract function) will probably be used across CLIs
     private generateRepositoryBoilerPlate(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig) {
-        // Static files and dependencies
+        // Static files and dependencies (.github/, bin/, .gitignore, .rubocop_*, Gemfile, Rakefile, README)
     }
 
     private generateTypes(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig, intermediateRepresentation: IntermediateRepresentation) {

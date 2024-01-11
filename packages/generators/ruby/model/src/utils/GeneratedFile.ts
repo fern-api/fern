@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 
-export class GeneratedFile {
+export abstract class GeneratedFile {
     public filename: string;
     public directory: RelativeFilePath;
     public fileContents: string;
@@ -12,9 +12,9 @@ export class GeneratedFile {
         this.fileContents = fileContents;
     }
 
-    public async write(directoryPrefix: AbsoluteFilePath, contents: string): Promise<void> {
+    public async write(directoryPrefix: AbsoluteFilePath): Promise<void> {
         const outputDirectory = join(directoryPrefix, this.directory);
         await mkdir(outputDirectory, { recursive: true });
-        await writeFile(`${outputDirectory}/${this.filename}`, contents);
+        await writeFile(`${outputDirectory}/${this.filename}`, this.fileContents);
     }
 }
