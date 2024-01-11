@@ -219,7 +219,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.packageMarkerFile.service = {
                 ...this.packageMarkerFile.service,
                 endpoints: Object.fromEntries(
-                    Object.entries(this.packageMarkerFile.service?.endpoints ?? {}).map(([id, endpoint]) => {
+                    Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
                         return [
                             id,
                             {
@@ -238,7 +238,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 file.service = {
                     ...file.service,
                     endpoints: Object.fromEntries(
-                        Object.entries(file.service?.endpoints ?? {}).map(([id, endpoint]) => {
+                        Object.entries(file.service.endpoints).map(([id, endpoint]) => {
                             return [
                                 id,
                                 {
@@ -317,5 +317,6 @@ function getSharedSuffix(strings: string[]): string {
 }
 
 function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
 }
