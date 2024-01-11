@@ -21,7 +21,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/attempts/{id}",
+            "path": "/2023-01-01/attempts/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -50,7 +50,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/attempts",
+            "path": "/2023-01-01/attempts",
             "request": {
               "name": "GetAttemptsRequest",
               "query-parameters": {
@@ -102,7 +102,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/bookmarks",
+            "path": "/2023-01-01/bookmarks",
             "request": {
               "body": {
                 "properties": {
@@ -141,7 +141,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -158,7 +158,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -187,7 +187,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bookmarks",
+            "path": "/2023-01-01/bookmarks",
             "request": {
               "name": "GetBookmarksRequest",
               "query-parameters": {
@@ -234,7 +234,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/bookmarks/{id}/trigger",
+            "path": "/2023-01-01/bookmarks/{id}/trigger",
             "path-parameters": {
               "id": "string",
             },
@@ -266,7 +266,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/bookmarks/{id}",
+            "path": "/2023-01-01/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -341,7 +341,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "POST",
-            "path": "/bulk/events/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -359,7 +359,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/bulk/events/retry",
+            "path": "/2023-01-01/bulk/events/retry",
             "request": {
               "body": {
                 "properties": {
@@ -398,7 +398,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/events/retry/plan",
+            "path": "/2023-01-01/bulk/events/retry/plan",
             "response": {
               "docs": "Events bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -428,7 +428,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/events/retry",
+            "path": "/2023-01-01/bulk/events/retry",
             "request": {
               "name": "GetEventBulkRetriesRequest",
               "query-parameters": {
@@ -458,7 +458,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/bulk/events/retry/{id}",
+            "path": "/2023-01-01/bulk/events/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -807,7 +807,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "POST",
-            "path": "/bulk/ignored-events/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -825,7 +825,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/bulk/ignored-events/retry",
+            "path": "/2023-01-01/bulk/ignored-events/retry",
             "request": {
               "body": {
                 "properties": {
@@ -864,7 +864,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry/plan",
+            "path": "/2023-01-01/bulk/ignored-events/retry/plan",
             "response": {
               "docs": "Ignored events bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -890,7 +890,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry",
+            "path": "/2023-01-01/bulk/ignored-events/retry",
             "request": {
               "name": "GetIgnoredEventBulkRetriesRequest",
               "query-parameters": {
@@ -920,7 +920,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/bulk/ignored-events/retry/{id}",
+            "path": "/2023-01-01/bulk/ignored-events/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -996,7 +996,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "POST",
-            "path": "/bulk/requests/retry/{id}/cancel",
+            "path": "/2023-01-01/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
             },
@@ -1014,7 +1014,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/bulk/requests/retry",
+            "path": "/2023-01-01/bulk/requests/retry",
             "request": {
               "body": {
                 "properties": {
@@ -1057,7 +1057,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/requests/retry/plan",
+            "path": "/2023-01-01/bulk/requests/retry/plan",
             "response": {
               "docs": "Requests bulk retry plan",
               "type": "root.BatchOperationPlan",
@@ -1088,7 +1088,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/bulk/requests/retry",
+            "path": "/2023-01-01/bulk/requests/retry",
             "request": {
               "name": "GetRequestBulkRetriesRequest",
               "query-parameters": {
@@ -1118,7 +1118,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/bulk/requests/retry/{id}",
+            "path": "/2023-01-01/bulk/requests/retry/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1372,7 +1372,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/webhooks/{id}/archive",
+            "path": "/2023-01-01/webhooks/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -1390,7 +1390,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -1445,7 +1445,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/webhooks/{id}",
+            "path": "/2023-01-01/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1474,7 +1474,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "name": "GetConnectionsRequest",
               "query-parameters": {
@@ -1506,7 +1506,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/webhooks/{id}/pause",
+            "path": "/2023-01-01/webhooks/{id}/pause",
             "path-parameters": {
               "id": "string",
             },
@@ -1523,7 +1523,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/webhooks/{id}/unarchive",
+            "path": "/2023-01-01/webhooks/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -1540,7 +1540,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/webhooks/{id}/unpause",
+            "path": "/2023-01-01/webhooks/{id}/unpause",
             "path-parameters": {
               "id": "string",
             },
@@ -1559,7 +1559,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/webhooks/{id}",
+            "path": "/2023-01-01/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1602,7 +1602,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/webhooks",
+            "path": "/2023-01-01/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -1811,7 +1811,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/destinations/{id}/archive",
+            "path": "/2023-01-01/destinations/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -1829,7 +1829,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "body": {
                 "properties": {
@@ -1873,7 +1873,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/destinations/{id}",
+            "path": "/2023-01-01/destinations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -1902,7 +1902,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "name": "GetDestinationsRequest",
               "query-parameters": {
@@ -1932,7 +1932,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/destinations/{id}/unarchive",
+            "path": "/2023-01-01/destinations/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -1951,7 +1951,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/destinations/{id}",
+            "path": "/2023-01-01/destinations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2003,7 +2003,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/destinations",
+            "path": "/2023-01-01/destinations",
             "request": {
               "body": {
                 "properties": {
@@ -2097,7 +2097,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/events/{id}",
+            "path": "/2023-01-01/events/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2128,7 +2128,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/events",
+            "path": "/2023-01-01/events",
             "request": {
               "name": "GetEventsRequest",
               "query-parameters": {
@@ -2173,7 +2173,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/events/{id}/raw_body",
+            "path": "/2023-01-01/events/{id}/raw_body",
             "path-parameters": {
               "id": "string",
             },
@@ -2190,7 +2190,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/events/{id}/mute",
+            "path": "/2023-01-01/events/{id}/mute",
             "path-parameters": {
               "id": "string",
             },
@@ -2207,7 +2207,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "POST",
-            "path": "/events/{id}/retry",
+            "path": "/2023-01-01/events/{id}/retry",
             "path-parameters": {
               "id": "string",
             },
@@ -2253,7 +2253,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/integrations/{id}/attach/{source_id}",
+            "path": "/2023-01-01/integrations/{id}/attach/{source_id}",
             "path-parameters": {
               "id": "string",
               "source_id": "string",
@@ -2272,7 +2272,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/integrations",
+            "path": "/2023-01-01/integrations",
             "request": {
               "body": {
                 "properties": {
@@ -2308,7 +2308,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2340,7 +2340,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
-            "path": "/integrations/{id}/detach/{source_id}",
+            "path": "/2023-01-01/integrations/{id}/detach/{source_id}",
             "path-parameters": {
               "id": "string",
               "source_id": "string",
@@ -2358,7 +2358,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2389,7 +2389,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/integrations",
+            "path": "/2023-01-01/integrations",
             "request": {
               "name": "GetIntegrationsRequest",
               "query-parameters": {
@@ -2412,7 +2412,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/integrations/{id}",
+            "path": "/2023-01-01/integrations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2489,7 +2489,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "body": {
                 "properties": {
@@ -2522,7 +2522,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2539,7 +2539,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}/disable",
+            "path": "/2023-01-01/issue-triggers/{id}/disable",
             "path-parameters": {
               "id": "string",
             },
@@ -2556,7 +2556,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}/enable",
+            "path": "/2023-01-01/issue-triggers/{id}/enable",
             "path-parameters": {
               "id": "string",
             },
@@ -2573,7 +2573,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2604,7 +2604,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "name": "GetIssueTriggersRequest",
               "query-parameters": {
@@ -2632,7 +2632,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/issue-triggers/{id}",
+            "path": "/2023-01-01/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2672,7 +2672,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/issue-triggers",
+            "path": "/2023-01-01/issue-triggers",
             "request": {
               "body": {
                 "properties": {
@@ -2759,7 +2759,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2776,7 +2776,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2806,7 +2806,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/issues/count",
+            "path": "/2023-01-01/issues/count",
             "request": {
               "name": "GetIssueCountRequest",
               "query-parameters": {
@@ -2851,7 +2851,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/issues",
+            "path": "/2023-01-01/issues",
             "request": {
               "name": "GetIssuesRequest",
               "query-parameters": {
@@ -2885,7 +2885,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/issues/{id}",
+            "path": "/2023-01-01/issues/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -2996,7 +2996,7 @@ exports[`open api parser hookdeck simple 1`] = `
             "display-name": "Toggle webhook notifications for the workspace",
             "docs": "",
             "method": "PUT",
-            "path": "/notifications/webhooks",
+            "path": "/2023-01-01/notifications/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -3044,7 +3044,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/requests/{id}",
+            "path": "/2023-01-01/requests/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3078,7 +3078,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/requests/{id}/events",
+            "path": "/2023-01-01/requests/{id}/events",
             "path-parameters": {
               "id": "string",
             },
@@ -3141,7 +3141,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/requests/{id}/ignored_events",
+            "path": "/2023-01-01/requests/{id}/ignored_events",
             "path-parameters": {
               "id": "string",
             },
@@ -3169,7 +3169,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/requests/{id}/raw_body",
+            "path": "/2023-01-01/requests/{id}/raw_body",
             "path-parameters": {
               "id": "string",
             },
@@ -3201,7 +3201,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/requests",
+            "path": "/2023-01-01/requests",
             "request": {
               "name": "GetRequestsRequest",
               "query-parameters": {
@@ -3242,7 +3242,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/requests/{id}/retry",
+            "path": "/2023-01-01/requests/{id}/retry",
             "path-parameters": {
               "id": "string",
             },
@@ -3329,7 +3329,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/rulesets/{id}/archive",
+            "path": "/2023-01-01/rulesets/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -3347,7 +3347,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "body": {
                 "properties": {
@@ -3379,7 +3379,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/rulesets/{id}",
+            "path": "/2023-01-01/rulesets/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3408,7 +3408,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "name": "GetRulesetsRequest",
               "query-parameters": {
@@ -3436,7 +3436,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/rulesets/{id}/unarchive",
+            "path": "/2023-01-01/rulesets/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -3455,7 +3455,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/rulesets/{id}",
+            "path": "/2023-01-01/rulesets/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3495,7 +3495,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/rulesets",
+            "path": "/2023-01-01/rulesets",
             "request": {
               "body": {
                 "properties": {
@@ -3553,7 +3553,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/sources/{id}/archive",
+            "path": "/2023-01-01/sources/{id}/archive",
             "path-parameters": {
               "id": "string",
             },
@@ -3571,7 +3571,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "body": {
                 "properties": {
@@ -3598,7 +3598,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/sources/{id}",
+            "path": "/2023-01-01/sources/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3627,7 +3627,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "name": "GetSourcesRequest",
               "query-parameters": {
@@ -3656,7 +3656,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "PUT",
-            "path": "/sources/{id}/unarchive",
+            "path": "/2023-01-01/sources/{id}/unarchive",
             "path-parameters": {
               "id": "string",
             },
@@ -3675,7 +3675,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/sources/{id}",
+            "path": "/2023-01-01/sources/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3710,7 +3710,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/sources",
+            "path": "/2023-01-01/sources",
             "request": {
               "body": {
                 "properties": {
@@ -3764,7 +3764,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "body": {
                 "properties": {
@@ -3799,7 +3799,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/transformations/{id}",
+            "path": "/2023-01-01/transformations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3816,7 +3816,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/transformations/{id}/executions/{execution_id}",
+            "path": "/2023-01-01/transformations/{id}/executions/{execution_id}",
             "path-parameters": {
               "execution_id": "string",
               "id": "string",
@@ -3848,7 +3848,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/transformations/{id}/executions",
+            "path": "/2023-01-01/transformations/{id}/executions",
             "path-parameters": {
               "id": "string",
             },
@@ -3891,7 +3891,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "name": "GetTransformationsRequest",
               "query-parameters": {
@@ -3935,7 +3935,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
-            "path": "/transformations/run",
+            "path": "/2023-01-01/transformations/run",
             "request": {
               "body": {
                 "properties": {
@@ -3981,7 +3981,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/transformations/{id}",
+            "path": "/2023-01-01/transformations/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -4020,7 +4020,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
-            "path": "/transformations",
+            "path": "/2023-01-01/transformations",
             "request": {
               "body": {
                 "properties": {

@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
@@ -212,11 +212,51 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public build(): FernDefinition {
-        return {
+        const basePath = getSharedEnvironmentBasePath(this.rootApiFile);
+
+        // substitute package marker file
+        if (this.packageMarkerFile.service != null) {
+            this.packageMarkerFile.service = {
+                ...this.packageMarkerFile.service,
+                endpoints: Object.fromEntries(
+                    Object.entries(this.packageMarkerFile.service.endpoints).map(([id, endpoint]) => {
+                        return [
+                            id,
+                            {
+                                ...endpoint,
+                                path: `${basePath}${endpoint.path}`
+                            }
+                        ];
+                    })
+                )
+            };
+        }
+
+        // subsitute definition files
+        for (const [_, file] of Object.entries(this.definitionFiles)) {
+            if (file.service != null) {
+                file.service = {
+                    ...file.service,
+                    endpoints: Object.fromEntries(
+                        Object.entries(file.service.endpoints).map(([id, endpoint]) => {
+                            return [
+                                id,
+                                {
+                                    ...endpoint,
+                                    path: `${basePath}${endpoint.path}`
+                                }
+                            ];
+                        })
+                    )
+                };
+            }
+        }
+        const definition: FernDefinition = {
             rootApiFile: this.rootApiFile,
             packageMarkerFile: this.packageMarkerFile,
             definitionFiles: this.definitionFiles
         };
+        return definition;
     }
 
     public getOrCreateFile(
@@ -230,30 +270,53 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 }
 
-// // when building the fern definition try to extract as much of the shared prefix environment url
-// // into the endpoint path
-// function getPathname(url: string): string {
-//     const parsedUrl = new URL(url);
-//     const pathname = parsedUrl.pathname;
-//     if (pathname.endsWith("/")) {
-//         return pathname.slice(0, -1);
-//     } else {
-//         return pathname;
-//     }
-// }
+function getSharedEnvironmentBasePath(rootApiFile: RootApiFileSchema): string {
+    if (rootApiFile.environments == null) {
+        return "";
+    }
+    const urls = Object.entries(rootApiFile.environments).flatMap(([_, url]) => {
+        if (typeof url === "string") {
+            return [url];
+        } else if (isSingleBaseUrl(url)) {
+            return [url.url];
+        } else {
+            return Object.values(url.urls);
+        }
+    });
+    return getSharedSuffix(urls.map(getPathname));
+}
 
-// function getSharedSuffix(strings: string[]): string {
-//     let suffix = "";
+function getPathname(url: string): string {
+    try {
+        const parsedUrl = new URL(url);
+        const pathname = parsedUrl.pathname;
+        if (pathname.endsWith("/")) {
+            return pathname.slice(0, -1);
+        } else {
+            return pathname;
+        }
+    } catch (err) {
+        return "";
+    }
+}
 
-//     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
-//     while (true) {
-//         const chars = strings.map((s) => s[s.length - suffix.length - 1]);
-//         const char = chars[0];
-//         if (char == null || chars.some((c) => c !== char)) {
-//             break;
-//         }
-//         suffix = char + suffix;
-//     }
+function getSharedSuffix(strings: string[]): string {
+    let suffix = "";
 
-//     return suffix;
-// }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+    while (true) {
+        const chars = strings.map((s) => s[s.length - suffix.length - 1]);
+        const char = chars[0];
+        if (char == null || chars.some((c) => c !== char)) {
+            break;
+        }
+        suffix = char + suffix;
+    }
+
+    return suffix;
+}
+
+function isSingleBaseUrl(url: RawSchemas.EnvironmentSchema): url is RawSchemas.SingleBaseUrlEnvironmentSchema {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (url as RawSchemas.SingleBaseUrlEnvironmentSchema).url != null;
+}
