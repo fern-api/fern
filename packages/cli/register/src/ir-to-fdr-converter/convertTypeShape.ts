@@ -50,7 +50,8 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     availability:
                         baseProperty.availability != null
                             ? convertIrAvailability({ availability: baseProperty.availability })
-                            : undefined
+                            : undefined,
+                    docs: baseProperty.docs
                 };
             });
             return {
