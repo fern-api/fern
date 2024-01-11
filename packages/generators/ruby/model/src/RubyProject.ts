@@ -9,39 +9,39 @@ export class RubyProject extends PersistedProject {
         return;
     }
 
-    public format(logger: Logger): Promise<void>  {
+    public format(logger: Logger): Promise<void> {
         // TODO
         return;
     }
 
-    public build(logger: Logger): Promise<void>  {
+    public build(logger: Logger): Promise<void> {
         // TODO
         return;
     }
-    
+
     public copyProjectAsZipTo({
         destinationZip,
-        logger,
+        logger
     }: {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
-    }): Promise<void>  {
+    }): Promise<void> {
         // TODO
         return;
     }
 
     public copyPublishableContentAsZipTo({
         destinationZip,
-        logger,
+        logger
     }: {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
-    }): Promise<void>  {
+    }): Promise<void> {
         // TODO
         return;
     }
 
-    public deleteGitIgnoredFiles(logger: Logger): Promise<void>  {
+    public deleteGitIgnoredFiles(logger: Logger): Promise<void> {
         // TODO
         return;
     }

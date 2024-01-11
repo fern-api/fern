@@ -11,13 +11,27 @@ export enum RubyClass {
     DATETIME = "DateTime",
     BOOLEAN = "Boolean",
     NIL = "nil",
-    VOID = "void",
+    VOID = "void"
+}
+export declare namespace Class_ {
+    export interface Init extends AstNode.Init {
+        name: string;
+        moduleBreadcrumbs: string[];
+        importedClasses?: Class_[];
+        extendedClasses?: Class_[];
+        properties?: Variable[];
+        functions?: Function_[];
+        expressions?: Expression[];
+        includeInitializer?: boolean;
+        location?: string;
+    }
 }
 
 export class Class_ extends AstNode {
     public location: string | undefined;
     public name: string;
     public moduleBreadcrumbs: string[];
+    public importedClasses: Class_[];
     public extendedClasses: Class_[];
 
     public properties: Variable[];
@@ -25,13 +39,25 @@ export class Class_ extends AstNode {
     public expressions: Expression[];
     public includeInitializer: boolean;
 
-    constructor(name: string, moduleBreadcrumbs: string[], extendedClasses: Class_[] = [], properties: Variable[] = [], functions: Function_[] = [], expressions: Expression[] = [], includeInitializer = true, documentation?: string, location?: string) {
-        super(documentation);
+    constructor({
+        name,
+        moduleBreadcrumbs,
+        importedClasses = [],
+        extendedClasses = [],
+        properties = [],
+        functions = [],
+        expressions = [],
+        includeInitializer = true,
+        location,
+        ...rest
+    }: Class_.Init) {
+        super(rest);
         this.location = location;
         this.name = name;
         this.moduleBreadcrumbs = moduleBreadcrumbs;
+        this.importedClasses = importedClasses;
         this.extendedClasses = extendedClasses;
-    
+
         this.properties = properties;
         this.functions = functions;
         this.expressions = expressions;

@@ -4,6 +4,15 @@ import { Expression } from "./Expression";
 import { Parameter } from "./Parameter";
 import { Yardoc } from "./Yardoc";
 
+export declare namespace Function_ {
+    export interface Init extends AstNode.Init {
+        name: string;
+        functionBody: Expression[];
+        parameters: Parameter[];
+        isAsync: boolean;
+        returnValue?: Class_;
+    }
+}
 export class Function_ extends AstNode {
     public name: string;
 
@@ -13,8 +22,8 @@ export class Function_ extends AstNode {
     public functionBody: Expression[];
     public isAsync: boolean;
 
-    constructor(name: string, functionBody: Expression[], parameters: Parameter[] = [], isAsync = false, returnValue?: Class_, documentation?: string) {
-        super(documentation);
+    constructor({ name, functionBody, parameters = [], isAsync = false, returnValue, ...rest }: Function_.Init) {
+        super(rest);
         this.name = name;
         this.parameters = parameters;
         this.returnValue = returnValue;
@@ -23,7 +32,7 @@ export class Function_ extends AstNode {
     }
 
     // When invoking a function
-    public writeInvokation(arguments: Map<string, string>): string {
+    public writeInvokation(argumentMap: Map<string, string>): string {
         return "";
     }
 
@@ -31,10 +40,11 @@ export class Function_ extends AstNode {
     public writeInternal(startingTabSpaces: number): string {
         let print = "";
         // Write docstring
-        print += (new Yardoc(
-            this.documentation,
-            {name: "docString", parameters: this.parameters, returnClass: this.returnValue}
-        )).writeInternal(startingTabSpaces);
+        print += new Yardoc(this.documentation, {
+            name: "docString",
+            parameters: this.parameters,
+            returnClass: this.returnValue
+        }).writeInternal(startingTabSpaces);
         // Write function signature
         // Write function body
         return print;

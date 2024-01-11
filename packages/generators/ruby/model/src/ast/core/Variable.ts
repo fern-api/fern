@@ -1,18 +1,25 @@
 import { AstNode } from "../AstNode";
 import { Class_, RubyClass } from "./Class_";
 
-
 export enum VariableType {
-    CLASS, INSTANCE, LOCAL
+    CLASS,
+    INSTANCE,
+    LOCAL
 }
-
+export declare namespace Variable {
+    export interface Init extends AstNode.Init {
+        name: string;
+        type: Class_ | RubyClass;
+        variableType: VariableType;
+    }
+}
 export class Variable extends AstNode {
     public name: string;
     public type: Class_ | RubyClass;
     public variableType: VariableType;
 
-    constructor(name: string, type: Class_ | RubyClass, variableType: VariableType, description?: string) {
-        super(description);
+    constructor({ name, type, variableType, ...rest }: Variable.Init) {
+        super(rest);
         this.name = name;
         this.type = type;
         this.variableType = variableType;

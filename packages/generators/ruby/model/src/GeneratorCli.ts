@@ -15,16 +15,23 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         return {
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
             extraDependencies: parsed?.extraDependencies ?? {},
-            noOptionalProperties: parsed?.noOptionalProperties ?? false,
+            noOptionalProperties: parsed?.noOptionalProperties ?? false
         };
     }
 
     // TODO: This (as an abstract function) will probably be used across CLIs
-    private generateRepositoryBoilerPlate(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig) {
+    private generateRepositoryBoilerPlate(
+        config: FernGeneratorExec.GeneratorConfig,
+        customConfig: RubyModelCustomConfig
+    ) {
         // Static files and dependencies (.github/, bin/, .gitignore, .rubocop_*, Gemfile, Rakefile, README)
     }
 
-    private generateTypes(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig, intermediateRepresentation: IntermediateRepresentation) {
+    private generateTypes(
+        config: FernGeneratorExec.GeneratorConfig,
+        customConfig: RubyModelCustomConfig,
+        intermediateRepresentation: IntermediateRepresentation
+    ) {
         const generatedTypeFiles = new TypesGenerator(intermediateRepresentation).generateFiles();
         this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
     }
@@ -34,7 +41,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: IntermediateRepresentation
     ) {
         generatorContext.logger.debug("Generating boilerplate");
         this.generateRepositoryBoilerPlate(config, customConfig);
@@ -46,7 +53,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
     }
@@ -54,7 +61,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
     }
@@ -62,7 +69,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
+        intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
     }

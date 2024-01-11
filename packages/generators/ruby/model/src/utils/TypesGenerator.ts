@@ -1,11 +1,16 @@
-import { IntermediateRepresentation, ObjectTypeDeclaration, Type, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
+import {
+    IntermediateRepresentation,
+    ObjectTypeDeclaration,
+    Type,
+    TypeDeclaration,
+    TypeId
+} from "@fern-fern/ir-sdk/api";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
-
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
     private types: Map<TypeId, TypeDeclaration>;
-    // Ruby does not have a concept of interfaces directly and so we'd want to 
+    // Ruby does not have a concept of interfaces directly and so we'd want to
     // create the type/class as normal and note for the inheriting classes to
     // specify the inheritence (e.g. class InheritingClass < BaseClass)
     private typeExtends: Map<TypeId, TypeId[]>;
@@ -19,9 +24,9 @@ export class TypesGenerator {
             this.types.set(type.name.typeId, type);
 
             const extendedTypes = type.shape._visit<TypeId[]>({
-                alias:  () => [],
+                alias: () => [],
                 enum: () => [],
-                object: (value: ObjectTypeDeclaration) => value.extends.map(extendedType => extendedType.typeId),
+                object: (value: ObjectTypeDeclaration) => value.extends.map((extendedType) => extendedType.typeId),
                 union: () => [],
                 undiscriminatedUnion: () => [],
                 _other: () => []
@@ -42,7 +47,10 @@ export class TypesGenerator {
     private generateUnionFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
         // TODO
     }
-    private generateUndiscriminatedUnionFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
+    private generateUndiscriminatedUnionFile(
+        typeId: TypeId,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | null {
         // TODO
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | null {
@@ -54,7 +62,7 @@ export class TypesGenerator {
 
         for (const [key, value] of this.types.entries()) {
             const generatedFile = value.shape._visit<GeneratedRubyFile | null>({
-                alias:  () => this.generateAliasFile(key, value),
+                alias: () => this.generateAliasFile(key, value),
                 enum: () => this.generateEnumFile(key, value),
                 object: () => this.generateObjectFile(key, value),
                 union: () => this.generateUnionFile(key, value),
@@ -66,7 +74,7 @@ export class TypesGenerator {
                 typeFiles.set(key, generatedFile);
             }
         }
-          
+
         return typeFiles;
     }
 }
