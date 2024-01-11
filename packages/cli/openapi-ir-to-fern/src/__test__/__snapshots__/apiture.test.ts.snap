@@ -37,7 +37,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/accounts/{accountId}/jointOwners",
+            "path": "/banking/accounts/{accountId}/jointOwners",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -70,7 +70,7 @@ exports[`open api parser apiture simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/accounts/{accountId}",
+            "path": "/banking/accounts/{accountId}",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -109,7 +109,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
-            "path": "/accountBalances",
+            "path": "/banking/accountBalances",
             "request": {
               "name": "AccountsListAccountBalancesRequest",
               "query-parameters": {
@@ -140,7 +140,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/accounts",
+            "path": "/banking/accounts",
             "request": {
               "name": "AccountsListAccountsRequest",
               "query-parameters": {
@@ -186,7 +186,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/achEligibleAccounts",
+            "path": "/banking/achEligibleAccounts",
             "request": {
               "name": "AccountsListEligibleAchAccountsRequest",
               "query-parameters": {
@@ -251,7 +251,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/institutions/{institutionId}/cutoffTimes",
+            "path": "/banking/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -320,7 +320,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
-            "path": "/institutions/{institutionId}/transferDateRestrictions",
+            "path": "/banking/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -390,7 +390,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
-            "path": "/institutions/{institutionId}/transferSchedule",
+            "path": "/banking/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
               "institutionId": {
                 "docs": "The unique identifier of a financial institution.",
@@ -438,7 +438,7 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/institutionByLocator",
+            "path": "/banking/institutionByLocator",
             "request": {
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
               "query-parameters": {
@@ -490,7 +490,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/accounts/{accountId}/jointOwnerInvitations",
+            "path": "/banking/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -535,7 +535,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/accounts/{accountId}/overdraftProtection",
+            "path": "/banking/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -563,7 +563,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
+            "path": "/banking/accounts/{accountId}/eligibleOverdraftAccounts",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -602,7 +602,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "root.UnprocessableEntityError",
             ],
             "method": "PATCH",
-            "path": "/accounts/{accountId}/overdraftProtection",
+            "path": "/banking/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -663,7 +663,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               },
             ],
             "method": "GET",
-            "path": "/transactionCategories",
+            "path": "/banking/transactionCategories",
             "request": {
               "headers": {
                 "If-None-Match": {
@@ -707,7 +707,7 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.TooManyRequestsError",
             ],
             "method": "GET",
-            "path": "/accounts/{accountId}/transactions",
+            "path": "/banking/accounts/{accountId}/transactions",
             "path-parameters": {
               "accountId": {
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
@@ -799,7 +799,7 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnprocessableEntityError",
             ],
             "method": "POST",
-            "path": "/transfers",
+            "path": "/banking/transfers",
             "request": {
               "body": {
                 "extends": [
@@ -850,7 +850,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "DELETE",
-            "path": "/transfers/{transferId}",
+            "path": "/banking/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -868,7 +868,7 @@ Note: This operation requires an identity challenge if the financial institution
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/transfers/{transferId}",
+            "path": "/banking/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",
@@ -891,7 +891,7 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
-            "path": "/transfers",
+            "path": "/banking/transfers",
             "request": {
               "name": "TransfersListTransfersRequest",
               "query-parameters": {
@@ -940,7 +940,7 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnprocessableEntityError",
             ],
             "method": "PATCH",
-            "path": "/transfers/{transferId}",
+            "path": "/banking/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
                 "docs": "The unique identifier of this transfer. This is an opaque string.",

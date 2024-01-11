@@ -73,7 +73,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/payments/{payment_id}/breakdown",
+            "path": "/rest/v1/payments/{payment_id}/breakdown",
             "path-parameters": {
               "payment_id": "string",
             },
@@ -117,7 +117,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/billing/{invoice_id}/download",
+            "path": "/rest/v1/billing/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
@@ -164,7 +164,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/invoices/{invoice_id}/download",
+            "path": "/rest/v1/invoices/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
                 "docs": "ID of an existing invoice",
@@ -235,7 +235,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/invoices",
+            "path": "/rest/v1/invoices",
             "request": {
               "name": "GetInvoiceListRequest",
               "query-parameters": {
@@ -298,7 +298,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/payments",
+            "path": "/rest/v1/payments",
             "request": {
               "name": "GetPaymentListRequest",
               "query-parameters": {
@@ -355,7 +355,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/attachments",
+            "path": "/rest/v1/attachments",
             "request": {
               "body": {
                 "properties": {
@@ -421,7 +421,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/people/me",
+            "path": "/rest/v1/people/me",
             "response": {
               "docs": "Successful operation.",
               "type": "root.PeopleMeContainer",
@@ -456,7 +456,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/people",
+            "path": "/rest/v1/people",
             "request": {
               "name": "GetPeopleListRequest",
               "query-parameters": {
@@ -502,7 +502,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/premium",
+            "path": "/rest/v1/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -540,7 +540,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/amendments",
+            "path": "/rest/v1/contracts/{contract_id}/amendments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -578,7 +578,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts",
+            "path": "/rest/v1/contracts",
             "request": {
               "body": {
                 "properties": {
@@ -607,7 +607,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/fixed-rate",
+            "path": "/rest/v1/contracts/fixed-rate",
             "request": {
               "body": {
                 "properties": {
@@ -636,7 +636,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/milestone-based",
+            "path": "/rest/v1/contracts/milestone-based",
             "request": {
               "body": {
                 "properties": {
@@ -665,7 +665,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/task-based",
+            "path": "/rest/v1/contracts/task-based",
             "request": {
               "body": {
                 "properties": {
@@ -694,7 +694,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/time-based",
+            "path": "/rest/v1/contracts/time-based",
             "request": {
               "body": {
                 "properties": {
@@ -737,7 +737,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/preview",
+            "path": "/rest/v1/contracts/{contract_id}/preview",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -770,7 +770,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/contracts/{contract_id}/premium",
+            "path": "/rest/v1/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -828,7 +828,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/terminations",
+            "path": "/rest/v1/contracts/{contract_id}/terminations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -879,7 +879,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/documents",
+            "path": "/rest/v1/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -916,7 +916,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/contracts/{contract_id}/archive",
+            "path": "/rest/v1/contracts/{contract_id}/archive",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -944,7 +944,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/contracts/{contract_id}",
+            "path": "/rest/v1/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -977,7 +977,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/final-payments",
+            "path": "/rest/v1/contracts/{contract_id}/final-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1026,7 +1026,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PUT",
-            "path": "/contracts/{contract_id}/documents",
+            "path": "/rest/v1/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1076,7 +1076,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/alternate_emails",
+            "path": "/rest/v1/contracts/{contract_id}/alternate_emails",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1104,7 +1104,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}",
+            "path": "/rest/v1/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1132,7 +1132,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts",
+            "path": "/rest/v1/contracts",
             "request": {
               "name": "GetContractListRequest",
               "query-parameters": {
@@ -1221,7 +1221,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contract-templates",
+            "path": "/rest/v1/contract-templates",
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractTemplateListContainer",
@@ -1243,7 +1243,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/invitations",
+            "path": "/rest/v1/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1325,7 +1325,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/contracts/estimate",
+            "path": "/rest/v1/contracts/estimate",
             "request": {
               "body": {
                 "properties": {
@@ -1357,7 +1357,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/signatures",
+            "path": "/rest/v1/contracts/{contract_id}/signatures",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1395,7 +1395,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/contracts/{contract_id}/invitations",
+            "path": "/rest/v1/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1501,7 +1501,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/eor",
+            "path": "/rest/v1/eor",
             "request": {
               "body": {
                 "properties": {
@@ -1611,7 +1611,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/eor/validations/{country_code}",
+            "path": "/rest/v1/eor/validations/{country_code}",
             "path-parameters": {
               "country_code": {
                 "docs": "Country code.",
@@ -1652,7 +1652,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/hris/direct-employees",
+            "path": "/rest/v1/hris/direct-employees",
             "request": {
               "body": "root.HrisDirectEmployee",
             },
@@ -1690,7 +1690,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/invoice-adjustments",
+            "path": "/rest/v1/invoice-adjustments",
             "request": {
               "body": {
                 "properties": {
@@ -1722,7 +1722,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
+            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}/reviews",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -1760,7 +1760,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/invoice-adjustments/many/reviews",
+            "path": "/rest/v1/invoice-adjustments/many/reviews",
             "request": {
               "body": {
                 "properties": {
@@ -1792,7 +1792,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/invoice-adjustments/{invoice_adjustment_id}",
+            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -1829,7 +1829,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/invoice-adjustments",
+            "path": "/rest/v1/invoice-adjustments",
             "request": {
               "name": "GetInvoiceAdjustmentsRequest",
               "query-parameters": {
@@ -1899,7 +1899,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/invoice-adjustments",
+            "path": "/rest/v1/contracts/{contract_id}/invoice-adjustments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -1971,7 +1971,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/invoice-adjustments/{invoice_adjustment_id}",
+            "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
                 "docs": "ID of an existing invoice adjustment",
@@ -2035,7 +2035,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/lookups/countries",
+            "path": "/rest/v1/lookups/countries",
             "response": {
               "docs": "Successful operation.",
               "type": "root.CountryListContainer",
@@ -2075,7 +2075,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/lookups/currencies",
+            "path": "/rest/v1/lookups/currencies",
             "response": {
               "docs": "Successful operation.",
               "type": "root.CurrencyListContainer",
@@ -2118,7 +2118,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/lookups/job-titles",
+            "path": "/rest/v1/lookups/job-titles",
             "request": {
               "name": "GetJobTitleListRequest",
               "query-parameters": {
@@ -2172,7 +2172,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/lookups/seniorities",
+            "path": "/rest/v1/lookups/seniorities",
             "request": {
               "name": "GetSeniorityListRequest",
               "query-parameters": {
@@ -2216,7 +2216,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/lookups/time-off-types",
+            "path": "/rest/v1/lookups/time-off-types",
             "response": {
               "docs": "Successful operation.",
               "type": "root.TimeoffTypeListContainer",
@@ -2251,7 +2251,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/milestones",
+            "path": "/rest/v1/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2289,7 +2289,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
+            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2331,7 +2331,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/milestones/many/reviews",
+            "path": "/rest/v1/contracts/{contract_id}/milestones/many/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2369,7 +2369,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/contracts/{contract_id}/milestones/{milestone_id}",
+            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2434,7 +2434,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/milestones",
+            "path": "/rest/v1/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2494,7 +2494,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/milestones/{milestone_id}",
+            "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2539,7 +2539,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/off-cycle-payments",
+            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2577,7 +2577,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
+            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2624,7 +2624,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/off-cycle-payments",
+            "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2674,7 +2674,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/agreements",
+            "path": "/rest/v1/agreements",
             "request": {
               "name": "GetAgreementsRequest",
               "query-parameters": {
@@ -2724,7 +2724,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/legal-entities",
+            "path": "/rest/v1/legal-entities",
             "response": {
               "docs": "Successful operation.",
               "type": "root.LegalEntityListContainer",
@@ -2759,7 +2759,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/organizations",
+            "path": "/rest/v1/organizations",
             "response": {
               "docs": "Successful operation.",
               "type": "root.OrganizationListContainer",
@@ -2794,7 +2794,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/teams",
+            "path": "/rest/v1/teams",
             "response": {
               "docs": "Successful operation.",
               "type": "root.TeamListContainer",
@@ -2829,7 +2829,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/tasks",
+            "path": "/rest/v1/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2896,7 +2896,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/tasks/many/reviews",
+            "path": "/rest/v1/contracts/{contract_id}/tasks/many/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -2963,7 +2963,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
+            "path": "/rest/v1/contracts/{contract_id}/tasks/{task_id}/reviews",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3005,7 +3005,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/contracts/{contract_id}/tasks/{task_id}",
+            "path": "/rest/v1/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3069,7 +3069,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/tasks",
+            "path": "/rest/v1/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3108,7 +3108,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/contracts/{contract_id}/time-offs",
+            "path": "/rest/v1/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3137,7 +3137,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
+            "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3167,7 +3167,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PUT",
-            "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
+            "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3200,7 +3200,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/time-offs",
+            "path": "/rest/v1/time-offs",
             "response": {
               "docs": "successful operation",
               "type": "root.EorClientTimeoffsContainer",
@@ -3257,7 +3257,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/entitlements",
+            "path": "/rest/v1/contracts/{contract_id}/entitlements",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3376,7 +3376,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/time-offs",
+            "path": "/rest/v1/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3404,7 +3404,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/time-offs/{timeoff_id}/review",
+            "path": "/rest/v1/time-offs/{timeoff_id}/review",
             "path-parameters": {
               "timeoff_id": {
                 "docs": "Time off Id",
@@ -3455,7 +3455,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/timesheets",
+            "path": "/rest/v1/timesheets",
             "request": {
               "body": {
                 "properties": {
@@ -3487,7 +3487,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/timesheets/{timesheet_id}/reviews",
+            "path": "/rest/v1/timesheets/{timesheet_id}/reviews",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -3525,7 +3525,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/timesheets/many/reviews",
+            "path": "/rest/v1/timesheets/many/reviews",
             "request": {
               "body": {
                 "properties": {
@@ -3557,7 +3557,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "DELETE",
-            "path": "/timesheets/{timesheet_id}",
+            "path": "/rest/v1/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -3594,7 +3594,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/timesheets/{timesheet_id}",
+            "path": "/rest/v1/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -3622,7 +3622,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/timesheets",
+            "path": "/rest/v1/timesheets",
             "request": {
               "name": "GetTimesheetsRequest",
               "query-parameters": {
@@ -3683,7 +3683,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/contracts/{contract_id}/timesheets",
+            "path": "/rest/v1/contracts/{contract_id}/timesheets",
             "path-parameters": {
               "contract_id": {
                 "docs": "Deel contract id.",
@@ -3746,7 +3746,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/timesheets/{timesheet_id}",
+            "path": "/rest/v1/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
                 "docs": "ID of an existing timesheet",
@@ -3806,7 +3806,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
-            "path": "/webhooks/{id}",
+            "path": "/rest/v1/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3827,7 +3827,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "PATCH",
-            "path": "/webhooks/{id}",
+            "path": "/rest/v1/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3885,7 +3885,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
-            "path": "/webhooks/{id}",
+            "path": "/rest/v1/webhooks/{id}",
             "path-parameters": {
               "id": "string",
             },
@@ -3910,7 +3910,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/webhooks",
+            "path": "/rest/v1/webhooks",
             "request": {
               "body": {
                 "properties": {
@@ -3982,7 +3982,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/webhooks",
+            "path": "/rest/v1/webhooks",
             "response": {
               "docs": "successful operation",
               "type": "root.WebhookListResponse",
