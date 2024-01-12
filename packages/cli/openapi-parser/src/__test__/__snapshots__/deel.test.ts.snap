@@ -15061,6 +15061,21 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "audiences": [],
           "conflict": {},
+          "generatedName": "contractToCreateOngoingTimeBasedType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "groupName": undefined,
+            "type": "literal",
+            "value": {
+              "string": "ongoing_time_based",
+              "type": "string",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
           "generatedName": "contractToCreateOngoingTimeBasedCompensationDetails",
           "key": "compensation_details",
           "schema": {
@@ -15100,21 +15115,6 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
         },
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "contractToCreateOngoingTimeBasedType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "groupName": undefined,
-            "type": "literal",
-            "value": {
-              "string": "ongoing_time_based",
-              "type": "string",
-            },
-          },
-        },
       ],
       "type": "object",
     },
@@ -15135,6 +15135,21 @@ exports[`open api parser deel parse open api 1`] = `
       "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "contractToCreatePayAsYouGoTimeBasedType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "groupName": undefined,
+            "type": "literal",
+            "value": {
+              "string": "pay_as_you_go_time_based",
+              "type": "string",
+            },
+          },
+        },
         {
           "audiences": [],
           "conflict": {},
@@ -15177,21 +15192,6 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
         },
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "contractToCreatePayAsYouGoTimeBasedType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "groupName": undefined,
-            "type": "literal",
-            "value": {
-              "string": "pay_as_you_go_time_based",
-              "type": "string",
-            },
-          },
-        },
       ],
       "type": "object",
     },
@@ -15215,20 +15215,6 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "audiences": [],
           "conflict": {},
-          "generatedName": "contractToCreatePaygMilestonesCompensationDetails",
-          "key": "compensation_details",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ContractToCreatePaygMilestonesCompensationDetails",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "CompensationDetailsOfContractToCreate_Shared",
-            "type": "reference",
-          },
-        },
-        {
-          "audiences": [],
-          "conflict": {},
           "generatedName": "contractToCreatePaygMilestonesType",
           "key": "type",
           "schema": {
@@ -15239,6 +15225,20 @@ exports[`open api parser deel parse open api 1`] = `
               "string": "payg_milestones",
               "type": "string",
             },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "contractToCreatePaygMilestonesCompensationDetails",
+          "key": "compensation_details",
+          "schema": {
+            "description": undefined,
+            "generatedName": "ContractToCreatePaygMilestonesCompensationDetails",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": "CompensationDetailsOfContractToCreate_Shared",
+            "type": "reference",
           },
         },
       ],
@@ -15264,20 +15264,6 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "audiences": [],
           "conflict": {},
-          "generatedName": "contractToCreatePaygTasksCompensationDetails",
-          "key": "compensation_details",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ContractToCreatePaygTasksCompensationDetails",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "CompensationDetailsOfContractToCreate_Shared",
-            "type": "reference",
-          },
-        },
-        {
-          "audiences": [],
-          "conflict": {},
           "generatedName": "contractToCreatePaygTasksType",
           "key": "type",
           "schema": {
@@ -15288,6 +15274,20 @@ exports[`open api parser deel parse open api 1`] = `
               "string": "payg_tasks",
               "type": "string",
             },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "contractToCreatePaygTasksCompensationDetails",
+          "key": "compensation_details",
+          "schema": {
+            "description": undefined,
+            "generatedName": "ContractToCreatePaygTasksCompensationDetails",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": "CompensationDetailsOfContractToCreate_Shared",
+            "type": "reference",
           },
         },
       ],

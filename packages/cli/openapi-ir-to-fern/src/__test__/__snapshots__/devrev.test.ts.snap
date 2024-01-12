@@ -2724,9 +2724,7 @@ sort order. If not set, then no prior elements exist.
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "ErrorBadRequestType",
-        },
+        "properties": {},
       },
       "ErrorBadRequestInvalidEnumValue": {
         "docs": undefined,
@@ -2790,65 +2788,42 @@ sort order. If not set, then no prior elements exist.
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-forbidden-type",
-        },
+        "properties": {},
       },
       "ErrorInternalServerError": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "reference_id": {
-            "docs": "A unique ID that's generated for the error that can be used for
-inquiry.
-",
-            "type": "optional<string>",
-          },
-          "type": "error-internal-server-error-type",
-        },
+        "properties": {},
       },
       "ErrorNotFound": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-not-found-type",
-        },
+        "properties": {},
       },
       "ErrorServiceUnavailable": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-service-unavailable-type",
-        },
+        "properties": {},
       },
       "ErrorTooManyRequests": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "retry_after": {
-            "docs": "The number of seconds after which the client should retry.
-",
-            "type": "optional<integer>",
-          },
-          "type": "error-too-many-requests-type",
-        },
+        "properties": {},
       },
       "ErrorUnauthorized": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
-        "properties": {
-          "type": "error-unauthorized-type",
-        },
+        "properties": {},
       },
       "EventPartCreated": {
         "docs": undefined,

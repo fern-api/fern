@@ -45,8 +45,9 @@ export function convertObject({
     propertiesToExclude: Set<string>;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
-    let allRequired = [...(required ?? [])];
-    let propertiesToConvert = { ...properties };
+    const allRequired = [...(required ?? [])];
+    const propertiesToConvert = { ...properties };
+    const inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
@@ -63,9 +64,9 @@ export function convertObject({
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
-            if (allOfElement.properties != null) {
-                allRequired = [...allRequired, ...(allOfElement.required ?? [])];
-                propertiesToConvert = { ...allOfElement.properties, ...propertiesToConvert };
+            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs);
+            if (allOfSchema.type === "object") {
+                inlinedParentProperties.push(...allOfSchema.properties);
             }
         }
     }
@@ -127,6 +128,24 @@ export function convertObject({
             generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
         };
     });
+
+    convertedProperties.push(
+        ...inlinedParentProperties.map((property) => {
+            const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = property.conflict;
+            for (const parent of parents) {
+                const parentPropertySchema = parent.properties[property.key];
+                if (parentPropertySchema != null && !isSchemaWithExampleEqual(property.schema, parentPropertySchema)) {
+                    conflicts[parent.schemaId] = { differentSchema: true };
+                } else if (parentPropertySchema != null) {
+                    conflicts[parent.schemaId] = { differentSchema: false };
+                }
+            }
+            return {
+                ...property,
+                conflict: conflicts
+            };
+        })
+    );
 
     return wrapObject({
         nameOverride,
