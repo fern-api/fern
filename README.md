@@ -187,7 +187,3 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md).
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
-
-<!--
-Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
--->

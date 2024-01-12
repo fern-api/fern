@@ -219,4 +219,4 @@ logo:
 background-image: ./docs/images/background.svg
 colors:
   accentPrimary: "#16EE9D"
-favicon: ./docs/images/favicon.png
+favicon: ./docs/images/favicon.ico
