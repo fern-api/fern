@@ -41,9 +41,11 @@ const FERN_TYPE_EXTENSIONS: Plugin = {
 
 export async function loadOpenAPI({
     absolutePathToOpenAPI,
+    absolutePathToOpenAPIOverrides,
     context
 }: {
     absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     context: TaskContext;
 }): Promise<OpenAPI.Document> {
     const result = await bundle({
@@ -66,15 +68,22 @@ export async function loadOpenAPI({
     });
     const parsed = await SwaggerParser.parse(result.bundle.parsed);
 
-    const overridesFilepath =
+    let overridesFilepath = undefined;
+    if (absolutePathToOpenAPIOverrides != null) {
+        overridesFilepath = absolutePathToOpenAPIOverrides;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        typeof parsed === "object" ? (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] : undefined;
+    } else if (typeof parsed === "object" && (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null) {
+        overridesFilepath = join(
+            dirname(absolutePathToOpenAPI),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
+        );
+    }
 
     if (overridesFilepath != null) {
-        const pathToFile = join(dirname(absolutePathToOpenAPI), RelativeFilePath.of(overridesFilepath));
         let parsedOverrides = null;
         try {
-            const contents = (await readFile(pathToFile, "utf8")).toString();
+            const contents = (await readFile(overridesFilepath, "utf8")).toString();
             try {
                 parsedOverrides = JSON.parse(contents);
             } catch (err) {
