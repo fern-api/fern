@@ -74,16 +74,6 @@ navigation:
         contents:
           - page: Publishing to Maven Central
             path: ./docs/pages/guides/publish-to-maven-central.mdx
-          # - page: Migrating an old SDK to a Fern SDK
-          #   path: ./pages/guides/migrate-old-sdk.mdx
-          # - page: Use a TypeScript SDK with React Query
-          #   path: ./pages/tutorials/typescript-sdk-react-query.mdx
-          # - page: Generate a TypeScript SDK for your FastAPI backend
-          #   path: ./pages/tutorials/fastapi-to-typescript-sdk.mdx
-          # - page: Use Fern in a monorepo
-          #   path: ./pages/tutorials/monorepo.mdx
-          # - page: Set up Fern with yarn-pnp
-          #   path: ./pages/tutorials/yarn-pnp.mdx
   - tab: api-definition
     layout:
       - section: OpenAPI Specification
@@ -160,6 +150,11 @@ navigation:
           - page: Pull request previews
             path: ./docs/pages/docs/previews.mdx
             slug: previews
+      - section: Documenting SDKs 
+        contents: 
+          - page: Add SDK snippets to docs
+            path: ./docs/pages/docs/snippets.mdx
+            slug: snippets
       - section: Component Library
         contents:
           - page: Cards
