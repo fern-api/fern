@@ -34,6 +34,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -202,6 +203,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateAppResponse",
@@ -380,6 +382,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateAppResponse",
@@ -432,6 +435,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetAppInfoResponse",
@@ -545,6 +549,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -647,6 +652,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -750,6 +756,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -843,6 +850,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -913,6 +921,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetBuildInfoResponse",
@@ -967,6 +976,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateBuildResponse",
@@ -1194,6 +1204,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -1264,6 +1275,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDeploymentInfoResponse",
@@ -1343,6 +1355,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateDeploymentResponse",
@@ -1390,6 +1403,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPingServiceEndpointsResponse",
@@ -1499,6 +1513,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreatePrivateLobbyDeprecatedResponse",
@@ -1608,6 +1623,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreatePublicLobbyDeprecatedResponse",
@@ -1755,6 +1771,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -1904,6 +1921,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreatePrivateLobbyResponse",
@@ -2048,6 +2066,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreatePublicLobbyResponse",
@@ -2192,6 +2211,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateLocalLobbyResponse",
@@ -2369,6 +2389,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateLobbyResponse",
@@ -2468,6 +2489,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -2538,6 +2560,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetLobbyInfoResponse",
@@ -2643,6 +2666,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetLobbyStateResponse",
@@ -3113,6 +3137,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMetricsResponse",
@@ -3214,6 +3239,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -3320,6 +3346,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -3390,6 +3417,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetProcessInfoResponse",
@@ -3472,6 +3500,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateRoomResponse",
@@ -3537,6 +3566,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRoomInfoResponse",
@@ -3634,6 +3664,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -3736,6 +3767,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -3976,6 +4008,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionInfoResponse",

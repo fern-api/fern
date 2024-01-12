@@ -61,6 +61,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CloseMenuByConnIdResponse",
@@ -292,6 +293,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "FetchMenuByConnIdResponse",
@@ -389,6 +391,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PerformActionByConnIdResponse",
@@ -463,6 +466,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RequestMenuByConnIdResponse",
@@ -695,6 +699,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendMenuToConnIdResponse",
@@ -1168,6 +1173,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingConnectionsResponse",
@@ -1437,6 +1443,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateConnectionInvitationResponse",
@@ -1687,6 +1694,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateStaticConnectionResponse",
@@ -2001,6 +2009,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveConnectionInvitationResponse",
@@ -2201,6 +2210,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionRecordResponse",
@@ -2275,6 +2285,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteConnectionRecordResponse",
@@ -2536,6 +2547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptConnectionInvitationResponse",
@@ -2757,6 +2769,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptConnectionRequestResponse",
@@ -2846,6 +2859,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionEndpointResponse",
@@ -2945,6 +2959,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetInboundConnectionResponse",
@@ -3040,6 +3055,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionMetadataResponse",
@@ -3134,6 +3150,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetConnectionMetadataResponse",
@@ -3231,6 +3248,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendMessageResponse",
@@ -3320,6 +3338,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPingResponse",
@@ -3441,6 +3460,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StartConnectionIntroductionResponse",
@@ -3638,6 +3658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishCredentialDefinitionResponse",
@@ -3819,6 +3840,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCreatedCredDefsResponse",
@@ -4073,6 +4095,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredentialDefinitionResponse",
@@ -4327,6 +4350,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "WriteCredentialDefinitionResponse",
@@ -4401,6 +4425,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredentialMimeTypesResponse",
@@ -4516,6 +4541,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRevocationStatusResponse",
@@ -4672,6 +4698,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetW3CCredentialResponse",
@@ -4746,6 +4773,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteW3CCredentialResponse",
@@ -4856,6 +4884,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredentialRecordResponse",
@@ -4930,6 +4959,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteCredentialRecordResponse",
@@ -5084,6 +5114,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredentialsResponse",
@@ -5348,6 +5379,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetW3CCredentialsResponse",
@@ -5646,6 +5678,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateDidexRequestResponse",
@@ -6087,6 +6120,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveDidexRequestResponse",
@@ -6328,6 +6362,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptDidexInvitationResponse",
@@ -6569,6 +6604,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptDidexRequestResponse",
@@ -6767,6 +6803,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetV20FeaturesQueriesResponse",
@@ -6930,6 +6967,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetV20FeatureRecordsResponse",
@@ -7104,6 +7142,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetV10FeaturesQueryResponse",
@@ -7248,6 +7287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetV10FeatureRecordsResponse",
@@ -8571,6 +8611,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordResponse",
@@ -9894,6 +9935,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferResponse",
@@ -11234,6 +11276,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingCredExRecordsV2Response",
@@ -12419,6 +12462,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredExRecordResponse",
@@ -12493,6 +12537,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteCredExRecordResponse",
@@ -13693,6 +13738,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderResponse",
@@ -13757,6 +13803,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemResponse",
@@ -15107,6 +15154,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferResponse",
@@ -16202,6 +16250,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialRequestResponse",
@@ -17402,6 +17451,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialResponse",
@@ -18732,6 +18782,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialResponse",
@@ -20062,6 +20113,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferResponse",
@@ -21392,6 +21444,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalResponse",
@@ -22646,6 +22699,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequestResponse",
@@ -23371,6 +23425,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordResponse",
@@ -24061,6 +24116,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferResponse",
@@ -24867,6 +24923,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingCredExRecordsResponse",
@@ -25518,6 +25575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredExRecordResponse",
@@ -25592,6 +25650,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteCredExRecordResponse",
@@ -26258,6 +26317,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderResponse",
@@ -26322,6 +26382,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemResponse",
@@ -27086,6 +27147,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferResponse",
@@ -27737,6 +27799,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialRequestResponse",
@@ -28403,6 +28466,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialResponse",
@@ -29135,6 +29199,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialResponse",
@@ -29832,6 +29897,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferResponse",
@@ -30564,6 +30630,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalResponse",
@@ -30612,6 +30679,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SignResponse",
@@ -30660,6 +30728,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "VerifyResponse",
@@ -30786,6 +30855,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPublishedDidEndpointResponse",
@@ -30868,6 +30938,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDidVerkeyResponse",
@@ -30947,6 +31018,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDidNymRoleResponse",
@@ -30999,6 +31071,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMultipleLedgerConfigResponse",
@@ -31046,6 +31119,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetWriteLedgerResponse",
@@ -31328,6 +31402,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RegisterNymResponse",
@@ -31375,6 +31450,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RotatePublicDidKeypairResponse",
@@ -31440,6 +31516,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTaaResponse",
@@ -31502,6 +31579,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptTaaResponse",
@@ -31538,6 +31616,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDefaultMediatorResponse",
@@ -31574,6 +31653,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ClearDefaultMediatorResponse",
@@ -31681,6 +31761,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetKeylistsResponse",
@@ -31841,6 +31922,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistQueryToMediatorResponse",
@@ -31988,6 +32070,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistUpdateToMediatorResponse",
@@ -32052,6 +32135,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RequestMediationForConnectionResponse",
@@ -32215,6 +32299,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingMediationRecordsResponse",
@@ -32267,6 +32352,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMediationRecordResponse",
@@ -32319,6 +32405,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteMediationRecordResponse",
@@ -32423,6 +32510,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DenyMediationRequestResponse",
@@ -32519,6 +32607,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GrantMediationRequestResponse",
@@ -32652,6 +32741,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateKeylistForConnIdResponse",
@@ -32704,6 +32794,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetDefaultMediatorResponse",
@@ -32866,6 +32957,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateWalletResponse",
@@ -32973,6 +33065,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetWalletRecordResponse",
@@ -33126,6 +33219,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateWalletResponse",
@@ -33223,6 +33317,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteWalletResponse",
@@ -33328,6 +33423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetAuthTokenResponse",
@@ -33439,6 +33535,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingWalletsResponse",
@@ -33852,6 +33949,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOobInvitationResponse",
@@ -34471,6 +34569,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveOobInvitationResponse",
@@ -34518,6 +34617,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetLoadedPluginsResponse",
@@ -35466,6 +35566,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateProofRequestResponse",
@@ -36322,6 +36423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingPresExRecordsV2Response",
@@ -37041,6 +37143,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPresExRecordResponse",
@@ -37115,6 +37218,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeletePresExRecordResponse",
@@ -37347,6 +37451,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -37416,6 +37521,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemResponse",
@@ -38324,6 +38430,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationResponse",
@@ -39073,6 +39180,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestResponse",
@@ -39792,6 +39900,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "VerifyReceivedPresentationResponse",
@@ -40693,6 +40802,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalResponse",
@@ -41648,6 +41758,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestResponse",
@@ -42278,6 +42389,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeProofRequestResponse",
@@ -42995,6 +43107,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingPresExRecordsResponse",
@@ -43569,6 +43682,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPresExRecordResponse",
@@ -43643,6 +43757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeletePresExRecordResponse",
@@ -43875,6 +43990,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -43944,6 +44060,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemResponse",
@@ -44553,6 +44670,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationResponse",
@@ -45157,6 +45275,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestResponse",
@@ -45731,6 +45850,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "VerifyReceivedPresentationResponse",
@@ -46369,6 +46489,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalResponse",
@@ -47006,6 +47127,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestResponse",
@@ -47089,6 +47211,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDidDocumentResponse",
@@ -47362,6 +47485,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetActiveRegistryForCredDefIdResponse",
@@ -47424,6 +47548,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ClearPendingRevocationsResponse",
@@ -47700,6 +47825,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateRevocationRegistryResponse",
@@ -47870,6 +47996,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCredentialRevocationRecordResponse",
@@ -47994,6 +48121,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishRevocationsResponse",
@@ -48132,6 +48260,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetCreatedRegistriesResponse",
@@ -48220,6 +48349,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteTailsFileResponse",
@@ -48493,6 +48623,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRevocationRegistryResponse",
@@ -48789,6 +48920,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateRevocationRegistryResponse",
@@ -49167,6 +49299,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishRevocationRegistryDefinitionResponse",
@@ -49479,6 +49612,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishRevocationRegistryEntryResponse",
@@ -49578,6 +49712,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateRevocationEntryStateResponse",
@@ -49660,6 +49795,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssuedCredentialsCountResponse",
@@ -49801,6 +49937,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssuedCredentialDetailsResponse",
@@ -49875,6 +50012,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPublishedCredentialDetailsResponse",
@@ -50201,6 +50339,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetRevocationRegistryStateResponse",
@@ -50319,6 +50458,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UploadTailsFileResponse",
@@ -50414,6 +50554,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RevokeIssuedCredentialResponse",
@@ -50668,6 +50809,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishSchemaResponse",
@@ -50809,6 +50951,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetMatchingCreatedSchemasResponse",
@@ -50936,6 +51079,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetSchemaResponse",
@@ -51063,6 +51207,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "WriteSchemaRecordToWalletResponse",
@@ -51110,6 +51255,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ShutdownServerResponse",
@@ -51157,6 +51303,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetStatusResponse",
@@ -51204,6 +51351,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConfigResponse",
@@ -51259,6 +51407,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetLivelinessResponse",
@@ -51314,6 +51463,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetReadinessResponse",
@@ -51361,6 +51511,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ResetStatisticsResponse",
@@ -51492,6 +51643,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ResendTransactionRequestResponse",
@@ -51606,6 +51758,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransactionListResponse",
@@ -51688,6 +51841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTransactionRequestResponse",
@@ -51776,6 +51930,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetEndorserInfoForConnIdResponse",
@@ -51905,6 +52060,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetEndorserRoleForConnIdResponse",
@@ -52036,6 +52192,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransactionRecordResponse",
@@ -52167,6 +52324,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CancelTransactionRequestResponse",
@@ -52319,6 +52477,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EndorseTransactionResponse",
@@ -52450,6 +52609,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RefuseTransactionResponse",
@@ -52581,6 +52741,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishEndorsedTransactionResponse",
@@ -52830,6 +52991,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDidsResponse",
@@ -52958,6 +53120,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateLocalDidResponse",
@@ -53032,6 +53195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RotateKeypairResponse",
@@ -53114,6 +53278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetPublicDidResponse",
@@ -53281,6 +53446,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetPublicDidResponse",
@@ -53370,6 +53536,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDidEndpointResponse",
@@ -53490,6 +53657,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetDidEndpointResponse",

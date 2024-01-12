@@ -34,6 +34,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "File uploaded successfully",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "FilesUploadResponse",
@@ -253,6 +254,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A list of transcripts filtered by \`limit\` and \`status\`",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptListResponse",
@@ -314,6 +316,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Transcript created and queued for processing.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptCreateResponse",
@@ -379,6 +382,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The transcript resource",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetResponse",
@@ -444,6 +448,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The deleted transcript response.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptDeleteResponse",
@@ -590,6 +595,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Exported sentences",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetSentencesResponse",
@@ -655,6 +661,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Exported paragraphs",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetParagraphsResponse",
@@ -741,6 +748,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Word search response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptWordSearchResponse",
@@ -806,6 +814,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The redacted audio object containing the status and URL to the redacted audio.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetRedactedAudioResponse",
@@ -867,6 +876,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Temporary authentication token generated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RealtimeCreateTemporaryTokenResponse",
@@ -928,6 +938,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR summary response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LemurSummaryResponse",
@@ -989,6 +1000,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR question & answer response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LemurQuestionAnswerResponse",
@@ -1050,6 +1062,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR action items response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LemurActionItemsResponse",
@@ -1111,6 +1124,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR task response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LemurTaskResponse",
@@ -1178,6 +1192,7 @@ The LLM response data, as well as any context provided in the original request w
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR request data deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LemurPurgeRequestDataResponse",

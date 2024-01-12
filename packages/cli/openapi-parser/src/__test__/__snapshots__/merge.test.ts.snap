@@ -129,6 +129,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountDetailsRetrieveResponse",
@@ -181,6 +182,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountTokenRetrieveResponse",
@@ -233,6 +235,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AvailableActionsRetrieveResponse",
@@ -762,6 +765,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BankInfoListResponse",
@@ -1027,6 +1031,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BankInfoRetrieveResponse",
@@ -1406,6 +1411,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BenefitsListResponse",
@@ -1620,6 +1626,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BenefitsRetrieveResponse",
@@ -1921,6 +1928,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CompaniesListResponse",
@@ -2077,6 +2085,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CompaniesRetrieveResponse",
@@ -2786,6 +2795,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeePayrollRunsListResponse",
@@ -3178,6 +3188,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeePayrollRunsRetrieveResponse",
@@ -5759,6 +5770,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesListResponse",
@@ -6317,6 +6329,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesCreateResponse",
@@ -8413,6 +8426,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesRetrieveResponse",
@@ -8534,6 +8548,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesMetaPostRetrieveResponse",
@@ -9184,6 +9199,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmploymentsListResponse",
@@ -9631,6 +9647,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmploymentsRetrieveResponse",
@@ -9716,6 +9733,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateKeyCreateResponse",
@@ -10096,6 +10114,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GroupsListResponse",
@@ -10311,6 +10330,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GroupsRetrieveResponse",
@@ -10691,6 +10711,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssuesListResponse",
@@ -10801,6 +10822,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssuesRetrieveResponse",
@@ -10849,6 +10871,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LinkTokenCreateResponse",
@@ -11285,6 +11308,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LinkedAccountsListResponse",
@@ -11680,6 +11704,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LocationsListResponse",
@@ -11930,6 +11955,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LocationsRetrieveResponse",
@@ -11994,6 +12020,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PassthroughCreateResponse",
@@ -12288,6 +12315,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PayGroupsListResponse",
@@ -12437,6 +12465,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PayGroupsRetrieveResponse",
@@ -12968,6 +12997,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PayrollRunsListResponse",
@@ -13220,6 +13250,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PayrollRunsRetrieveResponse",
@@ -13305,6 +13336,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RegenerateKeyCreateResponse",
@@ -13379,6 +13411,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -13488,6 +13521,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -13641,6 +13675,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SelectiveSyncMetaListResponse",
@@ -13822,6 +13857,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SyncStatusListResponse",
@@ -13945,6 +13981,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -14301,6 +14338,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsListResponse",
@@ -14487,6 +14525,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsRetrieveResponse",
@@ -15168,6 +15207,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffListResponse",
@@ -15523,6 +15563,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffCreateResponse",
@@ -15994,6 +16035,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffBalancesListResponse",
@@ -16231,6 +16273,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffBalancesRetrieveResponse",
@@ -16596,6 +16639,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffRetrieveResponse",
@@ -16648,6 +16692,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffMetaPostRetrieveResponse",
@@ -16722,6 +16767,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -16791,6 +16837,7 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "WebhookReceiversCreateResponse",

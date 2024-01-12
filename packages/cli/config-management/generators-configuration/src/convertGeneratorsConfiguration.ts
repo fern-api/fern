@@ -15,7 +15,8 @@ import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
-    OPENAPI_LOCATION_KEY
+    OPENAPI_LOCATION_KEY,
+    OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
@@ -28,6 +29,7 @@ export async function convertGeneratorsConfiguration({
 }): Promise<GeneratorsConfiguration> {
     const pathToOpenAPI = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
     const pathToAsyncAPI = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
+    const pathToOpenAPIOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         absolutePathToAsyncAPI:
@@ -37,6 +39,10 @@ export async function convertGeneratorsConfiguration({
         absolutePathToOpenAPI:
             pathToOpenAPI != null
                 ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPI))
+                : undefined,
+        absolutePathToOpenAPIOverrides:
+            pathToOpenAPIOverrides != null
+                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPIOverrides))
                 : undefined,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
