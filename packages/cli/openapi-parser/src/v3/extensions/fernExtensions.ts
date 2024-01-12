@@ -187,7 +187,17 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-availability: ga # or beta, generally-available, deprecated,
      */
-    AVAILABILITY: "x-fern-availability"
+    AVAILABILITY: "x-fern-availability",
+
+    /**
+     * Used to signal that the SDK should return a specific property on the response.
+     *
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-sdk-return-value: data
+     */
+    RESPONSE_PROPERTY: "x-fern-sdk-return-value"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

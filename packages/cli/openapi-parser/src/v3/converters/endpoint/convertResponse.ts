@@ -3,8 +3,11 @@ import { StatusCode } from "@fern-fern/openapi-ir-model/commons";
 import { ResponseWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../extensions/getExtension";
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
+import { OperationContext } from "../contexts";
 import { convertSchema } from "../convertSchemas";
 import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
 
@@ -23,12 +26,14 @@ export interface ConvertedResponse {
 }
 
 export function convertResponse({
+    operationContext,
     responses,
     context,
     responseBreadcrumbs,
     responseStatusCode,
     isStreaming
 }: {
+    operationContext: OperationContext;
     isStreaming: boolean;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
@@ -46,7 +51,13 @@ export function convertResponse({
             continue;
         }
 
-        const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs, isStreaming });
+        const convertedResponse = convertResolvedResponse({
+            operationContext,
+            response,
+            context,
+            responseBreadcrumbs,
+            isStreaming
+        });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
                 case "json":
@@ -79,11 +90,13 @@ export function convertResponse({
 }
 
 function convertResolvedResponse({
+    operationContext,
     isStreaming,
     response,
     context,
     responseBreadcrumbs
 }: {
+    operationContext: OperationContext;
     isStreaming: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
@@ -96,6 +109,7 @@ function convertResolvedResponse({
             return {
                 type: "streamingJson",
                 description: resolvedResponse.description,
+                responseProperty: undefined,
                 schema: convertSchemaWithExampleToSchema(
                     convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
                 )
@@ -104,7 +118,8 @@ function convertResolvedResponse({
         return {
             type: "json",
             description: resolvedResponse.description,
-            schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
+            schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs),
+            responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY)
         };
     }
 
