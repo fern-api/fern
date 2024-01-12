@@ -1,41 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`validate petstore 1`] = `
-[
-  {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-types:
-  Pet:
-    properties:
-      id: integer
-      name: string
-      tag: optional<string>
-
-  Pets: list<Pet>
-
-  Error:
-    properties:
-      code: integer
-      message: string
-",
-    "name": "__package__.yml",
-    "type": "file",
-  },
-  {
-    "contents": "name: api
-error-discrimination:
-  strategy: status-code
-display-name: Swagger Petstore
-environments:
-  Default: http://petstore.swagger.io/v1
-default-environment: Default
-",
-    "name": "api.yml",
-    "type": "file",
-  },
-  {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
   root: __package__.yml
@@ -82,9 +45,3 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
-",
-    "name": "pets.yml",
-    "type": "file",
-  },
-]
-`;

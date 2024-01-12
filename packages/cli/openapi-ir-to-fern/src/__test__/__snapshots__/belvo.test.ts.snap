@@ -5868,7 +5868,42 @@ A payment intent captures all payment information (such as the amount to be char
             "method": "POST",
             "path": "/payments/payment-intents",
             "request": {
-              "body": "root.CreatePaymentIntentPse",
+              "body": {
+                "properties": {
+                  "allowed_payment_method_types": {
+                    "docs": "A list of payment method types allowed in this payment intent. For PSE, this value must be set to \`pse\`.",
+                    "type": "list<root.EnumPaymentLinkAllowedPaymentMethod>",
+                  },
+                  "amount": {
+                    "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
+
+**Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
+",
+                    "type": "CreatePaymentIntentPseAmount",
+                  },
+                  "customer": {
+                    "docs": "Belvo's unique ID to reference the customer.
+",
+                    "type": "string",
+                  },
+                  "description": {
+                    "docs": "The description of the payment.
+",
+                    "type": "string",
+                  },
+                  "metadata": {
+                    "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
+
+⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "payment_method_details": "root.PaymentIntentsPaymentMethodDetailsPse",
+                  "provider": "root.EnumPaymentLinkProvider",
+                },
+              },
+              "headers": undefined,
+              "name": "CreatePaymentIntentPse",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK (Created)",
@@ -6064,6 +6099,19 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "type": "root.PaymentIntentPse",
             },
           },
+        },
+      },
+      "types": {
+        "CreatePaymentIntentPseAmount": {
+          "discriminated": false,
+          "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
+
+**Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
+",
+          "union": [
+            "string",
+            "integer",
+          ],
         },
       },
     },
@@ -12507,51 +12555,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
         },
-      },
-      "CreatePaymentIntentPse": {
-        "docs": undefined,
-        "properties": {
-          "allowed_payment_method_types": {
-            "docs": "A list of payment method types allowed in this payment intent. For PSE, this value must be set to \`pse\`.",
-            "type": "list<EnumPaymentLinkAllowedPaymentMethod>",
-          },
-          "amount": {
-            "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
-
-**Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
-",
-            "type": "CreatePaymentIntentPseAmount",
-          },
-          "customer": {
-            "docs": "Belvo's unique ID to reference the customer.
-",
-            "type": "string",
-          },
-          "description": {
-            "docs": "The description of the payment.
-",
-            "type": "string",
-          },
-          "metadata": {
-            "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
-
-⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
-            "type": "optional<map<string, unknown>>",
-          },
-          "payment_method_details": "PaymentIntentsPaymentMethodDetailsPse",
-          "provider": "EnumPaymentLinkProvider",
-        },
-      },
-      "CreatePaymentIntentPseAmount": {
-        "discriminated": false,
-        "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
-
-**Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
-",
-        "union": [
-          "string",
-          "integer",
-        ],
       },
       "CreatePaymentLinkOfpi": {
         "docs": undefined,
