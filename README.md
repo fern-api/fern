@@ -1,11 +1,11 @@
 <br/>
 <div align="center">
-  <a href="https://www.buildwithfern.com/">
-    <img src="/fern/docs/images/logo-green.png" height="50" align="center" alt="header" />
+  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
+    <img src="/fern/docs/images/logo-green.png" height="80" align="center" alt="header" />
   </a>
 <br/>
 
-# Fern
+<br/>
 
 ![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)
 ![License](https://img.shields.io/badge/License-MIT-blue)
