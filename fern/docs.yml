@@ -81,16 +81,12 @@ navigation:
         contents:
           - page: Importing OpenAPI
             path: ./docs/pages/openapi/import.mdx
-            slug: import
           - page: OpenAPI Extensions
             path: ./docs/pages/openapi/extensions.mdx
-            slug: extensions
           - page: OpenAPI Examples
             path: ./docs/pages/openapi/examples.mdx
-            slug: examples
           - page: Exporting OpenAPI
             path: ./docs/pages/openapi/export.mdx
-            slug: export
       - section: Fern Definition
         contents:
           - page: Overview
@@ -111,7 +107,6 @@ navigation:
             path: ./docs/pages/fern-definition/availability.mdx
           - page: api.yml reference
             path: ./docs/pages/fern-definition/api-yml.mdx
-            slug: api-yml-reference
           - page: Packages
             path: ./docs/pages/fern-definition/packages.mdx
   - tab: sdks
@@ -140,22 +135,17 @@ navigation:
         contents:
           - page: Fern Docs Quickstart 
             path: ./docs/pages/docs/quickstart.mdx
-            slug: quickstart
-          - page: Configuration
-            path: ./docs/pages/docs/configuration.mdx
-            slug: configuration
-          - page: Custom domain
-            path: ./docs/pages/docs/custom-domain.mdx
-            slug: custom-domain
-          - page: Pull request previews
-            path: ./docs/pages/docs/previews.mdx
-            slug: previews
-      - section: Features
+          - page: Writing Content
+            path: ./docs/pages/docs/writing-content.mdx
+      - section: Configurations
         contents: 
-          - page: Add SDK snippets to docs
+          - page: Custom Domain
+            path: ./docs/pages/docs/custom-domain.mdx
+          - page: Pull Request Previews
+            path: ./docs/pages/docs/previews.mdx
+          - page: SDK Snippets
             path: ./docs/pages/docs/snippets.mdx
-            slug: snippets
-          - page: Filter by audience
+          - page: Audiences
             path: ./docs/pages/docs/audiences.mdx
       - section: Component Library
         contents:
