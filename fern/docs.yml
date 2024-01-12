@@ -150,11 +150,13 @@ navigation:
           - page: Pull request previews
             path: ./docs/pages/docs/previews.mdx
             slug: previews
-      - section: Documenting SDKs 
+      - section: Features
         contents: 
           - page: Add SDK snippets to docs
             path: ./docs/pages/docs/snippets.mdx
             slug: snippets
+          - page: Filter by audience
+            path: ./docs/pages/docs/audiences.mdx
       - section: Component Library
         contents:
           - page: Cards
