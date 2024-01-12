@@ -73,6 +73,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -749,6 +750,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],

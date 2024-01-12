@@ -435,6 +435,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of issue triggers",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssueTriggersResponse",
@@ -585,6 +586,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateIssueTriggerResponse",
@@ -730,6 +732,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertIssueTriggerResponse",
@@ -784,6 +787,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssueTriggerResponse",
@@ -965,6 +969,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIssueTriggerResponse",
@@ -1019,6 +1024,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted issue trigger's id",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteIssueTriggerResponse",
@@ -1073,6 +1079,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DisableIssueTriggerResponse",
@@ -1127,6 +1134,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EnableIssueTriggerResponse",
@@ -1394,6 +1402,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of attempts",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetAttemptsResponse",
@@ -1448,6 +1457,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single attempt",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetAttemptResponse",
@@ -2064,6 +2074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of bookmarks",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetBookmarksResponse",
@@ -2187,6 +2198,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateBookmarkResponse",
@@ -2241,6 +2253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetBookmarkResponse",
@@ -2396,6 +2409,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateBookmarkResponse",
@@ -2450,6 +2464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted bookmark's id",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteBookmarkResponse",
@@ -2583,6 +2598,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Array of created events",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TriggerBookmarkResponse",
@@ -3320,6 +3336,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of destinations",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDestinationsResponse",
@@ -3523,6 +3540,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateDestinationResponse",
@@ -3726,6 +3744,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertDestinationResponse",
@@ -3780,6 +3799,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetDestinationResponse",
@@ -4024,6 +4044,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateDestinationResponse",
@@ -4078,6 +4099,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ArchiveDestinationResponse",
@@ -4132,6 +4154,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UnarchiveDestinationResponse",
@@ -5838,6 +5861,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEventsResponse",
@@ -5892,6 +5916,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single event",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEventResponse",
@@ -5946,6 +5971,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A request raw body data",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestRawBodyResponse",
@@ -6000,6 +6026,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retried event with event attempt",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetryEventResponse",
@@ -6054,6 +6081,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single event",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "MuteEventResponse",
@@ -8572,6 +8600,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events bulk retries",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEventBulkRetriesResponse",
@@ -10113,6 +10142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateEventBulkRetryResponse",
@@ -11650,6 +11680,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Events bulk retry plan",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateEventBulkRetryPlanResponse",
@@ -11704,6 +11735,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEventBulkRetryResponse",
@@ -11758,6 +11790,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CancelEventBulkRetryResponse",
@@ -12682,6 +12715,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of ignored events bulk retries",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIgnoredEventBulkRetriesResponse",
@@ -12875,6 +12909,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateIgnoredEventBulkRetryResponse",
@@ -13064,6 +13099,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ignored events bulk retry plan",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateIgnoredEventBulkRetryPlanResponse",
@@ -13118,6 +13154,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIgnoredEventBulkRetryResponse",
@@ -13172,6 +13209,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CancelIgnoredEventBulkRetryResponse",
@@ -13269,6 +13307,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of integrations",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIntegrationsResponse",
@@ -13430,6 +13469,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateIntegrationResponse",
@@ -13484,6 +13524,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIntegrationResponse",
@@ -13682,6 +13723,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIntegrationResponse",
@@ -13736,6 +13778,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted integration id",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteIntegrationResponse",
@@ -13806,6 +13849,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Attach operation success status",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AttachIntegrationToSourceResponse",
@@ -13908,6 +13952,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Detach operation success status",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DetachIntegrationToSourceResponse",
@@ -15313,6 +15358,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of issues",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssuesResponse",
@@ -16725,6 +16771,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Issue count",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssueCountResponse",
@@ -16779,6 +16826,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIssueResponse",
@@ -16888,6 +16936,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated issue",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIssueResponse",
@@ -16942,6 +16991,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Dismissed issue",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DismissIssueResponse",
@@ -18332,6 +18382,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of requests",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestsResponse",
@@ -18386,6 +18437,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single request",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestResponse",
@@ -18440,6 +18492,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A request raw body data",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestRawBodyResponse",
@@ -18532,6 +18585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retry request operation result",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetryRequestResponse",
@@ -20266,6 +20320,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestEventsResponse",
@@ -20561,6 +20616,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of ignored events",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestIgnoredEventsResponse",
@@ -22734,6 +22790,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of request bulk retries",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestBulkRetriesResponse",
@@ -23941,6 +23998,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateRequestBulkRetryResponse",
@@ -25157,6 +25215,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Requests bulk retry plan",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateRequestBulkRetryPlanResponse",
@@ -25211,6 +25270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRequestBulkRetryResponse",
@@ -25265,6 +25325,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CancelRequestBulkRetryResponse",
@@ -26100,6 +26161,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of rulesets",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRulesetsResponse",
@@ -26213,6 +26275,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateRulesetResponse",
@@ -26326,6 +26389,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertRulesetResponse",
@@ -26380,6 +26444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRulesetResponse",
@@ -26539,6 +26604,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateRulesetResponse",
@@ -26593,6 +26659,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ArchiveRulesetResponse",
@@ -26647,6 +26714,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UnarchiveRulesetResponse",
@@ -27327,6 +27395,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of sources",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetSourcesResponse",
@@ -27397,6 +27466,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateSourceResponse",
@@ -27467,6 +27537,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertSourceResponse",
@@ -27521,6 +27592,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetSourceResponse",
@@ -27637,6 +27709,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateSourceResponse",
@@ -27691,6 +27764,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ArchiveSourceResponse",
@@ -27745,6 +27819,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UnarchiveSourceResponse",
@@ -27860,6 +27935,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Toggle operation status response",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ToggleWebhookNotificationsResponse",
@@ -28184,6 +28260,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of transformations",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransformationsResponse",
@@ -28326,6 +28403,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTransformationResponse",
@@ -28468,6 +28546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertTransformationResponse",
@@ -28522,6 +28601,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransformationResponse",
@@ -28691,6 +28771,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateTransformationResponse",
@@ -29048,6 +29129,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Transformation run output",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TestTransformationResponse",
@@ -29641,6 +29723,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of transformation executions",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransformationExecutionsResponse",
@@ -29710,6 +29793,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation execution",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetTransformationExecutionResponse",
@@ -30598,6 +30682,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of connections",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionsResponse",
@@ -31060,6 +31145,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateConnectionResponse",
@@ -31522,6 +31608,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertConnectionResponse",
@@ -31576,6 +31663,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionResponse",
@@ -31799,6 +31887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateConnectionResponse",
@@ -31853,6 +31942,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ArchiveConnectionResponse",
@@ -31907,6 +31997,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UnarchiveConnectionResponse",
@@ -31961,6 +32052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PauseConnectionResponse",
@@ -32015,6 +32107,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UnpauseConnectionResponse",

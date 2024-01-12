@@ -1134,6 +1134,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking amendment",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1584,6 +1585,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of booking line items",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1960,6 +1962,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking line item",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2224,6 +2227,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "A collection of booking line items",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4443,6 +4447,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of bookings",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6795,6 +6800,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8508,6 +8514,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8910,6 +8917,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10023,6 +10031,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11143,6 +11152,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created commercial invoice",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12152,6 +12162,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated commercial invoice",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13125,6 +13136,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13437,6 +13449,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of customs entries",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13767,6 +13780,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14214,6 +14228,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of documents",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14592,6 +14607,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14837,6 +14853,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -17402,6 +17419,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19889,6 +19907,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -21170,6 +21189,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of invoices",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22060,6 +22080,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22506,6 +22527,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of companies",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22965,6 +22987,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -23307,6 +23330,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -23681,6 +23705,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated company",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -24137,6 +24162,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of company entities",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -24678,6 +24704,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company entity",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -25005,6 +25032,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -25440,6 +25468,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -25788,6 +25817,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of contacts",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26150,6 +26180,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created contact",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26376,6 +26407,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26639,6 +26671,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated contact",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27083,6 +27116,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of locations",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27541,6 +27575,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created location",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27816,6 +27851,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28175,6 +28211,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28492,6 +28529,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28869,6 +28907,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29226,6 +29265,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29891,6 +29931,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -30536,6 +30577,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -30960,6 +31002,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of ports",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31482,6 +31525,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -32043,6 +32087,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -32397,6 +32442,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -32885,6 +32931,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -33998,6 +34045,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -35003,6 +35051,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -36469,6 +36518,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase orders",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -37927,6 +37977,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created purchase order",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderCreateResponse",
@@ -38791,6 +38842,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -40184,6 +40236,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The update purchase order",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderUpdateResponse",
@@ -41127,6 +41180,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42154,6 +42208,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -44565,6 +44620,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -46371,6 +46427,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48089,6 +48146,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated shipment",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48341,6 +48399,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments shareable status url",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],

@@ -182,6 +182,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -235,6 +236,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StartJobResponse",
@@ -309,6 +311,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -410,6 +413,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetJobResponse",

@@ -101,6 +101,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -240,6 +241,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetBuyerResponse",
@@ -389,6 +391,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateBuyerNameDescriptionResponse",
@@ -678,6 +681,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -1997,6 +2001,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOrUpdateDraftOfferResponse",
@@ -2261,6 +2266,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -2550,6 +2556,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEntitlementResponse",
@@ -2632,6 +2639,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AddEntitlementCreditResponse",
@@ -2931,6 +2939,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateEntitlementNameResponse",
@@ -3225,6 +3234,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -3544,6 +3554,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetEntitlementTermResponse",
@@ -3723,6 +3734,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByEntitlementResponse",
@@ -3806,6 +3818,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportUsageRecordGroupResponse",
@@ -4078,6 +4091,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByEntitlementResponse",
@@ -4175,6 +4189,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -4247,6 +4262,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateIntegrationResponse",
@@ -4412,6 +4428,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetIntegrationResponse",
@@ -4524,6 +4541,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -4651,6 +4669,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIntegrationResponse",
@@ -4763,6 +4782,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "whether it is verified or not",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -5455,6 +5475,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -6774,6 +6795,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOfferResponse",
@@ -7486,6 +7508,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetOfferResponse",
@@ -7555,6 +7578,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -7627,6 +7651,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if cancellation is successful",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -7918,6 +7943,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -8093,6 +8119,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -8401,6 +8428,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -9164,6 +9192,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -9745,6 +9774,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -10003,6 +10033,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListRevenueRecordsResponse",
@@ -10256,6 +10287,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListRevenueRecordDetailsResponse",
@@ -10793,6 +10825,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -11355,6 +11388,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetProductResponse",
@@ -11424,6 +11458,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -11507,6 +11542,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateProductResponse",
@@ -11608,6 +11644,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -11902,6 +11939,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -12624,6 +12662,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -12808,6 +12847,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByProductResponse",
@@ -13060,6 +13100,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByProductResponse",
@@ -13127,6 +13168,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRevenueReportResponse",
@@ -13281,6 +13323,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByOrganizationResponse",
@@ -13382,6 +13425,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageRecordGroupResponse",
@@ -13609,6 +13653,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByOrganizationResponse",
@@ -13773,6 +13818,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageRecordReportResponse",
@@ -13840,6 +13886,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageReportResponse",
@@ -13890,6 +13937,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetApiClientAccessTokenResponse",

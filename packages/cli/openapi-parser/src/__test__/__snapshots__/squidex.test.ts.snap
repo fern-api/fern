@@ -82,6 +82,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Users returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementGetUsersResponse",
@@ -138,6 +139,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementPostUserResponse",
@@ -198,6 +200,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementGetUserResponse",
@@ -271,6 +274,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementPutUserResponse",
@@ -403,6 +407,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User locked.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementLockUserResponse",
@@ -465,6 +470,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User unlocked.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementUnlockUserResponse",
@@ -524,6 +530,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User resources returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UsersGetUserResourcesResponse",
@@ -599,6 +606,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Users returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -664,6 +672,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User found.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UsersGetUserResponse",
@@ -785,6 +794,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Text translated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TranslationsPostTranslationResponse",
@@ -848,6 +858,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Templates returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TemplatesGetTemplatesResponse",
@@ -908,6 +919,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Template returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TemplatesGetTemplateResponse",
@@ -968,6 +980,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributors returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsGetContributorsResponse",
@@ -1041,6 +1054,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor assigned to team.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPostContributorResponse",
@@ -1102,6 +1116,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsDeleteMyselfResponse",
@@ -1178,6 +1193,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsDeleteContributorResponse",
@@ -1233,6 +1249,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Teams returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -1296,6 +1313,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPostTeamResponse",
@@ -1356,6 +1374,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Teams returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsGetTeamResponse",
@@ -1429,6 +1448,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPutTeamResponse",
@@ -1511,6 +1531,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Usage tracking results returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StatisticsGetLogResponse",
@@ -1601,6 +1622,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "API call returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StatisticsGetUsagesResponse",
@@ -1691,6 +1713,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "API call returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StatisticsGetUsagesForTeamResponse",
@@ -1751,6 +1774,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StatisticsGetCurrentStorageSizeResponse",
@@ -1811,6 +1835,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StatisticsGetTeamCurrentStorageSizeForTeamResponse",
@@ -1943,6 +1968,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -2080,6 +2106,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -2188,6 +2215,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Search results returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -2282,6 +2310,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostFieldResponse",
@@ -2384,6 +2413,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostNestedFieldResponse",
@@ -2472,6 +2502,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema UI fields defined.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaUiFieldsResponse",
@@ -2560,6 +2591,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema fields reordered.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaFieldOrderingResponse",
@@ -2661,6 +2693,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema fields reordered.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutNestedFieldOrderingResponse",
@@ -2762,6 +2795,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutFieldResponse",
@@ -2851,6 +2885,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasDeleteFieldResponse",
@@ -2965,6 +3000,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutNestedFieldResponse",
@@ -3067,6 +3103,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasDeleteNestedFieldResponse",
@@ -3156,6 +3193,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasLockFieldResponse",
@@ -3258,6 +3296,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasLockNestedFieldResponse",
@@ -3347,6 +3386,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasHideFieldResponse",
@@ -3449,6 +3489,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasHideNestedFieldResponse",
@@ -3538,6 +3579,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasShowFieldResponse",
@@ -3640,6 +3682,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasShowNestedFieldResponse",
@@ -3729,6 +3772,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field enabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasEnableFieldResponse",
@@ -3831,6 +3875,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field enabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasEnableNestedFieldResponse",
@@ -3920,6 +3965,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field disabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasDisableFieldResponse",
@@ -4022,6 +4068,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field disabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasDisableNestedFieldResponse",
@@ -4113,6 +4160,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schemas returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasGetSchemasResponse",
@@ -4186,6 +4234,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostSchemaResponse",
@@ -4261,6 +4310,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema found.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasGetSchemaResponse",
@@ -4349,6 +4399,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaResponse",
@@ -4531,6 +4582,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaSyncResponse",
@@ -4619,6 +4671,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutCategoryResponse",
@@ -4707,6 +4760,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutPreviewUrlsResponse",
@@ -4795,6 +4849,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutScriptsResponse",
@@ -4883,6 +4938,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutRulesResponse",
@@ -4959,6 +5015,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema published.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPublishSchemaResponse",
@@ -5035,6 +5092,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema unpublished.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SchemasUnpublishSchemaResponse",
@@ -5089,6 +5147,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule actions returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -5195,6 +5254,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rules returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesGetRulesResponse",
@@ -5268,6 +5328,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesPostRuleResponse",
@@ -5424,6 +5485,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesPutRuleResponse",
@@ -5594,6 +5656,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule enabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesEnableRuleResponse",
@@ -5670,6 +5733,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule disabled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesDisableRuleResponse",
@@ -6042,6 +6106,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule simulated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesSimulatePostResponse",
@@ -6117,6 +6182,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule simulated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesSimulateGetResponse",
@@ -6234,6 +6300,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule events returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RulesGetEventsResponse",
@@ -6544,6 +6611,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule events returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -6611,6 +6679,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule event type found.",
+        "responseProperty": undefined,
         "schema": {
           "type": "unknown",
         },
@@ -6697,6 +6766,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App plan information returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PlansGetPlansResponse",
@@ -6770,6 +6840,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Plan changed or redirect url returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PlansPutPlanResponse",
@@ -6861,6 +6932,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team plan information returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PlansGetTeamPlansResponse",
@@ -6934,6 +7006,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Plan changed or redirect url returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PlansPutTeamPlanResponse",
@@ -6988,6 +7061,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Infos returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PingGetInfoResponse",
@@ -7157,6 +7231,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Latest features returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NewsGetNewsResponse",
@@ -7211,6 +7286,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Supported language codes returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -7319,6 +7395,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Events returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -7427,6 +7504,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Events returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -7495,6 +7573,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumers returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EventConsumersGetEventConsumersResponse",
@@ -7556,6 +7635,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer started asynchronously.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EventConsumersStartEventConsumerResponse",
@@ -7617,6 +7697,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer stopped asynchronously.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EventConsumersStopEventConsumerResponse",
@@ -7678,6 +7759,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer resetted asynchronously.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EventConsumersResetEventConsumerResponse",
@@ -7876,6 +7958,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetContentsResponse",
@@ -8023,6 +8106,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPostContentResponse",
@@ -8111,6 +8195,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetContentsPostResponse",
@@ -8220,6 +8305,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetContentResponse",
@@ -8380,6 +8466,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content created or updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPostUpsertContentResponse",
@@ -8483,6 +8570,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPutContentResponse",
@@ -8742,6 +8830,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content patched.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPatchContentResponse",
@@ -8972,6 +9061,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetReferencesResponse",
@@ -9083,6 +9173,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetReferencingResponse",
@@ -9303,6 +9394,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -9446,6 +9538,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -9554,6 +9647,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content status changed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPutContentStatusResponse",
@@ -9645,6 +9739,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content status change cancelled.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsDeleteContentStatusResponse",
@@ -9736,6 +9831,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content draft created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsCreateDraftResponse",
@@ -9827,6 +9923,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content draft deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ContentsDeleteVersionResponse",
@@ -9929,6 +10026,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Watching users returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -10030,6 +10128,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Comments returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CommentsGetCommentsResponse",
@@ -10118,6 +10217,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Comment created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CommentsPostCommentResponse",
@@ -10407,6 +10507,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "All comments returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NotificationsGetNotificationsResponse",
@@ -10840,6 +10941,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Backups returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BackupsGetBackupsResponse",
@@ -10952,6 +11054,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Status returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BackupsGetRestoreJobResponse",
@@ -11739,6 +11842,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folders returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsGetAssetFoldersResponse",
@@ -11812,6 +11916,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPostAssetFolderResponse",
@@ -11900,6 +12005,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetFolderResponse",
@@ -12082,6 +12188,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder moved.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetFolderParentResponse",
@@ -12164,6 +12271,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets tags returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -12267,6 +12375,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset tag renamed and new tags returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -12479,6 +12588,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsGetAssetsResponse",
@@ -12613,6 +12723,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPostAssetResponse",
@@ -12686,6 +12797,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsGetAssetsPostResponse",
@@ -12761,6 +12873,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset found.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsGetAssetResponse",
@@ -12890,6 +13003,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset created or updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPostUpsertAssetResponse",
@@ -12978,6 +13092,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetResponse",
@@ -13222,6 +13337,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets created, update or delete.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -13317,6 +13433,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetContentResponse",
@@ -13405,6 +13522,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset moved.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetParentResponse",
@@ -13465,6 +13583,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset scripts returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetAssetScriptsResponse",
@@ -13538,6 +13657,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset scripts updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAssetScriptsResponse",
@@ -13629,6 +13749,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Clients returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetClientsResponse",
@@ -13703,6 +13824,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostClientResponse",
@@ -13835,6 +13957,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutClientResponse",
@@ -13952,6 +14075,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteClientResponse",
@@ -14012,6 +14136,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributors returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetContributorsResponse",
@@ -14085,6 +14210,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor assigned to app.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostContributorResponse",
@@ -14146,6 +14272,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteMyselfResponse",
@@ -14222,6 +14349,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteContributorResponse",
@@ -14345,6 +14473,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App image uploaded.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsUploadImageResponse",
@@ -14406,6 +14535,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App image removed.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteImageResponse",
@@ -14497,6 +14627,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Languages returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetLanguagesResponse",
@@ -14570,6 +14701,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostLanguageResponse",
@@ -14702,6 +14834,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutLanguageResponse",
@@ -14819,6 +14952,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteLanguageResponse",
@@ -14910,6 +15044,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Roles returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetRolesResponse",
@@ -14983,6 +15118,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostRoleResponse",
@@ -15065,6 +15201,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App permissions returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -15209,6 +15346,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutRoleResponse",
@@ -15326,6 +15464,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteRoleResponse",
@@ -15381,6 +15520,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -15444,6 +15584,7 @@ You will be assigned as owner of the new app automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostAppResponse",
@@ -15526,6 +15667,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "groupName": undefined,
@@ -15591,6 +15733,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetAppResponse",
@@ -15664,6 +15807,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAppResponse",
@@ -15806,6 +15950,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App transferred.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAppTeamResponse",
@@ -15866,6 +16011,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App settings returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetSettingsResponse",
@@ -15939,6 +16085,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutSettingsResponse",
@@ -16044,6 +16191,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflows returned.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsGetWorkflowsResponse",
@@ -16117,6 +16265,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostWorkflowResponse",
@@ -16205,6 +16354,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow updated.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutWorkflowResponse",
@@ -16336,6 +16486,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow deleted.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AppsDeleteWorkflowResponse",

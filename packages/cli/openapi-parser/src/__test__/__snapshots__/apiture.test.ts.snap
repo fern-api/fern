@@ -198,6 +198,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListAccountsResponse",
@@ -257,6 +258,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response is a representation of the customer's account.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsGetAccountResponse",
@@ -359,6 +361,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response contains the balances for all the accounts in the \`?accounts=\` query parameter.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListAccountBalancesResponse",
@@ -446,6 +449,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountJointOwnersListAccountJointOwnersResponse",
@@ -582,6 +586,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListEligibleAchAccountsResponse",
@@ -686,6 +691,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsResponse",
@@ -745,6 +751,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionGetOverdraftProtectionResponse",
@@ -820,6 +827,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionPatchOverdraftAccountsResponse",
@@ -895,6 +903,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "JointOwnersCreateJointOwnerInvitationResponse",
@@ -1003,6 +1012,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsLookUpInstitutionByLocatorResponse",
@@ -1226,6 +1236,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsListTransferScheduleResponse",
@@ -1330,6 +1341,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsGetCutoffTimesResponse",
@@ -1563,6 +1575,7 @@ This information provides hints to clients, allowing bank customers to select tr
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsGetTransferDateRestrictionsResponse",
@@ -1866,6 +1879,7 @@ The default response lists only recent transactions. Normally, this is transacti
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransactionsListTransactionsResponse",
@@ -1951,6 +1965,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransactionCategoriesListTransactionCategoriesResponse",
@@ -2108,6 +2123,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersListTransfersResponse",
@@ -2187,6 +2203,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "Created.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersCreateTransferResponse",
@@ -2246,6 +2263,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersGetTransferResponse",
@@ -2408,6 +2426,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersPatchTransferResponse",
