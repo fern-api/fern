@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/">
-    <img src="fern.png" height="120" align="center" alt="header" />
+    <img src="/fern/docs/images/logo-green.png" height="50" align="center" alt="header" />
   </a>
 <br/>
 
