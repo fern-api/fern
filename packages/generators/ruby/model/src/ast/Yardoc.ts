@@ -1,16 +1,17 @@
-import { AstNode, NewLinePlacement } from "../AstNode";
-import { Class_ } from "./Class_";
+import { AstNode, NewLinePlacement } from "./AstNode";
+import { ClassReference } from "./ClassReference";
 import { Parameter } from "./Parameter";
+import { Variable } from "./Variable";
 
 interface YardocDocString {
     readonly name: "docString";
 
     parameters: Parameter[];
-    returnClass: Class_ | undefined;
+    returnClass: ClassReference | undefined;
 }
 interface YardocTypeReference {
     readonly name: "typeReference";
-    type: Class_;
+    variable: ClassReference | Variable;
 }
 export declare namespace Yardoc {
     export interface Init extends AstNode.Init {
@@ -40,11 +41,13 @@ export class Yardoc extends AstNode {
         if (!this.reference) {
             return doc;
         } else if (this.reference.name === "typeReference") {
+            const typeName =
+                this.reference.variable.type instanceof ClassReference
+                    ? this.reference.variable.type.name
+                    : this.reference.variable.type.valueOf();
             doc += this.writePaddedString(
                 startingTabSpaces,
-                `# @type [${this.reference.type.name}]${this.writeConditionalDocumentation(
-                    this.reference.type.documentation
-                )}`,
+                `# @type [${typeName}]${this.writeConditionalDocumentation(this.reference.variable.documentation)}`,
                 NewLinePlacement.BEFORE
             );
         } else {

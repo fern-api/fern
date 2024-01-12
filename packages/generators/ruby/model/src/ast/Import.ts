@@ -1,4 +1,4 @@
-import { AstNode } from "../AstNode";
+import { AstNode } from "./AstNode";
 
 export declare namespace Import {
     export interface Init {

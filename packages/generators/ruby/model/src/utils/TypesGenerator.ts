@@ -1,59 +1,67 @@
 import {
-    IntermediateRepresentation,
+    AliasTypeDeclaration,
+    EnumTypeDeclaration,
     ObjectTypeDeclaration,
     Type,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    UndiscriminatedUnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import {
+    generateAliasDefinitionFromTypeDeclaration,
+    generateEnumDefinitionFromTypeDeclaration,
+    generateSerializableObjectFromTypeDeclaration
+} from "../ast/AbstractionUtilities";
+import { Module_ } from "../ast/Module_";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
-    private types: Map<TypeId, TypeDeclaration>;
-    // Ruby does not have a concept of interfaces directly and so we'd want to
-    // create the type/class as normal and note for the inheriting classes to
-    // specify the inheritence (e.g. class InheritingClass < BaseClass)
-    private typeExtends: Map<TypeId, TypeId[]>;
+    private types: Map<TypeId, TypeDeclaration> = new Map();
 
-    constructor(intermediateRepresentation: IntermediateRepresentation) {
-        this.types = new Map();
-        this.typeExtends = new Map();
-
-        // For convenience just get what's inheriting what ahead of time.
-        for (const type of Object.values(intermediateRepresentation.types)) {
-            this.types.set(type.name.typeId, type);
-
-            const extendedTypes = type.shape._visit<TypeId[]>({
-                alias: () => [],
-                enum: () => [],
-                object: (value: ObjectTypeDeclaration) => value.extends.map((extendedType) => extendedType.typeId),
-                union: () => [],
-                undiscriminatedUnion: () => [],
-                _other: () => []
-            });
-            this.typeExtends.set(type.name.typeId, extendedTypes);
-        }
+    private generateAliasFile(
+        aliasTypeDeclaration: AliasTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
+        const aliasExpression = generateAliasDefinitionFromTypeDeclaration(aliasTypeDeclaration, typeDeclaration);
+        const rootNode = Module_.wrapInModules(typeDeclaration.name, aliasExpression);
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: "TODO", entityName: typeDeclaration.name.name });
     }
-
-    private generateAliasFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
-        // TODO
+    private generateEnumFile(
+        enumTypeDeclaration: EnumTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
+        const enumExpression = generateEnumDefinitionFromTypeDeclaration(enumTypeDeclaration, typeDeclaration);
+        const rootNode = Module_.wrapInModules(typeDeclaration.name, enumExpression);
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: "TODO", entityName: typeDeclaration.name.name });
     }
-    private generateEnumFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
-        // TODO
+    private generateObjectFile(
+        objectTypeDeclaration: ObjectTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
+        const serializableObject = generateSerializableObjectFromTypeDeclaration(
+            objectTypeDeclaration,
+            typeDeclaration
+        );
+        const rootNode = Module_.wrapInModules(typeDeclaration.name, serializableObject);
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: "TODO", entityName: typeDeclaration.name.name });
     }
-    private generateObjectFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
+    private generateUnionFile(
+        unionTypeDeclaration: UnionTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
         // TODO
-    }
-    private generateUnionFile(typeId: TypeId, typeDeclaration: TypeDeclaration): GeneratedRubyFile | null {
-        // TODO
+        return;
     }
     private generateUndiscriminatedUnionFile(
-        typeId: TypeId,
+        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
         typeDeclaration: TypeDeclaration
-    ): GeneratedRubyFile | null {
+    ): GeneratedRubyFile | undefined {
         // TODO
+        return;
     }
-    private generateUnkownFile(shape: Type): GeneratedRubyFile | null {
+    private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
@@ -61,12 +69,13 @@ export class TypesGenerator {
         const typeFiles = new Map<TypeId, GeneratedRubyFile>();
 
         for (const [key, value] of this.types.entries()) {
-            const generatedFile = value.shape._visit<GeneratedRubyFile | null>({
-                alias: () => this.generateAliasFile(key, value),
-                enum: () => this.generateEnumFile(key, value),
-                object: () => this.generateObjectFile(key, value),
-                union: () => this.generateUnionFile(key, value),
-                undiscriminatedUnion: () => this.generateUndiscriminatedUnionFile(key, value),
+            const generatedFile = value.shape._visit<GeneratedRubyFile | undefined>({
+                alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(atd, value),
+                enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, value),
+                object: (otd: ObjectTypeDeclaration) => this.generateObjectFile(otd, value),
+                union: (utd: UnionTypeDeclaration) => this.generateUnionFile(utd, value),
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
+                    this.generateUndiscriminatedUnionFile(uutd, value),
                 _other: () => this.generateUnkownFile(value.shape)
             });
 

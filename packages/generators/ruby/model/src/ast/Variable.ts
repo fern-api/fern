@@ -1,5 +1,5 @@
-import { AstNode } from "../AstNode";
-import { Class_, RubyClass } from "./Class_";
+import { AstNode } from "./AstNode";
+import { ClassReference } from "./ClassReference";
 
 export enum VariableType {
     CLASS,
@@ -9,20 +9,23 @@ export enum VariableType {
 export declare namespace Variable {
     export interface Init extends AstNode.Init {
         name: string;
-        type: Class_ | RubyClass;
+        type: ClassReference;
         variableType: VariableType;
+        isOptional?: boolean;
     }
 }
 export class Variable extends AstNode {
     public name: string;
-    public type: Class_ | RubyClass;
+    public type: ClassReference;
     public variableType: VariableType;
+    public isOptional: boolean;
 
-    constructor({ name, type, variableType, ...rest }: Variable.Init) {
+    constructor({ name, type, variableType, isOptional = false, ...rest }: Variable.Init) {
         super(rest);
         this.name = name;
         this.type = type;
         this.variableType = variableType;
+        this.isOptional = isOptional;
     }
 
     public writeInternal(startingTabSpaces: number): string {
