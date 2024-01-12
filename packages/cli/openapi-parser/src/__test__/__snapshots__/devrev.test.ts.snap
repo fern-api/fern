@@ -4387,13 +4387,6 @@ organizations.
     "dev-user",
     "tag-with-value",
     "error-base",
-    "error-bad-request-type",
-    "error-forbidden-type",
-    "error-internal-server-error-type",
-    "error-not-found-type",
-    "error-service-unavailable-type",
-    "error-too-many-requests-type",
-    "error-unauthorized-type",
     "part",
     "rev-org",
     "tag",
@@ -7131,22 +7124,7 @@ sort order. If not set, then no prior elements exist.
       "generatedName": "ErrorBadRequest",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorBadRequestType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorBadRequestType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-bad-request-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-bad-request-bad-request": {
@@ -7411,22 +7389,7 @@ sort order. If not set, then no prior elements exist.
       "generatedName": "ErrorForbidden",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorForbiddenType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorForbiddenType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-forbidden-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-forbidden-forbidden": {
@@ -7472,45 +7435,7 @@ sort order. If not set, then no prior elements exist.
       "generatedName": "ErrorInternalServerError",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorInternalServerErrorReferenceId",
-          "key": "reference_id",
-          "schema": {
-            "description": undefined,
-            "groupName": undefined,
-            "type": "optional",
-            "value": {
-              "description": "A unique ID that's generated for the error that can be used for
-inquiry.
-",
-              "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorInternalServerErrorType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorInternalServerErrorType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-internal-server-error-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-internal-server-error-internal-error": {
@@ -7556,22 +7481,7 @@ inquiry.
       "generatedName": "ErrorNotFound",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorNotFoundType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorNotFoundType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-not-found-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-not-found-not-found": {
@@ -7617,22 +7527,7 @@ inquiry.
       "generatedName": "ErrorServiceUnavailable",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorServiceUnavailableType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorServiceUnavailableType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-service-unavailable-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-service-unavailable-service-unavailable": {
@@ -7678,42 +7573,7 @@ inquiry.
       "generatedName": "ErrorTooManyRequests",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorTooManyRequestsRetryAfter",
-          "key": "retry_after",
-          "schema": {
-            "description": undefined,
-            "groupName": undefined,
-            "type": "optional",
-            "value": {
-              "description": "The number of seconds after which the client should retry.
-",
-              "groupName": undefined,
-              "schema": {
-                "type": "int",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorTooManyRequestsType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorTooManyRequestsType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-too-many-requests-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-too-many-requests-too-many-requests": {
@@ -7759,22 +7619,7 @@ inquiry.
       "generatedName": "ErrorUnauthorized",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "errorUnauthorizedType",
-          "key": "type",
-          "schema": {
-            "description": undefined,
-            "generatedName": "ErrorUnauthorizedType",
-            "groupName": undefined,
-            "nameOverride": undefined,
-            "schema": "error-unauthorized-type",
-            "type": "reference",
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "error-unauthorized-type": {

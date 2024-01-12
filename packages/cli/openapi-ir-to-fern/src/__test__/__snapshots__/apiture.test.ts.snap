@@ -809,7 +809,7 @@ Note: This operation requires an identity challenge if the financial institution
                 "properties": {
                   "schedule": {
                     "docs": "When the transfer should occur and any recurrence.",
-                    "type": "root.TransferSchedule",
+                    "type": "optional<root.TransferSchedule>",
                   },
                 },
               },
@@ -2218,7 +2218,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "items": {
             "docs": "An array containing a page of transaction items.",
-            "type": "list<TransactionItem>",
+            "type": "optional<list<TransactionItem>>",
           },
         },
       },

@@ -2162,7 +2162,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "document_line_number": 4,
                           "first_sale_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2187,7 +2186,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "net_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2197,7 +2195,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "price_per_unit": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2210,7 +2207,6 @@ exports[`open api parser flexport simple 1`] = `
                           "purchase_order_number": "9876-ABC",
                           "total_units": 10,
                           "value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2249,7 +2245,6 @@ exports[`open api parser flexport simple 1`] = `
                       },
                       "total_unit_count": "123.0",
                       "total_value": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -2378,7 +2373,6 @@ exports[`open api parser flexport simple 1`] = `
                               },
                               "document_line_number": 4,
                               "first_sale_value": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -2403,7 +2397,6 @@ exports[`open api parser flexport simple 1`] = `
                                 "value": 2300.4,
                               },
                               "net_value": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -2413,7 +2406,6 @@ exports[`open api parser flexport simple 1`] = `
                                 "value": 2300.4,
                               },
                               "price_per_unit": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -2426,7 +2418,6 @@ exports[`open api parser flexport simple 1`] = `
                               "purchase_order_number": "9876-ABC",
                               "total_units": 10,
                               "value": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -2465,7 +2456,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "total_unit_count": "123.0",
                           "total_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2589,7 +2579,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "document_line_number": 4,
                           "first_sale_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2614,7 +2603,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "net_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2624,7 +2612,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "price_per_unit": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2637,7 +2624,6 @@ exports[`open api parser flexport simple 1`] = `
                           "purchase_order_number": "9876-ABC",
                           "total_units": 10,
                           "value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2676,7 +2662,6 @@ exports[`open api parser flexport simple 1`] = `
                       },
                       "total_unit_count": "123.0",
                       "total_value": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -2727,7 +2712,6 @@ exports[`open api parser flexport simple 1`] = `
                   "invoice_number": "INVOICE-04-05-2020",
                   "is_related_parties": false,
                   "proration_amount": {
-                    "_object": "/money",
                     "amount": "12.34",
                     "currency_code": "USD",
                   },
@@ -2780,7 +2764,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "document_line_number": 4,
                           "first_sale_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2805,7 +2788,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "net_value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2815,7 +2797,6 @@ exports[`open api parser flexport simple 1`] = `
                             "value": 2300.4,
                           },
                           "price_per_unit": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2828,7 +2809,6 @@ exports[`open api parser flexport simple 1`] = `
                           "purchase_order_number": "9876-ABC",
                           "total_units": 10,
                           "value": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -2867,7 +2847,6 @@ exports[`open api parser flexport simple 1`] = `
                       },
                       "total_unit_count": "123.0",
                       "total_value": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -6106,7 +6085,6 @@ exports[`open api parser flexport simple 1`] = `
                         {
                           "_object": "/invoice",
                           "balance": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -6114,7 +6092,6 @@ exports[`open api parser flexport simple 1`] = `
                             {
                               "_object": "/credit_memo",
                               "amount": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -6155,7 +6132,6 @@ exports[`open api parser flexport simple 1`] = `
                             {
                               "_object": "/invoice_item",
                               "amount": {
-                                "_object": "/money",
                                 "amount": "12.34",
                                 "currency_code": "USD",
                               },
@@ -6210,7 +6186,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "status": "outstanding",
                           "total": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -6326,7 +6301,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "data": {
                       "_object": "/invoice",
                       "balance": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -6334,7 +6308,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         {
                           "_object": "/credit_memo",
                           "amount": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -6375,7 +6348,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         {
                           "_object": "/invoice_item",
                           "amount": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -6430,7 +6402,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "status": "outstanding",
                       "total": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -8690,7 +8661,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "transportation_mode": "ocean",
                           "unit_cost": {
-                            "_object": "/money",
                             "amount": "12.34",
                             "currency_code": "USD",
                           },
@@ -8891,7 +8861,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "transportation_mode": "ocean",
                       "unit_cost": {
-                        "_object": "/money",
                         "amount": "12.34",
                         "currency_code": "USD",
                       },
@@ -12844,12 +12813,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "extends": [
           "MoneyCreate",
         ],
-        "properties": {
-          "_object": {
-            "docs": "Type of the object. Always /money for this object.",
-            "type": "optional<string>",
-          },
-        },
+        "properties": {},
       },
       "MoneyCreate": {
         "docs": undefined,

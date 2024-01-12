@@ -9318,13 +9318,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "first_sale_value": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -9463,13 +9456,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "net_value": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -9512,13 +9498,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "price_per_unit": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -9585,13 +9564,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "value": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -9790,13 +9762,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "total_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -10564,13 +10529,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "first_sale_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -10709,13 +10667,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "net_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -10758,13 +10709,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "price_per_unit": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -10831,13 +10775,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -11036,13 +10973,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                   "total_value": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -11291,13 +11221,6 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "proration_amount": {
                 "properties": {
-                  "_object": {
-                    "primitive": {
-                      "string": "/money",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
                   "amount": {
                     "primitive": {
                       "string": "12.34",
@@ -11574,13 +11497,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "first_sale_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -11719,13 +11635,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "net_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -11768,13 +11677,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "price_per_unit": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -11841,13 +11743,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -12046,13 +11941,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                   "total_value": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -12544,13 +12432,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "first_sale_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -12689,13 +12570,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "net_value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -12738,13 +12612,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "price_per_unit": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -12811,13 +12678,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "value": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -13016,13 +12876,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                   "total_value": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -20198,13 +20051,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "balance": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -20235,13 +20081,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "amount": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -20459,13 +20298,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                                   },
                                   "amount": {
                                     "properties": {
-                                      "_object": {
-                                        "primitive": {
-                                          "string": "/money",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
                                       "amount": {
                                         "primitive": {
                                           "string": "12.34",
@@ -20758,13 +20590,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "total": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -21435,13 +21260,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "balance": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -21472,13 +21290,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "amount": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -21696,13 +21507,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "amount": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -21995,13 +21799,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "total": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -33819,13 +33616,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "unit_cost": {
                             "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/money",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
                               "amount": {
                                 "primitive": {
                                   "string": "12.34",
@@ -34975,13 +34765,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "unit_cost": {
                     "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/money",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                       "amount": {
                         "primitive": {
                           "string": "12.34",
@@ -63043,29 +62826,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "generatedName": "Money",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "moneyObject",
-          "key": "_object",
-          "schema": {
-            "description": undefined,
-            "groupName": undefined,
-            "type": "optional",
-            "value": {
-              "description": "Type of the object. Always /money for this object.",
-              "groupName": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-      ],
+      "properties": [],
       "type": "object",
     },
     "MoneyCreate": {
