@@ -220,6 +220,7 @@ types:
     extends: commons.WithDescription
     properties:
       schema: Schema
+      responseProperty: optional<string>
 
   Schema:
     union:
