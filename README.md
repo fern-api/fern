@@ -17,7 +17,9 @@
 
 Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs, API documentation, and backend server boilerplate.
 
-![Overview Diagram](/fern/docs/images/overview.png)
+<div align="center">
+    <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
+</div>
 
 ## Getting started
 
