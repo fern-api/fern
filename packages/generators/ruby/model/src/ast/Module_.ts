@@ -1,6 +1,7 @@
 import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { BLOCK_END } from "../utils/Constants";
 import { AstNode } from "./AstNode";
-import { Class_ } from "./Class_";
+import { Class_ } from "./classes/Class_";
 
 export declare namespace Module_ {
     export interface Init extends AstNode.Init {
@@ -19,13 +20,13 @@ export class Module_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): string {
-        // Write modules shell `module NAME ... end`
+        // TODO: Write imports from properties, extended classes and function arguments
         return this.writePaddedString(
             startingTabSpaces,
             `
 module ${this.name}
 ${this.child?.writeInternal(this.tabSizeSpaces + startingTabSpaces)}
-end
+${BLOCK_END}
 `
         );
     }

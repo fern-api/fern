@@ -1,5 +1,5 @@
 import { AstNode } from "../AstNode";
-import { Hash_ } from "../primitives/Hash_";
+import { HashInstance } from "../primitives/Hash_";
 
 export declare namespace Enum {
     export interface Init extends AstNode.Init {
@@ -8,8 +8,8 @@ export declare namespace Enum {
 }
 
 // TODO: allow for per-enum documentation
-export class Enum extends Hash_ {
+export class Enum extends HashInstance {
     constructor({ contents, documentation }: Enum.Init) {
-        super({ keyType: "string", valueType: "string", contents, isFrozen: true, documentation });
+        super({ contents, isFrozen: true, documentation });
     }
 }

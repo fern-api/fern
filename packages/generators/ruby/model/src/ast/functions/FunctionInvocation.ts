@@ -1,9 +1,8 @@
-import { Argument } from "./Argument";
-import { AstNode } from "./AstNode";
-import { ClassReference } from "./ClassReference";
-import { Expression } from "./Expression";
-import { Function_ } from "./Function_";
-import { Variable } from "./Variable";
+import { Argument } from "../Argument";
+import { AstNode } from "../AstNode";
+import { Expression } from "../expressions/Expression";
+import { Function_ } from "../functions/Function_";
+import { Variable } from "../Variable";
 
 interface BlockConfiguration {
     arguments?: string;
@@ -12,7 +11,7 @@ interface BlockConfiguration {
 export declare namespace FunctionInvocation {
     export interface Init extends AstNode.Init {
         baseFunction: Function_;
-        onObject?: ClassReference | string | Variable;
+        onObject?: Variable | AstNode | string;
         arguments_?: Argument[];
         block?: BlockConfiguration;
     }
@@ -20,7 +19,7 @@ export declare namespace FunctionInvocation {
 export class FunctionInvocation extends AstNode {
     public baseFunction: Function_;
     // Required if this function is a class method
-    public onObject: ClassReference | Variable | string | undefined;
+    public onObject: Variable | AstNode | string| undefined;
     public arguments_: Argument[];
     // A block is usually the do ... end block you see right
     // after a traditional function invocation.
@@ -45,17 +44,17 @@ end
     }
 
     private writeArgmuments(): string {
-        return this.arguments_.map((a) => a.writeInternal(0)).join(", ");
+        return `(${this.arguments_.map((a) => a.writeInternal(0)).join(", ")})`;
     }
 
     // When writing the definition
     public writeInternal(startingTabSpaces: number): string {
-        const className = this.onObject instanceof AstNode ? this.onObject.name : this.onObject;
+        const className = this.onObject instanceof AstNode ? this.onObject.writeInternal(0) : this.onObject;
         // Note there's no real documentation here, but it'll be
         return this.writePaddedString(
             startingTabSpaces,
             `
-${className !== undefined && className + "."}${this.baseFunction.name}(${this.writeArgmuments()})${this.writeBlock(
+${className !== undefined && className + "."}${this.baseFunction.name}${this.writeArgmuments()}${this.writeBlock(
                 startingTabSpaces
             )}
 `

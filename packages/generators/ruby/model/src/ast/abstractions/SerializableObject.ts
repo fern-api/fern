@@ -1,11 +1,11 @@
 import { Argument } from "../Argument";
-import { ClassReference, GenericClassReference, JsonClassReference } from "../ClassReference";
-import { Class_ } from "../Class_";
-import { Expression } from "../Expression";
-import { FunctionInvocation } from "../FunctionInvocation";
-import { Function_ } from "../Function_";
+import { ClassReference, GenericClassReference, JsonClassReference } from "../classes/ClassReference";
+import { Class_ } from "../classes/Class_";
+import { Expression } from "../expressions/Expression";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
+import { Function_ } from "../functions/Function_";
 import { Parameter } from "../Parameter";
-import { Hash_ } from "../primitives/Hash_";
+import { HashInstance } from "../primitives/Hash_";
 import { Property } from "../Property";
 
 export declare namespace SerializableObject {
@@ -56,9 +56,7 @@ export class SerializableObject extends Class_ {
             new Expression({ leftSide: "additional_properties", rightSide: "struct", isAssignment: true }),
             new FunctionInvocation({
                 baseFunction: new Function_({ name: "new", functionBody: [] }),
-                arguments_: properties?.map(
-                    (prop) => new Argument({ name: prop.name, type: prop.type, value: prop.name, isNamed: true })
-                )
+                arguments_: properties?.map((prop) => prop.toArgument(prop.name, true))
             })
         ];
         const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
@@ -80,9 +78,7 @@ export class SerializableObject extends Class_ {
                 // also see the definition of "new" in the function above
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                 // TODO: call to_json on these properties if they're objects
-                onObject: new Hash_({
-                    keyType: "any",
-                    valueType: "any",
+                onObject: new HashInstance({
                     contents: new Map(properties?.map((prop) => [prop.wireValue ?? prop.name, prop.toVariable()]))
                 })
             })

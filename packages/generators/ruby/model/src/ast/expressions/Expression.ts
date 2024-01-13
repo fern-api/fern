@@ -1,8 +1,8 @@
-import { AstNode } from "./AstNode";
-import { ClassReference } from "./ClassReference";
-import { FunctionInvocation } from "./FunctionInvocation";
-import { Variable } from "./Variable";
-import { Yardoc } from "./Yardoc";
+import { AstNode } from "../AstNode";
+import { ClassReference } from "../classes/ClassReference";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
+import { Variable } from "../Variable";
+import { Yardoc } from "../Yardoc";
 
 export declare namespace Expression {
     export interface Init extends AstNode.Init {

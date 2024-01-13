@@ -2,13 +2,14 @@ import {
     AliasTypeDeclaration,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
-    TypeDeclaration
+    TypeDeclaration,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { Enum } from "./abstractions/Enum";
 import { SerializableObject } from "./abstractions/SerializableObject";
-import { ClassReference } from "./ClassReference";
-import { Expression } from "./Expression";
-import { Variable, VariableType } from "./Variable";
+import { ClassReference } from "./classes/ClassReference";
+import { Expression } from "./expressions/Expression";
+import { Property } from "./Property";
 import { Yardoc } from "./Yardoc";
 
 export function generateAliasDefinitionFromTypeDeclaration(
@@ -33,7 +34,9 @@ export function generateEnumDefinitionFromTypeDeclaration(
     );
     const enum_ = new Enum({ contents, documentation: typeDeclaration.docs });
 
-    const yardoc = new Yardoc({ reference: { name: "typeReference", variable: enum_ } });
+    const yardoc = new Yardoc({
+        reference: { name: "typeReference", type: name }
+    });
 
     return new Expression({
         leftSide: name,
@@ -41,6 +44,23 @@ export function generateEnumDefinitionFromTypeDeclaration(
         isAssignment: true,
         documentation: typeDeclaration.docs,
         yardoc
+    });
+}
+
+function isTypeOptional(typeReference: TypeReference): boolean {
+    return typeReference._visit<boolean>({
+        container: (ct) => {return ct._visit<boolean>({
+            list: () => false,
+            map: () => false,
+            optional: () => true,
+            set: () => false,
+            literal: () => false,
+            _other: () => false
+        });},
+        named: () => false,
+        primitive: () => false,
+        _other: () => false,
+        unknown: () => false
     });
 }
 
@@ -53,11 +73,12 @@ export function generateSerializableObjectFromTypeDeclaration(
     );
     const properties = objectTypeDeclaration.properties.map(
         (property) =>
-            new Variable({
+            new Property({
                 name: property.name.name.snakeCase.safeName,
                 type: ClassReference.fromTypeReference(property.valueType),
-                variableType: VariableType.CLASS,
-                documentation: property.docs
+                documentation: property.docs,
+                wireValue: property.name.wireValue,
+                isOptional: isTypeOptional(property.valueType)
             })
     );
 

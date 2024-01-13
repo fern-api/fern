@@ -1,5 +1,6 @@
+import { Argument } from "./Argument";
 import { AstNode } from "./AstNode";
-import { ClassReference } from "./ClassReference";
+import { ClassReference } from "./classes/ClassReference";
 import { Parameter } from "./Parameter";
 import { Variable, VariableType } from "./Variable";
 
@@ -23,6 +24,15 @@ export class Property extends AstNode {
         this.type = type;
         this.wireValue = wireValue;
         this.isOptional = isOptional;
+    }
+
+    public toArgument(value: Variable | string, isNamed: boolean): Argument {
+        return new Argument({
+            name: this.name,
+            type: this.type,
+            value,
+            isNamed
+        });
     }
 
     public toParameter(defaultValue?: Variable | string): Parameter {

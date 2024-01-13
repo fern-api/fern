@@ -1,5 +1,5 @@
 import { AstNode } from "./AstNode";
-import { ClassReference, NilValue } from "./ClassReference";
+import { ClassReference, NilValue } from "./classes/ClassReference";
 import { Variable } from "./Variable";
 
 export declare namespace Parameter {
@@ -25,6 +25,8 @@ export class Parameter extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): string {
-        return `${this.name}:${this.defaultValue !== undefined && " " + this.defaultValue.write(0)}`;
+        const defaultString =
+            this.defaultValue instanceof Variable ? this.defaultValue.writeInternal(0) : this.defaultValue;
+        return `${this.name}:${this.defaultValue !== undefined && " " + defaultString}`;
     }
 }

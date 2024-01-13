@@ -1,18 +1,26 @@
 import { AstNode } from "../AstNode";
-import { ClassReference } from "../ClassReference";
+import { ClassReference } from "../classes/ClassReference";
+import { Import } from "../Import";
 
 export declare namespace Set_ {
-    export interface Init extends AstNode.Init {
+    export interface InitReference extends AstNode.Init {
+        innerType: ClassReference | string;
+    }
+    export interface InitInstance extends AstNode.Init {
         contents?: string[];
-        type: ClassReference | string;
     }
 }
-export class Set_ extends ClassReference {
-    public contents: string[];
-    constructor({ type, contents = [], ...rest }: Set_.Init) {
-        const typeName = type instanceof ClassReference ? type.name : type;
-        super({ name: `Set<${typeName}>`, ...rest });
+export class SetReference extends ClassReference {
+    constructor({ innerType, ...rest }: Set_.InitReference) {
+        const typeName = innerType instanceof ClassReference ? innerType.name : innerType;
+        super({ name: `Set<${typeName}>`, import_: new Import({ from: "set" }), ...rest });
+    }
+}
 
+export class SetInstance extends AstNode {
+    public contents: string[];
+    constructor({ contents = [], ...rest }: Set_.InitInstance) {
+        super(rest);
         this.contents = contents;
     }
 

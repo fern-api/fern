@@ -1,18 +1,25 @@
 import { AstNode } from "../AstNode";
-import { ClassReference } from "../ClassReference";
+import { ClassReference } from "../classes/ClassReference";
 
-export declare namespace Array_ {
-    export interface Init extends AstNode.Init {
+export declare namespace ArrayReference {
+    export interface InitReference extends AstNode.Init {
+        innerType: ClassReference | string;
+    }
+    export interface InitInstance extends AstNode.Init {
         contents?: string[];
-        type: ClassReference | string;
     }
 }
-export class Array_ extends ClassReference {
-    public contents: string[];
-    constructor({ contents = [], type, ...rest }: Array_.Init) {
-        const typeName = type instanceof ClassReference ? type.name : type;
+export class ArrayReference extends ClassReference {
+    constructor({ innerType, ...rest }: ArrayReference.InitReference) {
+        const typeName = innerType instanceof ClassReference ? innerType.name : innerType;
         super({ name: `Array<${typeName}>`, ...rest });
+    }
+}
 
+export class ArrayInstance extends AstNode {
+    public contents: string[];
+    constructor({ contents = [], ...rest }: ArrayReference.InitInstance) {
+        super(rest);
         this.contents = contents;
     }
 

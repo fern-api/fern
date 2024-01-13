@@ -1,5 +1,5 @@
 import { AstNode } from "./AstNode";
-import { ClassReference } from "./ClassReference";
+import { ClassReference } from "./classes/ClassReference";
 import { Variable } from "./Variable";
 
 export declare namespace Argument {

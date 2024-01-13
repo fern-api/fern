@@ -1,8 +1,9 @@
-import { AstNode } from "./AstNode";
-import { ClassReference } from "./ClassReference";
-import { Expression } from "./Expression";
+import { AstNode, NewLinePlacement } from "../AstNode";
+import { ClassReference } from "../classes/ClassReference";
+import { Expression } from "../expressions/Expression";
+import { Parameter } from "../Parameter";
+import { Yardoc } from "../Yardoc";
 import { FunctionInvocation } from "./FunctionInvocation";
-import { Parameter } from "./Parameter";
 
 export declare namespace Function_ {
     export interface Init extends AstNode.Init {
@@ -23,6 +24,7 @@ export class Function_ extends AstNode {
     public functionBody: (Expression | FunctionInvocation)[];
     public isAsync: boolean;
     public isStatic: boolean;
+    public yardoc: Yardoc;
 
     constructor({
         name,
@@ -40,13 +42,22 @@ export class Function_ extends AstNode {
         this.functionBody = functionBody;
         this.isAsync = isAsync;
         this.isStatic = isStatic;
+
+        this.yardoc = new Yardoc({ reference: { name: "docString", parameters, returnValue } });
     }
 
-    // When writing the definition
+    private writeParameters(): string {
+        return `(${this.parameters.map((a) => a.writeInternal(0)).join(", ")})`;
+    }
+
     public writeInternal(startingTabSpaces: number): string {
-        // Write docstring
-        // Write function signature
-        // Write function body
-        return "";
+        const functionSignature = this.writePaddedString(startingTabSpaces, `def ${this.isStatic && "self."}${this.name}${this.parameters.length > 0 && this.writeParameters()}`, NewLinePlacement.AFTER);
+        return `
+${this.documentation !== undefined && this.writePaddedString(startingTabSpaces, this.documentation, NewLinePlacement.AFTER)}
+${this.yardoc.writeInternal(startingTabSpaces)}
+${functionSignature}
+${this.functionBody.map(expression => expression.writeInternal(startingTabSpaces))}
+${this.writePaddedString(startingTabSpaces, "end", NewLinePlacement.AFTER)}
+`;
     }
 }

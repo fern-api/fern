@@ -1,20 +1,20 @@
 import { AstNode, NewLinePlacement } from "./AstNode";
-import { ClassReference } from "./ClassReference";
+import { ClassReference } from "./classes/ClassReference";
 import { Parameter } from "./Parameter";
-import { Variable } from "./Variable";
+import { Property } from "./Property";
 
 interface YardocDocString {
     readonly name: "docString";
 
     parameters: Parameter[];
-    returnClass: ClassReference | undefined;
+    returnValue: ClassReference | undefined;
 }
 interface YardocTypeReference {
     readonly name: "typeReference";
-    variable: ClassReference | Variable;
+    type: Property | string;
 }
 export declare namespace Yardoc {
-    export interface Init extends AstNode.Init {
+    export interface Init extends Omit<AstNode.Init, "documentation"> {
         reference?: YardocDocString | YardocTypeReference;
     }
 }
@@ -32,22 +32,16 @@ export class Yardoc extends AstNode {
     }
     public writeInternal(startingTabSpaces: number): string {
         let doc = "";
-        if (this.documentation !== undefined) {
-            doc += this.writePaddedString(
-                startingTabSpaces,
-                `#${this.writeConditionalDocumentation(this.documentation)}`
-            );
-        }
         if (!this.reference) {
             return doc;
         } else if (this.reference.name === "typeReference") {
             const typeName =
-                this.reference.variable.type instanceof ClassReference
-                    ? this.reference.variable.type.name
-                    : this.reference.variable.type.valueOf();
+                this.reference.type instanceof Property ? this.reference.type.type.name : this.reference.type;
+            const documentation =
+                this.reference.type instanceof Property ? this.reference.type.type.documentation : undefined;
             doc += this.writePaddedString(
                 startingTabSpaces,
-                `# @type [${typeName}]${this.writeConditionalDocumentation(this.reference.variable.documentation)}`,
+                `# @type [${typeName}]${this.writeConditionalDocumentation(documentation)}`,
                 NewLinePlacement.BEFORE
             );
         } else {
@@ -61,10 +55,10 @@ export class Yardoc extends AstNode {
                     NewLinePlacement.BEFORE
                 );
             });
-            if (this.reference.returnClass !== undefined) {
+            if (this.reference.returnValue !== undefined) {
                 doc += this.writePaddedString(
                     startingTabSpaces,
-                    `# @returns [${this.reference.returnClass.name}]`,
+                    `# @returns [${this.reference.returnValue.name}]`,
                     NewLinePlacement.BEFORE
                 );
             }

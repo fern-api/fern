@@ -1,9 +1,10 @@
 import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
-import { AstNode } from "./AstNode";
-import { Import } from "./Import";
-import { Array_ } from "./primitives/Array_";
-import { Hash_ } from "./primitives/Hash_";
-import { Set_ } from "./primitives/Set_";
+import { TYPES_DIRECTORY } from "../../utils/Constants";
+import { AstNode } from "../AstNode";
+import { Import } from "../Import";
+import { ArrayReference } from "../primitives/Array_";
+import { HashReference } from "../primitives/Hash_";
+import { SetReference } from "../primitives/Set_";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -39,18 +40,14 @@ export class ClassReference extends AstNode {
         this.import_ = import_;
     }
 
-    // When writing the definition
     public writeInternal(startingTabSpaces: number): string {
-        // Write docstring
-        // Write accessors
-        // Write initializer
-        // Write function signature
-        // Write function body
-        return "";
+        return this.writePaddedString(startingTabSpaces, this.name);
     }
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        const location = declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName).join();
+        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
+        // are written to a "types" subdirectory
+        const location = [...declaredTypeName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName), TYPES_DIRECTORY, declaredTypeName.fernFilepath.file].join("/");
         return new ClassReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -87,15 +84,15 @@ export class ClassReference extends AstNode {
 
     static forContainerType(containerType: ContainerType): ClassReference {
         return containerType._visit<ClassReference>({
-            list: (tr: TypeReference) => new Array_({ type: ClassReference.fromTypeReference(tr) }),
+            list: (tr: TypeReference) => new ArrayReference({ innerType: ClassReference.fromTypeReference(tr) }),
             map: (mt: MapType) =>
-                new Hash_({
+                new HashReference({
                     keyType: ClassReference.fromTypeReference(mt.keyType),
                     valueType: ClassReference.fromTypeReference(mt.keyType)
                 }),
             // Optional types in Ruby look the same except they're defaulted to nil in signatures.
             optional: (tr: TypeReference) => ClassReference.fromTypeReference(tr),
-            set: (tr: TypeReference) => new Set_({ type: ClassReference.fromTypeReference(tr) }),
+            set: (tr: TypeReference) => new SetReference({ innerType: ClassReference.fromTypeReference(tr) }),
             literal: (lit: Literal) =>
                 Literal._visit<ClassReference>(lit, {
                     string: () => new ClassReference({ name: RubyClass.STRING }),
