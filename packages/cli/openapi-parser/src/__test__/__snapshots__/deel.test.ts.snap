@@ -3940,7 +3940,84 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "primitive": {
+                  "string": "contract-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "agreement_reflects_relation": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contractor_characteristics": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "calculated_premium": {
+                    "primitive": {
+                      "double": 50,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "misclassification_guarantee": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "penalties": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "third_party_liabilities": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AddPremiumRequest",
       "headers": [],
       "internal": undefined,
@@ -30706,9 +30783,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": "Is the Contractor Agreement selected on the Deel Platform perfectly reflecting your organizations relation and actual working practices with the contractor?",
             "groupName": undefined,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "boolean",
             },
             "type": "primitive",
           },
@@ -30722,9 +30797,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": "Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
             "groupName": undefined,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "boolean",
             },
             "type": "primitive",
           },
