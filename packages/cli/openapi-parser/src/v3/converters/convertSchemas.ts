@@ -93,7 +93,7 @@ export function convertSchemaObject(
     }
 
     // enums
-    if (schema.enum != null) {
+    if (schema.enum != null && (schema.type === "string" || schema.type == null)) {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.

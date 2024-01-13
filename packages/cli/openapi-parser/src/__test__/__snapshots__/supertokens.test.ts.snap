@@ -17448,9 +17448,7 @@ e.g.:
                         "description": undefined,
                         "groupName": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "boolean",
                         },
                         "type": "primitive",
                       },

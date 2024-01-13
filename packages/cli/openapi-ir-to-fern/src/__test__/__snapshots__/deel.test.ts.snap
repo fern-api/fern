@@ -501,6 +501,32 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "contract-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "agreement_reflects_relation": true,
+                    "contractor_characteristics": false,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "calculated_premium": 50,
+                      "id": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
+                      "misclassification_guarantee": {},
+                      "penalties": {},
+                      "third_party_liabilities": {},
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/premium",
             "path-parameters": {
@@ -7892,11 +7918,11 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "agreement_reflects_relation": {
             "docs": "Is the Contractor Agreement selected on the Deel Platform perfectly reflecting your organizations relation and actual working practices with the contractor?",
-            "type": "string",
+            "type": "boolean",
           },
           "contractor_characteristics": {
             "docs": "Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
-            "type": "string",
+            "type": "boolean",
           },
         },
       },
