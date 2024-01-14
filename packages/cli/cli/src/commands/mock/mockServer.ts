@@ -1,3 +1,4 @@
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { runMockServer } from "@fern-api/mock";
 import { Project } from "@fern-api/project-loader";
 import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -35,9 +36,15 @@ export async function mockServer({
             workspace: fernWorkspace
         });
 
+        const ir = await generateIntermediateRepresentation({
+            workspace: fernWorkspace,
+            audiences: { type: "all" },
+            generationLanguage: undefined
+        });
+
         await runMockServer({
             context,
-            workspace: fernWorkspace,
+            ir,
             port
         });
     });

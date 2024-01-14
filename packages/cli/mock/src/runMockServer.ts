@@ -1,12 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
     ExampleEndpointCall,
     ExamplePathParameter,
     ExampleTypeReference,
     HttpEndpoint,
+    IntermediateRepresentation,
     NameAndWireValue
 } from "@fern-fern/ir-sdk/api";
 import express, { Request, Response } from "express";
@@ -21,19 +20,13 @@ type RequestHandler = (req: Request, res: Response) => void;
 
 export async function runMockServer({
     context,
-    workspace,
+    ir,
     port
 }: {
     context: TaskContext;
-    workspace: FernWorkspace;
+    ir: IntermediateRepresentation;
     port: number | undefined;
 }): Promise<void> {
-    const ir = await generateIntermediateRepresentation({
-        workspace,
-        audiences: { type: "all" },
-        generationLanguage: undefined
-    });
-
     const app = express();
     app.use(express.json({ limit: "50mb", strict: false }));
 
