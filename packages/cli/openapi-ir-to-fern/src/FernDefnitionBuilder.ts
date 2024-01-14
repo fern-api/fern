@@ -4,6 +4,7 @@ import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
+import { TypeDeclarationSchemaDeduper } from "./TypeDeclarationSchemaDeduper";
 
 export interface FernDefinitionBuilder {
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
@@ -58,6 +59,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
+    private deduper: TypeDeclarationSchemaDeduper = new TypeDeclarationSchemaDeduper();
 
     public constructor(ir: OpenAPIIntermediateRepresentation) {
         this.rootApiFile = {
@@ -172,6 +174,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.types = {};
         }
         fernFile.types[name] = schema;
+
+        this.deduper.registerSchema({ name, schema, location: file });
     }
 
     public addError(
@@ -256,6 +260,9 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             packageMarkerFile: this.packageMarkerFile,
             definitionFiles: this.definitionFiles
         };
+
+        this.deduper.dedupe(definition);
+
         return definition;
     }
 
