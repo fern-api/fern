@@ -3,6 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../commons/core-utils" },
+    { "path": "../generation/ir-generator" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]
