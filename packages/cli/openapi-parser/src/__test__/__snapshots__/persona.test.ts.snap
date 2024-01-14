@@ -244,6 +244,7 @@ exports[`open api parser persona parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1354,6 +1355,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3145,6 +3147,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3765,6 +3768,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4326,6 +4330,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4844,6 +4849,7 @@ Note that this will only delete the report -- it does not delete associated acco
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -5384,6 +5390,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5443,6 +5450,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6211,6 +6219,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6270,6 +6279,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6932,6 +6942,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7226,6 +7237,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7675,6 +7687,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8141,6 +8154,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8656,6 +8670,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9548,6 +9563,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10024,6 +10040,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10741,6 +10758,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11087,6 +11105,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11553,6 +11572,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11813,6 +11833,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12135,6 +12156,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12771,6 +12793,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13337,6 +13360,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13424,6 +13448,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13989,6 +14014,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14065,6 +14091,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14623,6 +14650,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15374,6 +15402,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15901,6 +15930,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16171,6 +16201,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16923,6 +16954,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -17026,6 +17058,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17506,6 +17539,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17604,6 +17638,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17799,6 +17834,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -17886,6 +17922,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18529,6 +18566,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19157,6 +19195,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19344,6 +19383,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19665,6 +19705,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19767,6 +19808,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -20085,6 +20127,7 @@ A match_type of 'email_address' will need to match the entire email address of a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -20230,6 +20273,7 @@ A match_type of 'email_address' will need to match the entire email address of a
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -20547,6 +20591,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -20692,6 +20737,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21010,6 +21056,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -21155,6 +21202,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21472,6 +21520,7 @@ Both IPv4 and IPv6 are supported.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -21617,6 +21666,7 @@ Both IPv4 and IPv6 are supported.",
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21933,6 +21983,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22078,6 +22129,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22393,6 +22445,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22538,6 +22591,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22904,6 +22958,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -23169,6 +23224,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23823,6 +23879,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -24056,6 +24113,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24703,6 +24761,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25397,6 +25456,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26205,6 +26265,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26438,6 +26499,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27208,6 +27270,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27306,6 +27369,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27424,6 +27488,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27517,6 +27582,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27598,6 +27664,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27691,6 +27758,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27772,6 +27840,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27865,6 +27934,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27946,6 +28016,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28039,6 +28110,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28120,6 +28192,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28213,6 +28286,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28294,6 +28368,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28387,6 +28462,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28468,6 +28544,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28561,6 +28638,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28661,6 +28739,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28754,6 +28833,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28835,6 +28915,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28988,6 +29069,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29090,6 +29172,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29442,6 +29525,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29690,6 +29774,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29813,6 +29898,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30263,6 +30349,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -30401,6 +30488,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30789,6 +30877,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31037,6 +31126,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31160,6 +31250,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31603,6 +31694,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31726,6 +31818,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32099,6 +32192,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -32372,6 +32466,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32934,6 +33029,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33423,6 +33519,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33920,6 +34017,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -34503,6 +34601,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -35124,6 +35223,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -35947,6 +36047,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -36834,6 +36935,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -36953,6 +37055,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -38919,6 +39022,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -40063,6 +40167,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -40235,6 +40340,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41102,6 +41208,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -41401,6 +41508,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41956,6 +42064,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -42462,6 +42571,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42624,6 +42734,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42786,6 +42897,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42953,6 +43065,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -43115,6 +43228,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -43277,6 +43391,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -44002,6 +44117,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -44221,6 +44337,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -46009,6 +46126,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -46073,6 +46191,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -46857,6 +46976,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -46906,6 +47026,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -47719,6 +47840,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -47943,6 +48065,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48024,6 +48147,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48237,6 +48361,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48387,6 +48512,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48796,6 +48922,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48855,6 +48982,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -49539,6 +49667,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -49598,6 +49727,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -50282,6 +50412,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -50346,6 +50477,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -51085,6 +51217,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -51496,6 +51629,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -51555,6 +51689,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -52626,6 +52761,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -53733,6 +53869,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -54431,6 +54568,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -55002,6 +55140,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -55652,6 +55791,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -56293,6 +56433,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -56845,6 +56986,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -57479,6 +57621,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -58030,6 +58173,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -58611,6 +58755,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -59237,6 +59382,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -59392,6 +59538,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -59907,6 +60054,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -60393,6 +60541,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -60464,6 +60613,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -60962,6 +61112,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -61578,6 +61729,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -62082,6 +62234,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -62163,6 +62316,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -62645,6 +62799,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -62745,6 +62900,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -63281,6 +63437,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -63384,6 +63541,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -63811,6 +63969,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -63892,6 +64051,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -64303,6 +64463,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -64374,6 +64535,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -64813,6 +64975,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -65394,6 +65557,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -65888,6 +66052,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -66110,6 +66275,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -66597,6 +66763,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -66651,6 +66818,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -67136,6 +67304,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -67616,6 +67785,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -67838,6 +68008,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -68309,6 +68480,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -68938,6 +69110,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -69067,6 +69240,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -69638,6 +69812,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -70209,6 +70384,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -70726,6 +70902,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -71073,6 +71250,7 @@ The inquiry can still be resumed after expiry.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -72110,6 +72288,7 @@ The inquiry can still be resumed after expiry.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -72167,6 +72346,7 @@ The inquiry can still be resumed after expiry.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -74482,6 +74662,7 @@ The inquiry can still be resumed after expiry.",
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": undefined,
+        "fullExample": undefined,
         "generatedName": "UnprocessableEntityErrorBody",
         "groupName": undefined,
         "nameOverride": undefined,
@@ -74503,6 +74684,7 @@ The inquiry can still be resumed after expiry.",
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": undefined,
+                  "fullExample": undefined,
                   "generatedName": "UnprocessableEntityErrorBodyErrorsItem",
                   "groupName": undefined,
                   "nameOverride": undefined,

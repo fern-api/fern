@@ -471,7 +471,8 @@ export function convertSchemaObject(
             allOf: schema.allOf ?? [],
             context,
             propertiesToExclude,
-            groupName
+            groupName,
+            fullExample: schema.example
         });
     }
 

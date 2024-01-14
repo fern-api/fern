@@ -31,7 +31,8 @@ export function convertObject({
     allOf,
     context,
     propertiesToExclude,
-    groupName
+    groupName,
+    fullExample
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -44,6 +45,7 @@ export function convertObject({
     context: AbstractOpenAPIV3ParserContext;
     propertiesToExclude: Set<string>;
     groupName: SdkGroupName | undefined;
+    fullExample: undefined | unknown;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -157,7 +159,8 @@ export function convertObject({
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
-        groupName
+        groupName,
+        fullExample
     });
 }
 
@@ -169,7 +172,8 @@ export function wrapObject({
     description,
     allOf,
     allOfPropertyConflicts,
-    groupName
+    groupName,
+    fullExample
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -179,6 +183,7 @@ export function wrapObject({
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
     groupName: SdkGroupName | undefined;
+    fullExample: unknown | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -189,7 +194,8 @@ export function wrapObject({
                 generatedName,
                 allOf,
                 allOfPropertyConflicts,
-                groupName
+                groupName,
+                fullExample
             }),
             description,
             groupName
@@ -202,7 +208,8 @@ export function wrapObject({
         generatedName,
         allOf,
         allOfPropertyConflicts,
-        groupName
+        groupName,
+        fullExample
     });
 }
 

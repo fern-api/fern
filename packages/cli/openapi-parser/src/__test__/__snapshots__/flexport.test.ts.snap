@@ -1121,6 +1121,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BookingAmendmentCreateRequest",
@@ -1134,6 +1135,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking amendment",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1585,6 +1587,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of booking line items",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1949,6 +1952,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BookingLineItemCreateRequest",
@@ -1962,6 +1966,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking line item",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -2227,6 +2232,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "A collection of booking line items",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4447,6 +4453,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of bookings",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6787,6 +6794,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "BookingCreateRequest",
@@ -6800,6 +6808,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8514,6 +8523,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8904,6 +8914,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CarbonCalculationCreateRequest",
@@ -8917,6 +8928,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9996,6 +10008,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11069,6 +11082,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CommercialInvoicesCreateRequest",
@@ -11082,6 +11096,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created commercial invoice",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12037,6 +12052,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CommercialInvoicesUpdateRequest",
@@ -12050,6 +12066,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated commercial invoice",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12989,6 +13006,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13302,6 +13320,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of customs entries",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13633,6 +13652,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14081,6 +14101,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of documents",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14447,6 +14468,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DocumentsCreateRequest",
@@ -14460,6 +14482,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14706,6 +14729,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17272,6 +17296,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19760,6 +19785,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21014,6 +21040,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of invoices",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21877,6 +21904,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22324,6 +22352,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of companies",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22771,6 +22800,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyCreateRequest",
@@ -22784,6 +22814,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23127,6 +23158,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23489,6 +23521,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyUpdateRequest",
@@ -23502,6 +23535,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated company",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23959,6 +23993,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of company entities",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24488,6 +24523,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyEntityCreateRequest",
@@ -24501,6 +24537,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company entity",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24829,6 +24866,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25252,6 +25290,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyEntityUpdateRequest",
@@ -25265,6 +25304,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25614,6 +25654,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of contacts",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25964,6 +26005,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkContactCreateRequest",
@@ -25977,6 +26019,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created contact",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26204,6 +26247,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26455,6 +26499,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkContactUpdateRequest",
@@ -26468,6 +26513,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated contact",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26913,6 +26959,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of locations",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27359,6 +27406,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "NetworkLocationCreateRequest",
@@ -27372,6 +27420,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created location",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27648,6 +27697,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27995,6 +28045,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "LocationUpdateRequest",
@@ -28008,6 +28059,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28326,6 +28378,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28704,6 +28757,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29062,6 +29116,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29728,6 +29783,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30374,6 +30430,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30799,6 +30856,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of ports",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31322,6 +31380,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31871,6 +31930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ProductCreateRequest",
@@ -31884,6 +31944,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32239,6 +32300,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32715,6 +32777,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ProductUpdateRequest",
@@ -32728,6 +32791,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33835,6 +33899,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -34834,6 +34899,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -36301,6 +36367,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase orders",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -37747,6 +37814,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderCreateRequest",
@@ -37760,6 +37828,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created purchase order",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38625,6 +38694,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -40006,6 +40076,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderUpdateRequest",
@@ -40019,6 +40090,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The update purchase order",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40963,6 +41035,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41991,6 +42064,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -44403,6 +44477,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -46210,6 +46285,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -47916,6 +47992,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ShipmentUpdateRequest",
@@ -47929,6 +48006,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated shipment",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48142,6 +48220,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48182,6 +48261,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments shareable status url",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

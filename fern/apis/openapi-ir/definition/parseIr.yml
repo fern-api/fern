@@ -47,6 +47,7 @@ types:
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
+      fullExample: optional<unknown>
 
   ResponseWithExample:
     union:
@@ -63,6 +64,7 @@ types:
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
+      fullExample: optional<unknown>
 
   PathParameterWithExample:
     extends: commons.WithDescription
@@ -159,6 +161,7 @@ types:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
+      fullExample: optional<unknown>
 
   ObjectPropertyWithExample:
     properties:

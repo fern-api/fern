@@ -119,7 +119,8 @@ function convertResolvedResponse({
             type: "json",
             description: resolvedResponse.description,
             schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs),
-            responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY)
+            responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
+            fullExample: undefined
         };
     }
 

@@ -182,6 +182,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -223,6 +224,7 @@ exports[`open api parser hume parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StartJobRequest",
@@ -236,6 +238,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -311,6 +314,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -413,6 +417,7 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

@@ -134,7 +134,8 @@ export function convertRequest({
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
-        contentType: jsonSchema.overridenContentType
+        contentType: jsonSchema.overridenContentType,
+        fullExample: undefined
     });
 }
 

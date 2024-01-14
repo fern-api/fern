@@ -964,6 +964,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1250,6 +1251,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RegisterLinkRequestBody",
@@ -1263,6 +1265,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1470,6 +1473,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchLinksRequestBody",
@@ -1483,6 +1487,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1691,6 +1696,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1949,6 +1955,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateLinkRequestBody",
@@ -1962,6 +1969,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2252,6 +2260,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ChangeLinkAccessModeRequestBody",
@@ -2265,6 +2274,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3911,6 +3921,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4491,6 +4502,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveAccountsRequestBody",
@@ -4504,6 +4516,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5103,6 +5116,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchAccountsRequestBody",
@@ -5116,6 +5130,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5703,6 +5718,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8193,6 +8209,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8966,6 +8983,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTransactionsRequestBody",
@@ -8979,6 +8997,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9175,6 +9194,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTransactionsAsyncRequestBody",
@@ -9188,6 +9208,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Accepted (when \`X-Belvo-Request-Mode\` is \`async\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9951,6 +9972,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchTransactionsRequestBody",
@@ -9964,6 +9986,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10720,6 +10743,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12158,6 +12182,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12771,6 +12796,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveBalancesRequestBody",
@@ -12784,6 +12810,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13395,6 +13422,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchBalancesRequestBody",
@@ -13408,6 +13436,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14007,6 +14036,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14799,6 +14829,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15153,6 +15184,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15761,6 +15793,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15982,6 +16015,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveOwnersRequestBody",
@@ -15995,6 +16029,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16235,6 +16270,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchOwnersRequestBody",
@@ -16248,6 +16284,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16476,6 +16513,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17538,6 +17576,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17693,6 +17732,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveInvoicesRequestBody",
@@ -17706,6 +17746,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17878,6 +17919,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchInvoicesRequestBody",
@@ -17891,6 +17933,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18013,6 +18056,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -18558,6 +18602,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -18676,6 +18721,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -18709,6 +18755,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18847,6 +18894,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19405,6 +19453,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -19487,6 +19536,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxStatusRequestBody",
@@ -19500,6 +19550,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19617,6 +19668,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -20215,6 +20267,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20394,6 +20447,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxComplianceStatusRequestBody",
@@ -20407,6 +20461,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20594,6 +20649,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21116,6 +21172,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21414,6 +21471,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveIncomeRequestBody",
@@ -21427,6 +21485,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21717,6 +21776,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchIncomesRequestBody",
@@ -21730,6 +21790,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -22018,6 +22079,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -22981,6 +23043,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -23647,6 +23710,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveRecurringExpensesRequestBody",
@@ -23660,6 +23724,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -24331,6 +24396,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchRecurringExpensesRequestBody",
@@ -24344,6 +24410,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25008,6 +25075,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25665,6 +25733,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26038,6 +26107,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrievePortfolioRequestBody",
@@ -26051,6 +26121,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26431,6 +26502,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchPortfolioRequestBody",
@@ -26444,6 +26516,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26825,6 +26898,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27685,6 +27759,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27977,6 +28052,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveReceivableTransactionsRequestBody",
@@ -27990,6 +28066,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28276,6 +28353,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29115,6 +29193,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29713,6 +29792,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveRiskInsightsRequestBody",
@@ -29726,6 +29806,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30341,6 +30422,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchRiskInsightsRequestBody",
@@ -30354,6 +30436,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30962,6 +31045,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31604,6 +31688,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31918,6 +32003,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxRetentionsRequestBody",
@@ -31931,6 +32017,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32242,6 +32329,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32727,6 +32815,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -32900,6 +32989,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxDeclarationsRequestBody",
@@ -32913,6 +33003,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33035,6 +33126,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -33591,6 +33683,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34001,6 +34094,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveEmploymentRecordDetailsRequestBody",
@@ -34014,6 +34108,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34437,6 +34532,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34821,6 +34917,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "VerifyIncomeRequest",
@@ -34834,6 +34931,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35117,6 +35215,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CategorizeTransactionsRequest",
@@ -35130,6 +35229,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35236,6 +35336,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35331,6 +35432,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35401,6 +35503,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35486,6 +35589,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RegisterPaymentWebhookRequest",
@@ -35499,6 +35603,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35560,6 +35665,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36153,6 +36259,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36417,6 +36524,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36788,6 +36896,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36828,6 +36937,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -36861,6 +36971,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -36937,6 +37048,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37472,6 +37584,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37513,6 +37626,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -37546,6 +37660,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37622,6 +37737,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -38062,6 +38178,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38103,6 +38220,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -38136,6 +38254,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -38214,6 +38333,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -38869,6 +38989,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38910,6 +39031,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreatePaymentIntentRequest",
@@ -38923,6 +39045,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38979,6 +39102,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39036,6 +39160,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExample": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PatchPaymentIntentRequest",
@@ -39049,6 +39174,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39804,6 +39930,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39860,6 +39987,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExample": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
