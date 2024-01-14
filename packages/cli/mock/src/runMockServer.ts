@@ -40,7 +40,7 @@ export async function runMockServer({
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
             const endpointPath = getFullPathForEndpoint(endpoint);
-            context.logger.debug(`Registering ${endpoint.method} ${endpointPath} ...`);
+            context.logger.info(`Registering ${endpoint.method} ${endpointPath} ...`);
             switch (endpoint.method) {
                 case "GET":
                     app.get(endpointPath, getRequestHandler(endpoint));
@@ -110,7 +110,7 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
                 return;
             }
         }
-        res.status(404).send(`Unrecognized example request: ${JSON.stringify(req.body)}`);
+        res.status(404).send("Unrecognized example request");
     };
 }
 
