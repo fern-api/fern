@@ -18,6 +18,10 @@ import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
 
+// TODO: There are a few gaps in what the mock server can
+// validate, which will require changes to the example IR.
+//
+// See https://github.com/fern-api/fern/issues/2620
 export async function runMockServer({
     context,
     ir,
