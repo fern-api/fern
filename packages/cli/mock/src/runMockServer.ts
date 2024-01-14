@@ -9,7 +9,6 @@ import {
     NameAndWireValue
 } from "@fern-fern/ir-sdk/api";
 import express, { Request, Response } from "express";
-import { ParamsDictionary, Query } from "express-serve-static-core";
 import getPort from "get-port";
 import { IncomingHttpHeaders } from "http";
 import { isEqual } from "lodash-es";
@@ -113,37 +112,37 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
 
 function isRequestMatch(req: Request, example: ExampleEndpointCall): boolean {
     return (
-        validatePathParameters(example, req.params) &&
-        validateQueryParameters(example, req.query) &&
+        validatePathParameters(example, req) &&
+        validateQueryParameters(example, req) &&
         validateHeaders(example, req.headers) &&
         validateRequestBody(example, req)
     );
 }
 
-function validatePathParameters(example: ExampleEndpointCall, params: ParamsDictionary): boolean {
+function validatePathParameters(example: ExampleEndpointCall, req: Request): boolean {
     const examplePathParameters = examplePathParametersToRecord([
         ...example.rootPathParameters,
         ...example.servicePathParameters,
         ...example.endpointPathParameters
     ]);
-    if (Object.keys(examplePathParameters).length !== Object.keys(params).length) {
+    if (Object.keys(examplePathParameters).length !== Object.keys(req.params).length) {
         return false;
     }
     if (Object.keys(examplePathParameters).length > 0) {
-        if (!isEqual(params, examplePathParameters)) {
+        if (!isEqual(req.params, examplePathParameters)) {
             return false;
         }
     }
     return true;
 }
 
-function validateQueryParameters(example: ExampleEndpointCall, query: Query): boolean {
+function validateQueryParameters(example: ExampleEndpointCall, req: Request): boolean {
     const exampleQueryParameters = examplesWithWireValueToRecord(example.queryParameters);
-    if (Object.keys(exampleQueryParameters).length !== Object.keys(query).length) {
+    if (Object.keys(exampleQueryParameters).length !== Object.keys(req.query).length) {
         return false;
     }
     if (Object.keys(exampleQueryParameters).length > 0) {
-        return stringifyQuery(query) === stringifyQuery(exampleQueryParameters);
+        return stringifyQuery(req.query) === stringifyQuery(exampleQueryParameters);
     }
     return true;
 }

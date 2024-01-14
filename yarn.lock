@@ -2526,19 +2526,14 @@ __metadata:
   resolution: "@fern-api/mock@workspace:packages/cli/mock"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/ir-generator": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3277
-    "@types/cors": ^2.8.13
     "@types/express": ^4.17.20
-    "@types/express-serve-static-core": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/qs": 6.9.8
     "@types/url-join": ^4.0.1
-    "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
     express: ^4.18.2
@@ -4106,18 +4101,6 @@ __metadata:
   version: 1.0.1
   resolution: "@types/estree@npm:1.0.1"
   checksum: e9aa175eacb797216fafce4d41e8202c7a75555bc55232dee0f9903d7171f8f19f0ae7d5191bb1a88cb90e65468be508c0df850a9fb81b4433b293a5a749899d
-  languageName: node
-  linkType: hard
-
-"@types/express-serve-static-core@npm:^4.17.20":
-  version: 4.17.41
-  resolution: "@types/express-serve-static-core@npm:4.17.41"
-  dependencies:
-    "@types/node": "*"
-    "@types/qs": "*"
-    "@types/range-parser": "*"
-    "@types/send": "*"
-  checksum: 12750f6511dd870bbaccfb8208ad1e79361cf197b147f62a3bedc19ec642f3a0f9926ace96705f4bc88ec2ae56f61f7ca8c2438e6b22f5540842b5569c28a121
   languageName: node
   linkType: hard
 

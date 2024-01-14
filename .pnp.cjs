@@ -4282,19 +4282,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/mock", "workspace:packages/cli/mock"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3277"],\
-            ["@types/cors", "npm:2.8.17"],\
             ["@types/express", "npm:4.17.20"],\
-            ["@types/express-serve-static-core", "npm:4.17.41"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.8"],\
             ["@types/url-join", "npm:4.0.1"],\
-            ["@types/uuid", "npm:9.0.7"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["express", "npm:4.18.2"],\
@@ -6111,17 +6106,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-express-serve-static-core-npm-4.17.39-d4788cef7b-4227b96a53.zip/node_modules/@types/express-serve-static-core/",\
           "packageDependencies": [\
             ["@types/express-serve-static-core", "npm:4.17.39"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["@types/qs", "npm:6.9.7"],\
-            ["@types/range-parser", "npm:1.2.4"],\
-            ["@types/send", "npm:0.17.3"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.17.41", {\
-          "packageLocation": "./.yarn/cache/@types-express-serve-static-core-npm-4.17.41-7d196a92fa-12750f6511.zip/node_modules/@types/express-serve-static-core/",\
-          "packageDependencies": [\
-            ["@types/express-serve-static-core", "npm:4.17.41"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"],\
