@@ -133,7 +133,6 @@ function validatePathParameters(example: ExampleEndpointCall, params: ParamsDict
         return false;
     }
     if (Object.keys(examplePathParameters).length > 0) {
-        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
         if (!isEqual(params, examplePathParameters)) {
             return false;
         }
