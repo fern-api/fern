@@ -1887,6 +1887,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
+    "@fern-api/mock": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -1969,6 +1970,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
+    "@fern-api/mock": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
@@ -2485,7 +2487,7 @@ __metadata:
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/qs": ^6.9.7
+    "@types/qs": 6.9.8
     axios: ^0.27.2
     boxen: ^7.0.0
     chalk: ^5.0.1
@@ -2496,7 +2498,7 @@ __metadata:
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: ^6.11.1
+    qs: 6.11.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2516,6 +2518,33 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/mock@workspace:*, @fern-api/mock@workspace:packages/cli/mock":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/mock@workspace:packages/cli/mock"
+  dependencies:
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@fern-fern/ir-sdk": 0.0.3277
+    "@types/express": ^4.17.20
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.7
+    "@types/node": ^18.7.18
+    "@types/qs": 6.9.8
+    "@types/url-join": ^4.0.1
+    depcheck: ^1.4.6
+    eslint: ^8.26.0
+    express: ^4.18.2
+    get-port: 7.0.0
+    jest: ^29.7.0
+    lodash-es: ^4.17.21
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    qs: 6.11.2
+    typescript: 4.6.4
+    url-join: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -4445,10 +4474,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*, @types/qs@npm:^6.9.7":
+"@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/qs@npm:6.9.8":
+  version: 6.9.8
+  resolution: "@types/qs@npm:6.9.8"
+  checksum: c28e07d00d07970e5134c6eed184a0189b8a4649e28fdf36d9117fe671c067a44820890de6bdecef18217647a95e9c6aebdaaae69f5fe4b0bec9345db885f77e
   languageName: node
   linkType: hard
 
@@ -8346,6 +8382,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.1.0
   resolution: "get-package-type@npm:0.1.0"
   checksum: bba0811116d11e56d702682ddef7c73ba3481f114590e705fc549f4d868972263896af313c57a25c076e3c0d567e11d919a64ba1b30c879be985fc9d44f96148
+  languageName: node
+  linkType: hard
+
+"get-port@npm:7.0.0":
+  version: 7.0.0
+  resolution: "get-port@npm:7.0.0"
+  checksum: e9087f62d086bbb70f20c0a208e7cac552679c1426e29e0607eb1b8907a5cc4509337d5971b7f635385cd2a773a14cd21b7d9c3254a2eb5ebeaf5f8fde19fb07
   languageName: node
   linkType: hard
 
@@ -12767,12 +12810,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.11.1":
-  version: 6.11.1
-  resolution: "qs@npm:6.11.1"
+"qs@npm:6.11.2":
+  version: 6.11.2
+  resolution: "qs@npm:6.11.2"
   dependencies:
     side-channel: ^1.0.4
-  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
+  checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
   languageName: node
   linkType: hard
 

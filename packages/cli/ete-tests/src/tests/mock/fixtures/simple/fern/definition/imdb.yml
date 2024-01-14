@@ -1,0 +1,51 @@
+types:
+  MovieId: string
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating: double
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      auth: true
+      method: POST
+      path: ""
+      request: CreateMovieRequest
+      response: MovieId
+      examples:
+        - path-parameters:
+            rootPathParam: root
+          request:
+            title: Shrek
+            rating: 10
+          response:
+            body: shrek-123
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      request:
+        name: GetMovieRequest
+        query-parameters:
+          movieName:
+            type: string
+      response: Movie
+      examples:
+        - path-parameters:
+            rootPathParam: root
+            movieId: id-123
+          query-parameters:
+            movieName: hello
+          response:
+            body:
+              id: id-123
+              title: Shrek
+              rating: 10
