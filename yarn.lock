@@ -2487,7 +2487,7 @@ __metadata:
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/qs": ^6.9.7
+    "@types/qs": 6.9.8
     axios: ^0.27.2
     boxen: ^7.0.0
     chalk: ^5.0.1
@@ -2498,7 +2498,7 @@ __metadata:
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: ^6.11.1
+    qs: 6.11.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2534,10 +2534,10 @@ __metadata:
     "@types/express": ^4.17.20
     "@types/express-serve-static-core": ^4.17.20
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/qs": 6.9.8
-    "@types/url-join": 4.0.1
+    "@types/url-join": ^4.0.1
     "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2549,7 +2549,7 @@ __metadata:
     prettier: ^2.7.1
     qs: 6.11.2
     typescript: 4.6.4
-    url-join: 4.0.1
+    url-join: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -4491,7 +4491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*, @types/qs@npm:^6.9.7":
+"@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
@@ -12833,15 +12833,6 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     side-channel: ^1.0.4
   checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
-  languageName: node
-  linkType: hard
-
-"qs@npm:^6.11.1":
-  version: 6.11.1
-  resolution: "qs@npm:6.11.1"
-  dependencies:
-    side-channel: ^1.0.4
-  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
   languageName: node
   linkType: hard
 
