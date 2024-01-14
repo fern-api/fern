@@ -4,7 +4,7 @@ import {
     ObjectPropertyConflictInfo,
     ReferencedSchema
 } from "@fern-fern/openapi-ir-model/finalIr";
-import { ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { NamedFullExample, ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -32,7 +32,7 @@ export function convertObject({
     context,
     propertiesToExclude,
     groupName,
-    fullExample
+    fullExamples
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -45,7 +45,7 @@ export function convertObject({
     context: AbstractOpenAPIV3ParserContext;
     propertiesToExclude: Set<string>;
     groupName: SdkGroupName | undefined;
-    fullExample: undefined | unknown;
+    fullExamples: undefined | NamedFullExample[];
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -160,7 +160,7 @@ export function convertObject({
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
         groupName,
-        fullExample
+        fullExamples
     });
 }
 
@@ -173,7 +173,7 @@ export function wrapObject({
     allOf,
     allOfPropertyConflicts,
     groupName,
-    fullExample
+    fullExamples
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -183,7 +183,7 @@ export function wrapObject({
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
     groupName: SdkGroupName | undefined;
-    fullExample: unknown | undefined;
+    fullExamples: undefined | NamedFullExample[];
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -195,7 +195,7 @@ export function wrapObject({
                 allOf,
                 allOfPropertyConflicts,
                 groupName,
-                fullExample
+                fullExamples
             }),
             description,
             groupName
@@ -209,7 +209,7 @@ export function wrapObject({
         allOf,
         allOfPropertyConflicts,
         groupName,
-        fullExample
+        fullExamples
     });
 }
 

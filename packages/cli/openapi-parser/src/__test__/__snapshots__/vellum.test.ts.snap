@@ -71,7 +71,7 @@ Used to retrieve a deployment given its ID or name.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -110,7 +110,7 @@ Creates a new document index.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DocumentIndexesCreateRequest",
@@ -124,7 +124,7 @@ Creates a new document index.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -276,7 +276,7 @@ Used to list documents. Optionally filter on supported fields.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -315,7 +315,7 @@ Executes a deployed Workflow and streams back its results.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ExecuteWorkflowStreamRequest",
@@ -438,7 +438,7 @@ Generate a completion using a previously defined deployment.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateRequest",
@@ -452,7 +452,7 @@ Generate a completion using a previously defined deployment.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -504,7 +504,7 @@ Generate a stream of completions using a previously defined deployment.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GenerateStreamRequest",
@@ -581,7 +581,7 @@ Used to retrieve a model version given its ID.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -636,7 +636,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ModelVersionCompilePromptRequest",
@@ -650,7 +650,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -694,7 +694,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RegisterPromptRequest",
@@ -708,7 +708,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -769,7 +769,7 @@ or overwritten with default values.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertSandboxScenarioRequest",
@@ -783,7 +783,7 @@ or overwritten with default values.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -915,7 +915,7 @@ Perform a search against a document index.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SearchRequest",
@@ -929,7 +929,7 @@ Perform a search against a document index.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -996,7 +996,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SubmitCompletionActualsRequest",
@@ -1107,7 +1107,7 @@ or overwritten with default values.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpsertTestSuiteTestCaseRequest",
@@ -1121,7 +1121,7 @@ or overwritten with default values.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1364,7 +1364,7 @@ Upload a document to be indexed and used for search.
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

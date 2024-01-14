@@ -72,7 +72,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -128,7 +128,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -166,7 +166,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -221,7 +221,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateNumberRequestBody",
@@ -235,7 +235,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -291,7 +291,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -368,7 +368,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -424,7 +424,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -480,7 +480,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -519,7 +519,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateCallRequest",
@@ -533,7 +533,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -589,7 +589,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "type": "unknown",
@@ -622,7 +622,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -678,7 +678,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -785,7 +785,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -824,7 +824,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateActionRequest",
@@ -838,7 +838,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -923,7 +923,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateActionRequestBody",
@@ -937,7 +937,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1023,7 +1023,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1100,7 +1100,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1139,7 +1139,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateAgentRequest",
@@ -1153,7 +1153,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1208,7 +1208,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateAgentRequestBody",
@@ -1222,7 +1222,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1278,7 +1278,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1393,7 +1393,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1432,7 +1432,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateVoiceRequest",
@@ -1446,7 +1446,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1539,7 +1539,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateVoiceRequestBody",
@@ -1553,7 +1553,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1647,7 +1647,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1724,7 +1724,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1763,7 +1763,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateWebhookRequest",
@@ -1777,7 +1777,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1832,7 +1832,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateWebhookRequestBody",
@@ -1846,7 +1846,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful Response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

@@ -61,7 +61,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -294,7 +294,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -380,7 +380,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PerformActionByConnIdRequest",
@@ -394,7 +394,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -470,7 +470,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -691,7 +691,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendMenuToConnIdRequest",
@@ -705,7 +705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1180,7 +1180,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1438,7 +1438,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateConnectionInvitationRequestBody",
@@ -1452,7 +1452,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1691,7 +1691,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateStaticConnectionRequest",
@@ -1705,7 +1705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2008,7 +2008,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveConnectionInvitationRequestBody",
@@ -2022,7 +2022,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2224,7 +2224,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2300,7 +2300,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2563,7 +2563,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2786,7 +2786,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2877,7 +2877,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2978,7 +2978,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3075,7 +3075,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3158,7 +3158,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetConnectionMetadataRequest",
@@ -3172,7 +3172,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3258,7 +3258,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendMessageRequest",
@@ -3272,7 +3272,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3350,7 +3350,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPingRequest",
@@ -3364,7 +3364,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3487,7 +3487,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3673,7 +3673,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishCredentialDefinitionRequestBody",
@@ -3687,7 +3687,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3870,7 +3870,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4126,7 +4126,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4382,7 +4382,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4458,7 +4458,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4575,7 +4575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4733,7 +4733,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4809,7 +4809,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4921,7 +4921,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4997,7 +4997,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5153,7 +5153,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5406,7 +5406,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetW3CCredentialsRequestBody",
@@ -5420,7 +5420,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5720,7 +5720,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6150,7 +6150,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveDidexRequestRequestBody",
@@ -6164,7 +6164,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6407,7 +6407,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6650,7 +6650,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6850,7 +6850,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7015,7 +7015,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7191,7 +7191,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7337,7 +7337,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8649,7 +8649,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordRequest",
@@ -8663,7 +8663,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9975,7 +9975,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferRequest",
@@ -9989,7 +9989,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11331,7 +11331,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12518,7 +12518,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12594,7 +12594,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13783,7 +13783,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderRequest",
@@ -13797,7 +13797,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13850,7 +13850,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemRequest",
@@ -13864,7 +13864,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15203,7 +15203,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferRequest",
@@ -15217,7 +15217,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16301,7 +16301,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialRequestRequest",
@@ -16315,7 +16315,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17504,7 +17504,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialRequest",
@@ -17518,7 +17518,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18837,7 +18837,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequest",
@@ -18851,7 +18851,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20170,7 +20170,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferRequest",
@@ -20184,7 +20184,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21503,7 +21503,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalRequest",
@@ -21517,7 +21517,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -22760,7 +22760,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequestRequest",
@@ -22774,7 +22774,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -23488,7 +23488,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordRequest",
@@ -23502,7 +23502,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -24181,7 +24181,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferRequest",
@@ -24195,7 +24195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25003,7 +25003,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25656,7 +25656,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25732,7 +25732,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26387,7 +26387,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderRequest",
@@ -26401,7 +26401,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26454,7 +26454,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemRequest",
@@ -26468,7 +26468,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27221,7 +27221,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferRequest",
@@ -27235,7 +27235,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27888,7 +27888,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28543,7 +28543,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialRequest",
@@ -28557,7 +28557,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29278,7 +29278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequest",
@@ -29292,7 +29292,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29978,7 +29978,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferRequest",
@@ -29992,7 +29992,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30713,7 +30713,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalRequest",
@@ -30727,7 +30727,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30764,7 +30764,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SignRequest",
@@ -30778,7 +30778,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30815,7 +30815,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "VerifyRequest",
@@ -30829,7 +30829,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30957,7 +30957,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31041,7 +31041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31122,7 +31122,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31176,7 +31176,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31225,7 +31225,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31509,7 +31509,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31558,7 +31558,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31625,7 +31625,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31676,7 +31676,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AcceptTaaRequest",
@@ -31690,7 +31690,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31728,7 +31728,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31766,7 +31766,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31875,7 +31875,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32024,7 +32024,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistQueryToMediatorRequestBody",
@@ -32038,7 +32038,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32174,7 +32174,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistUpdateToMediatorRequest",
@@ -32188,7 +32188,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32241,7 +32241,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RequestMediationForConnectionRequest",
@@ -32255,7 +32255,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32420,7 +32420,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32474,7 +32474,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32528,7 +32528,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32621,7 +32621,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DenyMediationRequestRequest",
@@ -32635,7 +32635,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32733,7 +32733,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32855,7 +32855,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateKeylistForConnIdRequest",
@@ -32869,7 +32869,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32923,7 +32923,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33074,7 +33074,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateWalletRequest",
@@ -33088,7 +33088,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33197,7 +33197,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33339,7 +33339,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateWalletRequest",
@@ -33353,7 +33353,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33439,7 +33439,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "DeleteWalletRequest",
@@ -33453,7 +33453,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33547,7 +33547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetAuthTokenRequest",
@@ -33561,7 +33561,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33674,7 +33674,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34076,7 +34076,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOobInvitationRequestBody",
@@ -34090,7 +34090,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34698,7 +34698,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveOobInvitationRequestBody",
@@ -34712,7 +34712,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34761,7 +34761,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35698,7 +35698,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateProofRequestRequest",
@@ -35712,7 +35712,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36570,7 +36570,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37291,7 +37291,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37367,7 +37367,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37601,7 +37601,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37659,7 +37659,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemRequest",
@@ -37673,7 +37673,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38570,7 +38570,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequest",
@@ -38584,7 +38584,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39322,7 +39322,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestRequest",
@@ -39336,7 +39336,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40057,7 +40057,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40947,7 +40947,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalRequest",
@@ -40961,7 +40961,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -41905,7 +41905,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestRequest",
@@ -41919,7 +41919,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -42538,7 +42538,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeProofRequestRequest",
@@ -42552,7 +42552,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43271,7 +43271,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43847,7 +43847,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43923,7 +43923,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44157,7 +44157,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44215,7 +44215,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemRequest",
@@ -44229,7 +44229,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44827,7 +44827,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequest",
@@ -44841,7 +44841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -45434,7 +45434,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestRequest",
@@ -45448,7 +45448,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -46024,7 +46024,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -46651,7 +46651,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalRequest",
@@ -46665,7 +46665,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47291,7 +47291,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestRequest",
@@ -47305,7 +47305,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47390,7 +47390,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47665,7 +47665,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47716,7 +47716,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ClearPendingRevocationsRequest",
@@ -47730,7 +47730,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47995,7 +47995,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateRevocationRegistryRequest",
@@ -48009,7 +48009,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48181,7 +48181,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48294,7 +48294,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishRevocationsRequest",
@@ -48308,7 +48308,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48448,7 +48448,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48538,7 +48538,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48813,7 +48813,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49098,7 +49098,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateRevocationRegistryRequest",
@@ -49112,7 +49112,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49492,7 +49492,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49806,7 +49806,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49907,7 +49907,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49991,7 +49991,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50134,7 +50134,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50210,7 +50210,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50538,7 +50538,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50658,7 +50658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50742,7 +50742,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "RevokeIssuedCredentialRequest",
@@ -50756,7 +50756,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50999,7 +50999,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PublishSchemaRequestBody",
@@ -51013,7 +51013,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51156,7 +51156,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51285,7 +51285,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51414,7 +51414,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51463,7 +51463,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51512,7 +51512,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51561,7 +51561,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51618,7 +51618,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51675,7 +51675,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51724,7 +51724,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51857,7 +51857,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51973,7 +51973,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52044,7 +52044,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTransactionRequestRequestBody",
@@ -52058,7 +52058,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52148,7 +52148,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52279,7 +52279,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52412,7 +52412,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52545,7 +52545,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52699,7 +52699,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52832,7 +52832,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52965,7 +52965,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53216,7 +53216,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53333,7 +53333,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateLocalDidRequest",
@@ -53347,7 +53347,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53423,7 +53423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53507,7 +53507,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53676,7 +53676,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53767,7 +53767,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53876,7 +53876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SetDidEndpointRequestBody",
@@ -53890,7 +53890,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

@@ -29,7 +29,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateDirectEmployeeRequest",
@@ -43,7 +43,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Hris direct employee object that was created or edited",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -414,7 +414,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -684,7 +684,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateEorContractRequest",
@@ -698,7 +698,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -743,7 +743,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractTimeBasedRequest",
@@ -757,7 +757,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -802,7 +802,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractTaskBasedRequest",
@@ -816,7 +816,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -861,7 +861,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractMilestoneBasedRequest",
@@ -875,7 +875,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -920,7 +920,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractFixedRateRequest",
@@ -934,7 +934,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1185,7 +1185,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1230,7 +1230,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractRequest",
@@ -1244,7 +1244,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1306,7 +1306,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1367,7 +1367,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AttachExternalIdRequest",
@@ -1381,7 +1381,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1456,7 +1456,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1531,7 +1531,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1750,7 +1750,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1811,7 +1811,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateContractPgoTakRequest",
@@ -1825,7 +1825,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1907,7 +1907,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2060,7 +2060,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTaskManyReviewRequest",
@@ -2074,7 +2074,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2248,7 +2248,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTaskReviewByIdRequest",
@@ -2262,7 +2262,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2360,7 +2360,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2421,7 +2421,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AmendContractDetailsRequest",
@@ -2435,7 +2435,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2547,7 +2547,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TerminateContractRequest",
@@ -2561,7 +2561,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2622,7 +2622,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "SignContractRequest",
@@ -2636,7 +2636,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2696,7 +2696,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2757,7 +2757,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InviteToSignContractRequest",
@@ -2771,7 +2771,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2833,7 +2833,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3022,7 +3022,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3204,7 +3204,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3265,7 +3265,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateMilestoneRequest",
@@ -3279,7 +3279,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3481,7 +3481,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3558,7 +3558,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3634,7 +3634,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateMilestoneReviewRequest",
@@ -3648,7 +3648,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3709,7 +3709,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateMilestoneReviewsRequest",
@@ -3723,7 +3723,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3812,7 +3812,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3873,7 +3873,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOffCyclePaymentRequest",
@@ -3887,7 +3887,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3964,7 +3964,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4099,7 +4099,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AddPremiumRequest",
@@ -4113,7 +4113,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4196,7 +4196,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4357,7 +4357,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4562,7 +4562,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "PostContractEstimateRequest",
@@ -4576,7 +4576,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5076,7 +5076,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5134,7 +5134,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateEorTimeOffsRequest",
@@ -5148,7 +5148,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5221,7 +5221,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EditEorTimeOffsRequest",
@@ -5235,7 +5235,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5309,7 +5309,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5502,7 +5502,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5547,7 +5547,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTimesheetRequest",
@@ -5561,7 +5561,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5621,7 +5621,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5702,7 +5702,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5761,7 +5761,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateTimesheetByIdRequest",
@@ -5775,7 +5775,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5834,7 +5834,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTimesheetReviewRequest",
@@ -5848,7 +5848,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5893,7 +5893,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateTimesheetReviewsRequest",
@@ -5907,7 +5907,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6132,7 +6132,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6361,7 +6361,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6406,7 +6406,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateInvoiceAdjustmentRequest",
@@ -6420,7 +6420,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6501,7 +6501,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6560,7 +6560,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateInvoiceAdjustmentByIdRequest",
@@ -6574,7 +6574,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6633,7 +6633,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateInvoiceAdjustmentReviewRequest",
@@ -6647,7 +6647,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6692,7 +6692,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateInvoiceAdjustmentReviewsRequest",
@@ -6706,7 +6706,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6763,7 +6763,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6825,7 +6825,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6907,7 +6907,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7040,7 +7040,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7148,7 +7148,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7210,7 +7210,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7273,7 +7273,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7335,7 +7335,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7379,7 +7379,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateFileRefRequest",
@@ -7393,7 +7393,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7511,7 +7511,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7592,7 +7592,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7805,7 +7805,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7848,7 +7848,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "successful operation",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7909,7 +7909,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReviewTimeoffRequest",
@@ -7923,7 +7923,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8242,7 +8242,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8351,7 +8351,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8460,7 +8460,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8671,7 +8671,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8770,7 +8770,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8846,7 +8846,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8908,7 +8908,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "successful operation",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8953,7 +8953,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateWebhookRequest",
@@ -8967,7 +8967,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "successful operation",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9029,7 +9029,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "successful operation",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9158,7 +9158,7 @@ exports[`open api parser deel parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "WebhookControllerEditByIdRequest",
@@ -9172,7 +9172,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "successful operation",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9449,7 +9449,7 @@ exports[`open api parser deel parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Successful operation.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

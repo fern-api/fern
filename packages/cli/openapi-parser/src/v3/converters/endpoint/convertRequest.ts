@@ -135,7 +135,7 @@ export function convertRequest({
         description: undefined,
         schema: requestSchema,
         contentType: jsonSchema.overridenContentType,
-        fullExample: undefined
+        fullExamples: undefined
     });
 }
 

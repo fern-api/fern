@@ -89,7 +89,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -164,7 +164,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status and secret properties",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -316,7 +316,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -379,7 +379,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -546,7 +546,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrives all TOTP devices",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -782,7 +782,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -829,7 +829,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -979,7 +979,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1040,7 +1040,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1210,7 +1210,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1273,7 +1273,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1527,7 +1527,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrives a userId mapping",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1709,7 +1709,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1796,7 +1796,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -2009,7 +2009,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2097,7 +2097,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -2242,7 +2242,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2332,7 +2332,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -2462,7 +2462,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -2572,7 +2572,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -2861,7 +2861,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -3011,7 +3011,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "Starts the passwordless login process",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -3355,7 +3355,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -3386,7 +3386,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3707,7 +3707,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "List of all active passwordless codes of the user",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4020,7 +4020,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -4088,7 +4088,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4273,7 +4273,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get a user's information.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -4507,7 +4507,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4598,7 +4598,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4749,7 +4749,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4804,7 +4804,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "signin response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -4952,7 +4952,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5007,7 +5007,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "signup response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5195,7 +5195,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "get user's information",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5436,7 +5436,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5510,7 +5510,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -5655,7 +5655,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5691,7 +5691,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new reset password token for this user",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5975,7 +5975,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "get user's information",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6144,7 +6144,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6221,7 +6221,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Reset a password using password reset token",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -6398,7 +6398,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6610,7 +6610,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6705,7 +6705,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "import user response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6956,7 +6956,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -7030,7 +7030,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Signin/up a user",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7253,7 +7253,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get a user's information.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -7542,7 +7542,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get all users associated with given email",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7841,7 +7841,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user's information.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8038,7 +8038,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8183,7 +8183,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRequestBody",
@@ -8197,7 +8197,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new email verification token for this user",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -8384,7 +8384,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRemoveRequestBody",
@@ -8398,7 +8398,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8614,7 +8614,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify an email",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8759,7 +8759,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8815,7 +8815,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify an email",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -9021,7 +9021,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyRemoveRequestBody",
@@ -9035,7 +9035,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9209,7 +9209,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9392,7 +9392,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9447,7 +9447,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9622,7 +9622,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9658,7 +9658,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9784,7 +9784,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9829,7 +9829,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -9977,7 +9977,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10022,7 +10022,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10229,7 +10229,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10396,7 +10396,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10598,7 +10598,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10655,7 +10655,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10817,7 +10817,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10972,7 +10972,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11029,7 +11029,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -11216,7 +11216,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11405,7 +11405,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11436,7 +11436,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11613,7 +11613,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11785,7 +11785,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user and session information for a given session handle",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -12150,7 +12150,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12262,7 +12262,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a new Session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12464,7 +12464,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -12542,7 +12542,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Delete a session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12687,7 +12687,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12799,7 +12799,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify a session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -12996,7 +12996,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13060,7 +13060,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Refresh a session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13400,7 +13400,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user Session Handles",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13545,7 +13545,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13600,7 +13600,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Regenerate user session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13787,7 +13787,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get Session Data",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13935,7 +13935,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13990,7 +13990,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Change Session Data",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14115,7 +14115,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14227,7 +14227,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a signed JWT",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14361,7 +14361,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14512,7 +14512,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get JWT Data",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14660,7 +14660,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14715,7 +14715,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Change JWT Data for a session",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14842,7 +14842,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14901,7 +14901,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -15157,7 +15157,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -15323,7 +15323,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -15671,7 +15671,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15874,7 +15874,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get a list of dashboard users",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16108,7 +16108,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16146,7 +16146,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -16360,7 +16360,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16486,7 +16486,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16545,7 +16545,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -16812,7 +16812,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get a list of sessions for dashboard user",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16996,7 +16996,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get api version",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17131,7 +17131,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get api version",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -17234,7 +17234,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17289,7 +17289,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17344,7 +17344,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17399,7 +17399,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17454,7 +17454,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17539,7 +17539,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns the telemetryID if it exists",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -17767,7 +17767,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17944,7 +17944,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of active users",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18322,7 +18322,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "User Pagination",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18578,7 +18578,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -18614,7 +18614,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns OK if the operation succeeded (even if the user didn't exist before the call)",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18740,7 +18740,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns available tags for search",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18892,7 +18892,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19053,7 +19053,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19184,7 +19184,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19222,7 +19222,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19361,7 +19361,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

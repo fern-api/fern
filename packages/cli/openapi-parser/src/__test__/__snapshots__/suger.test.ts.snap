@@ -101,7 +101,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -242,7 +242,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -380,7 +380,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateBuyerNameDescriptionRequest",
@@ -394,7 +394,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -685,7 +685,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1993,7 +1993,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOrUpdateDraftOfferRequest",
@@ -2007,7 +2007,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2273,7 +2273,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2564,7 +2564,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2635,7 +2635,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AddEntitlementCreditRequest",
@@ -2649,7 +2649,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2937,7 +2937,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateEntitlementNameRequest",
@@ -2951,7 +2951,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3247,7 +3247,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3568,7 +3568,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3749,7 +3749,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3821,7 +3821,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "ReportUsageRecordGroupRequest",
@@ -3835,7 +3835,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4109,7 +4109,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4208,7 +4208,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4269,7 +4269,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateIntegrationRequest",
@@ -4283,7 +4283,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4450,7 +4450,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4564,7 +4564,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4680,7 +4680,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIntegrationRequest",
@@ -4694,7 +4694,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4808,7 +4808,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "whether it is verified or not",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5502,7 +5502,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6810,7 +6810,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "CreateOfferRequest",
@@ -6824,7 +6824,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7538,7 +7538,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7609,7 +7609,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7683,7 +7683,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if cancellation is successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7976,7 +7976,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8153,7 +8153,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8463,7 +8463,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9228,7 +9228,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9811,7 +9811,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10071,7 +10071,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10326,7 +10326,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10865,7 +10865,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11429,7 +11429,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11500,7 +11500,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Empty string if deletion is successful",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11572,7 +11572,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UpdateProductRequest",
@@ -11586,7 +11586,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11689,7 +11689,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11985,7 +11985,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12709,7 +12709,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12895,7 +12895,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13149,7 +13149,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13205,7 +13205,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetRevenueReportRequest",
@@ -13219,7 +13219,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13375,7 +13375,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13478,7 +13478,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13707,7 +13707,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13873,7 +13873,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13929,7 +13929,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageReportRequest",
@@ -13943,7 +13943,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13982,7 +13982,7 @@ exports[`open api parser suger parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetApiClientAccessTokenRequest",
@@ -13996,7 +13996,7 @@ exports[`open api parser suger parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExample": undefined,
+        "fullExamples": undefined,
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
