@@ -22,7 +22,78 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "inbound_agent": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListNumbersRequest",
       "headers": [],
       "internal": undefined,
@@ -318,7 +389,96 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "agent": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "agent_phone_number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "from_number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "not_started",
+                        "type": "enum",
+                      },
+                      "to_number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListCallsRequest",
       "headers": [],
       "internal": undefined,
@@ -569,7 +729,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -631,7 +791,44 @@ exports[`open api parser vocode parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "monthly_usage_limit_minutes": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "monthly_usage_minutes": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "plan_type": {
+                "enum": "plan_free",
+                "type": "enum",
+              },
+              "user_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetUsageRequest",
       "headers": [],
       "internal": undefined,
@@ -757,7 +954,44 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListActionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1072,7 +1306,90 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "actions": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "interrupt_sensitivity": {
+                        "enum": "low",
+                        "type": "enum",
+                      },
+                      "language": {
+                        "enum": "en",
+                        "type": "enum",
+                      },
+                      "prompt": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "voice": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListAgentsRequest",
       "headers": [],
       "internal": undefined,
@@ -1365,7 +1682,44 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListVoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -1640,7 +1994,64 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "subscriptions": {
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "user_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1696,7 +2107,84 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_more": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "method": {
+                        "enum": "GET",
+                        "type": "enum",
+                      },
+                      "subscriptions": {
+                        "array": [
+                          {
+                            "enum": "event_message",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "user_id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "page": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "size": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -1773,7 +2261,77 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "subscriptions": {
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "subscriptions": {
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "user_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1826,7 +2384,67 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "subscriptions": {
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "user_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateWebhookRequest",
       "headers": [],
       "internal": undefined,

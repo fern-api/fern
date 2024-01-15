@@ -25,13 +25,18 @@ exports[`open api parser apiture simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "accountId": "account-id",
+                  "accountId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "string",
+                        "name": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -69,6 +74,43 @@ exports[`open api parser apiture simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "allows": {
+                      "billPay": true,
+                      "manageCards": true,
+                      "manageJointOwners": true,
+                      "manageOverdraftAccounts": true,
+                      "mobileCheckDeposit": true,
+                      "transferFrom": true,
+                      "transferTo": true,
+                      "view": true,
+                      "viewCards": true,
+                    },
+                    "electronicStatements": true,
+                    "id": "string",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                    "maskedNumber": "string",
+                    "nickname": "Payroll Checking",
+                    "product": {
+                      "code": "CD001",
+                      "description": "string",
+                      "label": "string",
+                      "type": "savings",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/banking/accounts/{accountId}",
             "path-parameters": {
@@ -103,7 +145,16 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "available": "3456.78",
+                        "current": "3456.78",
+                        "currentWithPending": "3456.78",
+                        "id": "string",
+                        "incomplete": true,
+                        "updatedAt": "2021-10-30T19:06:04.250Z",
+                      },
+                    ],
                   },
                 },
               },
@@ -138,6 +189,48 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "allows": "billPay",
+                  "location": "internal",
+                  "productType": "savings",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "string",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "string",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "CD001",
+                          "description": "string",
+                          "label": "string",
+                          "type": "savings",
+                        },
+                      },
+                    ],
+                    "limit": 1,
+                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/accounts",
@@ -184,6 +277,47 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "allows": "billPay",
+                  "secCode": "arc",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "string",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "string",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "CD001",
+                          "description": "string",
+                          "label": "string",
+                          "type": "savings",
+                        },
+                      },
+                    ],
+                    "limit": 1,
+                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/achEligibleAccounts",
@@ -249,6 +383,27 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "time": "16:45",
+                        "type": "ach",
+                      },
+                    ],
+                    "timeZoneId": "string",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/institutions/{institutionId}/cutoffTimes",
@@ -437,6 +592,49 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "countryCode": "string",
+                  "locator": "string",
+                  "locatorType": "abaRoutingNumber",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "found": true,
+                    "institution": {
+                      "address": {
+                        "address1": "1805 Tiburon Dr.",
+                        "address2": "Building 14, Suite 1500",
+                        "countryCode": "string",
+                        "locality": "string",
+                        "postalCode": "string",
+                      },
+                      "locator": "string",
+                      "locatorType": "abaRoutingNumber",
+                      "name": "string",
+                    },
+                    "intermediaryInstitutions": [
+                      {
+                        "address": {
+                          "address1": "1805 Tiburon Dr.",
+                          "address2": "Building 14, Suite 1500",
+                          "countryCode": "string",
+                          "locality": "string",
+                          "postalCode": "string",
+                        },
+                        "locator": "string",
+                        "locatorType": "abaRoutingNumber",
+                        "name": "string",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/banking/institutionByLocator",
             "request": {
@@ -489,6 +687,30 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "emailAddress": "string",
+                  "firstName": "string",
+                  "lastName": "string",
+                  "sharedSecret": "string",
+                },
+                "response": {
+                  "body": {
+                    "emailAddress": "string",
+                    "firstName": "string",
+                    "id": "string",
+                    "lastName": "string",
+                    "sharedSecret": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/banking/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
@@ -534,6 +756,21 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "maximumOverdraftAccounts": 1,
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/banking/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
@@ -561,6 +798,24 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": {},
+                    "limit": 1,
+                    "maximumOverdraftAccounts": 1,
+                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/accounts/{accountId}/eligibleOverdraftAccounts",
@@ -600,6 +855,21 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "maximumOverdraftAccounts": 1,
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/banking/accounts/{accountId}/overdraftProtection",
@@ -657,7 +927,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "string",
+                        "label": "string",
+                        "type": "credit",
+                      },
+                    ],
                   },
                 },
               },
@@ -705,6 +981,45 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.NotFoundError",
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "string",
+                },
+                "query-parameters": {
+                  "subtype": "check",
+                  "type": "balance",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "amount": "3456.78",
+                        "balance": "3456.78",
+                        "category": {
+                          "id": "string",
+                          "label": "string",
+                        },
+                        "check": {
+                          "number": 1,
+                        },
+                        "createdOn": "2023-05-18",
+                        "id": "string",
+                        "merchant": {},
+                        "occurredOn": "2023-05-18",
+                        "postedOn": "2023-05-18",
+                        "subtype": "check",
+                        "type": "balance",
+                      },
+                    ],
+                    "limit": 1,
+                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/accounts/{accountId}/transactions",
@@ -798,6 +1113,59 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                  "sourceAccount": {
+                    "id": "string",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                    "type": "savings",
+                  },
+                  "targetAccount": {
+                    "id": "string",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                    "type": "savings",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "amount": "3456.78",
+                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "id": "string",
+                    "schedule": {
+                      "amountLimit": "3456.78",
+                      "frequency": "once",
+                      "recurrenceType": "fixed",
+                    },
+                    "sourceAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "state": "unscheduled",
+                    "targetAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/banking/transfers",
             "request": {
@@ -842,7 +1210,7 @@ Note: This operation requires an identity challenge if the financial institution
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "transferId": "transfer-id",
+                  "transferId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -867,6 +1235,42 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "amount": "3456.78",
+                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "id": "string",
+                    "schedule": {
+                      "amountLimit": "3456.78",
+                      "frequency": "once",
+                      "recurrenceType": "fixed",
+                    },
+                    "sourceAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "state": "unscheduled",
+                    "targetAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/banking/transfers/{transferId}",
             "path-parameters": {
@@ -889,6 +1293,46 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "amount": "3456.78",
+                        "createdAt": "2022-04-18T07:21:35.375Z",
+                        "id": "string",
+                        "schedule": {
+                          "amountLimit": "3456.78",
+                          "frequency": "once",
+                          "recurrenceType": "fixed",
+                        },
+                        "sourceAccount": {
+                          "id": "string",
+                          "label": "Checking *1008",
+                          "location": "internal",
+                          "type": "savings",
+                        },
+                        "state": "unscheduled",
+                        "targetAccount": {
+                          "id": "string",
+                          "label": "Checking *1008",
+                          "location": "internal",
+                          "type": "savings",
+                        },
+                        "updatedAt": "2022-04-18T07:21:35.375Z",
+                      },
+                    ],
+                    "limit": 1,
+                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/banking/transfers",
@@ -938,6 +1382,61 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                  "sourceAccount": {
+                    "id": "string",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                    "type": "savings",
+                  },
+                  "targetAccount": {
+                    "id": "string",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                    "type": "savings",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "amount": "3456.78",
+                    "createdAt": "2022-04-18T07:21:35.375Z",
+                    "id": "string",
+                    "schedule": {
+                      "amountLimit": "3456.78",
+                      "frequency": "once",
+                      "recurrenceType": "fixed",
+                    },
+                    "sourceAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "state": "unscheduled",
+                    "targetAccount": {
+                      "id": "string",
+                      "label": "Checking *1008",
+                      "location": "internal",
+                      "type": "savings",
+                    },
+                    "updatedAt": "2022-04-18T07:21:35.375Z",
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/banking/transfers/{transferId}",

@@ -101,7 +101,7 @@ client.accounts.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -143,7 +143,7 @@ client.accounts.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -213,8 +213,8 @@ client.accounts.list(params: {
                       ],
                       "loan_type": "Consignado",
                       "monthly_payment": 1000,
-                      "number_of_installments_outstanding": 48,
-                      "number_of_installments_total": 60,
+                      "number_of_installments_outstanding": 1,
+                      "number_of_installments_total": 1,
                       "outstanding_balance": 182000,
                       "outstanding_principal": 142023,
                       "payment_day": "27",
@@ -307,7 +307,7 @@ client.accounts.list(params: {
                   "number__in": "4057068115181,7809346821648",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "public_identification_name": "CLABE",
                   "public_identification_value": "150194683119900273",
                   "type": "Cuentas de efectivo",
@@ -315,7 +315,7 @@ client.accounts.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -380,8 +380,8 @@ client.accounts.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -677,8 +677,8 @@ client.accounts.list(params: {
                         ],
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
                         "outstanding_principal": 142023,
                         "payment_day": "27",
@@ -822,8 +822,8 @@ client.accounts.list(params: {
                         ],
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
                         "outstanding_principal": 142023,
                         "payment_day": "27",
@@ -970,7 +970,7 @@ client.balances.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -998,7 +998,7 @@ client.balances.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -1069,8 +1069,8 @@ client.balances.list(params: {
                         ],
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
                         "outstanding_principal": 142023,
                         "payment_day": "27",
@@ -1154,7 +1154,7 @@ client.balances.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "value_date": "2022-05-05",
                   "value_date__gt": "2022-05-06",
                   "value_date__gte": "2022-05-04",
@@ -1165,7 +1165,7 @@ client.balances.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -1231,8 +1231,8 @@ client.balances.list(params: {
                             ],
                             "loan_type": "Consignado",
                             "monthly_payment": 1000,
-                            "number_of_installments_outstanding": 48,
-                            "number_of_installments_total": 60,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
                             "outstanding_principal": 142023,
                             "payment_day": "27",
@@ -1482,8 +1482,8 @@ client.balances.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -1621,8 +1621,8 @@ client.balances.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -1791,7 +1791,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                   },
                 },
@@ -1941,7 +1941,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                       "currency": "BRL",
                       "description": "APPL3STORE",
                       "institution": "BBVA",
-                      "mcc": 2345,
+                      "mcc": 1,
                       "transaction_id": "3CWE4927CF15355",
                       "type": "INFLOW",
                       "value_date": "2022-11-18",
@@ -1961,7 +1961,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "currency": "BRL",
                         "description": "APPL3STORE",
                         "institution": "BBVA",
-                        "mcc": 2345,
+                        "mcc": 1,
                         "merchant": {
                           "logo": "https://www.apple.com/ac/structured-data/images/open_graph_logo.png?202110180743",
                           "merchant_name": "Apple, Inc",
@@ -2083,7 +2083,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                   },
                 },
@@ -2211,7 +2211,7 @@ At the moment, the employment records resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2239,7 +2239,7 @@ At the moment, the employment records resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -2267,7 +2267,7 @@ At the moment, the employment records resource is available for:
                         "most_recent_base_salary": 762.54,
                         "start_date": "2019-10-10",
                         "state": "DISTRITO FEDERAL",
-                        "weeks_employed": 12,
+                        "weeks_employed": 1,
                       },
                     ],
                     "files": [
@@ -2299,9 +2299,9 @@ At the moment, the employment records resource is available for:
                     },
                     "report_date": "2023-01-19",
                     "social_security_summary": {
-                      "weeks_contributed": 188,
-                      "weeks_redeemed": 0,
-                      "weeks_reinstated": 0,
+                      "weeks_contributed": 1,
+                      "weeks_redeemed": 1,
+                      "weeks_reinstated": 1,
                     },
                   },
                 },
@@ -2348,12 +2348,12 @@ At the moment, the employment records resource is available for:
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -2376,7 +2376,7 @@ At the moment, the employment records resource is available for:
                             "most_recent_base_salary": 762.54,
                             "start_date": "2019-10-10",
                             "state": "DISTRITO FEDERAL",
-                            "weeks_employed": 12,
+                            "weeks_employed": 1,
                           },
                         ],
                         "files": [
@@ -2408,9 +2408,9 @@ At the moment, the employment records resource is available for:
                         },
                         "report_date": "2023-01-19",
                         "social_security_summary": {
-                          "weeks_contributed": 188,
-                          "weeks_redeemed": 0,
-                          "weeks_reinstated": 0,
+                          "weeks_contributed": 1,
+                          "weeks_redeemed": 1,
+                          "weeks_reinstated": 1,
                         },
                       },
                     ],
@@ -2494,7 +2494,7 @@ At the moment, the employment records resource is available for:
                           "most_recent_base_salary": 762.54,
                           "start_date": "2019-10-10",
                           "state": "DISTRITO FEDERAL",
-                          "weeks_employed": 12,
+                          "weeks_employed": 1,
                         },
                       ],
                       "files": [
@@ -2526,9 +2526,9 @@ At the moment, the employment records resource is available for:
                       },
                       "report_date": "2023-01-19",
                       "social_security_summary": {
-                        "weeks_contributed": 188,
-                        "weeks_redeemed": 0,
-                        "weeks_reinstated": 0,
+                        "weeks_contributed": 1,
+                        "weeks_redeemed": 1,
+                        "weeks_reinstated": 1,
                       },
                     },
                   ],
@@ -2647,15 +2647,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                           "confidence": "HIGH",
                           "currency": "BRL",
                           "frequency": "MONTHLY",
-                          "full_periods": 12,
+                          "full_periods": 1,
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
                           "last_income_description": {},
-                          "lookback_periods": 4,
+                          "lookback_periods": 1,
                           "monthly_average": 2500,
-                          "number_of_incomes": 4,
-                          "periods_with_income": 3,
+                          "number_of_incomes": 1,
+                          "periods_with_income": 1,
                           "regularity": 0.75,
                           "stability": 1,
                           "trend": 0,
@@ -2669,7 +2669,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                       "monthly_average_low_confidence": 1308.18,
                       "monthly_average_medium_confidence": 2500,
                       "monthly_average_regular": 2500,
-                      "number_of_income_streams": 12,
+                      "number_of_income_streams": 1,
                       "total_high_confidence": 0,
                       "total_income_amount": 12616.37,
                       "total_irregular_income_amount": 2616.37,
@@ -2806,7 +2806,7 @@ client.incomes.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2834,7 +2834,7 @@ client.incomes.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -2855,15 +2855,15 @@ client.incomes.list(params: {
                           "confidence": "HIGH",
                           "currency": "BRL",
                           "frequency": "MONTHLY",
-                          "full_periods": 12,
+                          "full_periods": 1,
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
                           "last_income_description": {},
-                          "lookback_periods": 4,
+                          "lookback_periods": 1,
                           "monthly_average": 2500,
-                          "number_of_incomes": 4,
-                          "periods_with_income": 3,
+                          "number_of_incomes": 1,
+                          "periods_with_income": 1,
                           "regularity": 0.75,
                           "stability": 1,
                           "trend": 0,
@@ -2877,7 +2877,7 @@ client.incomes.list(params: {
                       "monthly_average_low_confidence": 1308.18,
                       "monthly_average_medium_confidence": 2500,
                       "monthly_average_regular": 2500,
-                      "number_of_income_streams": 12,
+                      "number_of_income_streams": 1,
                       "total_high_confidence": 0,
                       "total_income_amount": 12616.37,
                       "total_irregular_income_amount": 2616.37,
@@ -2934,12 +2934,12 @@ client.incomes.list(params: {
                   "link__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -2954,15 +2954,15 @@ client.incomes.list(params: {
                             "confidence": "HIGH",
                             "currency": "BRL",
                             "frequency": "MONTHLY",
-                            "full_periods": 12,
+                            "full_periods": 1,
                             "income_type": "SALARY",
                             "last_income_amount": 2500,
                             "last_income_date": "2022-02-09",
                             "last_income_description": {},
-                            "lookback_periods": 4,
+                            "lookback_periods": 1,
                             "monthly_average": 2500,
-                            "number_of_incomes": 4,
-                            "periods_with_income": 3,
+                            "number_of_incomes": 1,
+                            "periods_with_income": 1,
                             "regularity": 0.75,
                             "stability": 1,
                             "trend": 0,
@@ -2976,7 +2976,7 @@ client.incomes.list(params: {
                         "monthly_average_low_confidence": 1308.18,
                         "monthly_average_medium_confidence": 2500,
                         "monthly_average_regular": 2500,
-                        "number_of_income_streams": 12,
+                        "number_of_income_streams": 1,
                         "total_high_confidence": 0,
                         "total_income_amount": 12616.37,
                         "total_irregular_income_amount": 2616.37,
@@ -3081,15 +3081,15 @@ client.incomes.list(params: {
                           "confidence": "HIGH",
                           "currency": "BRL",
                           "frequency": "MONTHLY",
-                          "full_periods": 12,
+                          "full_periods": 1,
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
                           "last_income_description": {},
-                          "lookback_periods": 4,
+                          "lookback_periods": 1,
                           "monthly_average": 2500,
-                          "number_of_incomes": 4,
-                          "periods_with_income": 3,
+                          "number_of_incomes": 1,
+                          "periods_with_income": 1,
                           "regularity": 0.75,
                           "stability": 1,
                           "trend": 0,
@@ -3103,7 +3103,7 @@ client.incomes.list(params: {
                       "monthly_average_low_confidence": 1308.18,
                       "monthly_average_medium_confidence": 2500,
                       "monthly_average_regular": 2500,
-                      "number_of_income_streams": 12,
+                      "number_of_income_streams": 1,
                       "total_high_confidence": 0,
                       "total_income_amount": 12616.37,
                       "total_irregular_income_amount": 2616.37,
@@ -3178,15 +3178,15 @@ client.incomes.list(params: {
                         "confidence": "HIGH",
                         "currency": "BRL",
                         "frequency": "MONTHLY",
-                        "full_periods": 12,
+                        "full_periods": 1,
                         "income_type": "SALARY",
                         "last_income_amount": 2500,
                         "last_income_date": "2022-02-09",
                         "last_income_description": {},
-                        "lookback_periods": 4,
+                        "lookback_periods": 1,
                         "monthly_average": 2500,
-                        "number_of_incomes": 4,
-                        "periods_with_income": 3,
+                        "number_of_incomes": 1,
+                        "periods_with_income": 1,
                         "regularity": 0.75,
                         "stability": 1,
                         "trend": 0,
@@ -3200,7 +3200,7 @@ client.incomes.list(params: {
                     "monthly_average_low_confidence": 1308.18,
                     "monthly_average_medium_confidence": 2500,
                     "monthly_average_regular": 2500,
-                    "number_of_income_streams": 12,
+                    "number_of_income_streams": 1,
                     "total_high_confidence": 0,
                     "total_income_amount": 12616.37,
                     "total_irregular_income_amount": 2616.37,
@@ -3299,7 +3299,7 @@ You can see a complete list of institutions by either consulting our [Institutio
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -3338,7 +3338,7 @@ You can see a complete list of institutions by either consulting our [Institutio
                       },
                     ],
                     "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                    "id": 1003,
+                    "id": 1,
                     "integration_type": "credentials",
                     "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
                     "name": "erebor_mx_retail",
@@ -3399,7 +3399,7 @@ You can see a complete list of institutions by either consulting our [Institutio
                   "name__in": "erebor_br_retail,gotham_co_business",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
                   "status": "healthy",
                   "status__in": "healthy,down",
@@ -3410,7 +3410,7 @@ You can see a complete list of institutions by either consulting our [Institutio
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -3444,7 +3444,7 @@ You can see a complete list of institutions by either consulting our [Institutio
                           },
                         ],
                         "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                        "id": 1003,
+                        "id": 1,
                         "integration_type": "credentials",
                         "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
                         "name": "erebor_mx_retail",
@@ -3604,7 +3604,7 @@ client. investments_portfolio.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3632,7 +3632,7 @@ client. investments_portfolio.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -3735,12 +3735,12 @@ client. investments_portfolio.list(params: {
                   "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -4128,7 +4128,7 @@ client.invoices.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -4210,7 +4210,7 @@ client.invoices.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "status": "Vigente",
                   "status__in": "Vigente,Cancelado",
                   "total_amount": "1000.00",
@@ -4225,7 +4225,7 @@ client.invoices.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                   },
                 },
@@ -4671,7 +4671,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -4699,7 +4699,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -4779,7 +4779,7 @@ To delete links in bulk, we recommend looping through the list of links you want
                   "institution_user_id__in": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=,YwuTM0uEEh1BbVgDZBcNpa_-Tm3l2q8ZkZNrlhp-pNA=",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "refresh_rate": "24h",
                   "status": "invalid",
                   "status__in": "invalid,unconfirmed",
@@ -4787,7 +4787,7 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -5195,7 +5195,7 @@ For a list of standards codes, see the table below.
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -5401,7 +5401,7 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -5429,7 +5429,7 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -5507,12 +5507,12 @@ client.owners.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -5780,7 +5780,7 @@ client.owners.list(params: {
                     "form_fields": [
                       {
                         "label": "Document",
-                        "length": 6,
+                        "length": 1,
                         "name": "username",
                         "optional": false,
                         "placeholder": "Username",
@@ -5848,7 +5848,7 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://belvo.com/payments/{endpoint}/?page=2",
                     "results": [
                       {
@@ -5858,7 +5858,7 @@ client.owners.list(params: {
                         "form_fields": [
                           {
                             "label": "Document",
-                            "length": 6,
+                            "length": 1,
                             "name": "username",
                             "optional": false,
                             "placeholder": "Username",
@@ -6066,7 +6066,7 @@ A payment intent captures all payment information (such as the amount to be char
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                   },
                 },
@@ -6289,14 +6289,14 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "created_at__range": "2022-09-15,2022-09-20",
                   "ordering": "created_at",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "search": "trai",
                   "status": "ACTIVE",
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                   },
                 },
@@ -6489,7 +6489,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                   },
                 },
@@ -6626,7 +6626,7 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -6699,7 +6699,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                     "results": [
                       {
@@ -6826,7 +6826,7 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -6854,7 +6854,7 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -6885,7 +6885,7 @@ You can use the Payment Transactions resource in order to get useful information
                     "net_amount": 104.58,
                     "number_of_installments": {
                       "paid": 1,
-                      "total": 2,
+                      "total": 1,
                     },
                     "status": "APPROVED",
                     "type": "MASTERCARD_CREDIT",
@@ -6945,7 +6945,7 @@ You can use the Payment Transactions resource in order to get useful information
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "value_date": "2022-05-05",
                   "value_date__gt": "2022-05-06",
                   "value_date__gte": "2022-05-04",
@@ -6956,7 +6956,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -6982,7 +6982,7 @@ You can use the Payment Transactions resource in order to get useful information
                         "net_amount": 104.58,
                         "number_of_installments": {
                           "paid": 1,
-                          "total": 2,
+                          "total": 1,
                         },
                         "status": "APPROVED",
                         "type": "MASTERCARD_CREDIT",
@@ -7139,7 +7139,7 @@ You can use the Payment Transactions resource in order to get useful information
                     "net_amount": 104.58,
                     "number_of_installments": {
                       "paid": 1,
-                      "total": 2,
+                      "total": 1,
                     },
                     "status": "APPROVED",
                     "type": "MASTERCARD_CREDIT",
@@ -7264,7 +7264,7 @@ client. recurring_expenses.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -7292,7 +7292,7 @@ client. recurring_expenses.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -7364,8 +7364,8 @@ client. recurring_expenses.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -7385,7 +7385,7 @@ client. recurring_expenses.list(params: {
                       },
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
-                      "days_since_last_transaction": 5,
+                      "days_since_last_transaction": 1,
                       "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
@@ -7450,12 +7450,12 @@ client. recurring_expenses.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -7521,8 +7521,8 @@ client. recurring_expenses.list(params: {
                             ],
                             "loan_type": "Consignado",
                             "monthly_payment": 1000,
-                            "number_of_installments_outstanding": 48,
-                            "number_of_installments_total": 60,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
                             "outstanding_principal": 142023,
                             "payment_day": "27",
@@ -7542,7 +7542,7 @@ client. recurring_expenses.list(params: {
                         },
                         "average_transaction_amount": 32.9,
                         "category": "Bills & Utilities",
-                        "days_since_last_transaction": 5,
+                        "days_since_last_transaction": 1,
                         "frequency": "MONTHLY",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "median_transaction_amount": 32.9,
@@ -7712,8 +7712,8 @@ client. recurring_expenses.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -7733,7 +7733,7 @@ client. recurring_expenses.list(params: {
                       },
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
-                      "days_since_last_transaction": 5,
+                      "days_since_last_transaction": 1,
                       "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
@@ -7862,8 +7862,8 @@ client. recurring_expenses.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -7883,7 +7883,7 @@ client. recurring_expenses.list(params: {
                       },
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
-                      "days_since_last_transaction": 5,
+                      "days_since_last_transaction": 1,
                       "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
@@ -8019,7 +8019,7 @@ client. risk_insights.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -8047,7 +8047,7 @@ client. risk_insights.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -8063,12 +8063,12 @@ client. risk_insights.list(params: {
                       "balances_metrics": {
                         "balance_threshold_x": 267,
                         "closing_balance": 24.19,
-                        "days_balance_below_0_1m": 0,
-                        "days_balance_below_0_1w": 0,
-                        "days_balance_below_0_3m": 0,
-                        "days_balance_below_x_1m": 3,
-                        "days_balance_below_x_1w": 3,
-                        "days_balance_below_x_3m": 3,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
                         "max_balance_1m": 3062.11,
                         "max_balance_1w": 3062.11,
                         "max_balance_3m": 3062.11,
@@ -8089,14 +8089,14 @@ client. risk_insights.list(params: {
                       },
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "credit_cards_metrics": {
-                        "num_accounts": 2,
+                        "num_accounts": 1,
                         "sum_credit_limit": 600.5,
                         "sum_credit_used": 200.5,
                       },
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "loans_metrics": {
-                        "num_accounts": 5,
+                        "num_accounts": 1,
                         "sum_loans_monthly_payment": 400,
                         "sum_loans_outstanding_principal": 2000,
                         "sum_loans_principal": 5000,
@@ -8114,15 +8114,15 @@ client. risk_insights.list(params: {
                         "mean_outgoing_amount_1m": 3027.44,
                         "mean_outgoing_amount_1w": 3027.44,
                         "mean_outgoing_amount_3m": 3027.44,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_3m": 19,
-                        "num_transactions_1m": 39,
-                        "num_transactions_1w": 39,
-                        "num_transactions_3m": 39,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -8180,12 +8180,12 @@ client. risk_insights.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -8195,12 +8195,12 @@ client. risk_insights.list(params: {
                         "balances_metrics": {
                           "balance_threshold_x": 267,
                           "closing_balance": 24.19,
-                          "days_balance_below_0_1m": 0,
-                          "days_balance_below_0_1w": 0,
-                          "days_balance_below_0_3m": 0,
-                          "days_balance_below_x_1m": 3,
-                          "days_balance_below_x_1w": 3,
-                          "days_balance_below_x_3m": 3,
+                          "days_balance_below_0_1m": 1,
+                          "days_balance_below_0_1w": 1,
+                          "days_balance_below_0_3m": 1,
+                          "days_balance_below_x_1m": 1,
+                          "days_balance_below_x_1w": 1,
+                          "days_balance_below_x_3m": 1,
                           "max_balance_1m": 3062.11,
                           "max_balance_1w": 3062.11,
                           "max_balance_3m": 3062.11,
@@ -8221,14 +8221,14 @@ client. risk_insights.list(params: {
                         },
                         "created_at": "2022-02-01T20:25:47.307911Z",
                         "credit_cards_metrics": {
-                          "num_accounts": 2,
+                          "num_accounts": 1,
                           "sum_credit_limit": 600.5,
                           "sum_credit_used": 200.5,
                         },
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "loans_metrics": {
-                          "num_accounts": 5,
+                          "num_accounts": 1,
                           "sum_loans_monthly_payment": 400,
                           "sum_loans_outstanding_principal": 2000,
                           "sum_loans_principal": 5000,
@@ -8246,15 +8246,15 @@ client. risk_insights.list(params: {
                           "mean_outgoing_amount_1m": 3027.44,
                           "mean_outgoing_amount_1w": 3027.44,
                           "mean_outgoing_amount_3m": 3027.44,
-                          "num_incoming_transactions_1m": 20,
-                          "num_incoming_transactions_1w": 20,
-                          "num_incoming_transactions_3m": 20,
-                          "num_outgoing_transactions_1m": 19,
-                          "num_outgoing_transactions_1w": 19,
-                          "num_outgoing_transactions_3m": 19,
-                          "num_transactions_1m": 39,
-                          "num_transactions_1w": 39,
-                          "num_transactions_3m": 39,
+                          "num_incoming_transactions_1m": 1,
+                          "num_incoming_transactions_1w": 1,
+                          "num_incoming_transactions_3m": 1,
+                          "num_outgoing_transactions_1m": 1,
+                          "num_outgoing_transactions_1w": 1,
+                          "num_outgoing_transactions_3m": 1,
+                          "num_transactions_1m": 1,
+                          "num_transactions_1w": 1,
+                          "num_transactions_3m": 1,
                           "sum_incoming_amount_1m": 10022.01,
                           "sum_incoming_amount_1w": 10022.01,
                           "sum_incoming_amount_3m": 10022.01,
@@ -8352,12 +8352,12 @@ client. risk_insights.list(params: {
                       "balances_metrics": {
                         "balance_threshold_x": 267,
                         "closing_balance": 24.19,
-                        "days_balance_below_0_1m": 0,
-                        "days_balance_below_0_1w": 0,
-                        "days_balance_below_0_3m": 0,
-                        "days_balance_below_x_1m": 3,
-                        "days_balance_below_x_1w": 3,
-                        "days_balance_below_x_3m": 3,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
                         "max_balance_1m": 3062.11,
                         "max_balance_1w": 3062.11,
                         "max_balance_3m": 3062.11,
@@ -8378,14 +8378,14 @@ client. risk_insights.list(params: {
                       },
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "credit_cards_metrics": {
-                        "num_accounts": 2,
+                        "num_accounts": 1,
                         "sum_credit_limit": 600.5,
                         "sum_credit_used": 200.5,
                       },
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "loans_metrics": {
-                        "num_accounts": 5,
+                        "num_accounts": 1,
                         "sum_loans_monthly_payment": 400,
                         "sum_loans_outstanding_principal": 2000,
                         "sum_loans_principal": 5000,
@@ -8403,15 +8403,15 @@ client. risk_insights.list(params: {
                         "mean_outgoing_amount_1m": 3027.44,
                         "mean_outgoing_amount_1w": 3027.44,
                         "mean_outgoing_amount_3m": 3027.44,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_3m": 19,
-                        "num_transactions_1m": 39,
-                        "num_transactions_1w": 39,
-                        "num_transactions_3m": 39,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -8479,12 +8479,12 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       "balances_metrics": {
                         "balance_threshold_x": 267,
                         "closing_balance": 24.19,
-                        "days_balance_below_0_1m": 0,
-                        "days_balance_below_0_1w": 0,
-                        "days_balance_below_0_3m": 0,
-                        "days_balance_below_x_1m": 3,
-                        "days_balance_below_x_1w": 3,
-                        "days_balance_below_x_3m": 3,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
                         "max_balance_1m": 3062.11,
                         "max_balance_1w": 3062.11,
                         "max_balance_3m": 3062.11,
@@ -8505,14 +8505,14 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "credit_cards_metrics": {
-                        "num_accounts": 2,
+                        "num_accounts": 1,
                         "sum_credit_limit": 600.5,
                         "sum_credit_used": 200.5,
                       },
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "loans_metrics": {
-                        "num_accounts": 5,
+                        "num_accounts": 1,
                         "sum_loans_monthly_payment": 400,
                         "sum_loans_outstanding_principal": 2000,
                         "sum_loans_principal": 5000,
@@ -8530,15 +8530,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
                         "mean_outgoing_amount_1m": 3027.44,
                         "mean_outgoing_amount_1w": 3027.44,
                         "mean_outgoing_amount_3m": 3027.44,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_3m": 19,
-                        "num_transactions_1m": 39,
-                        "num_transactions_1w": 39,
-                        "num_transactions_3m": 39,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -8672,7 +8672,7 @@ For example:
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
                     "results": [
                       {
@@ -8771,7 +8771,7 @@ client.tax_compliance_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -8799,7 +8799,7 @@ client.tax_compliance_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -8869,12 +8869,12 @@ client.tax_compliance_status.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -9063,7 +9063,7 @@ At the moment, the Tax Declaration resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -9403,7 +9403,7 @@ client.tax_retentions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -9431,7 +9431,7 @@ client.tax_retentions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -9441,7 +9441,7 @@ client.tax_retentions.list(params: {
                 "response": {
                   "body": {
                     "certified_at": "2019-01-03T21:10:41.000Z",
-                    "code": 25,
+                    "code": 1,
                     "collected_at": "2022-02-09T08:45:50.406032Z",
                     "created_at": "2022-02-09T08:46:20.406032Z",
                     "id": "c749315b-eec2-435d-a458-06912878564f",
@@ -9519,17 +9519,17 @@ client.tax_retentions.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
                         "certified_at": "2019-01-03T21:10:41.000Z",
-                        "code": 25,
+                        "code": 1,
                         "collected_at": "2022-02-09T08:45:50.406032Z",
                         "created_at": "2022-02-09T08:46:20.406032Z",
                         "id": "c749315b-eec2-435d-a458-06912878564f",
@@ -9651,7 +9651,7 @@ client.tax_retentions.list(params: {
                   "body": [
                     {
                       "certified_at": "2019-01-03T21:10:41.000Z",
-                      "code": 25,
+                      "code": 1,
                       "collected_at": "2022-02-09T08:45:50.406032Z",
                       "created_at": "2022-02-09T08:46:20.406032Z",
                       "id": "c749315b-eec2-435d-a458-06912878564f",
@@ -9818,7 +9818,7 @@ client.tax_returns.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -10112,7 +10112,7 @@ client.tax_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -10186,12 +10186,12 @@ client.tax_status.list(params: {
                   "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                 },
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                   },
                 },
@@ -10428,7 +10428,7 @@ client.transactions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -10456,7 +10456,7 @@ client.transactions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -10527,8 +10527,8 @@ client.transactions.list(params: {
                         ],
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
                         "outstanding_principal": 142023,
                         "payment_day": "27",
@@ -10661,7 +10661,7 @@ client.transactions.list(params: {
                   "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                   "omit": "link,balance",
                   "page": 1,
-                  "page_size": 100,
+                  "page_size": 1,
                   "reference": "085904452810319225",
                   "reference__in": "085904452810319225,8703",
                   "status": "PENDING",
@@ -10678,7 +10678,7 @@ client.transactions.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 130,
+                    "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
                     "results": [
                       {
@@ -10744,8 +10744,8 @@ client.transactions.list(params: {
                             ],
                             "loan_type": "Consignado",
                             "monthly_payment": 1000,
-                            "number_of_installments_outstanding": 48,
-                            "number_of_installments_total": 60,
+                            "number_of_installments_outstanding": 1,
+                            "number_of_installments_total": 1,
                             "outstanding_balance": 182000,
                             "outstanding_principal": 142023,
                             "payment_day": "27",
@@ -11140,8 +11140,8 @@ client.transactions.list(params: {
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",
@@ -11307,8 +11307,8 @@ If you try to access older information than what we can access, we will return a
                           ],
                           "loan_type": "Consignado",
                           "monthly_payment": 1000,
-                          "number_of_installments_outstanding": 48,
-                          "number_of_installments_total": 60,
+                          "number_of_installments_outstanding": 1,
+                          "number_of_installments_total": 1,
                           "outstanding_balance": 182000,
                           "outstanding_principal": 142023,
                           "payment_day": "27",

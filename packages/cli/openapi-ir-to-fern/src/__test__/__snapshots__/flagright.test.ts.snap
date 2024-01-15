@@ -34,6 +34,587 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             "UnauthorizedError",
             "TooManyRequestsError",
           ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": {
+                "userId": "string",
+              },
+              "query-parameters": undefined,
+              "request": undefined,
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
+                  "createdTimestamp": 1.1,
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "legalName": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "registrationCountry": "AF",
+                      "registrationIdentifier": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [],
+                          "city": "string",
+                          "country": "string",
+                          "postcode": "string",
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                  "linkedEntities": {},
+                  "mccDetails": {
+                    "code": 1.1,
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userId": "string",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+              },
+            },
+          ],
           "method": "GET",
           "path": "/business/users/{userId}",
           "path-parameters": {
@@ -59,6 +640,100 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             "UnauthorizedError",
             "TooManyRequestsError",
           ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": {
+                "transactionId": "string",
+              },
+              "query-parameters": undefined,
+              "request": undefined,
+              "response": {
+                "body": {
+                  "destinationAmountDetails": {
+                    "country": "AF",
+                    "transactionAmount": 1.1,
+                    "transactionCurrency": "1INCH",
+                  },
+                  "deviceData": {},
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "originAmountDetails": {
+                    "country": "AF",
+                    "transactionAmount": 1.1,
+                    "transactionCurrency": "1INCH",
+                  },
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "timestamp": 1.1,
+                  "transactionId": "string",
+                  "transactionState": "CREATED",
+                  "type": "DEPOSIT",
+                },
+              },
+            },
+          ],
           "method": "GET",
           "path": "/transactions/{transactionId}",
           "path-parameters": {
@@ -83,6 +758,461 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "errors": [
             "UnauthorizedError",
             "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": {
+                "userId": "string",
+              },
+              "query-parameters": undefined,
+              "request": undefined,
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [],
+                        "city": "string",
+                        "country": "string",
+                        "postcode": "string",
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "createdTimestamp": 1.1,
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentIssuedCountry": "AF",
+                      "documentNumber": "string",
+                      "documentType": "string",
+                      "nameOnDocument": {
+                        "firstName": "string",
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                    },
+                  ],
+                  "riskLevel": "VERY_HIGH",
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userDetails": {
+                    "countryOfNationality": "AF",
+                    "countryOfResidence": "AF",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "string",
+                    },
+                  },
+                  "userId": "string",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+              },
+            },
           ],
           "method": "GET",
           "path": "/consumer/users/{userId}",
@@ -118,6 +1248,646 @@ Each consumer Business entity needs three mandatory fields:
             "BadRequestError",
             "UnauthorizedError",
             "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "acquisitionChannel": "ORGANIC",
+                "allowedPaymentMethods": [
+                  "ACH",
+                ],
+                "createdTimestamp": 1.1,
+                "directors": [
+                  {
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [],
+                          "city": "string",
+                          "country": "string",
+                          "postcode": "string",
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "generalDetails": {
+                      "countryOfNationality": "AF",
+                      "countryOfResidence": "AF",
+                      "gender": "M",
+                      "name": {
+                        "firstName": "string",
+                      },
+                    },
+                    "legalDocuments": [
+                      {
+                        "documentIssuedCountry": "AF",
+                        "documentNumber": "string",
+                        "documentType": "string",
+                        "nameOnDocument": {
+                          "firstName": "string",
+                        },
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                    "pepStatus": [
+                      {
+                        "isPepHit": true,
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                  },
+                ],
+                "kycStatusDetails": {
+                  "status": "SUCCESSFUL",
+                },
+                "legalEntity": {
+                  "companyFinancialDetails": {
+                    "expectedTransactionAmountPerMonth": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "expectedTurnoverPerMonth": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                  },
+                  "companyGeneralDetails": {
+                    "legalName": "string",
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                    "userRegistrationStatus": "REGISTERED",
+                    "userSegment": "SOLE_PROPRIETORSHIP",
+                  },
+                  "companyRegistrationDetails": {
+                    "registrationCountry": "AF",
+                    "registrationIdentifier": "string",
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                  },
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [],
+                        "city": "string",
+                        "country": "string",
+                        "postcode": "string",
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+                "linkedEntities": {},
+                "mccDetails": {
+                  "code": 1.1,
+                },
+                "riskLevel": "VERY_HIGH",
+                "shareHolders": [
+                  {
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [],
+                          "city": "string",
+                          "country": "string",
+                          "postcode": "string",
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "generalDetails": {
+                      "countryOfNationality": "AF",
+                      "countryOfResidence": "AF",
+                      "gender": "M",
+                      "name": {
+                        "firstName": "string",
+                      },
+                    },
+                    "legalDocuments": [
+                      {
+                        "documentIssuedCountry": "AF",
+                        "documentNumber": "string",
+                        "documentType": "string",
+                        "nameOnDocument": {
+                          "firstName": "string",
+                        },
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                    "pepStatus": [
+                      {
+                        "isPepHit": true,
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                  },
+                ],
+                "tags": [
+                  {
+                    "key": "string",
+                    "value": "string",
+                  },
+                ],
+                "transactionLimits": {
+                  "maximumDailyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumMonthlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumQuarterlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumWeeklyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumYearlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "paymentMethodLimits": {
+                    "ACH": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "CARD": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "CHECK": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "GENERIC_BANK_ACCOUNT": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "IBAN": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "MPESA": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "SWIFT": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "UPI": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "WALLET": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                  },
+                },
+                "userId": "string",
+                "userStateDetails": {
+                  "state": "UNACCEPTABLE",
+                },
+              },
+              "response": {
+                "body": {
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "userId": "string",
+                },
+              },
+            },
           ],
           "method": "POST",
           "path": "/business/users",
@@ -156,6 +1926,1214 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "BadRequestError",
             "UnauthorizedError",
             "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "timestamp": 1.1,
+                "updatedBusinessUserAttributes": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "legalName": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "registrationCountry": "AF",
+                      "registrationIdentifier": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [],
+                          "city": "string",
+                          "country": "string",
+                          "postcode": "string",
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                  "linkedEntities": {},
+                  "mccDetails": {
+                    "code": 1.1,
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+                "userId": "string",
+              },
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
+                  "createdTimestamp": 1.1,
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "1INCH",
+                        "amountValue": 1.1,
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "legalName": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "registrationCountry": "AF",
+                      "registrationIdentifier": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [],
+                          "city": "string",
+                          "country": "string",
+                          "postcode": "string",
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                  "linkedEntities": {},
+                  "mccDetails": {
+                    "code": 1.1,
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [],
+                            "city": "string",
+                            "country": "string",
+                            "postcode": "string",
+                            "tags": [
+                              {
+                                "key": "string",
+                                "value": "string",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "AF",
+                        "countryOfResidence": "AF",
+                        "gender": "M",
+                        "name": {
+                          "firstName": "string",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentIssuedCountry": "AF",
+                          "documentNumber": "string",
+                          "documentType": "string",
+                          "nameOnDocument": {
+                            "firstName": "string",
+                          },
+                          "tags": [
+                            {
+                              "key": "string",
+                              "value": "string",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userId": "string",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+              },
+            },
           ],
           "method": "POST",
           "path": "/events/business/user",
@@ -223,6 +3201,100 @@ Here are some of the most used payload fields explained (you can find the full p
             "UnauthorizedError",
             "TooManyRequestsError",
           ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "destinationAmountDetails": {
+                  "country": "AF",
+                  "transactionAmount": 1.1,
+                  "transactionCurrency": "1INCH",
+                },
+                "deviceData": {},
+                "originAmountDetails": {
+                  "country": "AF",
+                  "transactionAmount": 1.1,
+                  "transactionCurrency": "1INCH",
+                },
+                "tags": [
+                  {
+                    "key": "string",
+                    "value": "string",
+                  },
+                ],
+                "timestamp": 1.1,
+                "transactionId": "string",
+                "transactionState": "CREATED",
+                "type": "DEPOSIT",
+              },
+              "response": {
+                "body": {
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "transactionId": "string",
+                },
+              },
+            },
+          ],
           "method": "POST",
           "path": "/transactions",
           "request": {
@@ -265,6 +3337,520 @@ Each consumer User entity needs three mandatory fields:
             "UnauthorizedError",
             "TooManyRequestsError",
           ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "acquisitionChannel": "ORGANIC",
+                "contactDetails": {
+                  "addresses": [
+                    {
+                      "addressLines": [],
+                      "city": "string",
+                      "country": "string",
+                      "postcode": "string",
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "createdTimestamp": 1.1,
+                "kycStatusDetails": {
+                  "status": "SUCCESSFUL",
+                },
+                "legalDocuments": [
+                  {
+                    "documentIssuedCountry": "AF",
+                    "documentNumber": "string",
+                    "documentType": "string",
+                    "nameOnDocument": {
+                      "firstName": "string",
+                    },
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                  },
+                ],
+                "pepStatus": [
+                  {
+                    "isPepHit": true,
+                  },
+                ],
+                "riskLevel": "VERY_HIGH",
+                "tags": [
+                  {
+                    "key": "string",
+                    "value": "string",
+                  },
+                ],
+                "transactionLimits": {
+                  "maximumDailyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumMonthlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumQuarterlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumWeeklyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "maximumYearlyTransactionLimit": {
+                    "amountCurrency": "1INCH",
+                    "amountValue": 1.1,
+                  },
+                  "paymentMethodLimits": {
+                    "ACH": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "CARD": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "CHECK": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "GENERIC_BANK_ACCOUNT": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "IBAN": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "MPESA": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "SWIFT": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "UPI": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                    "WALLET": {
+                      "averageTransactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionAmountLimit": {
+                        "day": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "month": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "week": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                        "year": {
+                          "amountCurrency": "1INCH",
+                          "amountValue": 1.1,
+                        },
+                      },
+                      "transactionCountLimit": {},
+                    },
+                  },
+                },
+                "userDetails": {
+                  "countryOfNationality": "AF",
+                  "countryOfResidence": "AF",
+                  "gender": "M",
+                  "name": {
+                    "firstName": "string",
+                  },
+                },
+                "userId": "string",
+                "userSegment": "RETAIL",
+                "userStateDetails": {
+                  "state": "UNACCEPTABLE",
+                },
+              },
+              "response": {
+                "body": {
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "userId": "string",
+                },
+              },
+            },
+          ],
           "method": "POST",
           "path": "/consumer/users",
           "request": {
@@ -303,6 +3889,126 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "BadRequestError",
             "UnauthorizedError",
             "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "metaData": {},
+                "timestamp": 1.1,
+                "transactionId": "string",
+                "transactionState": "CREATED",
+                "updatedTransactionAttributes": {
+                  "destinationAmountDetails": {
+                    "country": "AF",
+                    "transactionAmount": 1.1,
+                    "transactionCurrency": "1INCH",
+                  },
+                  "deviceData": {},
+                  "originAmountDetails": {
+                    "country": "AF",
+                    "transactionAmount": 1.1,
+                    "transactionCurrency": "1INCH",
+                  },
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionState": "CREATED",
+                },
+              },
+              "response": {
+                "body": {
+                  "eventId": "string",
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "transaction": {
+                    "destinationAmountDetails": {
+                      "country": "AF",
+                      "transactionAmount": 1.1,
+                      "transactionCurrency": "1INCH",
+                    },
+                    "deviceData": {},
+                    "originAmountDetails": {
+                      "country": "AF",
+                      "transactionAmount": 1.1,
+                      "transactionCurrency": "1INCH",
+                    },
+                    "tags": [
+                      {
+                        "key": "string",
+                        "value": "string",
+                      },
+                    ],
+                    "timestamp": 1.1,
+                    "transactionId": "string",
+                    "transactionState": "CREATED",
+                    "type": "DEPOSIT",
+                  },
+                },
+              },
+            },
           ],
           "method": "POST",
           "path": "/events/transaction",
@@ -370,6 +4076,954 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "BadRequestError",
             "UnauthorizedError",
             "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "timestamp": 1.1,
+                "updatedConsumerUserAttributes": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [],
+                        "city": "string",
+                        "country": "string",
+                        "postcode": "string",
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentIssuedCountry": "AF",
+                      "documentNumber": "string",
+                      "documentType": "string",
+                      "nameOnDocument": {
+                        "firstName": "string",
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                    },
+                  ],
+                  "riskLevel": "VERY_HIGH",
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+                "userId": "string",
+              },
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [],
+                        "city": "string",
+                        "country": "string",
+                        "postcode": "string",
+                        "tags": [
+                          {
+                            "key": "string",
+                            "value": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "createdTimestamp": 1.1,
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHit": true,
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "ALLOW",
+                      "ruleDescription": "string",
+                      "ruleHitMeta": {
+                        "falsePositiveDetails": {
+                          "confidenceScore": 1.1,
+                          "isFalsePositive": true,
+                        },
+                        "hitDirections": [
+                          "ORIGIN",
+                        ],
+                        "sanctionsDetails": [
+                          {
+                            "entityType": "CONSUMER_NAME",
+                            "name": "string",
+                            "searchId": "string",
+                          },
+                        ],
+                      },
+                      "ruleId": "string",
+                      "ruleInstanceId": "string",
+                      "ruleName": "string",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentIssuedCountry": "AF",
+                      "documentNumber": "string",
+                      "documentType": "string",
+                      "nameOnDocument": {
+                        "firstName": "string",
+                      },
+                      "tags": [
+                        {
+                          "key": "string",
+                          "value": "string",
+                        },
+                      ],
+                    },
+                  ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                    },
+                  ],
+                  "riskLevel": "VERY_HIGH",
+                  "tags": [
+                    {
+                      "key": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "1INCH",
+                      "amountValue": 1.1,
+                    },
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionAmountLimit": {
+                          "day": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "month": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "week": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                          "year": {
+                            "amountCurrency": "1INCH",
+                            "amountValue": 1.1,
+                          },
+                        },
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userDetails": {
+                    "countryOfNationality": "AF",
+                    "countryOfResidence": "AF",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "string",
+                    },
+                  },
+                  "userId": "string",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+              },
+            },
           ],
           "method": "POST",
           "path": "/events/consumer/user",

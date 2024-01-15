@@ -18,7 +18,37 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ArtifactsLocateRequest",
       "headers": [],
       "internal": undefined,
@@ -80,7 +110,68 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "file_name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "form_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ArtifactsPrepareRequest",
       "headers": [],
       "internal": undefined,
@@ -140,7 +231,76 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "grant_type": {
+                "enum": "urn:devrev:params:oauth:grant-type:token-issue",
+                "type": "enum",
+              },
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+              "rev_info": {
+                "properties": {
+                  "org_traits": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "user_ref": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "user_traits": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "subject_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:jwt:auth0",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "access_token": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "expires_in": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "token_type": {
+                "literal": {
+                  "string": "bearer",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -260,7 +420,50 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
       "internal": undefined,
@@ -342,7 +545,28 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -527,7 +751,57 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "token_hint": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -654,7 +928,26 @@ connections can not be deleted using this method.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -835,7 +1128,30 @@ disabled.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "toggle": {
+                "enum": "disable",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
       "headers": [],
       "internal": undefined,
@@ -970,7 +1286,36 @@ disabled.
           "response": {
             "properties": {
               "dev_users": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "display_picture": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1158,7 +1503,47 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_user": {
+                "properties": {
+                  "display_picture": {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersSelfRequest",
       "headers": [],
       "internal": undefined,
@@ -1280,7 +1665,18 @@ used.
             "type": "object",
           },
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "value": {
+                  "map": [],
+                  "type": "map",
+                },
+              },
+            ],
             "type": "map",
           },
         },
@@ -1709,7 +2105,46 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "display_name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "environment": {
+                "enum": "production",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1786,7 +2221,18 @@ organization.
             "type": "object",
           },
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "value": {
+                  "map": [],
+                  "type": "map",
+                },
+              },
+            ],
             "type": "map",
           },
         },
@@ -1849,7 +2295,42 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -1931,7 +2412,20 @@ to access.
           "response": {
             "properties": {
               "rev_orgs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2201,7 +2695,46 @@ them.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "environment": {
+                "enum": "production",
+                "type": "enum",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2261,7 +2794,49 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "tag": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2338,7 +2913,18 @@ and a logical concept denoted by the tag's name.
             "type": "object",
           },
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "value": {
+                  "map": [],
+                  "type": "map",
+                },
+              },
+            ],
             "type": "map",
           },
         },
@@ -2401,7 +2987,49 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tag": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2479,7 +3107,27 @@ and a logical concept denoted by the tag's name.
           "response": {
             "properties": {
               "tags": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2593,7 +3241,53 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "allowed_values": {
+                "properties": {},
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "tag": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2987,7 +3681,78 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "event_types": {
+                "array": [
+                  {
+                    "enum": "part_created",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "webhook": {
+                "properties": {
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "secret": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -3064,7 +3829,18 @@ used.
             "type": "object",
           },
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "value": {
+                  "map": [],
+                  "type": "map",
+                },
+              },
+            ],
             "type": "map",
           },
         },
@@ -3127,7 +3903,69 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "webhook": {
+                "properties": {
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "secret": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -3197,7 +4035,47 @@ used.
           "response": {
             "properties": {
               "webhooks": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "event_types": {
+                        "array": [
+                          {
+                            "enum": "part_created",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "secret": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3250,7 +4128,105 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "action": {
+                "enum": "activate",
+                "type": "enum",
+              },
+              "event_types": {
+                "properties": {
+                  "add": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "remove": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "set": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "webhook": {
+                "properties": {
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "secret": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3387,7 +4363,18 @@ used.
             "type": "object",
           },
           "response": {
-            "map": [],
+            "map": [
+              {
+                "key": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "value": {
+                  "map": [],
+                  "type": "map",
+                },
+              },
+            ],
             "type": "map",
           },
         },

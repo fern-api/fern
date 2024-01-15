@@ -17,7 +17,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -154,7 +154,58 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns the account token for the end user with the provided public token.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "public_token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "account_token": {
+                "primitive": {
+                  "string": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "integration": {
+                "properties": {
+                  "categories": {
+                    "array": [
+                      {
+                        "enum": "hris",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountTokenRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -208,7 +259,87 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of models and actions available for an account.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "available_model_operations": {
+                "array": [
+                  {
+                    "properties": {
+                      "available_operations": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "model_name": {
+                        "primitive": {
+                          "string": "Candidate",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "required_post_parameters": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "supported_fields": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "integration": {
+                "properties": {
+                  "categories": {
+                    "array": [
+                      {
+                        "enum": "hris",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "passthrough_available": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AvailableActionsRetrieveRequest",
       "headers": [
         {
@@ -269,7 +400,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -385,6 +516,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -800,7 +948,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -812,7 +960,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -895,6 +1043,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -1067,7 +1232,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1156,6 +1321,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -1448,7 +1630,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1460,7 +1642,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1530,6 +1712,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -1664,7 +1863,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1721,6 +1920,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -1967,7 +2183,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1979,7 +2195,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2017,6 +2233,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -2125,7 +2358,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2185,7 +2418,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2276,6 +2509,23 @@ exports[`open api parser merge parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "string",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
                               "remote_id": {
                                 "primitive": {
                                   "string": "93478612",
@@ -2320,6 +2570,23 @@ exports[`open api parser merge parse open api 1`] = `
                                   "type": "datetime",
                                 },
                                 "type": "primitive",
+                              },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "string",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
                               },
                               "remote_id": {
                                 "primitive": {
@@ -2383,6 +2650,23 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "remote_id": {
                         "primitive": {
                           "string": "19202938",
@@ -2435,6 +2719,23 @@ exports[`open api parser merge parse open api 1`] = `
                                   "type": "string",
                                 },
                                 "type": "primitive",
+                              },
+                              "remote_data": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "path": {
+                                        "primitive": {
+                                          "string": "string",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
                               },
                               "remote_id": {
                                 "primitive": {
@@ -2836,7 +3137,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2848,7 +3149,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2920,6 +3221,23 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "remote_id": {
                         "primitive": {
                           "string": "93478612",
@@ -2964,6 +3282,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -3027,6 +3362,23 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -3079,6 +3431,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -3230,7 +3599,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3400,6 +3769,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -5813,7 +6199,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5992,6 +6378,18 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "source": {
+                        "properties": {
+                          "pointer": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "title": {
                         "primitive": {
                           "string": "Missing Required Field",
@@ -6034,7 +6432,7 @@ exports[`open api parser merge parse open api 1`] = `
                           },
                           "status_code": {
                             "primitive": {
-                              "int": 200,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -6169,6 +6567,23 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "remote_data": {
+                    "array": [
+                      {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "remote_id": {
                     "primitive": {
                       "string": "19202938",
@@ -6245,6 +6660,18 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "source": {
+                        "properties": {
+                          "pointer": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "title": {
                         "primitive": {
@@ -6374,7 +6801,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6386,7 +6813,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6530,6 +6957,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -8535,7 +8979,78 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_conditional_params": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "has_required_linked_account_params": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "request_schema": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "status": {
+                "properties": {
+                  "can_make_request": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "linked_account_status": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
       "headers": [
         {
@@ -8596,7 +9111,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8696,6 +9211,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -9248,7 +9780,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9260,7 +9792,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9334,6 +9866,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -9785,7 +10334,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9863,6 +10412,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -10167,7 +10733,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10179,7 +10745,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10238,6 +10804,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -10767,7 +11350,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10871,7 +11454,104 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a link token to be used when linking a new end user.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "categories": {
+                "array": [
+                  {
+                    "enum": "hris",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "common_models": {
+                "array": [
+                  {
+                    "properties": {
+                      "disabled_fields": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "enabled_actions": {
+                        "array": [
+                          {
+                            "enum": "READ",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "model_id": {
+                        "primitive": {
+                          "string": "hris.Employee",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "end_user_email_address": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_user_organization_name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_user_origin_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "integration_name": {
+                "primitive": {
+                  "string": "Lever",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link_token": {
+                "primitive": {
+                  "string": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "magic_link_url": {
+                "primitive": {
+                  "string": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LinkTokenCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -10987,6 +11667,77 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "integration": {
+                        "properties": {
+                          "available_model_operations": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "available_operations": {
+                                    "array": [],
+                                    "type": "array",
+                                  },
+                                  "model_name": {
+                                    "primitive": {
+                                      "string": "Candidate",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "required_post_parameters": {
+                                    "array": [],
+                                    "type": "array",
+                                  },
+                                  "supported_fields": {
+                                    "array": [],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "categories": {
+                            "array": [
+                              {
+                                "enum": "hris",
+                                "type": "enum",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "color": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "passthrough_available": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "slug": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "is_duplicate": {
                         "primitive": {
@@ -11367,7 +12118,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11452,6 +12203,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -11764,7 +12532,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11776,7 +12544,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11842,6 +12610,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -12016,7 +12801,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12112,7 +12897,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "status": {
                 "primitive": {
-                  "int": 200,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -12195,7 +12980,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12245,6 +13030,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -12491,7 +13293,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12503,7 +13305,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12534,6 +13336,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -12642,7 +13461,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12721,6 +13540,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -13175,7 +14011,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13187,7 +14023,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13240,6 +14076,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -13517,7 +14370,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13530,7 +14383,32 @@ exports[`open api parser merge parse open api 1`] = `
           "response": {
             "array": [
               {
-                "properties": {},
+                "properties": {
+                  "linked_account_conditions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "condition_schema_id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "operator": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
                 "type": "object",
               },
             ],
@@ -13603,7 +14481,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13619,7 +14497,31 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "properties": {
                       "linked_account_conditions": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "condition_schema_id": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "operator": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "value": {
+                                "map": [],
+                                "type": "map",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                     },
@@ -13634,7 +14536,32 @@ exports[`open api parser merge parse open api 1`] = `
           "response": {
             "array": [
               {
-                "properties": {},
+                "properties": {
+                  "linked_account_conditions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "condition_schema_id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "operator": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
                 "type": "object",
               },
             ],
@@ -13720,7 +14647,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13870,7 +14797,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14053,7 +14980,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14183,7 +15110,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14251,6 +15178,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -14536,7 +15480,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14548,7 +15492,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14597,6 +15541,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -14724,7 +15685,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14838,6 +15799,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -15407,7 +16385,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15488,6 +16466,18 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "source": {
+                        "properties": {
+                          "pointer": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "title": {
                         "primitive": {
                           "string": "Missing Required Field",
@@ -15530,7 +16520,7 @@ exports[`open api parser merge parse open api 1`] = `
                           },
                           "status_code": {
                             "primitive": {
-                              "int": 200,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -15602,6 +16592,23 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "remote_data": {
+                    "array": [
+                      {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "remote_id": {
                     "primitive": {
                       "string": "19202938",
@@ -15636,6 +16643,18 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "source": {
+                        "properties": {
+                          "pointer": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
                       },
                       "title": {
                         "primitive": {
@@ -15765,7 +16784,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15853,6 +16872,23 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "remote_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "path": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "remote_id": {
                         "primitive": {
@@ -16238,7 +17274,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16250,7 +17286,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16312,6 +17348,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -16477,7 +17530,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16489,7 +17542,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16570,6 +17623,23 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "remote_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "path": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -16837,7 +17907,78 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "has_conditional_params": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "has_required_linked_account_params": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "request_schema": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "status": {
+                "properties": {
+                  "can_make_request": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "linked_account_status": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
       "headers": [
         {
@@ -16898,7 +18039,7 @@ exports[`open api parser merge parse open api 1`] = `
               "name": "X-Account-Token",
               "value": {
                 "primitive": {
-                  "string": "x-account-token",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16909,7 +18050,27 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [],
+            "array": [
+              {
+                "properties": {
+                  "event": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "is_active": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
             "type": "array",
           },
         },
@@ -16972,7 +18133,62 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "event": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_active": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "event": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_active": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhookReceiversCreateRequest",
       "headers": [
         {
