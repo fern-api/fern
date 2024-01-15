@@ -131,11 +131,7 @@ export function buildObjectTypeDeclaration({
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchema = context.getSchema(inlineSchemaId);
-        const inlinedSchemaPropertyInfo = getAllProperties({
-            schema: inlinedSchema,
-            schemaId: inlineSchemaId
-        });
+        const inlinedSchemaPropertyInfo = getAllProperties(context, inlineSchemaId);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
@@ -189,15 +185,17 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllProperties({ schemaId, schema }: { schemaId: SchemaId; schema: Schema }): {
+function getAllProperties(context: OpenApiIrConverterContext, schemaId: SchemaId): {
     properties: ObjectProperty[];
     allOf: ReferencedSchema[];
 } {
-    if (schema.type !== "object") {
-        throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}`);
+    const schema = context.getSchema(schemaId);
+    if (schema.type === "object") {
+        return { properties: schema.properties, allOf: schema.allOf };
+    } else if (schema.type === "reference") {
+        return getAllProperties(context, schema.schema);
     }
-    const properties: ObjectProperty[] = [...schema.properties];
-    return { properties, allOf: schema.allOf };
+    throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
 }
 
 export function buildArrayTypeDeclaration({
