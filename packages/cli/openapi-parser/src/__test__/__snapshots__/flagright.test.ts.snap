@@ -87,6 +87,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostConsumerTransactionRequestBody",
@@ -100,6 +101,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -191,6 +193,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -249,6 +252,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostTransactionEventRequest",
@@ -262,6 +266,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -312,6 +317,7 @@ Each consumer User entity needs three mandatory fields:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostConsumerUserRequest",
@@ -325,6 +331,7 @@ Each consumer User entity needs three mandatory fields:
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -433,6 +440,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -484,6 +492,7 @@ Each consumer Business entity needs three mandatory fields:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostBusinessUserRequest",
@@ -497,6 +506,7 @@ Each consumer Business entity needs three mandatory fields:
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -605,6 +615,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -662,6 +673,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostUserEventRequest",
@@ -675,6 +687,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -732,6 +745,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PostBusinessUserEventRequest",
@@ -745,6 +759,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

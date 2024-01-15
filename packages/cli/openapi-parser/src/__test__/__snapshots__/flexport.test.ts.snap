@@ -1121,6 +1121,82 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
+              "booking_id": 12345,
+              "new_cargo": {
+                "contains_hazmat": true,
+                "contains_li_ion": true,
+                "contains_magnets": true,
+                "contains_non_li_ion_battery": true,
+                "contains_other_dangerous_goods": true,
+                "lithium_batteries_packing_types": [
+                  "packed_loose",
+                ],
+                "marks_and_numbers": "Fragile",
+                "shipping_units": [
+                  {
+                    "atomic_count": 9,
+                    "count": 9,
+                    "height": {
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                    "length": {
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                    "name": "Watches",
+                    "unit_type": "carton",
+                    "volume": {
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                    "width": {
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                  },
+                ],
+                "volume": {
+                  "unit": "cbm",
+                  "value": 472.62,
+                },
+                "weight": {
+                  "unit": "kg",
+                  "value": 2300.4,
+                },
+              },
+              "new_cargo_ready_date": "2019-06-30",
+              "new_container_counts": {
+                "forty_five_ft_hc": 5,
+                "forty_ft": 3,
+                "forty_ft_hc": 4,
+                "twenty_ft": 2,
+              },
+              "new_metadata": {
+                "PO": [
+                  "12345",
+                ],
+                "SKU": [
+                  "abc123",
+                ],
+              },
+              "new_name": "Valentine's Day - 2020",
+              "new_origin_address_ref": "warehouse_cn",
+              "new_origin_port_loc_code": "CNSZP",
+              "new_wants_import_customs_service": false,
+              "new_wants_pickup_service": false,
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "BookingAmendmentCreateRequest",
@@ -1134,6 +1210,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking amendment",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1585,6 +1662,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of booking line items",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1949,6 +2027,16 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "booking_id": 9876,
+              "purchase_order_line_item_id": 112358,
+              "units": 200,
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "BookingLineItemCreateRequest",
@@ -1962,6 +2050,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking line item",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -2227,6 +2316,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "A collection of booking line items",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4447,6 +4537,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of bookings",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6787,6 +6878,105 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "cargo": {
+                "contains_hazmat": true,
+                "contains_li_ion": true,
+                "contains_magnets": true,
+                "contains_non_li_ion_battery": true,
+                "contains_other_dangerous_goods": true,
+                "lithium_batteries_packing_types": [
+                  "packed_loose",
+                ],
+                "marks_and_numbers": "Fragile",
+                "shipping_units": [
+                  {
+                    "atomic_count": 9,
+                    "count": 9,
+                    "height": {
+                      "_object": "/quantity/length",
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                    "length": {
+                      "_object": "/quantity/length",
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                    "name": "Watches",
+                    "unit_type": "carton",
+                    "volume": {
+                      "_object": "/quantity/volume",
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "_object": "/quantity/weight",
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                    "width": {
+                      "_object": "/quantity/length",
+                      "unit": "cm",
+                      "value": 472.62,
+                    },
+                  },
+                ],
+                "volume": {
+                  "_object": "/quantity/volume",
+                  "unit": "cbm",
+                  "value": 472.62,
+                },
+                "weight": {
+                  "_object": "/quantity/weight",
+                  "unit": "kg",
+                  "value": 2300.4,
+                },
+              },
+              "cargo_ready_date": "2019-06-30",
+              "consignee_entity_ref": "zoomit_ref",
+              "delivery_date": "2019-07-31",
+              "destination_address_ref": "my-albany-ref",
+              "metadata": {
+                "purchase_order": [
+                  "12345",
+                ],
+                "sku": [
+                  "abc123",
+                ],
+              },
+              "name": "PO 123",
+              "notify_party": null,
+              "ocean_booking": {
+                "container_counts": {
+                  "forty_five_ft_hc": 5,
+                  "forty_ft": 3,
+                  "forty_ft_hc": 4,
+                  "twenty_ft": 2,
+                },
+                "incoterm": "FOB",
+                "is_lcl": false,
+                "product_descriptions": [
+                  {
+                    "description": "Watches",
+                    "description_for_export_customs": "手表",
+                    "description_for_export_customs_locale": "zh_CN",
+                    "hs_code": "9101.00",
+                  },
+                ],
+                "wants_delivery_service": false,
+                "wants_pickup_service": false,
+              },
+              "origin_address_ref": "id-274346",
+              "shipper_entity_ref": "zoomit-us",
+              "special_instructions": "Handle carefully",
+              "wants_export_customs_service": true,
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "BookingCreateRequest",
@@ -6800,6 +6990,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created booking",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8514,6 +8705,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8904,6 +9096,23 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "destination_port": "JFK",
+              "origin_coordinates": {
+                "latitude": "37.78",
+                "longitude": "-12.41",
+              },
+              "transportation_mode": "air",
+              "weight": {
+                "unit": "kg",
+                "value": 40,
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "CarbonCalculationCreateRequest",
@@ -8917,6 +9126,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9996,6 +10206,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11069,6 +11280,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CommercialInvoicesCreateRequest",
@@ -11082,6 +11294,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The created commercial invoice",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12037,6 +12250,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CommercialInvoicesUpdateRequest",
@@ -12050,6 +12264,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated commercial invoice",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12989,6 +13204,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13302,6 +13518,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of customs entries",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13633,6 +13850,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14081,6 +14299,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of documents",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14447,6 +14666,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DocumentsCreateRequest",
@@ -14460,6 +14680,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14706,6 +14927,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15622,6 +15844,10 @@ we still recommend setting the Content-Type header to the value \`application/js
                                         "type": "primitive",
                                       },
                                     },
+                                    "type": "object",
+                                  },
+                                  "booking": {
+                                    "properties": {},
                                     "type": "object",
                                   },
                                   "buyers": {
@@ -17272,6 +17498,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18236,6 +18463,10 @@ we still recommend setting the Content-Type header to the value \`application/js
                                 "type": "primitive",
                               },
                             },
+                            "type": "object",
+                          },
+                          "booking": {
+                            "properties": {},
                             "type": "object",
                           },
                           "buyers": {
@@ -19760,6 +19991,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21014,6 +21246,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of invoices",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21877,6 +22110,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22042,6 +22276,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             },
                             "type": "primitive",
                           },
+                          "contacts": {
+                            "properties": {},
+                            "type": "object",
+                          },
                           "entities": {
                             "array": [
                               {
@@ -22193,6 +22431,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             ],
                             "type": "array",
                           },
+                          "locations": {
+                            "properties": {},
+                            "type": "object",
+                          },
                         },
                         "type": "object",
                       },
@@ -22324,6 +22566,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of companies",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22594,6 +22837,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "primitive",
                   },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "entities": {
                     "array": [
                       {
@@ -22745,6 +22992,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     ],
                     "type": "array",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -22771,6 +23022,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyCreateRequest",
@@ -22784,6 +23036,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22926,6 +23179,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "primitive",
                   },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "entities": {
                     "array": [
                       {
@@ -23077,6 +23334,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     ],
                     "type": "array",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -23127,6 +23388,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23289,6 +23551,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "primitive",
                   },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "entities": {
                     "array": [
                       {
@@ -23440,6 +23706,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     ],
                     "type": "array",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -23489,6 +23759,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyUpdateRequest",
@@ -23502,6 +23773,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated company",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23959,6 +24231,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of company entities",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24488,6 +24761,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyEntityCreateRequest",
@@ -24501,6 +24775,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created company entity",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24829,6 +25104,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25252,6 +25528,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkCompanyEntityUpdateRequest",
@@ -25265,6 +25542,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25463,6 +25741,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             },
                             "type": "object",
                           },
+                          "locations": {
+                            "properties": {},
+                            "type": "object",
+                          },
                         },
                         "type": "object",
                       },
@@ -25614,6 +25896,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of contacts",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25931,6 +26214,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -25964,6 +26251,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkContactCreateRequest",
@@ -25977,6 +26265,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created contact",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26154,6 +26443,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -26204,6 +26497,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26406,6 +26700,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -26455,6 +26753,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkContactUpdateRequest",
@@ -26468,6 +26767,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated contact",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26715,6 +27015,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             },
                             "type": "object",
                           },
+                          "company": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "contacts": {
+                            "properties": {},
+                            "type": "object",
+                          },
                         },
                         "type": "object",
                       },
@@ -26913,6 +27221,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of locations",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27326,6 +27635,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "company": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -27359,6 +27676,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "NetworkLocationCreateRequest",
@@ -27372,6 +27690,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created location",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27598,6 +27917,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "company": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -27648,6 +27975,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27946,6 +28274,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     "type": "object",
                   },
+                  "company": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -27995,6 +28331,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "LocationUpdateRequest",
@@ -28008,6 +28345,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28140,6 +28478,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "contacts": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "entities": {
                     "array": [
@@ -28292,6 +28634,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     ],
                     "type": "array",
                   },
+                  "locations": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -28326,6 +28672,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28704,6 +29051,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29062,6 +29410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29728,6 +30077,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30374,6 +30724,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30799,6 +31150,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of ports",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31322,6 +31674,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31871,6 +32224,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ProductCreateRequest",
@@ -31884,6 +32238,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32239,6 +32594,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32715,6 +33071,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ProductUpdateRequest",
@@ -32728,6 +33085,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33835,6 +34193,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -34834,6 +35193,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase order line items",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -36301,6 +36661,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of purchase orders",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -37747,6 +38108,132 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "cargo_ready_date": "2019-06-30",
+              "currency_code": "USD",
+              "destination_location_refs": [
+                "id-654321",
+                "id-654322",
+              ],
+              "destination_port": {
+                "code": "USFBN",
+                "code_type": "unlocode",
+              },
+              "freight_payment_terms": "freight_collect",
+              "incoterm": "FOB",
+              "issue_date": "2019-06-30",
+              "line_items": [
+                {
+                  "assigned_party_ref": "id-12355",
+                  "cargo_ready_date": "2019-06-30",
+                  "destination_locations": [
+                    {
+                      "location_ref": "id-654321",
+                      "units": 1,
+                    },
+                  ],
+                  "destination_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "hs_codes": [
+                    {
+                      "code": "6204.62.80.11",
+                      "country_code": "US",
+                    },
+                  ],
+                  "incoterm": "FOB",
+                  "item_key": "item_key_1",
+                  "line_item_number": 1,
+                  "measurements": [
+                    {
+                      "measure_type": "length",
+                      "unit_of_measure": "EA",
+                      "value": "1.0",
+                    },
+                  ],
+                  "metadata": {
+                    "size": [
+                      "M",
+                    ],
+                  },
+                  "must_arrive_date": "2019-07-31",
+                  "origin_location_ref": "id-123456",
+                  "origin_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "product": {
+                    "color": "red",
+                    "country_of_origin": "US",
+                    "dangerous": true,
+                    "ean_ucc_13": "1234567890123",
+                    "ean_ucc_8": "12345678",
+                    "lot_number": "123456789",
+                    "name": "AC Adapter 12",
+                    "product_category": "furniture",
+                    "size": "m",
+                    "sku": "SKU-123",
+                    "style": "classic",
+                    "upc": "123456789",
+                  },
+                  "transportation_mode": "ocean",
+                  "unit_cost": {
+                    "amount": "100.01",
+                    "currency_code": "USD",
+                  },
+                  "units": 10,
+                },
+              ],
+              "memo": "memo",
+              "must_arrive_date": "2019-07-31",
+              "name": "PO 123",
+              "order_class": "purchase_order",
+              "order_type": "Apparel",
+              "origin_location_ref": "id-123456",
+              "origin_port": {
+                "code": "USFBN",
+                "code_type": "unlocode",
+              },
+              "parties": [
+                {
+                  "contacts": [
+                    {
+                      "department": "a department",
+                      "email": "abc@173.com",
+                      "fax": "123456789",
+                      "name": "abc",
+                      "phone": "123456789",
+                    },
+                  ],
+                  "external_ref": "id-1232",
+                  "location_ref": "id-1232",
+                  "role": "buyer",
+                },
+                {
+                  "contacts": [
+                    {
+                      "department": "a department",
+                      "email": "abc@173.com",
+                      "fax": "123456789",
+                      "name": "cds",
+                      "phone": "123456789",
+                    },
+                  ],
+                  "external_ref": "id-321",
+                  "location_ref": "id-432",
+                  "role": "seller",
+                },
+              ],
+              "priority": "standard",
+              "status": "open",
+              "transportation_mode": "ocean",
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderCreateRequest",
@@ -37760,6 +38247,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The created purchase order",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38625,6 +39113,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -40006,6 +40495,129 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "cargo_ready_date": "2019-06-30",
+              "currency_code": "USD",
+              "destination_location_refs": [
+                "id-654321",
+                "id-654322",
+              ],
+              "destination_port": {
+                "code": "CNSHA",
+                "code_type": "unlocode",
+              },
+              "freight_payment_terms": "freight_collect",
+              "incoterm": "FOB",
+              "issue_date": "2019-06-30",
+              "line_items": {
+                "cargo_ready_date": "2019-06-30",
+                "destination_locations": [
+                  {
+                    "address_ref": "id-654321",
+                    "destination_units": 1,
+                  },
+                ],
+                "destination_port": {
+                  "code": "USFBN",
+                  "code_type": "unlocode",
+                },
+                "hs_codes": [
+                  {
+                    "code": "6204.62.80.11",
+                    "country_code": "US",
+                  },
+                ],
+                "incoterm": "FOB",
+                "item_key": "item_key_1",
+                "line_item_number": 1,
+                "measurements": [
+                  {
+                    "measure_type": "length",
+                    "unit_of_measure": "EA",
+                    "value": 1,
+                  },
+                ],
+                "metadata": {
+                  "size": [
+                    "M",
+                  ],
+                },
+                "must_arrive_date": "2019-07-31",
+                "origin_location_ref": "id-123456",
+                "origin_port": {
+                  "code": "USLGB",
+                  "code_type": "unlocode",
+                },
+                "product": {
+                  "color": "red",
+                  "country_of_origin": "US",
+                  "dangerous": true,
+                  "ean_ucc_13": 1234567890123,
+                  "ean_ucc_8": 12345678,
+                  "lot_number": 123456789,
+                  "name": "AC Adapter 12",
+                  "product_category": "furniture",
+                  "size": "m",
+                  "sku": "SKU-123",
+                  "style": "classic",
+                  "upc": 123456789,
+                },
+                "transportation_mode": "ocean",
+                "unit_cost": {
+                  "amount": "100.01",
+                  "currency_code": "USD",
+                },
+                "units": 10,
+              },
+              "memo": "memo",
+              "must_arrive_date": "2019-07-31",
+              "name": "PO 123",
+              "order_class": "purchase_order",
+              "order_type": "Apparel",
+              "origin_location_ref": "id-123456",
+              "origin_port": {
+                "code": "USLA",
+                "code_type": "unlocode",
+              },
+              "parties": [
+                {
+                  "contact": [
+                    {
+                      "department": "a department",
+                      "email": "abc@173.com",
+                      "fax": 123456789,
+                      "name": "abc",
+                      "phone": 123456789,
+                    },
+                  ],
+                  "external_ref": "id-1232",
+                  "location_ref": "id-1232",
+                  "role": "buyer",
+                },
+                {
+                  "contact": [
+                    {
+                      "department": "a department",
+                      "email": "abc@173.com",
+                      "fax": 123456789,
+                      "name": "cds",
+                      "phone": 123456789,
+                    },
+                  ],
+                  "external_ref": "id-321",
+                  "location_ref": "id-432",
+                  "role": "seller",
+                },
+              ],
+              "priority": "standard",
+              "status": "open",
+              "transportation_mode": "ocean",
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "PurchaseOrderUpdateRequest",
@@ -40019,6 +40631,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The update purchase order",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40100,6 +40713,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "additional_dates": {
+                            "properties": {},
+                            "type": "object",
                           },
                           "air_leg": {
                             "properties": {
@@ -40963,6 +41580,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41206,6 +41824,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "additional_dates": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "air_leg": {
                     "properties": {
@@ -41991,6 +42613,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -42291,6 +42914,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                 "type": "primitive",
                               },
                             },
+                            "type": "object",
+                          },
+                          "booking": {
+                            "properties": {},
                             "type": "object",
                           },
                           "buyers": {
@@ -44403,6 +45030,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -44718,6 +45346,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "type": "primitive",
                       },
                     },
+                    "type": "object",
+                  },
+                  "booking": {
+                    "properties": {},
                     "type": "object",
                   },
                   "buyers": {
@@ -46210,6 +46842,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -46427,6 +47060,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "type": "primitive",
                       },
                     },
+                    "type": "object",
+                  },
+                  "booking": {
+                    "properties": {},
                     "type": "object",
                   },
                   "buyers": {
@@ -47916,6 +48553,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ShipmentUpdateRequest",
@@ -47929,6 +48567,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "The updated shipment",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48142,6 +48781,17 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [
+          {
+            "name": undefined,
+            "value": {
+              "shipment_ids": [
+                123,
+                456,
+              ],
+            },
+          },
+        ],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48182,6 +48832,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "requestNameOverride": undefined,
       "response": {
         "description": "collection of shipments shareable status url",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

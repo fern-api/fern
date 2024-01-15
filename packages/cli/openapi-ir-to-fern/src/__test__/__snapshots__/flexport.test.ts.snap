@@ -2980,6 +2980,7 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/network/company",
+                      "contacts": {},
                       "entities": [
                         {
                           "_object": "/company_entity",
@@ -3008,6 +3009,7 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                         },
                       ],
+                      "locations": {},
                     },
                     "version": 2,
                   },
@@ -3062,6 +3064,7 @@ exports[`open api parser flexport simple 1`] = `
                       "data": [
                         {
                           "_object": "/network/company",
+                          "contacts": {},
                           "entities": [
                             {
                               "_object": "/company_entity",
@@ -3090,6 +3093,7 @@ exports[`open api parser flexport simple 1`] = `
                               ],
                             },
                           ],
+                          "locations": {},
                         },
                       ],
                       "next": "https://api.flexport.com/network/companies?page=3&per=10",
@@ -3147,6 +3151,7 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/network/company",
+                      "contacts": {},
                       "entities": [
                         {
                           "_object": "/company_entity",
@@ -3175,6 +3180,7 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                         },
                       ],
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/me/companies",
                     "version": 2,
@@ -3206,6 +3212,7 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/network/company",
+                      "contacts": {},
                       "entities": [
                         {
                           "_object": "/company_entity",
@@ -3234,6 +3241,7 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                         },
                       ],
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/companies/ABC123",
                     "version": 2,
@@ -3277,6 +3285,7 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/network/company",
+                      "contacts": {},
                       "entities": [
                         {
                           "_object": "/company_entity",
@@ -3305,6 +3314,7 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                         },
                       ],
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/companies/ABC123",
                     "version": 2,
@@ -3867,6 +3877,7 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/companies/12345",
                         "ref_type": "/company",
                       },
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/contacts",
                     "version": 2,
@@ -3936,6 +3947,7 @@ exports[`open api parser flexport simple 1`] = `
                             "link": "https://api.flexport.com/network/companies/12345",
                             "ref_type": "/company",
                           },
+                          "locations": {},
                         },
                       ],
                       "next": "https://api.flexport.com/network/contacts?page=3&per=10",
@@ -4005,6 +4017,7 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/companies/12345",
                         "ref_type": "/company",
                       },
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/contacts/ABC123",
                     "version": 2,
@@ -4055,6 +4068,7 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/companies/12345",
                         "ref_type": "/company",
                       },
+                      "locations": {},
                     },
                     "self": "https://api.flexport.com/network/contacts/ABC123",
                     "version": 2,
@@ -5197,6 +5211,7 @@ exports[`open api parser flexport simple 1`] = `
                                 "house_airway_bill": "HWXJKE67732",
                                 "master_airway_bill": "22831046871",
                               },
+                              "booking": {},
                               "buyers": [
                                 {
                                   "_object": "/company_entity",
@@ -5678,6 +5693,7 @@ exports[`open api parser flexport simple 1`] = `
                             "house_airway_bill": "HWXJKE67732",
                             "master_airway_bill": "22831046871",
                           },
+                          "booking": {},
                           "buyers": [
                             {
                               "_object": "/company_entity",
@@ -6520,6 +6536,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "unlocode": "US AL2",
                             "zip": "56307",
                           },
+                          "company": {},
+                          "contacts": {},
                         },
                       ],
                       "next": "https://api.flexport.com/network/locations?page=3&per=10",
@@ -6616,6 +6634,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "company": {},
+                      "contacts": {},
                     },
                     "self": "https://api.flexport.com/network/locations",
                     "version": 2,
@@ -6693,6 +6713,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "company": {},
+                      "contacts": {},
                     },
                     "self": "https://api.flexport.com/network/locations/abdef123",
                     "version": 2,
@@ -6758,6 +6780,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "company": {},
+                      "contacts": {},
                     },
                     "self": "https://api.flexport.com/network/locations/abdef123",
                     "version": 2,
@@ -8980,6 +9004,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "house_airway_bill": "HWXJKE67732",
                             "master_airway_bill": "22831046871",
                           },
+                          "booking": {},
                           "buyers": [
                             {
                               "_object": "/company_entity",
@@ -9491,6 +9516,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "house_airway_bill": "HWXJKE67732",
                         "master_airway_bill": "22831046871",
                       },
+                      "booking": {},
                       "buyers": [
                         {
                           "_object": "/company_entity",
@@ -9819,6 +9845,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "house_airway_bill": "HWXJKE67732",
                         "master_airway_bill": "22831046871",
                       },
+                      "booking": {},
                       "buyers": [
                         {
                           "_object": "/company_entity",
@@ -10239,6 +10266,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       "data": [
                         {
                           "_object": "/shipment_leg",
+                          "additional_dates": {},
                           "air_leg": {
                             "_object": "/air/shipment_leg",
                             "flight_number": "Y8 1234",
@@ -10431,6 +10459,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "_object": "/api/response",
                     "data": {
                       "_object": "/shipment_leg",
+                      "additional_dates": {},
                       "air_leg": {
                         "_object": "/air/shipment_leg",
                         "flight_number": "Y8 1234",

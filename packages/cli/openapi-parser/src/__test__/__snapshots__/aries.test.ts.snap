@@ -61,6 +61,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -293,6 +294,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -378,6 +380,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PerformActionByConnIdRequest",
@@ -391,6 +394,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -466,6 +470,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -686,6 +691,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendMenuToConnIdRequest",
@@ -699,6 +705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1173,6 +1180,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1210,6 +1218,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "metadata": {
+                "properties": {},
+                "type": "object",
               },
               "my_label": {
                 "primitive": {
@@ -1430,6 +1442,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateConnectionInvitationRequestBody",
@@ -1443,6 +1456,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1681,6 +1695,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateStaticConnectionRequest",
@@ -1694,6 +1709,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1996,6 +2012,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveConnectionInvitationRequestBody",
@@ -2009,6 +2026,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2210,6 +2228,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2285,6 +2304,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2547,6 +2567,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2769,6 +2790,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2859,6 +2881,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2959,6 +2982,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3001,7 +3025,12 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "results": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -3055,6 +3084,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3105,7 +3135,12 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "results": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -3137,6 +3172,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SetConnectionMetadataRequest",
@@ -3150,6 +3186,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3235,6 +3272,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendMessageRequest",
@@ -3248,6 +3286,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3325,6 +3364,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendPingRequest",
@@ -3338,6 +3378,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3460,6 +3501,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3559,6 +3601,37 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "messages_attach": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "meta_data": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "signature_request": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "signature_response": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "state": {
                     "primitive": {
                       "string": "active",
@@ -3572,6 +3645,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "timing": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "transaction_id": {
                     "primitive": {
@@ -3645,6 +3722,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PublishCredentialDefinitionRequestBody",
@@ -3658,6 +3736,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3840,6 +3919,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4095,6 +4175,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4350,6 +4431,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4425,6 +4507,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4541,6 +4624,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4595,6 +4679,10 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 ],
                 "type": "array",
+              },
+              "cred_value": {
+                "properties": {},
+                "type": "object",
               },
               "expanded_types": {
                 "array": [
@@ -4698,6 +4786,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4773,6 +4862,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4884,6 +4974,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4959,6 +5050,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5114,6 +5206,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5213,6 +5306,10 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                      "cred_value": {
+                        "properties": {},
+                        "type": "object",
                       },
                       "expanded_types": {
                         "array": [
@@ -5366,6 +5463,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "GetW3CCredentialsRequestBody",
@@ -5379,6 +5477,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5678,6 +5777,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6107,6 +6207,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveDidexRequestRequestBody",
@@ -6120,6 +6221,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6362,6 +6464,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6604,6 +6707,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6803,6 +6907,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6967,6 +7072,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7142,6 +7248,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7287,6 +7394,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7605,6 +7713,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -8598,6 +8727,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordRequest",
@@ -8611,6 +8741,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8929,6 +9060,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -9922,6 +10074,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferRequest",
@@ -9935,6 +10088,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10008,6 +10162,27 @@ exports[`open api parser aries parse open api 1`] = `
                               "type": "boolean",
                             },
                             "type": "primitive",
+                          },
+                          "by_format": {
+                            "properties": {
+                              "cred_issue": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "cred_offer": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "cred_proposal": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "cred_request": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
                           },
                           "connection_id": {
                             "primitive": {
@@ -11018,6 +11193,10 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "cred_request_metadata": {
+                            "properties": {},
+                            "type": "object",
+                          },
                           "cred_rev_id": {
                             "primitive": {
                               "string": "12345",
@@ -11276,6 +11455,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11341,6 +11521,27 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
+                  },
+                  "by_format": {
+                    "properties": {
+                      "cred_issue": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_offer": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_proposal": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_request": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "connection_id": {
                     "primitive": {
@@ -12350,6 +12551,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "cred_request_metadata": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "cred_rev_id": {
                     "primitive": {
@@ -12462,6 +12667,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12537,6 +12743,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12605,6 +12812,27 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
+                  },
+                  "by_format": {
+                    "properties": {
+                      "cred_issue": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_offer": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_proposal": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_request": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "connection_id": {
                     "primitive": {
@@ -13615,6 +13843,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "cred_request_metadata": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "cred_rev_id": {
                     "primitive": {
                       "string": "12345",
@@ -13725,6 +13957,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderRequest",
@@ -13738,6 +13971,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13790,6 +14024,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemRequest",
@@ -13803,6 +14038,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14132,6 +14368,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -15141,6 +15398,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferRequest",
@@ -15154,6 +15412,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15228,6 +15487,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -16237,6 +16517,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialRequestRequest",
@@ -16250,6 +16531,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16318,6 +16600,27 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
+                  },
+                  "by_format": {
+                    "properties": {
+                      "cred_issue": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_offer": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_proposal": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "cred_request": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "connection_id": {
                     "primitive": {
@@ -17328,6 +17631,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "cred_request_metadata": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "cred_rev_id": {
                     "primitive": {
                       "string": "12345",
@@ -17438,6 +17745,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialRequest",
@@ -17451,6 +17759,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17776,6 +18085,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -18769,6 +19099,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequest",
@@ -18782,6 +19113,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -19107,6 +19439,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -20100,6 +20453,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferRequest",
@@ -20113,6 +20467,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20438,6 +20793,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -21431,6 +21807,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalRequest",
@@ -21444,6 +21821,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21693,6 +22071,27 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "cred_issue": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_offer": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "cred_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -22686,6 +23085,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequestRequest",
@@ -22699,6 +23099,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -23308,6 +23709,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -23335,6 +23740,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -23360,6 +23769,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -23412,6 +23825,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateCredentialRecordRequest",
@@ -23425,6 +23839,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -23999,6 +24414,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -24026,6 +24445,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -24051,6 +24474,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -24103,6 +24530,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeCredentialOfferRequest",
@@ -24116,6 +24544,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -24655,6 +25084,10 @@ exports[`open api parser aries parse open api 1`] = `
                         },
                         "type": "object",
                       },
+                      "credential_request_metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "error_msg": {
                         "primitive": {
                           "string": "Credential definition identifier is not set in proposal",
@@ -24682,6 +25115,10 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "rev_reg": {
+                            "properties": {},
+                            "type": "object",
+                          },
                           "rev_reg_id": {
                             "primitive": {
                               "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -24707,6 +25144,10 @@ exports[`open api parser aries parse open api 1`] = `
                           "values": {
                             "map": [],
                             "type": "map",
+                          },
+                          "witness": {
+                            "properties": {},
+                            "type": "object",
                           },
                         },
                         "type": "object",
@@ -24923,6 +25364,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25454,6 +25896,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -25481,6 +25927,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -25506,6 +25956,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -25575,6 +26029,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25650,6 +26105,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26184,6 +26640,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -26211,6 +26671,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -26236,6 +26700,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -26304,6 +26772,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "IssueCredentialToHolderRequest",
@@ -26317,6 +26786,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26369,6 +26839,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReportCredExProblemRequest",
@@ -26382,6 +26853,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27014,6 +27486,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -27041,6 +27517,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -27066,6 +27546,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -27134,6 +27618,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendCredentialOfferRequest",
@@ -27147,6 +27632,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27678,6 +28164,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -27705,6 +28195,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -27730,6 +28224,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -27799,6 +28297,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28333,6 +28832,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -28360,6 +28863,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -28385,6 +28892,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -28453,6 +28964,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "StoreReceivedCredentialRequest",
@@ -28466,6 +28978,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29082,6 +29595,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -29109,6 +29626,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -29134,6 +29655,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -29186,6 +29711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialRequest",
@@ -29199,6 +29725,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29780,6 +30307,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -29807,6 +30338,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -29832,6 +30367,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -29884,6 +30423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialOfferRequest",
@@ -29897,6 +30437,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30513,6 +31054,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "credential_request_metadata": {
+                "properties": {},
+                "type": "object",
+              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -30540,6 +31085,10 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "rev_reg": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "rev_reg_id": {
                     "primitive": {
                       "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -30565,6 +31114,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "values": {
                     "map": [],
                     "type": "map",
+                  },
+                  "witness": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -30617,6 +31170,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreeCredentialProposalRequest",
@@ -30630,6 +31184,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30666,6 +31221,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SignRequest",
@@ -30679,6 +31235,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30715,6 +31272,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "VerifyRequest",
@@ -30728,6 +31286,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30855,6 +31414,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30938,6 +31498,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31018,6 +31579,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31051,7 +31613,12 @@ exports[`open api parser aries parse open api 1`] = `
           "response": {
             "properties": {
               "ledger_config_list": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -31071,6 +31638,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31119,6 +31687,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31216,6 +31785,37 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "messages_attach": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "meta_data": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "signature_request": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "signature_response": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "state": {
                     "primitive": {
                       "string": "active",
@@ -31229,6 +31829,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "timing": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "transaction_id": {
                     "primitive": {
@@ -31402,6 +32006,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31450,6 +32055,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31484,6 +32090,10 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {
               "result": {
                 "properties": {
+                  "aml_record": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "taa_accepted": {
                     "properties": {
                       "time": {
@@ -31494,6 +32104,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                     },
+                    "type": "object",
+                  },
+                  "taa_record": {
+                    "properties": {},
                     "type": "object",
                   },
                 },
@@ -31516,6 +32130,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31566,6 +32181,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AcceptTaaRequest",
@@ -31579,6 +32195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31616,6 +32233,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31653,6 +32271,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31761,6 +32380,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31802,7 +32422,12 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "filter": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -31820,6 +32445,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "filter": {
+                "properties": {},
+                "type": "object",
               },
               "paginate": {
                 "properties": {
@@ -31909,6 +32538,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistQueryToMediatorRequestBody",
@@ -31922,6 +32552,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32057,6 +32688,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendKeylistUpdateToMediatorRequest",
@@ -32070,6 +32702,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32122,6 +32755,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RequestMediationForConnectionRequest",
@@ -32135,6 +32769,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32299,6 +32934,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32352,6 +32988,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32405,6 +33042,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32497,6 +33135,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DenyMediationRequestRequest",
@@ -32510,6 +33149,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32607,6 +33247,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32728,6 +33369,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UpdateKeylistForConnIdRequest",
@@ -32741,6 +33383,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32794,6 +33437,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32900,6 +33544,10 @@ exports[`open api parser aries parse open api 1`] = `
                 "enum": "managed",
                 "type": "enum",
               },
+              "settings": {
+                "properties": {},
+                "type": "object",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -32944,6 +33592,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateWalletRequest",
@@ -32957,6 +33606,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33010,6 +33660,10 @@ exports[`open api parser aries parse open api 1`] = `
               "key_management_mode": {
                 "enum": "managed",
                 "type": "enum",
+              },
+              "settings": {
+                "properties": {},
+                "type": "object",
               },
               "state": {
                 "primitive": {
@@ -33065,6 +33719,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33153,6 +33808,10 @@ exports[`open api parser aries parse open api 1`] = `
                 "enum": "managed",
                 "type": "enum",
               },
+              "settings": {
+                "properties": {},
+                "type": "object",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -33206,6 +33865,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UpdateWalletRequest",
@@ -33219,6 +33879,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33304,6 +33965,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DeleteWalletRequest",
@@ -33317,6 +33979,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33410,6 +34073,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "GetAuthTokenRequest",
@@ -33423,6 +34087,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33469,6 +34134,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "key_management_mode": {
                         "enum": "managed",
                         "type": "enum",
+                      },
+                      "settings": {
+                        "properties": {},
+                        "type": "object",
                       },
                       "state": {
                         "primitive": {
@@ -33535,6 +34204,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33612,6 +34282,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "metadata": {
+                "properties": {},
+                "type": "object",
               },
               "my_label": {
                 "primitive": {
@@ -33936,6 +34610,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateOobInvitationRequestBody",
@@ -33949,6 +34624,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34556,6 +35232,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReceiveOobInvitationRequestBody",
@@ -34569,6 +35246,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34617,6 +35295,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34680,6 +35359,35 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_definition": {
                         "properties": {
+                          "format": {
+                            "properties": {
+                              "jwt": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "jwt_vc": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "jwt_vp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp_vc": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp_vp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "id": {
                             "primitive": {
                               "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -34774,6 +35482,29 @@ exports[`open api parser aries parse open api 1`] = `
                                       "subject_is_issuer": {
                                         "enum": "required",
                                         "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  "metadata": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "schema": {
+                                    "properties": {
+                                      "uri_groups": {
+                                        "array": [
+                                          {
+                                            "array": [
+                                              {
+                                                "properties": {},
+                                                "type": "object",
+                                              },
+                                            ],
+                                            "type": "array",
+                                          },
+                                        ],
+                                        "type": "array",
                                       },
                                     },
                                     "type": "object",
@@ -34899,6 +35630,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -35553,6 +36301,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateProofRequestRequest",
@@ -35566,6 +36315,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35623,6 +36373,23 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "boolean",
                         },
                         "type": "primitive",
+                      },
+                      "by_format": {
+                        "properties": {
+                          "pres": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "pres_proposal": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "pres_request": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
                       },
                       "connection_id": {
                         "primitive": {
@@ -36423,6 +37190,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36472,6 +37240,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -37143,6 +37928,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37218,6 +38004,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37451,6 +38238,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37508,6 +38296,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemRequest",
@@ -37521,6 +38310,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37567,6 +38357,35 @@ exports[`open api parser aries parse open api 1`] = `
                 "properties": {
                   "presentation_definition": {
                     "properties": {
+                      "format": {
+                        "properties": {
+                          "jwt": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "jwt_vc": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "jwt_vp": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "ldp": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "ldp_vc": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "ldp_vp": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "id": {
                         "primitive": {
                           "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -37665,6 +38484,29 @@ exports[`open api parser aries parse open api 1`] = `
                                 },
                                 "type": "object",
                               },
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "schema": {
+                                "properties": {
+                                  "uri_groups": {
+                                    "array": [
+                                      {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
                             },
                             "type": "object",
                           },
@@ -37709,6 +38551,14 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "object",
                   },
+                  "record_ids": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "reveal_doc": {
+                    "properties": {},
+                    "type": "object",
+                  },
                 },
                 "type": "object",
               },
@@ -37747,6 +38597,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -38417,6 +39284,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequest",
@@ -38430,6 +39298,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38497,6 +39366,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -39167,6 +40053,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestRequest",
@@ -39180,6 +40067,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39229,6 +40117,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -39900,6 +40805,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40033,6 +40939,29 @@ exports[`open api parser aries parse open api 1`] = `
                                 },
                                 "type": "object",
                               },
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "schema": {
+                                "properties": {
+                                  "uri_groups": {
+                                    "array": [
+                                      {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
                             },
                             "type": "object",
                           },
@@ -40135,6 +41064,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -40789,6 +41735,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalRequest",
@@ -40802,6 +41749,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40872,6 +41820,35 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_definition": {
                         "properties": {
+                          "format": {
+                            "properties": {
+                              "jwt": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "jwt_vc": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "jwt_vp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp_vc": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "ldp_vp": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "id": {
                             "primitive": {
                               "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -40966,6 +41943,29 @@ exports[`open api parser aries parse open api 1`] = `
                                       "subject_is_issuer": {
                                         "enum": "required",
                                         "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  "metadata": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "schema": {
+                                    "properties": {
+                                      "uri_groups": {
+                                        "array": [
+                                          {
+                                            "array": [
+                                              {
+                                                "properties": {},
+                                                "type": "object",
+                                              },
+                                            ],
+                                            "type": "array",
+                                          },
+                                        ],
+                                        "type": "array",
                                       },
                                     },
                                     "type": "object",
@@ -41091,6 +42091,23 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "by_format": {
+                "properties": {
+                  "pres": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_proposal": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "pres_request": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -41745,6 +42762,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestRequest",
@@ -41758,6 +42776,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -41935,10 +42954,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -42015,6 +43042,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -42376,6 +43416,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateFreeProofRequestRequest",
@@ -42389,6 +43430,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -42514,10 +43556,18 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                           "proof": {
                             "properties": {
+                              "aggregated_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "proofs": {
                                 "array": [
                                   {
                                     "properties": {
+                                      "non_revoc_proof": {
+                                        "properties": {},
+                                        "type": "object",
+                                      },
                                       "primary_proof": {
                                         "properties": {
                                           "eq_proof": {
@@ -42594,6 +43644,19 @@ exports[`open api parser aries parse open api 1`] = `
                                   },
                                 ],
                                 "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "requested_proof": {
+                            "properties": {
+                              "self_attested_attrs": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "unrevealed_attrs": {
+                                "properties": {},
+                                "type": "object",
                               },
                             },
                             "type": "object",
@@ -43107,6 +44170,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43224,10 +44288,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -43304,6 +44376,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -43682,6 +44767,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43757,6 +44843,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -43990,6 +45077,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44047,6 +45135,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ReportPresExProblemRequest",
@@ -44060,6 +45149,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44200,10 +45290,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -44280,6 +45378,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -44657,6 +45768,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequest",
@@ -44670,6 +45782,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -44805,10 +45918,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -44885,6 +46006,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -45262,6 +46396,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendProofPresentationRequestRequest",
@@ -45275,6 +46410,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -45392,10 +46528,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -45472,6 +46616,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -45850,6 +47007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -46035,10 +47193,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -46115,6 +47281,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -46476,6 +47655,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendPresentationProposalRequest",
@@ -46489,6 +47669,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -46673,10 +47854,18 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "proof": {
                     "properties": {
+                      "aggregated_proof": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "proofs": {
                         "array": [
                           {
                             "properties": {
+                              "non_revoc_proof": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "primary_proof": {
                                 "properties": {
                                   "eq_proof": {
@@ -46753,6 +47942,19 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "requested_proof": {
+                    "properties": {
+                      "self_attested_attrs": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "unrevealed_attrs": {
+                        "properties": {},
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -47114,6 +48316,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SendFreePresentationRequestRequest",
@@ -47127,6 +48330,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47211,6 +48415,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47485,6 +48690,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47535,6 +48741,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ClearPendingRevocationsRequest",
@@ -47548,6 +48755,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47812,6 +49020,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateRevocationRegistryRequest",
@@ -47825,6 +49034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -47996,6 +49206,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48031,6 +49242,10 @@ exports[`open api parser aries parse open api 1`] = `
           },
           "response": {
             "properties": {
+              "sent": {
+                "properties": {},
+                "type": "object",
+              },
               "txn": {
                 "properties": {
                   "_type": {
@@ -48061,6 +49276,37 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "messages_attach": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "meta_data": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "signature_request": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "signature_response": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "state": {
                     "primitive": {
                       "string": "active",
@@ -48074,6 +49320,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "timing": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "transaction_id": {
                     "primitive": {
@@ -48108,6 +49358,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PublishRevocationsRequest",
@@ -48121,6 +49372,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48260,6 +49512,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48349,6 +49602,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48623,6 +49877,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -48907,6 +50162,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UpdateRevocationRegistryRequest",
@@ -48920,6 +50176,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49196,6 +50453,37 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "messages_attach": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "meta_data": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "signature_request": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "signature_response": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "state": {
                     "primitive": {
                       "string": "active",
@@ -49209,6 +50497,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "timing": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "transaction_id": {
                     "primitive": {
@@ -49299,6 +50591,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49612,6 +50905,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49665,7 +50959,20 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "accum_calculated": {
+                "properties": {},
+                "type": "object",
+              },
+              "accum_fixed": {
+                "properties": {},
+                "type": "object",
+              },
+              "rev_reg_delta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -49712,6 +51019,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49795,6 +51103,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49937,6 +51246,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -49979,7 +51289,12 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "rev_reg_delta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -50012,6 +51327,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50339,6 +51655,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50458,6 +51775,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50541,6 +51859,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevokeIssuedCredentialRequest",
@@ -50554,6 +51873,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50710,6 +52030,37 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "messages_attach": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "meta_data": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "signature_request": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "signature_response": {
+                    "array": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "state": {
                     "primitive": {
                       "string": "active",
@@ -50723,6 +52074,10 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "timing": {
+                    "properties": {},
+                    "type": "object",
                   },
                   "transaction_id": {
                     "primitive": {
@@ -50796,6 +52151,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PublishSchemaRequestBody",
@@ -50809,6 +52165,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -50951,6 +52308,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51079,6 +52437,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51207,6 +52566,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51255,6 +52615,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51286,7 +52647,16 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "conductor": {
+                "properties": {},
+                "type": "object",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -51303,6 +52673,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51334,7 +52705,12 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "config": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -51351,6 +52727,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51407,6 +52784,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51463,6 +52841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51511,6 +52890,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51582,6 +52962,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -51595,6 +53006,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -51643,6 +53058,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51707,6 +53123,37 @@ exports[`open api parser aries parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "messages_attach": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "meta_data": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "signature_request": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "signature_response": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "state": {
                         "primitive": {
                           "string": "active",
@@ -51720,6 +53167,10 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "timing": {
+                        "properties": {},
+                        "type": "object",
                       },
                       "transaction_id": {
                         "primitive": {
@@ -51758,6 +53209,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51828,6 +53280,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateTransactionRequestRequestBody",
@@ -51841,6 +53294,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -51930,6 +53384,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52060,6 +53515,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52131,6 +53587,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -52144,6 +53631,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -52192,6 +53683,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52263,6 +53755,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -52276,6 +53799,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -52324,6 +53851,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52395,6 +53923,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -52408,6 +53967,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -52477,6 +54040,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52548,6 +54112,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -52561,6 +54156,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -52609,6 +54208,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52680,6 +54280,37 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "messages_attach": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "meta_data": {
+                "properties": {},
+                "type": "object",
+              },
+              "signature_request": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "signature_response": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -52693,6 +54324,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "timing": {
+                "properties": {},
+                "type": "object",
               },
               "transaction_id": {
                 "primitive": {
@@ -52741,6 +54376,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -52991,6 +54627,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53107,6 +54744,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateLocalDidRequest",
@@ -53120,6 +54758,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53195,6 +54834,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53278,6 +54918,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53446,6 +55087,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53536,6 +55178,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -53644,6 +55287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SetDidEndpointRequestBody",
@@ -53657,6 +55301,7 @@ exports[`open api parser aries parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

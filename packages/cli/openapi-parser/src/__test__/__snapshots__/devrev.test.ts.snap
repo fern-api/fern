@@ -47,6 +47,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -91,6 +92,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ArtifactsPrepareRequest",
@@ -104,6 +106,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -149,6 +152,7 @@ authenticated user.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensCreateRequest",
@@ -162,6 +166,7 @@ authenticated user.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -219,6 +224,7 @@ given Dev organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensDeleteRequest",
@@ -284,6 +290,7 @@ given Dev organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -421,6 +428,7 @@ subject.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -483,6 +491,7 @@ authenticated user.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensSelfDeleteRequest",
@@ -530,6 +539,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensUpdateRequest",
@@ -543,6 +553,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -592,6 +603,7 @@ enterprise connections can be created by an organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsCreateRequest",
@@ -605,6 +617,7 @@ enterprise connections can be created by an organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -653,6 +666,7 @@ connections can not be deleted using this method.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsDeleteRequest",
@@ -716,6 +730,7 @@ connections can not be deleted using this method.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -781,6 +796,7 @@ created by the user.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -831,6 +847,7 @@ disabled.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsToggleRequest",
@@ -877,6 +894,7 @@ disabled.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsUpdateRequest",
@@ -890,6 +908,7 @@ disabled.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1107,6 +1126,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1151,6 +1171,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1194,6 +1215,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsCreateRequest",
@@ -1207,6 +1229,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1273,6 +1296,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsDeleteRequest",
@@ -1286,6 +1310,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1348,6 +1373,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1589,6 +1615,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1634,6 +1661,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsUpdateRequest",
@@ -1647,6 +1675,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1692,6 +1721,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsCreateRequest",
@@ -1705,6 +1735,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1771,6 +1802,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsDeleteRequest",
@@ -1784,6 +1816,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1845,6 +1878,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2134,6 +2168,7 @@ them.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2178,6 +2213,7 @@ them.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsUpdateRequest",
@@ -2191,6 +2227,7 @@ them.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2236,6 +2273,7 @@ and a logical concept denoted by the tag's name.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsCreateRequest",
@@ -2249,6 +2287,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2315,6 +2354,7 @@ and a logical concept denoted by the tag's name.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsDeleteRequest",
@@ -2328,6 +2368,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2389,6 +2430,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2518,6 +2560,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2562,6 +2605,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsUpdateRequest",
@@ -2575,6 +2619,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2618,6 +2663,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesCreateRequest",
@@ -2631,6 +2677,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2692,6 +2739,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2849,6 +2897,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2892,6 +2941,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateRequest",
@@ -2905,6 +2955,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2948,6 +2999,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksCreateRequest",
@@ -2961,6 +3013,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3027,6 +3080,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksDeleteRequest",
@@ -3040,6 +3094,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3101,6 +3156,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3161,6 +3217,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3205,6 +3262,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksUpdateRequest",
@@ -3218,6 +3276,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3263,6 +3322,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksCreateRequest",
@@ -3276,6 +3336,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3342,6 +3403,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksDeleteRequest",
@@ -3355,6 +3417,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3695,6 +3758,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3756,6 +3820,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4144,6 +4209,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4188,6 +4254,7 @@ organizations.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksUpdateRequest",
@@ -4201,6 +4268,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

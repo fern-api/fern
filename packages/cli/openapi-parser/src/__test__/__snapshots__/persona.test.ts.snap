@@ -92,6 +92,10 @@ exports[`open api parser persona parse open api 1`] = `
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "template": {
                         "properties": {
                           "data": {
@@ -244,6 +248,7 @@ exports[`open api parser persona parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1099,6 +1104,10 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "sessions": {
                         "properties": {
                           "data": {
@@ -1354,6 +1363,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3025,6 +3035,10 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "template": {
                         "properties": {
                           "data": {
@@ -3145,6 +3159,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3708,7 +3723,12 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -3765,6 +3785,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4326,6 +4347,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4844,6 +4866,7 @@ Note that this will only delete the report -- it does not delete associated acco
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -5179,7 +5202,12 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -5243,6 +5271,10 @@ Note that this action will trigger any associated workflows and webhooks.",
                             "type": "object",
                           },
                         },
+                        "type": "object",
+                      },
+                      "reports": {
+                        "properties": {},
                         "type": "object",
                       },
                       "template": {
@@ -5384,6 +5416,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5443,6 +5476,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6006,7 +6040,12 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -6070,6 +6109,10 @@ Note that this action will trigger any associated workflows and webhooks.",
                             "type": "object",
                           },
                         },
+                        "type": "object",
+                      },
+                      "reports": {
+                        "properties": {},
                         "type": "object",
                       },
                       "template": {
@@ -6211,6 +6254,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6270,6 +6314,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6932,6 +6977,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7226,6 +7272,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7552,7 +7599,27 @@ Note: An account is still updatable after redaction. If you want to delete data 
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "selfie-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -7675,6 +7742,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8141,6 +8209,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8407,6 +8476,10 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
                             },
                             "type": "object",
                           },
+                          "reports": {
+                            "properties": {},
+                            "type": "object",
+                          },
                           "sessions": {
                             "properties": {
                               "data": {
@@ -8656,6 +8729,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9363,7 +9437,17 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "fields": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -9423,6 +9507,10 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
                             "type": "object",
                           },
                         },
+                        "type": "object",
+                      },
+                      "reports": {
+                        "properties": {},
                         "type": "object",
                       },
                       "template": {
@@ -9548,6 +9636,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10024,6 +10113,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10741,6 +10831,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10980,7 +11071,27 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "selfie-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -11087,6 +11198,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11553,6 +11665,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11813,6 +11926,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12034,6 +12148,10 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                             },
                             "type": "primitive",
                           },
+                          "post-params": {
+                            "properties": {},
+                            "type": "object",
+                          },
                         },
                         "type": "object",
                       },
@@ -12135,6 +12253,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12771,6 +12890,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13337,6 +13457,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13424,6 +13545,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13810,7 +13932,12 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -13989,6 +14116,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14065,6 +14193,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14623,6 +14752,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15046,6 +15176,15 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database",
@@ -15374,6 +15513,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15831,6 +15971,10 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                         },
                         "type": "object",
                       },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                     },
                     "type": "object",
                   },
@@ -15901,6 +16045,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16171,6 +16316,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16832,6 +16978,10 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "phone-number": {
                         "primitive": {
                           "string": "111-222-3333",
@@ -16923,6 +17073,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -17026,6 +17177,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17506,6 +17658,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17604,6 +17757,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17799,6 +17953,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -17886,6 +18041,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18529,6 +18685,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19083,7 +19240,12 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -19157,6 +19319,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19344,6 +19507,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19585,7 +19749,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "file": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -19665,6 +19839,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19767,6 +19942,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -20005,7 +20181,22 @@ A match_type of 'email_address' will need to match the entire email address of a
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -20085,6 +20276,7 @@ A match_type of 'email_address' will need to match the entire email address of a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -20230,6 +20422,7 @@ A match_type of 'email_address' will need to match the entire email address of a
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -20467,7 +20660,22 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -20547,6 +20755,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -20692,6 +20901,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -20930,7 +21140,22 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -21010,6 +21235,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -21155,6 +21381,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21392,7 +21619,22 @@ Both IPv4 and IPv6 are supported.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -21472,6 +21714,7 @@ Both IPv4 and IPv6 are supported.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -21617,6 +21860,7 @@ Both IPv4 and IPv6 are supported.",
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -21853,7 +22097,22 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -21933,6 +22192,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22078,6 +22338,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22313,7 +22574,22 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "file": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -22393,6 +22669,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -22538,6 +22815,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -22904,6 +23182,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -23169,6 +23448,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -23675,7 +23955,21 @@ The columns we allow are
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "back-photo": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "front-photo": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -23823,6 +24117,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -24056,6 +24351,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -24703,6 +24999,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -25310,6 +25607,10 @@ The columns we allow are
                         },
                         "type": "object",
                       },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                     },
                     "type": "object",
                   },
@@ -25397,6 +25698,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -26043,7 +26345,21 @@ The columns we allow are
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "back-photo": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "front-photo": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -26205,6 +26521,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26438,6 +26755,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27208,6 +27526,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27306,6 +27625,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27424,6 +27744,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27456,7 +27777,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -27517,6 +27848,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27598,6 +27930,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27630,7 +27963,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -27691,6 +28034,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27772,6 +28116,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27804,7 +28149,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -27865,6 +28220,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27946,6 +28302,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -27978,7 +28335,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28039,6 +28406,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28120,6 +28488,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28152,7 +28521,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28213,6 +28592,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28294,6 +28674,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28326,7 +28707,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28387,6 +28778,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28468,6 +28860,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28500,7 +28893,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28561,6 +28964,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28661,6 +29065,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28693,7 +29098,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28754,6 +29169,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28835,6 +29251,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -28867,7 +29284,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28920,6 +29347,15 @@ The columns we allow are
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -28988,6 +29424,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29090,6 +29527,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -29384,7 +29822,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -29442,6 +29890,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29562,7 +30011,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -29622,6 +30081,15 @@ The columns we allow are
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -29690,6 +30158,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29813,6 +30282,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30128,7 +30598,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -30195,6 +30675,15 @@ The columns we allow are
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -30263,6 +30752,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -30401,6 +30891,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -30731,7 +31222,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -30789,6 +31290,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -30909,7 +31411,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -30969,6 +31481,15 @@ The columns we allow are
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -31037,6 +31558,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31160,6 +31682,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -31475,7 +31998,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -31535,6 +32068,15 @@ The columns we allow are
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -31603,6 +32145,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31726,6 +32269,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32041,7 +32585,17 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -32099,6 +32653,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -32288,6 +32843,15 @@ The columns we allow are
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "list-item/browser-fingerprint",
@@ -32372,6 +32936,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -32850,6 +33415,15 @@ The columns we allow are
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "list-item/email-address",
@@ -32934,6 +33508,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33339,6 +33914,15 @@ The columns we allow are
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "list-item/geolocation",
@@ -33423,6 +34007,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -33836,6 +34421,15 @@ The columns we allow are
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "list-item/government-id-number",
@@ -33920,6 +34514,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -34419,6 +35014,15 @@ The columns we allow are
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "list-item/name",
@@ -34503,6 +35107,7 @@ The columns we allow are
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -35083,7 +35688,12 @@ The columns we allow are
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -35124,6 +35734,7 @@ The columns we allow are
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -35728,6 +36339,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                 ],
                 "type": "array",
               },
+              "links": {
+                "properties": {},
+                "type": "object",
+              },
             },
             "type": "object",
           },
@@ -35947,6 +36562,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -36463,6 +37079,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                 "properties": {},
                 "type": "object",
               },
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
             },
             "type": "object",
           },
@@ -36512,6 +37132,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "accounts": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-comments": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "case-template": {
                         "properties": {
                           "data": {
@@ -36565,6 +37193,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                     },
                     "type": "object",
                   },
@@ -36597,6 +37229,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "fields": {
+                            "properties": {},
+                            "type": "object",
                           },
                           "reviewer": {
                             "primitive": {
@@ -36689,6 +37325,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                                 "type": "array",
                               },
                             },
+                            "type": "object",
+                          },
+                          "inquiry-template-version": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "reports": {
+                            "properties": {},
                             "type": "object",
                           },
                           "selfies": {
@@ -36834,6 +37478,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -36953,6 +37598,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -38809,6 +39455,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                     },
                     "type": "object",
                   },
@@ -38919,6 +39569,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -39866,7 +40517,31 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "attachments": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "fields": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -39936,6 +40611,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "accounts": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-comments": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "case-template": {
                         "properties": {
                           "data": {
@@ -40063,6 +40746,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -40235,6 +40919,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41035,6 +41720,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/selfie",
@@ -41102,6 +41796,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -41401,6 +42096,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -41872,6 +42568,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/selfie",
@@ -41956,6 +42661,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -42388,7 +43094,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -42462,6 +43173,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42550,7 +43262,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -42624,6 +43341,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42712,7 +43430,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -42786,6 +43509,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -42879,7 +43603,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -42953,6 +43682,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -43041,7 +43771,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -43115,6 +43850,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -43203,7 +43939,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -43277,6 +44018,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -44002,6 +44744,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -44221,6 +44964,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -45805,7 +46549,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -45882,6 +46631,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "accounts": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-comments": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "case-template": {
                         "properties": {
                           "data": {
@@ -46009,6 +46766,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -46073,6 +46831,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -46857,6 +47616,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -46906,6 +47666,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -47661,7 +48422,22 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "face-photo": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -47719,6 +48495,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -47882,7 +48659,17 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -47943,6 +48730,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48024,6 +48812,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48157,7 +48946,27 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "image-files": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -48237,6 +49046,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48387,6 +49197,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "201",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -48630,7 +49441,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -48686,6 +49502,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -48796,6 +49620,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -48855,6 +49680,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -49373,7 +50199,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -49429,6 +50260,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -49539,6 +50378,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -49598,6 +50438,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -50116,7 +50957,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -50172,6 +51018,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -50282,6 +51136,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -50346,6 +51201,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -51085,6 +51941,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -51299,7 +52156,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -51369,6 +52231,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                   },
                   "relationships": {
                     "properties": {
+                      "accounts": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-comments": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "case-template": {
                         "properties": {
                           "data": {
@@ -51496,6 +52366,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -51555,6 +52426,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -52338,6 +53210,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         "array": [
                           {
                             "properties": {
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "name": {
                                 "primitive": {
                                   "string": "id_account_comparison",
@@ -52559,6 +53435,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         },
                         "type": "object",
                       },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                     },
                     "type": "object",
                   },
@@ -52626,6 +53506,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -53564,6 +54445,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         "array": [
                           {
                             "properties": {
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "name": {
                                 "primitive": {
                                   "string": "selfie_id_comparison",
@@ -53669,6 +54554,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/selfie",
@@ -53733,6 +54627,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -54347,6 +55242,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database",
@@ -54431,6 +55335,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -54833,6 +55738,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         "array": [
                           {
                             "properties": {
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "name": {
                                 "primitive": {
                                   "string": "database_inquiry_comparison",
@@ -54938,6 +55847,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database",
@@ -55002,6 +55920,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -55568,6 +56487,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-phone-carrier",
@@ -55652,6 +56580,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -56078,6 +57007,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-phone-carrier",
@@ -56293,6 +57231,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -56781,6 +57720,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-phone-carrier",
@@ -56845,6 +57793,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -57356,7 +58305,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
             {
               "name": "data",
               "value": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -57413,6 +58367,19 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "selfie": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -57479,6 +58446,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -57946,6 +58914,19 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "selfie": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-serpro",
@@ -58030,6 +59011,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -58454,6 +59436,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         "array": [
                           {
                             "properties": {
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "name": {
                                 "primitive": {
                                   "string": "database_serpro_name_comparison",
@@ -58547,6 +59533,19 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "selfie": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-serpro",
@@ -58611,6 +59610,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -59116,7 +60116,12 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -59169,6 +60174,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -59237,6 +60251,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -59392,6 +60407,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -59823,6 +60839,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-tin",
@@ -59907,6 +60932,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -60327,6 +61353,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "phone-number": {
                         "primitive": {
                           "string": "111-222-3333",
@@ -60393,6 +61423,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -60464,6 +61495,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -60805,6 +61837,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         "array": [
                           {
                             "properties": {
+                              "metadata": {
+                                "properties": {},
+                                "type": "object",
+                              },
                               "name": {
                                 "primitive": {
                                   "string": "database_tin_name_comparison",
@@ -60898,6 +61934,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                     },
                     "type": "primitive",
                   },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "type": {
                     "primitive": {
                       "string": "verification/database-tin",
@@ -60962,6 +62007,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -61490,6 +62536,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "phone-number": {
                         "primitive": {
                           "string": "111-222-3333",
@@ -61513,6 +62563,15 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -61578,6 +62637,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -61979,7 +63039,17 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -62015,6 +63085,10 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                           "type": "int",
                         },
                         "type": "primitive",
+                      },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
                       },
                       "phone-number": {
                         "primitive": {
@@ -62082,6 +63156,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -62163,6 +63238,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -62496,7 +63572,17 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -62531,6 +63617,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                   },
                   "relationships": {
                     "properties": {
+                      "creator": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "workflow": {
                         "properties": {
                           "data": {
@@ -62645,6 +63735,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -62745,6 +63836,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -63197,6 +64289,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "status": {
                         "primitive": {
                           "string": "initiated",
@@ -63281,6 +64377,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -63384,6 +64481,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -63715,7 +64813,17 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -63751,6 +64859,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
                       },
                       "status": {
                         "primitive": {
@@ -63811,6 +64923,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -63892,6 +65005,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -64244,6 +65358,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "status": {
                         "primitive": {
                           "string": "confirmed",
@@ -64303,6 +65421,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -64374,6 +65493,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -64732,6 +65852,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                         },
                         "type": "primitive",
                       },
+                      "metadata": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "status": {
                         "primitive": {
                           "string": "passed",
@@ -64748,6 +65872,15 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
                   },
                   "type": {
                     "primitive": {
@@ -64813,6 +65946,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -65275,6 +66409,10 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                 ],
                 "type": "array",
               },
+              "links": {
+                "properties": {},
+                "type": "object",
+              },
             },
             "type": "object",
           },
@@ -65394,6 +66532,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -65772,7 +66911,17 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -65888,6 +67037,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -66110,6 +67260,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -66597,6 +67748,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -66651,6 +67803,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -67136,6 +68289,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -67491,7 +68645,17 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -67616,6 +68780,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -67838,6 +69003,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -68239,6 +69405,14 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -68309,6 +69483,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -68828,6 +70003,14 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -68938,6 +70121,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -69067,6 +70251,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -69568,6 +70753,14 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -69638,6 +70831,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -70139,6 +71333,14 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                   },
                   "relationships": {
                     "properties": {
+                      "account": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "inquiry": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "report-template": {
                         "properties": {
                           "data": {
@@ -70209,6 +71411,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -70726,6 +71929,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -70953,6 +72157,10 @@ The inquiry can still be resumed after expiry.",
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "template": {
                         "properties": {
                           "data": {
@@ -71073,6 +72281,7 @@ The inquiry can still be resumed after expiry.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -71634,7 +72843,12 @@ The inquiry can still be resumed after expiry.",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -71643,6 +72857,10 @@ The inquiry can still be resumed after expiry.",
                 "properties": {
                   "attributes": {
                     "properties": {
+                      "behaviors": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "created-at": {
                         "primitive": {
                           "string": "2023-03-28T18:34:32.000Z",
@@ -71947,6 +73165,18 @@ The inquiry can still be resumed after expiry.",
                         },
                         "type": "object",
                       },
+                      "reports": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "reviewer": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "selfies": {
+                        "properties": {},
+                        "type": "object",
+                      },
                       "sessions": {
                         "properties": {
                           "data": {
@@ -71974,6 +73204,10 @@ The inquiry can still be resumed after expiry.",
                             "type": "array",
                           },
                         },
+                        "type": "object",
+                      },
+                      "template": {
+                        "properties": {},
                         "type": "object",
                       },
                       "verifications": {
@@ -72110,6 +73344,7 @@ The inquiry can still be resumed after expiry.",
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -72167,6 +73402,7 @@ The inquiry can still be resumed after expiry.",
       "requestNameOverride": undefined,
       "response": {
         "description": "200",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -74482,6 +75718,7 @@ The inquiry can still be resumed after expiry.",
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": undefined,
+        "fullExamples": [],
         "generatedName": "UnprocessableEntityErrorBody",
         "groupName": undefined,
         "nameOverride": undefined,
@@ -74503,6 +75740,7 @@ The inquiry can still be resumed after expiry.",
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": undefined,
+                  "fullExamples": [],
                   "generatedName": "UnprocessableEntityErrorBodyErrorsItem",
                   "groupName": undefined,
                   "nameOverride": undefined,

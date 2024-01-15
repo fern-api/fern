@@ -794,7 +794,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "path-parameters": undefined,
               "query-parameters": undefined,
               "request": {
-                "actuals": [],
+                "actuals": [
+                  {},
+                ],
               },
               "response": undefined,
             },

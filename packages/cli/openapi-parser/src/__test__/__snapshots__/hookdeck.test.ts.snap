@@ -28,7 +28,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -435,6 +440,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of issue triggers",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -474,6 +480,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -586,6 +593,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -625,6 +633,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -732,6 +741,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -787,6 +797,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -842,6 +853,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -969,6 +981,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1024,6 +1037,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted issue trigger's id",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1079,6 +1093,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1134,6 +1149,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue trigger",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1168,7 +1184,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1402,6 +1423,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of attempts",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1457,6 +1479,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single attempt",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1491,7 +1514,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -2074,6 +2102,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of bookmarks",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2113,6 +2142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2198,6 +2228,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2253,6 +2284,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2309,6 +2341,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2409,6 +2442,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single bookmark",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2464,6 +2498,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted bookmark's id",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2550,6 +2585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2598,6 +2634,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Array of created events",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2632,7 +2669,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -3336,6 +3378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of destinations",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3375,6 +3418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -3540,6 +3584,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3579,6 +3624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -3744,6 +3790,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3799,6 +3846,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3855,6 +3903,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4044,6 +4093,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4099,6 +4149,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4154,6 +4205,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single destination",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4199,7 +4251,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -5861,6 +5918,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5916,6 +5974,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single event",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5971,6 +6030,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A request raw body data",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6026,6 +6086,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retried event with event attempt",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6081,6 +6142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single event",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6131,7 +6193,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -8600,6 +8667,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events bulk retries",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8639,6 +8707,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10142,6 +10211,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10173,7 +10243,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {},
@@ -11680,6 +11758,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Events bulk retry plan",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11735,6 +11814,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11790,6 +11870,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11821,10 +11902,23 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -12715,6 +12809,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of ignored events bulk retries",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12754,6 +12849,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12909,6 +13005,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12940,7 +13037,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {},
@@ -13099,6 +13204,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ignored events bulk retry plan",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13154,6 +13260,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13209,6 +13316,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ignored events bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13251,7 +13359,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -13307,6 +13420,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of integrations",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13346,6 +13460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13469,6 +13584,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13524,6 +13640,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13580,6 +13697,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13723,6 +13841,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single integration",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13778,6 +13897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "An object with deleted integration id",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13849,6 +13969,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Attach operation success status",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13952,6 +14073,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Detach operation success status",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13983,10 +14105,23 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "aggregation_keys",
+              "value": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -15358,6 +15493,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of issues",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15388,7 +15524,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "aggregation_keys",
+              "value": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -16771,6 +16915,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Issue count",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16826,6 +16971,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single issue",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16881,6 +17027,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16936,6 +17083,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Updated issue",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16991,6 +17139,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Dismissed issue",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17043,7 +17192,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -18382,6 +18536,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of requests",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18437,6 +18592,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single request",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18492,6 +18648,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A request raw body data",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18548,6 +18705,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -18585,6 +18743,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retry request operation result",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18642,7 +18801,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -20320,6 +20484,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of events",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20366,7 +20531,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -20616,6 +20786,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of ignored events",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20670,7 +20841,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -22790,6 +22966,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of request bulk retries",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -22829,6 +23006,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -23998,6 +24176,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25215,6 +25394,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Requests bulk retry plan",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25270,6 +25450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25325,6 +25506,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single requests bulk retry",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25359,7 +25541,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -26161,6 +26348,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of rulesets",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26200,6 +26388,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26275,6 +26464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26314,6 +26504,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26389,6 +26580,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26444,6 +26636,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26500,6 +26693,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -26604,6 +26798,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26659,6 +26854,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26714,6 +26910,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single ruleset",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26748,7 +26945,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -27395,6 +27597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of sources",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27434,6 +27637,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27466,6 +27670,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27505,6 +27710,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27537,6 +27743,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27592,6 +27799,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27648,6 +27856,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27709,6 +27918,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27764,6 +27974,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27819,6 +28030,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single source",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27855,6 +28067,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -27935,6 +28148,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Toggle operation status response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27969,7 +28183,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -28260,6 +28479,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of transformations",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28299,6 +28519,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28403,6 +28624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28442,6 +28664,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28546,6 +28769,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28601,6 +28825,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28657,6 +28882,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -28771,6 +28997,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28805,11 +29032,19 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "env": {
+                "properties": {},
+                "type": "object",
+              },
               "request": {
                 "properties": {
                   "headers": {
                     "map": [],
                     "type": "map",
+                  },
+                  "parsed_query": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -28839,6 +29074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -29129,6 +29365,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Transformation run output",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29174,7 +29411,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -29723,6 +29965,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of transformation executions",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29793,6 +30036,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single transformation execution",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29827,7 +30071,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -30682,6 +30931,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "List of connections",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30721,6 +30971,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31145,6 +31396,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31184,6 +31436,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31608,6 +31861,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31663,6 +31917,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31719,6 +31974,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -31887,6 +32143,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31942,6 +32199,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31997,6 +32255,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32052,6 +32311,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32107,6 +32367,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A single connection",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

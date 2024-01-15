@@ -73,6 +73,13 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "info": {
+                      "awsBuyer": {
+                        "companyInfo": {},
+                      },
+                      "azureBuyer": {
+                        "buyerInfo": {},
+                        "companyInfo": {},
+                      },
                       "gcpBuyer": {
                         "approvals": [
                           {
@@ -80,6 +87,7 @@ exports[`open api parser suger simple 1`] = `
                           },
                         ],
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "userInfo": {},
                       },
                     },
                     "partner": "AWS",
@@ -123,6 +131,13 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsBuyer": {
+                          "companyInfo": {},
+                        },
+                        "azureBuyer": {
+                          "buyerInfo": {},
+                          "companyInfo": {},
+                        },
                         "gcpBuyer": {
                           "approvals": [
                             {
@@ -130,6 +145,7 @@ exports[`open api parser suger simple 1`] = `
                             },
                           ],
                           "state": "ACCOUNT_STATE_UNSPECIFIED",
+                          "userInfo": {},
                         },
                       },
                       "partner": "AWS",
@@ -170,6 +186,13 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "info": {
+                      "awsBuyer": {
+                        "companyInfo": {},
+                      },
+                      "azureBuyer": {
+                        "buyerInfo": {},
+                        "companyInfo": {},
+                      },
                       "gcpBuyer": {
                         "approvals": [
                           {
@@ -177,6 +200,7 @@ exports[`open api parser suger simple 1`] = `
                           },
                         ],
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "userInfo": {},
                       },
                     },
                     "partner": "AWS",
@@ -284,14 +308,26 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "info": {
+                      "awsEntitlements": [
+                        {},
+                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
+                          "term": {},
                         },
                       ],
                       "commits": [
@@ -307,12 +343,16 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
+                          "consumers": [
+                            {},
+                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -323,17 +363,26 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
+                      ],
+                      "paymentInstallments": [
+                        {},
                       ],
                     },
                     "partner": "AWS",
@@ -379,14 +428,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -402,12 +463,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -418,17 +483,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "partner": "AWS",
@@ -472,14 +546,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -495,12 +581,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -511,17 +601,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "partner": "AWS",
@@ -569,14 +668,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -592,12 +703,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -608,17 +723,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "partner": "AWS",
@@ -666,14 +790,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -689,12 +825,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -705,17 +845,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "partner": "AWS",
@@ -763,14 +912,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -786,12 +947,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -802,17 +967,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "partner": "AWS",
@@ -859,14 +1033,26 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "info": {
+                      "awsEntitlements": [
+                        {},
+                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
+                          "term": {},
                         },
                       ],
                       "commits": [
@@ -882,12 +1068,16 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
+                          "consumers": [
+                            {},
+                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -898,17 +1088,26 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
+                      ],
+                      "paymentInstallments": [
+                        {},
                       ],
                     },
                     "partner": "AWS",
@@ -987,14 +1186,26 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "entitlementInfo": {
+                      "awsEntitlements": [
+                        {},
+                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
+                          "term": {},
                         },
                       ],
                       "commits": [
@@ -1010,12 +1221,16 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
+                          "consumers": [
+                            {},
+                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -1026,17 +1241,26 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
+                      ],
+                      "paymentInstallments": [
+                        {},
                       ],
                     },
                     "info": {
@@ -1089,14 +1313,26 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "entitlementInfo": {
+                        "awsEntitlements": [
+                          {},
+                        ],
                         "azureSubscriptions": [
                           {
                             "allowedCustomerOperations": [
                               "Read",
                             ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
                             "saasSubscriptionStatus": "NotStarted",
                             "sandboxType": "None",
                             "sessionMode": "None",
+                            "term": {},
                           },
                         ],
                         "commits": [
@@ -1112,12 +1348,16 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "eulaType": "",
                         "gcpEntitlements": [
                           {
+                            "consumers": [
+                              {},
+                            ],
                             "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                           },
                         ],
@@ -1128,17 +1368,26 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
+                        ],
+                        "paymentInstallments": [
+                          {},
                         ],
                       },
                       "info": {
@@ -1262,6 +1511,31 @@ exports[`open api parser suger simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
+                    "info": {
+                      "awsAceIntegration": {
+                        "credential": {},
+                      },
+                      "awsIntegration": {},
+                      "azureIntegration": {
+                        "credential": {},
+                      },
+                      "gcpIntegration": {},
+                      "hubspotCrmIntegration": {
+                        "credential": {},
+                      },
+                      "salesforceCrmIntegration": {
+                        "credential": {},
+                        "filters": [
+                          {},
+                        ],
+                      },
+                      "slackIntegration": {
+                        "authedUser": {},
+                        "enterprise": {},
+                        "incomingWebhook": {},
+                        "team": {},
+                      },
+                    },
                     "partner": "AWS",
                     "service": "MARKETPLACE",
                     "status": "CREATED",
@@ -1308,6 +1582,31 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": [
                     {
+                      "info": {
+                        "awsAceIntegration": {
+                          "credential": {},
+                        },
+                        "awsIntegration": {},
+                        "azureIntegration": {
+                          "credential": {},
+                        },
+                        "gcpIntegration": {},
+                        "hubspotCrmIntegration": {
+                          "credential": {},
+                        },
+                        "salesforceCrmIntegration": {
+                          "credential": {},
+                          "filters": [
+                            {},
+                          ],
+                        },
+                        "slackIntegration": {
+                          "authedUser": {},
+                          "enterprise": {},
+                          "incomingWebhook": {},
+                          "team": {},
+                        },
+                      },
                       "partner": "AWS",
                       "service": "MARKETPLACE",
                       "status": "CREATED",
@@ -1503,7 +1802,9 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "metaInfo": {},
+                  },
                 },
               },
             ],
@@ -1547,6 +1848,26 @@ exports[`open api parser suger simple 1`] = `
                         "results": [
                           {
                             "status": "Success",
+                            "usageRecord": {
+                              "usageAllocations": [
+                                {
+                                  "tags": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "unprocessedRecords": [
+                          {
+                            "usageAllocations": [
+                              {
+                                "tags": [
+                                  {},
+                                ],
+                              },
+                            ],
                           },
                         ],
                       },
@@ -1561,6 +1882,13 @@ exports[`open api parser suger simple 1`] = `
                               },
                             },
                             "status": "Accepted",
+                          },
+                        ],
+                      },
+                      "gcpMeteringResponse": {
+                        "reportErrors": [
+                          {
+                            "status": {},
                           },
                         ],
                       },
@@ -1604,7 +1932,13 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -1663,7 +1997,13 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -1719,7 +2059,13 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -1787,6 +2133,26 @@ exports[`open api parser suger simple 1`] = `
                             "results": [
                               {
                                 "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
                               },
                             ],
                           },
@@ -1801,6 +2167,13 @@ exports[`open api parser suger simple 1`] = `
                                   },
                                 },
                                 "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
                               },
                             ],
                           },
@@ -1878,6 +2251,26 @@ exports[`open api parser suger simple 1`] = `
                             "results": [
                               {
                                 "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
                               },
                             ],
                           },
@@ -1892,6 +2285,13 @@ exports[`open api parser suger simple 1`] = `
                                   },
                                 },
                                 "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
                               },
                             ],
                           },
@@ -1962,6 +2362,26 @@ exports[`open api parser suger simple 1`] = `
                             "results": [
                               {
                                 "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
                               },
                             ],
                           },
@@ -1976,6 +2396,13 @@ exports[`open api parser suger simple 1`] = `
                                   },
                                 },
                                 "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
                               },
                             ],
                           },
@@ -2138,6 +2565,9 @@ exports[`open api parser suger simple 1`] = `
                               "paymentOption": {
                                 "type": "day",
                               },
+                              "prices": [
+                                {},
+                              ],
                             },
                           ],
                         },
@@ -2150,6 +2580,9 @@ exports[`open api parser suger simple 1`] = `
                       ],
                     },
                     "azurePrivateOffer": {
+                      "acceptanceLinks": [
+                        {},
+                      ],
                       "beneficiaries": [
                         {
                           "beneficiaryRecipients": [
@@ -2177,6 +2610,9 @@ exports[`open api parser suger simple 1`] = `
                                     "paymentOption": {
                                       "type": "day",
                                     },
+                                    "prices": [
+                                      {},
+                                    ],
                                   },
                                 ],
                               },
@@ -2204,6 +2640,9 @@ exports[`open api parser suger simple 1`] = `
                                     "paymentOption": {
                                       "type": "day",
                                     },
+                                    "prices": [
+                                      {},
+                                    ],
                                   },
                                 ],
                               },
@@ -2220,6 +2659,7 @@ exports[`open api parser suger simple 1`] = `
                       "privateOfferType": "customerPromotion",
                       "state": "draft",
                       "subState": "pendingAcceptance",
+                      "upgradedFrom": {},
                       "validations": [
                         {
                           "code": "businessValidationError",
@@ -2228,6 +2668,16 @@ exports[`open api parser suger simple 1`] = `
                       ],
                     },
                     "azureProductVariant": {
+                      "azureGovernmentCertifications": [
+                        {
+                          "validationResults": [
+                            {},
+                          ],
+                        },
+                      ],
+                      "extendedProperties": [
+                        {},
+                      ],
                       "featureAvailabilities": [
                         {
                           "customMeters": [
@@ -2244,8 +2694,15 @@ exports[`open api parser suger simple 1`] = `
                               "state": "Disabled",
                             },
                           ],
+                          "markets": [
+                            {},
+                          ],
                           "priceSchedules": [
                             {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
                               "schedules": [
                                 {
                                   "priceCadence": {
@@ -2257,11 +2714,25 @@ exports[`open api parser suger simple 1`] = `
                                       "name": "sharedcore",
                                     },
                                   ],
+                                  "retailPrice": {},
                                 },
                               ],
                             },
                           ],
+                          "properties": [
+                            {},
+                          ],
+                          "subscriptionAudiences": [
+                            {},
+                          ],
+                          "tenantAudiences": [
+                            {},
+                          ],
                           "trial": {
+                            "dateTimeRange": {
+                              "endAt": {},
+                              "startAt": {},
+                            },
                             "durationType": "Minute",
                             "type": "NoTrial",
                           },
@@ -2271,6 +2742,9 @@ exports[`open api parser suger simple 1`] = `
                       "resourceType": "AzureSkuVariant",
                       "state": "InActive",
                     },
+                    "buyerAzureTenants": [
+                      {},
+                    ],
                     "commits": [
                       {
                         "timeUnit": "DAY",
@@ -2284,6 +2758,7 @@ exports[`open api parser suger simple 1`] = `
                             "recurringUnit": "Monthly",
                           },
                         ],
+                        "usageCount": {},
                         "valueType": "VALUE_TYPE_UNSPECIFIED",
                       },
                     ],
@@ -2300,11 +2775,17 @@ exports[`open api parser suger simple 1`] = `
                           "subscriptionPlans": [
                             {
                               "period": "ONE_YEAR",
+                              "price": {},
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
+                              "priceTiers": [
+                                {
+                                  "price": {},
+                                },
+                              ],
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
@@ -2312,9 +2793,15 @@ exports[`open api parser suger simple 1`] = `
                         "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
+                    "paymentInstallments": [
+                      {},
+                    ],
                     "visibility": "PRIVATE",
                   },
                   "metaInfo": {
+                    "contacts": [
+                      {},
+                    ],
                     "notifications": [
                       {
                         "action": "ACCEPT",
@@ -2346,6 +2833,9 @@ exports[`open api parser suger simple 1`] = `
                                 "paymentOption": {
                                   "type": "day",
                                 },
+                                "prices": [
+                                  {},
+                                ],
                               },
                             ],
                           },
@@ -2358,6 +2848,9 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -2385,6 +2878,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -2412,6 +2908,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -2428,6 +2927,7 @@ exports[`open api parser suger simple 1`] = `
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -2436,6 +2936,16 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -2452,8 +2962,15 @@ exports[`open api parser suger simple 1`] = `
                                 "state": "Disabled",
                               },
                             ],
+                            "markets": [
+                              {},
+                            ],
                             "priceSchedules": [
                               {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -2465,11 +2982,25 @@ exports[`open api parser suger simple 1`] = `
                                         "name": "sharedcore",
                                       },
                                     ],
+                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
                             "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -2479,6 +3010,9 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -2492,6 +3026,7 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -2508,11 +3043,17 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -2520,9 +3061,15 @@ exports[`open api parser suger simple 1`] = `
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -2587,6 +3134,9 @@ exports[`open api parser suger simple 1`] = `
                               "paymentOption": {
                                 "type": "day",
                               },
+                              "prices": [
+                                {},
+                              ],
                             },
                           ],
                         },
@@ -2599,6 +3149,9 @@ exports[`open api parser suger simple 1`] = `
                       ],
                     },
                     "azurePrivateOffer": {
+                      "acceptanceLinks": [
+                        {},
+                      ],
                       "beneficiaries": [
                         {
                           "beneficiaryRecipients": [
@@ -2626,6 +3179,9 @@ exports[`open api parser suger simple 1`] = `
                                     "paymentOption": {
                                       "type": "day",
                                     },
+                                    "prices": [
+                                      {},
+                                    ],
                                   },
                                 ],
                               },
@@ -2653,6 +3209,9 @@ exports[`open api parser suger simple 1`] = `
                                     "paymentOption": {
                                       "type": "day",
                                     },
+                                    "prices": [
+                                      {},
+                                    ],
                                   },
                                 ],
                               },
@@ -2669,6 +3228,7 @@ exports[`open api parser suger simple 1`] = `
                       "privateOfferType": "customerPromotion",
                       "state": "draft",
                       "subState": "pendingAcceptance",
+                      "upgradedFrom": {},
                       "validations": [
                         {
                           "code": "businessValidationError",
@@ -2677,6 +3237,16 @@ exports[`open api parser suger simple 1`] = `
                       ],
                     },
                     "azureProductVariant": {
+                      "azureGovernmentCertifications": [
+                        {
+                          "validationResults": [
+                            {},
+                          ],
+                        },
+                      ],
+                      "extendedProperties": [
+                        {},
+                      ],
                       "featureAvailabilities": [
                         {
                           "customMeters": [
@@ -2693,8 +3263,15 @@ exports[`open api parser suger simple 1`] = `
                               "state": "Disabled",
                             },
                           ],
+                          "markets": [
+                            {},
+                          ],
                           "priceSchedules": [
                             {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
                               "schedules": [
                                 {
                                   "priceCadence": {
@@ -2706,11 +3283,25 @@ exports[`open api parser suger simple 1`] = `
                                       "name": "sharedcore",
                                     },
                                   ],
+                                  "retailPrice": {},
                                 },
                               ],
                             },
                           ],
+                          "properties": [
+                            {},
+                          ],
+                          "subscriptionAudiences": [
+                            {},
+                          ],
+                          "tenantAudiences": [
+                            {},
+                          ],
                           "trial": {
+                            "dateTimeRange": {
+                              "endAt": {},
+                              "startAt": {},
+                            },
                             "durationType": "Minute",
                             "type": "NoTrial",
                           },
@@ -2720,6 +3311,9 @@ exports[`open api parser suger simple 1`] = `
                       "resourceType": "AzureSkuVariant",
                       "state": "InActive",
                     },
+                    "buyerAzureTenants": [
+                      {},
+                    ],
                     "commits": [
                       {
                         "timeUnit": "DAY",
@@ -2733,6 +3327,7 @@ exports[`open api parser suger simple 1`] = `
                             "recurringUnit": "Monthly",
                           },
                         ],
+                        "usageCount": {},
                         "valueType": "VALUE_TYPE_UNSPECIFIED",
                       },
                     ],
@@ -2749,11 +3344,17 @@ exports[`open api parser suger simple 1`] = `
                           "subscriptionPlans": [
                             {
                               "period": "ONE_YEAR",
+                              "price": {},
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
+                              "priceTiers": [
+                                {
+                                  "price": {},
+                                },
+                              ],
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
@@ -2761,9 +3362,15 @@ exports[`open api parser suger simple 1`] = `
                         "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
+                    "paymentInstallments": [
+                      {},
+                    ],
                     "visibility": "PRIVATE",
                   },
                   "metaInfo": {
+                    "contacts": [
+                      {},
+                    ],
                     "notifications": [
                       {
                         "action": "ACCEPT",
@@ -2795,6 +3402,9 @@ exports[`open api parser suger simple 1`] = `
                                 "paymentOption": {
                                   "type": "day",
                                 },
+                                "prices": [
+                                  {},
+                                ],
                               },
                             ],
                           },
@@ -2807,6 +3417,9 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -2834,6 +3447,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -2861,6 +3477,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -2877,6 +3496,7 @@ exports[`open api parser suger simple 1`] = `
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -2885,6 +3505,16 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -2901,8 +3531,15 @@ exports[`open api parser suger simple 1`] = `
                                 "state": "Disabled",
                               },
                             ],
+                            "markets": [
+                              {},
+                            ],
                             "priceSchedules": [
                               {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -2914,11 +3551,25 @@ exports[`open api parser suger simple 1`] = `
                                         "name": "sharedcore",
                                       },
                                     ],
+                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
                             "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -2928,6 +3579,9 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -2941,6 +3595,7 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -2957,11 +3612,17 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -2969,9 +3630,15 @@ exports[`open api parser suger simple 1`] = `
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -3062,6 +3729,9 @@ exports[`open api parser suger simple 1`] = `
                                 "paymentOption": {
                                   "type": "day",
                                 },
+                                "prices": [
+                                  {},
+                                ],
                               },
                             ],
                           },
@@ -3074,6 +3744,9 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -3101,6 +3774,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -3128,6 +3804,9 @@ exports[`open api parser suger simple 1`] = `
                                       "paymentOption": {
                                         "type": "day",
                                       },
+                                      "prices": [
+                                        {},
+                                      ],
                                     },
                                   ],
                                 },
@@ -3144,6 +3823,7 @@ exports[`open api parser suger simple 1`] = `
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -3152,6 +3832,16 @@ exports[`open api parser suger simple 1`] = `
                         ],
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -3168,8 +3858,15 @@ exports[`open api parser suger simple 1`] = `
                                 "state": "Disabled",
                               },
                             ],
+                            "markets": [
+                              {},
+                            ],
                             "priceSchedules": [
                               {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -3181,11 +3878,25 @@ exports[`open api parser suger simple 1`] = `
                                         "name": "sharedcore",
                                       },
                                     ],
+                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
                             "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -3195,6 +3906,9 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -3208,6 +3922,7 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -3224,11 +3939,17 @@ exports[`open api parser suger simple 1`] = `
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
+                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -3236,9 +3957,15 @@ exports[`open api parser suger simple 1`] = `
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -3306,6 +4033,9 @@ exports[`open api parser suger simple 1`] = `
                                   "paymentOption": {
                                     "type": "day",
                                   },
+                                  "prices": [
+                                    {},
+                                  ],
                                 },
                               ],
                             },
@@ -3318,6 +4048,9 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
                           "beneficiaries": [
                             {
                               "beneficiaryRecipients": [
@@ -3345,6 +4078,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3372,6 +4108,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3388,6 +4127,7 @@ exports[`open api parser suger simple 1`] = `
                           "privateOfferType": "customerPromotion",
                           "state": "draft",
                           "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
                           "validations": [
                             {
                               "code": "businessValidationError",
@@ -3396,6 +4136,16 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
                           "featureAvailabilities": [
                             {
                               "customMeters": [
@@ -3412,8 +4162,15 @@ exports[`open api parser suger simple 1`] = `
                                   "state": "Disabled",
                                 },
                               ],
+                              "markets": [
+                                {},
+                              ],
                               "priceSchedules": [
                                 {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
                                   "schedules": [
                                     {
                                       "priceCadence": {
@@ -3425,11 +4182,25 @@ exports[`open api parser suger simple 1`] = `
                                           "name": "sharedcore",
                                         },
                                       ],
+                                      "retailPrice": {},
                                     },
                                   ],
                                 },
                               ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
                               "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "durationType": "Minute",
                                 "type": "NoTrial",
                               },
@@ -3439,6 +4210,9 @@ exports[`open api parser suger simple 1`] = `
                           "resourceType": "AzureSkuVariant",
                           "state": "InActive",
                         },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
                         "commits": [
                           {
                             "timeUnit": "DAY",
@@ -3452,6 +4226,7 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
@@ -3468,11 +4243,17 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
@@ -3480,9 +4261,15 @@ exports[`open api parser suger simple 1`] = `
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
+                        "paymentInstallments": [
+                          {},
+                        ],
                         "visibility": "PRIVATE",
                       },
                       "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
                         "notifications": [
                           {
                             "action": "ACCEPT",
@@ -3550,6 +4337,9 @@ exports[`open api parser suger simple 1`] = `
                                   "paymentOption": {
                                     "type": "day",
                                   },
+                                  "prices": [
+                                    {},
+                                  ],
                                 },
                               ],
                             },
@@ -3562,6 +4352,9 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
                           "beneficiaries": [
                             {
                               "beneficiaryRecipients": [
@@ -3589,6 +4382,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3616,6 +4412,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3632,6 +4431,7 @@ exports[`open api parser suger simple 1`] = `
                           "privateOfferType": "customerPromotion",
                           "state": "draft",
                           "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
                           "validations": [
                             {
                               "code": "businessValidationError",
@@ -3640,6 +4440,16 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
                           "featureAvailabilities": [
                             {
                               "customMeters": [
@@ -3656,8 +4466,15 @@ exports[`open api parser suger simple 1`] = `
                                   "state": "Disabled",
                                 },
                               ],
+                              "markets": [
+                                {},
+                              ],
                               "priceSchedules": [
                                 {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
                                   "schedules": [
                                     {
                                       "priceCadence": {
@@ -3669,11 +4486,25 @@ exports[`open api parser suger simple 1`] = `
                                           "name": "sharedcore",
                                         },
                                       ],
+                                      "retailPrice": {},
                                     },
                                   ],
                                 },
                               ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
                               "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "durationType": "Minute",
                                 "type": "NoTrial",
                               },
@@ -3683,6 +4514,9 @@ exports[`open api parser suger simple 1`] = `
                           "resourceType": "AzureSkuVariant",
                           "state": "InActive",
                         },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
                         "commits": [
                           {
                             "timeUnit": "DAY",
@@ -3696,6 +4530,7 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
@@ -3712,11 +4547,17 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
@@ -3724,9 +4565,15 @@ exports[`open api parser suger simple 1`] = `
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
+                        "paymentInstallments": [
+                          {},
+                        ],
                         "visibility": "PRIVATE",
                       },
                       "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
                         "notifications": [
                           {
                             "action": "ACCEPT",
@@ -3806,6 +4653,9 @@ exports[`open api parser suger simple 1`] = `
                                   "paymentOption": {
                                     "type": "day",
                                   },
+                                  "prices": [
+                                    {},
+                                  ],
                                 },
                               ],
                             },
@@ -3818,6 +4668,9 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
                           "beneficiaries": [
                             {
                               "beneficiaryRecipients": [
@@ -3845,6 +4698,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3872,6 +4728,9 @@ exports[`open api parser suger simple 1`] = `
                                         "paymentOption": {
                                           "type": "day",
                                         },
+                                        "prices": [
+                                          {},
+                                        ],
                                       },
                                     ],
                                   },
@@ -3888,6 +4747,7 @@ exports[`open api parser suger simple 1`] = `
                           "privateOfferType": "customerPromotion",
                           "state": "draft",
                           "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
                           "validations": [
                             {
                               "code": "businessValidationError",
@@ -3896,6 +4756,16 @@ exports[`open api parser suger simple 1`] = `
                           ],
                         },
                         "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
                           "featureAvailabilities": [
                             {
                               "customMeters": [
@@ -3912,8 +4782,15 @@ exports[`open api parser suger simple 1`] = `
                                   "state": "Disabled",
                                 },
                               ],
+                              "markets": [
+                                {},
+                              ],
                               "priceSchedules": [
                                 {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
                                   "schedules": [
                                     {
                                       "priceCadence": {
@@ -3925,11 +4802,25 @@ exports[`open api parser suger simple 1`] = `
                                           "name": "sharedcore",
                                         },
                                       ],
+                                      "retailPrice": {},
                                     },
                                   ],
                                 },
                               ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
                               "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
                                 "durationType": "Minute",
                                 "type": "NoTrial",
                               },
@@ -3939,6 +4830,9 @@ exports[`open api parser suger simple 1`] = `
                           "resourceType": "AzureSkuVariant",
                           "state": "InActive",
                         },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
                         "commits": [
                           {
                             "timeUnit": "DAY",
@@ -3952,6 +4846,7 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
@@ -3968,11 +4863,17 @@ exports[`open api parser suger simple 1`] = `
                               "subscriptionPlans": [
                                 {
                                   "period": "ONE_YEAR",
+                                  "price": {},
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
                                   "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
@@ -3980,9 +4881,15 @@ exports[`open api parser suger simple 1`] = `
                             "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
+                        "paymentInstallments": [
+                          {},
+                        ],
                         "visibility": "PRIVATE",
                       },
                       "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
                         "notifications": [
                           {
                             "action": "ACCEPT",
@@ -4149,12 +5056,47 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "info": {
+                      "awsSaasProduct": {
+                        "Description": {},
+                        "Dimensions": [
+                          {},
+                        ],
+                        "PromotionalResources": {
+                          "AdditionalResources": [
+                            {},
+                          ],
+                        },
+                        "SupportInformation": {},
+                        "Versions": [
+                          {
+                            "DeliveryOptions": [
+                              {},
+                            ],
+                          },
+                        ],
+                      },
                       "awsSnsSubscriptions": [
                         {
                           "Status": "UNKNOWN",
                         },
                       ],
                       "azureProduct": {
+                        "availabilities": [
+                          {
+                            "emailAudiences": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "branches": [
+                          {},
+                        ],
+                        "externalIDs": [
+                          {},
+                        ],
                         "listings": [
                           {
                             "assets": [
@@ -4168,6 +5110,9 @@ exports[`open api parser suger simple 1`] = `
                                 "type": "CustomerSupport",
                               },
                             ],
+                            "listingUris": [
+                              {},
+                            ],
                             "resourceType": "AzureListing",
                           },
                         ],
@@ -4176,20 +5121,50 @@ exports[`open api parser suger simple 1`] = `
                             "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                           },
                         ],
+                        "properties": [
+                          {},
+                        ],
                         "setup": {
                           "callToAction": "free",
+                          "channelStates": [
+                            {},
+                          ],
                           "resourceType": "AzureProductSetup",
                           "sellingOption": "ListingOnly",
                         },
                         "submissions": [
                           {
+                            "pendingUpdateInfo": {},
                             "resourceType": "Submission",
+                            "resources": [
+                              {},
+                            ],
                             "state": "Inprogress",
                             "subState": "InDraft",
+                            "targets": [
+                              {},
+                            ],
+                            "variantResources": [
+                              {
+                                "resources": [
+                                  {},
+                                ],
+                              },
+                            ],
                           },
                         ],
                         "variants": [
                           {
+                            "azureGovernmentCertifications": [
+                              {
+                                "validationResults": [
+                                  {},
+                                ],
+                              },
+                            ],
+                            "extendedProperties": [
+                              {},
+                            ],
                             "featureAvailabilities": [
                               {
                                 "customMeters": [
@@ -4206,8 +5181,15 @@ exports[`open api parser suger simple 1`] = `
                                     "state": "Disabled",
                                   },
                                 ],
+                                "markets": [
+                                  {},
+                                ],
                                 "priceSchedules": [
                                   {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
                                     "schedules": [
                                       {
                                         "priceCadence": {
@@ -4219,11 +5201,25 @@ exports[`open api parser suger simple 1`] = `
                                             "name": "sharedcore",
                                           },
                                         ],
+                                        "retailPrice": {},
                                       },
                                     ],
                                   },
                                 ],
+                                "properties": [
+                                  {},
+                                ],
+                                "subscriptionAudiences": [
+                                  {},
+                                ],
+                                "tenantAudiences": [
+                                  {},
+                                ],
                                 "trial": {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
                                   "durationType": "Minute",
                                   "type": "NoTrial",
                                 },
@@ -4248,12 +5244,17 @@ exports[`open api parser suger simple 1`] = `
                               "recurringUnit": "Monthly",
                             },
                           ],
+                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "gcpProduct": {
                         "listingSpec": {
+                          "externalAccountSpec": {},
                           "listingType": "BillingIntegratedManagedService",
+                          "marketingSpec": {
+                            "supportSpec": {},
+                          },
                           "purchaseSpec": {
                             "metrics": [
                               {
@@ -4267,11 +5268,17 @@ exports[`open api parser suger simple 1`] = `
                                   "subscriptionPlans": [
                                     {
                                       "period": "ONE_YEAR",
+                                      "price": {},
                                       "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
                                   "usageFees": [
                                     {
+                                      "priceTiers": [
+                                        {
+                                          "price": {},
+                                        },
+                                      ],
                                       "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
@@ -4283,6 +5290,7 @@ exports[`open api parser suger simple 1`] = `
                         },
                         "marketplace": "marketplaces/google-cloud",
                         "serviceConfig": {
+                          "billing": {},
                           "metrics": [
                             {
                               "valueType": "VALUE_TYPE_UNSPECIFIED",
@@ -4332,7 +5340,9 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {},
+                  ],
                 },
               },
             ],
@@ -4372,12 +5382,47 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsSaasProduct": {
+                          "Description": {},
+                          "Dimensions": [
+                            {},
+                          ],
+                          "PromotionalResources": {
+                            "AdditionalResources": [
+                              {},
+                            ],
+                          },
+                          "SupportInformation": {},
+                          "Versions": [
+                            {
+                              "DeliveryOptions": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
                         "awsSnsSubscriptions": [
                           {
                             "Status": "UNKNOWN",
                           },
                         ],
                         "azureProduct": {
+                          "availabilities": [
+                            {
+                              "emailAudiences": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "branches": [
+                            {},
+                          ],
+                          "externalIDs": [
+                            {},
+                          ],
                           "listings": [
                             {
                               "assets": [
@@ -4391,6 +5436,9 @@ exports[`open api parser suger simple 1`] = `
                                   "type": "CustomerSupport",
                                 },
                               ],
+                              "listingUris": [
+                                {},
+                              ],
                               "resourceType": "AzureListing",
                             },
                           ],
@@ -4399,20 +5447,50 @@ exports[`open api parser suger simple 1`] = `
                               "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                             },
                           ],
+                          "properties": [
+                            {},
+                          ],
                           "setup": {
                             "callToAction": "free",
+                            "channelStates": [
+                              {},
+                            ],
                             "resourceType": "AzureProductSetup",
                             "sellingOption": "ListingOnly",
                           },
                           "submissions": [
                             {
+                              "pendingUpdateInfo": {},
                               "resourceType": "Submission",
+                              "resources": [
+                                {},
+                              ],
                               "state": "Inprogress",
                               "subState": "InDraft",
+                              "targets": [
+                                {},
+                              ],
+                              "variantResources": [
+                                {
+                                  "resources": [
+                                    {},
+                                  ],
+                                },
+                              ],
                             },
                           ],
                           "variants": [
                             {
+                              "azureGovernmentCertifications": [
+                                {
+                                  "validationResults": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                              "extendedProperties": [
+                                {},
+                              ],
                               "featureAvailabilities": [
                                 {
                                   "customMeters": [
@@ -4429,8 +5507,15 @@ exports[`open api parser suger simple 1`] = `
                                       "state": "Disabled",
                                     },
                                   ],
+                                  "markets": [
+                                    {},
+                                  ],
                                   "priceSchedules": [
                                     {
+                                      "dateTimeRange": {
+                                        "endAt": {},
+                                        "startAt": {},
+                                      },
                                       "schedules": [
                                         {
                                           "priceCadence": {
@@ -4442,11 +5527,25 @@ exports[`open api parser suger simple 1`] = `
                                               "name": "sharedcore",
                                             },
                                           ],
+                                          "retailPrice": {},
                                         },
                                       ],
                                     },
                                   ],
+                                  "properties": [
+                                    {},
+                                  ],
+                                  "subscriptionAudiences": [
+                                    {},
+                                  ],
+                                  "tenantAudiences": [
+                                    {},
+                                  ],
                                   "trial": {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
                                     "durationType": "Minute",
                                     "type": "NoTrial",
                                   },
@@ -4471,12 +5570,17 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "gcpProduct": {
                           "listingSpec": {
+                            "externalAccountSpec": {},
                             "listingType": "BillingIntegratedManagedService",
+                            "marketingSpec": {
+                              "supportSpec": {},
+                            },
                             "purchaseSpec": {
                               "metrics": [
                                 {
@@ -4490,11 +5594,17 @@ exports[`open api parser suger simple 1`] = `
                                     "subscriptionPlans": [
                                       {
                                         "period": "ONE_YEAR",
+                                        "price": {},
                                         "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                     "usageFees": [
                                       {
+                                        "priceTiers": [
+                                          {
+                                            "price": {},
+                                          },
+                                        ],
                                         "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
@@ -4506,6 +5616,7 @@ exports[`open api parser suger simple 1`] = `
                           },
                           "marketplace": "marketplaces/google-cloud",
                           "serviceConfig": {
+                            "billing": {},
                             "metrics": [
                               {
                                 "valueType": "VALUE_TYPE_UNSPECIFIED",
@@ -4555,12 +5666,47 @@ exports[`open api parser suger simple 1`] = `
                   "body": [
                     {
                       "info": {
+                        "awsSaasProduct": {
+                          "Description": {},
+                          "Dimensions": [
+                            {},
+                          ],
+                          "PromotionalResources": {
+                            "AdditionalResources": [
+                              {},
+                            ],
+                          },
+                          "SupportInformation": {},
+                          "Versions": [
+                            {
+                              "DeliveryOptions": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
                         "awsSnsSubscriptions": [
                           {
                             "Status": "UNKNOWN",
                           },
                         ],
                         "azureProduct": {
+                          "availabilities": [
+                            {
+                              "emailAudiences": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "branches": [
+                            {},
+                          ],
+                          "externalIDs": [
+                            {},
+                          ],
                           "listings": [
                             {
                               "assets": [
@@ -4574,6 +5720,9 @@ exports[`open api parser suger simple 1`] = `
                                   "type": "CustomerSupport",
                                 },
                               ],
+                              "listingUris": [
+                                {},
+                              ],
                               "resourceType": "AzureListing",
                             },
                           ],
@@ -4582,20 +5731,50 @@ exports[`open api parser suger simple 1`] = `
                               "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                             },
                           ],
+                          "properties": [
+                            {},
+                          ],
                           "setup": {
                             "callToAction": "free",
+                            "channelStates": [
+                              {},
+                            ],
                             "resourceType": "AzureProductSetup",
                             "sellingOption": "ListingOnly",
                           },
                           "submissions": [
                             {
+                              "pendingUpdateInfo": {},
                               "resourceType": "Submission",
+                              "resources": [
+                                {},
+                              ],
                               "state": "Inprogress",
                               "subState": "InDraft",
+                              "targets": [
+                                {},
+                              ],
+                              "variantResources": [
+                                {
+                                  "resources": [
+                                    {},
+                                  ],
+                                },
+                              ],
                             },
                           ],
                           "variants": [
                             {
+                              "azureGovernmentCertifications": [
+                                {
+                                  "validationResults": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                              "extendedProperties": [
+                                {},
+                              ],
                               "featureAvailabilities": [
                                 {
                                   "customMeters": [
@@ -4612,8 +5791,15 @@ exports[`open api parser suger simple 1`] = `
                                       "state": "Disabled",
                                     },
                                   ],
+                                  "markets": [
+                                    {},
+                                  ],
                                   "priceSchedules": [
                                     {
+                                      "dateTimeRange": {
+                                        "endAt": {},
+                                        "startAt": {},
+                                      },
                                       "schedules": [
                                         {
                                           "priceCadence": {
@@ -4625,11 +5811,25 @@ exports[`open api parser suger simple 1`] = `
                                               "name": "sharedcore",
                                             },
                                           ],
+                                          "retailPrice": {},
                                         },
                                       ],
                                     },
                                   ],
+                                  "properties": [
+                                    {},
+                                  ],
+                                  "subscriptionAudiences": [
+                                    {},
+                                  ],
+                                  "tenantAudiences": [
+                                    {},
+                                  ],
                                   "trial": {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
                                     "durationType": "Minute",
                                     "type": "NoTrial",
                                   },
@@ -4654,12 +5854,17 @@ exports[`open api parser suger simple 1`] = `
                                 "recurringUnit": "Monthly",
                               },
                             ],
+                            "usageCount": {},
                             "valueType": "VALUE_TYPE_UNSPECIFIED",
                           },
                         ],
                         "gcpProduct": {
                           "listingSpec": {
+                            "externalAccountSpec": {},
                             "listingType": "BillingIntegratedManagedService",
+                            "marketingSpec": {
+                              "supportSpec": {},
+                            },
                             "purchaseSpec": {
                               "metrics": [
                                 {
@@ -4673,11 +5878,17 @@ exports[`open api parser suger simple 1`] = `
                                     "subscriptionPlans": [
                                       {
                                         "period": "ONE_YEAR",
+                                        "price": {},
                                         "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                     "usageFees": [
                                       {
+                                        "priceTiers": [
+                                          {
+                                            "price": {},
+                                          },
+                                        ],
                                         "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
@@ -4689,6 +5900,7 @@ exports[`open api parser suger simple 1`] = `
                           },
                           "marketplace": "marketplaces/google-cloud",
                           "serviceConfig": {
+                            "billing": {},
                             "metrics": [
                               {
                                 "valueType": "VALUE_TYPE_UNSPECIFIED",
@@ -4880,7 +6092,21 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "revenueRecordDetails": [
+                      {
+                        "awsRevenueRecordDetail": {
+                          "insertDate": {},
+                          "invoiceDate": {},
+                          "paymentDueDate": {},
+                          "usagePeriodEndDate": {},
+                          "usagePeriodStartDate": {},
+                        },
+                        "azureRevenueRecordDetail": {},
+                        "gcpRevenueRecordDetail": {},
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -4952,7 +6178,29 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "revenueRecords": [
+                      {
+                        "info": {
+                          "awsRevenueRecords": [
+                            {
+                              "insertDate": {},
+                              "invoiceDate": {},
+                              "paymentDueDate": {},
+                              "usagePeriodEndDate": {},
+                              "usagePeriodStartDate": {},
+                            },
+                          ],
+                          "azureRevenueRecords": [
+                            {},
+                          ],
+                          "gcpRevenueRecords": [
+                            {},
+                          ],
+                        },
+                      },
+                    ],
+                  },
                 },
               },
             ],

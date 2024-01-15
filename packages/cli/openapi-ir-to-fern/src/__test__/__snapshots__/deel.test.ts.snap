@@ -450,7 +450,19 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "client_legal_entity": {},
+                        "employments": [
+                          {
+                            "client_legal_entity": {},
+                            "payment": {},
+                            "team": {},
+                          },
+                        ],
+                        "monthly_payment": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -1476,7 +1488,10 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "data": {
-                    "client": {},
+                    "client": {
+                      "legal_entity": {},
+                      "team": {},
+                    },
                     "compensation_details": {},
                     "employee": {
                       "address": {
@@ -1507,12 +1522,18 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
+                      "client": {
+                        "legal_entity": {},
+                      },
+                      "compensation_details": {},
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "employee": {},
                       "employment": {
                         "end_date": "1999-12-31",
                         "scope_of_work": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
                         "start_date": "1999-12-31",
                       },
+                      "health_plan": {},
                       "job_title": "Designer",
                       "seniority": {
                         "id": 2,
@@ -3322,6 +3343,9 @@ exports[`open api parser deel simple 1`] = `
                       {
                         "applied_changes": [
                           {
+                            "attachments": [
+                              {},
+                            ],
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
                             "denial_reason": "No time off available",
@@ -3345,7 +3369,13 @@ exports[`open api parser deel simple 1`] = `
                             "type": "VACATION",
                           },
                         ],
+                        "attachments": [
+                          {},
+                        ],
                         "change_request": {
+                          "attachments": [
+                            {},
+                          ],
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
                           "denial_reason": "No time off available",
