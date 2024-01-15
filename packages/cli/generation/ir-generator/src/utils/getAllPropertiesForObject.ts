@@ -49,14 +49,18 @@ export function getAllPropertiesForObject({
     // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
-}): ObjectPropertyWithPath[] {
-    const properties: ObjectPropertyWithPath[] = [];
+}): {
+    properties: ObjectPropertyWithPath[];
+    warnings: string[];
+} {
+    const properties: Record<string, ObjectPropertyWithPath> = {}; // keyed by name
+    const warnings: string[] = [];
 
     // prevent infinite looping
     if (typeName != null) {
         const seenAtFilepath = (seen[filepathOfDeclaration] ??= new Set());
         if (seenAtFilepath.has(typeName)) {
-            return properties;
+            return { properties: Object.values(properties), warnings };
         }
         seenAtFilepath.add(typeName);
     }
@@ -68,27 +72,7 @@ export function getAllPropertiesForObject({
         rootApiFile: workspace.definition.rootApiFile.contents
     });
 
-    if (objectDeclaration.properties != null) {
-        for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
-            const propertyType =
-                typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
-            const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
-            if (resolvedPropertyType != null) {
-                properties.push({
-                    wireKey: propertyKey,
-                    name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
-                    filepathOfDeclaration,
-                    path,
-                    propertyType,
-                    resolvedPropertyType,
-                    isOptional:
-                        resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "optional"
-                });
-            }
-        }
-    }
-
+    // first, add properties from any extensions
     if (objectDeclaration.extends != null) {
         const extensions =
             typeof objectDeclaration.extends === "string" ? [objectDeclaration.extends] : objectDeclaration.extends;
@@ -104,8 +88,7 @@ export function getAllPropertiesForObject({
             ) {
                 const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
                 if (definitionFile != null) {
-                    properties.push(
-                        ...getAllPropertiesForObject({
+                    const { properties: extendedProperties, warnings: extendedWarnings } = getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
@@ -126,14 +109,43 @@ export function getAllPropertiesForObject({
                                 )
                             ],
                             seen
-                        })
-                    );
+                        });
+                    extendedProperties.forEach((property) => {
+                        properties[property.name] = property;
+                    });
+                    warnings.push(...extendedWarnings);
                 }
             }
         }
     }
 
-    return properties;
+    // then, add properties from the object itself
+    if (objectDeclaration.properties != null) {
+        for (const [propertyKey, propertyDeclaration] of Object.entries(objectDeclaration.properties)) {
+            const propertyType =
+                typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
+            const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
+            if (resolvedPropertyType != null) {
+                const propertyName = getPropertyName({ propertyKey, property: propertyDeclaration }).name;
+                if (properties[propertyName] != null) {
+                    warnings.push(`Duplicate property name "${propertyName}" on object "${typeName ?? "inline"}" at ${filepathOfDeclaration}`);
+                }
+                properties[propertyName] = {
+                    wireKey: propertyKey,
+                    name: propertyName,
+                    filepathOfDeclaration,
+                    path,
+                    propertyType,
+                    resolvedPropertyType,
+                    isOptional:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "optional"
+                };
+            }
+        }
+    }
+
+    return { properties: Object.values(properties), warnings };
 }
 
 export function getAllPropertiesForType({
@@ -168,7 +180,7 @@ export function getAllPropertiesForType({
         definitionFile,
         workspace,
         typeResolver
-    });
+    }).properties;
 }
 
 export function convertObjectPropertyWithPathToString({

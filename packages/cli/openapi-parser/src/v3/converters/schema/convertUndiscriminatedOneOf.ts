@@ -3,6 +3,7 @@ import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaEqual } from "../../utils/isSchemaEqual";
 import { convertSchema } from "../convertSchemas";
@@ -33,6 +34,8 @@ export function convertUndiscriminatedOneOf({
         if (!isReferenceObject(schema) && schema.enum != null) {
             return schema.enum.map((enumValue) => {
                 return SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName([generatedName, enumValue]),
                     value: {
                         type: "string",
                         string: enumValue
@@ -178,6 +181,8 @@ export function wrapUndiscriminantedOneOf({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.oneOf({
                 type: "undisciminated",
                 description,

@@ -53,14 +53,14 @@ export function buildTypeDeclaration({
         case "reference":
             return buildReferenceTypeDeclaration({ schema, context, declarationFile });
         case "unknown":
-            return buildUnknownTypeDeclaration();
+            return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
         case "optional":
         case "nullable":
             return buildOptionalTypeDeclaration({ schema, context, declarationFile });
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
-            return buildLiteralTypeDeclaration(schema.value);
+            return buildLiteralTypeDeclaration(schema.value, schema.nameOverride, schema.generatedName);
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
@@ -185,7 +185,10 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllProperties(context: OpenApiIrConverterContext, schemaId: SchemaId): {
+function getAllProperties(
+    context: OpenApiIrConverterContext,
+    schemaId: SchemaId
+): {
     properties: ObjectProperty[];
     allOf: ReferencedSchema[];
 } {
@@ -208,7 +211,7 @@ export function buildArrayTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, context })
     };
 }
@@ -223,14 +226,14 @@ export function buildMapTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, context })
     };
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildPrimitiveTypeReference(schema)
     };
 }
@@ -292,21 +295,28 @@ export function buildOptionalTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildOptionalTypeReference({ schema, context, fileContainingReference: declarationFile })
     };
 }
 
-export function buildUnknownTypeDeclaration(): ConvertedTypeDeclaration {
+export function buildUnknownTypeDeclaration(
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildUnknownTypeReference()
     };
 }
 
-export function buildLiteralTypeDeclaration(value: LiteralSchemaValue): ConvertedTypeDeclaration {
+export function buildLiteralTypeDeclaration(
+    value: LiteralSchemaValue,
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildLiteralTypeReference(value)
     };
 }

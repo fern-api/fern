@@ -23,7 +23,15 @@ export function buildQueryParameter({
         return undefined;
     }
 
-    const queryParameterType = getTypeFromTypeReference(typeReference.value);
+    let queryParameterType = getTypeFromTypeReference(typeReference.value);
+
+    // we can assume unknown-typed query parameteters are strings by default
+    if (queryParameterType === "unknown") {
+        queryParameterType = "string";
+    } else if (queryParameterType === "optional<unknown>") {
+        queryParameterType = "optional<string>";
+    }
+
     if (
         queryParameter.description == null &&
         !typeReference.allowMultiple &&
@@ -73,6 +81,8 @@ function getQueryParameterTypeReference({
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         groupName: undefined
@@ -122,6 +132,8 @@ function getQueryParameterTypeReference({
                 return {
                     value: buildTypeReference({
                         schema: Schema.optional({
+                            nameOverride: schema.nameOverride,
+                            generatedName: schema.generatedName,
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             groupName: undefined
@@ -137,6 +149,8 @@ function getQueryParameterTypeReference({
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
                         value: schema.value.value,
                         description: schema.description,
                         groupName: undefined
@@ -169,7 +183,13 @@ function getQueryParameterTypeReference({
             // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
-                    schema: Schema.optional({ value: oneOfSchema, description: undefined, groupName: undefined }),
+                    schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
+                        value: oneOfSchema,
+                        description: undefined,
+                        groupName: undefined
+                    }),
                     context,
                     fileContainingReference
                 });
@@ -190,7 +210,13 @@ function getQueryParameterTypeReference({
     if (schema.type === "array") {
         return {
             value: buildTypeReference({
-                schema: Schema.optional({ value: schema.value, description: schema.description, groupName: undefined }),
+                schema: Schema.optional({
+                    nameOverride: schema.nameOverride,
+                    generatedName: schema.generatedName,
+                    value: schema.value,
+                    description: schema.description,
+                    groupName: undefined
+                }),
                 context,
                 fileContainingReference
             }),

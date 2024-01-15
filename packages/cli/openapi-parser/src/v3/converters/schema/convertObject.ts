@@ -102,11 +102,15 @@ export function convertObject({
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
         const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
+        const propertyBreadcrumbs = [...breadcrumbs, propertyName];
+        const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
         const schema = isRequired
-            ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
+            ? convertSchema(propertySchema, false, context, propertyBreadcrumbs)
             : SchemaWithExample.optional({
+                  nameOverride,
+                  generatedName,
                   description: undefined,
-                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+                  value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
                   groupName
               });
 
@@ -182,6 +186,8 @@ export function wrapObject({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.object({
                 description,
                 properties,

@@ -3,12 +3,16 @@ import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/o
 import { wrapPrimitive } from "../convertSchemas";
 
 export function convertNumber({
+    nameOverride,
+    generatedName,
     format,
     description,
     wrapAsNullable,
     example,
     groupName
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     format: string | undefined;
     description: string | undefined;
     wrapAsNullable: boolean;
@@ -17,6 +21,8 @@ export function convertNumber({
 }): SchemaWithExample {
     if (format == null || format === "double") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.double({
                 example
             }),
@@ -26,6 +32,8 @@ export function convertNumber({
         });
     } else if (format === "float") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
@@ -35,6 +43,8 @@ export function convertNumber({
         });
     } else if (format === "int32") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
                 example
             }),
@@ -44,6 +54,8 @@ export function convertNumber({
         });
     } else if (format === "int64") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.int64({
                 example
             }),
@@ -53,6 +65,8 @@ export function convertNumber({
         });
     } else if (format === "time-delta") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
@@ -62,6 +76,8 @@ export function convertNumber({
         });
     }
     return wrapPrimitive({
+            nameOverride,
+            generatedName,
         primitive: PrimitiveSchemaValueWithExample.float({
             example
         }),

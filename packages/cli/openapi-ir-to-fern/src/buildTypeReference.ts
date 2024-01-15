@@ -299,16 +299,18 @@ function getPrefixedType({
 }
 
 function getSchemaName(schema: Schema): string | undefined {
-    if (schema.type === "object") {
-        return schema.nameOverride ?? schema.generatedName;
-    } else if (schema.type === "enum") {
-        return schema.nameOverride ?? schema.generatedName;
-    } else if (schema.type === "oneOf") {
-        return schema.oneOf.nameOverride ?? schema.oneOf.generatedName;
-    } else if (schema.type === "reference") {
-        return schema.nameOverride ?? schema.generatedName;
-    } else if (schema.type === "nullable") {
-        return getSchemaName(schema.value);
-    }
-    return undefined;
+    return Schema._visit(schema, {
+        primitive: s => s.nameOverride ?? s.generatedName,
+        object: s => s.nameOverride ?? s.generatedName,
+        array: s => s.nameOverride ?? s.generatedName,
+        map: s => s.nameOverride ?? s.generatedName,
+        enum: s => s.nameOverride ?? s.generatedName,
+        reference: s => s.nameOverride ?? s.generatedName,
+        literal: s => s.nameOverride ?? s.generatedName,
+        oneOf: s => s.nameOverride ?? s.generatedName,
+        optional: s => s.nameOverride ?? s.generatedName,
+        nullable: s => s.nameOverride ?? s.generatedName,
+        unknown: s => s.nameOverride ?? s.generatedName,
+        _unknown: () => undefined,
+    });
 }
