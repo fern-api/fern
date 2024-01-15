@@ -137,12 +137,22 @@ export class ExampleTypeFactory {
                 for (const [property, schema] of Object.entries(allProperties)) {
                     const required = property in requiredProperties;
                     if (required && fullExample[property] != null) {
-                        const propertyExample = this.buildExample(schema, fullExample[property]);
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds
+                        });
                         if (propertyExample != null) {
                             result[property] = propertyExample;
                         }
                     } else {
-                        const propertyExample = this.buildExample(schema, undefined);
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds
+                        });
                         if (propertyExample != null) {
                             result[property] = propertyExample;
                         } else if (required) {
