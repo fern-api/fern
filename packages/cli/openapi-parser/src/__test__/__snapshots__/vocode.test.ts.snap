@@ -560,7 +560,29 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
+        },
+      ],
       "generatedRequestName": "GetRecordingRequest",
       "headers": [],
       "internal": undefined,

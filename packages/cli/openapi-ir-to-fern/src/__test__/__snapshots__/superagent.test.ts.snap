@@ -48,6 +48,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "agentId": "agent-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/v1/agents/{agentId}",
             "path-parameters": {
@@ -65,6 +78,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "agentId": "agent-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/agents/{agentId}",
             "path-parameters": {
@@ -79,6 +105,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List All Agents",
             "docs": "List all agents",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/agents",
             "response": {
@@ -92,6 +129,19 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "Patch a specific agent",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "agentId": "agent-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/api/v1/agents/{agentId}",
@@ -112,6 +162,21 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "Invoke a specific agent",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "agentId": "agent-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "input": {},
+                },
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/api/v1/agents/{agentId}/predict",
@@ -176,6 +241,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "tokenId": "token-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/v1/api-tokens/{tokenId}",
             "path-parameters": {
@@ -193,6 +271,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "tokenId": "token-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/api-tokens/{tokenId}",
             "path-parameters": {
@@ -207,6 +298,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List Api Tokens",
             "docs": "List all API tokens",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/api-tokens",
             "response": {
@@ -325,6 +427,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "documentId": "document-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/v1/documents/{documentId}",
             "path-parameters": {
@@ -342,6 +457,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "documentId": "document-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/documents/{documentId}",
             "path-parameters": {
@@ -356,6 +484,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List Documents",
             "docs": "List all documents",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/documents",
             "response": {
@@ -407,6 +546,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "promptId": "prompt-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/v1/prompts/{promptId}",
             "path-parameters": {
@@ -424,6 +576,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "promptId": "prompt-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/prompts/{promptId}",
             "path-parameters": {
@@ -438,6 +603,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List Prompts",
             "docs": "List all prompts",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/prompts",
             "response": {
@@ -451,6 +627,19 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "Patch a specific prompt",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "promptId": "prompt-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/api/v1/prompts/{promptId}",
@@ -509,6 +698,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "toolId": "tool-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/v1/tools/{toolId}",
             "path-parameters": {
@@ -526,6 +728,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "toolId": "tool-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/tools/{toolId}",
             "path-parameters": {
@@ -540,6 +755,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List Tools",
             "docs": "List all tools",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/tools",
             "response": {
@@ -559,6 +785,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "List Agent Traces",
             "docs": "List all agent traces",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/traces",
             "response": {
@@ -584,6 +821,19 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "userId": "user-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/users/{userId}",
             "path-parameters": {
@@ -598,6 +848,17 @@ exports[`open api parser superagent simple 1`] = `
             "auth": true,
             "display-name": "Read User Me",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v1/users/me",
             "response": {

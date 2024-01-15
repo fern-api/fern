@@ -7,6 +7,7 @@ import {
     PrimitiveSchemaValueWithExample,
     SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
+import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsObject } from "./getFullExample";
 
 export class ExampleTypeFactory {
@@ -75,7 +76,17 @@ export class ExampleTypeFactory {
             case "oneOf":
                 return undefined;
             case "unknown":
-                return undefined;
+                if (example != null) {
+                    const fullExample = convertToFullExample(example);
+                    if (fullExample != null) {
+                        return FullExample.unknown(fullExample);
+                    }
+                }
+                if (isOptional) {
+                    return undefined;
+                } else {
+                    return FullExample.map([]);
+                }
             case "array": {
                 const itemExample = this.buildExampleHelper({
                     example,
