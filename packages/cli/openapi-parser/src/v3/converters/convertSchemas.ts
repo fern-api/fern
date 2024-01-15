@@ -498,26 +498,45 @@ export function convertSchemaObject(
                 return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
             }
 
-            for (const allOfElement of schema.allOf) {
-                const resolvedAllOfElement = isReferenceObject(allOfElement)
-                    ? context.resolveSchemaReference(allOfElement)
-                    : allOfElement;
+            if (hasNoProperties(schema)) {
+                // literals should be considered before primitives.
+                // ("string" AND "literal<'example'>") should become a literal
+                for (const allOfElement of schema.allOf) {
+                    const resolvedAllOfElement = isReferenceObject(allOfElement)
+                        ? context.resolveSchemaReference(allOfElement)
+                        : allOfElement;
 
-                if (
-                    resolvedAllOfElement.enum != null &&
-                    resolvedAllOfElement.enum.length === 1 &&
-                    resolvedAllOfElement.type !== "object"
-                ) {
-                    // TODO: check if there are any other enums.
-                    // if so, we should convert this as a union
-                    return convertLiteral({
-                        nameOverride,
-                        generatedName,
-                        wrapAsNullable,
-                        value: resolvedAllOfElement.enum[0],
-                        description,
-                        groupName
-                    });
+                    if (
+                        resolvedAllOfElement.enum != null &&
+                        resolvedAllOfElement.enum.length === 1 &&
+                        resolvedAllOfElement.type !== "object"
+                    ) {
+                        // TODO: check if there are any other enums.
+                        // if so, we should convert this as a union
+                        return convertLiteral({
+                            nameOverride,
+                            generatedName,
+                            wrapAsNullable,
+                            value: resolvedAllOfElement.enum[0],
+                            description,
+                            groupName
+                        });
+                    }
+                }
+
+                // then, if there are no literals, check if there are any non-objects
+                // since only objects can be extended.
+                // NOTE: this is an incomplete implementation
+                for (const allOfElement of schema.allOf) {
+                    const resolvedAllOfElement = isReferenceObject(allOfElement)
+                        ? context.resolveSchemaReference(allOfElement)
+                        : allOfElement;
+
+                    // TODO: check if there are any other non-object and non-enum elements
+                    // TODO: check if one of these are maps.
+                    if (resolvedAllOfElement.type !== "object" && resolvedAllOfElement.enum == null) {
+                        return convertSchema(allOfElement, wrapAsNullable, context, breadcrumbs, referencedAsRequest);
+                    }
                 }
             }
         }
