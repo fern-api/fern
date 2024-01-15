@@ -20875,7 +20875,120 @@ If you try to access older information than what we can access, we will return a
                         "type": "literal",
                       },
                       "income_streams": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "account_id": {
+                                "primitive": {
+                                  "string": "EBACA-89077589",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "average_income_amount": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "confidence": {
+                                "enum": "HIGH",
+                                "type": "enum",
+                              },
+                              "currency": {
+                                "primitive": {
+                                  "string": "BRL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "frequency": {
+                                "enum": "MONTHLY",
+                                "type": "enum",
+                              },
+                              "full_periods": {
+                                "primitive": {
+                                  "int": 12,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "income_type": {
+                                "enum": "SALARY",
+                                "type": "enum",
+                              },
+                              "last_income_amount": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "last_income_date": {
+                                "primitive": {
+                                  "string": "2022-02-09",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "last_income_description": {
+                                "map": [],
+                                "type": "map",
+                              },
+                              "lookback_periods": {
+                                "primitive": {
+                                  "int": 4,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "monthly_average": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "number_of_incomes": {
+                                "primitive": {
+                                  "int": 4,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "periods_with_income": {
+                                "primitive": {
+                                  "int": 3,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "regularity": {
+                                "primitive": {
+                                  "float": 0.75,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "stability": {
+                                "primitive": {
+                                  "float": 1,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "trend": {
+                                "primitive": {
+                                  "float": 0,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "last_transaction_date": {
@@ -21306,7 +21419,120 @@ If you try to access older information than what we can access, we will return a
                 "type": "literal",
               },
               "income_streams": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "account_id": {
+                        "primitive": {
+                          "string": "EBACA-89077589",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "average_income_amount": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "confidence": {
+                        "enum": "HIGH",
+                        "type": "enum",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "BRL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "frequency": {
+                        "enum": "MONTHLY",
+                        "type": "enum",
+                      },
+                      "full_periods": {
+                        "primitive": {
+                          "int": 12,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "income_type": {
+                        "enum": "SALARY",
+                        "type": "enum",
+                      },
+                      "last_income_amount": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_income_date": {
+                        "primitive": {
+                          "string": "2022-02-09",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_income_description": {
+                        "map": [],
+                        "type": "map",
+                      },
+                      "lookback_periods": {
+                        "primitive": {
+                          "int": 4,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "monthly_average": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "number_of_incomes": {
+                        "primitive": {
+                          "int": 4,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "periods_with_income": {
+                        "primitive": {
+                          "int": 3,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "regularity": {
+                        "primitive": {
+                          "float": 0.75,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "stability": {
+                        "primitive": {
+                          "float": 1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "trend": {
+                        "primitive": {
+                          "float": 0,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "last_transaction_date": {
@@ -21608,7 +21834,120 @@ If you try to access older information than what we can access, we will return a
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 12,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 3,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -21894,7 +22233,120 @@ If you try to access older information than what we can access, we will return a
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 12,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 3,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -34790,7 +35242,120 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 12,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 4,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 3,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -35486,6 +36051,62 @@ For example:
                 },
                 "type": "primitive",
               },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "auth_header": {
+                        "primitive": {
+                          "string": "Authorization",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "auth_token": {
+                        "primitive": {
+                          "string": "*******",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-02-09T08:45:50.406032Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_by": {
+                        "primitive": {
+                          "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "map": [],
+                        "type": "map",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "https://mycompany.com/security/webhook",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -35573,7 +36194,59 @@ For example:
             "type": "object",
           },
           "response": {
-            "array": [],
+            "array": [
+              {
+                "properties": {
+                  "auth_header": {
+                    "primitive": {
+                      "string": "Authorization",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "auth_token": {
+                    "primitive": {
+                      "string": "*******",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2022-02-09T08:45:50.406032Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_by": {
+                    "primitive": {
+                      "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "map": [],
+                    "type": "map",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "https://mycompany.com/security/webhook",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
             "type": "array",
           },
         },
@@ -35636,7 +36309,76 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "a3b92311-1888-449f-acaa-49ae28d68fcd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "*******",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "map": [],
+                "type": "map",
+              },
+              "url": {
+                "primitive": {
+                  "string": "https://mycompany.com/security/webhook",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailPaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,

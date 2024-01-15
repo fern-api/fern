@@ -6741,7 +6741,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "type",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
+        },
+      ],
       "generatedRequestName": "RulesGetEventSchemaRequest",
       "headers": [],
       "internal": undefined,

@@ -12009,7 +12009,119 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "primitive": {
+                  "string": "{"company": "Lime", "model": "Gen 2.5"}",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "multipart_form_data": {
+                "array": [
+                  {
+                    "properties": {
+                      "content_type": {
+                        "primitive": {
+                          "string": "application/pdf",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "primitive": {
+                          "string": "SW50ZWdyYXRlIGZhc3QKSW50ZWdyYXRlIG9uY2U=",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "file_name": {
+                        "primitive": {
+                          "string": "resume.pdf",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "resume",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "path": {
+                "primitive": {
+                  "string": "/scooters",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "request_format": {
+                "enum": "JSON",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "method": {
+                "primitive": {
+                  "string": "GET",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "path": {
+                "primitive": {
+                  "string": "/scooters",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "response": {
+                "map": [],
+                "type": "map",
+              },
+              "status": {
+                "primitive": {
+                  "int": 200,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PassthroughCreateRequest",
       "headers": [
         {
