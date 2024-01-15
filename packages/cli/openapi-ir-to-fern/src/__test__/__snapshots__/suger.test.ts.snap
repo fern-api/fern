@@ -61,6 +61,40 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "buyerId": "buyer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsBuyer": {
+                        "companyInfo": {},
+                      },
+                      "azureBuyer": {
+                        "buyerInfo": {},
+                        "companyInfo": {},
+                      },
+                      "gcpBuyer": {
+                        "approvals": [
+                          {
+                            "state": "STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "userInfo": {},
+                      },
+                    },
+                    "partner": "AWS",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
@@ -94,7 +128,29 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsBuyer": {
+                          "companyInfo": {},
+                        },
+                        "azureBuyer": {
+                          "buyerInfo": {},
+                          "companyInfo": {},
+                        },
+                        "gcpBuyer": {
+                          "approvals": [
+                            {
+                              "state": "STATE_UNSPECIFIED",
+                            },
+                          ],
+                          "state": "ACCOUNT_STATE_UNSPECIFIED",
+                          "userInfo": {},
+                        },
+                      },
+                      "partner": "AWS",
+                    },
+                  ],
                 },
               },
             ],
@@ -117,6 +173,40 @@ exports[`open api parser suger simple 1`] = `
             "docs": "update buyer name and description by the given organization and buyer id",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "buyerId": "buyer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsBuyer": {
+                        "companyInfo": {},
+                      },
+                      "azureBuyer": {
+                        "buyerInfo": {},
+                        "companyInfo": {},
+                      },
+                      "gcpBuyer": {
+                        "approvals": [
+                          {
+                            "state": "STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "userInfo": {},
+                      },
+                    },
+                    "partner": "AWS",
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/buyer/{buyerId}",
@@ -206,6 +296,102 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                          "term": {},
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "consumers": [
+                            {},
+                          ],
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
@@ -239,7 +425,91 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
                 },
               },
             ],
@@ -273,7 +543,91 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
                 },
               },
             ],
@@ -311,7 +665,91 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
                 },
               },
             ],
@@ -349,7 +787,91 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
                 },
               },
             ],
@@ -387,7 +909,91 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
                 },
               },
             ],
@@ -414,6 +1020,102 @@ exports[`open api parser suger simple 1`] = `
             "docs": "Update the name of the given Entitlement",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                          "term": {},
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "consumers": [
+                            {},
+                          ],
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
@@ -471,6 +1173,105 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "entitlementTermId": "entitlement-term-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "entitlementInfo": {
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "beneficiary": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "purchaser": {
+                            "buyerInfo": {},
+                            "companyInfo": {},
+                          },
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                          "term": {},
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "consumers": [
+                            {},
+                          ],
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                    },
+                    "info": {
+                      "type": "",
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
@@ -509,7 +1310,93 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "entitlementInfo": {
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "beneficiary": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "purchaser": {
+                              "buyerInfo": {},
+                              "companyInfo": {},
+                            },
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                            "term": {},
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "consumers": [
+                              {},
+                            ],
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                      },
+                      "info": {
+                        "type": "",
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
                 },
               },
             ],
@@ -612,6 +1499,50 @@ exports[`open api parser suger simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsAceIntegration": {
+                        "credential": {},
+                      },
+                      "awsIntegration": {},
+                      "azureIntegration": {
+                        "credential": {},
+                      },
+                      "gcpIntegration": {},
+                      "hubspotCrmIntegration": {
+                        "credential": {},
+                      },
+                      "salesforceCrmIntegration": {
+                        "credential": {},
+                        "filters": [
+                          {},
+                        ],
+                      },
+                      "slackIntegration": {
+                        "authedUser": {},
+                        "enterprise": {},
+                        "incomingWebhook": {},
+                        "team": {},
+                      },
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "CREATED",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -649,7 +1580,38 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsAceIntegration": {
+                          "credential": {},
+                        },
+                        "awsIntegration": {},
+                        "azureIntegration": {
+                          "credential": {},
+                        },
+                        "gcpIntegration": {},
+                        "hubspotCrmIntegration": {
+                          "credential": {},
+                        },
+                        "salesforceCrmIntegration": {
+                          "credential": {},
+                          "filters": [
+                            {},
+                          ],
+                        },
+                        "slackIntegration": {
+                          "authedUser": {},
+                          "enterprise": {},
+                          "incomingWebhook": {},
+                          "team": {},
+                        },
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "CREATED",
+                    },
+                  ],
                 },
               },
             ],
@@ -830,6 +1792,22 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "usageRecordGroupId": "usage-record-group-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "metaInfo": {},
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
@@ -853,6 +1831,71 @@ exports[`open api parser suger simple 1`] = `
             "docs": "get the usageRecordReport for a given organization and usageRecordReport ID.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "usageRecordReportId": "usage-record-report-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsMeteringResponse": {
+                        "results": [
+                          {
+                            "status": "Success",
+                            "usageRecord": {
+                              "usageAllocations": [
+                                {
+                                  "tags": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "unprocessedRecords": [
+                          {
+                            "usageAllocations": [
+                              {
+                                "tags": [
+                                  {},
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      "azureMeteringResponse": {
+                        "result": [
+                          {
+                            "error": {
+                              "additionalInfo": {
+                                "acceptedMessage": {
+                                  "status": "Accepted",
+                                },
+                              },
+                            },
+                            "status": "Accepted",
+                          },
+                        ],
+                      },
+                      "gcpMeteringResponse": {
+                        "reportErrors": [
+                          {
+                            "status": {},
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
@@ -878,6 +1921,26 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -925,6 +1988,25 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -966,6 +2048,26 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordGroups": [
+                      {
+                        "metaInfo": {},
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -1012,6 +2114,75 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -1063,6 +2234,74 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -1104,6 +2343,75 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                                "usageRecord": {
+                                  "usageAllocations": [
+                                    {
+                                      "tags": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                            "unprocessedRecords": [
+                              {
+                                "usageAllocations": [
+                                  {
+                                    "tags": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                          "gcpMeteringResponse": {
+                            "reportErrors": [
+                              {
+                                "status": {},
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -1233,6 +2541,551 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "info": {
+                    "azureOriginalPlan": {
+                      "pricing": {
+                        "customMeters": {
+                          "priceInputOption": "perMarket",
+                        },
+                        "recurrentPrice": {
+                          "priceInputOption": "perMarket",
+                          "prices": [
+                            {
+                              "billingTerm": {
+                                "type": "day",
+                              },
+                              "paymentOption": {
+                                "type": "day",
+                              },
+                              "prices": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
+                      },
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azurePrivateOffer": {
+                      "acceptanceLinks": [
+                        {},
+                      ],
+                      "beneficiaries": [
+                        {
+                          "beneficiaryRecipients": [
+                            {
+                              "recipientType": "cspCustomer",
+                            },
+                          ],
+                        },
+                      ],
+                      "pricing": [
+                        {
+                          "discountType": "percentage",
+                          "originalPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                    "prices": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                          "planType": "FLAT_RATE",
+                          "privateOfferPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                    "prices": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "privateOfferType": "customerPromotion",
+                      "state": "draft",
+                      "subState": "pendingAcceptance",
+                      "upgradedFrom": {},
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azureProductVariant": {
+                      "azureGovernmentCertifications": [
+                        {
+                          "validationResults": [
+                            {},
+                          ],
+                        },
+                      ],
+                      "extendedProperties": [
+                        {},
+                      ],
+                      "featureAvailabilities": [
+                        {
+                          "customMeters": [
+                            {
+                              "includedBaseQuantities": [
+                                {
+                                  "recurringUnit": "Monthly",
+                                },
+                              ],
+                            },
+                          ],
+                          "marketStates": [
+                            {
+                              "state": "Disabled",
+                            },
+                          ],
+                          "markets": [
+                            {},
+                          ],
+                          "priceSchedules": [
+                            {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
+                              "schedules": [
+                                {
+                                  "priceCadence": {
+                                    "type": "Month",
+                                  },
+                                  "pricingModel": "Flat",
+                                  "pricingUnits": [
+                                    {
+                                      "name": "sharedcore",
+                                    },
+                                  ],
+                                  "retailPrice": {},
+                                },
+                              ],
+                            },
+                          ],
+                          "properties": [
+                            {},
+                          ],
+                          "subscriptionAudiences": [
+                            {},
+                          ],
+                          "tenantAudiences": [
+                            {},
+                          ],
+                          "trial": {
+                            "dateTimeRange": {
+                              "endAt": {},
+                              "startAt": {},
+                            },
+                            "durationType": "Minute",
+                            "type": "NoTrial",
+                          },
+                          "visibility": "Public",
+                        },
+                      ],
+                      "resourceType": "AzureSkuVariant",
+                      "state": "InActive",
+                    },
+                    "buyerAzureTenants": [
+                      {},
+                    ],
+                    "commits": [
+                      {
+                        "timeUnit": "DAY",
+                        "type": "FLAT_RATE",
+                      },
+                    ],
+                    "dimensions": [
+                      {
+                        "includedBaseQuantities": [
+                          {
+                            "recurringUnit": "Monthly",
+                          },
+                        ],
+                        "usageCount": {},
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "eulaType": "",
+                    "gcpMetrics": [
+                      {
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "gcpPlans": [
+                      {
+                        "priceInfo": {
+                          "priceModel": "FREE",
+                          "subscriptionPlans": [
+                            {
+                              "period": "ONE_YEAR",
+                              "price": {},
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                          "usageFees": [
+                            {
+                              "priceTiers": [
+                                {
+                                  "price": {},
+                                },
+                              ],
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                      },
+                    ],
+                    "paymentInstallments": [
+                      {},
+                    ],
+                    "visibility": "PRIVATE",
+                  },
+                  "metaInfo": {
+                    "contacts": [
+                      {},
+                    ],
+                    "notifications": [
+                      {
+                        "action": "ACCEPT",
+                        "entityType": "ORGANIZATION",
+                        "eventStatus": "",
+                      },
+                    ],
+                  },
+                  "offerType": "DEFAULT",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                  "status": "ACCEPTED",
+                },
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                                "prices": [
+                                  {},
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "markets": [
+                              {},
+                            ],
+                            "priceSchedules": [
+                              {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                    "retailPrice": {},
+                                  },
+                                ],
+                              },
+                            ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
+                            "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -1256,6 +3109,551 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "info": {
+                    "azureOriginalPlan": {
+                      "pricing": {
+                        "customMeters": {
+                          "priceInputOption": "perMarket",
+                        },
+                        "recurrentPrice": {
+                          "priceInputOption": "perMarket",
+                          "prices": [
+                            {
+                              "billingTerm": {
+                                "type": "day",
+                              },
+                              "paymentOption": {
+                                "type": "day",
+                              },
+                              "prices": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
+                      },
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azurePrivateOffer": {
+                      "acceptanceLinks": [
+                        {},
+                      ],
+                      "beneficiaries": [
+                        {
+                          "beneficiaryRecipients": [
+                            {
+                              "recipientType": "cspCustomer",
+                            },
+                          ],
+                        },
+                      ],
+                      "pricing": [
+                        {
+                          "discountType": "percentage",
+                          "originalPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                    "prices": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                          "planType": "FLAT_RATE",
+                          "privateOfferPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                    "prices": [
+                                      {},
+                                    ],
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "privateOfferType": "customerPromotion",
+                      "state": "draft",
+                      "subState": "pendingAcceptance",
+                      "upgradedFrom": {},
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azureProductVariant": {
+                      "azureGovernmentCertifications": [
+                        {
+                          "validationResults": [
+                            {},
+                          ],
+                        },
+                      ],
+                      "extendedProperties": [
+                        {},
+                      ],
+                      "featureAvailabilities": [
+                        {
+                          "customMeters": [
+                            {
+                              "includedBaseQuantities": [
+                                {
+                                  "recurringUnit": "Monthly",
+                                },
+                              ],
+                            },
+                          ],
+                          "marketStates": [
+                            {
+                              "state": "Disabled",
+                            },
+                          ],
+                          "markets": [
+                            {},
+                          ],
+                          "priceSchedules": [
+                            {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
+                              "schedules": [
+                                {
+                                  "priceCadence": {
+                                    "type": "Month",
+                                  },
+                                  "pricingModel": "Flat",
+                                  "pricingUnits": [
+                                    {
+                                      "name": "sharedcore",
+                                    },
+                                  ],
+                                  "retailPrice": {},
+                                },
+                              ],
+                            },
+                          ],
+                          "properties": [
+                            {},
+                          ],
+                          "subscriptionAudiences": [
+                            {},
+                          ],
+                          "tenantAudiences": [
+                            {},
+                          ],
+                          "trial": {
+                            "dateTimeRange": {
+                              "endAt": {},
+                              "startAt": {},
+                            },
+                            "durationType": "Minute",
+                            "type": "NoTrial",
+                          },
+                          "visibility": "Public",
+                        },
+                      ],
+                      "resourceType": "AzureSkuVariant",
+                      "state": "InActive",
+                    },
+                    "buyerAzureTenants": [
+                      {},
+                    ],
+                    "commits": [
+                      {
+                        "timeUnit": "DAY",
+                        "type": "FLAT_RATE",
+                      },
+                    ],
+                    "dimensions": [
+                      {
+                        "includedBaseQuantities": [
+                          {
+                            "recurringUnit": "Monthly",
+                          },
+                        ],
+                        "usageCount": {},
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "eulaType": "",
+                    "gcpMetrics": [
+                      {
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "gcpPlans": [
+                      {
+                        "priceInfo": {
+                          "priceModel": "FREE",
+                          "subscriptionPlans": [
+                            {
+                              "period": "ONE_YEAR",
+                              "price": {},
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                          "usageFees": [
+                            {
+                              "priceTiers": [
+                                {
+                                  "price": {},
+                                },
+                              ],
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                      },
+                    ],
+                    "paymentInstallments": [
+                      {},
+                    ],
+                    "visibility": "PRIVATE",
+                  },
+                  "metaInfo": {
+                    "contacts": [
+                      {},
+                    ],
+                    "notifications": [
+                      {
+                        "action": "ACCEPT",
+                        "entityType": "ORGANIZATION",
+                        "eventStatus": "",
+                      },
+                    ],
+                  },
+                  "offerType": "DEFAULT",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                  "status": "ACCEPTED",
+                },
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                                "prices": [
+                                  {},
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "markets": [
+                              {},
+                            ],
+                            "priceSchedules": [
+                              {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                    "retailPrice": {},
+                                  },
+                                ],
+                              },
+                            ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
+                            "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/draftOffer",
@@ -1304,6 +3702,286 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "offerId": "offer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                                "prices": [
+                                  {},
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                      "prices": [
+                                        {},
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "upgradedFrom": {},
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {
+                            "validationResults": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "extendedProperties": [
+                          {},
+                        ],
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "markets": [
+                              {},
+                            ],
+                            "priceSchedules": [
+                              {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                    "retailPrice": {},
+                                  },
+                                ],
+                              },
+                            ],
+                            "properties": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                            "tenantAudiences": [
+                              {},
+                            ],
+                            "trial": {
+                              "dateTimeRange": {
+                                "endAt": {},
+                                "startAt": {},
+                              },
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "price": {},
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "priceTiers": [
+                                  {
+                                    "price": {},
+                                  },
+                                ],
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "contacts": [
+                        {},
+                      ],
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
@@ -1337,7 +4015,275 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                  "prices": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "markets": [
+                                {},
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                      "retailPrice": {},
+                                    },
+                                  ],
+                                },
+                              ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
+                              "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -1373,7 +4319,275 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                  "prices": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "markets": [
+                                {},
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                      "retailPrice": {},
+                                    },
+                                  ],
+                                },
+                              ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
+                              "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -1421,7 +4635,275 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                  "prices": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "acceptanceLinks": [
+                            {},
+                          ],
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                        "prices": [
+                                          {},
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "upgradedFrom": {},
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "azureGovernmentCertifications": [
+                            {
+                              "validationResults": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "extendedProperties": [
+                            {},
+                          ],
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "markets": [
+                                {},
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                      "retailPrice": {},
+                                    },
+                                  ],
+                                },
+                              ],
+                              "properties": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                              "tenantAudiences": [
+                                {},
+                              ],
+                              "trial": {
+                                "dateTimeRange": {
+                                  "endAt": {},
+                                  "startAt": {},
+                                },
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "price": {},
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "priceTiers": [
+                                    {
+                                      "price": {},
+                                    },
+                                  ],
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "contacts": [
+                          {},
+                        ],
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -1478,7 +4960,11 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "type": "TemporalWorkflow",
+                    },
+                  ],
                 },
               },
             ],
@@ -1558,6 +5044,268 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsSaasProduct": {
+                        "Description": {},
+                        "Dimensions": [
+                          {},
+                        ],
+                        "PromotionalResources": {
+                          "AdditionalResources": [
+                            {},
+                          ],
+                        },
+                        "SupportInformation": {},
+                        "Versions": [
+                          {
+                            "DeliveryOptions": [
+                              {},
+                            ],
+                          },
+                        ],
+                      },
+                      "awsSnsSubscriptions": [
+                        {
+                          "Status": "UNKNOWN",
+                        },
+                      ],
+                      "azureProduct": {
+                        "availabilities": [
+                          {
+                            "emailAudiences": [
+                              {},
+                            ],
+                            "subscriptionAudiences": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "branches": [
+                          {},
+                        ],
+                        "externalIDs": [
+                          {},
+                        ],
+                        "listings": [
+                          {
+                            "assets": [
+                              {
+                                "resourceType": "ListingAsset",
+                                "state": "PendingUpload",
+                              },
+                            ],
+                            "listingContacts": [
+                              {
+                                "type": "CustomerSupport",
+                              },
+                            ],
+                            "listingUris": [
+                              {},
+                            ],
+                            "resourceType": "AzureListing",
+                          },
+                        ],
+                        "packageConfigurations": [
+                          {
+                            "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                          },
+                        ],
+                        "properties": [
+                          {},
+                        ],
+                        "setup": {
+                          "callToAction": "free",
+                          "channelStates": [
+                            {},
+                          ],
+                          "resourceType": "AzureProductSetup",
+                          "sellingOption": "ListingOnly",
+                        },
+                        "submissions": [
+                          {
+                            "pendingUpdateInfo": {},
+                            "resourceType": "Submission",
+                            "resources": [
+                              {},
+                            ],
+                            "state": "Inprogress",
+                            "subState": "InDraft",
+                            "targets": [
+                              {},
+                            ],
+                            "variantResources": [
+                              {
+                                "resources": [
+                                  {},
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                        "variants": [
+                          {
+                            "azureGovernmentCertifications": [
+                              {
+                                "validationResults": [
+                                  {},
+                                ],
+                              },
+                            ],
+                            "extendedProperties": [
+                              {},
+                            ],
+                            "featureAvailabilities": [
+                              {
+                                "customMeters": [
+                                  {
+                                    "includedBaseQuantities": [
+                                      {
+                                        "recurringUnit": "Monthly",
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "marketStates": [
+                                  {
+                                    "state": "Disabled",
+                                  },
+                                ],
+                                "markets": [
+                                  {},
+                                ],
+                                "priceSchedules": [
+                                  {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
+                                    "schedules": [
+                                      {
+                                        "priceCadence": {
+                                          "type": "Month",
+                                        },
+                                        "pricingModel": "Flat",
+                                        "pricingUnits": [
+                                          {
+                                            "name": "sharedcore",
+                                          },
+                                        ],
+                                        "retailPrice": {},
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "properties": [
+                                  {},
+                                ],
+                                "subscriptionAudiences": [
+                                  {},
+                                ],
+                                "tenantAudiences": [
+                                  {},
+                                ],
+                                "trial": {
+                                  "dateTimeRange": {
+                                    "endAt": {},
+                                    "startAt": {},
+                                  },
+                                  "durationType": "Minute",
+                                  "type": "NoTrial",
+                                },
+                                "visibility": "Public",
+                              },
+                            ],
+                            "resourceType": "AzureSkuVariant",
+                            "state": "InActive",
+                          },
+                        ],
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "usageCount": {},
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpProduct": {
+                        "listingSpec": {
+                          "externalAccountSpec": {},
+                          "listingType": "BillingIntegratedManagedService",
+                          "marketingSpec": {
+                            "supportSpec": {},
+                          },
+                          "purchaseSpec": {
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                            "purchaseOptionSpecs": [
+                              {
+                                "priceInfo": {
+                                  "priceModel": "FREE",
+                                  "subscriptionPlans": [
+                                    {
+                                      "period": "ONE_YEAR",
+                                      "price": {},
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                  "usageFees": [
+                                    {
+                                      "priceTiers": [
+                                        {
+                                          "price": {},
+                                        },
+                                      ],
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                },
+                                "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                              },
+                            ],
+                          },
+                        },
+                        "marketplace": "marketplaces/google-cloud",
+                        "serviceConfig": {
+                          "billing": {},
+                          "metrics": [
+                            {
+                              "valueType": "VALUE_TYPE_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                      },
+                    },
+                    "partner": "AWS",
+                    "productType": "UNKNOWN",
+                    "service": "MARKETPLACE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -1592,7 +5340,9 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {},
+                  ],
                 },
               },
             ],
@@ -1629,7 +5379,257 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsSaasProduct": {
+                          "Description": {},
+                          "Dimensions": [
+                            {},
+                          ],
+                          "PromotionalResources": {
+                            "AdditionalResources": [
+                              {},
+                            ],
+                          },
+                          "SupportInformation": {},
+                          "Versions": [
+                            {
+                              "DeliveryOptions": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
+                        "awsSnsSubscriptions": [
+                          {
+                            "Status": "UNKNOWN",
+                          },
+                        ],
+                        "azureProduct": {
+                          "availabilities": [
+                            {
+                              "emailAudiences": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "branches": [
+                            {},
+                          ],
+                          "externalIDs": [
+                            {},
+                          ],
+                          "listings": [
+                            {
+                              "assets": [
+                                {
+                                  "resourceType": "ListingAsset",
+                                  "state": "PendingUpload",
+                                },
+                              ],
+                              "listingContacts": [
+                                {
+                                  "type": "CustomerSupport",
+                                },
+                              ],
+                              "listingUris": [
+                                {},
+                              ],
+                              "resourceType": "AzureListing",
+                            },
+                          ],
+                          "packageConfigurations": [
+                            {
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                            },
+                          ],
+                          "properties": [
+                            {},
+                          ],
+                          "setup": {
+                            "callToAction": "free",
+                            "channelStates": [
+                              {},
+                            ],
+                            "resourceType": "AzureProductSetup",
+                            "sellingOption": "ListingOnly",
+                          },
+                          "submissions": [
+                            {
+                              "pendingUpdateInfo": {},
+                              "resourceType": "Submission",
+                              "resources": [
+                                {},
+                              ],
+                              "state": "Inprogress",
+                              "subState": "InDraft",
+                              "targets": [
+                                {},
+                              ],
+                              "variantResources": [
+                                {
+                                  "resources": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                          "variants": [
+                            {
+                              "azureGovernmentCertifications": [
+                                {
+                                  "validationResults": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                              "extendedProperties": [
+                                {},
+                              ],
+                              "featureAvailabilities": [
+                                {
+                                  "customMeters": [
+                                    {
+                                      "includedBaseQuantities": [
+                                        {
+                                          "recurringUnit": "Monthly",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "marketStates": [
+                                    {
+                                      "state": "Disabled",
+                                    },
+                                  ],
+                                  "markets": [
+                                    {},
+                                  ],
+                                  "priceSchedules": [
+                                    {
+                                      "dateTimeRange": {
+                                        "endAt": {},
+                                        "startAt": {},
+                                      },
+                                      "schedules": [
+                                        {
+                                          "priceCadence": {
+                                            "type": "Month",
+                                          },
+                                          "pricingModel": "Flat",
+                                          "pricingUnits": [
+                                            {
+                                              "name": "sharedcore",
+                                            },
+                                          ],
+                                          "retailPrice": {},
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "properties": [
+                                    {},
+                                  ],
+                                  "subscriptionAudiences": [
+                                    {},
+                                  ],
+                                  "tenantAudiences": [
+                                    {},
+                                  ],
+                                  "trial": {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
+                                    "durationType": "Minute",
+                                    "type": "NoTrial",
+                                  },
+                                  "visibility": "Public",
+                                },
+                              ],
+                              "resourceType": "AzureSkuVariant",
+                              "state": "InActive",
+                            },
+                          ],
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpProduct": {
+                          "listingSpec": {
+                            "externalAccountSpec": {},
+                            "listingType": "BillingIntegratedManagedService",
+                            "marketingSpec": {
+                              "supportSpec": {},
+                            },
+                            "purchaseSpec": {
+                              "metrics": [
+                                {
+                                  "valueType": "VALUE_TYPE_UNSPECIFIED",
+                                },
+                              ],
+                              "purchaseOptionSpecs": [
+                                {
+                                  "priceInfo": {
+                                    "priceModel": "FREE",
+                                    "subscriptionPlans": [
+                                      {
+                                        "period": "ONE_YEAR",
+                                        "price": {},
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                    "usageFees": [
+                                      {
+                                        "priceTiers": [
+                                          {
+                                            "price": {},
+                                          },
+                                        ],
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                                },
+                              ],
+                            },
+                          },
+                          "marketplace": "marketplaces/google-cloud",
+                          "serviceConfig": {
+                            "billing": {},
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
                 },
               },
             ],
@@ -1663,7 +5663,257 @@ exports[`open api parser suger simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "info": {
+                        "awsSaasProduct": {
+                          "Description": {},
+                          "Dimensions": [
+                            {},
+                          ],
+                          "PromotionalResources": {
+                            "AdditionalResources": [
+                              {},
+                            ],
+                          },
+                          "SupportInformation": {},
+                          "Versions": [
+                            {
+                              "DeliveryOptions": [
+                                {},
+                              ],
+                            },
+                          ],
+                        },
+                        "awsSnsSubscriptions": [
+                          {
+                            "Status": "UNKNOWN",
+                          },
+                        ],
+                        "azureProduct": {
+                          "availabilities": [
+                            {
+                              "emailAudiences": [
+                                {},
+                              ],
+                              "subscriptionAudiences": [
+                                {},
+                              ],
+                            },
+                          ],
+                          "branches": [
+                            {},
+                          ],
+                          "externalIDs": [
+                            {},
+                          ],
+                          "listings": [
+                            {
+                              "assets": [
+                                {
+                                  "resourceType": "ListingAsset",
+                                  "state": "PendingUpload",
+                                },
+                              ],
+                              "listingContacts": [
+                                {
+                                  "type": "CustomerSupport",
+                                },
+                              ],
+                              "listingUris": [
+                                {},
+                              ],
+                              "resourceType": "AzureListing",
+                            },
+                          ],
+                          "packageConfigurations": [
+                            {
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                            },
+                          ],
+                          "properties": [
+                            {},
+                          ],
+                          "setup": {
+                            "callToAction": "free",
+                            "channelStates": [
+                              {},
+                            ],
+                            "resourceType": "AzureProductSetup",
+                            "sellingOption": "ListingOnly",
+                          },
+                          "submissions": [
+                            {
+                              "pendingUpdateInfo": {},
+                              "resourceType": "Submission",
+                              "resources": [
+                                {},
+                              ],
+                              "state": "Inprogress",
+                              "subState": "InDraft",
+                              "targets": [
+                                {},
+                              ],
+                              "variantResources": [
+                                {
+                                  "resources": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                          "variants": [
+                            {
+                              "azureGovernmentCertifications": [
+                                {
+                                  "validationResults": [
+                                    {},
+                                  ],
+                                },
+                              ],
+                              "extendedProperties": [
+                                {},
+                              ],
+                              "featureAvailabilities": [
+                                {
+                                  "customMeters": [
+                                    {
+                                      "includedBaseQuantities": [
+                                        {
+                                          "recurringUnit": "Monthly",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "marketStates": [
+                                    {
+                                      "state": "Disabled",
+                                    },
+                                  ],
+                                  "markets": [
+                                    {},
+                                  ],
+                                  "priceSchedules": [
+                                    {
+                                      "dateTimeRange": {
+                                        "endAt": {},
+                                        "startAt": {},
+                                      },
+                                      "schedules": [
+                                        {
+                                          "priceCadence": {
+                                            "type": "Month",
+                                          },
+                                          "pricingModel": "Flat",
+                                          "pricingUnits": [
+                                            {
+                                              "name": "sharedcore",
+                                            },
+                                          ],
+                                          "retailPrice": {},
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "properties": [
+                                    {},
+                                  ],
+                                  "subscriptionAudiences": [
+                                    {},
+                                  ],
+                                  "tenantAudiences": [
+                                    {},
+                                  ],
+                                  "trial": {
+                                    "dateTimeRange": {
+                                      "endAt": {},
+                                      "startAt": {},
+                                    },
+                                    "durationType": "Minute",
+                                    "type": "NoTrial",
+                                  },
+                                  "visibility": "Public",
+                                },
+                              ],
+                              "resourceType": "AzureSkuVariant",
+                              "state": "InActive",
+                            },
+                          ],
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "usageCount": {},
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpProduct": {
+                          "listingSpec": {
+                            "externalAccountSpec": {},
+                            "listingType": "BillingIntegratedManagedService",
+                            "marketingSpec": {
+                              "supportSpec": {},
+                            },
+                            "purchaseSpec": {
+                              "metrics": [
+                                {
+                                  "valueType": "VALUE_TYPE_UNSPECIFIED",
+                                },
+                              ],
+                              "purchaseOptionSpecs": [
+                                {
+                                  "priceInfo": {
+                                    "priceModel": "FREE",
+                                    "subscriptionPlans": [
+                                      {
+                                        "period": "ONE_YEAR",
+                                        "price": {},
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                    "usageFees": [
+                                      {
+                                        "priceTiers": [
+                                          {
+                                            "price": {},
+                                          },
+                                        ],
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                                },
+                              ],
+                            },
+                          },
+                          "marketplace": "marketplaces/google-cloud",
+                          "serviceConfig": {
+                            "billing": {},
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
                 },
               },
             ],
@@ -1832,6 +6082,34 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "revenueRecordDetails": [
+                      {
+                        "awsRevenueRecordDetail": {
+                          "insertDate": {},
+                          "invoiceDate": {},
+                          "paymentDueDate": {},
+                          "usagePeriodEndDate": {},
+                          "usagePeriodStartDate": {},
+                        },
+                        "azureRevenueRecordDetail": {},
+                        "gcpRevenueRecordDetail": {},
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
@@ -1889,6 +6167,42 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "revenueRecords": [
+                      {
+                        "info": {
+                          "awsRevenueRecords": [
+                            {
+                              "insertDate": {},
+                              "invoiceDate": {},
+                              "paymentDueDate": {},
+                              "usagePeriodEndDate": {},
+                              "usagePeriodStartDate": {},
+                            },
+                          ],
+                          "azureRevenueRecords": [
+                            {},
+                          ],
+                          "gcpRevenueRecords": [
+                            {},
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",

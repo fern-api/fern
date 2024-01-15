@@ -15,6 +15,19 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Account",
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/accounts/{id}",
             "path-parameters": {
@@ -61,6 +74,19 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Carrier",
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/carriers/{id}",
             "path-parameters": {
@@ -78,6 +104,17 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Carriers",
             "docs": "The Get Carriers method returns an array of Carrier objects.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/carriers",
             "response": {
@@ -182,6 +219,19 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Policy",
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/policies/{id}",
             "path-parameters": {

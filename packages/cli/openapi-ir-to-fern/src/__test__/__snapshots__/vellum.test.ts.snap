@@ -114,6 +114,21 @@ Creates a new document index.",
 
 Used to list documents. Optionally filter on supported fields.
 ",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v1/documents",
             "request": {
@@ -468,6 +483,25 @@ is found, a new test case will be appended to the end.
 
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "evaluation_params": {},
+                  "input_values": {},
+                },
+                "response": {
+                  "body": {
+                    "evaluation_params": {},
+                    "input_values": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {
@@ -589,6 +623,34 @@ Generate a completion using a previously defined deployment.
             "ForbiddenError",
             "NotFoundError",
             "InternalServerError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "options": {
+                  "logprobs": "ALL",
+                },
+                "requests": [
+                  {
+                    "input_values": {},
+                  },
+                ],
+              },
+              "response": {
+                "body": {
+                  "results": [
+                    {
+                      "data": {
+                        "completions": [],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
           ],
           "method": "POST",
           "path": "/v1/generate",
@@ -725,6 +787,19 @@ Used to submit feedback regarding the quality of previously generated completion
             "BadRequestError",
             "NotFoundError",
             "InternalServerError",
+          ],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "actuals": [
+                  {},
+                ],
+              },
+              "response": undefined,
+            },
           ],
           "method": "POST",
           "path": "/v1/submit-completion-actuals",

@@ -297,7 +297,23 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         429,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountsListAccountBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -382,7 +398,34 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -1016,7 +1059,89 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "institutionId",
+              "value": {
+                "primitive": {
+                  "string": "TIBURON",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "startsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "direction",
+              "value": {
+                "enum": "debit",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "frequency",
+              "value": {
+                "enum": "once",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "effectiveOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "scheduledOn": {
+                        "primitive": {
+                          "string": "2022-07-04",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "InstitutionsListTransferScheduleRequest",
       "headers": [],
       "internal": undefined,
@@ -1267,7 +1392,100 @@ This information provides hints to clients, allowing bank customers to select tr
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "institutionId",
+              "value": {
+                "primitive": {
+                  "string": "TIBURON",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "startsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "enum": "internal",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "risk",
+              "value": {
+                "enum": "early",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "restrictedDates": {
+                "array": [
+                  {
+                    "properties": {
+                      "creditOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "debitOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "occursOn": {
+                        "primitive": {
+                          "string": "2019-04-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reason": {
+                        "enum": "pastDate",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1713,7 +1931,23 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "headers": [
         {

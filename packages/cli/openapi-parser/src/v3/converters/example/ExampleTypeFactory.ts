@@ -150,7 +150,9 @@ export class ExampleTypeFactory {
                         }
                     }
                 }
-                return undefined;
+                return FullExample.object({
+                    properties: result
+                });
             }
             default:
                 assertNever(schema);

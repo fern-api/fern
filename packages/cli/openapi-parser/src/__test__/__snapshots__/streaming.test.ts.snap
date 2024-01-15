@@ -97,7 +97,29 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UserRequest",
       "headers": [],
       "internal": undefined,
@@ -272,7 +294,37 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "streamed": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UserV2Request",
       "headers": [],
       "internal": undefined,
@@ -509,7 +561,29 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UserV3Request",
       "headers": [],
       "internal": undefined,

@@ -153,7 +153,40 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 123,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "next": {
+                "primitive": {
+                  "string": "http://api.example.org/accounts/?offset=400&limit=100",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "http://api.example.org/accounts/?offset=200&limit=100",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DocumentsListRequest",
       "headers": [],
       "internal": undefined,
@@ -335,7 +368,65 @@ Generate a completion using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "options": {
+                "properties": {
+                  "logprobs": {
+                    "enum": "ALL",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "requests": {
+                "array": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "data": {
+                        "properties": {
+                          "completions": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateRequest",
       "headers": [],
       "internal": undefined,
@@ -877,7 +968,28 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "actuals": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": undefined,
@@ -929,7 +1041,50 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
