@@ -14,17 +14,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
           "get": {
             "auth": false,
             "docs": "This endpoint should be in \`auth/user.yml\`",
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/auth/user",
             "response": {

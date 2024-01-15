@@ -9,7 +9,7 @@ import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithE
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { OperationContext } from "../contexts";
 import { convertSchema } from "../convertSchemas";
-import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 const APPLICATION_PDF = "application/pdf";
@@ -103,24 +103,24 @@ function convertResolvedResponse({
     responseBreadcrumbs: string[];
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-    const jsonResponseSchema = getApplicationJsonResponse(resolvedResponse);
-    if (jsonResponseSchema != null) {
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
+    if (jsonMediaObject != null) {
         if (isStreaming) {
             return {
                 type: "streamingJson",
                 description: resolvedResponse.description,
                 responseProperty: undefined,
                 schema: convertSchemaWithExampleToSchema(
-                    convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs)
+                    convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
                 )
             };
         }
         return {
             type: "json",
             description: resolvedResponse.description,
-            schema: convertSchema(jsonResponseSchema, false, context, responseBreadcrumbs),
+            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
-            fullExamples: undefined
+            fullExamples: jsonMediaObject.examples
         };
     }
 
@@ -171,12 +171,6 @@ function convertResolvedResponse({
     return undefined;
 }
 
-function getApplicationJsonResponse(
-    response: OpenAPIV3.ResponseObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return getApplicationJsonSchemaFromMedia(response.content ?? {});
-}
-
 function markErrorSchemas({
     responses,
     context
@@ -196,8 +190,8 @@ function markErrorSchemas({
         }
         errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const errorSchema = getApplicationJsonResponse(resolvedResponse) ?? {}; // unknown response
-        context.markSchemaForStatusCode(parsedStatusCode, errorSchema);
+        const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
+        context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
     }
     return errorStatusCodes;
 }

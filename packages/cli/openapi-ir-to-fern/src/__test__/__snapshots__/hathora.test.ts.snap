@@ -914,22 +914,6 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "appId": "app-id",
-                  "processId": "process-id",
-                },
-                "query-parameters": {
-                  "metrics": "cpu",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {

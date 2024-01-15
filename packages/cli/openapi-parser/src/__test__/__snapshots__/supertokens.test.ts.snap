@@ -89,7 +89,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -164,7 +164,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status and secret properties",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -316,7 +316,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -379,7 +379,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -546,7 +546,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrives all TOTP devices",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -782,7 +782,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -829,7 +829,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -979,7 +979,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1040,7 +1040,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1210,7 +1210,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1273,7 +1273,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1527,7 +1527,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrives a userId mapping",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1709,7 +1709,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1796,7 +1796,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -1902,41 +1902,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userIdType": {
-                "enum": "SUPERTOKENS",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserIdMappingRemoveMappingRequest",
       "headers": [
         {
@@ -2009,7 +1975,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2097,7 +2063,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -2242,7 +2208,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2332,7 +2298,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -2462,7 +2428,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -2572,7 +2538,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -2861,7 +2827,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -3011,7 +2977,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "Starts the passwordless login process",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -3252,37 +3218,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "codeId": {
-                "primitive": {
-                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PasswordlessRevokeCodeRequest",
       "headers": [
         {
@@ -3355,7 +3291,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -3386,7 +3322,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -3439,126 +3375,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "phoneNumber",
-              "value": {
-                "primitive": {
-                  "string": "+14155552671",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "deviceId",
-              "value": {
-                "primitive": {
-                  "string": "TU/52WOcktSv99zqaAZuWJG9BSoS0aRLfCbep8rFEwk=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "preAuthSessionId",
-              "value": {
-                "primitive": {
-                  "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "devices": {
-                "array": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "array": [
-                          {
-                            "properties": {
-                              "codeId": {
-                                "primitive": {
-                                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "codeLifetime": {
-                                "primitive": {
-                                  "double": 900000,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "timeCreated": {
-                                "primitive": {
-                                  "double": 1637262633029,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "email": {
-                        "primitive": {
-                          "string": "johndoe@gmail.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "failedCodeInputAttemptCount": {
-                        "primitive": {
-                          "double": 2,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "phoneNumber": {
-                        "primitive": {
-                          "string": "+14155552671",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "preAuthSessionId": {
-                        "primitive": {
-                          "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PasswordlessListCodesRequest",
       "headers": [
         {
@@ -3707,7 +3524,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "List of all active passwordless codes of the user",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4020,7 +3837,7 @@ Passing the optional deviceId signifies a resend code flow.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -4088,7 +3905,7 @@ Passing the optional deviceId signifies a resend code flow.
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4273,7 +4090,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get a user's information.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -4407,34 +4224,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "enum": "OK",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PasswordlessPutUserRequest",
       "headers": [
         {
@@ -4507,7 +4297,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4598,7 +4388,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -4749,7 +4539,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -4804,7 +4594,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "signin response",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -4952,7 +4742,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5007,7 +4797,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "signup response",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5195,7 +4985,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "get user's information",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5322,48 +5112,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "enum": "OK",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordPutUserRequest",
       "headers": [
         {
@@ -5436,7 +5185,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5510,7 +5259,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "update user's information",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -5655,7 +5404,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -5691,7 +5440,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new reset password token for this user",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -5766,72 +5515,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "nextPaginationToken": {
-                "primitive": {
-                  "string": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "users": {
-                "array": [
-                  {
-                    "properties": {
-                      "email": {
-                        "primitive": {
-                          "string": "johndoe@gmail.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "timeJoined": {
-                        "primitive": {
-                          "double": 1623918032231,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetUsersRequest",
       "headers": [
         {
@@ -5975,7 +5659,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "get user's information",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6144,7 +5828,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6221,7 +5905,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Reset a password using password reset token",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -6298,33 +5982,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "double": 10,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetUserCountRequest",
       "headers": [
         {
@@ -6398,7 +6056,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6470,74 +6128,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "hashingAlgorithm": {
-                "enum": "argon2",
-                "type": "enum",
-              },
-              "passwordHash": {
-                "primitive": {
-                  "string": "passwordHash",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "primitive": {
-                      "string": "johndoe@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "timeJoined": {
-                    "primitive": {
-                      "double": 1623918032231,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserImportRequest",
       "headers": [
         {
@@ -6610,7 +6201,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6705,7 +6296,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "import user response",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -6796,94 +6387,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "properties": {
-                  "id": {
-                    "primitive": {
-                      "string": "johndoe@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "thirdPartyId": {
-                "primitive": {
-                  "string": "google",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "createdNewUser": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "primitive": {
-                      "string": "johndoe@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "thirdParty": {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "google",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "timeJoined": {
-                    "primitive": {
-                      "double": 1623918032231,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ThirdPartySigninupRequest",
       "headers": [
         {
@@ -6956,7 +6460,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -7030,7 +6534,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "requestNameOverride": undefined,
       "response": {
         "description": "Signin/up a user",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7253,7 +6757,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get a user's information.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -7379,80 +6883,7 @@ Note that there is an invisible character at the end of the path, this was to av
         401,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "email",
-              "value": {
-                "primitive": {
-                  "string": "john.doe@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "users": {
-                "array": [
-                  {
-                    "properties": {
-                      "email": {
-                        "primitive": {
-                          "string": "johndoe@gmail.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "google",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "primitive": {
-                          "double": 1623918032231,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUsersByEmailRequest",
       "headers": [
         {
@@ -7542,7 +6973,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get all users associated with given email",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7620,84 +7051,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "nextPaginationToken": {
-                "primitive": {
-                  "string": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "user": {
-                "array": [
-                  {
-                    "properties": {
-                      "email": {
-                        "primitive": {
-                          "string": "johndoe@gmail.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "google",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "primitive": {
-                          "double": 1623918032231,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUsersRequest",
       "headers": [
         {
@@ -7841,7 +7195,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user's information.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -7938,33 +7292,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "double": 10,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUserCountRequest",
       "headers": [
         {
@@ -8038,7 +7366,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8183,7 +7511,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRequestBody",
@@ -8197,7 +7525,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Generate a new email verification token for this user",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -8274,44 +7602,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyTokenRemoveRequest",
       "headers": [
         {
@@ -8384,7 +7675,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRemoveRequestBody",
@@ -8398,7 +7689,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8452,54 +7743,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "email",
-              "value": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "isVerified": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyGetRequest",
       "headers": [
         {
@@ -8614,7 +7858,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify an email",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -8759,7 +8003,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -8815,7 +8059,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify an email",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -8911,44 +8155,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyRemoveRequest",
       "headers": [
         {
@@ -9021,7 +8228,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyRemoveRequestBody",
@@ -9035,7 +8242,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "OK response",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9089,37 +8296,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserMetadataReadRequest",
       "headers": [
         {
@@ -9209,7 +8386,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9289,37 +8466,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserMetadataUpdateRequest",
       "headers": [
         {
@@ -9392,7 +8539,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9447,7 +8594,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9519,37 +8666,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserMetadataDeleteRequest",
       "headers": [
         {
@@ -9622,7 +8739,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9658,7 +8775,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -9784,7 +8901,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -9829,7 +8946,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -9977,7 +9094,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10022,7 +9139,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10097,49 +9214,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "roles": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "admin",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUserRolesRequest",
       "headers": [
         {
@@ -10229,7 +9304,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10396,7 +9471,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10476,56 +9551,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "permissions": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "permission",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "role": {
-                "primitive": {
-                  "string": "admin",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "createdNewRole": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PutRoleRequest",
       "headers": [
         {
@@ -10598,7 +9624,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -10655,7 +9681,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -10817,7 +9843,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -10972,7 +9998,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11029,7 +10055,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -11084,49 +10110,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "permission",
-              "value": {
-                "primitive": {
-                  "string": "permission",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "roles": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "admin",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPermissionRolesRequest",
       "headers": [
         {
@@ -11216,7 +10200,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11295,44 +10279,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "role": {
-                "primitive": {
-                  "string": "admin",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "didRoleExist": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RemoveRoleRequest",
       "headers": [
         {
@@ -11405,7 +10352,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -11436,7 +10383,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11508,38 +10455,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "roles": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "admin",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRolesRequest",
       "headers": [
         {
@@ -11613,7 +10529,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -11785,7 +10701,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user and session information for a given session handle",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -11955,129 +10871,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "enableAntiCsrf": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "useDynamicSigningKey": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "accessToken": {
-                "properties": {
-                  "createdTime": {
-                    "primitive": {
-                      "double": 1637262633029,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "expiry": {
-                    "primitive": {
-                      "double": 1637262633029,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "token": {
-                    "primitive": {
-                      "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "antiCsrfToken": {
-                "primitive": {
-                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "refreshToken": {
-                "properties": {
-                  "createdTime": {
-                    "primitive": {
-                      "double": 1637262633029,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "expiry": {
-                    "primitive": {
-                      "double": 1637262633029,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "token": {
-                    "primitive": {
-                      "string": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "session": {
-                "properties": {
-                  "handle": {
-                    "primitive": {
-                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "userId": {
-                    "primitive": {
-                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateNewSessionRequest",
       "headers": [
         {
@@ -12150,7 +10944,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12262,7 +11056,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a new Session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12464,7 +11258,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -12542,7 +11336,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Delete a session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -12687,7 +11481,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -12799,7 +11593,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Verify a session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -12996,7 +11790,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13060,7 +11854,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Refresh a session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13263,49 +12057,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "sessionHandles": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUserSessionHandlesRequest",
       "headers": [
         {
@@ -13400,7 +12152,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get user Session Handles",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -13545,7 +12297,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13600,7 +12352,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Regenerate user session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13787,7 +12539,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get Session Data",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -13935,7 +12687,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -13990,7 +12742,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Change Session Data",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14115,7 +12867,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14227,7 +12979,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Create a signed JWT",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14305,50 +13057,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "keys": {
-                "array": [
-                  {
-                    "properties": {
-                      "alg": {
-                        "literal": {
-                          "string": "RS256",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                      "kty": {
-                        "primitive": {
-                          "string": "RSA",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "use": {
-                        "primitive": {
-                          "string": "sig",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveJwksRequest",
       "headers": [],
       "internal": undefined,
@@ -14361,7 +13070,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -14512,7 +13221,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get JWT Data",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14660,7 +13369,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14715,7 +13424,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Change JWT Data for a session",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -14842,7 +13551,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -14901,7 +13610,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -15157,7 +13866,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -15323,7 +14032,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -15516,47 +14225,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "email",
-              "value": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "ue1231-f32f290f2-f23r23f-323f2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteDashboardUserRequest",
       "headers": [
         {
@@ -15671,7 +14340,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -15743,64 +14412,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-              "users": {
-                "array": [
-                  {
-                    "properties": {
-                      "email": {
-                        "primitive": {
-                          "string": "test@example.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "isSuspended": {
-                        "primitive": {
-                          "boolean": false,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "timeCreated": {
-                        "primitive": {
-                          "double": 16382348324,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "userId": {
-                        "primitive": {
-                          "string": "uf2323-f223r233-f23-f23-f2f32",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAllDashboardUsersRequest",
       "headers": [
         {
@@ -15874,7 +14486,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get a list of dashboard users",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16108,7 +14720,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16146,7 +14758,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -16235,37 +14847,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "sessionId",
-              "value": {
-                "primitive": {
-                  "string": "ue1231-f32f290f2-f23r23f-323f2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevokeDashboardUsersSessionRequest",
       "headers": [
         {
@@ -16360,7 +14942,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16486,7 +15068,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -16545,7 +15127,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Indicates success with the status property",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -16656,68 +15238,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "userId",
-              "value": {
-                "primitive": {
-                  "string": "ue1231-f32f290f2-f23r23f-323f2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "sessions": {
-                "array": [
-                  {
-                    "properties": {
-                      "expiry": {
-                        "primitive": {
-                          "double": 16382348324,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "sessionId": {
-                        "primitive": {
-                          "string": "fni29f-f23f23-f2fq32qt-h35evf",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "timeCreated": {
-                        "primitive": {
-                          "double": 16382348324,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "userId": {
-                        "primitive": {
-                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAllSessionsForDashboardUserRequest",
       "headers": [
         {
@@ -16812,7 +15333,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get a list of sessions for dashboard user",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -16951,18 +15472,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetApiVersionRequest",
       "headers": [
         {
@@ -16996,7 +15506,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get api version",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17131,7 +15641,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "get api version",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -17234,7 +15744,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17289,7 +15799,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17344,7 +15854,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17399,7 +15909,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17454,7 +15964,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "return a simple hello message",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17539,7 +16049,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns the telemetryID if it exists",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -17655,44 +16165,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "includeRecipeIds",
-              "value": {
-                "primitive": {
-                  "string": "val1,val2,val3..",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "double": 1000000,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUsersCountRequest",
       "headers": [
         {
@@ -17767,7 +16240,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of users",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -17839,44 +16312,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "since",
-              "value": {
-                "primitive": {
-                  "double": 1679875200000,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "double": 100000,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetActiveUsersCountRequest",
       "headers": [
         {
@@ -17944,7 +16380,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Get number of active users",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18016,91 +16452,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "includeRecipeIds",
-              "value": {
-                "primitive": {
-                  "string": "val1,val2,val3..",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "timeJoinedOrder",
-              "value": {
-                "enum": "ASC",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "email",
-              "value": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "phone",
-              "value": {
-                "primitive": {
-                  "double": 911234567890,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "recipe",
-              "value": {
-                "primitive": {
-                  "string": "emailpassword",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "provider",
-              "value": {
-                "primitive": {
-                  "string": "google",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "nextPaginationToken": {
-                "primitive": {
-                  "string": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUsersRequest",
       "headers": [
         {
@@ -18322,7 +16674,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "User Pagination",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18495,37 +16847,7 @@ e.g.:
         401,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteUserRequest",
       "headers": [
         {
@@ -18578,7 +16900,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -18614,7 +16936,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns OK if the operation succeeded (even if the user didn't exist before the call)",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18667,26 +16989,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetSearchTagsRequest",
       "headers": [
         {
@@ -18740,7 +17043,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "Returns available tags for search",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -18819,26 +17122,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetFeatureFlagRequest",
       "headers": [
         {
@@ -18892,7 +17176,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -19053,7 +17337,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19184,7 +17468,7 @@ e.g.:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -19222,7 +17506,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19288,26 +17572,7 @@ e.g.:
         401,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "status": {
-                "literal": {
-                  "string": "OK",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteLicenseRequest",
       "headers": [
         {
@@ -19361,7 +17626,7 @@ e.g.:
       "requestNameOverride": undefined,
       "response": {
         "description": "The operation was successful",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

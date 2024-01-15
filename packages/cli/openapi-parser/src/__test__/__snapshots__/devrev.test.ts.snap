@@ -47,7 +47,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -92,7 +92,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ArtifactsPrepareRequest",
@@ -106,7 +106,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -152,7 +152,7 @@ authenticated user.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensCreateRequest",
@@ -166,7 +166,7 @@ authenticated user.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -201,18 +201,7 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -224,7 +213,7 @@ given Dev organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensDeleteRequest",
@@ -290,7 +279,7 @@ given Dev organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -325,31 +314,7 @@ token type issued for a given subject.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "requested_token_type",
-              "value": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "tokens": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
       "internal": undefined,
@@ -428,7 +393,7 @@ subject.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -463,23 +428,7 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -491,7 +440,7 @@ authenticated user.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensSelfDeleteRequest",
@@ -539,7 +488,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensUpdateRequest",
@@ -553,7 +502,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -603,7 +552,7 @@ enterprise connections can be created by an organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsCreateRequest",
@@ -617,7 +566,7 @@ enterprise connections can be created by an organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -666,7 +615,7 @@ connections can not be deleted using this method.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsDeleteRequest",
@@ -730,7 +679,7 @@ connections can not be deleted using this method.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -767,23 +716,7 @@ created by the user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "auth_connections": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
       "internal": undefined,
@@ -796,7 +729,7 @@ created by the user.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -847,7 +780,7 @@ disabled.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsToggleRequest",
@@ -894,7 +827,7 @@ disabled.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsUpdateRequest",
@@ -908,7 +841,7 @@ disabled.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -941,43 +874,7 @@ disabled.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "state",
-              "value": {
-                "array": [
-                  {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "dev_users": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
       "internal": undefined,
@@ -1126,7 +1023,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1171,7 +1068,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1215,7 +1112,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsCreateRequest",
@@ -1229,7 +1126,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1262,29 +1159,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "map": [],
-            "type": "map",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1296,7 +1171,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsDeleteRequest",
@@ -1310,7 +1185,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1373,7 +1248,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1406,43 +1281,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "capability",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "parts": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1615,7 +1454,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1661,7 +1500,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PartsUpdateRequest",
@@ -1675,7 +1514,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1721,7 +1560,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsCreateRequest",
@@ -1735,7 +1574,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1768,29 +1607,7 @@ organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "map": [],
-            "type": "map",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1802,7 +1619,7 @@ organization.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsDeleteRequest",
@@ -1816,7 +1633,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1878,7 +1695,7 @@ organization.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1914,31 +1731,7 @@ to access.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "rev_orgs": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2168,7 +1961,7 @@ them.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2213,7 +2006,7 @@ them.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsUpdateRequest",
@@ -2227,7 +2020,7 @@ them.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2273,7 +2066,7 @@ and a logical concept denoted by the tag's name.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsCreateRequest",
@@ -2287,7 +2080,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2320,29 +2113,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "map": [],
-            "type": "map",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -2354,7 +2125,7 @@ and a logical concept denoted by the tag's name.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsDeleteRequest",
@@ -2368,7 +2139,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2430,7 +2201,7 @@ and a logical concept denoted by the tag's name.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2462,31 +2233,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "tags": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2560,7 +2307,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2605,7 +2352,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TagsUpdateRequest",
@@ -2619,7 +2366,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2663,7 +2410,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesCreateRequest",
@@ -2677,7 +2424,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2739,7 +2486,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2772,41 +2519,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "object",
-              "value": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "timeline_entries": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
       "internal": undefined,
@@ -2897,7 +2610,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2941,7 +2654,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateRequest",
@@ -2955,7 +2668,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2999,7 +2712,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksCreateRequest",
@@ -3013,7 +2726,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3046,29 +2759,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "map": [],
-            "type": "map",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -3080,7 +2771,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksDeleteRequest",
@@ -3094,7 +2785,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3156,7 +2847,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3188,23 +2879,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "webhooks": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
       "internal": undefined,
@@ -3217,7 +2892,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3262,7 +2937,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksUpdateRequest",
@@ -3276,7 +2951,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3322,7 +2997,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksCreateRequest",
@@ -3336,7 +3011,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3369,29 +3044,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "map": [],
-            "type": "map",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -3403,7 +3056,7 @@ used.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksDeleteRequest",
@@ -3417,7 +3070,7 @@ used.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3449,60 +3102,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "works": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
       "internal": undefined,
@@ -3758,7 +3358,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3820,7 +3420,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3852,67 +3452,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "works": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
       "internal": undefined,
@@ -4209,7 +3749,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4254,7 +3794,7 @@ organizations.
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "WorksUpdateRequest",
@@ -4268,7 +3808,7 @@ organizations.
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

@@ -198,7 +198,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -259,7 +259,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response is a representation of the customer's account.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -297,23 +297,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         429,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountsListAccountBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -363,7 +347,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response contains the balances for all the accounts in the \`?accounts=\` query parameter.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -398,34 +382,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "accountId",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -452,7 +409,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -590,7 +547,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -696,7 +653,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -757,7 +714,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -821,7 +778,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionPatchOverdraftAccountsRequest",
@@ -835,7 +792,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -899,7 +856,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "JointOwnersCreateJointOwnerInvitationRequest",
@@ -913,7 +870,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1023,7 +980,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1059,89 +1016,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "institutionId",
-              "value": {
-                "primitive": {
-                  "string": "TIBURON",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "startsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "endsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "direction",
-              "value": {
-                "enum": "debit",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "frequency",
-              "value": {
-                "enum": "once",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "effectiveOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledOn": {
-                        "primitive": {
-                          "string": "2022-07-04",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InstitutionsListTransferScheduleRequest",
       "headers": [],
       "internal": undefined,
@@ -1248,7 +1123,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1354,7 +1229,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1392,100 +1267,7 @@ This information provides hints to clients, allowing bank customers to select tr
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "institutionId",
-              "value": {
-                "primitive": {
-                  "string": "TIBURON",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "startsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "endsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "risk",
-              "value": {
-                "enum": "early",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "restrictedDates": {
-                "array": [
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "debitOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "occursOn": {
-                        "primitive": {
-                          "string": "2019-04-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "reason": {
-                        "enum": "pastDate",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1589,7 +1371,7 @@ This information provides hints to clients, allowing bank customers to select tr
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1894,7 +1676,7 @@ The default response lists only recent transactions. Normally, this is transacti
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1931,23 +1713,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "headers": [
         {
@@ -1981,7 +1747,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2140,7 +1906,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2208,7 +1974,7 @@ Note: This operation requires an identity challenge if the financial institution
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TransfersCreateTransferRequestBody",
@@ -2222,7 +1988,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "Created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2283,7 +2049,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2434,7 +2200,7 @@ Note: This operation requires an identity challenge if the financial institution
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TransfersPatchTransferRequestBody",
@@ -2448,7 +2214,7 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

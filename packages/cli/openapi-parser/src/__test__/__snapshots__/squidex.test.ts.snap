@@ -82,7 +82,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Users returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -127,7 +127,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementPostUserRequest",
@@ -141,7 +141,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -203,7 +203,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -265,7 +265,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UserManagementPutUserRequest",
@@ -279,7 +279,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -413,7 +413,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User locked.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -477,7 +477,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User unlocked.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -509,23 +509,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UsersGetUserResourcesRequest",
       "headers": [],
       "internal": undefined,
@@ -538,7 +522,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User resources returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -615,7 +599,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Users returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -682,7 +666,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "User found.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -792,7 +776,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TranslationsPostTranslationRequest",
@@ -806,7 +790,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Text translated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -838,27 +822,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TemplatesGetTemplatesRequest",
       "headers": [],
       "internal": undefined,
@@ -871,7 +835,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Templates returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -933,7 +897,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Template returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -995,7 +959,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributors returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1057,7 +1021,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPostContributorRequest",
@@ -1071,7 +1035,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor assigned to team.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1134,7 +1098,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1212,7 +1176,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1269,7 +1233,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Teams returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1321,7 +1285,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPostTeamRequest",
@@ -1335,7 +1299,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1397,7 +1361,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Teams returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1459,7 +1423,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TeamsPutTeamRequest",
@@ -1473,7 +1437,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1506,29 +1470,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "StatisticsGetLogRequest",
       "headers": [],
       "internal": undefined,
@@ -1557,7 +1499,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Usage tracking results returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1649,7 +1591,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "API call returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1741,7 +1683,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "API call returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1803,7 +1745,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1865,7 +1807,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1999,7 +1941,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2138,7 +2080,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Storage usage returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2248,7 +2190,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Search results returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2331,7 +2273,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostFieldRequest",
@@ -2345,7 +2287,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2436,7 +2378,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostNestedFieldRequest",
@@ -2450,7 +2392,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2527,7 +2469,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaUiFieldsRequest",
@@ -2541,7 +2483,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema UI fields defined.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2618,7 +2560,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaFieldOrderingRequest",
@@ -2632,7 +2574,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema fields reordered.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2722,7 +2664,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutNestedFieldOrderingRequest",
@@ -2736,7 +2678,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema fields reordered.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2826,7 +2768,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutFieldRequest",
@@ -2840,7 +2782,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2931,7 +2873,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3034,7 +2976,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutNestedFieldRequest",
@@ -3048,7 +2990,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3152,7 +3094,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3243,7 +3185,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3347,7 +3289,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3438,7 +3380,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3542,7 +3484,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field hidden.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3633,7 +3575,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3737,7 +3679,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field shown.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3828,7 +3770,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field enabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3932,7 +3874,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field enabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4023,7 +3965,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field disabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4127,7 +4069,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema field disabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4160,38 +4102,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasGetSchemasRequest",
       "headers": [],
       "internal": undefined,
@@ -4220,7 +4131,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schemas returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4282,7 +4193,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPostSchemaRequest",
@@ -4296,7 +4207,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4373,7 +4284,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema found.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4450,7 +4361,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaRequest",
@@ -4464,7 +4375,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4635,7 +4546,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutSchemaSyncRequest",
@@ -4649,7 +4560,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4726,7 +4637,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutCategoryRequest",
@@ -4740,7 +4651,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4817,7 +4728,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutPreviewUrlsRequest",
@@ -4831,7 +4742,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4908,7 +4819,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutScriptsRequest",
@@ -4922,7 +4833,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4999,7 +4910,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "SchemasPutRulesRequest",
@@ -5013,7 +4924,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5091,7 +5002,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema published.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5169,7 +5080,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Schema unpublished.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5225,7 +5136,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule actions returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5273,38 +5184,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RulesGetRulesRequest",
       "headers": [],
       "internal": undefined,
@@ -5333,7 +5213,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rules returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5395,7 +5275,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RulesPostRuleRequest",
@@ -5409,7 +5289,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5554,7 +5434,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RulesPutRuleRequest",
@@ -5568,7 +5448,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5740,7 +5620,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule enabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5818,7 +5698,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule disabled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6179,7 +6059,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RulesSimulatePostRequest",
@@ -6193,7 +6073,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule simulated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6270,7 +6150,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule simulated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6389,7 +6269,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule events returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6701,7 +6581,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule events returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6770,7 +6650,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Rule event type found.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "type": "unknown",
@@ -6798,38 +6678,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "locked": {
-                "enum": "None",
-                "type": "enum",
-              },
-              "plans": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansGetPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -6858,7 +6707,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App plan information returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6920,7 +6769,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PlansPutPlanRequest",
@@ -6934,7 +6783,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Plan changed or redirect url returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6967,38 +6816,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "team",
-              "value": {
-                "primitive": {
-                  "string": "team",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "locked": {
-                "enum": "None",
-                "type": "enum",
-              },
-              "plans": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansGetTeamPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -7027,7 +6845,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Team plan information returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7089,7 +6907,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PlansPutTeamPlanRequest",
@@ -7103,7 +6921,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Plan changed or redirect url returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7159,7 +6977,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Infos returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7330,7 +7148,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Latest features returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7386,7 +7204,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Supported language codes returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7496,7 +7314,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Events returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7606,7 +7424,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Events returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7643,27 +7461,7 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EventConsumersGetEventConsumersRequest",
       "headers": [],
       "internal": undefined,
@@ -7676,7 +7474,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumers returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7739,7 +7537,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer started asynchronously.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7802,7 +7600,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer stopped asynchronously.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7865,7 +7663,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Event consumer resetted asynchronously.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8065,7 +7863,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8201,7 +7999,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPostContentRequestBody",
@@ -8215,7 +8013,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8292,7 +8090,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsGetContentsPostRequest",
@@ -8306,7 +8104,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8417,7 +8215,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8566,7 +8364,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPostUpsertContentRequestBody",
@@ -8580,7 +8378,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content created or updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8672,7 +8470,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPutContentRequest",
@@ -8686,7 +8484,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8934,7 +8732,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPatchContentRequest",
@@ -8948,7 +8746,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content patched.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9180,7 +8978,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9293,7 +9091,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9419,47 +9217,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "schema",
-              "value": {
-                "primitive": {
-                  "string": "schema",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "datas": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "array": [],
-            "type": "array",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPostContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -9502,7 +9260,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPostContentsRequest",
@@ -9516,7 +9274,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Contents created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9555,57 +9313,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "schema",
-              "value": {
-                "primitive": {
-                  "string": "schema",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "jobs": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "Upsert",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "array": [],
-            "type": "array",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsBulkUpdateContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -9648,7 +9356,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsBulkUpdateContentsRequest",
@@ -9662,7 +9370,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9759,7 +9467,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ContentsPutContentStatusRequest",
@@ -9773,7 +9481,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content status changed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9866,7 +9574,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content status change cancelled.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9959,7 +9667,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content draft created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10052,7 +9760,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Content draft deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10156,7 +9864,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Watching users returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10259,7 +9967,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Comments returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10336,7 +10044,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CommentsPostCommentRequest",
@@ -10350,7 +10058,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Comment created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10442,7 +10150,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CommentsPutCommentRequest",
@@ -10642,7 +10350,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "All comments returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11017,38 +10725,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BackupsGetBackupsRequest",
       "headers": [],
       "internal": undefined,
@@ -11077,7 +10754,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Backups returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11191,7 +10868,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Status returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11236,7 +10913,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "BackupsPostRestoreJobRequest",
@@ -11981,7 +11658,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folders returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12043,7 +11720,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPostAssetFolderRequest",
@@ -12057,7 +11734,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12134,7 +11811,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetFolderRequest",
@@ -12148,7 +11825,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12319,7 +11996,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetFolderParentRequest",
@@ -12333,7 +12010,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset folder moved.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12417,7 +12094,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets tags returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12509,7 +12186,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutTagRequest",
@@ -12523,7 +12200,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset tag renamed and new tags returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12737,7 +12414,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12873,7 +12550,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12935,7 +12612,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsGetAssetsPostRequest",
@@ -12949,7 +12626,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13026,7 +12703,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset found.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13157,7 +12834,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset created or updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13234,7 +12911,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetRequest",
@@ -13248,7 +12925,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13413,47 +13090,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "jobs": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "Annotate",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "array": [],
-            "type": "array",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
       "headers": [],
       "internal": undefined,
@@ -13481,7 +13118,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsBulkUpdateAssetsRequest",
@@ -13495,7 +13132,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Assets created, update or delete.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13592,7 +13229,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13669,7 +13306,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AssetsPutAssetParentRequest",
@@ -13683,7 +13320,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset moved.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13745,7 +13382,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset scripts returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13807,7 +13444,7 @@ You will be assigned as owner of the new team automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAssetScriptsRequest",
@@ -13821,7 +13458,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Asset scripts updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13854,38 +13491,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetClientsRequest",
       "headers": [],
       "internal": undefined,
@@ -13914,7 +13520,7 @@ You will be assigned as owner of the new team automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Clients returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13977,7 +13583,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostClientRequest",
@@ -13991,7 +13597,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14025,51 +13631,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutClientRequest",
       "headers": [],
       "internal": undefined,
@@ -14112,7 +13674,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutClientRequest",
@@ -14126,7 +13688,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14160,48 +13722,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteClientRequest",
       "headers": [],
       "internal": undefined,
@@ -14245,7 +13766,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Client deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14307,7 +13828,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributors returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14369,7 +13890,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostContributorRequest",
@@ -14383,7 +13904,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor assigned to app.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14446,7 +13967,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14524,7 +14045,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Contributor removed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14649,7 +14170,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App image uploaded.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14712,7 +14233,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App image removed.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14745,38 +14266,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetLanguagesRequest",
       "headers": [],
       "internal": undefined,
@@ -14805,7 +14295,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Languages returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14867,7 +14357,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostLanguageRequest",
@@ -14881,7 +14371,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14915,51 +14405,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "language",
-              "value": {
-                "primitive": {
-                  "string": "language",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -15002,7 +14448,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutLanguageRequest",
@@ -15016,7 +14462,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15050,48 +14496,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "language",
-              "value": {
-                "primitive": {
-                  "string": "language",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -15135,7 +14540,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Language deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15168,38 +14573,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetRolesRequest",
       "headers": [],
       "internal": undefined,
@@ -15228,7 +14602,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Roles returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15290,7 +14664,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostRoleRequest",
@@ -15304,7 +14678,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15388,7 +14762,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "App permissions returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15429,56 +14803,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "roleName",
-              "value": {
-                "primitive": {
-                  "string": "role-name",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "permissions": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -15521,7 +14846,7 @@ The client secret is auto generated on the server and returned. The client does 
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutRoleRequest",
@@ -15535,7 +14860,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15569,48 +14894,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "roleName",
-              "value": {
-                "primitive": {
-                  "string": "role-name",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -15654,7 +14938,7 @@ The client secret is auto generated on the server and returned. The client does 
       "requestNameOverride": undefined,
       "response": {
         "description": "Role deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15711,7 +14995,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15763,7 +15047,7 @@ You will be assigned as owner of the new app automatically.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostAppRequest",
@@ -15777,7 +15061,7 @@ You will be assigned as owner of the new app automatically.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15861,7 +15145,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15928,7 +15212,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Apps returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15990,7 +15274,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAppRequest",
@@ -16004,7 +15288,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16135,7 +15419,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutAppTeamRequest",
@@ -16149,7 +15433,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App transferred.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16211,7 +15495,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App settings returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16273,7 +15557,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutSettingsRequest",
@@ -16287,7 +15571,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "App updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16320,52 +15604,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetWorkflowsRequest",
       "headers": [],
       "internal": undefined,
@@ -16394,7 +15633,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflows returned.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16456,7 +15695,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPostWorkflowRequest",
@@ -16470,7 +15709,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow created.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16547,7 +15786,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "AppsPutWorkflowRequest",
@@ -16561,7 +15800,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow updated.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16595,62 +15834,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "primitive": {
-                  "string": "app",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -16694,7 +15878,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "requestNameOverride": undefined,
       "response": {
         "description": "Workflow deleted.",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

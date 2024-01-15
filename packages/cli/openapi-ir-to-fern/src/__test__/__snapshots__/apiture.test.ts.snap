@@ -21,21 +21,6 @@ exports[`open api parser apiture simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "accountId": "account-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/banking/accounts/{accountId}/jointOwners",
             "path-parameters": {
@@ -94,19 +79,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/banking/accountBalances",
@@ -292,33 +264,6 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "institutionId": "TIBURON",
-                },
-                "query-parameters": {
-                  "endsOn": "2022-07-04",
-                  "risk": "early",
-                  "startsOn": "2022-07-04",
-                  "type": "internal",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "restrictedDates": [
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2019-04-05",
-                        "reason": "pastDate",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/banking/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
@@ -363,31 +308,6 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "institutionId": "TIBURON",
-                },
-                "query-parameters": {
-                  "direction": "debit",
-                  "endsOn": "2022-07-04",
-                  "frequency": "once",
-                  "startsOn": "2022-07-04",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [
-                      {
-                        "effectiveOn": "2022-07-05",
-                        "scheduledOn": "2022-07-04",
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/banking/institutions/{institutionId}/transferSchedule",
@@ -648,19 +568,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/banking/transactionCategories",

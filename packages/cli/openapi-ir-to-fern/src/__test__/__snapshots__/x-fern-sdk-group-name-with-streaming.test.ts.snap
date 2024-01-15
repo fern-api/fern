@@ -14,23 +14,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
           "get": {
             "auth": false,
             "docs": undefined,
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "userId": "user-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "stream": false,
-                },
-                "response": {
-                  "body": {
-                    "streamed": false,
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/user/{userId}",
             "path-parameters": {

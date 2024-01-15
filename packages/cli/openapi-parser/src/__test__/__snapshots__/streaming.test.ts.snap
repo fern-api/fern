@@ -22,7 +22,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -97,29 +97,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "stream": {
-                "literal": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserRequest",
       "headers": [],
       "internal": undefined,
@@ -131,7 +109,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -184,7 +162,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -219,7 +197,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -294,37 +272,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "stream": {
-                "literal": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "streamed": {
-                "literal": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserV2Request",
       "headers": [],
       "internal": undefined,
@@ -336,7 +284,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -389,7 +337,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -424,7 +372,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -561,29 +509,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "stream": {
-                "literal": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "literal",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserV3Request",
       "headers": [],
       "internal": undefined,
@@ -595,7 +521,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -648,7 +574,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": undefined,
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

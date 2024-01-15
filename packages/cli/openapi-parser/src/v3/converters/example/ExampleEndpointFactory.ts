@@ -52,7 +52,7 @@ export class ExampleEndpointFactory {
 
         let requestExample = undefined;
         if (requestSchemaIdResponse != null) {
-            requestExample = this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schema);
+            requestExample = this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schema, undefined);
             if (requestExample == null) {
                 this.logger.debug(
                     `Not enough information to generate request example for ${endpoint.method.toUpperCase()} ${
@@ -65,7 +65,7 @@ export class ExampleEndpointFactory {
 
         let responseExample = undefined;
         if (responseSchemaIdResponse != null) {
-            responseExample = this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schema);
+            responseExample = this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schema, undefined);
             if (responseExample == null) {
                 this.logger.debug(
                     `Not enough information to generate response example for ${endpoint.method.toUpperCase()} ${
@@ -136,7 +136,7 @@ export class ExampleEndpointFactory {
         parameter: QueryParameterWithExample | PathParameterWithExample | HeaderWithExample
     ): GeneratedParamterExample {
         const isRequired = isSchemaRequired(parameter.schema);
-        const example = this.exampleTypeFactory.buildExample(parameter.schema);
+        const example = this.exampleTypeFactory.buildExample(parameter.schema, undefined);
         if (example != null) {
             return {
                 type: "success",
