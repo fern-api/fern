@@ -212,7 +212,74 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Start a new batch job.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "models": {
+                "properties": {
+                  "face": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "language": {
+                    "properties": {
+                      "granularity": {
+                        "enum": "word",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "ner": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "prosody": {
+                    "properties": {
+                      "granularity": {
+                        "enum": "word",
+                        "type": "enum",
+                      },
+                      "window": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "transcription": {
+                "properties": {
+                  "language": {
+                    "enum": "zh",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "job_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "StartJobRequest",
       "headers": [],
       "internal": undefined,
@@ -271,7 +338,7 @@ exports[`open api parser hume parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",

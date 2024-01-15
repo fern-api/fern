@@ -21,12 +21,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -51,7 +53,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -112,14 +114,16 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
                   "name": "Query",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -161,12 +165,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -191,7 +197,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -225,7 +231,9 @@ exports[`open api parser aries simple 1`] = `
                   },
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -273,14 +281,16 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
                   "content": "Hello",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -331,7 +341,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -399,7 +409,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -654,12 +664,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -684,7 +696,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -717,7 +729,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -758,7 +770,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1011,7 +1023,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -1058,13 +1070,15 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
-                  "ref_id": "ref-id",
+                  "conn_id": "string",
+                  "ref_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -1204,7 +1218,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_def_id": "cred-def-id",
+                  "cred_def_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1269,7 +1283,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "revocation_registry_size": 1000,
+                  "revocation_registry_size": 1,
                   "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                   "tag": "default",
                 },
@@ -1352,7 +1366,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_def_id": "cred-def-id",
+                  "cred_def_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1428,12 +1442,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -1458,12 +1474,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -1488,7 +1506,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1518,7 +1536,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1603,7 +1621,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1646,7 +1664,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "credential_id": "credential-id",
+                  "credential_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1817,7 +1835,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1881,7 +1899,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -1946,7 +1964,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "their_public_did": "their-public-did",
+                  "their_public_did": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -2026,7 +2044,7 @@ exports[`open api parser aries simple 1`] = `
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "did_doc~attach": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "byte_count": 1234,
+                    "byte_count": 1,
                     "data": {
                       "base64": "ey4uLn0=",
                       "jws": {
@@ -2165,9 +2183,21 @@ exports[`open api parser aries simple 1`] = `
                         "disclose": {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "protocols": [],
+                          "protocols": [
+                            {
+                              "pid": "string",
+                              "roles": [
+                                "requester",
+                              ],
+                            },
+                          ],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "query_msg": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "query": "string",
+                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2210,9 +2240,21 @@ exports[`open api parser aries simple 1`] = `
                     "disclose": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "protocols": [],
+                      "protocols": [
+                        {
+                          "pid": "string",
+                          "roles": [
+                            "requester",
+                          ],
+                        },
+                      ],
                     },
                     "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "query_msg": {
+                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                      "query": "string",
+                    },
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2282,6 +2324,12 @@ exports[`open api parser aries simple 1`] = `
                         "queries_msg": {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "queries": [
+                            {
+                              "feature-type": "protocol",
+                              "match": "string",
+                            },
+                          ],
                         },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2332,6 +2380,12 @@ exports[`open api parser aries simple 1`] = `
                       "queries_msg": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                        "queries": [
+                          {
+                            "feature-type": "protocol",
+                            "match": "string",
+                          },
+                        ],
                       },
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2386,7 +2440,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "tran_id": "tran-id",
+                  "tran_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2432,6 +2486,41 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "For author to send a transaction request",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "tran_id": "string",
+                },
+                "request": {
+                  "expires_time": "2024-01-15T09:30:00Z",
+                },
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "endorser_write_txn": true,
+                    "messages_attach": [
+                      {},
+                    ],
+                    "meta_data": {},
+                    "signature_request": [
+                      {},
+                    ],
+                    "signature_response": [
+                      {},
+                    ],
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "timing": {},
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/create-request",
             "request": {
@@ -2515,7 +2604,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "tran_id": "tran-id",
+                  "tran_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2565,7 +2654,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "tran_id": "tran-id",
+                  "tran_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2615,7 +2704,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "tran_id": "tran-id",
+                  "tran_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2665,7 +2754,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "tran_id": "tran-id",
+                  "tran_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2711,6 +2800,23 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Set Endorser Info",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "conn_id": "string",
+                },
+                "query-parameters": {
+                  "endorser_did": "string",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "endorser_did": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/{conn_id}/set-endorser-info",
             "path-parameters": {
@@ -2745,7 +2851,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": {
                   "transaction_my_job": "TRANSACTION_AUTHOR",
@@ -2811,14 +2917,16 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": {
-                  "target_connection_id": "target-connection-id",
+                  "target_connection_id": "string",
                 },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -2931,7 +3039,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -2999,7 +3107,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -3129,7 +3242,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -3197,7 +3310,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -3254,12 +3372,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -3284,7 +3404,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3331,7 +3451,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -3399,7 +3519,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -3482,7 +3607,7 @@ exports[`open api parser aries simple 1`] = `
                           "offers~attach": [
                             {
                               "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
+                              "byte_count": 1,
                               "data": {
                                 "base64": "ey4uLn0=",
                                 "jws": {
@@ -3550,7 +3675,12 @@ exports[`open api parser aries simple 1`] = `
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                           "signature": {},
                           "signature_correctness_proof": {},
-                          "values": {},
+                          "values": {
+                            "string": {
+                              "encoded": "-1",
+                              "raw": "string",
+                            },
+                          },
                           "witness": {},
                         },
                         "role": "holder",
@@ -3600,7 +3730,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -3647,7 +3777,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -3715,7 +3845,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -3757,6 +3892,23 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "cred_ex_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "description": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -3788,7 +3940,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -3855,7 +4007,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -3923,7 +4075,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -3966,7 +4123,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -4013,7 +4170,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -4081,7 +4238,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -4177,7 +4339,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -4245,7 +4407,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -4380,7 +4547,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -4448,7 +4615,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -4572,7 +4744,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -4640,7 +4812,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -4717,7 +4894,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -4764,7 +4941,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -4832,7 +5009,12 @@ exports[`open api parser aries simple 1`] = `
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
-                      "values": {},
+                      "values": {
+                        "string": {
+                          "encoded": "-1",
+                          "raw": "string",
+                        },
+                      },
                       "witness": {},
                     },
                     "role": "holder",
@@ -4935,11 +5117,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -4986,7 +5172,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5046,7 +5232,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5104,7 +5290,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5153,7 +5339,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5257,11 +5443,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -5308,7 +5498,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5368,7 +5558,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5426,7 +5616,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5475,7 +5665,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -5559,12 +5749,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -5589,7 +5781,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -5614,7 +5806,7 @@ exports[`open api parser aries simple 1`] = `
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -5674,7 +5866,7 @@ exports[`open api parser aries simple 1`] = `
                         "offers~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -5732,7 +5924,7 @@ exports[`open api parser aries simple 1`] = `
                         "filters~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -5781,7 +5973,7 @@ exports[`open api parser aries simple 1`] = `
                         "requests~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -5892,7 +6084,7 @@ exports[`open api parser aries simple 1`] = `
                             "credentials~attach": [
                               {
                                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
+                                "byte_count": 1,
                                 "data": {
                                   "base64": "ey4uLn0=",
                                   "jws": {
@@ -5952,7 +6144,7 @@ exports[`open api parser aries simple 1`] = `
                             "offers~attach": [
                               {
                                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
+                                "byte_count": 1,
                                 "data": {
                                   "base64": "ey4uLn0=",
                                   "jws": {
@@ -6010,7 +6202,7 @@ exports[`open api parser aries simple 1`] = `
                             "filters~attach": [
                               {
                                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
+                                "byte_count": 1,
                                 "data": {
                                   "base64": "ey4uLn0=",
                                   "jws": {
@@ -6059,7 +6251,7 @@ exports[`open api parser aries simple 1`] = `
                             "requests~attach": [
                               {
                                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
+                                "byte_count": 1,
                                 "data": {
                                   "base64": "ey4uLn0=",
                                   "jws": {
@@ -6159,7 +6351,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -6184,7 +6376,7 @@ exports[`open api parser aries simple 1`] = `
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -6244,7 +6436,7 @@ exports[`open api parser aries simple 1`] = `
                         "offers~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -6302,7 +6494,7 @@ exports[`open api parser aries simple 1`] = `
                         "filters~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -6351,7 +6543,7 @@ exports[`open api parser aries simple 1`] = `
                         "requests~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -6443,6 +6635,23 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "cred_ex_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "description": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -6474,7 +6683,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -6500,11 +6709,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -6551,7 +6764,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6611,7 +6824,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6669,7 +6882,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6718,7 +6931,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6792,7 +7005,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -6818,7 +7031,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6878,7 +7091,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6936,7 +7149,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -6985,7 +7198,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7086,11 +7299,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -7137,7 +7354,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7197,7 +7414,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7255,7 +7472,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7304,7 +7521,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7389,11 +7606,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -7440,7 +7661,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7500,7 +7721,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7558,7 +7779,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7607,7 +7828,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7720,11 +7941,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -7771,7 +7996,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7831,7 +8056,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7889,7 +8114,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -7938,7 +8163,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -8005,11 +8230,15 @@ exports[`open api parser aries simple 1`] = `
                     "ld_proof": {
                       "credential": {
                         "@context": [],
-                        "credentialSubject": {},
+                        "credentialSubject": {
+                          "string": {},
+                        },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
+                        "issuer": {
+                          "string": {},
+                        },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created": "2021-12-31 23:59:59+00:00",
@@ -8058,7 +8287,7 @@ exports[`open api parser aries simple 1`] = `
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -8118,7 +8347,7 @@ exports[`open api parser aries simple 1`] = `
                       "offers~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -8176,7 +8405,7 @@ exports[`open api parser aries simple 1`] = `
                       "filters~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -8225,7 +8454,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -8312,7 +8541,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
+                  "cred_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -8337,7 +8566,7 @@ exports[`open api parser aries simple 1`] = `
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -8397,7 +8626,7 @@ exports[`open api parser aries simple 1`] = `
                         "offers~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -8455,7 +8684,7 @@ exports[`open api parser aries simple 1`] = `
                         "filters~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -8504,7 +8733,7 @@ exports[`open api parser aries simple 1`] = `
                         "requests~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "byte_count": 1234,
+                            "byte_count": 1,
                             "data": {
                               "base64": "ey4uLn0=",
                               "jws": {
@@ -8656,6 +8885,28 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Sign a JSON-LD structure and return it",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "doc": {
+                    "credential": {},
+                    "options": {
+                      "proofPurpose": "string",
+                      "verificationMethod": "string",
+                    },
+                  },
+                  "verkey": "string",
+                },
+                "response": {
+                  "body": {
+                    "signed_doc": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/jsonld/sign",
             "request": {
@@ -8681,6 +8932,26 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Verify a JSON-LD structure.",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "doc": {
+                    "proof": {
+                      "proofPurpose": "string",
+                      "verificationMethod": "string",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "valid": true,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/jsonld/verify",
             "request": {
@@ -8726,7 +8997,9 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {},
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -8758,7 +9031,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -8793,7 +9066,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -8854,7 +9127,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                   "endpoint_type": "Endpoint",
                 },
                 "request": undefined,
@@ -8900,7 +9173,7 @@ exports[`open api parser aries simple 1`] = `
                     "result": {
                       "aml_record": {},
                       "taa_accepted": {
-                        "time": 1640995199,
+                        "time": 1,
                       },
                       "taa_record": {},
                     },
@@ -8946,9 +9219,9 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                   "role": "STEWARD",
-                  "verkey": "verkey",
+                  "verkey": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -9026,7 +9299,9 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -9072,6 +9347,26 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Clear default mediator",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/mediation/default-mediator",
             "response": {
@@ -9083,6 +9378,28 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Delete mediation request by ID",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "mediation_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
@@ -9104,7 +9421,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "mediation_id": "mediation-id",
+                  "mediation_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -9150,6 +9467,26 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Get default mediator",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/mediation/default-mediator",
             "response": {
@@ -9170,7 +9507,16 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "results": [
+                      {
+                        "created_at": "2021-12-31 23:59:59+00:00",
+                        "recipient_key": "string",
+                        "state": "active",
+                        "updated_at": "2021-12-31 23:59:59+00:00",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -9207,7 +9553,20 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "results": [
+                      {
+                        "connection_id": "string",
+                        "created_at": "2021-12-31 23:59:59+00:00",
+                        "role": "string",
+                        "routing_keys": [
+                          "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                        ],
+                        "state": "active",
+                        "updated_at": "2021-12-31 23:59:59+00:00",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -9245,6 +9604,28 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Retrieve mediation request record",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "mediation_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
@@ -9266,7 +9647,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "mediation_id": "mediation-id",
+                  "mediation_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -9296,6 +9677,28 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Request mediation from connection",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "conn_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/request/{conn_id}",
             "path-parameters": {
@@ -9334,7 +9737,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "mediation_id": "mediation-id",
+                  "mediation_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -9346,8 +9749,8 @@ exports[`open api parser aries simple 1`] = `
                     "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                     "filter": {},
                     "paginate": {
-                      "limit": 30,
-                      "offset": 0,
+                      "limit": 1,
+                      "offset": 1,
                     },
                   },
                 },
@@ -9396,7 +9799,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "mediation_id": "mediation-id",
+                  "mediation_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -9448,6 +9851,28 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Set default mediator",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "mediation_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "string",
+                    "created_at": "2021-12-31 23:59:59+00:00",
+                    "role": "string",
+                    "routing_keys": [
+                      "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                    ],
+                    "state": "active",
+                    "updated_at": "2021-12-31 23:59:59+00:00",
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/mediation/{mediation_id}/default-mediator",
             "path-parameters": {
@@ -9469,7 +9894,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -9639,14 +10064,16 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "wallet_id": "wallet-id",
+                  "wallet_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
                   "wallet_key": "MySecretKey123",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -9684,7 +10111,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "wallet_id": "wallet-id",
+                  "wallet_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -9770,7 +10197,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "wallet_id": "wallet-id",
+                  "wallet_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -9807,7 +10234,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "wallet_id": "wallet-id",
+                  "wallet_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -9956,7 +10383,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -10074,7 +10501,7 @@ exports[`open api parser aries simple 1`] = `
                   "requests~attach": [
                     {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "byte_count": 1234,
+                      "byte_count": 1,
                       "data": {
                         "base64": "ey4uLn0=",
                         "jws": {
@@ -10122,7 +10549,7 @@ exports[`open api parser aries simple 1`] = `
                       "requests~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -10233,12 +10660,33 @@ exports[`open api parser aries simple 1`] = `
                   "proof_request": {
                     "name": "Proof request",
                     "non_revoked": {
-                      "from": 1640995199,
-                      "to": 1640995199,
+                      "from": 1,
+                      "to": 1,
                     },
                     "nonce": "1",
-                    "requested_attributes": {},
-                    "requested_predicates": {},
+                    "requested_attributes": {
+                      "string": {
+                        "name": "favouriteDrink",
+                        "names": [
+                          "age",
+                        ],
+                        "non_revoked": {
+                          "from": 1,
+                          "to": 1,
+                        },
+                      },
+                    },
+                    "requested_predicates": {
+                      "string": {
+                        "name": "index",
+                        "non_revoked": {
+                          "from": 1,
+                          "to": 1,
+                        },
+                        "p_type": "<",
+                        "p_value": 1,
+                      },
+                    },
                     "version": "1.0",
                   },
                   "trace": false,
@@ -10256,7 +10704,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -10304,18 +10752,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -10324,7 +10800,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -10398,12 +10874,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -10448,7 +10926,7 @@ exports[`open api parser aries simple 1`] = `
                               "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                               "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                               "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                              "timestamp": 1640995199,
+                              "timestamp": 1,
                             },
                           ],
                           "proof": {
@@ -10496,18 +10974,46 @@ exports[`open api parser aries simple 1`] = `
                                 "value": "martini",
                               },
                             ],
-                            "predicates": [],
+                            "predicates": [
+                              {
+                                "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                "name": "high_score",
+                                "predicate": "<",
+                                "threshold": 1,
+                              },
+                            ],
                           },
                         },
                         "presentation_request": {
                           "name": "Proof request",
                           "non_revoked": {
-                            "from": 1640995199,
-                            "to": 1640995199,
+                            "from": 1,
+                            "to": 1,
                           },
                           "nonce": "1",
-                          "requested_attributes": {},
-                          "requested_predicates": {},
+                          "requested_attributes": {
+                            "string": {
+                              "name": "favouriteDrink",
+                              "names": [
+                                "age",
+                              ],
+                              "non_revoked": {
+                                "from": 1,
+                                "to": 1,
+                              },
+                            },
+                          },
+                          "requested_predicates": {
+                            "string": {
+                              "name": "index",
+                              "non_revoked": {
+                                "from": 1,
+                                "to": 1,
+                              },
+                              "p_type": "<",
+                              "p_value": 1,
+                            },
+                          },
                           "version": "1.0",
                         },
                         "presentation_request_dict": {
@@ -10516,7 +11022,7 @@ exports[`open api parser aries simple 1`] = `
                           "request_presentations~attach": [
                             {
                               "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
+                              "byte_count": 1,
                               "data": {
                                 "base64": "ey4uLn0=",
                                 "jws": {
@@ -10594,7 +11100,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -10609,8 +11115,8 @@ exports[`open api parser aries simple 1`] = `
                         "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       },
                       "interval": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "presentation_referents": [
                         "1_age_uuid",
@@ -10662,7 +11168,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -10679,7 +11185,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -10727,18 +11233,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -10747,7 +11281,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -10804,6 +11338,23 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "pres_ex_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "description": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -10842,12 +11393,33 @@ exports[`open api parser aries simple 1`] = `
                   "proof_request": {
                     "name": "Proof request",
                     "non_revoked": {
-                      "from": 1640995199,
-                      "to": 1640995199,
+                      "from": 1,
+                      "to": 1,
                     },
                     "nonce": "1",
-                    "requested_attributes": {},
-                    "requested_predicates": {},
+                    "requested_attributes": {
+                      "string": {
+                        "name": "favouriteDrink",
+                        "names": [
+                          "age",
+                        ],
+                        "non_revoked": {
+                          "from": 1,
+                          "to": 1,
+                        },
+                      },
+                    },
+                    "requested_predicates": {
+                      "string": {
+                        "name": "index",
+                        "non_revoked": {
+                          "from": 1,
+                          "to": 1,
+                        },
+                        "p_type": "<",
+                        "p_value": 1,
+                      },
+                    },
                     "version": "1.0",
                   },
                   "trace": false,
@@ -10865,7 +11437,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -10913,18 +11485,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -10933,7 +11533,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11025,7 +11625,14 @@ exports[`open api parser aries simple 1`] = `
                         "value": "martini",
                       },
                     ],
-                    "predicates": [],
+                    "predicates": [
+                      {
+                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                        "name": "high_score",
+                        "predicate": "<",
+                        "threshold": 1,
+                      },
+                    ],
                   },
                   "trace": false,
                 },
@@ -11042,7 +11649,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -11090,18 +11697,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -11110,7 +11745,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11191,13 +11826,24 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "requested_attributes": {},
-                  "requested_predicates": {},
-                  "self_attested_attributes": {},
+                  "requested_attributes": {
+                    "string": {
+                      "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    },
+                  },
+                  "requested_predicates": {
+                    "string": {
+                      "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "timestamp": 1,
+                    },
+                  },
+                  "self_attested_attributes": {
+                    "string": "self_attested_value",
+                  },
                   "trace": false,
                 },
                 "response": {
@@ -11213,7 +11859,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -11261,18 +11907,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -11281,7 +11955,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11345,7 +12019,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -11365,7 +12039,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -11413,18 +12087,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -11433,7 +12135,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11511,7 +12213,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -11528,7 +12230,7 @@ exports[`open api parser aries simple 1`] = `
                           "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "timestamp": 1640995199,
+                          "timestamp": 1,
                         },
                       ],
                       "proof": {
@@ -11576,18 +12278,46 @@ exports[`open api parser aries simple 1`] = `
                             "value": "martini",
                           },
                         ],
-                        "predicates": [],
+                        "predicates": [
+                          {
+                            "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            "name": "high_score",
+                            "predicate": "<",
+                            "threshold": 1,
+                          },
+                        ],
                       },
                     },
                     "presentation_request": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                     "presentation_request_dict": {
@@ -11596,7 +12326,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11716,8 +12446,8 @@ exports[`open api parser aries simple 1`] = `
                               "fields": [
                                 {
                                   "filter": {
-                                    "maxLength": 1234,
-                                    "minLength": 1234,
+                                    "maxLength": 1,
+                                    "minLength": 1,
                                     "not": false,
                                   },
                                   "predicate": "required",
@@ -11748,9 +12478,9 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "submission_requirements": [
                           {
-                            "count": 1234,
-                            "max": 1234,
-                            "min": 1234,
+                            "count": 1,
+                            "max": 1,
+                            "min": 1,
                             "rule": "all",
                           },
                         ],
@@ -11759,12 +12489,33 @@ exports[`open api parser aries simple 1`] = `
                     "indy": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                   },
@@ -11794,7 +12545,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11838,7 +12589,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11881,7 +12632,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -11955,12 +12706,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -12016,7 +12769,7 @@ exports[`open api parser aries simple 1`] = `
                           "presentations~attach": [
                             {
                               "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
+                              "byte_count": 1,
                               "data": {
                                 "base64": "ey4uLn0=",
                                 "jws": {
@@ -12060,7 +12813,7 @@ exports[`open api parser aries simple 1`] = `
                           "proposals~attach": [
                             {
                               "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
+                              "byte_count": 1,
                               "data": {
                                 "base64": "ey4uLn0=",
                                 "jws": {
@@ -12103,7 +12856,7 @@ exports[`open api parser aries simple 1`] = `
                           "request_presentations~attach": [
                             {
                               "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
+                              "byte_count": 1,
                               "data": {
                                 "base64": "ey4uLn0=",
                                 "jws": {
@@ -12181,7 +12934,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -12196,8 +12949,8 @@ exports[`open api parser aries simple 1`] = `
                         "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       },
                       "interval": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "presentation_referents": [
                         "1_age_uuid",
@@ -12249,7 +13002,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -12277,7 +13030,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12321,7 +13074,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12364,7 +13117,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12421,6 +13174,23 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "pres_ex_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "description": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -12478,8 +13248,8 @@ exports[`open api parser aries simple 1`] = `
                               "fields": [
                                 {
                                   "filter": {
-                                    "maxLength": 1234,
-                                    "minLength": 1234,
+                                    "maxLength": 1,
+                                    "minLength": 1,
                                     "not": false,
                                   },
                                   "predicate": "required",
@@ -12510,9 +13280,9 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "submission_requirements": [
                           {
-                            "count": 1234,
-                            "max": 1234,
-                            "min": 1234,
+                            "count": 1,
+                            "max": 1,
+                            "min": 1,
                             "rule": "all",
                           },
                         ],
@@ -12521,12 +13291,33 @@ exports[`open api parser aries simple 1`] = `
                     "indy": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                   },
@@ -12556,7 +13347,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12600,7 +13391,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12643,7 +13434,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12732,8 +13523,8 @@ exports[`open api parser aries simple 1`] = `
                             "fields": [
                               {
                                 "filter": {
-                                  "maxLength": 1234,
-                                  "minLength": 1234,
+                                  "maxLength": 1,
+                                  "minLength": 1,
                                   "not": false,
                                 },
                                 "predicate": "required",
@@ -12770,12 +13561,33 @@ exports[`open api parser aries simple 1`] = `
                     "indy": {
                       "name": "Proof request",
                       "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
+                        "from": 1,
+                        "to": 1,
                       },
                       "nonce": "1",
-                      "requested_attributes": {},
-                      "requested_predicates": {},
+                      "requested_attributes": {
+                        "string": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                          ],
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                        },
+                      },
+                      "requested_predicates": {
+                        "string": {
+                          "name": "index",
+                          "non_revoked": {
+                            "from": 1,
+                            "to": 1,
+                          },
+                          "p_type": "<",
+                          "p_value": 1,
+                        },
+                      },
                       "version": "1.0",
                     },
                   },
@@ -12805,7 +13617,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12849,7 +13661,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12892,7 +13704,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -12973,7 +13785,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -12994,8 +13806,8 @@ exports[`open api parser aries simple 1`] = `
                             "fields": [
                               {
                                 "filter": {
-                                  "maxLength": 1234,
-                                  "minLength": 1234,
+                                  "maxLength": 1,
+                                  "minLength": 1,
                                   "not": false,
                                 },
                                 "predicate": "required",
@@ -13026,9 +13838,9 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "submission_requirements": [
                         {
-                          "count": 1234,
-                          "max": 1234,
-                          "min": 1234,
+                          "count": 1,
+                          "max": 1,
+                          "min": 1,
                           "rule": "all",
                         },
                       ],
@@ -13037,9 +13849,20 @@ exports[`open api parser aries simple 1`] = `
                     "reveal_doc": {},
                   },
                   "indy": {
-                    "requested_attributes": {},
-                    "requested_predicates": {},
-                    "self_attested_attributes": {},
+                    "requested_attributes": {
+                      "string": {
+                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      },
+                    },
+                    "requested_predicates": {
+                      "string": {
+                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "timestamp": 1,
+                      },
+                    },
+                    "self_attested_attributes": {
+                      "string": "self_attested_value",
+                    },
                     "trace": false,
                   },
                 },
@@ -13067,7 +13890,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13111,7 +13934,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13154,7 +13977,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13230,7 +14053,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -13261,7 +14084,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13305,7 +14128,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13348,7 +14171,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13426,7 +14249,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
+                  "pres_ex_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -13454,7 +14277,7 @@ exports[`open api parser aries simple 1`] = `
                       "presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13498,7 +14321,7 @@ exports[`open api parser aries simple 1`] = `
                       "proposals~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13541,7 +14364,7 @@ exports[`open api parser aries simple 1`] = `
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
+                          "byte_count": 1,
                           "data": {
                             "base64": "ey4uLn0=",
                             "jws": {
@@ -13653,7 +14476,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -13737,7 +14560,7 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "max_cred_num": 1000,
+                  "max_cred_num": 1,
                 },
                 "response": {
                   "body": {
@@ -13746,7 +14569,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -13758,7 +14581,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -13868,7 +14691,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "cred_def_id": "cred-def-id",
+                  "cred_def_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -13879,7 +14702,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -13891,7 +14714,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14029,7 +14852,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14072,13 +14895,13 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
-                    "result": 0,
+                    "result": 1,
                   },
                 },
               },
@@ -14104,7 +14927,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14136,7 +14959,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14147,7 +14970,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -14159,7 +14982,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14206,7 +15029,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14218,7 +15041,7 @@ exports[`open api parser aries simple 1`] = `
                         "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "error_msg": "Revocation registry undefined",
                         "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                        "max_cred_num": 1000,
+                        "max_cred_num": 1,
                         "pending_pub": [
                           "23",
                         ],
@@ -14230,7 +15053,7 @@ exports[`open api parser aries simple 1`] = `
                           "revocDefType": "CL_ACCUM",
                           "value": {
                             "issuanceType": "ISSUANCE_ON_DEMAND",
-                            "maxCredNum": 10,
+                            "maxCredNum": 1,
                             "publicKeys": {
                               "accumKey": {
                                 "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14312,7 +15135,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14323,7 +15146,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -14335,7 +15158,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14452,7 +15275,9 @@ exports[`open api parser aries simple 1`] = `
                   "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -14516,7 +15341,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": {
                   "state": "init",
@@ -14529,7 +15354,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -14541,7 +15366,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14597,7 +15422,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": {
                   "apply_ledger_update": true,
@@ -14642,7 +15467,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -14655,7 +15480,7 @@ exports[`open api parser aries simple 1`] = `
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "error_msg": "Revocation registry undefined",
                       "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
+                      "max_cred_num": 1,
                       "pending_pub": [
                         "23",
                       ],
@@ -14667,7 +15492,7 @@ exports[`open api parser aries simple 1`] = `
                         "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
+                          "maxCredNum": 1,
                           "publicKeys": {
                             "accumKey": {
                               "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
@@ -14727,12 +15552,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
+                  "rev_reg_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -14844,7 +15671,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "schema_id": "schema-id",
+                  "schema_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14856,7 +15683,7 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "name": "schema_name",
-                      "seqNo": 10,
+                      "seqNo": 1,
                       "ver": "1.0",
                       "version": "1.0",
                     },
@@ -14902,7 +15729,7 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                         "name": "schema_name",
-                        "seqNo": 10,
+                        "seqNo": 1,
                         "ver": "1.0",
                         "version": "1.0",
                       },
@@ -14978,7 +15805,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "schema_id": "schema-id",
+                  "schema_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -14990,7 +15817,7 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "name": "schema_name",
-                      "seqNo": 10,
+                      "seqNo": 1,
                       "ver": "1.0",
                       "version": "1.0",
                     },
@@ -15152,7 +15979,9 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -15174,7 +16003,9 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -15206,7 +16037,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "conn_id": "conn-id",
+                  "conn_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {},
@@ -15318,7 +16149,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -15445,11 +16276,13 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -15484,7 +16317,9 @@ exports[`open api parser aries simple 1`] = `
                   "endpoint_type": "Endpoint",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "string": {},
+                  },
                 },
               },
             ],
@@ -15534,7 +16369,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "did": "did",
+                  "did": "string",
                 },
                 "request": undefined,
                 "response": {
@@ -15624,7 +16459,7 @@ exports[`open api parser aries simple 1`] = `
             {
               "headers": undefined,
               "path-parameters": {
-                "tran_id": "tran-id",
+                "tran_id": "string",
               },
               "query-parameters": undefined,
               "request": undefined,

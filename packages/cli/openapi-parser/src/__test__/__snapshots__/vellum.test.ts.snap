@@ -42,7 +42,81 @@ with all stable endpoints. You can find them here:
 Used to retrieve a deployment given its ID or name.
 ",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "active_model_version_ids": {
+                "array": [],
+                "type": "array",
+              },
+              "created": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "environment": {
+                "enum": "DEVELOPMENT",
+                "type": "enum",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_deployed_on": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "model_type": {
+                "enum": "GENERATE",
+                "type": "enum",
+              },
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "ACTIVE",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DeploymentsRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -98,7 +172,111 @@ Used to retrieve a deployment given its ID or name.
 
 Creates a new document index.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "environment": {
+                "enum": "DEVELOPMENT",
+                "type": "enum",
+              },
+              "indexing_config": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "ACTIVE",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "environment": {
+                "enum": "DEVELOPMENT",
+                "type": "enum",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "indexing_config": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "ACTIVE",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DocumentIndexesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -163,7 +341,7 @@ Used to list documents. Optionally filter on supported fields.
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 123,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -181,6 +359,83 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "document_to_document_indexes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "document_index_id": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "indexing_state": {
+                                "enum": "AWAITING_PROCESSING",
+                                "type": "enum",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_uploaded_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "processing_failure_reason": {
+                        "literal": {
+                          "string": "EXCEEDED_CHARACTER_LIMIT",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "processing_state": {
+                        "enum": "QUEUED",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "literal": {
+                          "string": "ACTIVE",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -388,8 +643,40 @@ Generate a completion using a previously defined deployment.
                 "array": [
                   {
                     "properties": {
+                      "chat_history": {
+                        "array": [
+                          {
+                            "properties": {
+                              "role": {
+                                "enum": "SYSTEM",
+                                "type": "enum",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "input_values": {
-                        "map": [],
+                        "map": [
+                          {
+                            "key": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [],
+                              "type": "map",
+                            },
+                          },
+                        ],
                         "type": "map",
                       },
                     },
@@ -410,8 +697,84 @@ Generate a completion using a previously defined deployment.
                       "data": {
                         "properties": {
                           "completions": {
-                            "array": [],
+                            "array": [
+                              {
+                                "properties": {
+                                  "finish_reason": {
+                                    "enum": "LENGTH",
+                                    "type": "enum",
+                                  },
+                                  "id": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "logprobs": {
+                                    "properties": {
+                                      "tokens": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "text_offset": {
+                                                "primitive": {
+                                                  "int": 1,
+                                                  "type": "int",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                              "token": {
+                                                "primitive": {
+                                                  "string": "string",
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  "model_version_id": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "text": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "type": {
+                                    "enum": "STRING",
+                                    "type": "enum",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
                             "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "error": {
+                        "properties": {
+                          "message": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                         },
                         "type": "object",
@@ -552,7 +915,202 @@ Generate a stream of completions using a previously defined deployment.
 Used to retrieve a model version given its ID.
 ",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "build_config": {
+                "properties": {
+                  "base_model": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "sandbox_snapshot": {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "created": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "exec_config": {
+                "properties": {
+                  "input_variables": {
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "parameters": {
+                    "properties": {
+                      "frequency_penalty": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "max_tokens": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "presence_penalty": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "temperature": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "top_p": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "prompt_block_data": {
+                    "properties": {
+                      "blocks": {
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {
+                                  "chat_role": {
+                                    "enum": "SYSTEM",
+                                    "type": "enum",
+                                  },
+                                  "template_type": {
+                                    "enum": "STRING",
+                                    "type": "enum",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "version": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "model_type": {
+                "enum": "GENERATE",
+                "type": "enum",
+              },
+              "provider": {
+                "enum": "ANTHROPIC",
+                "type": "enum",
+              },
+              "status": {
+                "enum": "CREATING",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ModelVersionsRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -608,7 +1166,68 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "input_values": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "prompt": {
+                "properties": {
+                  "num_tokens": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "text": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -682,7 +1301,251 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "errorStatusCode": [
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "parameters": {
+                "properties": {
+                  "frequency_penalty": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "max_tokens": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "presence_penalty": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "temperature": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "top_p": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "prompt": {
+                "properties": {
+                  "input_variables": {
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "prompt_block_data": {
+                    "properties": {
+                      "blocks": {
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {
+                                  "chat_role": {
+                                    "enum": "SYSTEM",
+                                    "type": "enum",
+                                  },
+                                  "template_type": {
+                                    "enum": "STRING",
+                                    "type": "enum",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "version": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "provider": {
+                "enum": "ANTHROPIC",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "deployment": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "model_version": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "prompt": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "sandbox": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "sandbox_snapshot": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RegisterPromptRequest",
       "headers": [],
       "internal": undefined,
@@ -741,7 +1604,143 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "array": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "array": [
+                          {
+                            "properties": {
+                              "role": {
+                                "enum": "SYSTEM",
+                                "type": "enum",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "key": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "metric_input_params": {
+                "properties": {
+                  "params": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "inputs": {
+                "array": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "array": [
+                          {
+                            "properties": {
+                              "role": {
+                                "enum": "SYSTEM",
+                                "type": "enum",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "key": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "metric_input_params": {
+                "properties": {
+                  "params": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -818,7 +1817,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -828,7 +1827,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "scenario_id",
               "value": {
                 "primitive": {
-                  "string": "scenario-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -903,7 +1902,117 @@ Perform a search against a document index.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "options": {
+                "properties": {
+                  "filters": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "result_merging": {
+                    "properties": {
+                      "enabled": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "weights": {
+                    "properties": {
+                      "keywords": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "semantic_similarity": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "query": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "document": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "keywords": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "score": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SearchRequest",
       "headers": [],
       "internal": undefined,
@@ -1049,7 +2158,7 @@ or overwritten with default values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1064,7 +2173,18 @@ or overwritten with default values.",
                 "type": "object",
               },
               "input_values": {
-                "map": [],
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
                 "type": "map",
               },
             },
@@ -1077,7 +2197,18 @@ or overwritten with default values.",
                 "type": "object",
               },
               "input_values": {
-                "map": [],
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
                 "type": "map",
               },
             },
@@ -1161,7 +2292,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1171,7 +2302,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "test_case_id",
               "value": {
                 "primitive": {
-                  "string": "test-case-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",

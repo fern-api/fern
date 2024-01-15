@@ -20,7 +20,7 @@ exports[`open api parser persona parse open api 1`] = `
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -846,7 +846,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -865,14 +865,14 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
                         "properties": {
                           "autofill-cancels": {
                             "primitive": {
-                              "int": 29,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "autofill-starts": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -900,14 +900,14 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
                           },
                           "distraction-events": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "hesitation-baseline": {
                             "primitive": {
-                              "int": 19860,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -928,35 +928,35 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
                           },
                           "hesitation-time": {
                             "primitive": {
-                              "int": 12975,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "request-spoof-attempts": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "shortcut-copies": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "shortcut-pastes": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "user-agent-spoof-attempts": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -2963,7 +2963,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3712,7 +3712,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4174,7 +4174,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4748,7 +4748,7 @@ Note that this will only delete the report -- it does not delete associated acco
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5110,7 +5110,7 @@ Note that this will only delete the report -- it does not delete associated acco
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5193,7 +5193,7 @@ Note that this action will trigger any associated workflows and webhooks.",
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6031,7 +6031,7 @@ Note that this action will trigger any associated workflows and webhooks.",
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6867,7 +6867,7 @@ Note that this action will trigger any associated workflows and webhooks.",
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7175,7 +7175,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7590,7 +7590,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11858,7 +11858,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "file-id",
               "value": {
                 "primitive": {
-                  "string": "file-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11868,7 +11868,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "file-name",
               "value": {
                 "primitive": {
-                  "string": "file-name",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12074,7 +12074,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "api-log-id",
               "value": {
                 "primitive": {
-                  "string": "api-log-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12171,7 +12171,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                           },
                           "status": {
                             "primitive": {
-                              "int": 200,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -12713,7 +12713,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "document-id",
               "value": {
                 "primitive": {
-                  "string": "document-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13294,7 +13294,27 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "inquiry-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "kind": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -13921,7 +13941,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "document-id",
               "value": {
                 "primitive": {
-                  "string": "document-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14569,7 +14589,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "document-id",
               "value": {
                 "primitive": {
-                  "string": "document-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15125,7 +15145,27 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
             {
               "name": "data",
               "value": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "country-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -15147,7 +15187,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659415999,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -15876,7 +15916,68 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "back-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "front-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -15911,7 +16012,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659027344,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -16938,7 +17039,34 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "country-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone-number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -16973,7 +17101,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501078,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -17693,7 +17821,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "event-id",
               "value": {
                 "primitive": {
-                  "string": "event-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17790,7 +17918,27 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "document-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "inquiry-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -17811,7 +17959,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1593047079,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -18488,7 +18636,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18512,7 +18660,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1593047079,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -18533,7 +18681,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1593047530,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -19144,7 +19292,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -19231,7 +19379,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -19404,7 +19552,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
               "name": "importer-id",
               "value": {
                 "primitive": {
-                  "string": "importer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -19428,14 +19576,14 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -19449,7 +19597,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -19777,14 +19925,14 @@ The columns we allow are
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -19798,7 +19946,7 @@ The columns we allow are
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -20214,14 +20362,14 @@ A match_type of 'email_address' will need to match the entire email address of a
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -20235,7 +20383,7 @@ A match_type of 'email_address' will need to match the entire email address of a
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -20693,14 +20841,14 @@ The columns we allow are
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -20714,7 +20862,7 @@ The columns we allow are
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -21173,14 +21321,14 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -21194,7 +21342,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -21652,14 +21800,14 @@ Both IPv4 and IPv6 are supported.",
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -21673,7 +21821,7 @@ Both IPv4 and IPv6 are supported.",
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -22130,14 +22278,14 @@ The columns we allow are
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -22151,7 +22299,7 @@ The columns we allow are
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -22607,14 +22755,14 @@ The columns we allow are
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -22628,7 +22776,7 @@ The columns we allow are
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -23050,7 +23198,75 @@ The columns we allow are
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "back-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "country-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "front-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "inquiry-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -23944,7 +24160,7 @@ The columns we allow are
               "name": "document-id",
               "value": {
                 "primitive": {
-                  "string": "document-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -23959,11 +24175,51 @@ The columns we allow are
                   "attributes": {
                     "properties": {
                       "back-photo": {
-                        "properties": {},
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
                         "type": "object",
                       },
                       "front-photo": {
-                        "properties": {},
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
                         "type": "object",
                       },
                     },
@@ -24847,7 +25103,7 @@ The columns we allow are
               "name": "document-id",
               "value": {
                 "primitive": {
-                  "string": "document-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -25495,7 +25751,7 @@ The columns we allow are
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -25533,7 +25789,7 @@ The columns we allow are
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659027344,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -25566,7 +25822,7 @@ The columns we allow are
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659041226,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -26334,7 +26590,7 @@ The columns we allow are
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -26349,11 +26605,51 @@ The columns we allow are
                   "attributes": {
                     "properties": {
                       "back-photo": {
-                        "properties": {},
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
                         "type": "object",
                       },
                       "front-photo": {
-                        "properties": {},
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
                         "type": "object",
                       },
                     },
@@ -26387,7 +26683,7 @@ The columns we allow are
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1599974425,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -27561,7 +27857,7 @@ The columns we allow are
               "name": "list-id",
               "value": {
                 "primitive": {
-                  "string": "list-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -27660,7 +27956,7 @@ The columns we allow are
               "name": "list-id",
               "value": {
                 "primitive": {
-                  "string": "list-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -29312,7 +29608,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30039,7 +30335,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30640,14 +30936,14 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "radius-meters": {
                         "primitive": {
-                          "int": 10,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -31453,7 +31749,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -32026,7 +32322,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -32776,7 +33072,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -32807,7 +33103,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -33240,7 +33536,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -33341,7 +33637,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -33372,7 +33668,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -33833,7 +34129,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -33878,14 +34174,14 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "radius-meters": {
                         "primitive": {
-                          "int": 10,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -34347,7 +34643,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -34392,7 +34688,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -34839,7 +35135,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -34940,7 +35236,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -34971,7 +35267,7 @@ The columns we allow are
                       },
                       "match-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -35432,7 +35728,7 @@ The columns we allow are
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -37076,7 +37372,20 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "case-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "meta": {
@@ -39289,7 +39598,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "case-id",
               "value": {
                 "primitive": {
-                  "string": "case-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -40508,7 +40817,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "case-id",
               "value": {
                 "primitive": {
-                  "string": "case-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -41677,7 +41986,92 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "center-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "left-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "right-photo": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "data": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "filename": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -41698,7 +42092,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659042633,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -42501,7 +42895,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -42532,7 +42926,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659045263,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -42553,7 +42947,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659045269,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -43085,7 +43479,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -43253,7 +43647,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -43421,7 +43815,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -43594,7 +43988,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -43762,7 +44156,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -43930,7 +44324,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "account-id",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -44101,7 +44495,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -44159,7 +44553,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -44217,7 +44611,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -44275,7 +44669,37 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "query": {
+                        "properties": {
+                          "registration-country-code": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "type": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -46540,7 +46964,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "case-id",
               "value": {
                 "primitive": {
-                  "string": "case-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -47588,7 +48012,214 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "case-id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "meta": {
+                "properties": {
+                  "user-email-address": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "assignee-id": {
+                        "primitive": {
+                          "string": "foo@bar.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created-at": {
+                        "primitive": {
+                          "string": "2021-06-30T20:37:18.678Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "creator-id": {
+                        "primitive": {
+                          "string": "wfl_yKynZZiuPz1R5qm9JFyBnnLB",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "creator-type": {
+                        "primitive": {
+                          "string": "workflow",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "WATC-16",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "primitive": {
+                          "string": "open",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated-at": {
+                        "primitive": {
+                          "string": "2021-08-26T18:24:19.695Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "case_3maVhdLzdGftRZCvxfqazVL1",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "relationships": {
+                    "properties": {
+                      "accounts": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-comments": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "case-template": {
+                        "properties": {
+                          "data": {
+                            "properties": {
+                              "id": {
+                                "primitive": {
+                                  "string": "ctmpl_6HheND7s14a2o7fg33iHqhg7",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "case-template",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "inquiries": {
+                        "properties": {
+                          "data": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "id": {
+                                    "primitive": {
+                                      "string": "inq_29Yd6kF6xWVFgemm5WTxhxvf",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "type": {
+                                    "primitive": {
+                                      "string": "inquiry",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reports": {
+                        "properties": {
+                          "data": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "id": {
+                                    "primitive": {
+                                      "string": "rep_PN3xspEwWCWWRp1eGpedaSNj",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "type": {
+                                    "primitive": {
+                                      "string": "report/watchlist",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "type": {
+                    "primitive": {
+                      "string": "case",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AssignACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -48847,7 +49478,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "list-item-id",
               "value": {
                 "primitive": {
-                  "string": "list-item-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -48984,14 +49615,14 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "duplicate-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "error-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -49005,7 +49636,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "successful-count": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -49432,7 +50063,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -50190,7 +50821,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -50948,7 +51579,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -51824,7 +52455,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "user-audit-log-id",
               "value": {
                 "primitive": {
-                  "string": "user-audit-log-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -52147,7 +52778,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "case-id",
               "value": {
                 "primitive": {
-                  "string": "case-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -53184,7 +53815,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -53255,7 +53886,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659041232,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -53276,7 +53907,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659027344,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -53295,7 +53926,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "entity-confidence-score": {
                         "primitive": {
-                          "int": 100,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -53327,7 +53958,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                             "properties": {
                               "byte-size": {
                                 "primitive": {
-                                  "int": 316802,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -53394,7 +54025,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659041226,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -54419,7 +55050,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -54490,7 +55121,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659045273,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -54504,21 +55135,21 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659045263,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "selfie-similarity-score-left": {
                         "primitive": {
-                          "int": 100,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "selfie-similarity-score-right": {
                         "primitive": {
-                          "int": 100,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -54539,7 +55170,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659045269,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -55168,7 +55799,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -55199,7 +55830,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659416576,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -55227,7 +55858,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659416582,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -55719,7 +56350,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -55783,7 +56414,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659416582,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -55804,7 +56435,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659416576,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -55832,7 +56463,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659416582,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -56413,7 +57044,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -56444,7 +57075,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659496556,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -56472,7 +57103,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659496586,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -56949,7 +57580,69 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
             {
               "name": "data",
               "value": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "address-postal-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "address-street-1": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "address-subdivision": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "birthdate": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name-first": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name-last": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone-number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -56978,7 +57671,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659496556,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -57589,7 +58282,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -57619,7 +58312,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                                   },
                                   "match-score": {
                                     "primitive": {
-                                      "int": 100,
+                                      "int": 1,
                                       "type": "int",
                                     },
                                     "type": "primitive",
@@ -57656,7 +58349,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659496587,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -57677,7 +58370,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659496556,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -57705,7 +58398,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659496586,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -58339,7 +59032,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659498140,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -58840,7 +59533,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -58871,7 +59564,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659498140,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -58899,7 +59592,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659498720,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -59417,7 +60110,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -59469,7 +60162,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659498723,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -59490,7 +60183,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659498140,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -59518,7 +60211,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659498720,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -60118,7 +60811,27 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "tin": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -60146,7 +60859,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659499892,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -60765,7 +61478,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -60796,7 +61509,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659499892,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -60824,7 +61537,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659499980,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -61302,7 +62015,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -61313,7 +62026,20 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "confirmation-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -61348,7 +62074,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -61818,7 +62544,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -61870,7 +62596,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659499986,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -61891,7 +62617,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659499892,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -61919,7 +62645,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "submitted-at-ts": {
                         "primitive": {
-                          "int": 1659499980,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -62479,7 +63205,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -62503,7 +63229,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659501559,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -62531,7 +63257,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -63030,7 +63756,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -63081,7 +63807,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -63563,7 +64289,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "workflow-id",
               "value": {
                 "primitive": {
-                  "string": "workflow-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -64242,7 +64968,34 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "country-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone-number": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "verification-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -64277,7 +65030,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501078,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -64804,7 +65557,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -64848,7 +65601,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -65307,7 +66060,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -65318,7 +66071,20 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "confirmation-code": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -65346,7 +66112,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -65795,7 +66561,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "verification-id",
               "value": {
                 "primitive": {
-                  "string": "verification-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -65819,7 +66585,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       },
                       "completed-at-ts": {
                         "primitive": {
-                          "int": 1659501559,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -65840,7 +66606,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                       },
                       "created-at-ts": {
                         "primitive": {
-                          "int": 1659501249,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -67607,7 +68373,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "api-key-id",
               "value": {
                 "primitive": {
-                  "string": "api-key-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -67616,7 +68382,20 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "meta": {
+                "properties": {
+                  "expires-in-seconds": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -68150,7 +68929,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "api-key-id",
               "value": {
                 "primitive": {
-                  "string": "api-key-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -68636,7 +69415,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "api-key-id",
               "value": {
                 "primitive": {
-                  "string": "api-key-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -69343,7 +70122,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -69923,7 +70702,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -70691,7 +71470,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -71271,7 +72050,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "report-id",
               "value": {
                 "primitive": {
-                  "string": "report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -71849,7 +72628,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
               "name": "graph-query-id",
               "value": {
                 "primitive": {
-                  "string": "graph-query-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -71909,7 +72688,24 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "request": {
             "properties": {
               "data": {
-                "properties": {},
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "graph-query-template-id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "variable-map": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -72085,7 +72881,7 @@ The inquiry can still be resumed after expiry.",
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -72834,7 +73630,7 @@ The inquiry can still be resumed after expiry.",
               "name": "inquiry-id",
               "value": {
                 "primitive": {
-                  "string": "inquiry-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",

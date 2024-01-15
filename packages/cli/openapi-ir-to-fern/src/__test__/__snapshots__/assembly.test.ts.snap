@@ -57,6 +57,23 @@ exports[`open api parser assembly simple 1`] = `
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "final_model": "default",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lemur/v3/generate/action-items",
             "request": {
@@ -80,6 +97,23 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "request_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "deleted": true,
+                    "request_id": "string",
+                    "request_id_to_purge": "string",
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/lemur/v3/{request_id}",
@@ -105,6 +139,33 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "final_model": "default",
+                  "questions": [
+                    {
+                      "question": "string",
+                    },
+                  ],
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": [
+                      {
+                        "answer": "string",
+                        "question": "string",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/question-answer",
@@ -141,6 +202,23 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "final_model": "default",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lemur/v3/generate/summary",
             "request": {
@@ -176,6 +254,24 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "final_model": "default",
+                  "prompt": "string",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/task",
@@ -223,6 +319,21 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "expires_in": 1,
+                },
+                "response": {
+                  "body": {
+                    "token": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v2/realtime/token",
             "request": {
@@ -266,6 +377,172 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "audio_url": "string",
+                  "boost_param": "low",
+                  "custom_spelling": [
+                    {
+                      "from": [],
+                      "to": "string",
+                    },
+                  ],
+                  "language_code": "en",
+                  "redact_pii_policies": [
+                    "medical_process",
+                  ],
+                  "redact_pii_sub": "entity_type",
+                  "summary_model": "informative",
+                  "summary_type": "bullets",
+                },
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "string",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "string",
+                        "headline": "string",
+                        "start": 1,
+                        "summary": "string",
+                      },
+                    ],
+                    "content_safety_labels": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "string",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "string": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "string": 1.1,
+                          },
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                    },
+                    "custom_spelling": [
+                      {
+                        "from": [],
+                        "to": "string",
+                      },
+                    ],
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "iab_categories_result": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "label": "string",
+                              "relevance": 1.1,
+                            },
+                          ],
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
+                    "redact_pii_sub": "entity_type",
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "status": "queued",
+                    "summarization": true,
+                    "utterances": [
+                      {
+                        "channel": "string",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "string",
+                          },
+                        ],
+                      },
+                    ],
+                    "webhook_auth": true,
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v2/transcript",
             "request": {
@@ -301,6 +578,158 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "string",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "string",
+                        "headline": "string",
+                        "start": 1,
+                        "summary": "string",
+                      },
+                    ],
+                    "content_safety_labels": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "string",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "string": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "string": 1.1,
+                          },
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                    },
+                    "custom_spelling": [
+                      {
+                        "from": [],
+                        "to": "string",
+                      },
+                    ],
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "iab_categories_result": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "label": "string",
+                              "relevance": 1.1,
+                            },
+                          ],
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
+                    "redact_pii_sub": "entity_type",
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "status": "queued",
+                    "summarization": true,
+                    "utterances": [
+                      {
+                        "channel": "string",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "string",
+                          },
+                        ],
+                      },
+                    ],
+                    "webhook_auth": true,
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
@@ -325,6 +754,158 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "string",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "string",
+                        "headline": "string",
+                        "start": 1,
+                        "summary": "string",
+                      },
+                    ],
+                    "content_safety_labels": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "string",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "string": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "string": 1.1,
+                          },
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                    },
+                    "custom_spelling": [
+                      {
+                        "from": [],
+                        "to": "string",
+                      },
+                    ],
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "iab_categories_result": {
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "label": "string",
+                              "relevance": 1.1,
+                            },
+                          ],
+                          "text": "string",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
+                    "redact_pii_sub": "entity_type",
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                    "status": "queued",
+                    "summarization": true,
+                    "utterances": [
+                      {
+                        "channel": "string",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "string",
+                          },
+                        ],
+                      },
+                    ],
+                    "webhook_auth": true,
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}",
@@ -351,6 +932,39 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "audio_duration": 1.1,
+                    "confidence": 1.1,
+                    "id": "string",
+                    "paragraphs": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/paragraphs",
             "path-parameters": {
@@ -376,6 +990,22 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "redacted_audio_url": "string",
+                    "status": "redacted_audio_ready",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/redacted-audio",
             "path-parameters": {
@@ -400,6 +1030,39 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "audio_duration": 1.1,
+                    "confidence": 1.1,
+                    "id": "string",
+                    "sentences": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "string",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "string",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/sentences",
@@ -456,6 +1119,35 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "status": "queued",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "page_details": {
+                      "current_url": "string",
+                      "limit": 1,
+                      "prev_url": "string",
+                      "result_count": 1,
+                    },
+                    "transcripts": [
+                      {
+                        "audio_url": "string",
+                        "created": "2024-01-15T09:30:00Z",
+                        "id": "string",
+                        "resource_url": "string",
+                        "status": "queued",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript",
             "request": {
@@ -503,6 +1195,32 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "query-parameters": {
+                  "words": undefined,
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "id": "string",
+                    "matches": [
+                      {
+                        "count": 1,
+                        "indexes": [],
+                        "text": "string",
+                        "timestamps": [],
+                      },
+                    ],
+                    "total_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/word-search",

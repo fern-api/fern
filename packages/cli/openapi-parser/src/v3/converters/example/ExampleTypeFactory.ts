@@ -55,7 +55,7 @@ export class ExampleTypeFactory {
                     example
                 });
             case "primitive": {
-                const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example });
+                const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, isOptional });
                 return primitiveExample != null ? FullExample.primitive(primitiveExample) : undefined;
             }
             case "reference": {
@@ -104,11 +104,15 @@ export class ExampleTypeFactory {
                 if (objectExample != null && Object.entries(objectExample).length > 0) {
                     const kvs: KeyValuePair[] = [];
                     for (const [key, value] of Object.entries(objectExample)) {
-                        const keyExample = this.buildExampleFromPrimitive({ schema: schema.key.schema, example: key });
+                        const keyExample = this.buildExampleFromPrimitive({
+                            schema: schema.key.schema,
+                            example: key,
+                            isOptional
+                        });
                         const valueExample = this.buildExampleHelper({
                             example: value,
                             schema: schema.value,
-                            isOptional: true,
+                            isOptional,
                             visitedSchemaIds
                         });
                         if (keyExample != null && valueExample != null) {
@@ -120,11 +124,15 @@ export class ExampleTypeFactory {
                     }
                     return FullExample.map(kvs);
                 }
-                const keyExample = this.buildExampleFromPrimitive({ schema: schema.key.schema, example: undefined });
+                const keyExample = this.buildExampleFromPrimitive({
+                    schema: schema.key.schema,
+                    example: undefined,
+                    isOptional
+                });
                 const valueExample = this.buildExampleHelper({
                     example: undefined,
                     schema: schema.value,
-                    isOptional: true,
+                    isOptional,
                     visitedSchemaIds
                 });
                 if (keyExample != null && valueExample != null) {
@@ -231,9 +239,11 @@ export class ExampleTypeFactory {
     }
 
     private buildExampleFromPrimitive({
+        isOptional,
         example,
         schema
     }: {
+        isOptional: boolean;
         example: unknown | undefined;
         schema: PrimitiveSchemaValueWithExample;
     }): PrimitiveExample | undefined {
@@ -241,48 +251,84 @@ export class ExampleTypeFactory {
             case "string":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.string(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.string(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.string("string");
                 }
-                return schema.example != null ? PrimitiveExample.string(schema.example) : undefined;
+                return undefined;
             case "base64":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.base64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.base64(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.base64("SGVsbG8gd29ybGQh");
                 }
-                return schema.example != null ? PrimitiveExample.base64(schema.example) : undefined;
+                return undefined;
             case "boolean":
                 if (example != null && typeof example === "boolean") {
                     return PrimitiveExample.boolean(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.boolean(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.boolean(true);
                 }
-                return schema.example != null ? PrimitiveExample.boolean(schema.example) : undefined;
+                return undefined;
             case "date":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.date(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.date(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.date("2023-01-15");
                 }
-                return schema.example != null ? PrimitiveExample.date(schema.example) : undefined;
+                return undefined;
             case "datetime":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetime(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.datetime(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
                 }
-                return schema.example != null ? PrimitiveExample.datetime(schema.example) : undefined;
+                return undefined;
             case "double":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.double(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.double(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.double(1.1);
                 }
-                return schema.example != null ? PrimitiveExample.double(schema.example) : undefined;
+                return undefined;
             case "float":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.float(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.float(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.float(1.1);
                 }
-                return schema.example != null ? PrimitiveExample.float(schema.example) : undefined;
+                return undefined;
             case "int":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.int(1);
+                } else if (!isOptional) {
+                    return PrimitiveExample.int(1);
                 }
-                return schema.example != null ? PrimitiveExample.int(schema.example) : undefined;
+                return undefined;
             case "int64":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.int64(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.int64(1000000);
                 }
-                return schema.example != null ? PrimitiveExample.int64(schema.example) : undefined;
+                return undefined;
             default:
                 assertNever(schema);
         }

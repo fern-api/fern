@@ -20,7 +20,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -167,7 +167,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -177,7 +177,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "buyerId",
               "value": {
                 "primitive": {
-                  "string": "buyer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -329,7 +329,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -339,7 +339,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "buyerId",
               "value": {
                 "primitive": {
-                  "string": "buyer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -507,7 +507,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -517,7 +517,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "buyerId",
               "value": {
                 "primitive": {
-                  "string": "buyer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -883,7 +883,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2565,7 +2565,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2915,7 +2915,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2925,7 +2925,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3273,7 +3273,64 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "entitlementId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "creditAmountIncrement": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "entitlementID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AddEntitlementCreditRequest",
       "headers": [],
       "internal": undefined,
@@ -3365,7 +3422,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3375,7 +3432,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3746,7 +3803,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3756,7 +3813,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4126,7 +4183,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4136,7 +4193,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4146,7 +4203,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementTermId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-term-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4522,7 +4579,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4532,7 +4589,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4711,7 +4768,84 @@ exports[`open api parser suger parse open api 1`] = `
         409,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "entitlementId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "entitlementID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "metaInfo": {
+                "properties": {},
+                "type": "object",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "records": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "double": 1.1,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "metaInfo": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ReportUsageRecordGroupRequest",
       "headers": [],
       "internal": undefined,
@@ -4804,7 +4938,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4814,7 +4948,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "entitlementId",
               "value": {
                 "primitive": {
-                  "string": "entitlement-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5149,7 +5283,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5325,7 +5459,225 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "info": {
+                "properties": {
+                  "awsAceIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "awsIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "azureIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "gcpIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "hubspotCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "salesforceCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "filters": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "slackIntegration": {
+                    "properties": {
+                      "authedUser": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "enterprise": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "incomingWebhook": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "info": {
+                "properties": {
+                  "awsAceIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "awsIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "azureIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "gcpIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "hubspotCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "salesforceCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "filters": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "slackIntegration": {
+                    "properties": {
+                      "authedUser": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "enterprise": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "incomingWebhook": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "status": {
+                "enum": "CREATED",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -5403,7 +5755,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5640,7 +5992,46 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "partner",
+              "value": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "service",
+              "value": {
+                "enum": "MARKETPLACE",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "DeleteIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -5757,7 +6148,239 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "partner",
+              "value": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "service",
+              "value": {
+                "enum": "MARKETPLACE",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "info": {
+                "properties": {
+                  "awsAceIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "awsIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "azureIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "gcpIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "hubspotCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "salesforceCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "filters": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "slackIntegration": {
+                    "properties": {
+                      "authedUser": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "enterprise": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "incomingWebhook": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "info": {
+                "properties": {
+                  "awsAceIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "awsIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "azureIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "gcpIntegration": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "hubspotCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "salesforceCrmIntegration": {
+                    "properties": {
+                      "credential": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "filters": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "slackIntegration": {
+                    "properties": {
+                      "authedUser": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "enterprise": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "incomingWebhook": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "status": {
+                "enum": "CREATED",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -5884,7 +6507,46 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "partner",
+              "value": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "service",
+              "value": {
+                "enum": "MARKETPLACE",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "boolean": true,
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "VerifyIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -6006,7 +6668,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6889,7 +7551,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8571,7 +9233,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8581,7 +9243,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "offerId",
               "value": {
                 "primitive": {
-                  "string": "offer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9460,7 +10122,42 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "offerId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "DeleteOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -9534,7 +10231,42 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "offerId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "CancelOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -9615,7 +10347,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9625,7 +10357,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "offerId",
               "value": {
                 "primitive": {
-                  "string": "offer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9990,7 +10722,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10167,7 +10899,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10555,7 +11287,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "Authorization",
               "value": {
                 "primitive": {
-                  "string": "authorization",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10567,7 +11299,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -11504,7 +12236,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12390,7 +13122,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12709,7 +13441,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13007,7 +13739,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13853,7 +14585,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13863,7 +14595,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14706,7 +15438,42 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "productId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "DeleteProductRequest",
       "headers": [],
       "internal": undefined,
@@ -14779,7 +15546,822 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "productId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "fulfillmentUrl": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "info": {
+                "properties": {
+                  "awsSaasProduct": {
+                    "properties": {
+                      "Description": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "Dimensions": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "PromotionalResources": {
+                        "properties": {
+                          "AdditionalResources": {
+                            "array": [
+                              {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "SupportInformation": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "Versions": {
+                        "array": [
+                          {
+                            "properties": {
+                              "DeliveryOptions": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "awsSnsSubscriptions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "Status": {
+                            "enum": "UNKNOWN",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "azureProduct": {
+                    "properties": {
+                      "availabilities": {
+                        "array": [
+                          {
+                            "properties": {
+                              "emailAudiences": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "subscriptionAudiences": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "branches": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "externalIDs": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "listings": {
+                        "array": [
+                          {
+                            "properties": {
+                              "assets": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "resourceType": {
+                                        "enum": "ListingAsset",
+                                        "type": "enum",
+                                      },
+                                      "state": {
+                                        "enum": "PendingUpload",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "listingContacts": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "type": {
+                                        "enum": "CustomerSupport",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "listingUris": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "resourceType": {
+                                "literal": {
+                                  "string": "AzureListing",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "packageConfigurations": {
+                        "array": [
+                          {
+                            "properties": {
+                              "resourceType": {
+                                "literal": {
+                                  "string": "AzureSoftwareAsAServicePackageConfiguration",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "properties": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "setup": {
+                        "properties": {
+                          "callToAction": {
+                            "enum": "free",
+                            "type": "enum",
+                          },
+                          "channelStates": {
+                            "array": [
+                              {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "resourceType": {
+                            "literal": {
+                              "string": "AzureProductSetup",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                          "sellingOption": {
+                            "enum": "ListingOnly",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "submissions": {
+                        "array": [
+                          {
+                            "properties": {
+                              "pendingUpdateInfo": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                              "resourceType": {
+                                "literal": {
+                                  "string": "Submission",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                              "resources": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "state": {
+                                "enum": "Inprogress",
+                                "type": "enum",
+                              },
+                              "subState": {
+                                "enum": "InDraft",
+                                "type": "enum",
+                              },
+                              "targets": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "variantResources": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "resources": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "variants": {
+                        "array": [
+                          {
+                            "properties": {
+                              "azureGovernmentCertifications": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "validationResults": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "extendedProperties": {
+                                "array": [
+                                  {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "featureAvailabilities": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "customMeters": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "includedBaseQuantities": {
+                                                "array": [
+                                                  {
+                                                    "properties": {
+                                                      "recurringUnit": {
+                                                        "enum": "Monthly",
+                                                        "type": "enum",
+                                                      },
+                                                    },
+                                                    "type": "object",
+                                                  },
+                                                ],
+                                                "type": "array",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "marketStates": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "state": {
+                                                "enum": "Disabled",
+                                                "type": "enum",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "markets": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "priceSchedules": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "dateTimeRange": {
+                                                "properties": {
+                                                  "endAt": {
+                                                    "properties": {},
+                                                    "type": "object",
+                                                  },
+                                                  "startAt": {
+                                                    "properties": {},
+                                                    "type": "object",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                              "schedules": {
+                                                "array": [
+                                                  {
+                                                    "properties": {
+                                                      "priceCadence": {
+                                                        "properties": {
+                                                          "type": {
+                                                            "enum": "Month",
+                                                            "type": "enum",
+                                                          },
+                                                        },
+                                                        "type": "object",
+                                                      },
+                                                      "pricingModel": {
+                                                        "enum": "Flat",
+                                                        "type": "enum",
+                                                      },
+                                                      "pricingUnits": {
+                                                        "array": [
+                                                          {
+                                                            "properties": {
+                                                              "name": {
+                                                                "enum": "sharedcore",
+                                                                "type": "enum",
+                                                              },
+                                                            },
+                                                            "type": "object",
+                                                          },
+                                                        ],
+                                                        "type": "array",
+                                                      },
+                                                      "retailPrice": {
+                                                        "properties": {},
+                                                        "type": "object",
+                                                      },
+                                                    },
+                                                    "type": "object",
+                                                  },
+                                                ],
+                                                "type": "array",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "properties": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "subscriptionAudiences": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "tenantAudiences": {
+                                        "array": [
+                                          {
+                                            "properties": {},
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "trial": {
+                                        "properties": {
+                                          "dateTimeRange": {
+                                            "properties": {
+                                              "endAt": {
+                                                "properties": {},
+                                                "type": "object",
+                                              },
+                                              "startAt": {
+                                                "properties": {},
+                                                "type": "object",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                          "durationType": {
+                                            "enum": "Minute",
+                                            "type": "enum",
+                                          },
+                                          "type": {
+                                            "enum": "NoTrial",
+                                            "type": "enum",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      "visibility": {
+                                        "enum": "Public",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "resourceType": {
+                                "enum": "AzureSkuVariant",
+                                "type": "enum",
+                              },
+                              "state": {
+                                "enum": "InActive",
+                                "type": "enum",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "commits": {
+                    "array": [
+                      {
+                        "properties": {
+                          "timeUnit": {
+                            "enum": "DAY",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "enum": "FLAT_RATE",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "dimensions": {
+                    "array": [
+                      {
+                        "properties": {
+                          "includedBaseQuantities": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "recurringUnit": {
+                                    "enum": "Monthly",
+                                    "type": "enum",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "usageCount": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "valueType": {
+                            "enum": "VALUE_TYPE_UNSPECIFIED",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "gcpProduct": {
+                    "properties": {
+                      "listingSpec": {
+                        "properties": {
+                          "externalAccountSpec": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "listingType": {
+                            "literal": {
+                              "string": "BillingIntegratedManagedService",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                          "marketingSpec": {
+                            "properties": {
+                              "supportSpec": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "purchaseSpec": {
+                            "properties": {
+                              "metrics": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "valueType": {
+                                        "enum": "VALUE_TYPE_UNSPECIFIED",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "purchaseOptionSpecs": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "priceInfo": {
+                                        "properties": {
+                                          "priceModel": {
+                                            "enum": "FREE",
+                                            "type": "enum",
+                                          },
+                                          "subscriptionPlans": {
+                                            "array": [
+                                              {
+                                                "properties": {
+                                                  "period": {
+                                                    "literal": {
+                                                      "string": "ONE_YEAR",
+                                                      "type": "string",
+                                                    },
+                                                    "type": "literal",
+                                                  },
+                                                  "price": {
+                                                    "properties": {},
+                                                    "type": "object",
+                                                  },
+                                                  "taxCategoryOverride": {
+                                                    "literal": {
+                                                      "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                      "type": "string",
+                                                    },
+                                                    "type": "literal",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                            ],
+                                            "type": "array",
+                                          },
+                                          "usageFees": {
+                                            "array": [
+                                              {
+                                                "properties": {
+                                                  "priceTiers": {
+                                                    "array": [
+                                                      {
+                                                        "properties": {
+                                                          "price": {
+                                                            "properties": {},
+                                                            "type": "object",
+                                                          },
+                                                        },
+                                                        "type": "object",
+                                                      },
+                                                    ],
+                                                    "type": "array",
+                                                  },
+                                                  "taxCategoryOverride": {
+                                                    "literal": {
+                                                      "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                      "type": "string",
+                                                    },
+                                                    "type": "literal",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                            ],
+                                            "type": "array",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      "purchaseMode": {
+                                        "literal": {
+                                          "string": "PURCHASE_MODE_PUBLIC",
+                                          "type": "string",
+                                        },
+                                        "type": "literal",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "marketplace": {
+                        "literal": {
+                          "string": "marketplaces/google-cloud",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "serviceConfig": {
+                        "properties": {
+                          "billing": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "metrics": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "valueType": {
+                                    "enum": "VALUE_TYPE_UNSPECIFIED",
+                                    "type": "enum",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "productType": {
+                "enum": "UNKNOWN",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateProductRequest",
       "headers": [],
       "internal": undefined,
@@ -14871,7 +16453,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14881,7 +16463,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14984,7 +16566,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14994,7 +16576,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15359,7 +16941,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15369,7 +16951,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16267,7 +17849,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16277,7 +17859,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16463,7 +18045,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16473,7 +18055,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "productId",
               "value": {
                 "primitive": {
-                  "string": "product-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16781,7 +18363,123 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "partner": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+              "reportType": {
+                "enum": "InvoicedAmount",
+                "type": "enum",
+              },
+              "service": {
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "reportType": {
+                "enum": "InvoicedAmount",
+                "type": "enum",
+              },
+              "revenueRecords": {
+                "array": [
+                  {
+                    "properties": {
+                      "info": {
+                        "properties": {
+                          "awsRevenueRecords": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "insertDate": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "invoiceDate": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "paymentDueDate": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "usagePeriodEndDate": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                  "usagePeriodStartDate": {
+                                    "properties": {},
+                                    "type": "object",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "azureRevenueRecords": {
+                            "array": [
+                              {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "gcpRevenueRecords": {
+                            "array": [
+                              {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRevenueReportRequest",
       "headers": [],
       "internal": undefined,
@@ -16859,7 +18557,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17029,7 +18727,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17039,7 +18737,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "usageRecordGroupId",
               "value": {
                 "primitive": {
-                  "string": "usage-record-group-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17138,7 +18836,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17438,7 +19136,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "orgId",
               "value": {
                 "primitive": {
-                  "string": "org-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17448,7 +19146,7 @@ exports[`open api parser suger parse open api 1`] = `
               "name": "usageRecordReportId",
               "value": {
                 "primitive": {
-                  "string": "usage-record-report-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -17669,7 +19367,57 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "entitlementID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "usageRecords": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetUsageReportRequest",
       "headers": [],
       "internal": undefined,
@@ -17738,7 +19486,43 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "organizationID": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "secret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetApiClientAccessTokenRequest",
       "headers": [],
       "internal": undefined,
