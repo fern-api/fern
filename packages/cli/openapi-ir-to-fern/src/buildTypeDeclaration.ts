@@ -212,7 +212,7 @@ export function buildArrayTypeDeclaration({
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, context })
+        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
@@ -227,7 +227,7 @@ export function buildMapTypeDeclaration({
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, context })
+        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
@@ -299,7 +299,8 @@ export function buildOptionalTypeDeclaration({
         schema: buildOptionalTypeReference({
             schema,
             context,
-            fileContainingReference: declarationFile
+            fileContainingReference: declarationFile,
+            declarationFile
         })
     };
 }
