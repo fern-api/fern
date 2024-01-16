@@ -656,65 +656,6 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "transactionCurrency": "1INCH",
                   },
                   "deviceData": {},
-                  "executedRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
-                    },
-                  ],
-                  "hitRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
-                    },
-                  ],
                   "originAmountDetails": {
                     "country": "AF",
                     "transactionAmount": 1.1,
@@ -1896,7 +1837,7 @@ Each consumer Business entity needs three mandatory fields:
           },
           "response": {
             "docs": "Created",
-            "type": "PostBusinessUserResponse",
+            "type": "UserMonitoringResult",
           },
         },
         "post-business-user-event": {
@@ -2563,65 +2504,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "string",
                         },
                       ],
-                    },
-                  ],
-                  "executedRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
-                    },
-                  ],
-                  "hitRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
                     },
                   ],
                   "kycStatusDetails": {
@@ -3313,7 +3195,7 @@ Here are some of the most used payload fields explained (you can find the full p
           },
           "response": {
             "docs": "Created",
-            "type": "PostConsumerTransactionResponse",
+            "type": "TransactionMonitoringResult",
           },
         },
         "post-consumer-user": {
@@ -3858,7 +3740,7 @@ Each consumer User entity needs three mandatory fields:
           },
           "response": {
             "docs": "Created",
-            "type": "PostConsumerUserResponse",
+            "type": "UserMonitoringResult",
           },
         },
         "post-transaction-event": {
@@ -4539,65 +4421,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     ],
                   },
                   "createdTimestamp": 1.1,
-                  "executedRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
-                    },
-                  ],
-                  "hitRules": [
-                    {
-                      "labels": [
-                        "UNEXPECTED_BEHAVIOR",
-                      ],
-                      "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                        "hitDirections": [
-                          "ORIGIN",
-                        ],
-                        "sanctionsDetails": [
-                          {
-                            "entityType": "CONSUMER_NAME",
-                            "name": "string",
-                            "searchId": "string",
-                          },
-                        ],
-                      },
-                      "ruleId": "string",
-                      "ruleInstanceId": "string",
-                      "ruleName": "string",
-                    },
-                  ],
                   "kycStatusDetails": {
                     "status": "SUCCESSFUL",
                   },
@@ -5065,7 +4888,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "types": {
-      "ACHPaymentMethod": "literal<"ACH">",
       "AchDetails": {
         "docs": "Model for ACH payment method",
         "properties": {
@@ -5092,6 +4914,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "AchPaymentMethod": "literal<"ACH">",
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
@@ -5238,16 +5061,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "BusinessWithRulesResult": {
-        "docs": "Model for business payload with rules result",
-        "extends": [
-          "Business",
-        ],
-        "properties": {
-          "executedRules": "optional<list<ExecutedRulesResult>>",
-          "hitRules": "optional<list<HitRulesDetails>>",
-        },
-      },
+      "BusinessWithRulesResult": "Business",
       "CardDetails": {
         "docs": "Model for credit or debit card details",
         "properties": {
@@ -6241,7 +6055,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "IBANPaymentMethod": "literal<"IBAN">",
       "IbanDetails": {
         "docs": "Standardized model for Bank Details",
         "properties": {
@@ -6271,6 +6084,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": "optional<Tag>",
         },
       },
+      "IbanPaymentMethod": "literal<"IBAN">",
       "KycStatus": {
         "enum": [
           "SUCCESSFUL",
@@ -6481,41 +6295,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "PostBusinessUserResponse": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "message": "optional<string>",
-          "userId": {
-            "docs": "user ID the risk score pertains to",
-            "type": "string",
-          },
-        },
-      },
-      "PostConsumerTransactionResponse": {
-        "docs": undefined,
-        "extends": [
-          "TransactionMonitoringResult",
-        ],
-        "properties": {
-          "message": "optional<string>",
-        },
-      },
-      "PostConsumerUserResponse": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "message": "optional<string>",
-          "userId": {
-            "docs": "user ID the risk score pertains to",
-            "type": "string",
-          },
-        },
-      },
       "RiskLevel": {
         "enum": [
           "VERY_HIGH",
@@ -6615,7 +6394,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SWIFTPaymentMethod": "literal<"SWIFT">",
       "SanctionsDetails": {
         "docs": undefined,
         "properties": {
@@ -6666,6 +6444,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "SwiftPaymentMethod": "literal<"SWIFT">",
       "Tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
@@ -6892,17 +6671,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "WALLET": "WalletDetails",
         },
       },
-      "TransactionWithRulesResult": {
-        "docs": "Model for transaction payload with rules result",
-        "extends": [
-          "Transaction",
-        ],
-        "properties": {
-          "executedRules": "list<ExecutedRulesResult>",
-          "hitRules": "list<HitRulesDetails>",
-        },
-      },
-      "UPIPaymentMethod": "literal<"UPI">",
+      "TransactionWithRulesResult": "Transaction",
       "UpiDetails": {
         "docs": "Model for UPI payment method",
         "properties": {
@@ -6924,6 +6693,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "UpiPaymentMethod": "literal<"UPI">",
       "User": {
         "docs": "Model for User details",
         "extends": [
@@ -7038,16 +6808,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "userId": "optional<string>",
         },
       },
-      "UserWithRulesResult": {
-        "docs": "Model for consumer user payload with rules result",
-        "extends": [
-          "User",
-        ],
-        "properties": {
-          "executedRules": "optional<list<ExecutedRulesResult>>",
-          "hitRules": "optional<list<HitRulesDetails>>",
-        },
-      },
+      "UserWithRulesResult": "User",
       "WalletDetails": {
         "docs": "Standardized model for a Generic wallet transaction",
         "properties": {

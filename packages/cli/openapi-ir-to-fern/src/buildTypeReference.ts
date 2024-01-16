@@ -229,11 +229,12 @@ export function buildEnumTypeReference({
         name,
         schema: enumTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: getPrefixedType({ type: name, fileContainingReference, declarationFile, context }),
+        type: prefixedType,
         docs: schema.description
     };
 }
@@ -259,11 +260,12 @@ export function buildObjectTypeReference({
         name,
         schema: objectTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: getPrefixedType({ type: name, fileContainingReference, declarationFile, context }),
+        type: prefixedType,
         docs: schema.description
     };
 }
@@ -289,11 +291,12 @@ export function buildOneOfTypeReference({
         name,
         schema: unionTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: getPrefixedType({ type: name, fileContainingReference, declarationFile, context }),
+        type: prefixedType,
         docs: schema.description
     };
 }
