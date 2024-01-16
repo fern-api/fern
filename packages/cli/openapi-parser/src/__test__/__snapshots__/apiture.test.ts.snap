@@ -110,129 +110,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "response": {
             "properties": {
               "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "allows": {
-                        "properties": {
-                          "billPay": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "manageCards": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "mobileCheckDeposit": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "transferFrom": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "transferTo": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "view": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "viewCards": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "label": {
-                        "primitive": {
-                          "string": "Checking *1008",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "location": {
-                        "enum": "internal",
-                        "type": "enum",
-                      },
-                      "maskedNumber": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "nickname": {
-                        "primitive": {
-                          "string": "Payroll Checking",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "product": {
-                        "properties": {
-                          "code": {
-                            "primitive": {
-                              "string": "CD001",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "description": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "label": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "type": {
-                            "enum": "savings",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "limit": {
@@ -244,7 +122,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -930,129 +808,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "response": {
             "properties": {
               "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "allows": {
-                        "properties": {
-                          "billPay": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "manageCards": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "mobileCheckDeposit": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "transferFrom": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "transferTo": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "view": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "viewCards": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "label": {
-                        "primitive": {
-                          "string": "Checking *1008",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "location": {
-                        "enum": "internal",
-                        "type": "enum",
-                      },
-                      "maskedNumber": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "nickname": {
-                        "primitive": {
-                          "string": "Payroll Checking",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "product": {
-                        "properties": {
-                          "code": {
-                            "primitive": {
-                              "string": "CD001",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "description": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "label": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "type": {
-                            "enum": "savings",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "limit": {
@@ -1064,7 +820,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1234,8 +990,11 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "response": {
             "properties": {
               "items": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "limit": {
                 "primitive": {
@@ -1253,7 +1012,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1796,7 +1555,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                       },
                       "countryCode": {
                         "primitive": {
-                          "string": "string",
+                          "string": "US",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1861,7 +1620,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                           },
                           "countryCode": {
                             "primitive": {
-                              "string": "string",
+                              "string": "US",
                               "type": "string",
                             },
                             "type": "primitive",

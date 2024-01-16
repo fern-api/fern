@@ -20933,8 +20933,11 @@ If you try to access older information than what we can access, we will return a
                                 "type": "primitive",
                               },
                               "last_income_description": {
-                                "map": [],
-                                "type": "map",
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
                               },
                               "lookback_periods": {
                                 "primitive": {
@@ -21477,8 +21480,11 @@ If you try to access older information than what we can access, we will return a
                         "type": "primitive",
                       },
                       "last_income_description": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "lookback_periods": {
                         "primitive": {
@@ -21892,8 +21898,11 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -22291,8 +22300,11 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -35300,8 +35312,11 @@ If you need to know the currency of the account, just do a GET Details to the ac
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -36091,8 +36106,11 @@ For example:
                         "type": "primitive",
                       },
                       "name": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "url": {
                         "primitive": {
@@ -36233,8 +36251,11 @@ For example:
                     "type": "primitive",
                   },
                   "name": {
-                    "map": [],
-                    "type": "map",
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "url": {
                     "primitive": {
@@ -36364,8 +36385,11 @@ For example:
                 "type": "primitive",
               },
               "name": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "url": {
                 "primitive": {

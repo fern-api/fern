@@ -3117,8 +3117,11 @@ exports[`open api parser hathora parse open api 1`] = `
                           "type": "string",
                         },
                         "value": {
-                          "map": [],
-                          "type": "map",
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                       },
                     ],
@@ -3306,8 +3309,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -3351,8 +3357,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -3568,8 +3577,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -3613,8 +3625,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -3830,8 +3845,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -3875,8 +3893,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -4092,8 +4113,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -4141,8 +4165,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -4406,8 +4433,11 @@ exports[`open api parser hathora parse open api 1`] = `
                           "type": "string",
                         },
                         "value": {
-                          "map": [],
-                          "type": "map",
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                       },
                     ],
@@ -4578,8 +4608,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -4715,8 +4748,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -4756,8 +4792,11 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],

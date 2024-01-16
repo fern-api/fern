@@ -9020,8 +9020,11 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -12892,8 +12895,11 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
               },
               "response": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "status": {
                 "primitive": {
@@ -14515,8 +14521,11 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "primitive",
                               },
                               "value": {
-                                "map": [],
-                                "type": "map",
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
                               },
                             },
                             "type": "object",
@@ -17948,8 +17957,11 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],

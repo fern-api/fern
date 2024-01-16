@@ -202,32 +202,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [
-                      {
-                        "allows": {
-                          "billPay": true,
-                          "manageCards": true,
-                          "mobileCheckDeposit": true,
-                          "transferFrom": true,
-                          "transferTo": true,
-                          "view": true,
-                          "viewCards": true,
-                        },
-                        "id": "string",
-                        "label": "Checking *1008",
-                        "location": "internal",
-                        "maskedNumber": "string",
-                        "nickname": "Payroll Checking",
-                        "product": {
-                          "code": "CD001",
-                          "description": "string",
-                          "label": "string",
-                          "type": "savings",
-                        },
-                      },
-                    ],
+                    "items": [],
                     "limit": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
                 },
               },
@@ -289,32 +266,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [
-                      {
-                        "allows": {
-                          "billPay": true,
-                          "manageCards": true,
-                          "mobileCheckDeposit": true,
-                          "transferFrom": true,
-                          "transferTo": true,
-                          "view": true,
-                          "viewCards": true,
-                        },
-                        "id": "string",
-                        "label": "Checking *1008",
-                        "location": "internal",
-                        "maskedNumber": "string",
-                        "nickname": "Payroll Checking",
-                        "product": {
-                          "code": "CD001",
-                          "description": "string",
-                          "label": "string",
-                          "type": "savings",
-                        },
-                      },
-                    ],
+                    "items": [],
                     "limit": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
                 },
               },
@@ -609,7 +563,7 @@ This information provides hints to clients, allowing bank customers to select tr
                       "address": {
                         "address1": "1805 Tiburon Dr.",
                         "address2": "Building 14, Suite 1500",
-                        "countryCode": "string",
+                        "countryCode": "US",
                         "locality": "string",
                         "postalCode": "string",
                       },
@@ -622,7 +576,7 @@ This information provides hints to clients, allowing bank customers to select tr
                         "address": {
                           "address1": "1805 Tiburon Dr.",
                           "address2": "Building 14, Suite 1500",
-                          "countryCode": "string",
+                          "countryCode": "US",
                           "locality": "string",
                           "postalCode": "string",
                         },
@@ -809,10 +763,10 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": {},
+                    "items": "string",
                     "limit": 1,
                     "maximumOverdraftAccounts": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
                   },
                 },
               },

@@ -14221,8 +14221,11 @@ You will be assigned as owner of the new team automatically.",
                   {
                     "properties": {
                       "event": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "eventId": {
                         "primitive": {
@@ -14947,8 +14950,11 @@ You will be assigned as owner of the new team automatically.",
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "map": [],
-            "type": "map",
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
       ],
@@ -17039,8 +17045,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -17339,8 +17348,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "string",
                       },
                       "value": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                     },
                   ],
@@ -17431,8 +17443,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -17832,8 +17847,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -18146,8 +18164,11 @@ You will be assigned as owner of the new team automatically.",
                 "type": "primitive",
               },
               "data": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "id": {
                 "primitive": {
@@ -18412,8 +18433,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "string",
                       },
                       "value": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                     },
                   ],
@@ -18504,8 +18528,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -18858,8 +18885,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "string",
                       },
                       "value": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                     },
                   ],
@@ -18950,8 +18980,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -19403,8 +19436,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "string",
                       },
                       "value": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                     },
                   ],
@@ -19495,8 +19531,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -19977,8 +20016,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -20348,8 +20390,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -21220,8 +21265,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -21584,8 +21632,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -21935,8 +21986,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -22286,8 +22340,11 @@ You will be assigned as owner of the new team automatically.",
                         "type": "primitive",
                       },
                       "data": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
@@ -26238,8 +26295,11 @@ You will be assigned as owner of the new team automatically.",
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -26820,8 +26880,11 @@ You will be assigned as owner of the new team automatically.",
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -27114,8 +27177,11 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -27532,8 +27598,11 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -28208,8 +28277,11 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -30552,8 +30624,11 @@ The client secret is auto generated on the server and returned. The client does 
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -31596,8 +31671,11 @@ The client secret is auto generated on the server and returned. The client does 
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -31810,8 +31888,11 @@ The client secret is auto generated on the server and returned. The client does 
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -32135,8 +32216,11 @@ The client secret is auto generated on the server and returned. The client does 
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -32376,8 +32460,11 @@ The client secret is auto generated on the server and returned. The client does 
                               "type": "string",
                             },
                             "value": {
-                              "map": [],
-                              "type": "map",
+                              "primitive": {
+                                "string": "string",
+                                "type": "string",
+                              },
+                              "type": "primitive",
                             },
                           },
                         ],
@@ -32564,8 +32651,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           "type": "string",
                         },
                         "value": {
-                          "map": [],
-                          "type": "map",
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                       },
                     ],
@@ -32741,8 +32831,11 @@ You will be assigned as owner of the new app automatically.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -32923,8 +33016,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                           "type": "string",
                         },
                         "value": {
-                          "map": [],
-                          "type": "map",
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                       },
                     ],
@@ -33114,8 +33210,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -33301,8 +33400,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
@@ -33570,8 +33672,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
-                      "type": "map",
+                      "primitive": {
+                        "string": "string",
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
                   },
                 ],
