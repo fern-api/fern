@@ -2672,6 +2672,7 @@ authentication connection.
           },
         },
       },
+      "AuthConnectionOptionsSocial": "map<string, unknown>",
       "AuthConnectionToggle": {
         "enum": [
           "disable",
@@ -2821,6 +2822,7 @@ token. Only applicable for application access tokens.
           },
         ],
       },
+      "AuthTokenTokenType": "literal<"bearer">",
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -3083,6 +3085,7 @@ sort order. If not set, then no prior elements exist.
           "dev_user": "DevUser",
         },
       },
+      "Empty": "map<string, unknown>",
       "Enhancement": {
         "docs": undefined,
         "extends": [
@@ -3103,6 +3106,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorBadRequestBadRequest": "map<string, unknown>",
       "ErrorBadRequestInvalidEnumValue": {
         "docs": undefined,
         "properties": {
@@ -3129,6 +3133,7 @@ sort order. If not set, then no prior elements exist.
           },
         },
       },
+      "ErrorBadRequestParseError": "map<string, unknown>",
       "ErrorBadRequestType": {
         "enum": [
           "bad_request",
@@ -3167,6 +3172,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorForbiddenForbidden": "map<string, unknown>",
+      "ErrorForbiddenType": "literal<"forbidden">",
       "ErrorInternalServerError": {
         "docs": undefined,
         "extends": [
@@ -3174,6 +3181,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorInternalServerErrorInternalError": "map<string, unknown>",
+      "ErrorInternalServerErrorType": "literal<"internal_error">",
       "ErrorNotFound": {
         "docs": undefined,
         "extends": [
@@ -3181,6 +3190,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorNotFoundNotFound": "map<string, unknown>",
+      "ErrorNotFoundType": "literal<"not_found">",
       "ErrorServiceUnavailable": {
         "docs": undefined,
         "extends": [
@@ -3188,6 +3199,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
+      "ErrorServiceUnavailableType": "literal<"service_unavailable">",
       "ErrorTooManyRequests": {
         "docs": undefined,
         "extends": [
@@ -3195,6 +3208,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
+      "ErrorTooManyRequestsType": "literal<"too_many_requests">",
       "ErrorUnauthorized": {
         "docs": undefined,
         "extends": [
@@ -3202,6 +3217,8 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
+      "ErrorUnauthorizedType": "literal<"unauthenticated">",
+      "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
       "EventPartCreated": {
         "docs": undefined,
         "properties": {
@@ -3328,6 +3345,10 @@ sort order. If not set, then no prior elements exist.
           "work": "Work",
         },
       },
+      "ExternalIdentity": {
+        "docs": "External identity of a user.",
+        "type": "map<string, unknown>",
+      },
       "Feature": "PartBase",
       "FeatureSummary": "PartBaseSummary",
       "GroupSummary": "AtomBaseSummary",
@@ -3402,6 +3423,7 @@ always be returned in the specified sort-by order.
           "rev_org": "RevOrgSummary",
         },
       },
+      "OrgType": "literal<"rev_org">",
       "Part": {
         "base-properties": {},
         "discriminant": "type",
@@ -3529,12 +3551,14 @@ always be returned in the specified sort-by order.
           },
         },
       },
+      "PartsCreateRequestProduct": "map<string, unknown>",
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
           "part": "Part",
         },
       },
+      "PartsDeleteResponse": "map<string, unknown>",
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
@@ -3588,6 +3612,7 @@ sort order. If not set, then no prior elements exist.
           "product": "parts-update-request-product",
         },
       },
+      "PartsUpdateRequestCapability": "map<string, unknown>",
       "PartsUpdateRequestEnhancement": {
         "docs": undefined,
         "properties": {
@@ -3597,6 +3622,7 @@ sort order. If not set, then no prior elements exist.
           },
         },
       },
+      "PartsUpdateRequestFeature": "map<string, unknown>",
       "PartsUpdateRequestOwnedBy": {
         "docs": undefined,
         "properties": {
@@ -3608,6 +3634,7 @@ empty.
           },
         },
       },
+      "PartsUpdateRequestProduct": "map<string, unknown>",
       "PartsUpdateResponse": {
         "docs": undefined,
         "properties": {
@@ -3647,6 +3674,10 @@ organization.
         "properties": {
           "rev_org": "RevOrg",
         },
+      },
+      "RevOrgsDeleteResponse": {
+        "docs": "The response to deleting a Rev organization.",
+        "type": "map<string, unknown>",
       },
       "RevOrgsGetResponse": {
         "docs": "The response to getting a Rev organization's information.",
@@ -3803,6 +3834,10 @@ unique.
           "tag": "Tag",
         },
       },
+      "TagsDeleteResponse": {
+        "docs": "The response for deleting a tag.",
+        "type": "map<string, unknown>",
+      },
       "TagsGetResponse": {
         "docs": "The response to getting a tag's information.",
         "properties": {
@@ -3927,6 +3962,7 @@ will appear in the response.
           },
         },
       },
+      "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
       "TimelineEntriesCreateResponse": {
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
@@ -4010,6 +4046,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
       },
+      "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
       "TimelineEntriesUpdateResponse": {
         "docs": "The response to updating a timeline entry.",
         "properties": {
@@ -4025,6 +4062,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
       },
       "TimelineEntryBase": "AtomBase",
+      "TimelineEntryType": "literal<"timeline_comment">",
+      "TimelineEntryVisibility": "literal<"private">",
       "UserBase": {
         "docs": undefined,
         "extends": [
@@ -4222,6 +4261,10 @@ be set for other request types.
           "webhook": "Webhook",
         },
       },
+      "WebhooksDeleteResponse": {
+        "docs": "The response to deleting the webhook.",
+        "type": "map<string, unknown>",
+      },
       "WebhooksGetResponse": {
         "docs": "The response to getting the information for the webhook.",
         "properties": {
@@ -4406,6 +4449,7 @@ issues.
           "work": "Work",
         },
       },
+      "WorksDeleteResponse": "map<string, unknown>",
       "WorksExportResponse": {
         "docs": undefined,
         "properties": {
@@ -4551,50 +4595,6 @@ empty.
           "work": "Work",
         },
       },
-      "auth-connection-options-social": "map<string, unknown>",
-      "auth-token-token-type": "literal<"bearer">",
-      "empty": "map<string, unknown>",
-      "error-bad-request-bad-request": "map<string, unknown>",
-      "error-bad-request-parse-error": "map<string, unknown>",
-      "error-forbidden-forbidden": "map<string, unknown>",
-      "error-forbidden-type": "literal<"forbidden">",
-      "error-internal-server-error-internal-error": "map<string, unknown>",
-      "error-internal-server-error-type": "literal<"internal_error">",
-      "error-not-found-not-found": "map<string, unknown>",
-      "error-not-found-type": "literal<"not_found">",
-      "error-service-unavailable-service-unavailable": "map<string, unknown>",
-      "error-service-unavailable-type": "literal<"service_unavailable">",
-      "error-too-many-requests-too-many-requests": "map<string, unknown>",
-      "error-too-many-requests-type": "literal<"too_many_requests">",
-      "error-unauthorized-type": "literal<"unauthenticated">",
-      "error-unauthorized-unauthenticated": "map<string, unknown>",
-      "external-identity": {
-        "docs": "External identity of a user.",
-        "type": "map<string, unknown>",
-      },
-      "org-type": "literal<"rev_org">",
-      "parts-create-request-product": "map<string, unknown>",
-      "parts-delete-response": "map<string, unknown>",
-      "parts-update-request-capability": "map<string, unknown>",
-      "parts-update-request-feature": "map<string, unknown>",
-      "parts-update-request-product": "map<string, unknown>",
-      "rev-orgs-delete-response": {
-        "docs": "The response to deleting a Rev organization.",
-        "type": "map<string, unknown>",
-      },
-      "tags-delete-response": {
-        "docs": "The response for deleting a tag.",
-        "type": "map<string, unknown>",
-      },
-      "timeline-entries-create-request-type": "literal<"timeline_comment">",
-      "timeline-entries-update-request-type": "literal<"timeline_comment">",
-      "timeline-entry-type": "literal<"timeline_comment">",
-      "timeline-entry-visibility": "literal<"private">",
-      "webhooks-delete-response": {
-        "docs": "The response to deleting the webhook.",
-        "type": "map<string, unknown>",
-      },
-      "works-delete-response": "map<string, unknown>",
     },
   },
   "rootApiFile": {

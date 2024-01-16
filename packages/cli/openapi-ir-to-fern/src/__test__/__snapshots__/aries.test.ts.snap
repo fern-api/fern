@@ -18043,7 +18043,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "IndyPrimaryProof_eq_proof": {
+      "IndyPrimaryProofEqProof": {
         "docs": "Indy equality proof",
         "type": "optional<IndyEqProof>",
       },
@@ -18109,13 +18109,13 @@ exports[`open api parser aries simple 1`] = `
           "primary_proof": "optional<IndyProofProofProofsProofPrimaryProof>",
         },
       },
+      "IndyProofProofProofsProofNonRevocProof": {
+        "docs": "Indy non-revocation proof",
+        "type": "optional<IndyNonRevocProof>",
+      },
       "IndyProofProofProofsProofPrimaryProof": {
         "docs": "Indy primary proof",
         "type": "IndyPrimaryProof",
-      },
-      "IndyProofProofProofsProof_non_revoc_proof": {
-        "docs": "Indy non-revocation proof",
-        "type": "optional<IndyNonRevocProof>",
       },
       "IndyProofReqAttrSpec": {
         "docs": undefined,
@@ -18148,7 +18148,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "IndyProofReqAttrSpec_non_revoked": "optional<IndyProofReqAttrSpecNonRevoked>",
       "IndyProofReqPredSpec": {
         "docs": undefined,
         "properties": {
@@ -18205,7 +18204,6 @@ exports[`open api parser aries simple 1`] = `
           },
         ],
       },
-      "IndyProofReqPredSpec_non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
       "IndyProofRequest": {
         "docs": undefined,
         "properties": {
@@ -18245,7 +18243,6 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "IndyProofRequest_non_revoked": "optional<IndyProofRequestNonRevoked>",
       "IndyProofRequestedProof": {
         "docs": undefined,
         "properties": {

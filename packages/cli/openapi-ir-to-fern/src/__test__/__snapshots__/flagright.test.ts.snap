@@ -5065,7 +5065,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "types": {
-      "ACHPaymentMethod": "literal<"ACH">",
       "AchDetails": {
         "docs": "Model for ACH payment method",
         "properties": {
@@ -5092,6 +5091,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "AchPaymentMethod": "literal<"ACH">",
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
@@ -6241,7 +6241,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "IBANPaymentMethod": "literal<"IBAN">",
       "IbanDetails": {
         "docs": "Standardized model for Bank Details",
         "properties": {
@@ -6271,6 +6270,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": "optional<Tag>",
         },
       },
+      "IbanPaymentMethod": "literal<"IBAN">",
       "KycStatus": {
         "enum": [
           "SUCCESSFUL",
@@ -6615,7 +6615,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SWIFTPaymentMethod": "literal<"SWIFT">",
       "SanctionsDetails": {
         "docs": undefined,
         "properties": {
@@ -6666,6 +6665,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "SwiftPaymentMethod": "literal<"SWIFT">",
       "Tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
@@ -6902,7 +6902,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "hitRules": "list<HitRulesDetails>",
         },
       },
-      "UPIPaymentMethod": "literal<"UPI">",
       "UpiDetails": {
         "docs": "Model for UPI payment method",
         "properties": {
@@ -6924,6 +6923,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "UpiPaymentMethod": "literal<"UPI">",
       "User": {
         "docs": "Model for User details",
         "extends": [

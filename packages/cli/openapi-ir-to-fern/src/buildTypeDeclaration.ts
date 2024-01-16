@@ -53,14 +53,14 @@ export function buildTypeDeclaration({
         case "reference":
             return buildReferenceTypeDeclaration({ schema, context, declarationFile });
         case "unknown":
-            return buildUnknownTypeDeclaration();
+            return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
         case "optional":
         case "nullable":
             return buildOptionalTypeDeclaration({ schema, context, declarationFile });
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
-            return buildLiteralTypeDeclaration(schema.value);
+            return buildLiteralTypeDeclaration(schema.value, schema.nameOverride, schema.generatedName);
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
@@ -131,10 +131,7 @@ export function buildObjectTypeDeclaration({
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchemaPropertyInfo = getAllProperties({
-            context,
-            schemaId: inlineSchemaId
-        });
+        const inlinedSchemaPropertyInfo = getAllProperties(context, inlineSchemaId);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
@@ -188,7 +185,10 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllProperties({ context, schemaId }: { context: OpenApiIrConverterContext; schemaId: SchemaId }): {
+function getAllProperties(
+    context: OpenApiIrConverterContext,
+    schemaId: SchemaId
+): {
     properties: ObjectProperty[];
     allOf: ReferencedSchema[];
 } {
@@ -196,10 +196,7 @@ function getAllProperties({ context, schemaId }: { context: OpenApiIrConverterCo
     if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf };
     } else if (schema.type === "reference") {
-        return getAllProperties({
-            context,
-            schemaId: schema.schema
-        });
+        return getAllProperties(context, schema.schema);
     }
     throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
 }
@@ -214,7 +211,7 @@ export function buildArrayTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, context })
     };
 }
@@ -229,14 +226,14 @@ export function buildMapTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, context })
     };
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildPrimitiveTypeReference(schema)
     };
 }
@@ -298,21 +295,32 @@ export function buildOptionalTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
-        schema: buildOptionalTypeReference({ schema, context, fileContainingReference: declarationFile })
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildOptionalTypeReference({
+            schema,
+            context,
+            fileContainingReference: declarationFile
+        })
     };
 }
 
-export function buildUnknownTypeDeclaration(): ConvertedTypeDeclaration {
+export function buildUnknownTypeDeclaration(
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildUnknownTypeReference()
     };
 }
 
-export function buildLiteralTypeDeclaration(value: LiteralSchemaValue): ConvertedTypeDeclaration {
+export function buildLiteralTypeDeclaration(
+    value: LiteralSchemaValue,
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildLiteralTypeReference(value)
     };
 }

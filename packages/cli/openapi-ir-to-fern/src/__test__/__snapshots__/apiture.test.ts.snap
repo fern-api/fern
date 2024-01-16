@@ -1628,6 +1628,10 @@ Note: This operation requires an identity challenge if the financial institution
           "product": "ProductReference",
         },
       },
+      "AccountIds": {
+        "docs": "An array of account IDs.",
+        "type": "list<resourceId>",
+      },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
@@ -1683,6 +1687,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "outside",
         ],
       },
+      "AccountNickname": {
+        "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
+        "type": "string",
+      },
       "AccountPermissions": {
         "docs": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
         "properties": {
@@ -1715,6 +1723,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "boolean",
           },
         },
+      },
+      "AccountRoutingNumber": {
+        "docs": "An account ABA routing and transit number.",
+        "type": "string",
       },
       "Accounts": {
         "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
@@ -1880,6 +1892,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
+      "AmountRange": {
+        "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
+        "type": "string",
+      },
       "ApiProblem": {
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
@@ -1979,6 +1995,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "authenticatorToken",
         ],
       },
+      "ChallengePromptId": {
+        "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
+        "type": "string",
+      },
       "ChallengeSecurityQuestion": {
         "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
         "properties": {
@@ -2001,9 +2021,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
+      "ChallengeToken": {
+        "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
+        "type": "string",
+      },
       "CheckNumberRange": {
         "docs": "A numeric range for a checking account check number.",
         "type": "positiveIntegerRange",
+      },
+      "CreditOrDebitValue": {
+        "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
+        "type": "string",
       },
       "CutoffTime": {
         "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
@@ -2079,6 +2107,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
+      "DateRange": {
+        "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
+        "type": "string",
+      },
       "EligibleOverdraftAccountItem": {
         "docs": "An account that is eligible to be assigned as an overdraft protection account for another account.",
         "type": "OverdraftAccountFields",
@@ -2137,6 +2169,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "manual",
         ],
       },
+      "FullAccountNumber": {
+        "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+        "type": "string",
+      },
       "FullAccountPermissions": {
         "docs": "Flags which indicate the permissions the current authorized user has on this account resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in [\`account\`](#schema-account) response from the [\`getAccount\`](#op-getAccount) operation. See [\`accountPermissions\`](#schema-accountPermissions) for the subset of permission in \`account.allows\` flags in the [\`listAccounts\`](#op-listAccounts) response.",
         "extends": [
@@ -2184,6 +2220,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "integer",
           },
         },
+      },
+      "InstitutionId": {
+        "docs": "The unique immutable identifier of a financial institution.",
+        "type": "string",
       },
       "InstitutionLocatorType": {
         "docs": "Indicates the type of the institution \`locator\`.
@@ -2279,6 +2319,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
+      "MaskedAccountNumber": {
+        "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
+        "type": "string",
+      },
+      "MonetaryValue": {
+        "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
+        "type": "string",
+      },
       "OverdraftAccountFields": {
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
@@ -2315,6 +2363,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "properties": {
           "accounts": "optional<unknown>",
         },
+      },
+      "PositiveIntegerRange": {
+        "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
+        "type": "string",
       },
       "ProblemResponse": {
         "docs": "API problem or error response, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
@@ -2396,6 +2448,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
         "type": "resourceId",
       },
+      "ReadOnlyTimestamp": {
+        "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+        "type": "datetime",
+      },
       "RequiredIdentityChallenge": {
         "docs": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
         "properties": {
@@ -2412,6 +2468,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "ReadOnlyResourceId",
           },
         },
+      },
+      "ResourceId": {
+        "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
+        "type": "string",
       },
       "SimpleInstitution": {
         "docs": "A simple representation of a financial institution.",
@@ -2433,6 +2493,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "string",
           },
         },
+      },
+      "TimeZoneId": {
+        "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
+        "type": "string",
       },
       "TimestampFields": {
         "docs": "Timestamps which describe when a resource was created or last updated.",
@@ -2475,6 +2539,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "properties": {
           "type": "TransactionCategoryType",
         },
+      },
+      "TransactionCategoryLabel": {
+        "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+        "type": "string",
       },
       "TransactionCategoryType": {
         "docs": "Classifies a transaction category as applying to either debit or credit transactions.
@@ -3170,74 +3238,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "type": "optional<string>",
           },
         },
-      },
-      "accountIds": {
-        "docs": "An array of account IDs.",
-        "type": "list<resourceId>",
-      },
-      "accountNickname": {
-        "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
-        "type": "string",
-      },
-      "accountRoutingNumber": {
-        "docs": "An account ABA routing and transit number.",
-        "type": "string",
-      },
-      "amountRange": {
-        "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
-        "type": "string",
-      },
-      "challengePromptId": {
-        "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
-        "type": "string",
-      },
-      "challengeToken": {
-        "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
-        "type": "string",
-      },
-      "creditOrDebitValue": {
-        "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
-        "type": "string",
-      },
-      "dateRange": {
-        "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
-        "type": "string",
-      },
-      "fullAccountNumber": {
-        "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
-        "type": "string",
-      },
-      "institutionId": {
-        "docs": "The unique immutable identifier of a financial institution.",
-        "type": "string",
-      },
-      "maskedAccountNumber": {
-        "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
-        "type": "string",
-      },
-      "monetaryValue": {
-        "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
-        "type": "string",
-      },
-      "positiveIntegerRange": {
-        "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
-        "type": "string",
-      },
-      "readOnlyTimestamp": {
-        "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
-        "type": "datetime",
-      },
-      "resourceId": {
-        "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
-        "type": "string",
-      },
-      "timeZoneId": {
-        "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
-        "type": "string",
-      },
-      "transactionCategoryLabel": {
-        "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
-        "type": "string",
       },
     },
   },
