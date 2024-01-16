@@ -37,16 +37,10 @@ export class ExampleTypeFactory {
                 if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
                     return FullExample.enum(example);
                 }
-                return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
+                return schema.values[0] != null ? FullExample.enum(schema.values[0].value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable":
-                return this.buildExampleHelper({
-                    schema: schema.value,
-                    isOptional: true,
-                    visitedSchemaIds,
-                    example
-                });
             case "optional":
                 return this.buildExampleHelper({
                     schema: schema.value,
@@ -91,13 +85,14 @@ export class ExampleTypeFactory {
                 const itemExample = this.buildExampleHelper({
                     example,
                     schema: schema.value,
-                    isOptional: true,
+                    isOptional: false,
                     visitedSchemaIds
                 });
-                if (isOptional) {
-                    return itemExample != null ? FullExample.array([itemExample]) : undefined;
-                }
-                return itemExample != null ? FullExample.array([itemExample]) : FullExample.array([]);
+                return itemExample != null
+                    ? FullExample.array([itemExample])
+                    : !isOptional
+                    ? FullExample.array([])
+                    : undefined;
             }
             case "map": {
                 const objectExample = getFullExampleAsObject(example);
@@ -147,35 +142,26 @@ export class ExampleTypeFactory {
             }
             case "object": {
                 const result: Record<string, FullExample> = {};
-                const fullExample =
+                const unvalidatedExampleObject =
                     getFullExampleAsObject(example) ??
                     (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0]) : {}) ??
                     {};
                 const allProperties = this.getAllProperties(schema);
-                const requiredProperties = this.getAllRequiredProperties(schema);
-                for (const [property, schema] of Object.entries(allProperties)) {
-                    const required = property in requiredProperties;
-                    if (required && fullExample[property] != null) {
-                        const propertyExample = this.buildExampleHelper({
-                            schema,
-                            example: fullExample[property],
-                            isOptional: !required,
-                            visitedSchemaIds
-                        });
-                        if (propertyExample != null) {
-                            result[property] = propertyExample;
-                        }
-                    } else {
-                        const propertyExample = this.buildExampleHelper({
-                            schema,
-                            example: fullExample[property],
-                            isOptional: !required,
-                            visitedSchemaIds
-                        });
-                        if (propertyExample != null) {
-                            result[property] = propertyExample;
-                        } else if (required) {
+                const requiredPropertyKeys = new Set(this.getAllRequiredPropertyKeys(schema));
+                for (const [propertyKey, propertySchema] of Object.entries(allProperties)) {
+                    const required = requiredPropertyKeys.has(propertyKey);
+                    const propertyExample = this.buildExampleHelper({
+                        schema: propertySchema,
+                        example: unvalidatedExampleObject[propertyKey],
+                        isOptional: !required,
+                        visitedSchemaIds
+                    });
+                    if (propertyExample == null) {
+                        if (required) {
+                            // cannot build example
                             return undefined;
+                        } else {
+                            continue;
                         }
                     }
                 }
@@ -206,12 +192,12 @@ export class ExampleTypeFactory {
         return properties;
     }
 
-    private getAllRequiredProperties(object: ObjectSchemaWithExample): Record<string, SchemaWithExample> {
-        let requiredProperties: Record<string, SchemaWithExample> = {};
+    private getAllRequiredPropertyKeys(object: ObjectSchemaWithExample): string[] {
+        const requiredProperyKeys: string[] = [];
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema);
             if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
-                requiredProperties[property.key] = property.schema;
+                requiredProperyKeys.push(property.key);
             }
         }
         for (const allOf of object.allOf) {
@@ -219,12 +205,9 @@ export class ExampleTypeFactory {
             if (allOfSchema?.type !== "object") {
                 continue;
             }
-            requiredProperties = {
-                ...requiredProperties,
-                ...this.getAllRequiredProperties(allOfSchema)
-            };
+            requiredProperyKeys.push(...this.getAllRequiredPropertyKeys(allOfSchema));
         }
-        return requiredProperties;
+        return requiredProperyKeys;
     }
 
     private getResolvedSchema(schema: SchemaWithExample) {

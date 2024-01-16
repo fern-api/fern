@@ -605,6 +605,44 @@ export function convertSchemaObject(
     }
 
     if (schema.type == null) {
+        const inferredValue = schema.example ?? schema.default;
+        if (inferredValue != null) {
+            if (typeof schema.default === "number") {
+                return convertNumber({
+                    nameOverride,
+                    generatedName,
+                    format: undefined,
+                    description,
+                    wrapAsNullable,
+                    example: inferredValue,
+                    groupName
+                });
+            } else if (typeof inferredValue === "string") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    primitive: PrimitiveSchemaValueWithExample.string({
+                        maxLength: undefined,
+                        minLength: undefined,
+                        example: inferredValue
+                    }),
+                    wrapAsNullable,
+                    description,
+                    groupName
+                });
+            } else if (typeof inferredValue === "boolean") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    primitive: PrimitiveSchemaValueWithExample.boolean({
+                        example: inferredValue
+                    }),
+                    wrapAsNullable,
+                    description,
+                    groupName
+                });
+            }
+        }
         return SchemaWithExample.unknown({
             nameOverride,
             generatedName,
