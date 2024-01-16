@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildTypeReference } from "./buildTypeReference";
@@ -23,7 +24,15 @@ export function buildQueryParameter({
         return undefined;
     }
 
-    const queryParameterType = getTypeFromTypeReference(typeReference.value);
+    let queryParameterType = getTypeFromTypeReference(typeReference.value);
+
+    // we can assume unknown-typed query parameteters are strings by default
+    if (queryParameterType === "unknown") {
+        queryParameterType = "string";
+    } else if (queryParameterType === "optional<unknown>") {
+        queryParameterType = "optional<string>";
+    }
+
     if (
         queryParameter.description == null &&
         !typeReference.allowMultiple &&
@@ -80,6 +89,7 @@ function getQueryParameterTypeReference({
                         groupName: undefined
                     }),
                     context,
+                    declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     fileContainingReference
                 }),
                 allowMultiple: true
@@ -131,7 +141,8 @@ function getQueryParameterTypeReference({
                             groupName: undefined
                         }),
                         context,
-                        fileContainingReference
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
                     }),
                     allowMultiple: true
                 };

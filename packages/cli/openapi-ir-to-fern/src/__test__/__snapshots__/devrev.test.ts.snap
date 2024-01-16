@@ -890,7 +890,7 @@ used.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.parts-delete-response",
+              "type": "root.PartsDeleteResponse",
             },
           },
           "get": {
@@ -1150,7 +1150,7 @@ records.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.rev-orgs-delete-response",
+              "type": "root.RevOrgsDeleteResponse",
             },
           },
           "get": {
@@ -1493,7 +1493,7 @@ permitted.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.tags-delete-response",
+              "type": "root.TagsDeleteResponse",
             },
           },
           "get": {
@@ -1934,7 +1934,7 @@ response.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.webhooks-delete-response",
+              "type": "root.WebhooksDeleteResponse",
             },
           },
           "get": {
@@ -2194,7 +2194,7 @@ won't receive any object events until successfully verified.
             },
             "response": {
               "docs": "Success.",
-              "type": "root.works-delete-response",
+              "type": "root.WorksDeleteResponse",
             },
           },
           "export": {
@@ -2593,7 +2593,7 @@ authentication connection that is set up for a Dev organization.
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
           "samlp": "AuthConnectionOptionsSaml",
-          "social": "auth-connection-options-social",
+          "social": "AuthConnectionOptionsSocial",
           "waad": "AuthConnectionOptionsAzureAd",
         },
       },
@@ -2857,7 +2857,7 @@ of values in which the order of values does not matter.
 ",
             "type": "optional<string>",
           },
-          "token_type": "auth-token-token-type",
+          "token_type": "AuthTokenTokenType",
         },
       },
       "AuthTokensGetResponse": {
@@ -3017,7 +3017,7 @@ organization.
 ",
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
-          "none": "empty",
+          "none": "Empty",
           "oidc": "AuthConnectionOptionsOidc",
           "samlp": "AuthConnectionOptionsSaml",
           "waad": "AuthConnectionOptionsAzureAd",
@@ -3052,7 +3052,7 @@ connection.
         "properties": {
           "external_identities": {
             "docs": "IDs of the Dev User outside the DevRev SOR.",
-            "type": "optional<list<external-identity>>",
+            "type": "optional<list<ExternalIdentity>>",
           },
         },
       },
@@ -3515,7 +3515,7 @@ always be returned in the specified sort-by order.
           "capability": "PartsCreateRequestCapability",
           "enhancement": "PartsCreateRequestEnhancement",
           "feature": "PartsCreateRequestFeature",
-          "product": "parts-create-request-product",
+          "product": "PartsCreateRequestProduct",
         },
       },
       "PartsCreateRequestCapability": {
@@ -3605,11 +3605,11 @@ sort order. If not set, then no prior elements exist.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": "parts-update-request-capability",
+          "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
-          "feature": "parts-update-request-feature",
-          "none": "empty",
-          "product": "parts-update-request-product",
+          "feature": "PartsUpdateRequestFeature",
+          "none": "Empty",
+          "product": "PartsUpdateRequestProduct",
         },
       },
       "PartsUpdateRequestCapability": "map<string, unknown>",
@@ -3936,7 +3936,7 @@ will appear in the response.
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
           },
-          "visibility": "optional<timeline-entry-visibility>",
+          "visibility": "optional<TimelineEntryVisibility>",
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
@@ -4521,7 +4521,7 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "union": {
           "issue": "WorksUpdateRequestIssue",
-          "none": "empty",
+          "none": "Empty",
           "ticket": "WorksUpdateRequestTicket",
         },
       },

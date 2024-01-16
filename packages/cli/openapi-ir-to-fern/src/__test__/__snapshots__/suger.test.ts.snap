@@ -7904,7 +7904,7 @@ This member is required.",
         "properties": {
           "resultMetadata": {
             "docs": "Metadata pertaining to the operation's result.",
-            "type": "optional<middleware.Metadata>",
+            "type": "optional<MiddlewareMetadata>",
           },
           "results": {
             "docs": "Contains all UsageRecords processed by BatchMeterUsage. These records were
@@ -9485,7 +9485,7 @@ This field is present only if the product has usage-based billing configured.",
           "name": "optional<string>",
           "startTime": "optional<datetime>",
           "status": "optional<string>",
-          "type": "optional<shared.OperationType>",
+          "type": "optional<SharedOperationType>",
         },
       },
       "SharedOperationType": "literal<"TemporalWorkflow">",
