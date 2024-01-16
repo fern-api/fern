@@ -1732,7 +1732,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
         "extends": [
           "AbstractBody",
-          "AbstractPagedBodyFields",
         ],
         "properties": {
           "count": {
@@ -1742,6 +1741,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "items": {
             "docs": "The array of items in this page of accounts. This array may be empty.",
             "type": "list<AccountItem>",
+          },
+          "limit": {
+            "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+            "type": "integer",
           },
           "nextPage_url": {
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -2119,10 +2122,13 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
         "extends": [
           "AbstractBody",
-          "AbstractPagedBodyFields",
         ],
         "properties": {
           "items": "unknown",
+          "limit": {
+            "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+            "type": "integer",
+          },
           "maximumOverdraftAccounts": {
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",

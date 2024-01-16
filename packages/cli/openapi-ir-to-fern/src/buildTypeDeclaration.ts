@@ -90,7 +90,14 @@ export function buildObjectTypeDeclaration({
                 continue; // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
-                    schemasToInline.add(schemaId);
+                    const parentSchemasToInine = getAllParentSchemasToInline({
+                        property: property.key,
+                        schemaId,
+                        context
+                    });
+                    parentSchemasToInine.forEach((schemaToInline) => {
+                        schemasToInline.add(schemaToInline);
+                    });
                 });
             }
         }
@@ -131,7 +138,7 @@ export function buildObjectTypeDeclaration({
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchemaPropertyInfo = getAllProperties(context, inlineSchemaId);
+        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
@@ -145,6 +152,9 @@ export function buildObjectTypeDeclaration({
             }
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
+            if (schemasToInline.has(extendedSchema.schema)) {
+                continue; // dont extend from schemas that need to be inlined
+            }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
                 context,
@@ -185,7 +195,37 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllProperties(
+function getAllParentSchemasToInline({
+    property,
+    schemaId,
+    context
+}: {
+    property: string;
+    schemaId: SchemaId;
+    context: OpenApiIrConverterContext;
+}): SchemaId[] {
+    const schema = context.getSchema(schemaId);
+    if (schema.type === "reference") {
+        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context });
+    }
+    if (schema.type === "object") {
+        const { properties, allOf } = getProperties(context, schemaId);
+        const hasProperty = properties.some((p) => {
+            return p.key === property;
+        });
+        const parentSchemasToInline = [
+            ...allOf.flatMap((parent) => {
+                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema });
+            })
+        ];
+        if (hasProperty || parentSchemasToInline.length > 0) {
+            return [schemaId, ...parentSchemasToInline];
+        }
+    }
+    return [];
+}
+
+function getProperties(
     context: OpenApiIrConverterContext,
     schemaId: SchemaId
 ): {
@@ -196,7 +236,7 @@ function getAllProperties(
     if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf };
     } else if (schema.type === "reference") {
-        return getAllProperties(context, schema.schema);
+        return getProperties(context, schema.schema);
     }
     throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
 }
