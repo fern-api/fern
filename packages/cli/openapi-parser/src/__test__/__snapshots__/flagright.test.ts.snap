@@ -401,11 +401,15 @@ Here are some of the most used payload fields explained (you can find the full p
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "PostConsumerTransactionRequestValidateOriginUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "PostConsumerTransactionRequestValidateOriginUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -421,11 +425,15 @@ Here are some of the most used payload fields explained (you can find the full p
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "PostConsumerTransactionRequestValidateDestinationUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "PostConsumerTransactionRequestValidateDestinationUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -479,11 +487,15 @@ Here are some of the most used payload fields explained (you can find the full p
               "key": "message",
               "schema": {
                 "description": undefined,
+                "generatedName": "postConsumerTransactionResponseMessage",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "PostConsumerTransactionResponseMessage",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -881,7 +893,9 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "name": "transactionId",
           "schema": {
             "description": undefined,
+            "generatedName": "GetConsumerTransactionRequestTransactionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3467,11 +3481,15 @@ Each consumer User entity needs three mandatory fields:
               "key": "message",
               "schema": {
                 "description": undefined,
+                "generatedName": "postConsumerUserResponseMessage",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "PostConsumerUserResponseMessage",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -5211,7 +5229,9 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "name": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "GetConsumerUserRequestUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7746,11 +7766,15 @@ Each consumer Business entity needs three mandatory fields:
               "key": "message",
               "schema": {
                 "description": undefined,
+                "generatedName": "postBusinessUserResponseMessage",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "PostBusinessUserResponseMessage",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -9967,7 +9991,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "name": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "GetBusinessUserUserIdRequestUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -18282,7 +18308,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "schema": {
         "description": undefined,
         "example": undefined,
+        "generatedName": "BadRequestErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -18293,7 +18321,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "schema": {
         "description": undefined,
         "example": undefined,
+        "generatedName": "UnauthorizedErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -18304,7 +18334,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "schema": {
         "description": undefined,
         "example": undefined,
+        "generatedName": "TooManyRequestsErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -18408,11 +18440,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "routingNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsRoutingNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Routing number of the bank",
+              "generatedName": "AchDetailsRoutingNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -18429,11 +18465,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsAccountNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Bank account number of the individual",
+              "generatedName": "AchDetailsAccountNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -18450,11 +18490,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsBankName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the bank",
+              "generatedName": "AchDetailsBankName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -18471,11 +18515,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
+              "generatedName": "AchDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18492,7 +18540,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsBankAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18511,11 +18561,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "beneficiaryName",
           "schema": {
             "description": undefined,
+            "generatedName": "achDetailsBeneficiaryName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Beneficiary name of the account",
+              "generatedName": "AchDetailsBeneficiaryName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18530,7 +18584,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "ACHPaymentMethod": {
       "description": "Classify the method of payment as "ACH" for ACHDetails",
+      "generatedName": "AchPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "ACH",
@@ -18597,9 +18653,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "addressLines",
           "schema": {
             "description": "Address lines of the user's residence address",
+            "generatedName": "AddressAddressLines",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
+              "generatedName": "AddressAddressLinesItem",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -18611,7 +18671,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "postcode",
           "schema": {
             "description": "Post code of the user's residence address",
+            "generatedName": "AddressPostcode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -18627,7 +18689,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "city",
           "schema": {
             "description": "City of the user's residence address",
+            "generatedName": "AddressCity",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -18643,11 +18707,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "state",
           "schema": {
             "description": undefined,
+            "generatedName": "addressState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "State of the user's residence address",
+              "generatedName": "AddressState",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -18664,7 +18732,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": "User's country of residence",
+            "generatedName": "AddressCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -18680,11 +18750,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "addressTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "AddressTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -18715,11 +18789,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "alertId",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsAlertId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsAlertId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18736,11 +18814,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18757,15 +18839,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasons",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsReasons",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsReasons",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "AlertClosedDetailsReasonsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -18783,15 +18871,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonDescriptionForOther",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsReasonDescriptionForOther",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsReasonDescriptionForOther",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "AlertClosedDetailsReasonDescriptionForOtherItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -18809,11 +18903,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "comment",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsComment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsComment",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18830,11 +18928,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18851,15 +18953,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionIds",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsTransactionIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsTransactionIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "AlertClosedDetailsTransactionIdsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -18877,11 +18985,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleName",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsRuleName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsRuleName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18898,11 +19010,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleDescription",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsRuleDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsRuleDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18919,11 +19035,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleId",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsRuleId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsRuleId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18940,11 +19060,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleInstanceId",
           "schema": {
             "description": undefined,
+            "generatedName": "alertClosedDetailsRuleInstanceId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "AlertClosedDetailsRuleInstanceId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -18972,7 +19096,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "amountValue",
           "schema": {
             "description": "Numerical value of the transaction",
+            "generatedName": "AmountAmountValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -19038,7 +19164,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "Unique user ID for the user",
+            "generatedName": "BusinessBaseUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -19054,7 +19182,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "createdTimestamp",
           "schema": {
             "description": "Timestamp when the user was created",
+            "generatedName": "BusinessBaseCreatedTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -19079,11 +19209,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "parentUserId",
           "schema": {
             "description": undefined,
+            "generatedName": "businessEntityLinkParentUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessEntityLinkParentUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -19100,15 +19234,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "childUserIds",
           "schema": {
             "description": undefined,
+            "generatedName": "businessEntityLinkChildUserIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessEntityLinkChildUserIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "BusinessEntityLinkChildUserIdsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -19137,7 +19277,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userStateDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalUserStateDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19156,7 +19298,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "kycStatusDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalKycStatusDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19175,7 +19319,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalEntity",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalLegalEntity",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19194,11 +19340,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "shareHolders",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalShareHolders",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
+              "generatedName": "BusinessOptionalShareHolders",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19218,11 +19368,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "directors",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalDirectors",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Director(s) of the company. Must be at least one",
+              "generatedName": "BusinessOptionalDirectors",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19242,7 +19396,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionLimits",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalTransactionLimits",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19261,7 +19417,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "riskLevel",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalRiskLevel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19280,11 +19438,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "allowedPaymentMethods",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalAllowedPaymentMethods",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessOptionalAllowedPaymentMethods",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19304,7 +19466,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "linkedEntities",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalLinkedEntities",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19323,7 +19487,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "acquisitionChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalAcquisitionChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19342,11 +19508,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "savedPaymentDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalSavedPaymentDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessOptionalSavedPaymentDetails",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "oneOf": {
@@ -19444,7 +19614,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "mccDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalMccDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19463,11 +19635,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "businessOptionalTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "BusinessOptionalTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19498,7 +19674,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "timestamp",
           "schema": {
             "description": "Timestamp of the event",
+            "generatedName": "BusinessUserEventTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -19512,7 +19690,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "Transaction ID the event pertains to",
+            "generatedName": "BusinessUserEventUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -19528,11 +19708,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
+            "generatedName": "businessUserEventEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique event ID",
+              "generatedName": "BusinessUserEventEventId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -19549,11 +19733,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "businessUserEventReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
+              "generatedName": "BusinessUserEventReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -19570,11 +19758,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
+            "generatedName": "businessUserEventEventDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Event description",
+              "generatedName": "BusinessUserEventEventDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -19591,7 +19783,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedBusinessUserAttributes",
           "schema": {
             "description": undefined,
+            "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19621,7 +19815,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "user ID the risk score pertains to",
+            "generatedName": "BusinessUsersResponseUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -19657,11 +19853,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": undefined,
+            "generatedName": "businessWithRulesResultExecutedRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessWithRulesResultExecutedRules",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19681,11 +19881,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": undefined,
+            "generatedName": "businessWithRulesResultHitRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BusinessWithRulesResultHitRules",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -19716,11 +19920,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardFingerprint",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardFingerprint",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
+              "generatedName": "CardDetailsCardFingerprint",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -19737,7 +19945,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardIssuedCountry",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardIssuedCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19756,11 +19966,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionReferenceField",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsTransactionReferenceField",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reference for the transaction",
+              "generatedName": "CardDetailsTransactionReferenceField",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -19777,11 +19991,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "3dsDone",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetails3DsDone",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether 3ds was successfully enforced for the transaction",
+              "generatedName": "CardDetails3DsDone",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -19796,7 +20014,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nameOnCard",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsNameOnCard",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19815,7 +20035,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardExpiry",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardExpiry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19834,11 +20056,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardLast4Digits",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardLast4Digits",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Last 4 digits of Card",
+              "generatedName": "CardDetailsCardLast4Digits",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 4,
                 "minLength": 4,
@@ -19855,7 +20081,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardBrand",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardBrand",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Brand of Card",
@@ -19917,7 +20145,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardFunding",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardFunding",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Funding of Card",
@@ -19955,11 +20185,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardAuthenticated",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardAuthenticated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Authentication of Card",
+              "generatedName": "CardDetailsCardAuthenticated",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -19974,11 +20208,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsPaymentChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardDetailsPaymentChannel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -19995,7 +20233,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardType",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsCardType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20027,7 +20267,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "merchantDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "cardDetailsMerchantDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20057,11 +20299,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
+            "generatedName": "cardExpiryMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardExpiryMonth",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -20076,11 +20322,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
+            "generatedName": "cardExpiryYear",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardExpiryYear",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -20106,11 +20356,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20127,11 +20381,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "category",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsCategory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsCategory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20148,11 +20406,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "MCC",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsMcc",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsMcc",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20169,11 +20431,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "city",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsCity",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsCity",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20190,11 +20456,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsCountry",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 2,
                 "minLength": 2,
@@ -20211,11 +20481,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "state",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsState",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20232,11 +20506,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "postCode",
           "schema": {
             "description": undefined,
+            "generatedName": "cardMerchantDetailsPostCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CardMerchantDetailsPostCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20252,7 +20530,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "CardPaymentMethod": {
       "description": "Classify the method of payment as "Card" for CardDetails
 ",
+      "generatedName": "CardPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "CARD",
@@ -20274,11 +20554,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "caseId",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsCaseId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsCaseId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20295,11 +20579,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20316,15 +20604,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasons",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsReasons",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsReasons",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "CaseClosedDetailsReasonsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -20342,15 +20636,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonDescriptionForOther",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsReasonDescriptionForOther",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsReasonDescriptionForOther",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "CaseClosedDetailsReasonDescriptionForOtherItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -20368,11 +20668,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "comment",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsComment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsComment",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20389,11 +20693,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20410,15 +20718,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionIds",
           "schema": {
             "description": undefined,
+            "generatedName": "caseClosedDetailsTransactionIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CaseClosedDetailsTransactionIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "CaseClosedDetailsTransactionIdsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -20474,7 +20788,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "timestamp",
           "schema": {
             "description": "Timestamp of the event",
+            "generatedName": "CaseManagementEventTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -20527,11 +20843,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionId",
           "schema": {
             "description": undefined,
+            "generatedName": "caseManagementEventTransactionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Transaction ID the case pertains to",
+              "generatedName": "CaseManagementEventTransactionId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -20548,11 +20868,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "caseManagementEventUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "User ID the case pertains to",
+              "generatedName": "CaseManagementEventUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20569,11 +20893,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
+            "generatedName": "caseManagementEventEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Event ID the case pertains to",
+              "generatedName": "CaseManagementEventEventId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20590,11 +20918,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "caseStatusReasonDescription",
           "schema": {
             "description": undefined,
+            "generatedName": "caseManagementEventCaseStatusReasonDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Case status reason description",
+              "generatedName": "CaseManagementEventCaseStatusReasonDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20622,11 +20954,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checkNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsCheckNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CheckDetailsCheckNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20643,11 +20979,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checkIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsCheckIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CheckDetailsCheckIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20664,11 +21004,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CheckDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -20685,7 +21029,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deliveryStatus",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsDeliveryStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20741,11 +21087,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "etaTimestamp",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsEtaTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CheckDetailsEtaTimestamp",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -20760,7 +21110,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "shippingAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "checkDetailsShippingAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20777,7 +21129,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "CheckPaymentMethod": {
       "description": "Classify the method of payment as "CHECK" for CheckDetails",
+      "generatedName": "CheckPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "CHECK",
@@ -20799,7 +21153,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "expectedTransactionAmountPerMonth",
           "schema": {
             "description": undefined,
+            "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20818,7 +21174,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "expectedTurnoverPerMonth",
           "schema": {
             "description": undefined,
+            "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20837,11 +21195,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "companyFinancialDetailsTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "CompanyFinancialDetailsTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -20872,7 +21234,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalName",
           "schema": {
             "description": "Legal name of the company",
+            "generatedName": "CompanyGeneralDetailsLegalName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -20888,15 +21252,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "businessIndustry",
           "schema": {
             "description": undefined,
+            "generatedName": "companyGeneralDetailsBusinessIndustry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The industry the business operates in for a business customer",
+              "generatedName": "CompanyGeneralDetailsBusinessIndustry",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "CompanyGeneralDetailsBusinessIndustryItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -20914,15 +21284,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "mainProductsServicesSold",
           "schema": {
             "description": undefined,
+            "generatedName": "companyGeneralDetailsMainProductsServicesSold",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The key products and services provided by the company",
+              "generatedName": "CompanyGeneralDetailsMainProductsServicesSold",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "CompanyGeneralDetailsMainProductsServicesSoldItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -20940,7 +21316,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userSegment",
           "schema": {
             "description": undefined,
+            "generatedName": "companyGeneralDetailsUserSegment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Segmentation of the business user",
@@ -20996,7 +21374,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userRegistrationStatus",
           "schema": {
             "description": undefined,
+            "generatedName": "companyGeneralDetailsUserRegistrationStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -21015,11 +21395,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "companyGeneralDetailsTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "CompanyGeneralDetailsTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -21050,7 +21434,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "registrationIdentifier",
           "schema": {
             "description": "Commercial registry registration number for the company in its registration country",
+            "generatedName": "CompanyRegistrationDetailsRegistrationIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -21080,11 +21466,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "taxIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "companyRegistrationDetailsTaxIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Tax ID number of the registered entity",
+              "generatedName": "CompanyRegistrationDetailsTaxIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21101,11 +21491,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalEntityType",
           "schema": {
             "description": undefined,
+            "generatedName": "companyRegistrationDetailsLegalEntityType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Type of legal entity. Ex: Limited Liability",
+              "generatedName": "CompanyRegistrationDetailsLegalEntityType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21122,11 +21516,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "dateOfRegistration",
           "schema": {
             "description": undefined,
+            "generatedName": "companyRegistrationDetailsDateOfRegistration",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "CompanyRegistrationDetailsDateOfRegistration",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21143,11 +21541,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "companyRegistrationDetailsTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "CompanyRegistrationDetailsTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -21178,7 +21580,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "firstName",
           "schema": {
             "description": "First name of the user",
+            "generatedName": "ConsumerNameFirstName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -21194,11 +21598,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "middleName",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerNameMiddleName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Middle name of the user",
+              "generatedName": "ConsumerNameMiddleName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -21215,11 +21623,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "lastName",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerNameLastName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Last name of the user",
+              "generatedName": "ConsumerNameLastName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -21247,7 +21659,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "timestamp",
           "schema": {
             "description": "Timestamp of the event",
+            "generatedName": "ConsumerUserEventTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -21261,7 +21675,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "Transaction ID the event pertains to",
+            "generatedName": "ConsumerUserEventUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -21277,11 +21693,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerUserEventEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique event ID",
+              "generatedName": "ConsumerUserEventEventId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21298,11 +21718,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerUserEventReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
+              "generatedName": "ConsumerUserEventReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21319,11 +21743,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerUserEventEventDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Event description",
+              "generatedName": "ConsumerUserEventEventDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -21340,7 +21768,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedConsumerUserAttributes",
           "schema": {
             "description": undefined,
+            "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -21370,7 +21800,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "user ID the risk score pertains to",
+            "generatedName": "ConsumerUsersResponseUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -21397,15 +21829,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "emailIds",
           "schema": {
             "description": undefined,
+            "generatedName": "contactDetailsEmailIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Email addresses of the contacts for a given business customer",
+              "generatedName": "ContactDetailsEmailIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "ContactDetailsEmailIdsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -21423,15 +21861,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactNumbers",
           "schema": {
             "description": undefined,
+            "generatedName": "contactDetailsContactNumbers",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Phone numbers to contact a given business customer",
+              "generatedName": "ContactDetailsContactNumbers",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "ContactDetailsContactNumbersItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -21449,15 +21893,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "faxNumbers",
           "schema": {
             "description": undefined,
+            "generatedName": "contactDetailsFaxNumbers",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Fax numbers to contact a business customer",
+              "generatedName": "ContactDetailsFaxNumbers",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "ContactDetailsFaxNumbersItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -21475,15 +21925,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "websites",
           "schema": {
             "description": undefined,
+            "generatedName": "contactDetailsWebsites",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Website of the company",
+              "generatedName": "ContactDetailsWebsites",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "ContactDetailsWebsitesItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -21501,11 +21957,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "addresses",
           "schema": {
             "description": undefined,
+            "generatedName": "contactDetailsAddresses",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Address(es) of the company",
+              "generatedName": "ContactDetailsAddresses",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -24674,7 +25134,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "day",
           "schema": {
             "description": "Day of date",
+            "generatedName": "DateDay",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -24688,7 +25150,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": "Month of date",
+            "generatedName": "DateMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -24702,7 +25166,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": "Year of date",
+            "generatedName": "DateYear",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -24727,11 +25193,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "batteryLevel",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataBatteryLevel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Battery level of the device used for a transaction or event at a given timestamp",
+              "generatedName": "DeviceDataBatteryLevel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -24746,11 +25216,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceLatitude",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceLatitude",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Device latitude at a give timestamp for an event or transaction",
+              "generatedName": "DeviceDataDeviceLatitude",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -24765,11 +25239,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceLongitude",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceLongitude",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Device longitude at a give timestamp for an event or transaction",
+              "generatedName": "DeviceDataDeviceLongitude",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -24784,11 +25262,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ipAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataIpAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "IP address of the device at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataIpAddress",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24805,11 +25287,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Device identifier number",
+              "generatedName": "DeviceDataDeviceIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24826,11 +25312,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "vpnUsed",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataVpnUsed",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether VPN was used at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataVpnUsed",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -24845,11 +25335,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "operatingSystem",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataOperatingSystem",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Operating system of the device at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataOperatingSystem",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24866,11 +25360,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceMaker",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceMaker",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The maker of the device at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataDeviceMaker",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24887,11 +25385,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceModel",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceModel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The model of the device at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataDeviceModel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24908,11 +25410,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceYear",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataDeviceYear",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The year the device was manufactured at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataDeviceYear",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24929,11 +25435,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "appVersion",
           "schema": {
             "description": undefined,
+            "generatedName": "deviceDataAppVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
+              "generatedName": "DeviceDataAppVersion",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -24961,7 +25471,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleId",
           "schema": {
             "description": "Unique rule identifier",
+            "generatedName": "ExecutedRulesResultRuleId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -24977,7 +25489,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleInstanceId",
           "schema": {
             "description": undefined,
+            "generatedName": "ExecutedRulesResultRuleInstanceId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -24993,7 +25507,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleName",
           "schema": {
             "description": "Name of the rule",
+            "generatedName": "ExecutedRulesResultRuleName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25009,7 +25525,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleDescription",
           "schema": {
             "description": "Description of the rule",
+            "generatedName": "ExecutedRulesResultRuleDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25039,7 +25557,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleHit",
           "schema": {
             "description": undefined,
+            "generatedName": "ExecutedRulesResultRuleHit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -25053,7 +25573,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleHitMeta",
           "schema": {
             "description": undefined,
+            "generatedName": "executedRulesResultRuleHitMeta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25072,11 +25594,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "labels",
           "schema": {
             "description": undefined,
+            "generatedName": "executedRulesResultLabels",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ExecutedRulesResultLabels",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -25096,7 +25622,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nature",
           "schema": {
             "description": undefined,
+            "generatedName": "executedRulesResultNature",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25126,7 +25654,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleId",
           "schema": {
             "description": "Unique rule identifier",
+            "generatedName": "FailedRulesResultRuleId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25142,7 +25672,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleName",
           "schema": {
             "description": "Name of the rule",
+            "generatedName": "FailedRulesResultRuleName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25158,7 +25690,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleDescription",
           "schema": {
             "description": "Description of the rule",
+            "generatedName": "FailedRulesResultRuleDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25199,7 +25733,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "isFalsePositive",
           "schema": {
             "description": undefined,
+            "generatedName": "FalsePositiveDetailsIsFalsePositive",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -25213,7 +25749,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "confidenceScore",
           "schema": {
             "description": undefined,
+            "generatedName": "FalsePositiveDetailsConfidenceScore",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -25225,7 +25763,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "GeneralBankAccountPaymentMethod": {
       "description": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
+      "generatedName": "GeneralBankAccountPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "GENERIC_BANK_ACCOUNT",
@@ -25247,11 +25787,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsAccountNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Bank account number",
+              "generatedName": "GenericBankAccountDetailsAccountNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -25268,11 +25812,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountType",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsAccountType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Bank account type. E.g. Checking, Savings etc.",
+              "generatedName": "GenericBankAccountDetailsAccountType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25289,11 +25837,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsBankName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the bank",
+              "generatedName": "GenericBankAccountDetailsBankName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -25310,11 +25862,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankCode",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsBankCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
+              "generatedName": "GenericBankAccountDetailsBankCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25331,11 +25887,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
+              "generatedName": "GenericBankAccountDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25352,7 +25912,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsBankAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25371,11 +25933,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "specialInstructions",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsSpecialInstructions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Special instructions to be specified if any",
+              "generatedName": "GenericBankAccountDetailsSpecialInstructions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25392,11 +25958,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "genericBankAccountDetailsPaymentChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "GenericBankAccountDetailsPaymentChannel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25424,7 +25994,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleId",
           "schema": {
             "description": "Unique rule identifier",
+            "generatedName": "HitRulesDetailsRuleId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25440,7 +26012,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleInstanceId",
           "schema": {
             "description": undefined,
+            "generatedName": "HitRulesDetailsRuleInstanceId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -25456,7 +26030,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleName",
           "schema": {
             "description": "Name of the rule",
+            "generatedName": "HitRulesDetailsRuleName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25472,7 +26048,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleDescription",
           "schema": {
             "description": "Description of the rule",
+            "generatedName": "HitRulesDetailsRuleDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25502,7 +26080,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleHitMeta",
           "schema": {
             "description": undefined,
+            "generatedName": "hitRulesDetailsRuleHitMeta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25521,11 +26101,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "labels",
           "schema": {
             "description": undefined,
+            "generatedName": "hitRulesDetailsLabels",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "HitRulesDetailsLabels",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -25545,7 +26129,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nature",
           "schema": {
             "description": undefined,
+            "generatedName": "hitRulesDetailsNature",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25575,11 +26161,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "BIC",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsBic",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
+              "generatedName": "IbanDetailsBic",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -25596,11 +26186,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsBankName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the bank",
+              "generatedName": "IbanDetailsBankName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -25617,7 +26211,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsBankAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25636,7 +26232,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25655,11 +26253,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "IBAN",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsIban",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Account number of the user. Can be account number, IBAN number etc.",
+              "generatedName": "IbanDetailsIban",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25676,11 +26278,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the bank account holder",
+              "generatedName": "IbanDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25697,7 +26303,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25716,11 +26324,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankBranchCode",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsBankBranchCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
+              "generatedName": "IbanDetailsBankBranchCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25737,11 +26349,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "ibanDetailsPaymentChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "IbanDetailsPaymentChannel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25757,7 +26373,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "IBANPaymentMethod": {
       "description": "Classify the method of payment as "IBAN" for IBANDetails
 ",
+      "generatedName": "IbanPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "IBAN",
@@ -25818,11 +26436,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "kycStatusDetailsReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "KycStatusDetailsReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -25839,7 +26461,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "kycStatusDetailsStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25869,7 +26493,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentType",
           "schema": {
             "description": "User's identity document type such as passport, national ID etc.",
+            "generatedName": "LegalDocumentDocumentType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25885,7 +26511,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentNumber",
           "schema": {
             "description": "User's unique identity document number such as passport number",
+            "generatedName": "LegalDocumentDocumentNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -25901,11 +26529,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentIssuedDate",
           "schema": {
             "description": undefined,
+            "generatedName": "legalDocumentDocumentIssuedDate",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
+              "generatedName": "LegalDocumentDocumentIssuedDate",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -25920,11 +26552,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentExpirationDate",
           "schema": {
             "description": undefined,
+            "generatedName": "legalDocumentDocumentExpirationDate",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
+              "generatedName": "LegalDocumentDocumentExpirationDate",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -25953,11 +26589,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "legalDocumentTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "LegalDocumentTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -25977,7 +26617,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nameOnDocument",
           "schema": {
             "description": undefined,
+            "generatedName": "legalDocumentNameOnDocument",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26021,7 +26663,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "companyFinancialDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "legalEntityCompanyFinancialDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26040,7 +26684,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "companyRegistrationDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "legalEntityCompanyRegistrationDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26059,15 +26705,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonForAccountOpening",
           "schema": {
             "description": undefined,
+            "generatedName": "legalEntityReasonForAccountOpening",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reason for opening the account at financial institution",
+              "generatedName": "LegalEntityReasonForAccountOpening",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "LegalEntityReasonForAccountOpeningItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -26085,7 +26737,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "legalEntityContactDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26115,7 +26769,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "listDataMetadata",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26134,11 +26790,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "items",
           "schema": {
             "description": undefined,
+            "generatedName": "listDataItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "List items",
+              "generatedName": "ListDataItems",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -26169,7 +26829,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "listId",
           "schema": {
             "description": undefined,
+            "generatedName": "ListExistedListId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -26199,7 +26861,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "items",
           "schema": {
             "description": "List items",
+            "generatedName": "ListExistedItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -26229,7 +26893,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "listId",
           "schema": {
             "description": undefined,
+            "generatedName": "ListHeaderListId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -26273,7 +26939,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "listHeaderMetadata",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26292,7 +26960,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "createdTimestamp",
           "schema": {
             "description": undefined,
+            "generatedName": "ListHeaderCreatedTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -26306,7 +26976,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "size",
           "schema": {
             "description": undefined,
+            "generatedName": "ListHeaderSize",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -26331,7 +27003,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "key",
           "schema": {
             "description": undefined,
+            "generatedName": "ListItemKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -26347,7 +27021,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "listItemMetadata",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26364,10 +27040,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "ListKeyMetadata": {
       "description": undefined,
+      "generatedName": "ListKeyMetadata",
       "groupName": undefined,
       "key": {
         "description": undefined,
+        "generatedName": "ListKeyMetadataKey",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -26375,8 +27054,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "type": "primitive",
       },
+      "nameOverride": undefined,
       "type": "map",
       "value": {
+        "generatedName": "ListKeyMetadataValue",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -26395,11 +27077,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "listMetadataName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "List name",
+              "generatedName": "ListMetadataName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -26416,11 +27102,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "description",
           "schema": {
             "description": undefined,
+            "generatedName": "listMetadataDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "List description",
+              "generatedName": "ListMetadataDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -26437,11 +27127,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "listMetadataStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ListMetadataStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -26456,11 +27150,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checksum",
           "schema": {
             "description": undefined,
+            "generatedName": "listMetadataChecksum",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ListMetadataChecksum",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -26590,7 +27288,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "code",
           "schema": {
             "description": "Merchant code",
+            "generatedName": "MccDetailsCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -26604,11 +27304,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "description",
           "schema": {
             "description": undefined,
+            "generatedName": "mccDetailsDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Merchant Description",
+              "generatedName": "MccDetailsDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -26636,7 +27340,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "businessShortCode",
           "schema": {
             "description": "Business code",
+            "generatedName": "MpesaDetailsBusinessShortCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -26697,7 +27403,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "phoneNumber",
           "schema": {
             "description": "Contact Number of the account holder",
+            "generatedName": "MpesaDetailsPhoneNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -26711,7 +27419,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "MpesaPaymentMethod": {
       "description": "Classify the method of payment as "Mpesa" for MpesaDetails",
+      "generatedName": "MpesaPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "MPESA",
@@ -26733,7 +27443,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "isPepHit",
           "schema": {
             "description": undefined,
+            "generatedName": "PepStatusIsPepHit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -26747,11 +27459,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepCountry",
           "schema": {
             "description": undefined,
+            "generatedName": "pepStatusPepCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PepStatusPepCountry",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 2,
                 "minLength": 2,
@@ -26856,11 +27572,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalDocuments",
           "schema": {
             "description": undefined,
+            "generatedName": "personLegalDocuments",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
+              "generatedName": "PersonLegalDocuments",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -26880,7 +27600,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "personContactDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26899,11 +27621,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepStatus",
           "schema": {
             "description": undefined,
+            "generatedName": "personPepStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PersonPepStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -26923,11 +27649,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "personTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "PersonTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -26997,7 +27727,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "kycRiskScore",
           "schema": {
             "description": "Quantified KYC risk score",
+            "generatedName": "RiskScoringResultKycRiskScore",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -27011,7 +27743,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionRiskScore",
           "schema": {
             "description": "Quantified action risk score",
+            "generatedName": "RiskScoringResultTransactionRiskScore",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -27025,11 +27759,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "customerRiskAssessment",
           "schema": {
             "description": undefined,
+            "generatedName": "riskScoringResultCustomerRiskAssessment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Quantified dynamic risk score",
+              "generatedName": "RiskScoringResultCustomerRiskAssessment",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -27088,7 +27826,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "exceptionName",
           "schema": {
             "description": "Unique rule identifier",
+            "generatedName": "RuleFailureExceptionExceptionName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -27104,7 +27844,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "exceptionDescription",
           "schema": {
             "description": "Name of the rule",
+            "generatedName": "RuleFailureExceptionExceptionDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -27152,11 +27894,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitDirections",
           "schema": {
             "description": undefined,
+            "generatedName": "ruleHitMetaHitDirections",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RuleHitMetaHitDirections",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -27176,7 +27922,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "falsePositiveDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "ruleHitMetaFalsePositiveDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27195,11 +27943,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "sanctionsDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "ruleHitMetaSanctionsDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RuleHitMetaSanctionsDetails",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -27344,7 +28096,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": "Unique transaction identifier",
+            "generatedName": "RulesResultsExecutedRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -27363,7 +28117,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": "Unique transaction identifier",
+            "generatedName": "RulesResultsHitRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -27393,11 +28149,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "swiftCode",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsSwiftCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "SWIFT code of the financial institution",
+              "generatedName": "SwiftDetailsSwiftCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -27414,11 +28174,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsAccountNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Account number",
+              "generatedName": "SwiftDetailsAccountNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -27435,11 +28199,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountType",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsAccountType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Account type. E.g. Checking, Savings etc.",
+              "generatedName": "SwiftDetailsAccountType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -27456,11 +28224,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsBankName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the bank",
+              "generatedName": "SwiftDetailsBankName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -27477,11 +28249,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
+              "generatedName": "SwiftDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -27498,7 +28274,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsBankAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27517,11 +28295,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "specialInstructions",
           "schema": {
             "description": undefined,
+            "generatedName": "swiftDetailsSpecialInstructions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Special instructions if any",
+              "generatedName": "SwiftDetailsSpecialInstructions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -27536,7 +28318,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "SWIFTPaymentMethod": {
       "description": "Classify the method of payment as "SWIFT" for SWIFTDetails",
+      "generatedName": "SwiftPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "SWIFT",
@@ -27558,7 +28342,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "SanctionsDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -27574,7 +28360,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "searchId",
           "schema": {
             "description": undefined,
+            "generatedName": "SanctionsDetailsSearchId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -27590,7 +28378,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "entityType",
           "schema": {
             "description": undefined,
+            "generatedName": "sanctionsDetailsEntityType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27677,7 +28467,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "key",
           "schema": {
             "description": "Key value when you are creating a custom variable",
+            "generatedName": "TagKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -27693,7 +28485,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "value",
           "schema": {
             "description": "Value for a given key when you are creating a custom variable",
+            "generatedName": "TagValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -27747,7 +28541,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionAmount",
           "schema": {
             "description": "Amount of the transaction",
+            "generatedName": "TransactionAmountDetailsTransactionAmount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -27775,7 +28571,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionAmountDetailsCountry",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27805,7 +28603,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "day",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionAmountLimitDay",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27824,7 +28624,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "week",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionAmountLimitWeek",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27843,7 +28645,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionAmountLimitMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27862,7 +28666,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionAmountLimitYear",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27892,7 +28698,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionBaseType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27911,7 +28719,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionId",
           "schema": {
             "description": "Unique transaction identifier",
+            "generatedName": "TransactionBaseTransactionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -27927,7 +28737,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "timestamp",
           "schema": {
             "description": "Timestamp of when transaction took place",
+            "generatedName": "TransactionBaseTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -27941,11 +28753,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originUserId",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionBaseOriginUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "UserId for where the transaction originates from",
+              "generatedName": "TransactionBaseOriginUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -27962,11 +28778,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationUserId",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionBaseDestinationUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
+              "generatedName": "TransactionBaseDestinationUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -27994,11 +28814,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "day",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCountLimitDay",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionCountLimitDay",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -28013,11 +28837,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "week",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCountLimitWeek",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionCountLimitWeek",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -28032,11 +28860,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCountLimitMonth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionCountLimitMonth",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -28051,11 +28883,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCountLimitYear",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionCountLimitYear",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -28095,7 +28931,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "timestamp",
           "schema": {
             "description": "Timestamp of the event",
+            "generatedName": "TransactionEventTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -28109,7 +28947,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionId",
           "schema": {
             "description": "Transaction ID the event pertains to",
+            "generatedName": "TransactionEventTransactionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -28125,11 +28965,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionEventEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique event ID",
+              "generatedName": "TransactionEventEventId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -28146,11 +28990,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionEventReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
+              "generatedName": "TransactionEventReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -28167,11 +29015,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionEventEventDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Event description",
+              "generatedName": "TransactionEventEventDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -28188,7 +29040,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedTransactionAttributes",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionEventUpdatedTransactionAttributes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28207,7 +29061,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metaData",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionEventMetaData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28246,7 +29102,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionEventMonitoringResultEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -28287,7 +29145,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionCountLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitTransactionCountLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28306,7 +29166,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionAmountLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitTransactionAmountLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28325,7 +29187,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "averageTransactionAmountLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitAverageTransactionAmountLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28355,7 +29219,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumDailyTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28374,7 +29240,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumWeeklyTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28393,7 +29261,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumMonthlyTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28412,7 +29282,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumQuarterlyTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28431,7 +29303,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28450,7 +29324,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumYearlyTransactionLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28469,7 +29345,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentMethodLimits",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionLimitsPaymentMethodLimits",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -28486,7 +29364,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "ACH",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsAch",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28505,7 +29385,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "CARD",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsCard",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28524,7 +29406,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "IBAN",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsIban",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28543,7 +29427,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "UPI",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28562,7 +29448,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "GENERIC_BANK_ACCOUNT",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28581,7 +29469,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "MPESA",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28600,7 +29490,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "SWIFT",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28619,7 +29511,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "WALLET",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28638,7 +29532,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "CHECK",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "type": "optional",
                     "value": {
                       "description": undefined,
@@ -28682,7 +29578,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionId",
           "schema": {
             "description": "Transaction ID that the results pertain to",
+            "generatedName": "TransactionMonitoringResultTransactionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -28811,7 +29709,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionState",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableTransactionState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28830,7 +29730,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originAmountDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableOriginAmountDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28849,7 +29751,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationAmountDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableDestinationAmountDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28868,7 +29772,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originPaymentDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableOriginPaymentDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -28965,7 +29871,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationPaymentDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableDestinationPaymentDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -29062,15 +29970,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "relatedTransactionIds",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableRelatedTransactionIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
+              "generatedName": "TransactionUpdatableRelatedTransactionIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "TransactionUpdatableRelatedTransactionIdsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -29088,11 +30002,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "productType",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableProductType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
+              "generatedName": "TransactionUpdatableProductType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -29109,11 +30027,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "promotionCodeUsed",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatablePromotionCodeUsed",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether a promotion code was used or not the transaction",
+              "generatedName": "TransactionUpdatablePromotionCodeUsed",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -29128,11 +30050,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reference",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableReference",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
+              "generatedName": "TransactionUpdatableReference",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -29149,7 +30075,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceData",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableDeviceData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29168,11 +30096,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionUpdatableTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "TransactionUpdatableTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -29212,7 +30144,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionWithRulesResultExecutedRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -29231,7 +30165,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionWithRulesResultHitRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -29261,7 +30197,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "upiID",
           "schema": {
             "description": "UPI Id number",
+            "generatedName": "UpiDetailsUpiId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -29277,11 +30215,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankProvider",
           "schema": {
             "description": undefined,
+            "generatedName": "upiDetailsBankProvider",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Bank provider name",
+              "generatedName": "UpiDetailsBankProvider",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -29298,11 +30240,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "interfaceProvider",
           "schema": {
             "description": undefined,
+            "generatedName": "upiDetailsInterfaceProvider",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Interface provider name",
+              "generatedName": "UpiDetailsInterfaceProvider",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -29319,11 +30265,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "upiDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
+              "generatedName": "UpiDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -29338,7 +30288,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "UPIPaymentMethod": {
       "description": "Classify the method of payment as "UPI" for UPIDetails",
+      "generatedName": "UpiPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "UPI",
@@ -29387,7 +30339,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "Unique user ID",
+            "generatedName": "UserBaseUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -29403,7 +30357,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "userBaseUserDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29422,7 +30378,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "createdTimestamp",
           "schema": {
             "description": "Timestamp when userId is created",
+            "generatedName": "UserBaseCreatedTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -29461,11 +30419,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "dateOfBirth",
           "schema": {
             "description": undefined,
+            "generatedName": "userDetailsDateOfBirth",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Date of birth of the user (YYYY-MM-DD)",
+              "generatedName": "UserDetailsDateOfBirth",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -29482,7 +30444,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "countryOfResidence",
           "schema": {
             "description": undefined,
+            "generatedName": "userDetailsCountryOfResidence",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29501,7 +30465,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "countryOfNationality",
           "schema": {
             "description": undefined,
+            "generatedName": "userDetailsCountryOfNationality",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29520,7 +30486,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "gender",
           "schema": {
             "description": undefined,
+            "generatedName": "userDetailsGender",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Gender of the individual - Male, Female or Non-Binary",
@@ -29578,7 +30546,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": "User ID that the results pertain to",
+            "generatedName": "UserMonitoringResultUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -29605,7 +30575,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userStateDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalUserStateDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29624,7 +30596,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "kycStatusDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalKycStatusDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29643,11 +30617,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalDocuments",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalLegalDocuments",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
+              "generatedName": "UserOptionalLegalDocuments",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -29667,7 +30645,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalContactDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29686,7 +30666,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionLimits",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalTransactionLimits",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29705,7 +30687,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "riskLevel",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalRiskLevel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29724,7 +30708,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "acquisitionChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalAcquisitionChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29743,15 +30729,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonForAccountOpening",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalReasonForAccountOpening",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserOptionalReasonForAccountOpening",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "UserOptionalReasonForAccountOpeningItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -29769,7 +30761,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userSegment",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalUserSegment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29801,11 +30795,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepStatus",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalPepStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserOptionalPepStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -29825,11 +30823,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "userOptionalTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
+              "generatedName": "UserOptionalTags",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -29950,11 +30952,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
+            "generatedName": "userStateDetailsUserId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserStateDetailsUserId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -29971,11 +30977,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
+            "generatedName": "userStateDetailsReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserStateDetailsReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -30026,11 +31036,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": undefined,
+            "generatedName": "userWithRulesResultExecutedRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserWithRulesResultExecutedRules",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -30050,11 +31064,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": undefined,
+            "generatedName": "userWithRulesResultHitRules",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserWithRulesResultHitRules",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -30085,7 +31103,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "walletType",
           "schema": {
             "description": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
+            "generatedName": "WalletDetailsWalletType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -30101,11 +31121,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "walletId",
           "schema": {
             "description": undefined,
+            "generatedName": "walletDetailsWalletId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Unique ID of the wallet",
+              "generatedName": "WalletDetailsWalletId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -30122,11 +31146,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
+            "generatedName": "walletDetailsPaymentChannel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Payment Channel used through wallet",
+              "generatedName": "WalletDetailsPaymentChannel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -30143,11 +31171,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "walletDetailsName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Name of the account holder for a specific wallet",
+              "generatedName": "WalletDetailsName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -30164,7 +31196,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
+            "generatedName": "walletDetailsTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -30183,11 +31217,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "walletPhoneNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "walletDetailsWalletPhoneNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Phone number associated with the wallet, if any",
+              "generatedName": "WalletDetailsWalletPhoneNumber",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -30202,7 +31240,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "WalletPaymentMethod": {
       "description": "Classify the method of payment as "Wallet" for WalletDetails",
+      "generatedName": "WalletPaymentMethod",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "WALLET",
@@ -30224,7 +31264,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "WebhookEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -30268,7 +31310,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "createdTimestamp",
           "schema": {
             "description": undefined,
+            "generatedName": "WebhookEventCreatedTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },

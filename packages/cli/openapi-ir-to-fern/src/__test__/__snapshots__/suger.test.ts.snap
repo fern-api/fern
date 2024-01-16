@@ -7920,6 +7920,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
           },
         },
       },
+      "MiddlewareMetadata": "map<string, unknown>",
       "ServicecontrolReportError": {
         "docs": undefined,
         "properties": {
@@ -9487,6 +9488,7 @@ This field is present only if the product has usage-based billing configured.",
           "type": "optional<shared.OperationType>",
         },
       },
+      "SharedOperationType": "literal<"TemporalWorkflow">",
       "SharedPaymentInstallment": {
         "docs": undefined,
         "properties": {
@@ -10043,8 +10045,6 @@ the same customer, dimension, and time, but a different quantity.",
           "DuplicateRecord",
         ],
       },
-      "middleware.Metadata": "map<string, unknown>",
-      "shared.OperationType": "literal<"TemporalWorkflow">",
     },
   },
   "rootApiFile": {

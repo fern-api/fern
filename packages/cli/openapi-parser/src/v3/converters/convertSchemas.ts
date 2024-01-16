@@ -64,6 +64,8 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride: undefined,
+            generatedName: getGeneratedTypeName(breadcrumbs),
             value: referenceSchema,
             description: undefined,
             groupName: undefined
@@ -99,7 +101,7 @@ export function convertSchemaObject(
         );
     }
 
-    const fernSchema = getFernTypeExtension({ schema, description });
+    const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName });
     if (fernSchema != null) {
         return fernSchema;
     }
@@ -115,6 +117,8 @@ export function convertSchemaObject(
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
+                nameOverride,
+                generatedName,
                 primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
@@ -128,6 +132,8 @@ export function convertSchemaObject(
 
         if (schema.enum.length === 1 && schema.enum[0] != null) {
             return convertLiteral({
+                nameOverride,
+                generatedName,
                 wrapAsNullable,
                 value: schema.enum[0],
                 description,
@@ -153,6 +159,8 @@ export function convertSchemaObject(
         const secondElement = schema.type[1];
         if (firstElement === "null") {
             return SchemaWithExample.nullable({
+                nameOverride,
+                generatedName,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -168,6 +176,8 @@ export function convertSchemaObject(
             });
         } else if (secondElement === "null") {
             return SchemaWithExample.nullable({
+                nameOverride,
+                generatedName,
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -213,6 +223,8 @@ export function convertSchemaObject(
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
         if (literalValue != null) {
             return wrapLiteral({
+                nameOverride,
+                generatedName,
                 literal: LiteralSchemaValue.boolean(literalValue),
                 wrapAsNullable,
                 description,
@@ -220,6 +232,8 @@ export function convertSchemaObject(
             });
         }
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 example: getExampleAsBoolean(schema)
             }),
@@ -230,6 +244,8 @@ export function convertSchemaObject(
     }
     if (schema === "number" || schema.type === "number") {
         return convertNumber({
+            nameOverride,
+            generatedName,
             format: schema.format,
             description,
             wrapAsNullable,
@@ -239,6 +255,8 @@ export function convertSchemaObject(
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
                 example: getExampleAsNumber(schema)
             }),
@@ -250,6 +268,8 @@ export function convertSchemaObject(
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
+                nameOverride,
+                generatedName,
                 primitive: PrimitiveSchemaValueWithExample.datetime({
                     example: getExamplesString(schema)
                 }),
@@ -262,6 +282,8 @@ export function convertSchemaObject(
         const maybeConstValue = getProperty<string>(schema, "const");
         if (maybeConstValue != null) {
             return wrapLiteral({
+                nameOverride,
+                generatedName,
                 literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
@@ -270,6 +292,8 @@ export function convertSchemaObject(
         }
 
         return wrapPrimitive({
+            nameOverride,
+            generatedName,
             primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
@@ -283,12 +307,23 @@ export function convertSchemaObject(
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsNullable, context, groupName });
+        return convertArray({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            item: schema.items,
+            description,
+            wrapAsNullable,
+            context,
+            groupName
+        });
     }
 
     // maps
     if (schema.additionalProperties != null && schema.additionalProperties !== false && hasNoProperties(schema)) {
         return convertAdditionalProperties({
+            nameOverride,
+            generatedName,
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
@@ -496,9 +531,13 @@ export function convertSchemaObject(
     // handle vanilla object
     if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
         return wrapMap({
+            nameOverride,
+            generatedName,
             description,
             wrapAsNullable,
             keySchema: {
+                nameOverride,
+                generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
@@ -507,13 +546,21 @@ export function convertSchemaObject(
                 }),
                 groupName
             },
-            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined, groupName }),
+            valueSchema: SchemaWithExample.unknown({
+                nameOverride,
+                generatedName: `${generatedName}Value`,
+                description: undefined,
+                example: undefined,
+                groupName
+            }),
             groupName
         });
     }
 
     if (schema.type == null) {
         return SchemaWithExample.unknown({
+            nameOverride,
+            generatedName,
             description,
             groupName,
             example: undefined
@@ -576,6 +623,8 @@ function maybeInjectDescriptionOrGroupName(
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
         return SchemaWithExample.optional({
+            nameOverride: schema.nameOverride,
+            generatedName: schema.generatedName,
             value: Schema.reference({
                 ...schema.value
             }),
@@ -584,6 +633,8 @@ function maybeInjectDescriptionOrGroupName(
         });
     } else if (schema.type === "nullable" && schema.value.type === "reference") {
         return SchemaWithExample.nullable({
+            nameOverride: schema.nameOverride,
+            generatedName: schema.generatedName,
             value: Schema.reference({
                 ...schema.value
             }),
@@ -629,16 +680,24 @@ export function wrapLiteral({
     literal,
     wrapAsNullable,
     groupName,
-    description
+    description,
+    nameOverride,
+    generatedName
 }: {
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
     groupName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.literal({
+                nameOverride,
+                generatedName,
                 value: literal,
                 description,
                 groupName
@@ -648,6 +707,8 @@ export function wrapLiteral({
         });
     }
     return SchemaWithExample.literal({
+        nameOverride,
+        generatedName,
         value: literal,
         groupName,
         description
@@ -658,16 +719,24 @@ export function wrapPrimitive({
     primitive,
     wrapAsNullable,
     groupName,
-    description
+    description,
+    generatedName,
+    nameOverride
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
     groupName: string | undefined;
     description: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.primitive({
+                nameOverride,
+                generatedName,
                 schema: primitive,
                 description,
                 groupName
@@ -677,6 +746,8 @@ export function wrapPrimitive({
         });
     }
     return SchemaWithExample.primitive({
+        nameOverride,
+        generatedName,
         schema: primitive,
         description,
         groupName
