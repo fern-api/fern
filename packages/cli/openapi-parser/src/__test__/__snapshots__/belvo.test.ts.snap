@@ -22241,8 +22241,11 @@ If you try to access older information than what we can access, we will return a
                                 "type": "primitive",
                               },
                               "last_income_description": {
-                                "map": [],
-                                "type": "map",
+                                "primitive": {
+                                  "string": "Salário",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
                               },
                               "lookback_periods": {
                                 "primitive": {
@@ -22817,8 +22820,11 @@ If you try to access older information than what we can access, we will return a
                         "type": "primitive",
                       },
                       "last_income_description": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "Salário",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "lookback_periods": {
                         "primitive": {
@@ -23240,8 +23246,11 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "Salário",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -23649,8 +23658,11 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "Salário",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -37182,8 +37194,11 @@ If you need to know the currency of the account, just do a GET Details to the ac
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "map": [],
-                            "type": "map",
+                            "primitive": {
+                              "string": "Salário",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -37977,8 +37992,11 @@ For example:
                         "type": "primitive",
                       },
                       "name": {
-                        "map": [],
-                        "type": "map",
+                        "primitive": {
+                          "string": "Your webhook name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "url": {
                         "primitive": {
@@ -38119,8 +38137,11 @@ For example:
                     "type": "primitive",
                   },
                   "name": {
-                    "map": [],
-                    "type": "map",
+                    "primitive": {
+                      "string": "Your webhook name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "url": {
                     "primitive": {
@@ -38252,8 +38273,11 @@ For example:
                 "type": "primitive",
               },
               "name": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "Your webhook name",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "url": {
                 "primitive": {
@@ -57455,9 +57479,16 @@ For each income stream, we provide additional insights such as:
           "generatedName": "incomeStreamsBodyLastIncomeDescription",
           "key": "last_income_description",
           "schema": {
+            "description": "The description of the most recent income from the steam. ",
             "generatedName": "IncomeStreamsBodyLastIncomeDescription",
+            "groupName": undefined,
             "nameOverride": undefined,
-            "type": "unknown",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         {
@@ -89269,9 +89300,16 @@ For \`session_expired\` errors, the description can be (among others):
           "generatedName": "paymentWebhookName",
           "key": "name",
           "schema": {
+            "description": "The name you provided to identify the webhook.",
             "generatedName": "PaymentWebhookName",
+            "groupName": undefined,
             "nameOverride": undefined,
-            "type": "unknown",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         {

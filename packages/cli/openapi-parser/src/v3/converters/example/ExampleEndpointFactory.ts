@@ -7,37 +7,22 @@ import {
 } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     EndpointWithExample,
-    HeaderWithExample,
     NamedFullExample,
-    PathParameterWithExample,
-    QueryParameterWithExample,
     RequestWithExample,
     ResponseWithExample,
     SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { isSchemaRequired } from "../../utils/isSchemaRequired";
-import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
-
-type GeneratedParamterExample = SuccessfullyGeneratedParamterExample | FailedGeneratedParamterExample;
-
-interface SuccessfullyGeneratedParamterExample {
-    type: "success";
-    value: QueryParameterExample | HeaderExample | PathParameterExample | undefined;
-}
-
-interface FailedGeneratedParamterExample {
-    type: "failed";
-}
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
-    private dummyExampleFactory: DummyExampleFactory;
     private logger: Logger;
+    private schemas: Record<string, SchemaWithExample>;
 
     constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
+        this.schemas = schemas;
         this.exampleTypeFactory = new ExampleTypeFactory(schemas);
-        this.dummyExampleFactory = new DummyExampleFactory(schemas);
         this.logger = logger;
     }
 
@@ -53,53 +38,86 @@ export class ExampleEndpointFactory {
 
         let requestExample = undefined;
         if (requestSchemaIdResponse != null) {
-            requestExample = this.exampleTypeFactory.buildExample(
-                requestSchemaIdResponse.schema,
-                requestSchemaIdResponse.example
-            );
-            if (requestExample == null) {
+            const required = this.isSchemaRequired(requestSchemaIdResponse.schema);
+            requestExample = this.exampleTypeFactory.buildExample({
+                schema: requestSchemaIdResponse.schema,
+                example: requestSchemaIdResponse.example?.value,
+                isOptional: !required,
+                parameter: true
+            });
+            if (required && requestExample == null) {
                 return undefined;
             }
         }
 
         let responseExample = undefined;
         if (responseSchemaIdResponse != null) {
-            responseExample = this.exampleTypeFactory.buildExample(
-                responseSchemaIdResponse.schema,
-                responseSchemaIdResponse.example
-            );
-            if (responseExample == null) {
+            const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
+            responseExample = this.exampleTypeFactory.buildExample({
+                schema: responseSchemaIdResponse.schema,
+                example: responseSchemaIdResponse.example?.value,
+                isOptional: !required,
+                parameter: true
+            });
+            if (required && responseExample == null) {
                 return undefined;
             }
         }
 
         const pathParameters: PathParameterExample[] = [];
         for (const pathParameter of endpoint.pathParameters) {
-            const example = this.buildParameterExample(pathParameter);
-            if (example.type === "failed") {
-                return;
-            } else if (example.value != null) {
-                pathParameters.push(example.value);
+            const required = this.isSchemaRequired(pathParameter.schema);
+            const example = this.exampleTypeFactory.buildExample({
+                schema: pathParameter.schema,
+                isOptional: !required,
+                example: undefined,
+                parameter: true
+            });
+            if (required && example == null) {
+                return undefined;
+            } else if (example != null) {
+                pathParameters.push({
+                    name: pathParameter.name,
+                    value: example
+                });
             }
         }
 
         const queryParameters: QueryParameterExample[] = [];
         for (const queryParameter of endpoint.queryParameters) {
-            const example = this.buildParameterExample(queryParameter);
-            if (example.type === "failed") {
-                return;
-            } else if (example.value != null) {
-                queryParameters.push(example.value);
+            const required = this.isSchemaRequired(queryParameter.schema);
+            const example = this.exampleTypeFactory.buildExample({
+                schema: queryParameter.schema,
+                isOptional: !required,
+                example: undefined,
+                parameter: true
+            });
+            if (required && example == null) {
+                return undefined;
+            } else if (example != null) {
+                queryParameters.push({
+                    name: queryParameter.name,
+                    value: example
+                });
             }
         }
 
         const headers: HeaderExample[] = [];
         for (const header of endpoint.headers) {
-            const example = this.buildParameterExample(header);
-            if (example.type === "failed") {
-                return;
-            } else if (example.value != null) {
-                headers.push(example.value);
+            const required = this.isSchemaRequired(header.schema);
+            const example = this.exampleTypeFactory.buildExample({
+                schema: header.schema,
+                isOptional: !required,
+                example: undefined,
+                parameter: true
+            });
+            if (required && example == null) {
+                return undefined;
+            } else if (example != null) {
+                headers.push({
+                    name: header.name,
+                    value: example
+                });
             }
         }
 
@@ -114,36 +132,19 @@ export class ExampleEndpointFactory {
         return example;
     }
 
-    private buildParameterExample(
-        parameter: QueryParameterWithExample | PathParameterWithExample | HeaderWithExample
-    ): GeneratedParamterExample {
-        const isRequired = isSchemaRequired(parameter.schema);
-        const example = this.exampleTypeFactory.buildExample(parameter.schema, undefined);
-        if (example != null) {
-            return {
-                type: "success",
-                value: {
-                    name: parameter.name,
-                    value: example
-                }
-            };
-        } else if (isRequired) {
-            const dummyExample = this.dummyExampleFactory.generateExample({
-                schema: parameter.schema,
-                name: parameter.name
-            });
-            if (dummyExample == null) {
-                return { type: "failed" };
+    private isSchemaRequired(schema: SchemaWithExample) {
+        return isSchemaRequired(this.getResolvedSchema(schema));
+    }
+
+    private getResolvedSchema(schema: SchemaWithExample) {
+        while (schema.type === "reference") {
+            const resolvedSchema = this.schemas[schema.schema];
+            if (resolvedSchema == null) {
+                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
             }
-            return {
-                type: "success",
-                value: {
-                    name: parameter.name,
-                    value: dummyExample
-                }
-            };
+            schema = resolvedSchema;
         }
-        return { type: "success", value: undefined };
+        return schema;
     }
 }
 

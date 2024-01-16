@@ -26,14 +26,14 @@ we still recommend setting the Content-Type header to the value \`application/js
             "properties": {
               "amendment_note": {
                 "primitive": {
-                  "string": "This is an amendment note with useful context to changes made to the booking",
+                  "string": "This is an amendment note with useful context to changes made to the booking.",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "booking_id": {
                 "primitive": {
-                  "int": 1,
+                  "int": 12345,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -42,35 +42,35 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "properties": {
                   "contains_hazmat": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_li_ion": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_magnets": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_non_li_ion_battery": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_other_dangerous_goods": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
@@ -255,28 +255,28 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "properties": {
                   "forty_five_ft_hc": {
                     "primitive": {
-                      "int": 1,
+                      "int": 5,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "forty_ft": {
                     "primitive": {
-                      "int": 1,
+                      "int": 3,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "forty_ft_hc": {
                     "primitive": {
-                      "int": 1,
+                      "int": 4,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "twenty_ft": {
                     "primitive": {
-                      "int": 1,
+                      "int": 2,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -314,14 +314,14 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "new_origin_address_ref": {
                 "primitive": {
-                  "string": "id-123456",
+                  "string": "warehouse_cn",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "new_origin_port_loc_code": {
                 "primitive": {
-                  "string": "CNYTN",
+                  "string": "CNSZP",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -380,14 +380,14 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "new_wants_import_customs_service": {
                 "primitive": {
-                  "boolean": true,
+                  "boolean": false,
                   "type": "boolean",
                 },
                 "type": "primitive",
               },
               "new_wants_pickup_service": {
                 "primitive": {
-                  "boolean": true,
+                  "boolean": false,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -1951,21 +1951,21 @@ we still recommend setting the Content-Type header to the value \`application/js
             "properties": {
               "booking_id": {
                 "primitive": {
-                  "int": 1,
+                  "int": 9876,
                   "type": "int",
                 },
                 "type": "primitive",
               },
               "purchase_order_line_item_id": {
                 "primitive": {
-                  "int": 1,
+                  "int": 112358,
                   "type": "int",
                 },
                 "type": "primitive",
               },
               "units": {
                 "primitive": {
-                  "int": 1,
+                  "int": 200,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -5048,35 +5048,35 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "properties": {
                   "contains_hazmat": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_li_ion": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_magnets": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_non_li_ion_battery": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "contains_other_dangerous_goods": {
                     "primitive": {
-                      "boolean": false,
+                      "boolean": true,
                       "type": "boolean",
                     },
                     "type": "primitive",
@@ -5259,7 +5259,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "consignee_entity_ref": {
                 "primitive": {
-                  "string": "consignee_company_name_llc",
+                  "string": "zoomit_ref",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5270,14 +5270,14 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "delivery_date": {
                 "primitive": {
-                  "string": "2019-07-23",
+                  "string": "2019-07-31",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "destination_address_ref": {
                 "primitive": {
-                  "string": "id-123456",
+                  "string": "my-albany-ref",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5316,28 +5316,28 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "properties": {
                       "forty_five_ft_hc": {
                         "primitive": {
-                          "int": 1,
+                          "int": 5,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "forty_ft": {
                         "primitive": {
-                          "int": 1,
+                          "int": 3,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "forty_ft_hc": {
                         "primitive": {
-                          "int": 1,
+                          "int": 4,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "twenty_ft": {
                         "primitive": {
-                          "int": 1,
+                          "int": 2,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -5360,7 +5360,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "primitive",
                   },
                   "incoterm": {
-                    "enum": "EXW",
+                    "enum": "FOB",
                     "type": "enum",
                   },
                   "is_lcl": {
@@ -5424,14 +5424,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                   "wants_delivery_service": {
                     "primitive": {
-                      "boolean": true,
+                      "boolean": false,
                       "type": "boolean",
                     },
                     "type": "primitive",
                   },
                   "wants_pickup_service": {
                     "primitive": {
-                      "boolean": true,
+                      "boolean": false,
                       "type": "boolean",
                     },
                     "type": "primitive",
@@ -5441,21 +5441,21 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "origin_address_ref": {
                 "primitive": {
-                  "string": "id-123456",
+                  "string": "id-274346",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "shipper_entity_ref": {
                 "primitive": {
-                  "string": "shipper_company_name_ltd",
+                  "string": "zoomit-us",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "special_instructions": {
                 "primitive": {
-                  "string": "Please book 40ft reefer container.",
+                  "string": "Handle carefully",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5492,7 +5492,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "wants_export_customs_service": {
                 "primitive": {
-                  "boolean": false,
+                  "boolean": true,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -9133,6 +9133,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "object",
               },
+              "destination_port": {
+                "primitive": {
+                  "string": "JFK",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "distance": {
                 "properties": {
                   "unit": {
@@ -9211,14 +9218,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "properties": {
                   "latitude": {
                     "primitive": {
-                      "string": "76.003",
+                      "string": "37.78",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "longitude": {
                     "primitive": {
-                      "string": "-122.092",
+                      "string": "-12.41",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -9249,7 +9256,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                   "value": {
                     "primitive": {
-                      "double": 2300.4,
+                      "double": 40,
                       "type": "double",
                     },
                     "type": "primitive",
@@ -38684,12 +38691,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "enum",
               },
               "incoterm": {
-                "enum": "EXW",
+                "enum": "FOB",
                 "type": "enum",
               },
               "issue_date": {
                 "primitive": {
-                  "string": "2019-09-30",
+                  "string": "2019-06-30",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -38994,7 +39001,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               },
               "must_arrive_date": {
                 "primitive": {
-                  "string": "2019-09-30",
+                  "string": "2019-07-31",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -39114,7 +39121,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "array",
               },
               "priority": {
-                "enum": "high",
+                "enum": "standard",
                 "type": "enum",
               },
               "status": {
@@ -39122,7 +39129,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "enum",
               },
               "transportation_mode": {
-                "enum": "air",
+                "enum": "ocean",
                 "type": "enum",
               },
             },
@@ -41060,7 +41067,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "properties": {
                   "code": {
                     "primitive": {
-                      "string": "USFBN",
+                      "string": "CNSHA",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -41077,12 +41084,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "enum",
               },
               "incoterm": {
-                "enum": "EXW",
+                "enum": "FOB",
                 "type": "enum",
               },
               "issue_date": {
                 "primitive": {
-                  "string": "2019-09-30",
+                  "string": "2019-06-30",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -41170,7 +41177,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "type": "array",
                       },
                       "incoterm": {
-                        "enum": "EXW",
+                        "enum": "FOB",
                         "type": "enum",
                       },
                       "item_key": {
@@ -41221,7 +41228,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "must_arrive_date": {
                         "primitive": {
-                          "string": "2019-09-30",
+                          "string": "2019-07-31",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -41237,7 +41244,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "properties": {
                           "code": {
                             "primitive": {
-                              "string": "USFBN",
+                              "string": "USLGB",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -41267,7 +41274,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "dangerous": {
                             "primitive": {
-                              "boolean": false,
+                              "boolean": true,
                               "type": "boolean",
                             },
                             "type": "primitive",
@@ -41302,14 +41309,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "product_category": {
                             "primitive": {
-                              "string": "Cosmetics",
+                              "string": "furniture",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "size": {
                             "primitive": {
-                              "string": "M",
+                              "string": "m",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -41323,7 +41330,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "style": {
                             "primitive": {
-                              "string": "classical",
+                              "string": "classic",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -41339,14 +41346,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "type": "object",
                       },
                       "transportation_mode": {
-                        "enum": "air",
+                        "enum": "ocean",
                         "type": "enum",
                       },
                       "unit_cost": {
                         "properties": {
                           "amount": {
                             "primitive": {
-                              "string": "12.34",
+                              "string": "100.01",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -41367,7 +41374,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "units": {
                         "primitive": {
-                          "int": 1,
+                          "int": 10,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -41387,7 +41394,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               },
               "must_arrive_date": {
                 "primitive": {
-                  "string": "2019-09-30",
+                  "string": "2019-07-31",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -41421,7 +41428,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "properties": {
                   "code": {
                     "primitive": {
-                      "string": "USFBN",
+                      "string": "USLA",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -41507,7 +41514,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "array",
               },
               "priority": {
-                "enum": "high",
+                "enum": "standard",
                 "type": "enum",
               },
               "status": {
@@ -41515,7 +41522,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "enum",
               },
               "transportation_mode": {
-                "enum": "air",
+                "enum": "ocean",
                 "type": "enum",
               },
             },

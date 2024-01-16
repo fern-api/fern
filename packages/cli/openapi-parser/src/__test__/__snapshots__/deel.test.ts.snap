@@ -803,7 +803,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "properties": {
                       "amount": {
                         "primitive": {
-                          "double": 1.1,
+                          "double": 100,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -2940,7 +2940,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "properties": {
                       "amount": {
                         "primitive": {
-                          "double": 1.1,
+                          "double": 100,
                           "type": "double",
                         },
                         "type": "primitive",

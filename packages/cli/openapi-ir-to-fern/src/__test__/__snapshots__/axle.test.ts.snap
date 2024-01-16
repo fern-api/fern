@@ -190,15 +190,17 @@ exports[`open api parser axle simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "redirectUri": "https://example.com/redirect",
                   "user": {
                     "id": "string",
                   },
+                  "webhookUri": "https://example.com/webhook",
                 },
                 "response": {
                   "body": {
                     "data": {
-                      "ignitionToken": "string",
-                      "ignitionUri": "string",
+                      "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z",
+                      "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
                     },
                     "success": true,
                   },

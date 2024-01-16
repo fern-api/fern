@@ -190,7 +190,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -905,7 +905,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1087,8 +1087,11 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "response": {
             "properties": {
               "items": {
-                "map": [],
-                "type": "map",
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "limit": {
                 "primitive": {
@@ -1106,7 +1109,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               },
               "nextPage_url": {
                 "primitive": {
-                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
                   "type": "string",
                 },
                 "type": "primitive",

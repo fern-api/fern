@@ -17,36 +17,57 @@ export class ExampleTypeFactory {
         this.schemas = schemas;
     }
 
-    public buildExample(schema: SchemaWithExample, example: unknown | undefined): FullExample | undefined {
-        return this.buildExampleHelper({ schema, isOptional: false, visitedSchemaIds: new Set(), example });
+    public buildExample({
+        schema,
+        example,
+        isOptional = false,
+        /* If true, then we know that we are building an example for a query param, path param, or header */
+        parameter = false
+    }: {
+        schema: SchemaWithExample;
+        example: unknown | undefined;
+        isOptional: boolean;
+        parameter: boolean;
+    }): FullExample | undefined {
+        return this.buildExampleHelper({ schema, isOptional, visitedSchemaIds: new Set(), example, parameter });
     }
 
     private buildExampleHelper({
         example,
         schema,
         isOptional,
-        visitedSchemaIds
+        visitedSchemaIds,
+        parameter = false
     }: {
         example: unknown | undefined;
         schema: SchemaWithExample;
         isOptional: boolean;
         visitedSchemaIds: Set<SchemaId>;
+        parameter: boolean;
     }): FullExample | undefined {
         switch (schema.type) {
             case "enum":
                 if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
                     return FullExample.enum(example);
                 }
-                return schema.values[0] != null ? FullExample.enum(schema.values[0].value) : undefined;
+                return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable":
+                return this.buildExampleHelper({
+                    schema: schema.value,
+                    isOptional: true,
+                    visitedSchemaIds,
+                    example,
+                    parameter
+                });
             case "optional":
                 return this.buildExampleHelper({
                     schema: schema.value,
                     isOptional: true,
                     visitedSchemaIds,
-                    example
+                    example,
+                    parameter
                 });
             case "primitive": {
                 const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, isOptional });
@@ -60,7 +81,8 @@ export class ExampleTypeFactory {
                         example,
                         schema: referencedSchemaWithExample,
                         isOptional,
-                        visitedSchemaIds
+                        visitedSchemaIds,
+                        parameter
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -78,21 +100,22 @@ export class ExampleTypeFactory {
                 }
                 if (isOptional) {
                     return undefined;
-                } else {
-                    return FullExample.map([]);
+                } else if (parameter) {
+                    return FullExample.primitive(PrimitiveExample.string("string"));
                 }
+                return FullExample.map([]);
             case "array": {
                 const itemExample = this.buildExampleHelper({
                     example,
                     schema: schema.value,
-                    isOptional: false,
-                    visitedSchemaIds
+                    isOptional: true,
+                    visitedSchemaIds,
+                    parameter
                 });
-                return itemExample != null
-                    ? FullExample.array([itemExample])
-                    : !isOptional
-                    ? FullExample.array([])
-                    : undefined;
+                if (isOptional) {
+                    return itemExample != null ? FullExample.array([itemExample]) : undefined;
+                }
+                return itemExample != null ? FullExample.array([itemExample]) : FullExample.array([]);
             }
             case "map": {
                 const objectExample = getFullExampleAsObject(example);
@@ -108,7 +131,8 @@ export class ExampleTypeFactory {
                             example: value,
                             schema: schema.value,
                             isOptional,
-                            visitedSchemaIds
+                            visitedSchemaIds,
+                            parameter
                         });
                         if (keyExample != null && valueExample != null) {
                             kvs.push({
@@ -128,7 +152,8 @@ export class ExampleTypeFactory {
                     example: undefined,
                     schema: schema.value,
                     isOptional,
-                    visitedSchemaIds
+                    visitedSchemaIds,
+                    parameter
                 });
                 if (keyExample != null && valueExample != null) {
                     return FullExample.map([
@@ -142,26 +167,39 @@ export class ExampleTypeFactory {
             }
             case "object": {
                 const result: Record<string, FullExample> = {};
-                const unvalidatedExampleObject =
+                const fullExample =
                     getFullExampleAsObject(example) ??
                     (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0]) : {}) ??
                     {};
                 const allProperties = this.getAllProperties(schema);
-                const requiredPropertyKeys = new Set(this.getAllRequiredPropertyKeys(schema));
-                for (const [propertyKey, propertySchema] of Object.entries(allProperties)) {
-                    const required = requiredPropertyKeys.has(propertyKey);
-                    const propertyExample = this.buildExampleHelper({
-                        schema: propertySchema,
-                        example: unvalidatedExampleObject[propertyKey],
-                        isOptional: !required,
-                        visitedSchemaIds
-                    });
-                    if (propertyExample == null) {
-                        if (required) {
-                            // cannot build example
-                            return undefined;
+                const requiredProperties = this.getAllRequiredProperties(schema);
+                for (const [property, schema] of Object.entries(allProperties)) {
+                    const required = property in requiredProperties;
+                    if (required && fullExample[property] != null) {
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds,
+                            parameter
+                        });
+                        if (propertyExample != null) {
+                            result[property] = propertyExample;
                         } else {
-                            continue;
+                            return undefined;
+                        }
+                    } else {
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds,
+                            parameter
+                        });
+                        if (propertyExample != null) {
+                            result[property] = propertyExample;
+                        } else if (required) {
+                            return undefined;
                         }
                     }
                 }
@@ -181,33 +219,44 @@ export class ExampleTypeFactory {
         }
         for (const allOf of object.allOf) {
             const allOfSchema = this.schemas[allOf.schema];
-            if (allOfSchema?.type !== "object") {
+            if (allOfSchema == null) {
+                continue;
+            }
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
                 continue;
             }
             properties = {
-                ...properties,
-                ...this.getAllProperties(allOfSchema)
+                ...this.getAllProperties(resolvedAllOfSchema),
+                ...properties
             };
         }
         return properties;
     }
 
-    private getAllRequiredPropertyKeys(object: ObjectSchemaWithExample): string[] {
-        const requiredProperyKeys: string[] = [];
+    private getAllRequiredProperties(object: ObjectSchemaWithExample): Record<string, SchemaWithExample> {
+        let requiredProperties: Record<string, SchemaWithExample> = {};
         for (const property of object.properties) {
             const resolvedSchema = this.getResolvedSchema(property.schema);
             if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
-                requiredProperyKeys.push(property.key);
+                requiredProperties[property.key] = property.schema;
             }
         }
         for (const allOf of object.allOf) {
             const allOfSchema = this.schemas[allOf.schema];
-            if (allOfSchema?.type !== "object") {
+            if (allOfSchema == null) {
                 continue;
             }
-            requiredProperyKeys.push(...this.getAllRequiredPropertyKeys(allOfSchema));
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
+                continue;
+            }
+            requiredProperties = {
+                ...this.getAllRequiredProperties(resolvedAllOfSchema),
+                ...requiredProperties
+            };
         }
-        return requiredProperyKeys;
+        return requiredProperties;
     }
 
     private getResolvedSchema(schema: SchemaWithExample) {
