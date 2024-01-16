@@ -211,7 +211,7 @@ export function buildArrayTypeDeclaration({
 }): ConvertedTypeDeclaration {
     return {
         name: undefined,
-        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, context })
+        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
@@ -226,7 +226,7 @@ export function buildMapTypeDeclaration({
 }): ConvertedTypeDeclaration {
     return {
         name: undefined,
-        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, context })
+        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
@@ -295,7 +295,12 @@ export function buildOptionalTypeDeclaration({
 }): ConvertedTypeDeclaration {
     return {
         name: undefined,
-        schema: buildOptionalTypeReference({ schema, context, fileContainingReference: declarationFile })
+        schema: buildOptionalTypeReference({
+            schema,
+            context,
+            fileContainingReference: declarationFile,
+            declarationFile
+        })
     };
 }
 
