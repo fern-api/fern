@@ -933,7 +933,7 @@ exports[`open api parser hathora simple 1`] = `
                       "createdAt": "2024-01-15T09:30:00Z",
                       "createdBy": "string",
                       "initialConfig": {
-                        "string": {},
+                        "string": "string",
                       },
                       "local": true,
                       "region": "Seattle",
@@ -999,7 +999,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
-                    "string": {},
+                    "string": "string",
                   },
                   "region": "Seattle",
                   "visibility": "public",
@@ -1010,7 +1010,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",
@@ -1070,7 +1070,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
-                    "string": {},
+                    "string": "string",
                   },
                   "region": "Seattle",
                 },
@@ -1080,7 +1080,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",
@@ -1139,7 +1139,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
-                    "string": {},
+                    "string": "string",
                   },
                   "region": "Seattle",
                 },
@@ -1149,7 +1149,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",
@@ -1208,7 +1208,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
-                    "string": {},
+                    "string": "string",
                   },
                   "region": "Seattle",
                 },
@@ -1218,7 +1218,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",
@@ -1277,7 +1277,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",
@@ -1318,7 +1318,7 @@ exports[`open api parser hathora simple 1`] = `
                       "createdAt": "2024-01-15T09:30:00Z",
                       "createdBy": "string",
                       "initialConfig": {
-                        "string": {},
+                        "string": "string",
                       },
                       "local": true,
                       "region": "Seattle",
@@ -1362,7 +1362,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "state": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
                 "response": {
@@ -1371,7 +1371,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "initialConfig": {
-                      "string": {},
+                      "string": "string",
                     },
                     "local": true,
                     "region": "Seattle",

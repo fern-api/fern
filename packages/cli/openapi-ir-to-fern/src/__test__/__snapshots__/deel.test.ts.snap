@@ -750,7 +750,7 @@ exports[`open api parser deel simple 1`] = `
                       },
                     },
                     "compensation_details": {
-                      "amount": 1.1,
+                      "amount": 100,
                       "currency_code": "USD",
                       "cycle_end": 25,
                       "cycle_end_type": "DAY_OF_WEEK",
@@ -1246,7 +1246,7 @@ exports[`open api parser deel simple 1`] = `
                       },
                     },
                     "compensation_details": {
-                      "amount": 1.1,
+                      "amount": 100,
                       "currency_code": "USD",
                       "cycle_end": 25,
                       "cycle_end_type": "DAY_OF_WEEK",

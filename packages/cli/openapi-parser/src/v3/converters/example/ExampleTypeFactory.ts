@@ -17,20 +17,33 @@ export class ExampleTypeFactory {
         this.schemas = schemas;
     }
 
-    public buildExample(schema: SchemaWithExample, example: unknown | undefined): FullExample | undefined {
-        return this.buildExampleHelper({ schema, isOptional: false, visitedSchemaIds: new Set(), example });
+    public buildExample({
+        schema,
+        example,
+        isOptional = false,
+        /* If true, then we know that we are building an example for a query param, path param, or header */
+        parameter = false
+    }: {
+        schema: SchemaWithExample;
+        example: unknown | undefined;
+        isOptional: boolean;
+        parameter: boolean;
+    }): FullExample | undefined {
+        return this.buildExampleHelper({ schema, isOptional, visitedSchemaIds: new Set(), example, parameter });
     }
 
     private buildExampleHelper({
         example,
         schema,
         isOptional,
-        visitedSchemaIds
+        visitedSchemaIds,
+        parameter = false
     }: {
         example: unknown | undefined;
         schema: SchemaWithExample;
         isOptional: boolean;
         visitedSchemaIds: Set<SchemaId>;
+        parameter: boolean;
     }): FullExample | undefined {
         switch (schema.type) {
             case "enum":
@@ -45,14 +58,16 @@ export class ExampleTypeFactory {
                     schema: schema.value,
                     isOptional: true,
                     visitedSchemaIds,
-                    example
+                    example,
+                    parameter
                 });
             case "optional":
                 return this.buildExampleHelper({
                     schema: schema.value,
                     isOptional: true,
                     visitedSchemaIds,
-                    example
+                    example,
+                    parameter
                 });
             case "primitive": {
                 const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, isOptional });
@@ -66,7 +81,8 @@ export class ExampleTypeFactory {
                         example,
                         schema: referencedSchemaWithExample,
                         isOptional,
-                        visitedSchemaIds
+                        visitedSchemaIds,
+                        parameter
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -84,15 +100,17 @@ export class ExampleTypeFactory {
                 }
                 if (isOptional) {
                     return undefined;
-                } else {
-                    return FullExample.map([]);
+                } else if (parameter) {
+                    return FullExample.primitive(PrimitiveExample.string("string"));
                 }
+                return FullExample.map([]);
             case "array": {
                 const itemExample = this.buildExampleHelper({
                     example,
                     schema: schema.value,
                     isOptional: true,
-                    visitedSchemaIds
+                    visitedSchemaIds,
+                    parameter
                 });
                 if (isOptional) {
                     return itemExample != null ? FullExample.array([itemExample]) : undefined;
@@ -113,7 +131,8 @@ export class ExampleTypeFactory {
                             example: value,
                             schema: schema.value,
                             isOptional,
-                            visitedSchemaIds
+                            visitedSchemaIds,
+                            parameter
                         });
                         if (keyExample != null && valueExample != null) {
                             kvs.push({
@@ -133,7 +152,8 @@ export class ExampleTypeFactory {
                     example: undefined,
                     schema: schema.value,
                     isOptional,
-                    visitedSchemaIds
+                    visitedSchemaIds,
+                    parameter
                 });
                 if (keyExample != null && valueExample != null) {
                     return FullExample.map([
@@ -160,17 +180,21 @@ export class ExampleTypeFactory {
                             schema,
                             example: fullExample[property],
                             isOptional: !required,
-                            visitedSchemaIds
+                            visitedSchemaIds,
+                            parameter
                         });
                         if (propertyExample != null) {
                             result[property] = propertyExample;
+                        } else {
+                            return undefined;
                         }
                     } else {
                         const propertyExample = this.buildExampleHelper({
                             schema,
                             example: fullExample[property],
                             isOptional: !required,
-                            visitedSchemaIds
+                            visitedSchemaIds,
+                            parameter
                         });
                         if (propertyExample != null) {
                             result[property] = propertyExample;
@@ -195,12 +219,16 @@ export class ExampleTypeFactory {
         }
         for (const allOf of object.allOf) {
             const allOfSchema = this.schemas[allOf.schema];
-            if (allOfSchema?.type !== "object") {
+            if (allOfSchema == null) {
+                continue;
+            }
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
                 continue;
             }
             properties = {
-                ...properties,
-                ...this.getAllProperties(allOfSchema)
+                ...this.getAllProperties(resolvedAllOfSchema),
+                ...properties
             };
         }
         return properties;
@@ -216,12 +244,16 @@ export class ExampleTypeFactory {
         }
         for (const allOf of object.allOf) {
             const allOfSchema = this.schemas[allOf.schema];
-            if (allOfSchema?.type !== "object") {
+            if (allOfSchema == null) {
+                continue;
+            }
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
                 continue;
             }
             requiredProperties = {
-                ...requiredProperties,
-                ...this.getAllRequiredProperties(allOfSchema)
+                ...this.getAllRequiredProperties(resolvedAllOfSchema),
+                ...requiredProperties
             };
         }
         return requiredProperties;

@@ -27,7 +27,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -122,7 +122,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -171,7 +171,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -232,7 +232,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -289,7 +289,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -670,7 +670,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -1077,7 +1077,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -1448,7 +1448,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -1480,7 +1480,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -2925,7 +2925,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -3378,7 +3378,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -3904,7 +3904,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -5118,13 +5118,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5444,13 +5444,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5755,7 +5755,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -6647,7 +6647,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -6710,13 +6710,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7300,13 +7300,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7607,13 +7607,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7942,13 +7942,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8231,13 +8231,13 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {
-                          "string": {},
+                          "string": "string",
                         },
                         "expirationDate": "2010-01-01 19:23:24+00:00",
                         "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {
-                          "string": {},
+                          "string": "string",
                         },
                         "proof": {
                           "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8998,7 +8998,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -9300,7 +9300,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -10072,7 +10072,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -10880,7 +10880,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -11350,7 +11350,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -12712,7 +12712,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -13186,7 +13186,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -15276,7 +15276,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -15558,7 +15558,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -15980,7 +15980,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -16004,7 +16004,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -16281,7 +16281,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
@@ -16318,7 +16318,7 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "string": {},
+                    "string": "string",
                   },
                 },
               },
