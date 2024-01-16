@@ -3,6 +3,11 @@ imports:
   finalIr: finalIr.yml
 
 types:
+  NamedFullExample: 
+    properties: 
+      name: optional<string>
+      value: unknown
+
   EndpointWithExample:
     extends: commons.WithDescription
     properties:
@@ -47,6 +52,7 @@ types:
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
+      fullExamples: optional<list<NamedFullExample>>
 
   ResponseWithExample:
     union:
@@ -63,6 +69,7 @@ types:
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
+      fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
     extends: commons.WithDescription
@@ -164,6 +171,7 @@ types:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
+      fullExamples: optional<list<NamedFullExample>>
 
   ObjectPropertyWithExample:
     properties:

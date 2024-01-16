@@ -23,7 +23,9 @@ service:
         type: root.Pets
       examples:
         - response:
-            body: []
+            body:
+              - id: 1
+                name: string
 
     createPets:
       path: /v1/pets
@@ -45,3 +47,10 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      examples:
+        - path-parameters:
+            petId: string
+          response:
+            body:
+              id: 1
+              name: string

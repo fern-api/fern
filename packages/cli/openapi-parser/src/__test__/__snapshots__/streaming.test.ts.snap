@@ -22,6 +22,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -130,6 +131,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -182,6 +184,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -216,6 +219,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -332,6 +336,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -384,6 +389,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -418,6 +424,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -588,6 +595,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -640,6 +648,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],

@@ -34,6 +34,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "File uploaded successfully",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -71,7 +72,102 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "enum": "queued",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "page_details": {
+                "properties": {
+                  "current_url": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "limit": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "prev_url": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "result_count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "transcripts": {
+                "array": [
+                  {
+                    "properties": {
+                      "audio_url": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "resource_url": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "queued",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptListRequest",
       "headers": [],
       "internal": undefined,
@@ -254,6 +350,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "A list of transcripts filtered by \`limit\` and \`status\`",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -291,7 +388,713 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "audio_url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "boost_param": {
+                "enum": "low",
+                "type": "enum",
+              },
+              "custom_spelling": {
+                "array": [
+                  {
+                    "properties": {
+                      "from": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "to": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "language_code": {
+                "enum": "en",
+                "type": "enum",
+              },
+              "redact_pii_policies": {
+                "array": [
+                  {
+                    "enum": "medical_process",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "redact_pii_sub": {
+                "enum": "entity_type",
+                "type": "enum",
+              },
+              "summary_model": {
+                "enum": "informative",
+                "type": "enum",
+              },
+              "summary_type": {
+                "enum": "bullets",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "acoustic_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "rank": {
+                            "primitive": {
+                              "float": 1.1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamps": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "start": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "chapters": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "gist": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "headline": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "summary": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "severity": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "sentences_idx_end": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "sentences_idx_start": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "severity_score_summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "low": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "medium": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "double": 1.1,
+                                    "type": "double",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "array": [
+                  {
+                    "properties": {
+                      "from": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "to": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "entities": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "entity_type": {
+                        "enum": "banking_information",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "relevance": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                  "summary": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "value": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                },
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "language_code": {
+                "enum": "en",
+                "type": "enum",
+              },
+              "language_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [
+                  {
+                    "enum": "medical_process",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "redact_pii_sub": {
+                "enum": "entity_type",
+                "type": "enum",
+              },
+              "sentiment_analysis_results": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "sentiment": {
+                        "enum": "POSITIVE",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "status": {
+                "enum": "queued",
+                "type": "enum",
+              },
+              "summarization": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "utterances": {
+                "array": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "words": {
+                        "array": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "primitive": {
+                                  "double": 1.1,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "webhook_auth": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "words": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -303,6 +1106,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptCreateRequest",
@@ -316,6 +1120,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Transcript created and queued for processing.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -353,7 +1158,663 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "acoustic_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "rank": {
+                            "primitive": {
+                              "float": 1.1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamps": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "start": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "chapters": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "gist": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "headline": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "summary": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "severity": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "sentences_idx_end": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "sentences_idx_start": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "severity_score_summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "low": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "medium": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "double": 1.1,
+                                    "type": "double",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "array": [
+                  {
+                    "properties": {
+                      "from": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "to": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "entities": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "entity_type": {
+                        "enum": "banking_information",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "relevance": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                  "summary": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "value": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                },
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "language_code": {
+                "enum": "en",
+                "type": "enum",
+              },
+              "language_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [
+                  {
+                    "enum": "medical_process",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "redact_pii_sub": {
+                "enum": "entity_type",
+                "type": "enum",
+              },
+              "sentiment_analysis_results": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "sentiment": {
+                        "enum": "POSITIVE",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "status": {
+                "enum": "queued",
+                "type": "enum",
+              },
+              "summarization": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "utterances": {
+                "array": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "words": {
+                        "array": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "primitive": {
+                                  "double": 1.1,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "webhook_auth": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "words": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptGetRequest",
       "headers": [],
       "internal": undefined,
@@ -382,6 +1843,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The transcript resource",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -419,7 +1881,663 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "acoustic_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "count": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "rank": {
+                            "primitive": {
+                              "float": 1.1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamps": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "start": {
+                                    "primitive": {
+                                      "int": 1,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "chapters": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "gist": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "headline": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "summary": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "severity": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "sentences_idx_end": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "sentences_idx_start": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "severity_score_summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "low": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    "medium": {
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "summary": {
+                            "map": [
+                              {
+                                "key": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "value": {
+                                  "primitive": {
+                                    "double": 1.1,
+                                    "type": "double",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "array": [
+                  {
+                    "properties": {
+                      "from": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "to": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "entities": {
+                "array": [
+                  {
+                    "properties": {
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "entity_type": {
+                        "enum": "banking_information",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "array": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "label": {
+                                    "primitive": {
+                                      "string": "string",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "relevance": {
+                                    "primitive": {
+                                      "double": 1.1,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "text": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "status": {
+                    "enum": "success",
+                    "type": "enum",
+                  },
+                  "summary": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "value": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                },
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "language_code": {
+                "enum": "en",
+                "type": "enum",
+              },
+              "language_model": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [
+                  {
+                    "enum": "medical_process",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "redact_pii_sub": {
+                "enum": "entity_type",
+                "type": "enum",
+              },
+              "sentiment_analysis_results": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "sentiment": {
+                        "enum": "POSITIVE",
+                        "type": "enum",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "status": {
+                "enum": "queued",
+                "type": "enum",
+              },
+              "summarization": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "utterances": {
+                "array": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "words": {
+                        "array": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "primitive": {
+                                  "double": 1.1,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "webhook_auth": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "words": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -448,6 +2566,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The deleted transcript response.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -566,7 +2685,127 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "audio_duration": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "confidence": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sentences": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "words": {
+                        "array": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "primitive": {
+                                  "double": 1.1,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptGetSentencesRequest",
       "headers": [],
       "internal": undefined,
@@ -595,6 +2834,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Exported sentences",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -632,7 +2872,127 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "audio_duration": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "confidence": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "paragraphs": {
+                "array": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "end": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "start": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "words": {
+                        "array": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "primitive": {
+                                  "double": 1.1,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "end": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "start": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptGetParagraphsRequest",
       "headers": [],
       "internal": undefined,
@@ -661,6 +3021,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Exported paragraphs",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -698,7 +3059,84 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "words",
+              "value": {
+                "array": [],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "matches": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "indexes": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "timestamps": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "total_count": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptWordSearchRequest",
       "headers": [],
       "internal": undefined,
@@ -748,6 +3186,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Word search response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -785,7 +3224,44 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "redacted_audio_url": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "literal": {
+                  "string": "redacted_audio_ready",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranscriptGetRedactedAudioRequest",
       "headers": [],
       "internal": undefined,
@@ -814,6 +3290,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "The redacted audio object containing the status and URL to the redacted audio.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -851,7 +3328,37 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "expires_in": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "token": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RealtimeCreateTemporaryTokenRequest",
       "headers": [],
       "internal": undefined,
@@ -863,6 +3370,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RealtimeCreateTemporaryTokenRequest",
@@ -876,6 +3384,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Temporary authentication token generated.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -913,7 +3422,45 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "final_model": {
+                "enum": "default",
+                "type": "enum",
+              },
+              "transcript_ids": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "response": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LemurSummaryRequest",
       "headers": [],
       "internal": undefined,
@@ -925,6 +3472,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "LemurSummaryRequest",
@@ -938,6 +3486,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR summary response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -975,7 +3524,79 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "final_model": {
+                "enum": "default",
+                "type": "enum",
+              },
+              "questions": {
+                "array": [
+                  {
+                    "properties": {
+                      "question": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "transcript_ids": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "response": {
+                "array": [
+                  {
+                    "properties": {
+                      "answer": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "question": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LemurQuestionAnswerRequest",
       "headers": [],
       "internal": undefined,
@@ -987,6 +3608,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "LemurQuestionAnswerRequest",
@@ -1000,6 +3622,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR question & answer response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1037,7 +3660,45 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "final_model": {
+                "enum": "default",
+                "type": "enum",
+              },
+              "transcript_ids": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "response": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LemurActionItemsRequest",
       "headers": [],
       "internal": undefined,
@@ -1049,6 +3710,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "LemurActionItemsRequest",
@@ -1062,6 +3724,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR action items response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1099,7 +3762,52 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "final_model": {
+                "enum": "default",
+                "type": "enum",
+              },
+              "prompt": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "transcript_ids": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "response": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LemurTaskRequest",
       "headers": [],
       "internal": undefined,
@@ -1111,6 +3819,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "LemurTaskRequest",
@@ -1124,6 +3833,7 @@ exports[`open api parser assembly parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR task response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1163,7 +3873,51 @@ The LLM response data, as well as any context provided in the original request w
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "request_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "deleted": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "request_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "request_id_to_purge": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LemurPurgeRequestDataRequest",
       "headers": [],
       "internal": undefined,
@@ -1192,6 +3946,7 @@ The LLM response data, as well as any context provided in the original request w
       "requestNameOverride": undefined,
       "response": {
         "description": "LeMUR request data deleted.",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

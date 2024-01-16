@@ -32,7 +32,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "payment_id": "payment-id",
+                  "payment_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -101,7 +101,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "invoice_id": 1,
+                  "invoice_id": 1000000,
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -148,7 +148,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "invoice_id": 1,
+                  "invoice_id": 1000000,
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -292,7 +292,27 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": {},
+                    "data": {
+                      "rows": [
+                        {
+                          "created_at": "2022-05-24T09:38:46.235Z",
+                          "id": 12345,
+                          "label": "string",
+                          "paid_at": "2022-05-24T09:38:46.235Z",
+                          "payment_currency": "USD",
+                          "payment_method": {
+                            "type": "stripe_bacs_debit",
+                          },
+                          "status": "paid",
+                          "total": 1015,
+                          "workers": [
+                            {
+                              "name": "Jane Doe",
+                            },
+                          ],
+                        },
+                      ],
+                    },
                   },
                 },
               },
@@ -353,6 +373,26 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "content_type": "application/pdf",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "key": "string",
+                      "url": "string",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/attachments",
@@ -450,7 +490,38 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "client_legal_entity": {},
+                        "employments": [
+                          {
+                            "client_legal_entity": {},
+                            "payment": {},
+                            "team": {},
+                          },
+                        ],
+                        "monthly_payment": {},
+                        "payments": [
+                          {
+                            "created_at": "2022-05-24T09:38:46.235Z",
+                            "id": 12345,
+                            "label": "string",
+                            "paid_at": "2022-05-24T09:38:46.235Z",
+                            "payment_currency": "USD",
+                            "payment_method": {
+                              "type": "stripe_bacs_debit",
+                            },
+                            "status": "paid",
+                            "total": 1015,
+                            "workers": [
+                              {
+                                "name": "Jane Doe",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -505,7 +576,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -564,6 +635,37 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": 100,
+                    "currency_code": "USD",
+                    "cycle_end_type": "DAY_OF_WEEK",
+                    "effective_date": "1999-12-31",
+                    "first_payment_date": "1999-12-31",
+                    "frequency": "weekly",
+                    "job_title_id": 123,
+                    "job_title_name": "3D Designer",
+                    "payment_due_type": "REGULAR",
+                    "scale": "hourly",
+                    "seniority_id": 1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/amendments",
@@ -632,6 +734,143 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client": {
+                      "legal_entity": {
+                        "id": 1.1,
+                      },
+                      "team": {
+                        "id": 1.1,
+                      },
+                    },
+                    "compensation_details": {
+                      "amount": 1.1,
+                      "currency_code": "USD",
+                      "cycle_end": 25,
+                      "cycle_end_type": "DAY_OF_WEEK",
+                      "first_payment": 500,
+                      "first_payment_date": "1999-12-31",
+                      "frequency": "weekly",
+                      "notice_period": 15,
+                      "pay_before_weekends": true,
+                      "payment_due_days": 5,
+                      "payment_due_type": "REGULAR",
+                      "scale": "hourly",
+                    },
+                    "country_code": "US",
+                    "job_title": {},
+                    "meta": {
+                      "documents_required": true,
+                    },
+                    "notice_period": 15,
+                    "seniority": {},
+                    "start_date": "1999-12-31",
+                    "termination_date": "1999-12-31",
+                    "title": "string",
+                    "type": "ongoing_time_based",
+                    "who_reports": "both",
+                    "worker": {
+                      "first_name": "John",
+                      "last_name": "Doe",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/fixed-rate",
             "request": {
@@ -660,6 +899,142 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client": {
+                      "legal_entity": {
+                        "id": 1.1,
+                      },
+                      "team": {
+                        "id": 1.1,
+                      },
+                    },
+                    "compensation_details": {
+                      "amount": 100,
+                      "currency_code": "USD",
+                      "cycle_end": 25,
+                      "cycle_end_type": "DAY_OF_WEEK",
+                      "first_payment": 500,
+                      "first_payment_date": "1999-12-31",
+                      "frequency": "weekly",
+                      "notice_period": 15,
+                      "pay_before_weekends": true,
+                      "payment_due_days": 5,
+                      "payment_due_type": "REGULAR",
+                    },
+                    "country_code": "US",
+                    "job_title": {},
+                    "meta": {
+                      "documents_required": true,
+                    },
+                    "notice_period": 15,
+                    "seniority": {},
+                    "start_date": "1999-12-31",
+                    "termination_date": "1999-12-31",
+                    "title": "string",
+                    "type": "payg_milestones",
+                    "who_reports": "both",
+                    "worker": {
+                      "first_name": "John",
+                      "last_name": "Doe",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/milestone-based",
@@ -690,6 +1065,142 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client": {
+                      "legal_entity": {
+                        "id": 1.1,
+                      },
+                      "team": {
+                        "id": 1.1,
+                      },
+                    },
+                    "compensation_details": {
+                      "amount": 100,
+                      "currency_code": "USD",
+                      "cycle_end": 25,
+                      "cycle_end_type": "DAY_OF_WEEK",
+                      "first_payment": 500,
+                      "first_payment_date": "1999-12-31",
+                      "frequency": "weekly",
+                      "notice_period": 15,
+                      "pay_before_weekends": true,
+                      "payment_due_days": 5,
+                      "payment_due_type": "REGULAR",
+                    },
+                    "country_code": "US",
+                    "job_title": {},
+                    "meta": {
+                      "documents_required": true,
+                    },
+                    "notice_period": 15,
+                    "seniority": {},
+                    "start_date": "1999-12-31",
+                    "termination_date": "1999-12-31",
+                    "title": "string",
+                    "type": "payg_tasks",
+                    "who_reports": "both",
+                    "worker": {
+                      "first_name": "John",
+                      "last_name": "Doe",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/task-based",
             "request": {
@@ -718,6 +1229,143 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client": {
+                      "legal_entity": {
+                        "id": 1.1,
+                      },
+                      "team": {
+                        "id": 1.1,
+                      },
+                    },
+                    "compensation_details": {
+                      "amount": 1.1,
+                      "currency_code": "USD",
+                      "cycle_end": 25,
+                      "cycle_end_type": "DAY_OF_WEEK",
+                      "first_payment": 500,
+                      "first_payment_date": "1999-12-31",
+                      "frequency": "weekly",
+                      "notice_period": 15,
+                      "pay_before_weekends": true,
+                      "payment_due_days": 5,
+                      "payment_due_type": "REGULAR",
+                      "scale": "hourly",
+                    },
+                    "country_code": "US",
+                    "job_title": {},
+                    "meta": {
+                      "documents_required": true,
+                    },
+                    "notice_period": 15,
+                    "seniority": {},
+                    "start_date": "1999-12-31",
+                    "termination_date": "1999-12-31",
+                    "title": "string",
+                    "type": "pay_as_you_go_time_based",
+                    "who_reports": "both",
+                    "worker": {
+                      "first_name": "John",
+                      "last_name": "Doe",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/time-based",
@@ -755,7 +1403,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -794,6 +1442,23 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/rest/v1/contracts/{contract_id}/premium",
@@ -836,7 +1501,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -941,6 +1606,23 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "updated": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/rest/v1/contracts/{contract_id}/archive",
             "path-parameters": {
@@ -968,6 +1650,27 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "external_id": "string",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/rest/v1/contracts/{contract_id}",
@@ -1001,6 +1704,36 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": {
+                  "calculation_type": "CUSTOM_AMOUNT",
+                  "end_date": "1999-12-31",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "calculation_type": "CUSTOM_AMOUNT",
+                      "daily_rate": "5.8571",
+                      "last_cycle": {
+                        "completion_date": "2022-05-24T09:38:46.235Z",
+                        "end": "2022-05-24T09:38:46.235Z",
+                        "start": "2022-05-24T09:38:46.235Z",
+                      },
+                      "remaining_days": "5.8571",
+                      "total": "5.8571",
+                      "workweek_end": 1.1,
+                      "workweek_start": 1.1,
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rest/v1/contracts/{contract_id}/final-payments",
@@ -1092,12 +1825,16 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "isVerified": true,
+                    },
+                  ],
                 },
               },
             ],
@@ -1129,6 +1866,104 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/contracts/{contract_id}",
             "path-parameters": {
@@ -1156,6 +1991,61 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "countries": "US",
+                  "currencies": "USD",
+                  "order_direction": "asc",
+                  "sort_by": "contract_title",
+                  "statuses": "new",
+                  "types": "ongoing_time_based",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "client": {
+                          "team": {},
+                        },
+                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "id": "string",
+                        "invitations": {},
+                        "is_archived": true,
+                        "is_shielded": true,
+                        "notice_period": 15,
+                        "signatures": {
+                          "client_signed_at": "2022-05-24T09:38:46.235Z",
+                          "worker_signature": "Jane Doe",
+                          "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                        },
+                        "status": "new",
+                        "termination_date": "2022-05-24T09:38:46.235Z",
+                        "title": "string",
+                        "type": "ongoing_time_based",
+                        "who_reports": "both",
+                        "worker": {
+                          "alternate_email": [
+                            {
+                              "isVerified": true,
+                            },
+                          ],
+                          "full_name": "string",
+                          "id": 1000000,
+                        },
+                      },
+                    ],
+                    "page": {
+                      "cursor": "string",
+                      "total_rows": 1.1,
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rest/v1/contracts",
@@ -1267,6 +2157,28 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "email": "string",
+                    "message": "string",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/invitations",
@@ -1382,6 +2294,27 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client_signature": "string",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/signatures",
             "path-parameters": {
@@ -1419,6 +2352,23 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/rest/v1/contracts/{contract_id}/invitations",
@@ -1476,7 +2426,10 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "data": {
-                    "client": {},
+                    "client": {
+                      "legal_entity": {},
+                      "team": {},
+                    },
                     "compensation_details": {},
                     "employee": {
                       "address": {
@@ -1507,12 +2460,18 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
+                      "client": {
+                        "legal_entity": {},
+                      },
+                      "compensation_details": {},
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "employee": {},
                       "employment": {
                         "end_date": "1999-12-31",
                         "scope_of_work": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
                         "start_date": "1999-12-31",
                       },
+                      "health_plan": {},
                       "job_title": "Designer",
                       "seniority": {
                         "id": 2,
@@ -1715,6 +2674,31 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": 2500,
+                    "contract_id": "string",
+                    "date_submitted": "1999-12-31",
+                    "description": "Bonus for being awesome.",
+                    "type": "bonus",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "public_id": "00000000-0000-0000-0000-000000000000",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/invoice-adjustments",
             "request": {
@@ -1746,6 +2730,27 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "invoice_adjustment_id": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}/reviews",
@@ -1785,6 +2790,26 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "ids": [],
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/invoice-adjustments/many/reviews",
             "request": {
@@ -1816,6 +2841,23 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "invoice_adjustment_id": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
@@ -1853,6 +2895,29 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "contract_types": "ongoing_time_based",
+                  "date_from": "1999-12-31",
+                  "date_to": "1999-12-31",
+                  "types": "accrued_holiday",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                    "page": {
+                      "items_per_page": 1.1,
+                      "offset": 1.1,
+                      "total_rows": 1.1,
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rest/v1/invoice-adjustments",
@@ -1923,6 +2988,31 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": {
+                  "contract_types": "ongoing_time_based",
+                  "date_from": "1999-12-31",
+                  "date_to": "1999-12-31",
+                  "types": "accrued_holiday",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                    "page": {
+                      "items_per_page": 1.1,
+                      "offset": 1.1,
+                      "total_rows": 1.1,
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rest/v1/contracts/{contract_id}/invoice-adjustments",
@@ -1996,6 +3086,27 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "invoice_adjustment_id": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "description": "string",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "updated": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/rest/v1/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
@@ -2055,7 +3166,21 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "code": "US",
+                        "eor_support": true,
+                        "name": "United States",
+                        "state_type": "state",
+                        "states": [
+                          {
+                            "code": "NY",
+                            "name": "New York",
+                          },
+                        ],
+                        "visa_support": true,
+                      },
+                    ],
                   },
                 },
               },
@@ -2276,6 +3401,29 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": "900.00",
+                    "description": "Sprint #2",
+                    "title": "Sprint 2",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/milestones",
             "path-parameters": {
@@ -2313,6 +3461,28 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "milestone_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}/reviews",
@@ -2356,6 +3526,28 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "ids": [],
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/milestones/many/reviews",
             "path-parameters": {
@@ -2394,6 +3586,24 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "milestone_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/rest/v1/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
@@ -2430,7 +3640,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2491,8 +3701,8 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
-                  "milestone_id": "milestone-id",
+                  "contract_id": "string",
+                  "milestone_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2563,6 +3773,28 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": 2500,
+                    "date_submitted": "1999-12-31",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments",
@@ -2638,7 +3870,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2694,7 +3926,28 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "agreement_title": "string",
+                        "agreement_type": "shield",
+                        "client_legal_entity": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                        "id": 1.1,
+                        "msa": {
+                          "id": "string",
+                          "title": "string",
+                        },
+                        "provider_legal_entity": {
+                          "id": 1.1,
+                          "name": "Deel Inc.",
+                        },
+                      },
+                    ],
+                    "page": {
+                      "total_rows": 1.1,
+                    },
                   },
                 },
               },
@@ -2745,7 +3998,16 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [
+                      {
+                        "entity_subtype": "string",
+                        "entity_type": "individual",
+                        "id": 1.1,
+                        "name": "string",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -2779,7 +4041,12 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "id": 1.1,
+                        "name": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -2814,7 +4081,12 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "id": 1.1,
+                        "name": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -2853,6 +4125,33 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": "123.45",
+                    "attachment": {
+                      "filename": "string",
+                      "key": "string",
+                    },
+                    "date_submitted": "1999-12-31",
+                    "description": "Make the button pop.",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/tasks",
@@ -2896,7 +4195,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -2911,6 +4210,10 @@ exports[`open api parser deel simple 1`] = `
                     "data": [
                       {
                         "amount": "200",
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
                         "date_submitted": "1999-12-31",
                         "description": "Make the button pop.",
                         "id": 12345,
@@ -2963,8 +4266,8 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
-                  "task_id": "task-id",
+                  "contract_id": "string",
+                  "task_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": {
@@ -2978,6 +4281,10 @@ exports[`open api parser deel simple 1`] = `
                     "data": [
                       {
                         "amount": "200",
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
                         "date_submitted": "1999-12-31",
                         "description": "Make the button pop.",
                         "id": 12345,
@@ -3030,6 +4337,24 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "task_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/rest/v1/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
@@ -3075,7 +4400,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3084,6 +4409,10 @@ exports[`open api parser deel simple 1`] = `
                     "data": [
                       {
                         "amount": "200",
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
                         "date_submitted": "1999-12-31",
                         "description": "Make the button pop.",
                         "id": 12345,
@@ -3133,6 +4462,117 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "end_date": "2022-09-05",
+                    "is_end_date_half_day": false,
+                    "is_start_date_half_day": false,
+                    "other_timeoff_name": "Birthday",
+                    "reason": "Holiday",
+                    "start_date": "2022-09-03",
+                    "type": "VACATION",
+                    "with_multiple_dates": true,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "applied_changes": [
+                        {
+                          "attachments": [
+                            {},
+                          ],
+                          "days_used_end_year": "2.00",
+                          "days_used_start_year": "2.00",
+                          "denial_reason": "No time off available",
+                          "other_timeoff_name": "This is time off for a doctor's appointment",
+                          "reason": "I have a doctors appointment",
+                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requester": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "reviewed_at": "2022-05-24T09:38:46.235Z",
+                          "reviewer": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "single_date": "2022-05-24T09:38:46.235Z",
+                          "status": "REQUESTED",
+                          "total_days_used": "4.00",
+                          "type": "VACATION",
+                        },
+                      ],
+                      "attachments": [
+                        {},
+                      ],
+                      "change_request": {
+                        "attachments": [
+                          {},
+                        ],
+                        "days_used_end_year": "2.00",
+                        "days_used_start_year": "2.00",
+                        "denial_reason": "No time off available",
+                        "other_timeoff_name": "This is time off for a doctor's appointment",
+                        "reason": "I have a doctors appointment",
+                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requester": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewer": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "status": "REQUESTED",
+                        "total_days_used": "4.00",
+                        "type": "VACATION",
+                      },
+                      "contract_id": "abc123",
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "days_used_end_year": "2.00",
+                      "days_used_start_year": "2.00",
+                      "denial_reason": "No time off available",
+                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "id": 6938,
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "reason": "I have a doctors appointment",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "REQUESTED",
+                      "total_days_used": "4.00",
+                      "type": "VACATION",
+                      "updated_at": "2022-05-24T09:38:46.235Z",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts/{contract_id}/time-offs",
             "path-parameters": {
@@ -3161,6 +4601,24 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "timeoff_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
@@ -3191,6 +4649,118 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "timeoff_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "end_date": "2022-09-05",
+                    "is_end_date_half_day": false,
+                    "is_start_date_half_day": false,
+                    "other_timeoff_name": "Birthday",
+                    "reason": "Holiday",
+                    "start_date": "2022-09-03",
+                    "type": "VACATION",
+                    "with_multiple_dates": true,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "applied_changes": [
+                        {
+                          "attachments": [
+                            {},
+                          ],
+                          "days_used_end_year": "2.00",
+                          "days_used_start_year": "2.00",
+                          "denial_reason": "No time off available",
+                          "other_timeoff_name": "This is time off for a doctor's appointment",
+                          "reason": "I have a doctors appointment",
+                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requester": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "reviewed_at": "2022-05-24T09:38:46.235Z",
+                          "reviewer": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "single_date": "2022-05-24T09:38:46.235Z",
+                          "status": "REQUESTED",
+                          "total_days_used": "4.00",
+                          "type": "VACATION",
+                        },
+                      ],
+                      "attachments": [
+                        {},
+                      ],
+                      "change_request": {
+                        "attachments": [
+                          {},
+                        ],
+                        "days_used_end_year": "2.00",
+                        "days_used_start_year": "2.00",
+                        "denial_reason": "No time off available",
+                        "other_timeoff_name": "This is time off for a doctor's appointment",
+                        "reason": "I have a doctors appointment",
+                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requester": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewer": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "status": "REQUESTED",
+                        "total_days_used": "4.00",
+                        "type": "VACATION",
+                      },
+                      "contract_id": "abc123",
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "days_used_end_year": "2.00",
+                      "days_used_start_year": "2.00",
+                      "denial_reason": "No time off available",
+                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "id": 6938,
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "reason": "I have a doctors appointment",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "REQUESTED",
+                      "total_days_used": "4.00",
+                      "type": "VACATION",
+                      "updated_at": "2022-05-24T09:38:46.235Z",
+                    },
+                  },
+                },
+              },
             ],
             "method": "PUT",
             "path": "/rest/v1/contracts/{contract_id}/time-offs/{timeoff_id}",
@@ -3225,6 +4795,309 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "employees": [
+                        {
+                          "contract_id": "7WjJWdsJ113vocUN6Buwn",
+                          "eor_contract_id": 110143,
+                          "id": 568508,
+                          "name": "Steve Timeoff",
+                          "others": [
+                            {
+                              "requests": [
+                                {
+                                  "applied_changes": [
+                                    {
+                                      "attachments": [
+                                        {},
+                                      ],
+                                      "days_used_end_year": "2.00",
+                                      "days_used_start_year": "2.00",
+                                      "denial_reason": "No time off available",
+                                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                                      "reason": "I have a doctors appointment",
+                                      "requested_at": "2022-05-24T09:38:46.235Z",
+                                      "requester": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                      "reviewer": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "single_date": "2022-05-24T09:38:46.235Z",
+                                      "status": "REQUESTED",
+                                      "total_days_used": "4.00",
+                                      "type": "VACATION",
+                                    },
+                                  ],
+                                  "attachments": [
+                                    {},
+                                  ],
+                                  "change_request": {
+                                    "attachments": [
+                                      {},
+                                    ],
+                                    "days_used_end_year": "2.00",
+                                    "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46.235Z",
+                                    "requester": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                    "reviewer": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "single_date": "2022-05-24T09:38:46.235Z",
+                                    "status": "REQUESTED",
+                                    "total_days_used": "4.00",
+                                    "type": "VACATION",
+                                  },
+                                  "contract_id": "abc123",
+                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "days_used_end_year": "2.00",
+                                  "days_used_start_year": "2.00",
+                                  "denial_reason": "No time off available",
+                                  "end_date": "2022-05-24T09:38:46.235Z",
+                                  "id": 6938,
+                                  "other_timeoff_name": "This is time off for a doctor's appointment",
+                                  "reason": "I have a doctors appointment",
+                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requester": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                  "reviewer": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "single_date": "2022-05-24T09:38:46.235Z",
+                                  "start_date": "2022-05-24T09:38:46.235Z",
+                                  "status": "REQUESTED",
+                                  "total_days_used": "4.00",
+                                  "type": "VACATION",
+                                  "updated_at": "2022-05-24T09:38:46.235Z",
+                                },
+                              ],
+                              "year": 2022,
+                            },
+                          ],
+                          "sick_leaves": [
+                            {
+                              "requests": [
+                                {
+                                  "applied_changes": [
+                                    {
+                                      "attachments": [
+                                        {},
+                                      ],
+                                      "days_used_end_year": "2.00",
+                                      "days_used_start_year": "2.00",
+                                      "denial_reason": "No time off available",
+                                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                                      "reason": "I have a doctors appointment",
+                                      "requested_at": "2022-05-24T09:38:46.235Z",
+                                      "requester": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                      "reviewer": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "single_date": "2022-05-24T09:38:46.235Z",
+                                      "status": "REQUESTED",
+                                      "total_days_used": "4.00",
+                                      "type": "VACATION",
+                                    },
+                                  ],
+                                  "attachments": [
+                                    {},
+                                  ],
+                                  "change_request": {
+                                    "attachments": [
+                                      {},
+                                    ],
+                                    "days_used_end_year": "2.00",
+                                    "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46.235Z",
+                                    "requester": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                    "reviewer": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "single_date": "2022-05-24T09:38:46.235Z",
+                                    "status": "REQUESTED",
+                                    "total_days_used": "4.00",
+                                    "type": "VACATION",
+                                  },
+                                  "contract_id": "abc123",
+                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "days_used_end_year": "2.00",
+                                  "days_used_start_year": "2.00",
+                                  "denial_reason": "No time off available",
+                                  "end_date": "2022-05-24T09:38:46.235Z",
+                                  "id": 6938,
+                                  "other_timeoff_name": "This is time off for a doctor's appointment",
+                                  "reason": "I have a doctors appointment",
+                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requester": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                  "reviewer": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "single_date": "2022-05-24T09:38:46.235Z",
+                                  "start_date": "2022-05-24T09:38:46.235Z",
+                                  "status": "REQUESTED",
+                                  "total_days_used": "4.00",
+                                  "type": "VACATION",
+                                  "updated_at": "2022-05-24T09:38:46.235Z",
+                                },
+                              ],
+                              "year": 2022,
+                            },
+                          ],
+                          "time_zones": "string",
+                          "vacations": [
+                            {
+                              "requests": [
+                                {
+                                  "applied_changes": [
+                                    {
+                                      "attachments": [
+                                        {},
+                                      ],
+                                      "days_used_end_year": "2.00",
+                                      "days_used_start_year": "2.00",
+                                      "denial_reason": "No time off available",
+                                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                                      "reason": "I have a doctors appointment",
+                                      "requested_at": "2022-05-24T09:38:46.235Z",
+                                      "requester": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                      "reviewer": {
+                                        "id": 409222,
+                                        "name": "Mr. Rogers",
+                                        "profile_type": "client",
+                                      },
+                                      "single_date": "2022-05-24T09:38:46.235Z",
+                                      "status": "REQUESTED",
+                                      "total_days_used": "4.00",
+                                      "type": "VACATION",
+                                    },
+                                  ],
+                                  "attachments": [
+                                    {},
+                                  ],
+                                  "change_request": {
+                                    "attachments": [
+                                      {},
+                                    ],
+                                    "days_used_end_year": "2.00",
+                                    "days_used_start_year": "2.00",
+                                    "denial_reason": "No time off available",
+                                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                                    "reason": "I have a doctors appointment",
+                                    "requested_at": "2022-05-24T09:38:46.235Z",
+                                    "requester": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                    "reviewer": {
+                                      "id": 409222,
+                                      "name": "Mr. Rogers",
+                                      "profile_type": "client",
+                                    },
+                                    "single_date": "2022-05-24T09:38:46.235Z",
+                                    "status": "REQUESTED",
+                                    "total_days_used": "4.00",
+                                    "type": "VACATION",
+                                  },
+                                  "contract_id": "abc123",
+                                  "created_at": "2022-05-24T09:38:46.235Z",
+                                  "days_used_end_year": "2.00",
+                                  "days_used_start_year": "2.00",
+                                  "denial_reason": "No time off available",
+                                  "end_date": "2022-05-24T09:38:46.235Z",
+                                  "id": 6938,
+                                  "other_timeoff_name": "This is time off for a doctor's appointment",
+                                  "reason": "I have a doctors appointment",
+                                  "requested_at": "2022-05-24T09:38:46.235Z",
+                                  "requester": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                  "reviewer": {
+                                    "id": 409222,
+                                    "name": "Mr. Rogers",
+                                    "profile_type": "client",
+                                  },
+                                  "single_date": "2022-05-24T09:38:46.235Z",
+                                  "start_date": "2022-05-24T09:38:46.235Z",
+                                  "status": "REQUESTED",
+                                  "total_days_used": "4.00",
+                                  "type": "VACATION",
+                                  "updated_at": "2022-05-24T09:38:46.235Z",
+                                },
+                              ],
+                              "year": 2022,
+                            },
+                          ],
+                        },
+                      ],
+                      "total_requests": 1.1,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/time-offs",
             "response": {
@@ -3249,7 +5122,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3312,7 +5185,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "contract_id": "contract-id",
+                  "contract_id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3322,6 +5195,9 @@ exports[`open api parser deel simple 1`] = `
                       {
                         "applied_changes": [
                           {
+                            "attachments": [
+                              {},
+                            ],
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
                             "denial_reason": "No time off available",
@@ -3345,7 +5221,13 @@ exports[`open api parser deel simple 1`] = `
                             "type": "VACATION",
                           },
                         ],
+                        "attachments": [
+                          {},
+                        ],
                         "change_request": {
+                          "attachments": [
+                            {},
+                          ],
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
                           "denial_reason": "No time off available",
@@ -3429,6 +5311,28 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "timeoff_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "denial_reason": "Not allowed for this day.",
+                    "is_approved": true,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "updated": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/rest/v1/time-offs/{timeoff_id}/review",
             "path-parameters": {
@@ -3480,6 +5384,30 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "contract_id": "string",
+                    "date_submitted": "1999-12-31",
+                    "description": "string",
+                    "quantity": 1.1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "public_id": "00000000-0000-0000-0000-000000000000",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/timesheets",
             "request": {
@@ -3511,6 +5439,27 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "timesheet_id": 1000000,
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/timesheets/{timesheet_id}/reviews",
@@ -3550,6 +5499,26 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "ids": [],
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "created": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/timesheets/many/reviews",
             "request": {
@@ -3581,6 +5550,23 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "timesheet_id": 1000000,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "deleted": true,
+                    },
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/rest/v1/timesheets/{timesheet_id}",
@@ -3647,6 +5633,27 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "contract_types": "ongoing_time_based",
+                  "date_from": "1999-12-31",
+                  "date_to": "1999-12-31",
+                  "statuses": "approved",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                    "page": {
+                      "total_rows": 1.1,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/timesheets",
             "request": {
@@ -3707,6 +5714,29 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                },
+                "query-parameters": {
+                  "contract_types": "ongoing_time_based",
+                  "date_from": "1999-12-31",
+                  "date_to": "1999-12-31",
+                  "statuses": "approved",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                    "page": {
+                      "total_rows": 1.1,
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rest/v1/contracts/{contract_id}/timesheets",
@@ -3771,6 +5801,28 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "timesheet_id": 1000000,
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "description": "string",
+                    "quantity": 1.1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "updated": true,
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/rest/v1/timesheets/{timesheet_id}",
             "path-parameters": {
@@ -3824,7 +5876,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -3851,6 +5903,38 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "description": "My first webhook",
+                  "events": [],
+                  "name": "Demo webhook",
+                  "status": "enabled",
+                  "url": "https://mywebhook.com/listening",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "api_version": "v1",
+                      "created_at": "string",
+                      "description": "My first webhook",
+                      "events": [],
+                      "hidden": false,
+                      "id": 1.1,
+                      "name": "My webhooks",
+                      "status": "enabled",
+                      "updated_at": "string",
+                      "url": "https://mywebhook.com/listening",
+                    },
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/rest/v1/webhooks/{id}",
@@ -3910,6 +5994,32 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "api_version": "v1",
+                      "created_at": "string",
+                      "description": "My first webhook",
+                      "events": [],
+                      "hidden": false,
+                      "id": 1.1,
+                      "name": "My webhooks",
+                      "status": "enabled",
+                      "updated_at": "string",
+                      "url": "https://mywebhook.com/listening",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/webhooks/{id}",
             "path-parameters": {
@@ -3934,6 +6044,37 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "api_version": "v1",
+                  "description": "I like it very much.",
+                  "events": [],
+                  "name": "My first webhook.",
+                  "status": "enabled",
+                  "url": "https://mywebhook.com",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "api_version": "v1",
+                      "created_at": "string",
+                      "description": "My first webhook",
+                      "events": [],
+                      "hidden": false,
+                      "id": 1.1,
+                      "name": "My webhooks",
+                      "status": "enabled",
+                      "updated_at": "string",
+                      "url": "https://mywebhook.com/listening",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/rest/v1/webhooks",
@@ -4002,7 +6143,20 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "api_version": "v1",
+                        "created_at": "string",
+                        "description": "My first webhook",
+                        "events": [],
+                        "hidden": false,
+                        "id": 1.1,
+                        "name": "My webhooks",
+                        "status": "enabled",
+                        "updated_at": "string",
+                        "url": "https://mywebhook.com/listening",
+                      },
+                    ],
                   },
                 },
               },

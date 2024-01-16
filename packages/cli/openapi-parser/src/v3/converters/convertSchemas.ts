@@ -1,5 +1,9 @@
 import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
-import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import {
+    NamedFullExample,
+    PrimitiveSchemaValueWithExample,
+    SchemaWithExample
+} from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -83,6 +87,19 @@ export function convertSchemaObject(
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
+
+    const examples = getExtension<Record<string, unknown>>(schema, OpenAPIExtension.EXAMPLES);
+    const fullExamples: NamedFullExample[] = [];
+    if (schema.example != null) {
+        fullExamples.push({ name: undefined, value: schema.example });
+    }
+    if (examples != null && Object.keys(examples).length > 0) {
+        fullExamples.push(
+            ...Object.entries(examples).map(([name, value]) => {
+                return { name, value };
+            })
+        );
+    }
 
     const fernSchema = getFernTypeExtension({ schema, description, nameOverride, generatedName });
     if (fernSchema != null) {
@@ -553,7 +570,8 @@ export function convertSchemaObject(
             allOf: schema.allOf ?? [],
             context,
             propertiesToExclude,
-            groupName
+            groupName,
+            fullExamples
         });
     }
 

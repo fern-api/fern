@@ -18,7 +18,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "userId": "user-id",
+                  "userId": "string",
                 },
                 "query-parameters": undefined,
                 "request": {

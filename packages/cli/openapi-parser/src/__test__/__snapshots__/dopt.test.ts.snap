@@ -15,7 +15,131 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "uid",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "fields": {
+                "array": [],
+                "type": "array",
+              },
+              "kind": {
+                "literal": {
+                  "string": "block",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "sid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "state": {
+                "properties": {
+                  "active": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "entered": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "exited": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "transitioned": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "boolean": true,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "type": {
+                "enum": "custom",
+                "type": "enum",
+              },
+              "uid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "version": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "FindBlocksRequest",
       "headers": [],
       "internal": undefined,
@@ -73,6 +197,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -499,7 +624,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "uid",
               "value": {
                 "primitive": {
-                  "string": "uid",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -528,7 +653,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "user-identifier",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -653,7 +778,212 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "sid",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "include",
+              "value": {
+                "literal": {
+                  "string": "block",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "blocks": {
+                "array": [
+                  {
+                    "properties": {
+                      "fields": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "kind": {
+                        "literal": {
+                          "string": "block",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "sid": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "state": {
+                        "properties": {
+                          "active": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "entered": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "exited": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transitioned": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "type": {
+                        "enum": "custom",
+                        "type": "enum",
+                      },
+                      "uid": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "version": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "kind": {
+                "literal": {
+                  "string": "flow",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "sid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "state": {
+                "properties": {
+                  "finished": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "started": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "stopped": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "type": {
+                "literal": {
+                  "string": "flow",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "uid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "version": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetFlowRequest",
       "headers": [],
       "internal": undefined,
@@ -750,6 +1080,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -1338,7 +1669,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "uid",
               "value": {
                 "primitive": {
-                  "string": "uid",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1367,7 +1698,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "user-identifier",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",

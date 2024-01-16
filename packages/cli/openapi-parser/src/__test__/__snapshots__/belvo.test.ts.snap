@@ -176,7 +176,7 @@ in the DevPortal.
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -398,7 +398,7 @@ in the DevPortal.
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -964,6 +964,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1250,6 +1251,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RegisterLinkRequestBody",
@@ -1263,6 +1265,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1470,6 +1473,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchLinksRequestBody",
@@ -1483,6 +1487,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1518,7 +1523,7 @@ in the DevPortal.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1691,6 +1696,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1731,7 +1737,7 @@ in the DevPortal.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1949,6 +1955,7 @@ in the DevPortal.
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "UpdateLinkRequestBody",
@@ -1962,6 +1969,7 @@ in the DevPortal.
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2005,7 +2013,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2252,6 +2260,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "ChangeLinkAccessModeRequestBody",
@@ -2265,6 +2274,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2310,7 +2320,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -2682,7 +2692,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -3014,14 +3024,14 @@ To delete links in bulk, we recommend looping through the list of links you want
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -3911,6 +3921,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4320,14 +4331,14 @@ To delete links in bulk, we recommend looping through the list of links you want
                       },
                       "number_of_installments_outstanding": {
                         "primitive": {
-                          "int": 48,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "number_of_installments_total": {
                         "primitive": {
-                          "int": 60,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -4491,6 +4502,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveAccountsRequestBody",
@@ -4504,6 +4516,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4932,14 +4945,14 @@ To delete links in bulk, we recommend looping through the list of links you want
                       },
                       "number_of_installments_outstanding": {
                         "primitive": {
-                          "int": 48,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "number_of_installments_total": {
                         "primitive": {
-                          "int": 60,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -5103,6 +5116,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchAccountsRequestBody",
@@ -5116,6 +5130,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5170,7 +5185,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5518,14 +5533,14 @@ To delete links in bulk, we recommend looping through the list of links you want
                   },
                   "number_of_installments_outstanding": {
                     "primitive": {
-                      "int": 48,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "number_of_installments_total": {
                     "primitive": {
-                      "int": 60,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -5703,6 +5718,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5738,7 +5754,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5811,7 +5827,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -6383,7 +6399,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -6717,14 +6733,14 @@ To delete links in bulk, we recommend looping through the list of links you want
                               },
                               "number_of_installments_outstanding": {
                                 "primitive": {
-                                  "int": 48,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
                               },
                               "number_of_installments_total": {
                                 "primitive": {
-                                  "int": 60,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -8193,6 +8209,7 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8614,14 +8631,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -8966,6 +8983,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTransactionsRequestBody",
@@ -8979,6 +8997,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9175,6 +9194,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTransactionsAsyncRequestBody",
@@ -9188,6 +9208,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Accepted (when \`X-Belvo-Request-Mode\` is \`async\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9599,14 +9620,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -9951,6 +9972,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchTransactionsRequestBody",
@@ -9964,6 +9986,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10004,7 +10027,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10354,14 +10377,14 @@ If you try to access older information than what we can access, we will return a
                       },
                       "number_of_installments_outstanding": {
                         "primitive": {
-                          "int": 48,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "number_of_installments_total": {
                         "primitive": {
-                          "int": 60,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -10720,6 +10743,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10755,7 +10779,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10828,7 +10852,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -11100,7 +11124,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -11434,14 +11458,14 @@ If you try to access older information than what we can access, we will return a
                               },
                               "number_of_installments_outstanding": {
                                 "primitive": {
-                                  "int": 48,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
                               },
                               "number_of_installments_total": {
                                 "primitive": {
-                                  "int": 60,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -12158,6 +12182,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12576,14 +12601,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -12771,6 +12796,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveBalancesRequestBody",
@@ -12784,6 +12810,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13200,14 +13227,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -13395,6 +13422,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchBalancesRequestBody",
@@ -13408,6 +13436,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13448,7 +13477,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -13798,14 +13827,14 @@ If you try to access older information than what we can access, we will return a
                       },
                       "number_of_installments_outstanding": {
                         "primitive": {
-                          "int": 48,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "number_of_installments_total": {
                         "primitive": {
-                          "int": 60,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -14007,6 +14036,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14042,7 +14072,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14115,7 +14145,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -14247,7 +14277,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -14412,7 +14442,7 @@ If you try to access older information than what we can access, we will return a
                       },
                       "id": {
                         "primitive": {
-                          "int": 1003,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -14799,6 +14829,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14834,7 +14865,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -15015,7 +15046,7 @@ If you try to access older information than what we can access, we will return a
               },
               "id": {
                 "primitive": {
-                  "int": 1003,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -15153,6 +15184,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15198,7 +15230,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -15340,7 +15372,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -15761,6 +15793,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15982,6 +16015,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveOwnersRequestBody",
@@ -15995,6 +16029,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16235,6 +16270,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchOwnersRequestBody",
@@ -16248,6 +16284,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16288,7 +16325,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16476,6 +16513,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16511,7 +16549,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -16584,7 +16622,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -16886,7 +16924,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -17538,6 +17576,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17693,6 +17732,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveInvoicesRequestBody",
@@ -17706,6 +17746,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17878,6 +17919,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchInvoicesRequestBody",
@@ -17891,6 +17933,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18013,6 +18056,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -18068,7 +18112,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18558,6 +18602,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -18676,6 +18721,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -18709,6 +18755,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18847,6 +18894,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -18918,7 +18966,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -18991,7 +19039,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -19113,7 +19161,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -19405,6 +19453,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -19487,6 +19536,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxStatusRequestBody",
@@ -19500,6 +19550,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19617,6 +19668,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19672,7 +19724,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -19745,7 +19797,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -19867,7 +19919,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -20215,6 +20267,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20394,6 +20447,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxComplianceStatusRequestBody",
@@ -20407,6 +20461,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20442,7 +20497,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -20594,6 +20649,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20629,7 +20685,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -20702,7 +20758,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -20774,7 +20830,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -20819,7 +20875,120 @@ If you try to access older information than what we can access, we will return a
                         "type": "literal",
                       },
                       "income_streams": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "account_id": {
+                                "primitive": {
+                                  "string": "EBACA-89077589",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "average_income_amount": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "confidence": {
+                                "enum": "HIGH",
+                                "type": "enum",
+                              },
+                              "currency": {
+                                "primitive": {
+                                  "string": "BRL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "frequency": {
+                                "enum": "MONTHLY",
+                                "type": "enum",
+                              },
+                              "full_periods": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "income_type": {
+                                "enum": "SALARY",
+                                "type": "enum",
+                              },
+                              "last_income_amount": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "last_income_date": {
+                                "primitive": {
+                                  "string": "2022-02-09",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "last_income_description": {
+                                "map": [],
+                                "type": "map",
+                              },
+                              "lookback_periods": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "monthly_average": {
+                                "primitive": {
+                                  "float": 2500,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "number_of_incomes": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "periods_with_income": {
+                                "primitive": {
+                                  "int": 1,
+                                  "type": "int",
+                                },
+                                "type": "primitive",
+                              },
+                              "regularity": {
+                                "primitive": {
+                                  "float": 0.75,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "stability": {
+                                "primitive": {
+                                  "float": 1,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "trend": {
+                                "primitive": {
+                                  "float": 0,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "last_transaction_date": {
@@ -20880,7 +21049,7 @@ If you try to access older information than what we can access, we will return a
                       },
                       "number_of_income_streams": {
                         "primitive": {
-                          "int": 12,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -21116,6 +21285,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21249,7 +21419,120 @@ If you try to access older information than what we can access, we will return a
                 "type": "literal",
               },
               "income_streams": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "account_id": {
+                        "primitive": {
+                          "string": "EBACA-89077589",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "average_income_amount": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "confidence": {
+                        "enum": "HIGH",
+                        "type": "enum",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "BRL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "frequency": {
+                        "enum": "MONTHLY",
+                        "type": "enum",
+                      },
+                      "full_periods": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "income_type": {
+                        "enum": "SALARY",
+                        "type": "enum",
+                      },
+                      "last_income_amount": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_income_date": {
+                        "primitive": {
+                          "string": "2022-02-09",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_income_description": {
+                        "map": [],
+                        "type": "map",
+                      },
+                      "lookback_periods": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "monthly_average": {
+                        "primitive": {
+                          "float": 2500,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "number_of_incomes": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "periods_with_income": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "regularity": {
+                        "primitive": {
+                          "float": 0.75,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "stability": {
+                        "primitive": {
+                          "float": 1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "trend": {
+                        "primitive": {
+                          "float": 0,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "last_transaction_date": {
@@ -21310,7 +21593,7 @@ If you try to access older information than what we can access, we will return a
               },
               "number_of_income_streams": {
                 "primitive": {
-                  "int": 12,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -21414,6 +21697,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveIncomeRequestBody",
@@ -21427,6 +21711,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21549,7 +21834,120 @@ If you try to access older information than what we can access, we will return a
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -21610,7 +22008,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "number_of_income_streams": {
                     "primitive": {
-                      "int": 12,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -21717,6 +22115,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchIncomesRequestBody",
@@ -21730,6 +22129,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -21770,7 +22170,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21833,7 +22233,120 @@ If you try to access older information than what we can access, we will return a
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -21894,7 +22407,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "number_of_income_streams": {
                     "primitive": {
-                      "int": 12,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -22018,6 +22531,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -22058,7 +22572,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22131,7 +22645,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -22223,7 +22737,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -22557,14 +23071,14 @@ If you try to access older information than what we can access, we will return a
                               },
                               "number_of_installments_outstanding": {
                                 "primitive": {
-                                  "int": 48,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
                               },
                               "number_of_installments_total": {
                                 "primitive": {
-                                  "int": 60,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -22684,7 +23198,7 @@ If you try to access older information than what we can access, we will return a
                       },
                       "days_since_last_transaction": {
                         "primitive": {
-                          "int": 5,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -22981,6 +23495,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -23392,14 +23907,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -23519,7 +24034,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "days_since_last_transaction": {
                     "primitive": {
-                      "int": 5,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -23647,6 +24162,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveRecurringExpensesRequestBody",
@@ -23660,6 +24176,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -24076,14 +24593,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -24203,7 +24720,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "days_since_last_transaction": {
                     "primitive": {
-                      "int": 5,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -24331,6 +24848,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchRecurringExpensesRequestBody",
@@ -24344,6 +24862,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -24384,7 +24903,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -24736,14 +25255,14 @@ If you try to access older information than what we can access, we will return a
                           },
                           "number_of_installments_outstanding": {
                             "primitive": {
-                              "int": 48,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "number_of_installments_total": {
                             "primitive": {
-                              "int": 60,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -24863,7 +25382,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "days_since_last_transaction": {
                     "primitive": {
-                      "int": 5,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -25008,6 +25527,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -25048,7 +25568,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -25121,7 +25641,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -25163,7 +25683,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -25665,6 +26185,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26038,6 +26559,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrievePortfolioRequestBody",
@@ -26051,6 +26573,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26431,6 +26954,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchPortfolioRequestBody",
@@ -26444,6 +26968,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26479,7 +27004,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -26825,6 +27350,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -26860,7 +27386,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -26933,7 +27459,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -27115,7 +27641,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -27243,7 +27769,7 @@ If you try to access older information than what we can access, we will return a
                           },
                           "total": {
                             "primitive": {
-                              "int": 2,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -27685,6 +28211,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -27887,7 +28414,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "total": {
                     "primitive": {
-                      "int": 2,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -27977,6 +28504,7 @@ If you try to access older information than what we can access, we will return a
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveReceivableTransactionsRequestBody",
@@ -27990,6 +28518,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28025,7 +28554,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -28169,7 +28698,7 @@ If you try to access older information than what we can access, we will return a
                   },
                   "total": {
                     "primitive": {
-                      "int": 2,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -28276,6 +28805,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -28311,7 +28841,7 @@ If you try to access older information than what we can access, we will return a
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -28384,7 +28914,7 @@ If you try to access older information than what we can access, we will return a
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -28456,7 +28986,7 @@ If you try to access older information than what we can access, we will return a
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -28502,42 +29032,42 @@ If you try to access older information than what we can access, we will return a
                           },
                           "days_balance_below_0_1m": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "days_balance_below_0_1w": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "days_balance_below_0_3m": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "days_balance_below_x_1m": {
                             "primitive": {
-                              "int": 3,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "days_balance_below_x_1w": {
                             "primitive": {
-                              "int": 3,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "days_balance_below_x_3m": {
                             "primitive": {
-                              "int": 3,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -28666,7 +29196,7 @@ If you try to access older information than what we can access, we will return a
                         "properties": {
                           "num_accounts": {
                             "primitive": {
-                              "int": 2,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -28706,7 +29236,7 @@ If you try to access older information than what we can access, we will return a
                         "properties": {
                           "num_accounts": {
                             "primitive": {
-                              "int": 5,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -28823,63 +29353,63 @@ If you try to access older information than what we can access, we will return a
                           },
                           "num_incoming_transactions_1m": {
                             "primitive": {
-                              "int": 20,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_incoming_transactions_1w": {
                             "primitive": {
-                              "int": 20,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_incoming_transactions_3m": {
                             "primitive": {
-                              "int": 20,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_outgoing_transactions_1m": {
                             "primitive": {
-                              "int": 19,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_outgoing_transactions_1w": {
                             "primitive": {
-                              "int": 19,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_outgoing_transactions_3m": {
                             "primitive": {
-                              "int": 19,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_transactions_1m": {
                             "primitive": {
-                              "int": 39,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_transactions_1w": {
                             "primitive": {
-                              "int": 39,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "num_transactions_3m": {
                             "primitive": {
-                              "int": 39,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -29115,6 +29645,7 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29226,42 +29757,42 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "days_balance_below_0_1m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_1w": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_3m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1w": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_3m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -29390,7 +29921,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 2,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -29430,7 +29961,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 5,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -29547,63 +30078,63 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "num_incoming_transactions_1m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_1w": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_3m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1w": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_3m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1w": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_3m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -29713,6 +30244,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveRiskInsightsRequestBody",
@@ -29726,6 +30258,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -29854,42 +30387,42 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "days_balance_below_0_1m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_1w": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_3m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1w": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_3m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30018,7 +30551,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 2,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30058,7 +30591,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 5,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30175,63 +30708,63 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "num_incoming_transactions_1m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_1w": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_3m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1w": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_3m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1w": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_3m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30341,6 +30874,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchRiskInsightsRequestBody",
@@ -30354,6 +30888,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when save_data=false)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -30394,7 +30929,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -30458,42 +30993,42 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "days_balance_below_0_1m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_1w": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_0_3m": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_1w": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "days_balance_below_x_3m": {
                         "primitive": {
-                          "int": 3,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30622,7 +31157,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 2,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30662,7 +31197,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "num_accounts": {
                         "primitive": {
-                          "int": 5,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30779,63 +31314,63 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "num_incoming_transactions_1m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_1w": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_incoming_transactions_3m": {
                         "primitive": {
-                          "int": 20,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_1w": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_outgoing_transactions_3m": {
                         "primitive": {
-                          "int": 19,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_1w": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "num_transactions_3m": {
                         "primitive": {
-                          "int": 39,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -30962,6 +31497,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31002,7 +31538,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -31075,7 +31611,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -31177,7 +31713,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -31202,7 +31738,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "code": {
                         "primitive": {
-                          "int": 25,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -31604,6 +32140,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31702,7 +32239,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   },
                   "code": {
                     "primitive": {
-                      "int": 25,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -31918,6 +32455,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxRetentionsRequestBody",
@@ -31931,6 +32469,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -31971,7 +32510,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -32012,7 +32551,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
               "code": {
                 "primitive": {
-                  "int": 25,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -32242,6 +32781,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -32277,7 +32817,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -32727,6 +33267,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -32900,6 +33441,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveTaxDeclarationsRequestBody",
@@ -32913,6 +33455,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33035,6 +33578,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -33090,7 +33634,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -33163,7 +33707,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -33195,7 +33739,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -33315,7 +33859,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                               },
                               "weeks_employed": {
                                 "primitive": {
-                                  "int": 12,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -33466,21 +34010,21 @@ If you need to know the currency of the account, just do a GET Details to the ac
                         "properties": {
                           "weeks_contributed": {
                             "primitive": {
-                              "int": 188,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "weeks_redeemed": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "weeks_reinstated": {
                             "primitive": {
-                              "int": 0,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -33591,6 +34135,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -33768,7 +34313,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                           },
                           "weeks_employed": {
                             "primitive": {
-                              "int": 12,
+                              "int": 1,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -33919,21 +34464,21 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "properties": {
                       "weeks_contributed": {
                         "primitive": {
-                          "int": 188,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "weeks_redeemed": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
                       },
                       "weeks_reinstated": {
                         "primitive": {
-                          "int": 0,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -34001,6 +34546,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RetrieveEmploymentRecordDetailsRequestBody",
@@ -34014,6 +34560,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34054,7 +34601,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -34190,7 +34737,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "weeks_employed": {
                         "primitive": {
-                          "int": 12,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -34341,21 +34888,21 @@ If you need to know the currency of the account, just do a GET Details to the ac
                 "properties": {
                   "weeks_contributed": {
                     "primitive": {
-                      "int": 188,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "weeks_redeemed": {
                     "primitive": {
-                      "int": 0,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
                   },
                   "weeks_reinstated": {
                     "primitive": {
-                      "int": 0,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -34437,6 +34984,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34472,7 +35020,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -34694,7 +35242,120 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "type": "literal",
                   },
                   "income_streams": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "account_id": {
+                            "primitive": {
+                              "string": "EBACA-89077589",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "average_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "confidence": {
+                            "enum": "HIGH",
+                            "type": "enum",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "BRL",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "MONTHLY",
+                            "type": "enum",
+                          },
+                          "full_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "income_type": {
+                            "enum": "SALARY",
+                            "type": "enum",
+                          },
+                          "last_income_amount": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_date": {
+                            "primitive": {
+                              "string": "2022-02-09",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "last_income_description": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "lookback_periods": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_average": {
+                            "primitive": {
+                              "float": 2500,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_incomes": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "periods_with_income": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "regularity": {
+                            "primitive": {
+                              "float": 0.75,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "stability": {
+                            "primitive": {
+                              "float": 1,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "trend": {
+                            "primitive": {
+                              "float": 0,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "last_transaction_date": {
@@ -34755,7 +35416,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   },
                   "number_of_income_streams": {
                     "primitive": {
-                      "int": 12,
+                      "int": 1,
                       "type": "int",
                     },
                     "type": "primitive",
@@ -34821,6 +35482,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "VerifyIncomeRequest",
@@ -34834,6 +35496,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -34942,7 +35605,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "mcc": {
                         "primitive": {
-                          "int": 2345,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -35039,7 +35702,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                       },
                       "mcc": {
                         "primitive": {
-                          "int": 2345,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -35117,6 +35780,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CategorizeTransactionsRequest",
@@ -35130,6 +35794,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35169,7 +35834,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -35236,6 +35901,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35331,6 +35997,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35372,7 +36039,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -35383,6 +36050,62 @@ For example:
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "auth_header": {
+                        "primitive": {
+                          "string": "Authorization",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "auth_token": {
+                        "primitive": {
+                          "string": "*******",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-02-09T08:45:50.406032Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_by": {
+                        "primitive": {
+                          "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "map": [],
+                        "type": "map",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "https://mycompany.com/security/webhook",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -35401,6 +36124,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35470,7 +36194,59 @@ For example:
             "type": "object",
           },
           "response": {
-            "array": [],
+            "array": [
+              {
+                "properties": {
+                  "auth_header": {
+                    "primitive": {
+                      "string": "Authorization",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "auth_token": {
+                    "primitive": {
+                      "string": "*******",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2022-02-09T08:45:50.406032Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_by": {
+                    "primitive": {
+                      "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "name": {
+                    "map": [],
+                    "type": "map",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "https://mycompany.com/security/webhook",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
             "type": "array",
           },
         },
@@ -35486,6 +36262,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "RegisterPaymentWebhookRequest",
@@ -35499,6 +36276,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35531,7 +36309,76 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "a3b92311-1888-449f-acaa-49ae28d68fcd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "*******",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "map": [],
+                "type": "map",
+              },
+              "url": {
+                "primitive": {
+                  "string": "https://mycompany.com/security/webhook",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailPaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -35560,6 +36407,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -35595,7 +36443,7 @@ For example:
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -35750,7 +36598,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -35797,7 +36645,7 @@ For example:
                               },
                               "length": {
                                 "primitive": {
-                                  "int": 6,
+                                  "int": 1,
                                   "type": "int",
                                 },
                                 "type": "primitive",
@@ -36153,6 +37001,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36230,7 +37079,7 @@ For example:
                       },
                       "length": {
                         "primitive": {
-                          "int": 6,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -36417,6 +37266,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36554,7 +37404,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -36788,6 +37638,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -36828,6 +37679,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -36861,6 +37713,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -36937,6 +37790,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37144,7 +37998,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -37472,6 +38326,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37513,6 +38368,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -37546,6 +38402,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37622,6 +38479,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37687,7 +38545,7 @@ For example:
               "name": "page_size",
               "value": {
                 "primitive": {
-                  "int": 100,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -37783,7 +38641,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -38062,6 +38920,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38103,6 +38962,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -38136,6 +38996,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -38214,6 +39075,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -38461,7 +39323,7 @@ For example:
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -38869,6 +39731,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38910,6 +39773,7 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreatePaymentIntentRequest",
@@ -38923,6 +39787,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -38979,6 +39844,7 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39036,6 +39902,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "PatchPaymentIntentRequest",
@@ -39049,6 +39916,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39316,7 +40184,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "properties": {
               "count": {
                 "primitive": {
-                  "int": 130,
+                  "int": 1,
                   "type": "int",
                 },
                 "type": "primitive",
@@ -39804,6 +40672,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39860,6 +40729,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,

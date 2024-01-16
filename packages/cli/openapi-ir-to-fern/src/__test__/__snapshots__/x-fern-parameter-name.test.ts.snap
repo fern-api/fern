@@ -11,6 +11,19 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
         "get_user": {
           "auth": false,
           "docs": undefined,
+          "examples": [
+            {
+              "headers": {},
+              "path-parameters": undefined,
+              "query-parameters": {
+                "foo": "string",
+              },
+              "request": undefined,
+              "response": {
+                "body": "string",
+              },
+            },
+          ],
           "method": "GET",
           "path": "/user",
           "request": {
