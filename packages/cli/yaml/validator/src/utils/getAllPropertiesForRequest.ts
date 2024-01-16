@@ -59,5 +59,5 @@ export function getAllPropertiesForRequest({
         definitionFile,
         workspace,
         typeResolver
-    });
+    }).properties;
 }

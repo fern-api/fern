@@ -48,7 +48,7 @@ export function convertToError({
     return {
         generatedName: errorName,
         nameOverride: null,
-        schema: Schema.unknown(),
+        schema: Schema.unknown({ nameOverride: undefined, generatedName: errorName }),
         description: undefined
     };
 }

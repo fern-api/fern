@@ -34,7 +34,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.144",
+    "@fern-fern/openapi-ir-model": "0.0.150",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
