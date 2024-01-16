@@ -25,7 +25,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName,
+                groupName: schema.groupName
             });
         case "enum":
             return Schema.enum({

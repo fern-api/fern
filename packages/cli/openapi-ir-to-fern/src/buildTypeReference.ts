@@ -29,34 +29,37 @@ export function buildTypeReference({
     schema,
     /* The file the type reference will be written to */
     fileContainingReference,
+    /* The file any type declarations will be written to. Defaults to fileContainingReference if not present */
+    declarationFile = fileContainingReference,
     context
 }: {
     schema: Schema;
     fileContainingReference: RelativeFilePath;
+    declarationFile?: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     switch (schema.type) {
         case "primitive":
             return buildPrimitiveTypeReference(schema);
         case "array":
-            return buildArrayTypeReference({ schema, fileContainingReference, context });
+            return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "map":
-            return buildMapTypeReference({ schema, fileContainingReference, context });
+            return buildMapTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "reference":
             return buildReferenceTypeReference({ schema, fileContainingReference, context });
         case "unknown":
             return buildUnknownTypeReference();
         case "optional":
         case "nullable":
-            return buildOptionalTypeReference({ schema, fileContainingReference, context });
+            return buildOptionalTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "enum":
-            return buildEnumTypeReference({ schema, fileContainingReference, context });
+            return buildEnumTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "literal":
             return buildLiteralTypeReference(schema.value);
         case "object":
-            return buildObjectTypeReference({ schema, fileContainingReference, context });
+            return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "oneOf":
-            return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context });
+            return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context, declarationFile });
         default:
             assertNever(schema);
     }
@@ -95,10 +98,14 @@ export function buildReferenceTypeReference({
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const resolvedSchema = context.getSchema(schema.schema);
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const groupName = getGroupNameForSchema(resolvedSchema);
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        groupName: getGroupNameForSchema(resolvedSchema),
+        declarationFile:
+            groupName != null
+                ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
+                : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
         type: schemaName
     });
     const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
@@ -114,13 +121,15 @@ export function buildReferenceTypeReference({
 export function buildArrayTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: ArraySchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
-    const item = buildTypeReference({ schema: schema.value, fileContainingReference, context });
+    const item = buildTypeReference({ schema: schema.value, fileContainingReference, declarationFile, context });
     const type = `list<${getTypeFromTypeReference(item)}>`;
     if (schema.description == null) {
         return type;
@@ -134,16 +143,19 @@ export function buildArrayTypeReference({
 export function buildMapTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: MapSchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
+        declarationFile,
         context
     });
     const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
@@ -159,13 +171,20 @@ export function buildMapTypeReference({
 export function buildOptionalTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: OptionalSchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
-    const itemTypeReference = buildTypeReference({ schema: schema.value, fileContainingReference, context });
+    const itemTypeReference = buildTypeReference({
+        schema: schema.value,
+        fileContainingReference,
+        declarationFile,
+        context
+    });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
     const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
@@ -196,23 +215,26 @@ export function buildLiteralTypeReference(value: LiteralSchemaValue): RawSchemas
 export function buildEnumTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: EnumSchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const enumTypeDeclaration = buildEnumTypeDeclaration(schema);
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(fileContainingReference, {
+    context.builder.addType(declarationFile, {
         name,
         schema: enumTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: name,
+        type: prefixedType,
         docs: schema.description
     };
 }
@@ -220,27 +242,30 @@ export function buildEnumTypeReference({
 export function buildObjectTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: ObjectSchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const objectTypeDeclaration = buildObjectTypeDeclaration({
         schema,
-        declarationFile: fileContainingReference,
+        declarationFile,
         context
     });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(fileContainingReference, {
+    context.builder.addType(declarationFile, {
         name,
         schema: objectTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: name,
+        type: prefixedType,
         docs: schema.description
     };
 }
@@ -248,27 +273,30 @@ export function buildObjectTypeReference({
 export function buildOneOfTypeReference({
     schema,
     fileContainingReference,
+    declarationFile,
     context
 }: {
     schema: OneOfSchema;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const unionTypeDeclaration = buildOneOfTypeDeclaration({
         schema,
-        declarationFile: fileContainingReference,
+        declarationFile,
         context
     });
     const name = schema.nameOverride ?? schema.generatedName;
-    context.builder.addType(fileContainingReference, {
+    context.builder.addType(declarationFile, {
         name,
         schema: unionTypeDeclaration.schema
     });
+    const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
     if (schema.description == null) {
-        return name;
+        return prefixedType;
     }
     return {
-        type: name,
+        type: prefixedType,
         docs: schema.description
     };
 }
@@ -276,41 +304,37 @@ export function buildOneOfTypeReference({
 function getPrefixedType({
     type,
     fileContainingReference,
-    context,
-    groupName
+    declarationFile,
+    context
 }: {
     type: string;
     fileContainingReference: RelativeFilePath;
+    declarationFile: RelativeFilePath;
     context: OpenApiIrConverterContext;
-    groupName: string | undefined | null;
 }): string {
-    if (groupName == null && fileContainingReference === FERN_PACKAGE_MARKER_FILENAME) {
+    if (declarationFile === fileContainingReference) {
         return type;
     }
-    const fileToImport =
-        groupName != null
-            ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
-            : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
     const prefix = context.builder.addImport({
         file: fileContainingReference,
-        fileToImport
+        fileToImport: declarationFile
     });
     return prefix != null ? `${prefix}.${type}` : type;
 }
 
 function getSchemaName(schema: Schema): string | undefined {
     return Schema._visit(schema, {
-        primitive: s => s.nameOverride ?? s.generatedName,
-        object: s => s.nameOverride ?? s.generatedName,
-        array: s => s.nameOverride ?? s.generatedName,
-        map: s => s.nameOverride ?? s.generatedName,
-        enum: s => s.nameOverride ?? s.generatedName,
-        reference: s => s.nameOverride ?? s.generatedName,
-        literal: s => s.nameOverride ?? s.generatedName,
-        oneOf: s => s.nameOverride ?? s.generatedName,
-        optional: s => s.nameOverride ?? s.generatedName,
-        nullable: s => s.nameOverride ?? s.generatedName,
-        unknown: s => s.nameOverride ?? s.generatedName,
-        _unknown: () => undefined,
+        primitive: (s) => s.nameOverride ?? s.generatedName,
+        object: (s) => s.nameOverride ?? s.generatedName,
+        array: (s) => s.nameOverride ?? s.generatedName,
+        map: (s) => s.nameOverride ?? s.generatedName,
+        enum: (s) => s.nameOverride ?? s.generatedName,
+        reference: (s) => s.nameOverride ?? s.generatedName,
+        literal: (s) => s.nameOverride ?? s.generatedName,
+        oneOf: (s) => s.nameOverride ?? s.generatedName,
+        optional: (s) => s.nameOverride ?? s.generatedName,
+        nullable: (s) => s.nameOverride ?? s.generatedName,
+        unknown: (s) => s.nameOverride ?? s.generatedName,
+        _unknown: () => undefined
     });
 }

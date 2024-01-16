@@ -129,7 +129,9 @@ Used to retrieve a deployment given its ID or name.
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentsRetrieveRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -456,11 +458,15 @@ Used to list documents. Optionally filter on supported fields.
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentsListRequestDocumentIndexId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "DocumentsListRequestDocumentIndexId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -476,11 +482,15 @@ Used to list documents. Optionally filter on supported fields.
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentsListRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "DocumentsListRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -494,11 +504,15 @@ Used to list documents. Optionally filter on supported fields.
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentsListRequestOffset",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "DocumentsListRequestOffset",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -512,11 +526,15 @@ Used to list documents. Optionally filter on supported fields.
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentsListRequestOrdering",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "DocumentsListRequestOrdering",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1123,7 +1141,9 @@ Used to retrieve a model version given its ID.
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionsRetrieveRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1240,7 +1260,9 @@ Compiles the prompt backing the model version using the provided input values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionCompilePromptRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1753,7 +1775,9 @@ or overwritten with default values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "UpsertSandboxScenarioRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1851,7 +1875,9 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeleteSandboxScenarioRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1866,7 +1892,9 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "name": "scenario_id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeleteSandboxScenarioRequestScenarioId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2228,7 +2256,9 @@ or overwritten with default values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "UpsertTestSuiteTestCaseRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2326,7 +2356,9 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeleteTestSuiteTestCaseRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2341,7 +2373,9 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "name": "test_case_id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeleteTestSuiteTestCaseRequestTestCaseId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2397,15 +2431,21 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                "generatedName": "DocumentsUploadRequestAddToIndexNames",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                  "generatedName": "DocumentsUploadRequestAddToIndexNames",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "array",
                   "value": {
                     "description": undefined,
+                    "generatedName": "DocumentsUploadRequestAddToIndexNamesItem",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": 1,
@@ -2425,11 +2465,15 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                "generatedName": "DocumentsUploadRequestExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                  "generatedName": "DocumentsUploadRequestExternalId",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -2448,7 +2492,9 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "A human-friendly name for this document. Typically the filename.",
+                "generatedName": "DocumentsUploadRequestLabel",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -2473,15 +2519,21 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                "generatedName": "DocumentsUploadRequestKeywords",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                  "generatedName": "DocumentsUploadRequestKeywords",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "array",
                   "value": {
                     "description": undefined,
+                    "generatedName": "DocumentsUploadRequestKeywordsItem",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": 1,
@@ -2532,6 +2584,8 @@ Upload a document to be indexed and used for search.
       "generatedName": "BadRequestError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "BadRequestError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -2553,6 +2607,8 @@ Upload a document to be indexed and used for search.
       "generatedName": "NotFoundError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "NotFoundError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -2574,6 +2630,8 @@ Upload a document to be indexed and used for search.
       "generatedName": "InternalServerError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "InternalServerError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -2726,7 +2784,9 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "ChatMessageText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2767,7 +2827,9 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "ChatMessageRequestText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2869,15 +2931,21 @@ Upload a document to be indexed and used for search.
           "key": "source_handle_id",
           "schema": {
             "description": undefined,
+            "generatedName": "conditionalNodeResultDataSourceHandleId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ConditionalNodeResultDataSourceHandleId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "ConditionalNodeResultDataSourceHandleId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2953,7 +3021,9 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentNodeResultDataOutputId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2969,15 +3039,21 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "deploymentNodeResultDataText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "DeploymentNodeResultDataText",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "DeploymentNodeResultDataText",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2995,15 +3071,21 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "generatedName": "deploymentNodeResultDataDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "DeploymentNodeResultDataDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "DeploymentNodeResultDataDelta",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3032,7 +3114,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentReadId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3048,7 +3132,9 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentReadCreated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -3062,7 +3148,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the deployment",
+            "generatedName": "DeploymentReadLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -3078,7 +3166,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this deployment within its workspace",
+            "generatedName": "DeploymentReadName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -3094,7 +3184,9 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "deploymentReadStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the deployment
@@ -3117,7 +3209,9 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "generatedName": "deploymentReadEnvironment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this deployment is used in
@@ -3157,11 +3251,15 @@ Upload a document to be indexed and used for search.
           "key": "active_model_version_ids",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentReadActiveModelVersionIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "generatedName": "DeploymentReadActiveModelVersionIdsItem",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3178,7 +3276,9 @@ Upload a document to be indexed and used for search.
           "key": "last_deployed_on",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentReadLastDeployedOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -3232,7 +3332,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the document.",
+            "generatedName": "DocumentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3248,7 +3350,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "The human-readable name for the document.",
+            "generatedName": "DocumentLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 1000,
               "minLength": undefined,
@@ -3264,15 +3368,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "documentExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+              "generatedName": "DocumentExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+                "generatedName": "DocumentExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": 1000,
                   "minLength": undefined,
@@ -3301,7 +3411,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this link.",
+            "generatedName": "DocumentDocumentToDocumentIndexId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3317,7 +3429,9 @@ Upload a document to be indexed and used for search.
           "key": "document_index_id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+            "generatedName": "DocumentDocumentToDocumentIndexDocumentIndexId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3333,7 +3447,9 @@ Upload a document to be indexed and used for search.
           "key": "indexing_state",
           "schema": {
             "description": undefined,
+            "generatedName": "documentDocumentToDocumentIndexIndexingState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing where this document is along its indexing lifecycle for this index.
@@ -3369,7 +3485,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the document index",
+            "generatedName": "DocumentIndexCreateRequestLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": 1,
@@ -3385,7 +3503,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
+            "generatedName": "DocumentIndexCreateRequestName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": 1,
@@ -3401,7 +3521,9 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "documentIndexCreateRequestStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the document index
@@ -3423,7 +3545,9 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "generatedName": "documentIndexCreateRequestEnvironment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this document index is used in
@@ -3446,10 +3570,13 @@ Upload a document to be indexed and used for search.
           "key": "indexing_config",
           "schema": {
             "description": "Configuration representing how documents should be indexed",
+            "generatedName": "DocumentIndexCreateRequestIndexingConfig",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "DocumentIndexCreateRequestIndexingConfigKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3457,8 +3584,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "DocumentIndexCreateRequestIndexingConfigValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -3470,11 +3600,15 @@ Upload a document to be indexed and used for search.
           "key": "copy_documents_from_index_id",
           "schema": {
             "description": undefined,
+            "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
+              "generatedName": "DocumentIndexCreateRequestCopyDocumentsFromIndexId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3502,7 +3636,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentIndexReadId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3518,7 +3654,9 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": undefined,
+            "generatedName": "DocumentIndexReadCreated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -3532,7 +3670,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the document index",
+            "generatedName": "DocumentIndexReadLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -3548,7 +3688,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
+            "generatedName": "DocumentIndexReadName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -3564,7 +3706,9 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "documentIndexReadStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the document index
@@ -3586,7 +3730,9 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "generatedName": "documentIndexReadEnvironment",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this document index is used in
@@ -3609,10 +3755,13 @@ Upload a document to be indexed and used for search.
           "key": "indexing_config",
           "schema": {
             "description": "Configuration representing how documents should be indexed",
+            "generatedName": "DocumentIndexReadIndexingConfig",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "DocumentIndexReadIndexingConfigKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3620,8 +3769,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "DocumentIndexReadIndexingConfigValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -3666,7 +3818,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The Vellum-generated ID of the completion.",
+            "generatedName": "EnrichedNormalizedCompletionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3682,15 +3836,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "enrichedNormalizedCompletionExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+              "generatedName": "EnrichedNormalizedCompletionExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+                "generatedName": "EnrichedNormalizedCompletionExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3708,7 +3868,9 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The text generated by the LLM.",
+            "generatedName": "EnrichedNormalizedCompletionText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3728,7 +3890,9 @@ Upload a document to be indexed and used for search.
 * \`LENGTH\` - LENGTH
 * \`STOP\` - STOP
 * \`UNKNOWN\` - UNKNOWN",
+            "generatedName": "EnrichedNormalizedCompletionFinishReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -3747,11 +3911,15 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
+            "generatedName": "enrichedNormalizedCompletionLogprobs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The logprobs of the completion. Only present if specified in the original request options.",
+              "generatedName": "EnrichedNormalizedCompletionLogprobs",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -3771,7 +3939,9 @@ Upload a document to be indexed and used for search.
           "key": "model_version_id",
           "schema": {
             "description": "The ID of the model version used to generate this completion.",
+            "generatedName": "EnrichedNormalizedCompletionModelVersionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3787,7 +3957,9 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "enrichedNormalizedCompletionType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3846,11 +4018,15 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
+            "generatedName": "evaluationParamsTarget",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+              "generatedName": "EvaluationParamsTarget",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3878,11 +4054,15 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
+            "generatedName": "evaluationParamsRequestTarget",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+              "generatedName": "EvaluationParamsRequestTarget",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3910,15 +4090,21 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_id",
           "schema": {
             "description": undefined,
+            "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+              "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+                "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3936,15 +4122,21 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_name",
           "schema": {
             "description": undefined,
+            "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+              "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+                "generatedName": "ExecuteWorkflowStreamRequestWorkflowDeploymentName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -3962,15 +4154,21 @@ Upload a document to be indexed and used for search.
           "key": "release_tag",
           "schema": {
             "description": undefined,
+            "generatedName": "executeWorkflowStreamRequestReleaseTag",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+              "generatedName": "ExecuteWorkflowStreamRequestReleaseTag",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+                "generatedName": "ExecuteWorkflowStreamRequestReleaseTag",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -3988,7 +4186,9 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": undefined,
+            "generatedName": "ExecuteWorkflowStreamRequestInputs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4007,15 +4207,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "executeWorkflowStreamRequestExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a unique identifier for tracking purposes.",
+              "generatedName": "ExecuteWorkflowStreamRequestExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a unique identifier for tracking purposes.",
+                "generatedName": "ExecuteWorkflowStreamRequestExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -4073,15 +4279,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "generatedName": "generateBodyRequestDeploymentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "generatedName": "GenerateBodyRequestDeploymentId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "generatedName": "GenerateBodyRequestDeploymentId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4099,15 +4311,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "generatedName": "generateBodyRequestDeploymentName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "generatedName": "GenerateBodyRequestDeploymentName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "generatedName": "GenerateBodyRequestDeploymentName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -4125,7 +4343,9 @@ Upload a document to be indexed and used for search.
           "key": "requests",
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+            "generatedName": "GenerateBodyRequestRequests",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4144,11 +4364,15 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "generatedName": "generateBodyRequestOptions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
+              "generatedName": "GenerateBodyRequestOptions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4179,7 +4403,9 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "generatedName": "GenerateErrorResponseDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4206,7 +4432,9 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
+            "generatedName": "generateOptionsRequestLogprobs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Which logprobs to include, if any. Defaults to NONE.
@@ -4239,10 +4467,13 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "generatedName": "GenerateRequestInputValues",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "GenerateRequestInputValuesKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4250,8 +4481,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "GenerateRequestInputValuesValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -4263,11 +4497,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "generatedName": "generateRequestChatHistory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
+              "generatedName": "GenerateRequestChatHistory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -4287,19 +4525,27 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
+            "generatedName": "generateRequestExternalIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+              "generatedName": "GenerateRequestExternalIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+                "generatedName": "GenerateRequestExternalIds",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "generatedName": "GenerateRequestExternalIdsItem",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -4329,7 +4575,9 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": "The results of each generation request.",
+            "generatedName": "GenerateResponseResults",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4359,7 +4607,9 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "generatedName": "generateResultData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
@@ -4378,7 +4628,9 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "generatedName": "generateResultError",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
@@ -4408,7 +4660,9 @@ Upload a document to be indexed and used for search.
           "key": "completions",
           "schema": {
             "description": "The generated completions. This will generally be a list of length one.",
+            "generatedName": "GenerateResultDataCompletions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4438,7 +4692,9 @@ Upload a document to be indexed and used for search.
           "key": "message",
           "schema": {
             "description": "The error message returned by the LLM provider.",
+            "generatedName": "GenerateResultErrorMessage",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4465,15 +4721,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "generatedName": "generateStreamBodyRequestDeploymentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "generatedName": "GenerateStreamBodyRequestDeploymentId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "generatedName": "GenerateStreamBodyRequestDeploymentId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4491,15 +4753,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "generatedName": "generateStreamBodyRequestDeploymentName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "generatedName": "GenerateStreamBodyRequestDeploymentName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "generatedName": "GenerateStreamBodyRequestDeploymentName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -4517,7 +4785,9 @@ Upload a document to be indexed and used for search.
           "key": "requests",
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+            "generatedName": "GenerateStreamBodyRequestRequests",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4536,11 +4806,15 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "generatedName": "generateStreamBodyRequestOptions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
+              "generatedName": "GenerateStreamBodyRequestOptions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4596,7 +4870,9 @@ Upload a document to be indexed and used for search.
           "key": "request_index",
           "schema": {
             "description": undefined,
+            "generatedName": "GenerateStreamResultRequestIndex",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4610,7 +4886,9 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "generatedName": "generateStreamResultData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4629,7 +4907,9 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "generatedName": "generateStreamResultError",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4659,7 +4939,9 @@ Upload a document to be indexed and used for search.
           "key": "completion_index",
           "schema": {
             "description": undefined,
+            "generatedName": "GenerateStreamResultDataCompletionIndex",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4785,7 +5067,9 @@ Upload a document to be indexed and used for search.
           "key": "base_model",
           "schema": {
             "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
+            "generatedName": "ModelVersionBuildConfigBaseModel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4801,11 +5085,15 @@ Upload a document to be indexed and used for search.
           "key": "sandbox_snapshot",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionBuildConfigSandboxSnapshot",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
+              "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4836,10 +5124,13 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
+            "generatedName": "ModelVersionCompilePromptRequestRequestInputValues",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "ModelVersionCompilePromptRequestRequestInputValuesKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4847,8 +5138,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "ModelVersionCompilePromptRequestRequestInputValuesValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -4896,7 +5190,9 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
+            "generatedName": "ModelVersionCompiledPromptText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4912,7 +5208,9 @@ Upload a document to be indexed and used for search.
           "key": "num_tokens",
           "schema": {
             "description": "The approximate number of tokens used by the compiled prompt.",
+            "generatedName": "ModelVersionCompiledPromptNumTokens",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4951,7 +5249,9 @@ Upload a document to be indexed and used for search.
           "key": "input_variables",
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
+            "generatedName": "ModelVersionExecConfigInputVariables",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4970,11 +5270,15 @@ Upload a document to be indexed and used for search.
           "key": "prompt_template",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigPromptTemplate",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The template used to generate prompts for this model version.",
+              "generatedName": "ModelVersionExecConfigPromptTemplate",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4991,7 +5295,9 @@ Upload a document to be indexed and used for search.
           "key": "prompt_block_data",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigPromptBlockData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -5010,11 +5316,15 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ModelVersionExecConfigPromptSyntaxVersion",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -5040,7 +5350,9 @@ Upload a document to be indexed and used for search.
           "key": "temperature",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionExecConfigParametersTemperature",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5054,7 +5366,9 @@ Upload a document to be indexed and used for search.
           "key": "max_tokens",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionExecConfigParametersMaxTokens",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -5068,7 +5382,9 @@ Upload a document to be indexed and used for search.
           "key": "top_p",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionExecConfigParametersTopP",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5082,7 +5398,9 @@ Upload a document to be indexed and used for search.
           "key": "frequency_penalty",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionExecConfigParametersFrequencyPenalty",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5096,7 +5414,9 @@ Upload a document to be indexed and used for search.
           "key": "presence_penalty",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionExecConfigParametersPresencePenalty",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5110,18 +5430,25 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigParametersLogitBias",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ModelVersionExecConfigParametersLogitBias",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "ModelVersionExecConfigParametersLogitBias",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "ModelVersionExecConfigParametersLogitBiasKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -5129,14 +5456,19 @@ Upload a document to be indexed and used for search.
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "nullable",
                   "value": {
                     "description": undefined,
+                    "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -5154,19 +5486,27 @@ Upload a document to be indexed and used for search.
           "key": "stop",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigParametersStop",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ModelVersionExecConfigParametersStop",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "ModelVersionExecConfigParametersStop",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "generatedName": "ModelVersionExecConfigParametersStopItem",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -5185,11 +5525,15 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionExecConfigParametersTopK",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ModelVersionExecConfigParametersTopK",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -5215,7 +5559,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this model version.",
+            "generatedName": "ModelVersionReadId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5231,7 +5577,9 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": "Timestamp of when this model version was created.",
+            "generatedName": "ModelVersionReadCreated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -5245,7 +5593,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this model version.",
+            "generatedName": "ModelVersionReadLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -5301,7 +5651,9 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": "The unique id of this model version as it exists in the above provider's system.",
+            "generatedName": "ModelVersionReadExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 250,
               "minLength": undefined,
@@ -5345,7 +5697,9 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionReadStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -5411,7 +5765,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the sandbox snapshot.",
+            "generatedName": "ModelVersionSandboxSnapshotId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5427,11 +5783,15 @@ Upload a document to be indexed and used for search.
           "key": "prompt_index",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionSandboxSnapshotPromptIndex",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The index of the prompt in the sandbox snapshot.",
+              "generatedName": "ModelVersionSandboxSnapshotPromptIndex",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -5446,11 +5806,15 @@ Upload a document to be indexed and used for search.
           "key": "prompt_id",
           "schema": {
             "description": undefined,
+            "generatedName": "modelVersionSandboxSnapshotPromptId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the prompt in the sandbox snapshot.",
+              "generatedName": "ModelVersionSandboxSnapshotPromptId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5467,11 +5831,15 @@ Upload a document to be indexed and used for search.
           "key": "sandbox_id",
           "schema": {
             "description": undefined,
+            "generatedName": "ModelVersionSandboxSnapshotSandboxId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ModelVersionSandboxSnapshotSandboxId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5499,7 +5867,9 @@ Upload a document to be indexed and used for search.
           "key": "tokens",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedLogProbsTokens",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5518,11 +5888,15 @@ Upload a document to be indexed and used for search.
           "key": "likelihood",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedLogProbsLikelihood",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "NormalizedLogProbsLikelihood",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -5548,7 +5922,9 @@ Upload a document to be indexed and used for search.
           "key": "token",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedTokenLogProbsToken",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5564,11 +5940,15 @@ Upload a document to be indexed and used for search.
           "key": "logprob",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedTokenLogProbsLogprob",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "NormalizedTokenLogProbsLogprob",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -5583,14 +5963,19 @@ Upload a document to be indexed and used for search.
           "key": "top_logprobs",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedTokenLogProbsTopLogprobs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "NormalizedTokenLogProbsTopLogprobs",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "NormalizedTokenLogProbsTopLogprobsKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5598,14 +5983,19 @@ Upload a document to be indexed and used for search.
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
                 "description": undefined,
+                "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "nullable",
                 "value": {
                   "description": undefined,
+                  "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "type": "double",
                   },
@@ -5622,7 +6012,9 @@ Upload a document to be indexed and used for search.
           "key": "text_offset",
           "schema": {
             "description": undefined,
+            "generatedName": "NormalizedTokenLogProbsTextOffset",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -5647,11 +6039,15 @@ Upload a document to be indexed and used for search.
           "key": "count",
           "schema": {
             "description": undefined,
+            "generatedName": "paginatedSlimDocumentListCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PaginatedSlimDocumentListCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -5666,15 +6062,21 @@ Upload a document to be indexed and used for search.
           "key": "next",
           "schema": {
             "description": undefined,
+            "generatedName": "paginatedSlimDocumentListNext",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PaginatedSlimDocumentListNext",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PaginatedSlimDocumentListNext",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5692,15 +6094,21 @@ Upload a document to be indexed and used for search.
           "key": "previous",
           "schema": {
             "description": undefined,
+            "generatedName": "paginatedSlimDocumentListPrevious",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PaginatedSlimDocumentListPrevious",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PaginatedSlimDocumentListPrevious",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5718,11 +6126,15 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": undefined,
+            "generatedName": "paginatedSlimDocumentListResults",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PaginatedSlimDocumentListResults",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5740,7 +6152,9 @@ Upload a document to be indexed and used for search.
     },
     "ProcessingFailureReasonEnum": {
       "description": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+      "generatedName": "ProcessingFailureReasonEnum",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "EXCEEDED_CHARACTER_LIMIT",
@@ -5823,7 +6237,9 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptNodeResultDataOutputId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5839,15 +6255,21 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "promptNodeResultDataText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptNodeResultDataText",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptNodeResultDataText",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5865,15 +6287,21 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "generatedName": "promptNodeResultDataDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptNodeResultDataDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptNodeResultDataDelta",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5902,7 +6330,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5957,7 +6387,9 @@ Upload a document to be indexed and used for search.
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockDataVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -5971,7 +6403,9 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockDataBlocks",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6001,7 +6435,9 @@ Upload a document to be indexed and used for search.
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockDataRequestVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -6015,7 +6451,9 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockDataRequestBlocks",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6045,11 +6483,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesChatRole",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesChatRole",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6069,11 +6511,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesChatMessageUnterminated",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -6088,15 +6534,21 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesTemplate",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesTemplate",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesTemplate",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6114,11 +6566,15 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesTemplateType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesTemplateType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6138,15 +6594,21 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesFunctionName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesFunctionName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesFunctionName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6164,15 +6626,21 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesFunctionDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesFunctionDescription",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6190,18 +6658,25 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "PromptTemplateBlockPropertiesFunctionParametersKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -6209,8 +6684,11 @@ Upload a document to be indexed and used for search.
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "PromptTemplateBlockPropertiesFunctionParametersValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -6224,15 +6702,21 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesBlocks",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesBlocks",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesBlocks",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -6264,11 +6748,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestChatRole",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6288,11 +6776,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestChatMessageUnterminated",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -6307,15 +6799,21 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestTemplate",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesRequestTemplate",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6333,11 +6831,15 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestTemplateType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6357,15 +6859,21 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesRequestFunctionName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -6383,15 +6891,21 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesRequestFunctionDescription",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -6409,18 +6923,25 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParametersKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -6428,8 +6949,11 @@ Upload a document to be indexed and used for search.
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParametersValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -6443,15 +6967,21 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "PromptTemplateBlockPropertiesRequestBlocks",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "PromptTemplateBlockPropertiesRequestBlocks",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -6483,7 +7013,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "PromptTemplateBlockRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -6538,7 +7070,9 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": "The name of the input variable.",
+            "generatedName": "PromptTemplateInputVariableKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6565,7 +7099,9 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": "The name of the input variable.",
+            "generatedName": "PromptTemplateInputVariableRequestKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -6656,7 +7192,9 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "generatedName": "RegisterPromptErrorResponseDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6683,7 +7221,9 @@ Upload a document to be indexed and used for search.
           "key": "temperature",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestTemperature",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -6697,7 +7237,9 @@ Upload a document to be indexed and used for search.
           "key": "max_tokens",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestMaxTokens",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -6711,15 +7253,21 @@ Upload a document to be indexed and used for search.
           "key": "stop",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestStop",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "RegisterPromptModelParametersRequestStop",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "RegisterPromptModelParametersRequestStopItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6737,7 +7285,9 @@ Upload a document to be indexed and used for search.
           "key": "top_p",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestTopP",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -6751,11 +7301,15 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
+            "generatedName": "registerPromptModelParametersRequestTopK",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RegisterPromptModelParametersRequestTopK",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -6770,7 +7324,9 @@ Upload a document to be indexed and used for search.
           "key": "frequency_penalty",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestFrequencyPenalty",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -6784,7 +7340,9 @@ Upload a document to be indexed and used for search.
           "key": "presence_penalty",
           "schema": {
             "description": undefined,
+            "generatedName": "RegisterPromptModelParametersRequestPresencePenalty",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -6798,18 +7356,25 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
+            "generatedName": "registerPromptModelParametersRequestLogitBias",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RegisterPromptModelParametersRequestLogitBias",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "RegisterPromptModelParametersRequestLogitBiasKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -6817,14 +7382,19 @@ Upload a document to be indexed and used for search.
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "nullable",
                   "value": {
                     "description": undefined,
+                    "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -6853,7 +7423,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated prompt.",
+            "generatedName": "RegisterPromptPromptId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6869,7 +7441,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated prompt.",
+            "generatedName": "RegisterPromptPromptLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6896,11 +7470,15 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
+            "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RegisterPromptPromptInfoRequestPromptSyntaxVersion",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -6929,7 +7507,9 @@ Upload a document to be indexed and used for search.
           "key": "input_variables",
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
+            "generatedName": "RegisterPromptPromptInfoRequestInputVariables",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6959,7 +7539,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for corresponding entities created in Vellum.",
+            "generatedName": "RegisterPromptRequestRequestLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -6975,7 +7557,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A uniquely-identifying name for corresponding entities created in Vellum.",
+            "generatedName": "RegisterPromptRequestRequestName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -7028,7 +7612,9 @@ Upload a document to be indexed and used for search.
           "key": "model",
           "schema": {
             "description": "The initial model to use for this prompt",
+            "generatedName": "RegisterPromptRequestRequestModel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -7058,14 +7644,19 @@ Upload a document to be indexed and used for search.
           "key": "meta",
           "schema": {
             "description": undefined,
+            "generatedName": "registerPromptRequestRequestMeta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include additional metadata to store along with the prompt.",
+              "generatedName": "RegisterPromptRequestRequestMeta",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "RegisterPromptRequestRequestMetaKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7073,8 +7664,11 @@ Upload a document to be indexed and used for search.
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
+                "generatedName": "RegisterPromptRequestRequestMetaValue",
+                "nameOverride": undefined,
                 "type": "unknown",
               },
             },
@@ -7179,7 +7773,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated deployment.",
+            "generatedName": "RegisteredPromptDeploymentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7195,7 +7791,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A uniquely-identifying name for generated deployment.",
+            "generatedName": "RegisteredPromptDeploymentName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7211,7 +7809,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated deployment.",
+            "generatedName": "RegisteredPromptDeploymentLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7238,7 +7838,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated model version.",
+            "generatedName": "RegisteredPromptModelVersionId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7254,7 +7856,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated model version.",
+            "generatedName": "RegisteredPromptModelVersionLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7281,7 +7885,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated sandbox.",
+            "generatedName": "RegisteredPromptSandboxId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7297,7 +7903,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated sandbox.",
+            "generatedName": "RegisteredPromptSandboxLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7324,7 +7932,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated sandbox snapshot.",
+            "generatedName": "RegisteredPromptSandboxSnapshotId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7351,11 +7961,15 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
+            "generatedName": "sandboxMetricInputParamsParams",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SandboxMetricInputParamsParams",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -7386,11 +8000,15 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
+            "generatedName": "sandboxMetricInputParamsRequestParams",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SandboxMetricInputParamsRequestParams",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -7446,7 +8064,9 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "generatedName": "SandboxNodeResultDataOutputId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7462,15 +8082,21 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "sandboxNodeResultDataText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SandboxNodeResultDataText",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "SandboxNodeResultDataText",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7488,15 +8114,21 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "generatedName": "sandboxNodeResultDataDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SandboxNodeResultDataDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "SandboxNodeResultDataDelta",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7525,11 +8157,15 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "sandboxScenarioLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SandboxScenarioLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7546,7 +8182,9 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": "The inputs for the scenario",
+            "generatedName": "SandboxScenarioInputs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7565,7 +8203,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The id of the scenario",
+            "generatedName": "SandboxScenarioId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7606,7 +8246,9 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": undefined,
+            "generatedName": "ScenarioInputKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7622,11 +8264,15 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -7646,11 +8292,15 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputValue",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7667,11 +8317,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputChatHistory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputChatHistory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -7702,7 +8356,9 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": undefined,
+            "generatedName": "ScenarioInputRequestKey",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -7718,11 +8374,15 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputRequestType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputRequestType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -7742,11 +8402,15 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputRequestValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputRequestValue",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7763,11 +8427,15 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "generatedName": "scenarioInputRequestChatHistory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "ScenarioInputRequestChatHistory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -7820,7 +8488,9 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "generatedName": "SearchErrorResponseDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7847,19 +8517,27 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
+            "generatedName": "searchFiltersRequestExternalIds",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The document external IDs to filter by",
+              "generatedName": "SearchFiltersRequestExternalIds",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The document external IDs to filter by",
+                "generatedName": "SearchFiltersRequestExternalIds",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "generatedName": "SearchFiltersRequestExternalIdsItem",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -7914,7 +8592,9 @@ Upload a document to be indexed and used for search.
           "key": "results_output_id",
           "schema": {
             "description": undefined,
+            "generatedName": "SearchNodeResultDataResultsOutputId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7930,14 +8610,19 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": undefined,
+            "generatedName": "SearchNodeResultDataResults",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "generatedName": "SearchNodeResultDataResultsItem",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "SearchNodeResultDataResultsItemKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7945,8 +8630,11 @@ Upload a document to be indexed and used for search.
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
+                "generatedName": "SearchNodeResultDataResultsItemValue",
+                "nameOverride": undefined,
                 "type": "unknown",
               },
             },
@@ -7959,15 +8647,21 @@ Upload a document to be indexed and used for search.
           "key": "text_output_id",
           "schema": {
             "description": undefined,
+            "generatedName": "searchNodeResultDataTextOutputId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SearchNodeResultDataTextOutputId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "SearchNodeResultDataTextOutputId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7985,15 +8679,21 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "searchNodeResultDataText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "SearchNodeResultDataText",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "SearchNodeResultDataText",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8022,15 +8722,21 @@ Upload a document to be indexed and used for search.
           "key": "index_id",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestBodyRequestIndexId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the index to search against. Must provide either this or index_name.",
+              "generatedName": "SearchRequestBodyRequestIndexId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the index to search against. Must provide either this or index_name.",
+                "generatedName": "SearchRequestBodyRequestIndexId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8048,15 +8754,21 @@ Upload a document to be indexed and used for search.
           "key": "index_name",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestBodyRequestIndexName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the index to search against. Must provide either this or index_id.",
+              "generatedName": "SearchRequestBodyRequestIndexName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the index to search against. Must provide either this or index_id.",
+                "generatedName": "SearchRequestBodyRequestIndexName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -8074,7 +8786,9 @@ Upload a document to be indexed and used for search.
           "key": "query",
           "schema": {
             "description": "The query to search for.",
+            "generatedName": "SearchRequestBodyRequestQuery",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -8090,11 +8804,15 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestBodyRequestOptions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Configuration options for the search.",
+              "generatedName": "SearchRequestBodyRequestOptions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8125,15 +8843,21 @@ Upload a document to be indexed and used for search.
           "key": "limit",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestOptionsRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The maximum number of results to return.",
+              "generatedName": "SearchRequestOptionsRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The maximum number of results to return.",
+                "generatedName": "SearchRequestOptionsRequestLimit",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -8149,11 +8873,15 @@ Upload a document to be indexed and used for search.
           "key": "weights",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestOptionsRequestWeights",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The weights to use for the search. Must add up to 1.0.",
+              "generatedName": "SearchRequestOptionsRequestWeights",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8173,11 +8901,15 @@ Upload a document to be indexed and used for search.
           "key": "result_merging",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestOptionsRequestResultMerging",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The configuration for merging results.",
+              "generatedName": "SearchRequestOptionsRequestResultMerging",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8197,11 +8929,15 @@ Upload a document to be indexed and used for search.
           "key": "filters",
           "schema": {
             "description": undefined,
+            "generatedName": "searchRequestOptionsRequestFilters",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The filters to apply to the search.",
+              "generatedName": "SearchRequestOptionsRequestFilters",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8232,7 +8968,9 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": "The results of the search. Each result represents a chunk that matches the search query.",
+            "generatedName": "SearchResponseResults",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -8276,7 +9014,9 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The text of the chunk that matched the search query.",
+            "generatedName": "SearchResultText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8292,11 +9032,15 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "generatedName": "SearchResultKeywords",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "generatedName": "SearchResultKeywordsItem",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8313,7 +9057,9 @@ Upload a document to be indexed and used for search.
           "key": "score",
           "schema": {
             "description": "A score representing how well the chunk matches the search query.",
+            "generatedName": "SearchResultScore",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -8338,7 +9084,9 @@ Upload a document to be indexed and used for search.
           "key": "enabled",
           "schema": {
             "description": "Whether to enable merging results",
+            "generatedName": "SearchResultMergingRequestEnabled",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -8363,7 +9111,9 @@ Upload a document to be indexed and used for search.
           "key": "semantic_similarity",
           "schema": {
             "description": "The relative weight to give to semantic similarity",
+            "generatedName": "SearchWeightsRequestSemanticSimilarity",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -8377,7 +9127,9 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": "The relative weight to give to keyword matches",
+            "generatedName": "SearchWeightsRequestKeywords",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -8402,7 +9154,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this document.",
+            "generatedName": "SlimDocumentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8418,15 +9172,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "slimDocumentExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided when uploading the document.",
+              "generatedName": "SlimDocumentExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided when uploading the document.",
+                "generatedName": "SlimDocumentExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": 1000,
                   "minLength": undefined,
@@ -8444,7 +9204,9 @@ Upload a document to be indexed and used for search.
           "key": "last_uploaded_at",
           "schema": {
             "description": "A timestamp representing when this document was most recently uploaded.",
+            "generatedName": "SlimDocumentLastUploadedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -8458,7 +9220,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this document.",
+            "generatedName": "SlimDocumentLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 1000,
               "minLength": undefined,
@@ -8474,7 +9238,9 @@ Upload a document to be indexed and used for search.
           "key": "processing_state",
           "schema": {
             "description": undefined,
+            "generatedName": "slimDocumentProcessingState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
@@ -8498,13 +9264,17 @@ Upload a document to be indexed and used for search.
           "key": "processing_failure_reason",
           "schema": {
             "description": undefined,
+            "generatedName": "slimDocumentProcessingFailureReason",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
 
 * \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+              "generatedName": "SlimDocumentProcessingFailureReason",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8524,7 +9294,9 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "slimDocumentStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The document's current status.
@@ -8545,15 +9317,21 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "generatedName": "slimDocumentKeywords",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+              "generatedName": "SlimDocumentKeywords",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "SlimDocumentKeywordsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8571,7 +9349,9 @@ Upload a document to be indexed and used for search.
           "key": "document_to_document_indexes",
           "schema": {
             "description": undefined,
+            "generatedName": "SlimDocumentDocumentToDocumentIndexes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -8588,7 +9368,9 @@ Upload a document to be indexed and used for search.
     },
     "SlimDocumentStatusEnum": {
       "description": "* \`ACTIVE\` - Active",
+      "generatedName": "SlimDocumentStatusEnum",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "literal",
       "value": {
         "string": "ACTIVE",
@@ -8610,15 +9392,21 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualRequestId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+              "generatedName": "SubmitCompletionActualRequestId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+                "generatedName": "SubmitCompletionActualRequestId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -8636,15 +9424,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualRequestExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+              "generatedName": "SubmitCompletionActualRequestExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+                "generatedName": "SubmitCompletionActualRequestExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -8662,15 +9456,21 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualRequestText",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Text representing what the completion _should_ have been.",
+              "generatedName": "SubmitCompletionActualRequestText",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Text representing what the completion _should_ have been.",
+                "generatedName": "SubmitCompletionActualRequestText",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8688,15 +9488,21 @@ Upload a document to be indexed and used for search.
           "key": "quality",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualRequestQuality",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+              "generatedName": "SubmitCompletionActualRequestQuality",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+                "generatedName": "SubmitCompletionActualRequestQuality",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -8712,15 +9518,21 @@ Upload a document to be indexed and used for search.
           "key": "timestamp",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualRequestTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+              "generatedName": "SubmitCompletionActualRequestTimestamp",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+                "generatedName": "SubmitCompletionActualRequestTimestamp",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "datetime",
                 },
@@ -8747,7 +9559,9 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": undefined,
+            "generatedName": "SubmitCompletionActualsErrorResponseDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8774,15 +9588,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualsRequestDeploymentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "generatedName": "SubmitCompletionActualsRequestDeploymentId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "generatedName": "SubmitCompletionActualsRequestDeploymentId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8800,15 +9620,21 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "generatedName": "submitCompletionActualsRequestDeploymentName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "generatedName": "SubmitCompletionActualsRequestDeploymentName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "generatedName": "SubmitCompletionActualsRequestDeploymentName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -8826,7 +9652,9 @@ Upload a document to be indexed and used for search.
           "key": "actuals",
           "schema": {
             "description": "Feedback regarding the quality of previously generated completions",
+            "generatedName": "SubmitCompletionActualsRequestActuals",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -8856,7 +9684,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "generatedName": "TerminalNodeChatHistoryResultName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8872,7 +9702,9 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "TerminalNodeChatHistoryResultValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -8902,7 +9734,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "generatedName": "TerminalNodeJsonResultName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8918,10 +9752,13 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "TerminalNodeJsonResultValue",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "TerminalNodeJsonResultValueKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8929,8 +9766,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "TerminalNodeJsonResultValueValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -9041,7 +9881,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "generatedName": "TerminalNodeStringResultName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9057,7 +9899,9 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "TerminalNodeStringResultValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9084,11 +9928,15 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
+            "generatedName": "testSuiteTestCaseTestCaseId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+              "generatedName": "TestSuiteTestCaseTestCaseId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -9105,15 +9953,21 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "testSuiteTestCaseLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A human-friendly label for the test case.",
+              "generatedName": "TestSuiteTestCaseLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "A human-friendly label for the test case.",
+                "generatedName": "TestSuiteTestCaseLabel",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -9131,10 +9985,13 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "generatedName": "TestSuiteTestCaseInputValues",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "TestSuiteTestCaseInputValuesKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -9142,8 +9999,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "TestSuiteTestCaseInputValuesValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -9180,11 +10040,15 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
+            "generatedName": "testSuiteTestCaseRequestTestCaseId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+              "generatedName": "TestSuiteTestCaseRequestTestCaseId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -9201,15 +10065,21 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "testSuiteTestCaseRequestLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A human-friendly label for the test case.",
+              "generatedName": "TestSuiteTestCaseRequestLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "A human-friendly label for the test case.",
+                "generatedName": "TestSuiteTestCaseRequestLabel",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -9227,10 +10097,13 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "generatedName": "TestSuiteTestCaseRequestInputValues",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "TestSuiteTestCaseRequestInputValuesKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -9238,8 +10111,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "TestSuiteTestCaseRequestInputValuesValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -9276,19 +10152,27 @@ Upload a document to be indexed and used for search.
           "key": "add_to_index_names",
           "schema": {
             "description": undefined,
+            "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+              "generatedName": "UploadDocumentBodyRequestAddToIndexNames",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                "generatedName": "UploadDocumentBodyRequestAddToIndexNames",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UploadDocumentBodyRequestAddToIndexNamesItem",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -9307,15 +10191,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "uploadDocumentBodyRequestExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+              "generatedName": "UploadDocumentBodyRequestExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                "generatedName": "UploadDocumentBodyRequestExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -9333,7 +10223,9 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly name for this document. Typically the filename.",
+            "generatedName": "UploadDocumentBodyRequestLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -9349,7 +10241,9 @@ Upload a document to be indexed and used for search.
           "key": "contents",
           "schema": {
             "description": "The file contents of the document.",
+            "generatedName": "UploadDocumentBodyRequestContents",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9365,19 +10259,27 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "generatedName": "uploadDocumentBodyRequestKeywords",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+              "generatedName": "UploadDocumentBodyRequestKeywords",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                "generatedName": "UploadDocumentBodyRequestKeywords",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UploadDocumentBodyRequestKeywordsItem",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -9407,7 +10309,9 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": undefined,
+            "generatedName": "UploadDocumentErrorResponseDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9434,7 +10338,9 @@ Upload a document to be indexed and used for search.
           "key": "document_id",
           "schema": {
             "description": "The ID of the newly created document.",
+            "generatedName": "UploadDocumentResponseDocumentId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9461,11 +10367,15 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "upsertSandboxScenarioRequestRequestLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UpsertSandboxScenarioRequestRequestLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -9482,7 +10392,9 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": "The inputs for the scenario",
+            "generatedName": "UpsertSandboxScenarioRequestRequestInputs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -9501,11 +10413,15 @@ Upload a document to be indexed and used for search.
           "key": "scenario_id",
           "schema": {
             "description": undefined,
+            "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
+              "generatedName": "UpsertSandboxScenarioRequestRequestScenarioId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -9522,7 +10438,9 @@ Upload a document to be indexed and used for search.
           "key": "metric_input_params",
           "schema": {
             "description": undefined,
+            "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -9552,7 +10470,9 @@ Upload a document to be indexed and used for search.
           "key": "message",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowEventErrorMessage",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9615,7 +10535,9 @@ Upload a document to be indexed and used for search.
           "key": "run_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowExecutionNodeResultEventRunId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9631,15 +10553,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowExecutionNodeResultEventExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowExecutionNodeResultEventExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "WorkflowExecutionNodeResultEventExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -9682,7 +10610,9 @@ Upload a document to be indexed and used for search.
           "key": "run_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowExecutionWorkflowResultEventRunId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9698,15 +10628,21 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowExecutionWorkflowResultEventExternalId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowExecutionWorkflowResultEventExternalId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "WorkflowExecutionWorkflowResultEventExternalId",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -9811,7 +10747,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowNodeResultEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9827,7 +10765,9 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowNodeResultEventNodeId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9843,7 +10783,9 @@ Upload a document to be indexed and used for search.
           "key": "node_result_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowNodeResultEventNodeResultId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -9873,15 +10815,21 @@ Upload a document to be indexed and used for search.
           "key": "ts",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowNodeResultEventTs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowNodeResultEventTs",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "WorkflowNodeResultEventTs",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "datetime",
                 },
@@ -9897,7 +10845,9 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowNodeResultEventData",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -9916,11 +10866,15 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowNodeResultEventError",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowNodeResultEventError",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -9987,7 +10941,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "generatedName": "WorkflowRequestChatHistoryInputRequestName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -10003,7 +10959,9 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowRequestChatHistoryInputRequestValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -10071,7 +11029,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "generatedName": "WorkflowRequestJsonInputRequestName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -10087,10 +11047,13 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowRequestJsonInputRequestValue",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "WorkflowRequestJsonInputRequestValueKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -10098,8 +11061,11 @@ Upload a document to be indexed and used for search.
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "WorkflowRequestJsonInputRequestValueValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -10122,7 +11088,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "generatedName": "WorkflowRequestStringInputRequestName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -10138,7 +11106,9 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowRequestStringInputRequestValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10165,7 +11135,9 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10195,7 +11167,9 @@ Upload a document to be indexed and used for search.
           "key": "ts",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventTs",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -10209,7 +11183,9 @@ Upload a document to be indexed and used for search.
           "key": "output",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutput",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -10228,11 +11204,15 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowResultEventError",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowResultEventError",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -10301,7 +11281,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataChatHistoryName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10331,7 +11313,9 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataChatHistoryNodeId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10347,11 +11331,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -10368,15 +11356,21 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "workflowResultEventOutputDataChatHistoryValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowResultEventOutputDataChatHistoryValue",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "generatedName": "WorkflowResultEventOutputDataChatHistoryValue",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -10408,7 +11402,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataJsonName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10438,7 +11434,9 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataJsonNodeId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10454,11 +11452,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "generatedName": "WorkflowResultEventOutputDataJsonDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "generatedName": "WorkflowResultEventOutputDataJsonDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -10475,14 +11477,19 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataJsonValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "WorkflowResultEventOutputDataJsonValue",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "WorkflowResultEventOutputDataJsonValueKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -10490,8 +11497,11 @@ Upload a document to be indexed and used for search.
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
+                "generatedName": "WorkflowResultEventOutputDataJsonValueValue",
+                "nameOverride": undefined,
                 "type": "unknown",
               },
             },
@@ -10515,7 +11525,9 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataStringName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10545,7 +11557,9 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "generatedName": "WorkflowResultEventOutputDataStringNodeId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -10561,11 +11575,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+            "generatedName": "WorkflowResultEventOutputDataStringDelta",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+              "generatedName": "WorkflowResultEventOutputDataStringDelta",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -10582,11 +11600,15 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+            "generatedName": "WorkflowResultEventOutputDataStringValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+              "generatedName": "WorkflowResultEventOutputDataStringValue",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,

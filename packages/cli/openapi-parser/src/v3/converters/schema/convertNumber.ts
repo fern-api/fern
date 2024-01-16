@@ -76,8 +76,8 @@ export function convertNumber({
         });
     }
     return wrapPrimitive({
-            nameOverride,
-            generatedName,
+        nameOverride,
+        generatedName,
         primitive: PrimitiveSchemaValueWithExample.float({
             example
         }),

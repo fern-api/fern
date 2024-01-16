@@ -89,27 +89,27 @@ export function getAllPropertiesForObject({
                 const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
                 if (definitionFile != null) {
                     const { properties: extendedProperties, warnings: extendedWarnings } = getAllPropertiesForObject({
-                            typeName: resolvedTypeOfExtension.rawName,
-                            objectDeclaration: resolvedTypeOfExtension.declaration,
-                            filepathOfDeclaration: resolvedTypeOfExtension.filepath,
-                            definitionFile,
-                            workspace,
-                            typeResolver,
-                            path: [
-                                ...path,
-                                {
-                                    reference: extension,
-                                    followedVia: "extension"
-                                },
-                                ...resolvedTypeOfExtension.objectPath.map(
-                                    (pathItem): ObjectPropertyPathPart => ({
-                                        reference: pathItem.reference,
-                                        followedVia: "alias"
-                                    })
-                                )
-                            ],
-                            seen
-                        });
+                        typeName: resolvedTypeOfExtension.rawName,
+                        objectDeclaration: resolvedTypeOfExtension.declaration,
+                        filepathOfDeclaration: resolvedTypeOfExtension.filepath,
+                        definitionFile,
+                        workspace,
+                        typeResolver,
+                        path: [
+                            ...path,
+                            {
+                                reference: extension,
+                                followedVia: "extension"
+                            },
+                            ...resolvedTypeOfExtension.objectPath.map(
+                                (pathItem): ObjectPropertyPathPart => ({
+                                    reference: pathItem.reference,
+                                    followedVia: "alias"
+                                })
+                            )
+                        ],
+                        seen
+                    });
                     extendedProperties.forEach((property) => {
                         properties[property.name] = property;
                     });
@@ -128,7 +128,11 @@ export function getAllPropertiesForObject({
             if (resolvedPropertyType != null) {
                 const propertyName = getPropertyName({ propertyKey, property: propertyDeclaration }).name;
                 if (properties[propertyName] != null) {
-                    warnings.push(`Duplicate property name "${propertyName}" on object "${typeName ?? "inline"}" at ${filepathOfDeclaration}`);
+                    warnings.push(
+                        `Duplicate property name "${propertyName}" on object "${
+                            typeName ?? "inline"
+                        }" at ${filepathOfDeclaration}`
+                    );
                 }
                 properties[propertyName] = {
                     wireKey: propertyKey,

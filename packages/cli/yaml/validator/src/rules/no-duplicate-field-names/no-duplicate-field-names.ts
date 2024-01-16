@@ -1,5 +1,8 @@
 import {
-    constructFernFileContext, convertObjectPropertyWithPathToString, getAllPropertiesForObject, getEnumName,
+    constructFernFileContext,
+    convertObjectPropertyWithPathToString,
+    getAllPropertiesForObject,
+    getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName,
     TypeResolverImpl
@@ -39,7 +42,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                         object: (objectDeclaration) => {
                             const typeNameString = getTypeDeclarationNameAsString(typeName);
-                            const {properties: allProperties, warnings } = getAllPropertiesForObject({
+                            const { properties: allProperties, warnings } = getAllPropertiesForObject({
                                 typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
