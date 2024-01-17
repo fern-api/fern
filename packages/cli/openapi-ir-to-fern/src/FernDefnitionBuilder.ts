@@ -268,11 +268,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                         } else {
                             return [
                                 env,
-                                Object.fromEntries(
-                                    Object.entries(url.urls).map(([name, url]) => {
-                                        return [name, url.substring(0, url.length - basePath.length)];
-                                    })
-                                )
+                                {
+                                    urls: Object.fromEntries(
+                                        Object.entries(url.urls).map(([name, url]) => {
+                                            return [name, url.substring(0, url.length - basePath.length)];
+                                        })
+                                    )
+                                }
                             ];
                         }
                     })

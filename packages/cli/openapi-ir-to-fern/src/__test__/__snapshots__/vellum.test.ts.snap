@@ -2503,9 +2503,11 @@ Used to submit feedback regarding the quality of previously generated completion
     "display-name": "Vellum Client API",
     "environments": {
       "Production": {
-        "Default": "https://api.vellum.ai",
-        "Documents": "https://documents.vellum.ai",
-        "Predict": "https://predict.vellum.ai",
+        "urls": {
+          "Default": "https://api.vellum.ai",
+          "Documents": "https://documents.vellum.ai",
+          "Predict": "https://predict.vellum.ai",
+        },
       },
     },
     "error-discrimination": {
