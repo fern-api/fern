@@ -10730,7 +10730,7 @@ exports[`open api parser deel simple 1`] = `
     "default-environment": "Default",
     "display-name": "Deel REST API",
     "environments": {
-      "Default": "https://api.letsdeel.com/rest/v1",
+      "Default": "https://api.letsdeel.com",
     },
     "error-discrimination": {
       "strategy": "status-code",
