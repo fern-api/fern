@@ -190,6 +190,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "request": undefined,
                 "response": {
                   "body": {
+<<<<<<< HEAD
                     "items": [
                       {
                         "id": "string",
@@ -205,6 +206,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         },
                       },
                     ],
+=======
+                    "items": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
@@ -268,6 +272,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "request": undefined,
                 "response": {
                   "body": {
+<<<<<<< HEAD
                     "items": [
                       {
                         "id": "string",
@@ -283,6 +288,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                         },
                       },
                     ],
+=======
+                    "items": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
@@ -579,7 +587,7 @@ This information provides hints to clients, allowing bank customers to select tr
                       "address": {
                         "address1": "1805 Tiburon Dr.",
                         "address2": "Building 14, Suite 1500",
-                        "countryCode": "string",
+                        "countryCode": "US",
                         "locality": "string",
                       },
                       "locator": "string",
@@ -591,7 +599,7 @@ This information provides hints to clients, allowing bank customers to select tr
                         "address": {
                           "address1": "1805 Tiburon Dr.",
                           "address2": "Building 14, Suite 1500",
-                          "countryCode": "string",
+                          "countryCode": "US",
                           "locality": "string",
                         },
                         "locator": "string",
@@ -1629,6 +1637,30 @@ Note: This operation requires an identity challenge if the financial institution
       "AccountIds": {
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
+<<<<<<< HEAD
+=======
+      },
+      "AccountItem": {
+        "docs": "An account item in a list items in the \`accounts\` schema.",
+        "properties": {
+          "allows": "AccountPermissions",
+          "id": {
+            "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
+            "type": "optional<ReadOnlyResourceId>",
+          },
+          "label": {
+            "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+            "type": "optional<string>",
+          },
+          "location": {
+            "docs": "Indicates where an account is held.",
+            "type": "optional<AccountLocation>",
+          },
+          "maskedNumber": "optional<MaskedAccountNumber>",
+          "nickname": "optional<AccountNickname>",
+          "product": "optional<ProductReference>",
+        },
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
       },
       "AccountItem": "AccountFields",
       "AccountJointOwner": {
@@ -1710,7 +1742,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
         "extends": [
           "AbstractBody",
-          "AbstractPagedBodyFields",
         ],
         "properties": {
           "count": {
@@ -1720,6 +1751,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "items": {
             "docs": "The array of items in this page of accounts. This array may be empty.",
             "type": "list<AccountItem>",
+          },
+          "limit": {
+            "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+            "type": "integer",
           },
           "nextPage_url": {
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -2078,10 +2113,13 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
         "extends": [
           "AbstractBody",
-          "AbstractPagedBodyFields",
         ],
         "properties": {
           "items": "unknown",
+          "limit": {
+            "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+            "type": "integer",
+          },
           "maximumOverdraftAccounts": {
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",

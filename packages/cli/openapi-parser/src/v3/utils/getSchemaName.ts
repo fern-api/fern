@@ -1,18 +1,16 @@
 import { camelCase, upperFirst } from "lodash-es";
+import { replaceStartingNumber } from "./replaceStartingNumber";
 
 export function getGeneratedTypeName(breadcrumbs: string[]): string {
     const underscoreDelimeted = breadcrumbs.join("_");
-    return prependFernIfStartWithNumber(upperFirst(camelCase(underscoreDelimeted)));
+    const name = upperFirst(camelCase(underscoreDelimeted));
+    if (/^\d/.test(name)) {
+        return replaceStartingNumber(name) ?? name;
+    }
+    return name;
 }
 
 export function getGeneratedPropertyName(breadcrumbs: string[]): string {
     const underscoreDelimeted = breadcrumbs.join("_");
     return camelCase(underscoreDelimeted);
-}
-
-export function prependFernIfStartWithNumber(name: string): string {
-    if (/^\d/.test(name)) {
-        return "Fern" + name;
-    }
-    return name;
 }

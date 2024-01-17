@@ -8471,8 +8471,42 @@ connection.
       "generatedName": "DevUser",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "user-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "devUserExternalIdentities",
+          "key": "external_identities",
+          "schema": {
+            "description": undefined,
+            "generatedName": "devUserExternalIdentities",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "IDs of the Dev User outside the DevRev SOR.",
+              "generatedName": "DevUserExternalIdentities",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "DevUserExternalIdentitiesItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "external-identity",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "dev-user-summary": {
       "description": undefined,
@@ -8623,8 +8657,37 @@ sort order. If not set, then no prior elements exist.
       "generatedName": "Enhancement",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "part-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "enhancementTargetCloseDate",
+          "key": "target_close_date",
+          "schema": {
+            "description": undefined,
+            "generatedName": "enhancementTargetCloseDate",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "Timestamp when the enhancement is expected to be closed.",
+              "generatedName": "EnhancementTargetCloseDate",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "type": "datetime",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "enhancement-summary": {
       "description": undefined,
@@ -9782,8 +9845,35 @@ sort order. If not set, then no prior elements exist.
       "generatedName": "Issue",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "work-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "issuePriority",
+          "key": "priority",
+          "schema": {
+            "description": undefined,
+            "generatedName": "issuePriority",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "IssuePriority",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "issue-priority",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "issue-priority": {
       "description": "Priority of the work based upon impact and criticality.",
@@ -11079,8 +11169,93 @@ empty.
       "generatedName": "RevOrg",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "org-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "revOrgDescription",
+          "key": "description",
+          "schema": {
+            "description": undefined,
+            "generatedName": "revOrgDescription",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "Description of the Rev organization.",
+              "generatedName": "RevOrgDescription",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "revOrgDomain",
+          "key": "domain",
+          "schema": {
+            "description": undefined,
+            "generatedName": "revOrgDomain",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "Company's domain name. Example - 'devrev.ai'.",
+              "generatedName": "RevOrgDomain",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "revOrgExternalRef",
+          "key": "external_ref",
+          "schema": {
+            "description": undefined,
+            "generatedName": "revOrgExternalRef",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "External ref is a unique identifier for the Rev (customer)
+organization from your primary customer system of records. If none
+is specified, a system-generated identifier will be assigned to the
+organization.
+",
+              "generatedName": "RevOrgExternalRef",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "rev-org-summary": {
       "description": undefined,
@@ -11645,8 +11820,65 @@ records.
       "generatedName": "RevUserSummary",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "user-base-summary",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "revUserSummaryExternalRef",
+          "key": "external_ref",
+          "schema": {
+            "description": undefined,
+            "generatedName": "revUserSummaryExternalRef",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "External ref is a mutable unique identifier for a user within the
+Rev organization from your primary customer record. If none is
+available, a good alternative is the email address/phone number
+which could uniquely identify the user. If none is specified, a
+system-generated identifier will be assigned to the user.
+",
+              "generatedName": "RevUserSummaryExternalRef",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "revUserSummaryRevOrg",
+          "key": "rev_org",
+          "schema": {
+            "description": undefined,
+            "generatedName": "revUserSummaryRevOrg",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "RevUserSummaryRevOrg",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "org-summary",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "set-tag-with-value": {
       "allOf": [],
@@ -12461,8 +12693,77 @@ tags.
       "generatedName": "Ticket",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "work-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "ticketGroup",
+          "key": "group",
+          "schema": {
+            "description": undefined,
+            "generatedName": "ticketGroup",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "TicketGroup",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "group-summary",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "ticketRevOrg",
+          "key": "rev_org",
+          "schema": {
+            "description": undefined,
+            "generatedName": "ticketRevOrg",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "TicketRevOrg",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "org-summary",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "ticketSeverity",
+          "key": "severity",
+          "schema": {
+            "description": undefined,
+            "generatedName": "ticketSeverity",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "TicketSeverity",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "ticket-severity",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "ticket-severity": {
       "description": "Severity of the ticket.",
@@ -12502,8 +12803,127 @@ tags.
       "generatedName": "TimelineComment",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "timeline-entry-base",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "timelineCommentArtifacts",
+          "key": "artifacts",
+          "schema": {
+            "description": undefined,
+            "generatedName": "timelineCommentArtifacts",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The artifacts for the comment.",
+              "generatedName": "TimelineCommentArtifacts",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "TimelineCommentArtifactsItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "artifact-summary",
+                "type": "reference",
+              },
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "timelineCommentBody",
+          "key": "body",
+          "schema": {
+            "description": undefined,
+            "generatedName": "timelineCommentBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The comment's body. If the comment has been deleted, then no body
+will appear in the response.
+",
+              "generatedName": "TimelineCommentBody",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "timelineCommentBodyType",
+          "key": "body_type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "timelineCommentBodyType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "TimelineCommentBodyType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "timeline-comment-body-type",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "timelineCommentSnapKitBody",
+          "key": "snap_kit_body",
+          "schema": {
+            "description": undefined,
+            "generatedName": "timelineCommentSnapKitBody",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The SnapKit Body of the comment.",
+              "generatedName": "TimelineCommentSnapKitBody",
+              "groupName": undefined,
+              "key": {
+                "description": undefined,
+                "generatedName": "TimelineCommentSnapKitBodyKey",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "nameOverride": undefined,
+              "type": "map",
+              "value": {
+                "generatedName": "TimelineCommentSnapKitBodyValue",
+                "nameOverride": undefined,
+                "type": "unknown",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "timeline-comment-body-type": {
       "description": "The type of the body to use for the comment.",

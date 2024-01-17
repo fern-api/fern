@@ -110,6 +110,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "response": {
             "properties": {
               "items": {
+<<<<<<< HEAD
                 "array": [
                   {
                     "properties": {
@@ -179,6 +180,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
                     "type": "object",
                   },
                 ],
+=======
+                "array": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                 "type": "array",
               },
               "limit": {
@@ -825,6 +829,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "response": {
             "properties": {
               "items": {
+<<<<<<< HEAD
                 "array": [
                   {
                     "properties": {
@@ -894,6 +899,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                     "type": "object",
                   },
                 ],
+=======
+                "array": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                 "type": "array",
               },
               "limit": {
@@ -1660,7 +1668,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                       },
                       "countryCode": {
                         "primitive": {
-                          "string": "string",
+                          "string": "US",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1718,7 +1726,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                           },
                           "countryCode": {
                             "primitive": {
-                              "string": "string",
+                              "string": "US",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -4622,8 +4630,44 @@ Note: This operation requires an identity challenge if the financial institution
       "generatedName": "Account",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "accountFields",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "accountAllows",
+          "key": "allows",
+          "schema": {
+            "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
+            "generatedName": "AccountAllows",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": "fullAccountPermissions",
+            "type": "reference",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "accountElectronicStatements",
+          "key": "electronicStatements",
+          "schema": {
+            "description": "If \`true\`, the customer has opted in to receive account statements electronically.",
+            "generatedName": "AccountElectronicStatements",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "accountAllowsFilter": {
       "description": "Values for the \`?allows=\` filter in [\`listAccounts\`](#op-listAccounts).
@@ -5008,8 +5052,182 @@ Note: This operation requires an identity challenge if the financial institution
       "generatedName": "AccountItem",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "accountFields",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemId",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The unique identifier for this account resource. This is an immutable opaque string.",
+              "generatedName": "AccountItemId",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "readOnlyResourceId",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemLabel",
+          "key": "label",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemLabel",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "generatedName": "AccountItemLabel",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": 80,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemNickname",
+          "key": "nickname",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemNickname",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "AccountItemNickname",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "accountNickname",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemMaskedNumber",
+          "key": "maskedNumber",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemMaskedNumber",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "AccountItemMaskedNumber",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "maskedAccountNumber",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "accountItemAllows",
+          "key": "allows",
+          "schema": {
+            "description": undefined,
+            "generatedName": "AccountItemAllows",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": "accountPermissions",
+            "type": "reference",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemProduct",
+          "key": "product",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemProduct",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "AccountItemProduct",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "productReference",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "accountFields": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "accountItemLocation",
+          "key": "location",
+          "schema": {
+            "description": undefined,
+            "generatedName": "accountItemLocation",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "Indicates where an account is held.",
+              "generatedName": "AccountItemLocation",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "accountLocation",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "accountJointOwner": {
       "allOf": [
@@ -5564,8 +5782,104 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "generatedName": "Address",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "addressFields",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "addressRegionName",
+          "key": "regionName",
+          "schema": {
+            "description": undefined,
+            "generatedName": "addressRegionName",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "generatedName": "AddressRegionName",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": 20,
+                "minLength": 2,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "addressRegionCode",
+          "key": "regionCode",
+          "schema": {
+            "description": undefined,
+            "generatedName": "addressRegionCode",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "generatedName": "AddressRegionCode",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": 2,
+                "minLength": 2,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "addressPostalCode",
+          "key": "postalCode",
+          "schema": {
+            "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
+            "generatedName": "AddressPostalCode",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": 10,
+              "minLength": 5,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {
+            "addressFields": {
+              "differentSchema": false,
+            },
+          },
+          "generatedName": "addressCountryCode",
+          "key": "countryCode",
+          "schema": {
+            "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
+            "generatedName": "AddressCountryCode",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": 2,
+              "minLength": 2,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "addressFields": {
       "allOf": [],

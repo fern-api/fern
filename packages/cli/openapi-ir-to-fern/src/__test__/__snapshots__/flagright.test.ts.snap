@@ -6671,7 +6671,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "WALLET": "WalletDetails",
         },
       },
+<<<<<<< HEAD
       "TransactionWithRulesResult": "Transaction",
+=======
+      "TransactionWithRulesResult": {
+        "docs": "Model for transaction payload with rules result",
+        "extends": [
+          "Transaction",
+        ],
+        "properties": {
+          "executedRules": "list<ExecutedRulesResult>",
+          "hitRules": "list<HitRulesDetails>",
+        },
+      },
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
       "UpiDetails": {
         "docs": "Model for UPI payment method",
         "properties": {

@@ -6,8 +6,9 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaEqual } from "../../utils/isSchemaEqual";
+import { convertNumberToSnakeCase } from "../../utils/replaceStartingNumber";
 import { convertSchema } from "../convertSchemas";
-import { convertEnum, convertNumberToSnakeCase } from "./convertEnum";
+import { convertEnum } from "./convertEnum";
 
 export function convertUndiscriminatedOneOf({
     nameOverride,

@@ -468,8 +468,39 @@ Here are some of the most used payload fields explained (you can find the full p
           "generatedName": "PostConsumerTransactionResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
           "schema": "TransactionMonitoringResult",
           "type": "reference",
+=======
+          "properties": [
+            {
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postConsumerTransactionResponseMessage",
+              "key": "message",
+              "schema": {
+                "description": undefined,
+                "generatedName": "postConsumerTransactionResponseMessage",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PostConsumerTransactionResponseMessage",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -3169,8 +3200,39 @@ Each consumer User entity needs three mandatory fields:
           "generatedName": "PostConsumerUserResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
           "schema": "UserMonitoringResult",
           "type": "reference",
+=======
+          "properties": [
+            {
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postConsumerUserResponseMessage",
+              "key": "message",
+              "schema": {
+                "description": undefined,
+                "generatedName": "postConsumerUserResponseMessage",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PostConsumerUserResponseMessage",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -7400,8 +7462,39 @@ Each consumer Business entity needs three mandatory fields:
           "generatedName": "PostBusinessUserResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
           "schema": "UserMonitoringResult",
           "type": "reference",
+=======
+          "properties": [
+            {
+              "audiences": [],
+              "conflict": {},
+              "generatedName": "postBusinessUserResponseMessage",
+              "key": "message",
+              "schema": {
+                "description": undefined,
+                "generatedName": "postBusinessUserResponseMessage",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PostBusinessUserResponseMessage",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -18970,8 +19063,70 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "BusinessWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "Business",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "businessWithRulesResultExecutedRules",
+          "key": "executedRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "businessWithRulesResultExecutedRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "BusinessWithRulesResultExecutedRules",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "BusinessWithRulesResultExecutedRulesItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "ExecutedRulesResult",
+                "type": "reference",
+              },
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "businessWithRulesResultHitRules",
+          "key": "hitRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "businessWithRulesResultHitRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "BusinessWithRulesResultHitRules",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "BusinessWithRulesResultHitRulesItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "HitRulesDetails",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "CardDetails": {
       "allOf": [],
@@ -29193,8 +29348,56 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "TransactionWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "Transaction",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "transactionWithRulesResultExecutedRules",
+          "key": "executedRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "TransactionWithRulesResultExecutedRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "generatedName": "TransactionWithRulesResultExecutedRulesItem",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "ExecutedRulesResult",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "transactionWithRulesResultHitRules",
+          "key": "hitRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "TransactionWithRulesResultHitRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "generatedName": "TransactionWithRulesResultHitRulesItem",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "HitRulesDetails",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "UPIDetails": {
       "allOf": [],
@@ -30031,8 +30234,70 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "UserWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
       "schema": "User",
       "type": "reference",
+=======
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "userWithRulesResultExecutedRules",
+          "key": "executedRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "userWithRulesResultExecutedRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "UserWithRulesResultExecutedRules",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "UserWithRulesResultExecutedRulesItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "ExecutedRulesResult",
+                "type": "reference",
+              },
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "userWithRulesResultHitRules",
+          "key": "hitRules",
+          "schema": {
+            "description": undefined,
+            "generatedName": "userWithRulesResultHitRules",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "UserWithRulesResultHitRules",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "UserWithRulesResultHitRulesItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "HitRulesDetails",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "WalletDetails": {
       "allOf": [],

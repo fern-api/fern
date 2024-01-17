@@ -3044,7 +3044,22 @@ connection.
           "auth_connection": "AuthConnection",
         },
       },
+<<<<<<< HEAD
       "DevUser": "UserBase",
+=======
+      "DevUser": {
+        "docs": undefined,
+        "extends": [
+          "UserBase",
+        ],
+        "properties": {
+          "external_identities": {
+            "docs": "IDs of the Dev User outside the DevRev SOR.",
+            "type": "optional<list<ExternalIdentity>>",
+          },
+        },
+      },
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
       "DevUserSummary": "UserBaseSummary",
       "DevUsersListResponse": {
         "docs": "The response to listing the Dev users.",
@@ -3075,7 +3090,22 @@ sort order. If not set, then no prior elements exist.
         },
       },
       "Empty": "map<string, unknown>",
+<<<<<<< HEAD
       "Enhancement": "PartBase",
+=======
+      "Enhancement": {
+        "docs": undefined,
+        "extends": [
+          "PartBase",
+        ],
+        "properties": {
+          "target_close_date": {
+            "docs": "Timestamp when the enhancement is expected to be closed.",
+            "type": "optional<datetime>",
+          },
+        },
+      },
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
       "EnhancementSummary": "PartBaseSummary",
       "ErrorBadRequest": {
         "docs": undefined,

@@ -2651,7 +2651,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
+<<<<<<< HEAD
                           "last_income_description": "Salário",
+=======
+                          "last_income_description": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                           "lookback_periods": 1,
                           "monthly_average": 2500,
                           "number_of_incomes": 1,
@@ -2859,7 +2863,11 @@ client.incomes.list(params: {
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
+<<<<<<< HEAD
                           "last_income_description": "Salário",
+=======
+                          "last_income_description": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                           "lookback_periods": 1,
                           "monthly_average": 2500,
                           "number_of_incomes": 1,
@@ -2958,7 +2966,11 @@ client.incomes.list(params: {
                             "income_type": "SALARY",
                             "last_income_amount": 2500,
                             "last_income_date": "2022-02-09",
+<<<<<<< HEAD
                             "last_income_description": "Salário",
+=======
+                            "last_income_description": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                             "lookback_periods": 1,
                             "monthly_average": 2500,
                             "number_of_incomes": 1,
@@ -3085,7 +3097,11 @@ client.incomes.list(params: {
                           "income_type": "SALARY",
                           "last_income_amount": 2500,
                           "last_income_date": "2022-02-09",
+<<<<<<< HEAD
                           "last_income_description": "Salário",
+=======
+                          "last_income_description": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                           "lookback_periods": 1,
                           "monthly_average": 2500,
                           "number_of_incomes": 1,
@@ -3182,7 +3198,11 @@ client.incomes.list(params: {
                         "income_type": "SALARY",
                         "last_income_amount": 2500,
                         "last_income_date": "2022-02-09",
+<<<<<<< HEAD
                         "last_income_description": "Salário",
+=======
+                        "last_income_description": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                         "lookback_periods": 1,
                         "monthly_average": 2500,
                         "number_of_incomes": 1,
@@ -6665,7 +6685,11 @@ You can use the Payment Transactions resource in order to get useful information
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                     "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+<<<<<<< HEAD
                     "name": "Your webhook name",
+=======
+                    "name": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                     "url": "https://mycompany.com/security/webhook",
                   },
                 },
@@ -6708,7 +6732,11 @@ You can use the Payment Transactions resource in order to get useful information
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                         "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+<<<<<<< HEAD
                         "name": "Your webhook name",
+=======
+                        "name": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                         "url": "https://mycompany.com/security/webhook",
                       },
                     ],
@@ -6753,7 +6781,11 @@ You can use the Payment Transactions resource in order to get useful information
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                       "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+<<<<<<< HEAD
                       "name": "Your webhook name",
+=======
+                      "name": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                       "url": "https://mycompany.com/security/webhook",
                     },
                   ],
@@ -16511,24 +16543,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayConfirmationRequiredOfpiType>",
-          },
         },
-      },
-      "NextStepDisplayConfirmationRequiredOfpiType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NextStepDisplayConfirmationRequiredPse": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16540,27 +16555,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayConfirmationRequiredPseType>",
-          },
         },
-      },
-      "NextStepDisplayConfirmationRequiredPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
       },
       "NextStepDisplayCredentialsRequiredPse": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16572,27 +16567,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayCredentialsRequiredPseType>",
-          },
         },
-      },
-      "NextStepDisplayCredentialsRequiredPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
       },
       "NextStepDisplayCustomerBankAccountsPse": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16604,27 +16579,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayCustomerBankAccountsPseType>",
-          },
         },
-      },
-      "NextStepDisplayCustomerBankAccountsPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
       },
       "NextStepDisplayNeedsRedirectPse": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16636,27 +16591,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayNeedsRedirectPseType>",
-          },
         },
-      },
-      "NextStepDisplayNeedsRedirectPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
       },
       "NextStepDisplayPaymentFailed": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16668,24 +16603,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayPaymentFailedType>",
-          },
         },
-      },
-      "NextStepDisplayPaymentFailedType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NextStepDisplayPaymentMethodInformation": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16696,11 +16614,6 @@ For \`login_error\` errors, the description can be one of the following:
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
-          },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayPaymentMethodInformationType>",
           },
         },
       },
@@ -16714,39 +16627,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayPaymentMethodInformationPseType>",
-          },
         },
-      },
-      "NextStepDisplayPaymentMethodInformationPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
-      },
-      "NextStepDisplayPaymentMethodInformationType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NextStepDisplayPaymentProcessing": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16758,24 +16639,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayPaymentProcessingType>",
-          },
         },
-      },
-      "NextStepDisplayPaymentProcessingType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NextStepDisplayPaymentSucceeded": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16787,24 +16651,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayPaymentSucceededType>",
-          },
         },
-      },
-      "NextStepDisplayPaymentSucceededType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NextStepDisplayTokenRequiredPse": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16820,27 +16667,7 @@ For \`login_error\` errors, the description can be one of the following:
 **Note:** When the value is \`true\`, you'll need to confirm the payment intent. You can do this by making a PATCH request sending through the parameter \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.
-",
-            "type": "optional<NextStepDisplayTokenRequiredPseType>",
-          },
         },
-      },
-      "NextStepDisplayTokenRequiredPseType": {
-        "docs": "The type of \`next_step\` you need to follow.
-",
-        "enum": [
-          "pse_display_payment_method_information",
-          "pse_display_credentials_required",
-          "pse_display_needs_redirect",
-          "pse_display_token_required",
-          "pse_display_customer_bank_accounts",
-          "pse_display_confirmation_required",
-          "pse_display_payment_processing",
-          "pse_display_payment_failed",
-          "pse_display_payment_succeeded",
-        ],
       },
       "NextStepNeedsRedirect": {
         "docs": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
@@ -16852,22 +16679,7 @@ For \`login_error\` errors, the description can be one of the following:
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
             "type": "optional<boolean>",
           },
-          "type": {
-            "docs": "The type of \`next_step\` you need to follow.",
-            "type": "optional<NextStepNeedsRedirectType>",
-          },
         },
-      },
-      "NextStepNeedsRedirectType": {
-        "docs": "The type of \`next_step\` you need to follow.",
-        "enum": [
-          "open_finance_display_payment_method_information",
-          "open_finance_display_confirmation_required",
-          "open_finance_display_needs_redirect",
-          "open_finance_display_payment_processing",
-          "open_finance_display_payment_succeeded",
-          "open_finance_display_payment_failed",
-        ],
       },
       "NonTaxableIncomeIndividual": {
         "docs": "Object containing the declared non-taxable income of the tax payer.",
@@ -17245,16 +17057,17 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
       },
       "PaymentIntentOfpiNextStep": {
-        "discriminated": false,
+        "base-properties": {},
+        "discriminant": "type",
         "docs": undefined,
-        "union": [
-          "NextStepDisplayPaymentMethodInformation",
-          "NextStepNeedsRedirect",
-          "NextStepDisplayConfirmationRequiredOfpi",
-          "NextStepDisplayPaymentProcessing",
-          "NextStepDisplayPaymentSucceeded",
-          "NextStepDisplayPaymentFailed",
-        ],
+        "union": {
+          "open_finance_display_confirmation_required": "NextStepDisplayConfirmationRequiredOfpi",
+          "open_finance_display_needs_redirect": "NextStepNeedsRedirect",
+          "open_finance_display_payment_failed": "NextStepDisplayPaymentFailed",
+          "open_finance_display_payment_method_information": "NextStepDisplayPaymentMethodInformation",
+          "open_finance_display_payment_processing": "NextStepDisplayPaymentProcessing",
+          "open_finance_display_payment_succeeded": "NextStepDisplayPaymentSucceeded",
+        },
       },
       "PaymentIntentOfpiPaymentMethodDetails": {
         "discriminated": false,
@@ -17468,16 +17281,17 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         ],
       },
       "PaymentIntentPseNextStep": {
-        "discriminated": false,
+        "base-properties": {},
+        "discriminant": "type",
         "docs": undefined,
-        "union": [
-          "NextStepDisplayPaymentMethodInformationPse",
-          "NextStepDisplayCredentialsRequiredPse",
-          "NextStepDisplayNeedsRedirectPse",
-          "NextStepDisplayTokenRequiredPse",
-          "NextStepDisplayCustomerBankAccountsPse",
-          "NextStepDisplayConfirmationRequiredPse",
-        ],
+        "union": {
+          "pse_display_confirmation_required": "NextStepDisplayConfirmationRequiredPse",
+          "pse_display_credentials_required": "NextStepDisplayCredentialsRequiredPse",
+          "pse_display_customer_bank_accounts": "NextStepDisplayCustomerBankAccountsPse",
+          "pse_display_needs_redirect": "NextStepDisplayNeedsRedirectPse",
+          "pse_display_payment_method_information": "NextStepDisplayPaymentMethodInformationPse",
+          "pse_display_token_required": "NextStepDisplayTokenRequiredPse",
+        },
       },
       "PaymentIntentsPaymentMethodDetailsBodyPse": {
         "docs": "Details about the organization's bank account that will receive the payment.",

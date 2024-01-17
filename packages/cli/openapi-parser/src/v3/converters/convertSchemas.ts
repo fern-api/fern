@@ -648,7 +648,7 @@ export function convertSchemaObject(
             generatedName,
             description,
             groupName,
-            example: undefined
+            example: inferredValue
         });
     }
 
@@ -781,22 +781,22 @@ export function wrapLiteral({
             nameOverride,
             generatedName,
             value: SchemaWithExample.literal({
+                nameOverride,
+                generatedName,
                 value: literal,
                 description,
-                groupName,
-                generatedName,
-                nameOverride
+                groupName
             }),
             groupName,
             description
         });
     }
     return SchemaWithExample.literal({
+        nameOverride,
+        generatedName,
         value: literal,
         groupName,
-        description,
-        generatedName,
-        nameOverride
+        description
     });
 }
 
@@ -820,22 +820,22 @@ export function wrapPrimitive({
             nameOverride,
             generatedName,
             value: SchemaWithExample.primitive({
+                nameOverride,
+                generatedName,
                 schema: primitive,
                 description,
-                groupName,
-                generatedName,
-                nameOverride
+                groupName
             }),
             groupName,
             description
         });
     }
     return SchemaWithExample.primitive({
+        nameOverride,
+        generatedName,
         schema: primitive,
         description,
-        groupName,
-        generatedName,
-        nameOverride
+        groupName
     });
 }
 
@@ -926,6 +926,11 @@ function getPossibleDiscriminants({
             (propertyName === "type" ? resolvedPropertySchema.example : undefined);
         if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
             possibleDiscrimimants[propertyName] = maybeConstValue;
+        }
+
+        // assuming that if a type property on the object exists and has an example then it could be the discriminant
+        if (propertyName === "type" && resolvedPropertySchema.example != null) {
+            possibleDiscrimimants[propertyName] = resolvedPropertySchema.example;
         }
     }
     return possibleDiscrimimants;
