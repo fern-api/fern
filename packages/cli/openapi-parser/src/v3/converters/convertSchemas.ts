@@ -539,7 +539,7 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             keySchema: {
-                nameOverride,
+                nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
@@ -550,7 +550,7 @@ export function convertSchemaObject(
                 groupName
             },
             valueSchema: SchemaWithExample.unknown({
-                nameOverride,
+                nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
                 description: undefined,
                 example: undefined,
