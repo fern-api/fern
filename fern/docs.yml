@@ -147,6 +147,8 @@ navigation:
             path: ./docs/pages/docs/snippets.mdx
           - page: Audiences
             path: ./docs/pages/docs/audiences.mdx
+          - page: Endpoint Errors
+            path: ./docs/pages/docs/endpoint-errors.mdx
       - section: Component Library
         contents:
           - page: Cards
