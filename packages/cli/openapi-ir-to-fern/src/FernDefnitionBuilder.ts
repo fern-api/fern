@@ -251,6 +251,35 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 };
             }
         }
+
+        if (this.rootApiFile.environments != null) {
+            this.rootApiFile.environments = {
+                ...Object.fromEntries(
+                    Object.entries(this.rootApiFile.environments).map(([env, url]) => {
+                        if (typeof url === "string") {
+                            return [env, url.substring(0, url.length - basePath.length)];
+                        } else if (isSingleBaseUrl(url)) {
+                            return [
+                                env,
+                                {
+                                    url: url.url.substring(0, url.url.length - basePath.length)
+                                }
+                            ];
+                        } else {
+                            return [
+                                env,
+                                Object.fromEntries(
+                                    Object.entries(url.urls).map(([name, url]) => {
+                                        return [name, url.substring(0, url.length - basePath.length)];
+                                    })
+                                )
+                            ];
+                        }
+                    })
+                )
+            };
+        }
+
         const definition: FernDefinition = {
             rootApiFile: this.rootApiFile,
             packageMarkerFile: this.packageMarkerFile,

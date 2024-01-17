@@ -165,7 +165,6 @@ function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeRef
     }
     return convertFullExample(oneOf.undisciminated);
 }
-
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
         case "string":
