@@ -126,7 +126,8 @@ export function buildObjectTypeDeclaration({
 
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
-        if (schemasToInline.has(allOf.schema)) {
+        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context });
+        if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
             continue; // dont extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
@@ -426,4 +427,18 @@ export function buildOneOfTypeDeclaration({
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
+}
+
+function getSchemaIdOfResolvedType({
+    schema,
+    context
+}: {
+    schema: SchemaId;
+    context: OpenApiIrConverterContext;
+}): SchemaId {
+    const resolvedSchema = context.getSchema(schema);
+    if (resolvedSchema.type === "reference") {
+        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
+    }
+    return schema;
 }
