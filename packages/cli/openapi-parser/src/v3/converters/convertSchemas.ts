@@ -462,8 +462,6 @@ export function convertSchemaObject(
             }
         }
 
-        // const maybePrimitive = getPrimitive({ schemas: schema.anyOf, context });
-
         const maybeDiscriminant = getDiscriminant({ schemas: schema.anyOf, context });
         if (maybeDiscriminant != null) {
             return convertDiscriminatedOneOfWithVariants({
