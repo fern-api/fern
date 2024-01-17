@@ -4816,7 +4816,38 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "AccountsBankingChecking",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingChecking",
+            },
+          },
+          {
+            "name": "AccountsBankingCreditCard",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingCreditCard",
+            },
+          },
+          {
+            "name": "AcccountsBankingLoan",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingLoan",
+            },
+          },
+          {
+            "name": "AccountsBankingPension",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingPension",
+            },
+          },
+          {
+            "name": "AccountsBankingSavings",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingSavings",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -5440,7 +5471,38 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "AccountsBankingChecking",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingChecking",
+            },
+          },
+          {
+            "name": "AccountsBankingCreditCard",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingCreditCard",
+            },
+          },
+          {
+            "name": "AcccountsBankingLoan",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingLoan",
+            },
+          },
+          {
+            "name": "AccountsBankingPension",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingPension",
+            },
+          },
+          {
+            "name": "AccountsBankingSavings",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingSavings",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -6040,7 +6102,38 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "AccountsBankingChecking",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingCheckingDetail",
+            },
+          },
+          {
+            "name": "AccountsBankingCreditCard",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingCreditCardDetail",
+            },
+          },
+          {
+            "name": "AcccountsBankingLoan",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingLoanDetail",
+            },
+          },
+          {
+            "name": "AccountsBankingPension",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingPensionDetail",
+            },
+          },
+          {
+            "name": "AccountsBankingSavings",
+            "value": {
+              "$ref": "#/components/examples/AccountsBankingSavingsDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -8763,7 +8856,26 @@ To delete links in bulk, we recommend looping through the list of links you want
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TransactionsCheckingPaginated",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCheckingPaginated",
+            },
+          },
+          {
+            "name": "TransactionsSavingsPaginated",
+            "value": {
+              "$ref": "#/components/examples/TransactionsSavingsPaginated",
+            },
+          },
+          {
+            "name": "TransactionsCreditCardPaginated",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCreditCardPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -9559,7 +9671,26 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TransactionsChecking",
+            "value": {
+              "$ref": "#/components/examples/TransactionsChecking",
+            },
+          },
+          {
+            "name": "TransactionsSavings",
+            "value": {
+              "$ref": "#/components/examples/TransactionsSavings",
+            },
+          },
+          {
+            "name": "TransactionsCreditCard",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCreditCard",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -10568,7 +10699,26 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TransactionsChecking",
+            "value": {
+              "$ref": "#/components/examples/TransactionsChecking",
+            },
+          },
+          {
+            "name": "TransactionsSavings",
+            "value": {
+              "$ref": "#/components/examples/TransactionsSavings",
+            },
+          },
+          {
+            "name": "TransactionsCreditCard",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCreditCard",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -11337,7 +11487,26 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TransactionsChecking",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCheckingDetail",
+            },
+          },
+          {
+            "name": "TransactionsSavings",
+            "value": {
+              "$ref": "#/components/examples/TransactionsSavingsDetail",
+            },
+          },
+          {
+            "name": "TransactionsCreditCard",
+            "value": {
+              "$ref": "#/components/examples/TransactionsCreditCardDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -12890,7 +13059,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "BalancesExamplePaginated",
+            "value": {
+              "$ref": "#/components/examples/BalancesExamplePaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -13526,7 +13702,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "BalancesExamplePaginated",
+            "value": {
+              "$ref": "#/components/examples/BalancesExample",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14162,7 +14345,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "BalancesExamplePaginated",
+            "value": {
+              "$ref": "#/components/examples/BalancesExample",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -14774,7 +14964,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "BalancesExamplePaginated",
+            "value": {
+              "$ref": "#/components/examples/BalancesExampleDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16663,7 +16860,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OwnerBankingAccountPaginated",
+            "value": {
+              "$ref": "#/components/examples/OwnerBankingAccountPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16907,7 +17111,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OwnerBankingAccount",
+            "value": {
+              "$ref": "#/components/examples/OwnerBankingAccount",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17172,7 +17383,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OwnerBankingAccount",
+            "value": {
+              "$ref": "#/components/examples/OwnerBankingAccount",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -17413,7 +17631,14 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OwnerBankingAccount",
+            "value": {
+              "$ref": "#/components/examples/OwnerBankingAccountDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18602,7 +18827,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "InvoiceIngresso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceIngresoPaginated",
+            },
+          },
+          {
+            "name": "InvoicePago",
+            "value": {
+              "$ref": "#/components/examples/InvoicePagoPaginated",
+            },
+          },
+          {
+            "name": "InvoiceNomina",
+            "value": {
+              "$ref": "#/components/examples/InvoiceNominaPaginated",
+            },
+          },
+          {
+            "name": "InvoiceEgreso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceEgresoPaginated",
+            },
+          },
+          {
+            "name": "InvoiceTraslado",
+            "value": {
+              "$ref": "#/components/examples/InvoiceTrasladoPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -18780,7 +19036,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "InvoiceIngresso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceIngreso",
+            },
+          },
+          {
+            "name": "InvoicePago",
+            "value": {
+              "$ref": "#/components/examples/InvoicePago",
+            },
+          },
+          {
+            "name": "InvoiceNomina",
+            "value": {
+              "$ref": "#/components/examples/InvoiceNomina",
+            },
+          },
+          {
+            "name": "InvoiceEgreso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceEgreso",
+            },
+          },
+          {
+            "name": "InvoiceTraslado",
+            "value": {
+              "$ref": "#/components/examples/InvoiceTraslado",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -19112,7 +19399,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "InvoiceIngresso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceIngresoDetail",
+            },
+          },
+          {
+            "name": "InvoicePago",
+            "value": {
+              "$ref": "#/components/examples/InvoicePagoDetail",
+            },
+          },
+          {
+            "name": "InvoiceNomina",
+            "value": {
+              "$ref": "#/components/examples/InvoiceNominaDetail",
+            },
+          },
+          {
+            "name": "InvoiceEgreso",
+            "value": {
+              "$ref": "#/components/examples/InvoiceEgresoDetail",
+            },
+          },
+          {
+            "name": "InvoiceTraslado",
+            "value": {
+              "$ref": "#/components/examples/InvoiceTrasladoDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19744,7 +20062,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxReturnPersonal",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListPaginated",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAE",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPaginatedPFAE",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAI",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPaginatedPFAI",
+            },
+          },
+          {
+            "name": "TaxReturnBusiness",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessListPaginated",
+            },
+          },
+          {
+            "name": "TaxReturnBusinessMonthly",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessListMonthlyPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -19905,7 +20254,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxReturnPersonal",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalList",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAE",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAE",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAI",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAI",
+            },
+          },
+          {
+            "name": "TaxReturnBusiness",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessList",
+            },
+          },
+          {
+            "name": "TaxReturnBusinessMonthly",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessListMonthly",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20056,7 +20436,38 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxReturnPersonal",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListDetail",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAE",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAEDetail",
+            },
+          },
+          {
+            "name": "TaxReturnPersonalMonthlyPFAI",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAIDetail",
+            },
+          },
+          {
+            "name": "TaxReturnBusiness",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessListDetail",
+            },
+          },
+          {
+            "name": "TaxReturnBusinessMonthly",
+            "value": {
+              "$ref": "#/components/examples/TaxReturnBusinessListMonthlyDetail",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -20669,7 +21080,20 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxStatusPersonalListPaginated",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusPersonalListPaginated",
+            },
+          },
+          {
+            "name": "TaxStatusBusinessListPaginated",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusBusinessListPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -20774,7 +21198,20 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok (when \`save_data=false\`)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxStatusPersonal",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusPersonalList",
+            },
+          },
+          {
+            "name": "TaxStatusBusiness",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusBusinessList",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -20902,7 +21339,20 @@ If you try to access older information than what we can access, we will return a
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "TaxStatusPersonal",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusPersonalList",
+            },
+          },
+          {
+            "name": "TaxStatusBusiness",
+            "value": {
+              "$ref": "#/components/examples/TaxStatusBusinessList",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -37393,7 +37843,14 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "EnrichedIncome",
+            "value": {
+              "$ref": "#/components/examples/IncomeVerificationEyod",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -37693,7 +38150,14 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "CategorizeTransactions",
+            "value": {
+              "$ref": "#/components/examples/CategorizationExample",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39632,7 +40096,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiIndividualPaginated",
+            },
+          },
+          {
+            "name": "OfpiPixBusiness",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiBusinessPaginated",
+            },
+          },
+          {
+            "name": "PseIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerPseIndividualPaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -39673,7 +40156,26 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixIndividual",
+            "value": {
+              "$ref": "#/components/examples/CreateCustomerOfpiIndividual",
+            },
+          },
+          {
+            "name": "OfpiPixBusiness",
+            "value": {
+              "$ref": "#/components/examples/CreateCustomerOfpiBusiness",
+            },
+          },
+          {
+            "name": "PseIndividual",
+            "value": {
+              "$ref": "#/components/examples/CreateCustomerPseIndividual",
+            },
+          },
+        ],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -39707,7 +40209,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiIndividual",
+            },
+          },
+          {
+            "name": "OfpiPixBusiness",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiBusiness",
+            },
+          },
+          {
+            "name": "PseIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerPseIndividual",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -39786,7 +40307,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiIndividual",
+            },
+          },
+          {
+            "name": "OfpiPixBusiness",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerOfpiBusiness",
+            },
+          },
+          {
+            "name": "PseIndividual",
+            "value": {
+              "$ref": "#/components/examples/ResponseCustomerPseIndividual",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -40382,7 +40922,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfoPaginated",
+            },
+          },
+          {
+            "name": "OfpiPixKey",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKeyPaginated",
+            },
+          },
+          {
+            "name": "PseInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPsePaginated",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -40424,7 +40983,26 @@ For example:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixInfo",
+            "value": {
+              "$ref": "#/components/examples/CreateBankAccountOrganizationPixInfo",
+            },
+          },
+          {
+            "name": "OfpiPixKey",
+            "value": {
+              "$ref": "#/components/examples/CreateBankAccountOrganizationPixKey",
+            },
+          },
+          {
+            "name": "PseInfo",
+            "value": {
+              "$ref": "#/components/examples/CreateBankAccountOrganizationPse",
+            },
+          },
+        ],
         "schema": {
           "oneOf": {
             "description": undefined,
@@ -40458,7 +41036,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK (Created)",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfo",
+            },
+          },
+          {
+            "name": "OfpiPixKey",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKey",
+            },
+          },
+          {
+            "name": "PseInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPse",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {
@@ -40537,7 +41134,26 @@ For example:
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "OfpiPixInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfo",
+            },
+          },
+          {
+            "name": "OfpiPixKey",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKey",
+            },
+          },
+          {
+            "name": "PseInfo",
+            "value": {
+              "$ref": "#/components/examples/ResponseBankAccountOrganizationPse",
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "oneOf": {

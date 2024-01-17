@@ -90,6 +90,82 @@ export class ExampleTypeFactory {
                 return undefined;
             }
             case "oneOf":
+                switch (schema.oneOf.type) {
+                    case "discriminated": {
+                        const result: Record<string, FullExample> = {};
+
+                        let allProperties: Record<string, SchemaWithExample> = {};
+                        let requiredProperties: Record<string, SchemaWithExample> = {};
+
+                        const fullExample = getFullExampleAsObject(example);
+                        const exampleDiscriminant = fullExample?.[schema.oneOf.discriminantProperty];
+                        const exampleUnionVariantSchema = schema.oneOf.schemas[exampleDiscriminant];
+
+                        const firstUnionVariant = Object.entries(schema.oneOf.schemas)[0];
+                        if (
+                            exampleDiscriminant != null &&
+                            exampleUnionVariantSchema != null &&
+                            exampleUnionVariantSchema.type === "object"
+                        ) {
+                            allProperties = this.getAllProperties(exampleUnionVariantSchema);
+                            requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
+                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                                PrimitiveExample.string(exampleDiscriminant)
+                            );
+                        } else if (firstUnionVariant != null && firstUnionVariant[1].type === "object") {
+                            allProperties = this.getAllProperties(firstUnionVariant[1]);
+                            requiredProperties = this.getAllRequiredProperties(firstUnionVariant[1]);
+                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                                PrimitiveExample.string(firstUnionVariant[0])
+                            );
+                        } else {
+                            return undefined;
+                        }
+
+                        for (const commonProperty of schema.oneOf.commonProperties) {
+                            allProperties[commonProperty.key] = commonProperty.schema;
+                            const resolvedSchema = this.getResolvedSchema(commonProperty.schema);
+                            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+                                requiredProperties[commonProperty.key] = commonProperty.schema;
+                            }
+                        }
+
+                        for (const [property, schema] of Object.entries(allProperties)) {
+                            const required = property in requiredProperties;
+                            if (required && fullExample?.[property] != null) {
+                                const propertyExample = this.buildExampleHelper({
+                                    schema,
+                                    example: fullExample[property],
+                                    isOptional: !required,
+                                    visitedSchemaIds,
+                                    parameter
+                                });
+                                if (propertyExample != null) {
+                                    result[property] = propertyExample;
+                                } else {
+                                    return undefined;
+                                }
+                            } else {
+                                const propertyExample = this.buildExampleHelper({
+                                    schema,
+                                    example: fullExample?.[property],
+                                    isOptional: !required,
+                                    visitedSchemaIds,
+                                    parameter
+                                });
+                                if (propertyExample != null) {
+                                    result[property] = propertyExample;
+                                } else if (required) {
+                                    return undefined;
+                                }
+                            }
+                        }
+                        return FullExample.oneOf({
+                            type: "discriminated",
+                            discriminated: result
+                        });
+                    }
+                }
                 return undefined;
             case "unknown":
                 if (example != null) {

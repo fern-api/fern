@@ -34,6 +34,13 @@ export function getApplicationJsonSchemaMediaObject(
                     })
                 );
             }
+            if (mediaObject.examples != null && Object.keys(mediaObject.examples).length > 0) {
+                fullExamples.push(
+                    ...Object.entries(mediaObject.examples).map(([name, value]) => {
+                        return { name, value };
+                    })
+                );
+            }
 
             if (schema != null) {
                 return {

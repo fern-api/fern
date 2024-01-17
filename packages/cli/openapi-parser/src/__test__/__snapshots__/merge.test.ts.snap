@@ -15278,7 +15278,28 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "common_model": "hris.Employee",
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "field_name": "start_date",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": "2022-01-01T00:00:00Z",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15437,7 +15458,23 @@ exports[`open api parser merge parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionRequestExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": {
+                "linked_account_conditons": [
+                  {
+                    "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                    "operator": "GREATER_THAN_OR_EQUAL",
+                    "value": "2022-01-01T00:00:00Z",
+                  },
+                ],
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "SelectiveSyncConfigurationsUpdateRequestBody",
@@ -15451,7 +15488,28 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "common_model": "hris.Employee",
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "field_name": "start_date",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": "2022-01-01T00:00:00Z",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15622,7 +15680,38 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "PaginatedConditionSchemaListExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": {
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "common_model": "hris.Employee",
+                    "condition_type": "DATE_TIME",
+                    "field_name": "start_date",
+                    "id": "123e4567-e89b-12d3-a456-426655440000",
+                    "is_unique": true,
+                    "native_name": "Started At",
+                    "operators": [
+                      {
+                        "is_unique": true,
+                        "operator": "GREATER_THAN_OR_EQUAL",
+                      },
+                      {
+                        "is_unique": true,
+                        "operator": "LESS_THAN_OR_EQUAL",
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
