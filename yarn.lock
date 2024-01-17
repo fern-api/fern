@@ -1901,7 +1901,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
@@ -2040,7 +2040,7 @@ __metadata:
   dependencies:
     "@fern-api/fdr-sdk": 0.44.0-1-geb2e930
     "@fern-api/venus-api-sdk": 0.0.36
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2234,7 +2234,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2714,7 +2714,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
@@ -2784,7 +2784,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/seed-config": 0.0.15
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
@@ -2899,7 +2899,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/fiddle-sdk": ^0.0.379
+    "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/openapi-ir-model": 0.0.152
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3007,9 +3007,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.379":
-  version: 0.0.379
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.379"
+"@fern-fern/fiddle-sdk@npm:^0.0.386":
+  version: 0.0.386
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.386"
   dependencies:
     "@types/basic-auth": ^1.1.3
     "@types/url-join": 4.0.1
@@ -3018,7 +3018,7 @@ __metadata:
     buffer: ^6.0.3
     js-base64: ^3.7.2
     url-join: 4.0.1
-  checksum: 31ea7af7dc369b46d8bfec8702f78787633cf4585812b713c36e3c4188e09d022e7cfde6609e8fe5a399e1fc8a2d45e510f4f306f8f3a89c5b5e0ecdb50ae7fc
+  checksum: a440768054bf10836b2a16205a8fa77f52de4f4ecc4524daae44164cfce455691cef46ef0ad8bbdda7fa1de8b9aa4fa3eaa25c72dbfe2d46c17e876d9da5b19b
   languageName: node
   linkType: hard
 
