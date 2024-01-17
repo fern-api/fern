@@ -11,6 +11,7 @@ groups:
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/node-sdk
+          license: MIT
         config:
           namespaceExport: Fern
   python-sdk:
@@ -25,5 +26,6 @@ groups:
           token: ${PYPI_TOKEN}
         github:
           repository: fern-api/python-sdk
+          license: MIT
         config:
           client_class_name: Fern
