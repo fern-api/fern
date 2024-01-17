@@ -462,6 +462,8 @@ export function convertSchemaObject(
             }
         }
 
+        // const maybePrimitive = getPrimitive({ schemas: schema.anyOf, context });
+
         const maybeDiscriminant = getDiscriminant({ schemas: schema.anyOf, context });
         if (maybeDiscriminant != null) {
             return convertDiscriminatedOneOfWithVariants({
@@ -498,7 +500,7 @@ export function convertSchemaObject(
     }
 
     // handle objects
-    if (schema.allOf != null || schema.properties != null) {
+    if (schema.allOf != null || schema.properties != null || schema.required != null) {
         // convert a singular allOf as a reference or inlined schema
         if (schema.allOf != null) {
             const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
@@ -511,6 +513,48 @@ export function convertSchemaObject(
                     referencedAsRequest
                 );
                 return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
+            }
+
+            if (hasNoProperties(schema)) {
+                // literals should be considered before primitives.
+                // ("string" AND "literal<'example'>") should become a literal
+                for (const allOfElement of schema.allOf) {
+                    const resolvedAllOfElement = isReferenceObject(allOfElement)
+                        ? context.resolveSchemaReference(allOfElement)
+                        : allOfElement;
+
+                    if (
+                        resolvedAllOfElement.enum != null &&
+                        resolvedAllOfElement.enum.length === 1 &&
+                        resolvedAllOfElement.type !== "object"
+                    ) {
+                        // TODO: check if there are any other enums.
+                        // if so, we should convert this as a union
+                        return convertLiteral({
+                            nameOverride,
+                            generatedName,
+                            wrapAsNullable,
+                            value: resolvedAllOfElement.enum[0],
+                            description,
+                            groupName
+                        });
+                    }
+                }
+
+                // then, if there are no literals, check if there are any non-objects
+                // since only objects can be extended.
+                // NOTE: this is an incomplete implementation
+                for (const allOfElement of schema.allOf) {
+                    const resolvedAllOfElement = isReferenceObject(allOfElement)
+                        ? context.resolveSchemaReference(allOfElement)
+                        : allOfElement;
+
+                    // TODO: check if there are any other non-object and non-enum elements
+                    // TODO: check if one of these are maps.
+                    if (resolvedAllOfElement.type !== "object" && resolvedAllOfElement.enum == null) {
+                        return convertSchema(allOfElement, wrapAsNullable, context, breadcrumbs, referencedAsRequest);
+                    }
+                }
             }
         }
 
@@ -539,7 +583,7 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             keySchema: {
-                nameOverride,
+                nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
@@ -550,7 +594,7 @@ export function convertSchemaObject(
                 groupName
             },
             valueSchema: SchemaWithExample.unknown({
-                nameOverride,
+                nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
                 description: undefined,
                 example: undefined,
@@ -562,6 +606,43 @@ export function convertSchemaObject(
 
     if (schema.type == null) {
         const inferredValue = schema.example ?? schema.default;
+        if (inferredValue != null) {
+            if (typeof schema.default === "number") {
+                return convertNumber({
+                    nameOverride,
+                    generatedName,
+                    format: undefined,
+                    description,
+                    wrapAsNullable,
+                    example: inferredValue,
+                    groupName
+                });
+            } else if (typeof inferredValue === "string") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    primitive: PrimitiveSchemaValueWithExample.string({
+                        maxLength: undefined,
+                        minLength: undefined,
+                        example: inferredValue
+                    }),
+                    wrapAsNullable,
+                    description,
+                    groupName
+                });
+            } else if (typeof inferredValue === "boolean") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    primitive: PrimitiveSchemaValueWithExample.boolean({
+                        example: inferredValue
+                    }),
+                    wrapAsNullable,
+                    description,
+                    groupName
+                });
+            }
+        }
         return SchemaWithExample.unknown({
             nameOverride,
             generatedName,
@@ -659,12 +740,12 @@ function getSingularAllOf({
     if (hasNoProperties({ properties }) && allOf.length === 1 && allOf[0] != null) {
         return allOf[0];
     } else if (hasNoProperties({ properties }) && allOf.length === 2 && allOf[0] != null && allOf[1] != null) {
-        const allOfZero = allOf[0];
-        const allOfOne = allOf[1];
-        if (isAllOfElementEmpty(allOfZero)) {
-            return allOfOne;
-        } else if (isAllOfElementEmpty(allOfOne)) {
-            return allOfZero;
+        const firstAllOf = allOf[0];
+        const secondAllOf = allOf[1];
+        if (isAllOfElementEmpty(firstAllOf)) {
+            return secondAllOf;
+        } else if (isAllOfElementEmpty(secondAllOf)) {
+            return firstAllOf;
         }
     }
     return undefined;
@@ -840,7 +921,9 @@ function getPossibleDiscriminants({
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
         }
 
-        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const");
+        const maybeConstValue =
+            getProperty<string>(resolvedPropertySchema, "const") ??
+            (propertyName === "type" ? resolvedPropertySchema.example : undefined);
         if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
             possibleDiscrimimants[propertyName] = maybeConstValue;
         }

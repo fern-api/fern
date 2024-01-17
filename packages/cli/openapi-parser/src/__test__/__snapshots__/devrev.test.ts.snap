@@ -5712,12 +5712,9 @@ organizations.
     "part-base-summary",
     "auth-connection",
     "auth-connection-toggle",
-    "artifact-summary",
     "user-base",
-    "external-identity",
     "user-base-summary",
     "dev-user",
-    "tag-with-value",
     "error-base",
     "part",
     "rev-org",
@@ -5725,20 +5722,18 @@ organizations.
     "timeline-entry",
     "webhook",
     "work",
-    "part-summary",
-    "stage",
     "work-base",
+    "artifact-summary",
+    "tag-with-value",
     "parts-update-request-owned-by",
     "org-base",
     "org-base-summary",
     "org-environment",
-    "org-summary",
     "tag-summary",
     "tags-update-allowed-values",
-    "group-summary",
     "timeline-entry-base",
-    "timeline-comment-body-type",
     "timeline-entry-visibility",
+    "timeline-comment-body-type",
     "timeline-entries-update-request-timeline-comment-artifacts",
     "webhook-event-type",
     "webhook-status",
@@ -5763,6 +5758,8 @@ organizations.
     "event-work-updated",
     "webhooks-update-action",
     "webhooks-update-request-event-types",
+    "part-summary",
+    "stage",
     "stage-init",
     "set-tag-with-value",
     "works-update-request-artifact-ids",
@@ -8470,21 +8467,14 @@ connection.
       "type": "object",
     },
     "dev-user": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "UserBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "user-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DevUser",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "user-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -8516,6 +8506,7 @@ connection.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "dev-user-summary": {
       "description": undefined,
@@ -8662,21 +8653,14 @@ sort order. If not set, then no prior elements exist.
       },
     },
     "enhancement": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "PartBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "part-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Enhancement",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "part-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -8703,6 +8687,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "enhancement-summary": {
       "description": undefined,
@@ -9856,21 +9841,14 @@ sort order. If not set, then no prior elements exist.
       "type": "reference",
     },
     "issue": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "WorkBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "work-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Issue",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "work-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -9895,6 +9873,7 @@ sort order. If not set, then no prior elements exist.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "issue-priority": {
       "description": "Priority of the work based upon impact and criticality.",
@@ -11186,21 +11165,14 @@ empty.
       "type": "reference",
     },
     "rev-org": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "OrgBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "org-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RevOrg",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "org-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -11283,6 +11255,7 @@ organization.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "rev-org-summary": {
       "description": undefined,
@@ -11843,21 +11816,14 @@ records.
       "type": "object",
     },
     "rev-user-summary": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "UserBaseSummary",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "user-base-summary",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RevUserSummary",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "user-base-summary",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -11912,6 +11878,7 @@ system-generated identifier will be assigned to the user.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "set-tag-with-value": {
       "allOf": [],
@@ -12722,21 +12689,14 @@ tags.
       "type": "object",
     },
     "ticket": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "WorkBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "work-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Ticket",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "work-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -12803,6 +12763,7 @@ tags.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "ticket-severity": {
       "description": "Severity of the ticket.",
@@ -12838,21 +12799,14 @@ tags.
       ],
     },
     "timeline-comment": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "TimelineEntryBase",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "timeline-entry-base",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimelineComment",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "timeline-entry-base",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -12969,6 +12923,7 @@ will appear in the response.
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "timeline-comment-body-type": {
       "description": "The type of the body to use for the comment.",

@@ -84,18 +84,6 @@ exports[`open api parser apiture simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "allows": {
-                      "billPay": true,
-                      "manageCards": true,
-                      "manageJointOwners": true,
-                      "manageOverdraftAccounts": true,
-                      "mobileCheckDeposit": true,
-                      "transferFrom": true,
-                      "transferTo": true,
-                      "view": true,
-                      "viewCards": true,
-                    },
-                    "electronicStatements": true,
                     "id": "string",
                     "label": "Checking *1008",
                     "location": "internal",
@@ -202,7 +190,25 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "request": undefined,
                 "response": {
                   "body": {
+<<<<<<< HEAD
+                    "items": [
+                      {
+                        "id": "string",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "string",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "CD001",
+                          "description": "string",
+                          "label": "string",
+                          "type": "savings",
+                        },
+                      },
+                    ],
+=======
                     "items": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
@@ -266,7 +272,25 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "request": undefined,
                 "response": {
                   "body": {
+<<<<<<< HEAD
+                    "items": [
+                      {
+                        "id": "string",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "string",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "CD001",
+                          "description": "string",
+                          "label": "string",
+                          "type": "savings",
+                        },
+                      },
+                    ],
+=======
                     "items": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
@@ -565,7 +589,6 @@ This information provides hints to clients, allowing bank customers to select tr
                         "address2": "Building 14, Suite 1500",
                         "countryCode": "US",
                         "locality": "string",
-                        "postalCode": "string",
                       },
                       "locator": "string",
                       "locatorType": "abaRoutingNumber",
@@ -578,7 +601,6 @@ This information provides hints to clients, allowing bank customers to select tr
                           "address2": "Building 14, Suite 1500",
                           "countryCode": "US",
                           "locality": "string",
-                          "postalCode": "string",
                         },
                         "locator": "string",
                         "locatorType": "abaRoutingNumber",
@@ -1498,23 +1520,7 @@ Note: This operation requires an identity challenge if the financial institution
           },
         },
       },
-      "Account": {
-        "docs": "An internal customer account.",
-        "extends": [
-          "AbstractBody",
-          "AccountFields",
-        ],
-        "properties": {
-          "allows": {
-            "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
-            "type": "FullAccountPermissions",
-          },
-          "electronicStatements": {
-            "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
-            "type": "boolean",
-          },
-        },
-      },
+      "Account": "AccountFields",
       "AccountAllowsFilter": {
         "docs": "Values for the \`?allows=\` filter in [\`listAccounts\`](#op-listAccounts).
 
@@ -1631,6 +1637,8 @@ Note: This operation requires an identity challenge if the financial institution
       "AccountIds": {
         "docs": "An array of account IDs.",
         "type": "list<ResourceId>",
+<<<<<<< HEAD
+=======
       },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
@@ -1652,7 +1660,9 @@ Note: This operation requires an identity challenge if the financial institution
           "nickname": "optional<AccountNickname>",
           "product": "optional<ProductReference>",
         },
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
       },
+      "AccountItem": "AccountFields",
       "AccountJointOwner": {
         "docs": "Representation of account joint owner resources.",
         "extends": [
@@ -1854,26 +1864,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "web",
         ],
       },
-      "Address": {
-        "docs": "A postal address that can hold a US address or an international (non-US) postal addresses.",
-        "extends": [
-          "AddressFields",
-        ],
-        "properties": {
-          "postalCode": {
-            "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
-            "type": "string",
-          },
-          "regionCode": {
-            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
-            "type": "optional<string>",
-          },
-          "regionName": {
-            "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
-            "type": "optional<string>",
-          },
-        },
-      },
+      "Address": "AddressFields",
       "AddressFields": {
         "docs": "Properties of a simple address, used to compose other addresses.",
         "properties": {
@@ -2749,14 +2740,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
-      "Transfer": {
-        "docs": "Representation of a transfer resource.",
-        "extends": [
-          "AbstractBody",
-          "TransferItem",
-        ],
-        "properties": {},
-      },
+      "Transfer": "TransferItem",
       "TransferAccountReference": {
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
         "properties": {

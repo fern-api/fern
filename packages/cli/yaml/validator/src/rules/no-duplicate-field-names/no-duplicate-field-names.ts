@@ -1,5 +1,7 @@
 import {
     constructFernFileContext,
+    convertObjectPropertyWithPathToString,
+    getAllPropertiesForObject,
     getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName,
@@ -10,7 +12,6 @@ import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-s
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "@fern-api/ir-generator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
 export const NoDuplicateFieldNamesRule: Rule = {
@@ -41,7 +42,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
 
                         object: (objectDeclaration) => {
                             const typeNameString = getTypeDeclarationNameAsString(typeName);
-                            const allProperties = getAllPropertiesForObject({
+                            const { properties: allProperties, warnings } = getAllPropertiesForObject({
                                 typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
@@ -68,6 +69,12 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                     });
                                 }
                             }
+                            warnings.forEach((warning) => {
+                                violations.push({
+                                    severity: "warning",
+                                    message: warning
+                                });
+                            });
                         },
 
                         undiscriminatedUnion: () => [],
@@ -118,7 +125,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         if (definitionFile == null) {
                                             continue;
                                         }
-                                        const propertiesOnObject = getAllPropertiesForObject({
+                                        const { properties: propertiesOnObject, warnings } = getAllPropertiesForObject({
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
@@ -149,6 +156,13 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                                 message
                                             });
                                         }
+
+                                        warnings.forEach((warning) => {
+                                            violations.push({
+                                                severity: "warning",
+                                                message: warning
+                                            });
+                                        });
                                     }
                                 }
                             }

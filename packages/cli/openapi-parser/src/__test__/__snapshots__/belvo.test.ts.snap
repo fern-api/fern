@@ -22242,7 +22242,11 @@ If you try to access older information than what we can access, we will return a
                               },
                               "last_income_description": {
                                 "primitive": {
+<<<<<<< HEAD
+                                  "string": "Salário",
+=======
                                   "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -22821,7 +22825,11 @@ If you try to access older information than what we can access, we will return a
                       },
                       "last_income_description": {
                         "primitive": {
+<<<<<<< HEAD
+                          "string": "Salário",
+=======
                           "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                           "type": "string",
                         },
                         "type": "primitive",
@@ -23247,7 +23255,11 @@ If you try to access older information than what we can access, we will return a
                           },
                           "last_income_description": {
                             "primitive": {
+<<<<<<< HEAD
+                              "string": "Salário",
+=======
                               "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                               "type": "string",
                             },
                             "type": "primitive",
@@ -23659,7 +23671,11 @@ If you try to access older information than what we can access, we will return a
                           },
                           "last_income_description": {
                             "primitive": {
+<<<<<<< HEAD
+                              "string": "Salário",
+=======
                               "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                               "type": "string",
                             },
                             "type": "primitive",
@@ -37195,7 +37211,11 @@ If you need to know the currency of the account, just do a GET Details to the ac
                           },
                           "last_income_description": {
                             "primitive": {
+<<<<<<< HEAD
+                              "string": "Salário",
+=======
                               "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                               "type": "string",
                             },
                             "type": "primitive",
@@ -37993,7 +38013,11 @@ For example:
                       },
                       "name": {
                         "primitive": {
+<<<<<<< HEAD
+                          "string": "Your webhook name",
+=======
                           "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                           "type": "string",
                         },
                         "type": "primitive",
@@ -38138,7 +38162,11 @@ For example:
                   },
                   "name": {
                     "primitive": {
+<<<<<<< HEAD
+                      "string": "Your webhook name",
+=======
                       "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                       "type": "string",
                     },
                     "type": "primitive",
@@ -38274,7 +38302,11 @@ For example:
               },
               "name": {
                 "primitive": {
+<<<<<<< HEAD
+                  "string": "Your webhook name",
+=======
                   "string": "string",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                   "type": "string",
                 },
                 "type": "primitive",
@@ -57467,9 +57499,22 @@ For each income stream, we provide additional insights such as:
           "generatedName": "incomeStreamsBodyLastIncomeDescription",
           "key": "last_income_description",
           "schema": {
+<<<<<<< HEAD
+            "description": "The description of the most recent income from the steam. ",
+            "generatedName": "IncomeStreamsBodyLastIncomeDescription",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+=======
             "generatedName": "IncomeStreamsBodyLastIncomeDescription",
             "nameOverride": undefined,
             "type": "unknown",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           },
         },
         {
@@ -67792,6 +67837,68 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayConfirmationRequiredOfpiType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayConfirmationRequiredOfpiType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayConfirmationRequiredOfpiType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayConfirmationRequiredOfpiOpenFinanceDisplayConfirmationRequired",
           "key": "open_finance_display_confirmation_required",
           "schema": {
@@ -67849,6 +67956,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayConfirmationRequiredPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayConfirmationRequiredPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayConfirmationRequiredPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayConfirmationRequiredPsePseDisplayConfirmationRequired",
           "key": "pse_display_confirmation_required",
           "schema": {
@@ -67906,6 +68093,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayCredentialsRequiredPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayCredentialsRequiredPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayCredentialsRequiredPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayCredentialsRequiredPsePseDisplayCredentialsRequired",
           "key": "pse_display_credentials_required",
           "schema": {
@@ -67963,6 +68230,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayCustomerBankAccountsPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayCustomerBankAccountsPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayCustomerBankAccountsPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayCustomerBankAccountsPsePseDisplayCustomerBankAccounts",
           "key": "pse_display_customer_bank_accounts",
           "schema": {
@@ -68020,6 +68367,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayNeedsRedirectPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayNeedsRedirectPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayNeedsRedirectPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayNeedsRedirectPsePseDisplayNeedsRedirect",
           "key": "pse_display_needs_redirect",
           "schema": {
@@ -68077,6 +68504,68 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayPaymentFailedType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayPaymentFailedType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayPaymentFailedType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayPaymentFailedOpenFinanceDisplayPaymentFailed",
           "key": "open_finance_display_payment_failed",
           "schema": {
@@ -68134,6 +68623,68 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayPaymentMethodInformationType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayPaymentMethodInformationType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayPaymentMethodInformationType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayPaymentMethodInformationOpenFinanceDisplayPaymentMethodInformation",
           "key": "open_finance_display_payment_method_information",
           "schema": {
@@ -68191,6 +68742,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayPaymentMethodInformationPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayPaymentMethodInformationPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayPaymentMethodInformationPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayPaymentMethodInformationPsePseDisplayPaymentMethodInformation",
           "key": "pse_display_payment_method_information",
           "schema": {
@@ -68248,6 +68879,68 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayPaymentProcessingType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayPaymentProcessingType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayPaymentProcessingType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayPaymentProcessingOpenFinanceDisplayPaymentProcessing",
           "key": "open_finance_display_payment_processing",
           "schema": {
@@ -68305,6 +68998,68 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayPaymentSucceededType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayPaymentSucceededType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayPaymentSucceededType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayPaymentSucceededOpenFinanceDisplayPaymentSucceeded",
           "key": "open_finance_display_payment_succeeded",
           "schema": {
@@ -68362,6 +69117,86 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepDisplayTokenRequiredPseType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepDisplayTokenRequiredPseType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.
+",
+              "generatedName": "NextStepDisplayTokenRequiredPseType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_credentials_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_credentials_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "pse_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_token_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_token_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_customer_bank_accounts",
+                  "nameOverride": undefined,
+                  "value": "pse_display_customer_bank_accounts",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "pse_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_failed",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "pse_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "pse_display_payment_succeeded",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepDisplayTokenRequiredPsePseDisplayTokenRequired",
           "key": "pse_display_token_required",
           "schema": {
@@ -68423,6 +69258,67 @@ For \`login_error\` errors, the description can be one of the following:
         {
           "audiences": [],
           "conflict": {},
+<<<<<<< HEAD
+          "generatedName": "nextStepNeedsRedirectType",
+          "key": "type",
+          "schema": {
+            "description": undefined,
+            "generatedName": "nextStepNeedsRedirectType",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": "The type of \`next_step\` you need to follow.",
+              "generatedName": "NextStepNeedsRedirectType",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "enum",
+              "values": [
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_method_information",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_method_information",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_confirmation_required",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_confirmation_required",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_needs_redirect",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_needs_redirect",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_processing",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_processing",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_succeeded",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_succeeded",
+                },
+                {
+                  "description": undefined,
+                  "generatedName": "open_finance_display_payment_failed",
+                  "nameOverride": undefined,
+                  "value": "open_finance_display_payment_failed",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+=======
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           "generatedName": "nextStepNeedsRedirectOpenFinanceDisplayNeedsRedirect",
           "key": "open_finance_display_needs_redirect",
           "schema": {
@@ -88470,9 +89366,22 @@ For \`session_expired\` errors, the description can be (among others):
           "generatedName": "paymentWebhookName",
           "key": "name",
           "schema": {
+<<<<<<< HEAD
+            "description": "The name you provided to identify the webhook.",
+            "generatedName": "PaymentWebhookName",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+=======
             "generatedName": "PaymentWebhookName",
             "nameOverride": undefined,
             "type": "unknown",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
           },
         },
         {

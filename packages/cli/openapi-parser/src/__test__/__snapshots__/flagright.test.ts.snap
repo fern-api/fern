@@ -464,21 +464,14 @@ Here are some of the most used payload fields explained (you can find the full p
         "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
-          "allOf": [
-            {
-              "description": undefined,
-              "generatedName": "TransactionMonitoringResult",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schema": "TransactionMonitoringResult",
-              "type": "reference",
-            },
-          ],
-          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PostConsumerTransactionResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
+          "schema": "TransactionMonitoringResult",
+          "type": "reference",
+=======
           "properties": [
             {
               "audiences": [],
@@ -507,6 +500,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
           ],
           "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -570,245 +564,6 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "deviceData": {
                 "properties": {},
                 "type": "object",
-              },
-              "executedRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHit": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "hitRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "originAmountDetails": {
                 "properties": {
@@ -3441,38 +3196,14 @@ Each consumer User entity needs three mandatory fields:
         "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
-          "allOf": [
-            {
-              "description": undefined,
-              "generatedName": "ConsumerUsersResponse",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schema": "ConsumerUsersResponse",
-              "type": "reference",
-            },
-            {
-              "description": undefined,
-              "generatedName": "UserMonitoringResult",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schema": "UserMonitoringResult",
-              "type": "reference",
-            },
-          ],
-          "allOfPropertyConflicts": [
-            {
-              "allOfSchemaIds": [
-                "ConsumerUsersResponse",
-                "UserMonitoringResult",
-              ],
-              "conflictingTypeSignatures": false,
-              "propertyKey": "userId",
-            },
-          ],
           "description": undefined,
           "generatedName": "PostConsumerUserResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
+          "schema": "UserMonitoringResult",
+          "type": "reference",
+=======
           "properties": [
             {
               "audiences": [],
@@ -3501,6 +3232,7 @@ Each consumer User entity needs three mandatory fields:
             },
           ],
           "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -7726,38 +7458,14 @@ Each consumer Business entity needs three mandatory fields:
         "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
-          "allOf": [
-            {
-              "description": undefined,
-              "generatedName": "BusinessUsersResponse",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schema": "BusinessUsersResponse",
-              "type": "reference",
-            },
-            {
-              "description": undefined,
-              "generatedName": "UserMonitoringResult",
-              "groupName": undefined,
-              "nameOverride": undefined,
-              "schema": "UserMonitoringResult",
-              "type": "reference",
-            },
-          ],
-          "allOfPropertyConflicts": [
-            {
-              "allOfSchemaIds": [
-                "BusinessUsersResponse",
-                "UserMonitoringResult",
-              ],
-              "conflictingTypeSignatures": false,
-              "propertyKey": "userId",
-            },
-          ],
           "description": undefined,
           "generatedName": "PostBusinessUserResponse",
           "groupName": undefined,
           "nameOverride": undefined,
+<<<<<<< HEAD
+          "schema": "UserMonitoringResult",
+          "type": "reference",
+=======
           "properties": [
             {
               "audiences": [],
@@ -7786,6 +7494,7 @@ Each consumer Business entity needs three mandatory fields:
             },
           ],
           "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
         },
         "type": "json",
       },
@@ -11788,245 +11497,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "double",
                 },
                 "type": "primitive",
-              },
-              "executedRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHit": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "hitRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "kycStatusDetails": {
                 "properties": {
@@ -16093,245 +15563,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 ],
                 "type": "array",
               },
-              "executedRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHit": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "hitRules": {
-                "array": [
-                  {
-                    "properties": {
-                      "labels": {
-                        "array": [
-                          {
-                            "enum": "UNEXPECTED_BEHAVIOR",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "nature": {
-                        "enum": "AML",
-                        "type": "enum",
-                      },
-                      "ruleAction": {
-                        "enum": "ALLOW",
-                        "type": "enum",
-                      },
-                      "ruleDescription": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleHitMeta": {
-                        "properties": {
-                          "falsePositiveDetails": {
-                            "properties": {
-                              "confidenceScore": {
-                                "primitive": {
-                                  "double": 1.1,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "isFalsePositive": {
-                                "primitive": {
-                                  "boolean": true,
-                                  "type": "boolean",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "hitDirections": {
-                            "array": [
-                              {
-                                "enum": "ORIGIN",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "sanctionsDetails": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "entityType": {
-                                    "enum": "CONSUMER_NAME",
-                                    "type": "enum",
-                                  },
-                                  "name": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "searchId": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "ruleId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleInstanceId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ruleName": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "kycStatusDetails": {
                 "properties": {
                   "status": {
@@ -18343,15 +17574,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   },
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
-    "ExecutedRulesResult",
-    "HitRulesDetails",
     "TransactionMonitoringResult",
     "TransactionWithRulesResult",
     "TransactionEventMonitoringResult",
-    "ConsumerUsersResponse",
     "UserMonitoringResult",
     "User",
-    "BusinessUsersResponse",
     "Business",
     "UserWithRulesResult",
     "BusinessWithRulesResult",
@@ -18376,6 +17603,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "DeviceData",
     "TransactionUpdatable",
     "Transaction",
+    "ExecutedRulesResult",
+    "HitRulesDetails",
     "RulesResults",
     "RuleAction",
     "RuleHitMeta",
@@ -19830,21 +19059,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessWithRulesResult": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "Business",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "Business",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "Model for business payload with rules result",
+      "description": undefined,
       "generatedName": "BusinessWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "Business",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -19904,6 +19126,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "CardDetails": {
       "allOf": [],
@@ -30121,21 +29344,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionWithRulesResult": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "Transaction",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "Transaction",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "Model for transaction payload with rules result",
+      "description": undefined,
       "generatedName": "TransactionWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "Transaction",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -30181,6 +29397,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "UPIDetails": {
       "allOf": [],
@@ -31013,21 +30230,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserWithRulesResult": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "User",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "User",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "Model for consumer user payload with rules result",
+      "description": undefined,
       "generatedName": "UserWithRulesResult",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "User",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -31087,6 +30297,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "WalletDetails": {
       "allOf": [],

@@ -4815,12 +4815,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "request": {
             "properties": {
               "email": {
-                "properties": {},
-                "type": "object",
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "phoneNumber": {
-                "properties": {},
-                "type": "object",
+                "primitive": {
+                  "string": "+14155552671",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "userId": {
                 "primitive": {
@@ -4962,23 +4968,12 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "type": "optional",
                 "value": {
-                  "allOf": [
-                    {
-                      "description": undefined,
-                      "generatedName": "Email",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "email",
-                      "type": "reference",
-                    },
-                  ],
-                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "PasswordlessPutUserRequestEmail",
                   "groupName": undefined,
                   "nameOverride": undefined,
-                  "properties": [],
-                  "type": "object",
+                  "schema": "email",
+                  "type": "reference",
                 },
               },
             },
@@ -4994,23 +4989,12 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "nameOverride": undefined,
                 "type": "optional",
                 "value": {
-                  "allOf": [
-                    {
-                      "description": undefined,
-                      "generatedName": "PhoneNumber",
-                      "groupName": undefined,
-                      "nameOverride": undefined,
-                      "schema": "phoneNumber",
-                      "type": "reference",
-                    },
-                  ],
-                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "PasswordlessPutUserRequestPhoneNumber",
                   "groupName": undefined,
                   "nameOverride": undefined,
-                  "properties": [],
-                  "type": "object",
+                  "schema": "phoneNumber",
+                  "type": "reference",
                 },
               },
             },

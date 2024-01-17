@@ -110,7 +110,79 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "response": {
             "properties": {
               "items": {
+<<<<<<< HEAD
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Checking *1008",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location": {
+                        "enum": "internal",
+                        "type": "enum",
+                      },
+                      "maskedNumber": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nickname": {
+                        "primitive": {
+                          "string": "Payroll Checking",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "product": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "CD001",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+=======
                 "array": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                 "type": "array",
               },
               "limit": {
@@ -331,81 +403,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "request": undefined,
           "response": {
             "properties": {
-              "allows": {
-                "properties": {
-                  "billPay": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "manageCards": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "manageJointOwners": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "manageOverdraftAccounts": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "mobileCheckDeposit": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "transferFrom": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "transferTo": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "view": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "viewCards": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "electronicStatements": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
               "id": {
                 "primitive": {
                   "string": "string",
@@ -832,7 +829,79 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "response": {
             "properties": {
               "items": {
+<<<<<<< HEAD
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Checking *1008",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location": {
+                        "enum": "internal",
+                        "type": "enum",
+                      },
+                      "maskedNumber": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nickname": {
+                        "primitive": {
+                          "string": "Payroll Checking",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "product": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "CD001",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+=======
                 "array": [],
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
                 "type": "array",
               },
               "limit": {
@@ -1611,13 +1680,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                         },
                         "type": "primitive",
                       },
-                      "postalCode": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
                     },
                     "type": "object",
                   },
@@ -1670,13 +1732,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                             "type": "primitive",
                           },
                           "locality": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "postalCode": {
                             "primitive": {
                               "string": "string",
                               "type": "string",
@@ -4404,18 +4459,17 @@ Note: This operation requires an identity challenge if the financial institution
     "challengeToken",
     "transfer",
     "accountPermissions",
-    "abstractBody",
-    "readOnlyResourceId",
-    "accountNickname",
-    "maskedAccountNumber",
-    "productReference",
-    "accountLocation",
     "accountFields",
-    "fullAccountPermissions",
+    "maskedAccountNumber",
     "overdraftAccountFields",
     "abstractPagedBody",
+    "abstractBody",
     "overdraftProtectionFields",
     "accountItem",
+    "readOnlyResourceId",
+    "accountNickname",
+    "productReference",
+    "accountLocation",
     "accountBalance",
     "creditOrDebitValue",
     "readOnlyTimestamp",
@@ -4572,29 +4626,14 @@ Note: This operation requires an identity challenge if the financial institution
       "type": "object",
     },
     "account": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "AbstractBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "abstractBody",
-          "type": "reference",
-        },
-        {
-          "description": undefined,
-          "generatedName": "AccountFields",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "accountFields",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "An internal customer account.",
+      "description": undefined,
       "generatedName": "Account",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "accountFields",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -4628,6 +4667,7 @@ Note: This operation requires an identity challenge if the financial institution
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "accountAllowsFilter": {
       "description": "Values for the \`?allows=\` filter in [\`listAccounts\`](#op-listAccounts).
@@ -5008,21 +5048,14 @@ Note: This operation requires an identity challenge if the financial institution
       },
     },
     "accountItem": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "AccountFields",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "accountFields",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "An account item in a list items in the \`accounts\` schema.",
+      "description": undefined,
       "generatedName": "AccountItem",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "accountFields",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -5194,6 +5227,7 @@ Note: This operation requires an identity challenge if the financial institution
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "accountJointOwner": {
       "allOf": [
@@ -5744,21 +5778,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       ],
     },
     "address": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "AddressFields",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "addressFields",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "A postal address that can hold a US address or an international (non-US) postal addresses.",
+      "description": undefined,
       "generatedName": "Address",
       "groupName": undefined,
       "nameOverride": undefined,
+<<<<<<< HEAD
+      "schema": "addressFields",
+      "type": "reference",
+=======
       "properties": [
         {
           "audiences": [],
@@ -5852,6 +5879,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       ],
       "type": "object",
+>>>>>>> b1a9ea3e5436b8d5dbd78d9992e476775cbb4d31
     },
     "addressFields": {
       "allOf": [],
@@ -8832,31 +8860,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "type": "object",
     },
     "transfer": {
-      "allOf": [
-        {
-          "description": undefined,
-          "generatedName": "AbstractBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "abstractBody",
-          "type": "reference",
-        },
-        {
-          "description": undefined,
-          "generatedName": "TransferItem",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "transferItem",
-          "type": "reference",
-        },
-      ],
-      "allOfPropertyConflicts": [],
-      "description": "Representation of a transfer resource.",
+      "description": undefined,
       "generatedName": "Transfer",
       "groupName": undefined,
       "nameOverride": undefined,
-      "properties": [],
-      "type": "object",
+      "schema": "transferItem",
+      "type": "reference",
     },
     "transferAccountReference": {
       "allOf": [],
