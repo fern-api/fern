@@ -207,9 +207,13 @@ async function getGithubLicense({
     if (typeof githubLicense === "string") {
         switch (githubLicense) {
             case "MIT":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Mit);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Mit
+                });
             case "Apache-2.0":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Apache2);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Apache2
+                });
             default:
                 assertNever(githubLicense);
         }
@@ -219,7 +223,9 @@ async function getGithubLicense({
         RelativeFilePath.of(githubLicense.custom)
     );
     const licenseContent = await readFile(absolutePathToLicense);
-    return FernFiddle.GithubLicense.file(licenseContent.toString());
+    return FernFiddle.GithubLicense.custom({
+        contents: licenseContent.toString()
+    });
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
