@@ -7893,7 +7893,7 @@ exports[`open api parser hookdeck simple 1`] = `
     "default-environment": "Default",
     "display-name": "Hookdeck Admin REST API",
     "environments": {
-      "Default": "https://api.hookdeck.com/2023-01-01",
+      "Default": "https://api.hookdeck.com",
     },
     "error-discrimination": {
       "strategy": "status-code",

@@ -3263,7 +3263,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     "default-environment": "Default",
     "display-name": "Apiture Digital Banking",
     "environments": {
-      "Default": "https://api.apiture.com/banking",
+      "Default": "https://api.apiture.com",
     },
     "error-discrimination": {
       "strategy": "status-code",
