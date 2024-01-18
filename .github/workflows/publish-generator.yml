@@ -1,9 +1,5 @@
-name: publish
-on:
-  release:
-    types: [released]
-  push:
-    branches: [main]
+name: publish-generator
+on: workflow_dispatch
 
 jobs:
   # TODO: run seed tests and check
