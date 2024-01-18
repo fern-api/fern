@@ -56,7 +56,7 @@ export class ClassReference extends AstNode {
     }
 
     public toJson(_variable: Variable | string): FunctionInvocation | undefined {
-        return ;
+        return;
     }
 
     public fromJson(_variable: Variable | string): FunctionInvocation | undefined {
@@ -138,18 +138,20 @@ export const JsonClassReference = new ClassReference({ name: RubyClass.JSON });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {
-    export type InitReference = ClassReference.Init
+    export type InitReference = ClassReference.Init;
 }
 export class SerializableObjectReference extends ClassReference {
     constructor(init: SerializableObjectReference.InitReference) {
-        super({...init});
+        super({ ...init });
     }
 
     public fromJson(variable: string | Variable): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "from_json", functionBody: [] }),
             onObject: this.qualifiedName,
-            arguments_: [new Argument({type: GenericClassReference, value: variable, isNamed: true, name: "json_object"})]
+            arguments_: [
+                new Argument({ type: GenericClassReference, value: variable, isNamed: true, name: "json_object" })
+            ]
         });
     }
 }
@@ -176,21 +178,26 @@ export class ArrayReference extends ClassReference {
     }
 
     public fromJson(variable: string | Variable): FunctionInvocation | undefined {
-        const valueFromJsonFunction = this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
-        return (valueFromJsonFunction !== undefined ? new FunctionInvocation({
-            baseFunction: new Function_({ name: "map", functionBody: [] }),
-            onObject: variable,
-            block: {arguments: "v", expressions: [new Expression({rightSide: valueFromJsonFunction})]}
-        }) : undefined);
+        const valueFromJsonFunction =
+            this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
+        return valueFromJsonFunction !== undefined
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "map", functionBody: [] }),
+                  onObject: variable,
+                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueFromJsonFunction })] }
+              })
+            : undefined;
     }
 
     public toJson(variable: string | Variable): FunctionInvocation | undefined {
         const valueToJsonFunction = this.innerType instanceof ClassReference ? this.innerType.toJson("v") : undefined;
-        return (valueToJsonFunction !== undefined ? new FunctionInvocation({
-            baseFunction: new Function_({ name: "map", functionBody: [] }),
-            onObject: variable,
-            block: {arguments: "v", expressions: [new Expression({rightSide: valueToJsonFunction})]}
-        }) : undefined);
+        return valueToJsonFunction !== undefined
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "map", functionBody: [] }),
+                  onObject: variable,
+                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueToJsonFunction })] }
+              })
+            : undefined;
     }
 }
 
@@ -207,7 +214,6 @@ export class ArrayInstance extends AstNode {
             templateString: "[%s]"
         });
     }
-    
 }
 
 export declare namespace Hash_ {
@@ -233,21 +239,26 @@ export class HashReference extends ClassReference {
         this.valueType = valueType;
     }
     public fromJson(variable: string | Variable): FunctionInvocation | undefined {
-        const valueFromJsonFunction = this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
-        return (valueFromJsonFunction !== undefined ? new FunctionInvocation({
-            baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-            onObject: variable,
-            block: {arguments: "v", expressions: [new Expression({rightSide: valueFromJsonFunction})]}
-        }) : undefined);
+        const valueFromJsonFunction =
+            this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
+        return valueFromJsonFunction !== undefined
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                  onObject: variable,
+                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueFromJsonFunction })] }
+              })
+            : undefined;
     }
 
     public toJson(variable: string | Variable): FunctionInvocation | undefined {
         const valueToJsonFunction = this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
-        return (valueToJsonFunction !== undefined ? new FunctionInvocation({
-            baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-            onObject: variable,
-            block: {arguments: "v", expressions: [new Expression({rightSide: valueToJsonFunction})]}
-        }) : undefined);
+        return valueToJsonFunction !== undefined
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                  onObject: variable,
+                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueToJsonFunction })] }
+              })
+            : undefined;
     }
 }
 

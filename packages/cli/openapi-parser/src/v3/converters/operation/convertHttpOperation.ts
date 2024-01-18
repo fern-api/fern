@@ -79,6 +79,7 @@ export function convertHttpOperation({
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
     const convertedResponse = convertResponse({
+        operationContext,
         isStreaming: streamingResponse ?? false,
         responses: operation.responses,
         context,

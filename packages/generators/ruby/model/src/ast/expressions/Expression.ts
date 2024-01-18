@@ -15,7 +15,7 @@ export declare namespace Expression {
 }
 export class Expression extends AstNode {
     public leftSide: Variable | string | undefined;
-    public rightSide: Variable | FunctionInvocation | ClassReference | AstNode | string ;
+    public rightSide: Variable | FunctionInvocation | ClassReference | AstNode | string;
     public isAssignment: boolean;
     public yardoc: Yardoc | undefined;
 

@@ -49,7 +49,7 @@ export class TypesGenerator {
         // this.customConfig = customConfig;
 
         this.directoryPrefix = RelativeFilePath.of(
-            customConfig.clientName ?? upperFirst(camelCase(config.organization)) + "Client"
+            customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client"
         );
 
         // For convenience just get what's inheriting what ahead of time.

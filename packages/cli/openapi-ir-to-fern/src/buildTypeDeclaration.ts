@@ -53,14 +53,14 @@ export function buildTypeDeclaration({
         case "reference":
             return buildReferenceTypeDeclaration({ schema, context, declarationFile });
         case "unknown":
-            return buildUnknownTypeDeclaration();
+            return buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
         case "optional":
         case "nullable":
             return buildOptionalTypeDeclaration({ schema, context, declarationFile });
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
-            return buildLiteralTypeDeclaration(schema.value);
+            return buildLiteralTypeDeclaration(schema.value, schema.nameOverride, schema.generatedName);
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
@@ -90,7 +90,14 @@ export function buildObjectTypeDeclaration({
                 continue; // just use the parent property instead of redefining
             } else {
                 Object.entries(property.conflict).forEach(([schemaId]) => {
-                    schemasToInline.add(schemaId);
+                    const parentSchemasToInine = getAllParentSchemasToInline({
+                        property: property.key,
+                        schemaId,
+                        context
+                    });
+                    parentSchemasToInine.forEach((schemaToInline) => {
+                        schemasToInline.add(schemaToInline);
+                    });
                 });
             }
         }
@@ -119,7 +126,8 @@ export function buildObjectTypeDeclaration({
 
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
-        if (schemasToInline.has(allOf.schema)) {
+        const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context });
+        if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
             continue; // dont extend from schemas that need to be inlined
         }
         const allOfTypeReference = buildTypeReference({
@@ -131,11 +139,7 @@ export function buildObjectTypeDeclaration({
     }
 
     for (const inlineSchemaId of schemasToInline) {
-        const inlinedSchema = context.getSchema(inlineSchemaId);
-        const inlinedSchemaPropertyInfo = getAllProperties({
-            schema: inlinedSchema,
-            schemaId: inlineSchemaId
-        });
+        const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId);
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
                 if (propertiesToSetToUnknown.has(propertyToInline.key)) {
@@ -149,6 +153,9 @@ export function buildObjectTypeDeclaration({
             }
         }
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
+            if (schemasToInline.has(extendedSchema.schema)) {
+                continue; // dont extend from schemas that need to be inlined
+            }
             const extendedSchemaTypeReference = buildTypeReference({
                 schema: Schema.reference(extendedSchema),
                 context,
@@ -189,15 +196,50 @@ export function buildObjectTypeDeclaration({
     };
 }
 
-function getAllProperties({ schemaId, schema }: { schemaId: SchemaId; schema: Schema }): {
+function getAllParentSchemasToInline({
+    property,
+    schemaId,
+    context
+}: {
+    property: string;
+    schemaId: SchemaId;
+    context: OpenApiIrConverterContext;
+}): SchemaId[] {
+    const schema = context.getSchema(schemaId);
+    if (schema.type === "reference") {
+        return getAllParentSchemasToInline({ property, schemaId: schema.schema, context });
+    }
+    if (schema.type === "object") {
+        const { properties, allOf } = getProperties(context, schemaId);
+        const hasProperty = properties.some((p) => {
+            return p.key === property;
+        });
+        const parentSchemasToInline = [
+            ...allOf.flatMap((parent) => {
+                return getAllParentSchemasToInline({ property, context, schemaId: parent.schema });
+            })
+        ];
+        if (hasProperty || parentSchemasToInline.length > 0) {
+            return [schemaId, ...parentSchemasToInline];
+        }
+    }
+    return [];
+}
+
+function getProperties(
+    context: OpenApiIrConverterContext,
+    schemaId: SchemaId
+): {
     properties: ObjectProperty[];
     allOf: ReferencedSchema[];
 } {
-    if (schema.type !== "object") {
-        throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}`);
+    const schema = context.getSchema(schemaId);
+    if (schema.type === "object") {
+        return { properties: schema.properties, allOf: schema.allOf };
+    } else if (schema.type === "reference") {
+        return getProperties(context, schema.schema);
     }
-    const properties: ObjectProperty[] = [...schema.properties];
-    return { properties, allOf: schema.allOf };
+    throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}, type=${schema.type}`);
 }
 
 export function buildArrayTypeDeclaration({
@@ -210,8 +252,8 @@ export function buildArrayTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
-        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, context })
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildArrayTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
@@ -225,14 +267,14 @@ export function buildMapTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
-        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, context })
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildMapTypeReference({ schema, fileContainingReference: declarationFile, declarationFile, context })
     };
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         schema: buildPrimitiveTypeReference(schema)
     };
 }
@@ -294,21 +336,33 @@ export function buildOptionalTypeDeclaration({
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
     return {
-        name: undefined,
-        schema: buildOptionalTypeReference({ schema, context, fileContainingReference: declarationFile })
+        name: schema.nameOverride ?? schema.generatedName,
+        schema: buildOptionalTypeReference({
+            schema,
+            context,
+            fileContainingReference: declarationFile,
+            declarationFile
+        })
     };
 }
 
-export function buildUnknownTypeDeclaration(): ConvertedTypeDeclaration {
+export function buildUnknownTypeDeclaration(
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildUnknownTypeReference()
     };
 }
 
-export function buildLiteralTypeDeclaration(value: LiteralSchemaValue): ConvertedTypeDeclaration {
+export function buildLiteralTypeDeclaration(
+    value: LiteralSchemaValue,
+    nameOverride: string | null | undefined,
+    generatedName: string
+): ConvertedTypeDeclaration {
     return {
-        name: undefined,
+        name: nameOverride ?? generatedName,
         schema: buildLiteralTypeReference(value)
     };
 }
@@ -373,4 +427,18 @@ export function buildOneOfTypeDeclaration({
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
+}
+
+function getSchemaIdOfResolvedType({
+    schema,
+    context
+}: {
+    schema: SchemaId;
+    context: OpenApiIrConverterContext;
+}): SchemaId {
+    const resolvedSchema = context.getSchema(schema);
+    if (resolvedSchema.type === "reference") {
+        return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
+    }
+    return schema;
 }

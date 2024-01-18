@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildTypeReference } from "./buildTypeReference";
@@ -23,7 +24,15 @@ export function buildQueryParameter({
         return undefined;
     }
 
-    const queryParameterType = getTypeFromTypeReference(typeReference.value);
+    let queryParameterType = getTypeFromTypeReference(typeReference.value);
+
+    // we can assume unknown-typed query parameteters are strings by default
+    if (queryParameterType === "unknown") {
+        queryParameterType = "string";
+    } else if (queryParameterType === "optional<unknown>") {
+        queryParameterType = "optional<string>";
+    }
+
     if (
         queryParameter.description == null &&
         !typeReference.allowMultiple &&
@@ -73,17 +82,39 @@ function getQueryParameterTypeReference({
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         groupName: undefined
                     }),
                     context,
+                    declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
                     fileContainingReference
                 }),
                 allowMultiple: true
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
-            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            // Try to generated enum from literal values
+            const literalValues = [];
+            for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
+                if (schema.type === "literal" && schema.value.type === "string") {
+                    literalValues.push(schema.value.string);
+                }
+            }
+
+            if (literalValues.length > 0) {
+                context.builder.addType(fileContainingReference, {
+                    name: schema.generatedName,
+                    schema: { enum: literalValues }
+                });
+                return {
+                    value: schema.generatedName,
+                    allowMultiple: false
+                };
+            }
+
+            // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
                     schema,
@@ -103,12 +134,15 @@ function getQueryParameterTypeReference({
                 return {
                     value: buildTypeReference({
                         schema: Schema.optional({
+                            nameOverride: schema.nameOverride,
+                            generatedName: schema.generatedName,
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             groupName: undefined
                         }),
                         context,
-                        fileContainingReference
+                        fileContainingReference,
+                        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
                     }),
                     allowMultiple: true
                 };
@@ -118,6 +152,8 @@ function getQueryParameterTypeReference({
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
                         value: schema.value.value,
                         description: schema.description,
                         groupName: undefined
@@ -128,10 +164,35 @@ function getQueryParameterTypeReference({
                 allowMultiple: true
             };
         } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
-            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            // Try to generated enum from literal values
+            const literalValues = [];
+            for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
+                if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
+                    literalValues.push(oneOfSchema.value.string);
+                }
+            }
+
+            if (literalValues.length > 0) {
+                context.builder.addType(fileContainingReference, {
+                    name: schema.value.oneOf.generatedName,
+                    schema: { enum: literalValues }
+                });
+                return {
+                    value: `optional<${schema.value.oneOf.generatedName}>`,
+                    allowMultiple: false
+                };
+            }
+
+            // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
-                    schema: Schema.optional({ value: oneOfSchema, description: undefined, groupName: undefined }),
+                    schema: Schema.optional({
+                        nameOverride: schema.nameOverride,
+                        generatedName: schema.generatedName,
+                        value: oneOfSchema,
+                        description: undefined,
+                        groupName: undefined
+                    }),
                     context,
                     fileContainingReference
                 });
@@ -152,7 +213,13 @@ function getQueryParameterTypeReference({
     if (schema.type === "array") {
         return {
             value: buildTypeReference({
-                schema: Schema.optional({ value: schema.value, description: schema.description, groupName: undefined }),
+                schema: Schema.optional({
+                    nameOverride: schema.nameOverride,
+                    generatedName: schema.generatedName,
+                    value: schema.value,
+                    description: schema.description,
+                    groupName: undefined
+                }),
                 context,
                 fileContainingReference
             }),

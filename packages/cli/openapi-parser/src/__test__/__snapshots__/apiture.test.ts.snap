@@ -69,7 +69,69 @@ Transfers support recurring schedules, such as repeating every week or every mon
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "productType",
+              "value": {
+                "array": [
+                  {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "location",
+              "value": {
+                "enum": "internal",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "allows",
+              "value": {
+                "array": [
+                  {
+                    "enum": "billPay",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+              "limit": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountsListAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -84,11 +146,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountsRequestProductType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListAccountsRequestProductType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -107,7 +173,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountsRequestLocation",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -138,11 +206,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountsRequestAllows",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListAccountsRequestAllows",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -161,11 +233,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountsRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListAccountsRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -181,11 +257,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountsRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListAccountsRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -198,6 +278,8 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListAccountsResponse",
@@ -230,7 +312,167 @@ Transfers support recurring schedules, such as repeating every week or every mon
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "allows": {
+                "properties": {
+                  "billPay": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "manageCards": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "manageJointOwners": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "manageOverdraftAccounts": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "mobileCheckDeposit": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "transferFrom": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "transferTo": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "view": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "viewCards": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "electronicStatements": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "Checking *1008",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "location": {
+                "enum": "internal",
+                "type": "enum",
+              },
+              "maskedNumber": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "nickname": {
+                "primitive": {
+                  "string": "Payroll Checking",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product": {
+                "properties": {
+                  "code": {
+                    "primitive": {
+                      "string": "CD001",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountsGetAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -257,6 +499,8 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response is a representation of the customer's account.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsGetAccountResponse",
@@ -302,7 +546,55 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "available": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "current": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currentWithPending": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "incomplete": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2021-10-30T19:06:04.250Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -324,7 +616,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountBalancesRequestAccounts",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -342,11 +636,15 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListAccountBalancesRequestRetryCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListAccountBalancesRequestRetryCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -359,6 +657,8 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. The response contains the balances for all the accounts in the \`?accounts=\` query parameter.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListAccountBalancesResponse",
@@ -400,7 +700,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "account-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -412,7 +712,27 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -446,6 +766,8 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountJointOwnersListAccountJointOwnersResponse",
@@ -481,7 +803,57 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "allows",
+              "value": {
+                "array": [
+                  {
+                    "enum": "billPay",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "secCode",
+              "value": {
+                "enum": "arc",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+              "limit": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -496,7 +868,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListEligibleAchAccountsRequestAllows",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -527,7 +901,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListEligibleAchAccountsRequestCustomerId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -545,11 +921,15 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListEligibleAchAccountsRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListEligibleAchAccountsRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -565,11 +945,15 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -582,6 +966,8 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's ACH-eligible accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "AccountsListEligibleAchAccountsResponse",
@@ -620,7 +1006,58 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "limit": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "maximumOverdraftAccounts": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -649,11 +1086,15 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -669,11 +1110,15 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -686,6 +1131,8 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK. A page from the full list of the customer's eligible overdraft accounts. This list contains only accounts that the customer is entitled to access. While the \`nextPage_url\` property is present in the response, the client can fetch the next page of accounts by performing a \`GET\` on that URL.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsResponse",
@@ -718,7 +1165,37 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "maximumOverdraftAccounts": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionGetOverdraftProtectionRequest",
       "headers": [],
       "internal": undefined,
@@ -745,6 +1222,8 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionGetOverdraftProtectionResponse",
@@ -781,7 +1260,40 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "maximumOverdraftAccounts": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -807,6 +1319,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionPatchOverdraftAccountsRequest",
@@ -820,6 +1333,8 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "OverdraftProtectionPatchOverdraftAccountsResponse",
@@ -856,7 +1371,97 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "emailAddress": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "firstName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "lastName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sharedSecret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "emailAddress": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "firstName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "lastName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sharedSecret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -882,6 +1487,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "JointOwnersCreateJointOwnerInvitationRequest",
@@ -895,6 +1501,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "JointOwnersCreateJointOwnerInvitationResponse",
@@ -928,7 +1536,185 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "locator",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "locatorType",
+              "value": {
+                "enum": "abaRoutingNumber",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "countryCode",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "found": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "address1": {
+                        "primitive": {
+                          "string": "1805 Tiburon Dr.",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "address2": {
+                        "primitive": {
+                          "string": "Building 14, Suite 1500",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "countryCode": {
+                        "primitive": {
+                          "string": "US",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "locality": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "postalCode": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "locator": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "locatorType": {
+                    "enum": "abaRoutingNumber",
+                    "type": "enum",
+                  },
+                  "name": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "intermediaryInstitutions": {
+                "array": [
+                  {
+                    "properties": {
+                      "address": {
+                        "properties": {
+                          "address1": {
+                            "primitive": {
+                              "string": "1805 Tiburon Dr.",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "address2": {
+                            "primitive": {
+                              "string": "Building 14, Suite 1500",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "countryCode": {
+                            "primitive": {
+                              "string": "US",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "locality": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "postalCode": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "locator": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "locatorType": {
+                        "enum": "abaRoutingNumber",
+                        "type": "enum",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "InstitutionsLookUpInstitutionByLocatorRequest",
       "headers": [],
       "internal": undefined,
@@ -943,7 +1729,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestLocator",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 36,
               "minLength": undefined,
@@ -971,7 +1759,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the financial institution.",
+            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestCountryCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 2,
               "minLength": 2,
@@ -986,11 +1776,15 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1003,6 +1797,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsLookUpInstitutionByLocatorResponse",
@@ -1148,7 +1944,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsListTransferScheduleRequestStartsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1163,11 +1961,15 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1196,11 +1998,15 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsListTransferScheduleRequestCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsListTransferScheduleRequestCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1226,6 +2032,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsListTransferScheduleResponse",
@@ -1263,7 +2071,58 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
         412,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "institutionId",
+              "value": {
+                "primitive": {
+                  "string": "TIBURON",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "time": {
+                        "primitive": {
+                          "string": "16:45",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "ach",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "timeZoneId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "InstitutionsGetCutoffTimesRequest",
       "headers": [
         {
@@ -1272,11 +2131,15 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 512,
                 "minLength": undefined,
@@ -1313,7 +2176,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetCutoffTimesRequestTimeZoneId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1330,6 +2195,8 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsGetCutoffTimesResponse",
@@ -1488,11 +2355,15 @@ This information provides hints to clients, allowing bank customers to select tr
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1508,11 +2379,15 @@ This information provides hints to clients, allowing bank customers to select tr
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1528,7 +2403,9 @@ This information provides hints to clients, allowing bank customers to select tr
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1546,7 +2423,9 @@ This information provides hints to clients, allowing bank customers to select tr
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "InstitutionsGetTransferDateRestrictionsRequestRisk",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1563,6 +2442,8 @@ This information provides hints to clients, allowing bank customers to select tr
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "InstitutionsGetTransferDateRestrictionsResponse",
@@ -1603,7 +2484,164 @@ The default response lists only recent transactions. Normally, this is transacti
         429,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "balance",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "subtype",
+              "value": {
+                "array": [
+                  {
+                    "enum": "check",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "balance": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "category": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "check": {
+                        "properties": {
+                          "number": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "createdOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "merchant": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                      "occurredOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "postedOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "subtype": {
+                        "enum": "check",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "enum": "balance",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "limit": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1632,11 +2670,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -1652,11 +2694,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1670,11 +2716,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestOccurredOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestOccurredOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1690,11 +2740,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestPosted",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestPosted",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1708,7 +2762,9 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestCreatedOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1726,7 +2782,9 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestPostedOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1744,11 +2802,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestCategory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestCategory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1767,11 +2829,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1790,11 +2856,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestSubtype",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestSubtype",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1813,7 +2883,9 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestAmount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1831,7 +2903,9 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestCheckNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1849,11 +2923,15 @@ The default response lists only recent transactions. Normally, this is transacti
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionsListTransactionsRequestRetryCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionsListTransactionsRequestRetryCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1866,6 +2944,8 @@ The default response lists only recent transactions. Normally, this is transacti
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransactionsListTransactionsResponse",
@@ -1910,7 +2990,31 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "credit",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1926,11 +3030,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 512,
                 "minLength": undefined,
@@ -1951,6 +3059,8 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransactionCategoriesListTransactionCategoriesResponse",
@@ -1984,7 +3094,149 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "createdAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "schedule": {
+                        "properties": {
+                          "amountLimit": {
+                            "primitive": {
+                              "string": "3456.78",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "once",
+                            "type": "enum",
+                          },
+                          "recurrenceType": {
+                            "enum": "fixed",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "sourceAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Checking *1008",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "location": {
+                            "enum": "internal",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "state": {
+                        "enum": "unscheduled",
+                        "type": "enum",
+                      },
+                      "targetAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Checking *1008",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "location": {
+                            "enum": "internal",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "limit": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/resources/8b76b4a97dccad88890e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersListTransfersRequest",
       "headers": [],
       "internal": undefined,
@@ -1999,7 +3251,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestScheduledOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2017,7 +3271,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestDebitsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2035,7 +3291,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestCreditsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2053,11 +3311,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestHistorical",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransfersListTransfersRequestHistorical",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2071,11 +3333,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransfersListTransfersRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -2091,11 +3357,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersListTransfersRequestLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "TransfersListTransfersRequestLimit",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -2108,6 +3378,8 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersListTransfersResponse",
@@ -2143,7 +3415,210 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "state": {
+                "enum": "unscheduled",
+                "type": "enum",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "updatedAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersCreateTransferRequest",
       "headers": [
         {
@@ -2152,7 +3627,9 @@ Note: This operation requires an identity challenge if the financial institution
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersCreateTransferRequestChallenge",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2174,6 +3651,7 @@ Note: This operation requires an identity challenge if the financial institution
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TransfersCreateTransferRequestBody",
@@ -2187,6 +3665,8 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "Created.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersCreateTransferResponse",
@@ -2219,7 +3699,136 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "state": {
+                "enum": "unscheduled",
+                "type": "enum",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "updatedAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
       "internal": undefined,
@@ -2246,6 +3855,8 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersGetTransferResponse",
@@ -2287,7 +3898,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "transfer-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2350,7 +3961,221 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "state": {
+                "enum": "unscheduled",
+                "type": "enum",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "updatedAt": {
+                "primitive": {
+                  "datetime": "2022-04-18T07:21:35.375Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {
@@ -2359,7 +4184,9 @@ Note: This operation requires an identity challenge if the financial institution
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "TransfersPatchTransferRequestChallenge",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2395,6 +4222,7 @@ Note: This operation requires an identity challenge if the financial institution
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "TransfersPatchTransferRequestBody",
@@ -2408,6 +4236,8 @@ Note: This operation requires an identity challenge if the financial institution
       "requestNameOverride": undefined,
       "response": {
         "description": "OK.",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "TransfersPatchTransferResponse",
@@ -2668,11 +4498,15 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "start",
           "schema": {
             "description": undefined,
+            "generatedName": "abstractPagedBodyStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The opaque cursor that specifies the starting location of this page of items.",
+              "generatedName": "AbstractPagedBodyStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -2700,7 +4534,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "limit",
           "schema": {
             "description": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+            "generatedName": "AbstractPagedBodyFieldsLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -2714,11 +4550,15 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
+            "generatedName": "abstractPagedBodyFieldsNextPageUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
+              "generatedName": "AbstractPagedBodyFieldsNextPageUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 8000,
                 "minLength": undefined,
@@ -2777,7 +4617,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "electronicStatements",
           "schema": {
             "description": "If \`true\`, the customer has opted in to receive account statements electronically.",
+            "generatedName": "AccountElectronicStatements",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -2907,7 +4749,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "available",
           "schema": {
             "description": undefined,
+            "generatedName": "accountBalanceAvailable",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
@@ -2926,7 +4770,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "current",
           "schema": {
             "description": undefined,
+            "generatedName": "accountBalanceCurrent",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
@@ -2945,7 +4791,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "updatedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "accountBalanceUpdatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The time when the balance values were last updated from the banking core.",
@@ -2964,7 +4812,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "currentWithPending",
           "schema": {
             "description": undefined,
+            "generatedName": "accountBalanceCurrentWithPending",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
@@ -2983,7 +4833,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "incomplete",
           "schema": {
             "description": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
+            "generatedName": "AccountBalanceIncomplete",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3017,7 +4869,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "items",
           "schema": {
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
+            "generatedName": "AccountBalancesItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3061,7 +4915,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "label",
           "schema": {
             "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+            "generatedName": "AccountFieldsLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 80,
               "minLength": undefined,
@@ -3077,7 +4933,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nickname",
           "schema": {
             "description": undefined,
+            "generatedName": "accountFieldsNickname",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3136,7 +4994,9 @@ Note: This operation requires an identity challenge if the financial institution
     },
     "accountIds": {
       "description": "An array of account IDs.",
+      "generatedName": "AccountIds",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "array",
       "value": {
         "description": undefined,
@@ -3175,7 +5035,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The unique identifier for this account resource. This is an immutable opaque string.",
@@ -3198,11 +5060,15 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "generatedName": "AccountItemLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 80,
                 "minLength": undefined,
@@ -3223,7 +5089,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nickname",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemNickname",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3246,7 +5114,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "maskedNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemMaskedNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3283,7 +5153,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "product",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemProduct",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3306,7 +5178,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "location",
           "schema": {
             "description": undefined,
+            "generatedName": "accountItemLocation",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Indicates where an account is held.",
@@ -3359,7 +5233,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "name",
           "schema": {
             "description": "The full name of the joint owner.",
+            "generatedName": "AccountJointOwnerName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 50,
               "minLength": undefined,
@@ -3386,7 +5262,9 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "items",
           "schema": {
             "description": "An array containing account joint owner items.",
+            "generatedName": "AccountJointOwnersItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3434,7 +5312,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "accountNickname": {
       "description": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
+      "generatedName": "AccountNickname",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 50,
         "minLength": undefined,
@@ -3457,7 +5337,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "billPay",
           "schema": {
             "description": "If \`true\`, the customer may use this account for Bill Pay.",
+            "generatedName": "AccountPermissionsBillPay",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3471,7 +5353,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "mobileCheckDeposit",
           "schema": {
             "description": "If \`true\`, the customer may use this account for mobile check deposits.",
+            "generatedName": "AccountPermissionsMobileCheckDeposit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3485,7 +5369,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "transferFrom",
           "schema": {
             "description": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
+            "generatedName": "AccountPermissionsTransferFrom",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3499,7 +5385,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "transferTo",
           "schema": {
             "description": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
+            "generatedName": "AccountPermissionsTransferTo",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3513,7 +5401,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "view",
           "schema": {
             "description": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
+            "generatedName": "AccountPermissionsView",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3527,7 +5417,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "viewCards",
           "schema": {
             "description": "If \`true\`, the customer may view debit cards associated with this account.",
+            "generatedName": "AccountPermissionsViewCards",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3541,7 +5433,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "manageCards",
           "schema": {
             "description": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
+            "generatedName": "AccountPermissionsManageCards",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3553,7 +5447,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "accountRoutingNumber": {
       "description": "An account ABA routing and transit number.",
+      "generatedName": "AccountRoutingNumber",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 9,
         "minLength": 9,
@@ -3585,7 +5481,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "items",
           "schema": {
             "description": "The array of items in this page of accounts. This array may be empty.",
+            "generatedName": "AccountsItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3604,11 +5502,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "count",
           "schema": {
             "description": undefined,
+            "generatedName": "accountsCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
+              "generatedName": "AccountsCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3623,7 +5525,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "primaryAccountId",
           "schema": {
             "description": undefined,
+            "generatedName": "accountsPrimaryAccountId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
@@ -3646,11 +5550,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
+            "generatedName": "accountsNextPageUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
+              "generatedName": "AccountsNextPageUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -3859,11 +5767,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "regionName",
           "schema": {
             "description": undefined,
+            "generatedName": "addressRegionName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "generatedName": "AddressRegionName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 20,
                 "minLength": 2,
@@ -3880,11 +5792,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "regionCode",
           "schema": {
             "description": undefined,
+            "generatedName": "addressRegionCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "generatedName": "AddressRegionCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 2,
                 "minLength": 2,
@@ -3901,7 +5817,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "postalCode",
           "schema": {
             "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
+            "generatedName": "AddressPostalCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 10,
               "minLength": 5,
@@ -3921,7 +5839,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "countryCode",
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
+            "generatedName": "AddressCountryCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 2,
               "minLength": 2,
@@ -3948,7 +5868,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "address1",
           "schema": {
             "description": "The first line of the postal address. In the US, this typically includes the building number and street name.",
+            "generatedName": "AddressFieldsAddress1",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 35,
               "minLength": undefined,
@@ -3964,11 +5886,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "address2",
           "schema": {
             "description": undefined,
+            "generatedName": "addressFieldsAddress2",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
+              "generatedName": "AddressFieldsAddress2",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 35,
                 "minLength": undefined,
@@ -3985,7 +5911,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "locality",
           "schema": {
             "description": "The city/town/municipality of the address.",
+            "generatedName": "AddressFieldsLocality",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 20,
               "minLength": undefined,
@@ -4001,7 +5929,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "countryCode",
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
+            "generatedName": "AddressFieldsCountryCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 2,
               "minLength": 2,
@@ -4015,7 +5945,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "amountRange": {
       "description": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
+      "generatedName": "AmountRange",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -4038,12 +5970,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
+              "generatedName": "ApiProblemType",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4060,12 +5996,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "title",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemTitle",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
+              "generatedName": "ApiProblemTitle",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4082,12 +6022,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
+              "generatedName": "ApiProblemStatus",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -4102,12 +6046,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "detail",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemDetail",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A human-readable explanation specific to this occurrence of the problem.
 ",
+              "generatedName": "ApiProblemDetail",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4124,12 +6072,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "instance",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemInstance",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
+              "generatedName": "ApiProblemInstance",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4146,7 +6098,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The unique identifier for this problem. This is an immutable opaque string.",
@@ -4165,7 +6119,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "occurredAt",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemOccurredAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
@@ -4184,11 +6140,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "problems",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemProblems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
+              "generatedName": "ApiProblemProblems",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -4208,14 +6168,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "attributes",
           "schema": {
             "description": undefined,
+            "generatedName": "apiProblemAttributes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
+              "generatedName": "ApiProblemAttributes",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "ApiProblemAttributesKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4223,8 +6188,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
+                "generatedName": "ApiProblemAttributesValue",
+                "nameOverride": undefined,
                 "type": "unknown",
               },
             },
@@ -4262,15 +6230,21 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "labels",
           "schema": {
             "description": undefined,
+            "generatedName": "challengeFactorLabels",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
+              "generatedName": "ChallengeFactorLabels",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "ChallengeFactorLabelsItem",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": 40,
                   "minLength": undefined,
@@ -4288,7 +6262,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "securityQuestions",
           "schema": {
             "description": undefined,
+            "generatedName": "challengeFactorSecurityQuestions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4376,7 +6352,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "challengePromptId": {
       "description": "The unique ID of a prompt (such as a security question) in a challenge factor.",
+      "generatedName": "ChallengePromptId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 48,
         "minLength": 1,
@@ -4413,7 +6391,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "prompt",
           "schema": {
             "description": "The text prompt of this security question.",
+            "generatedName": "ChallengeSecurityQuestionPrompt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 50,
               "minLength": undefined,
@@ -4440,7 +6420,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "questions",
           "schema": {
             "description": "The array of security questions.",
+            "generatedName": "ChallengeSecurityQuestionsQuestions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4457,7 +6439,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "challengeToken": {
       "description": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
+      "generatedName": "ChallengeToken",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 255,
         "minLength": 8,
@@ -4475,7 +6459,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
     },
     "creditOrDebitValue": {
       "description": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
+      "generatedName": "CreditOrDebitValue",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -4512,7 +6498,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "time",
           "schema": {
             "description": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
+            "generatedName": "CutoffTimeTime",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4649,7 +6637,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "items",
           "schema": {
             "description": "A list of cutoff times for a financial institution.",
+            "generatedName": "CutoffTimesItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4666,7 +6656,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "dateRange": {
       "description": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
+      "generatedName": "DateRange",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -4705,6 +6697,8 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "generatedName": "eligibleOverdraftAccountsItems",
           "key": "items",
           "schema": {
+            "generatedName": "EligibleOverdraftAccountsItems",
+            "nameOverride": undefined,
             "type": "unknown",
           },
         },
@@ -4715,7 +6709,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "maximumOverdraftAccounts",
           "schema": {
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+            "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4733,11 +6729,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
+            "generatedName": "eligibleOverdraftAccountsNextPageUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
+              "generatedName": "EligibleOverdraftAccountsNextPageUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 256,
                 "minLength": undefined,
@@ -4803,7 +6803,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "fullAccountNumber": {
       "description": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+      "generatedName": "FullAccountNumber",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 32,
         "minLength": 1,
@@ -4835,7 +6837,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "manageJointOwners",
           "schema": {
             "description": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
+            "generatedName": "FullAccountPermissionsManageJointOwners",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -4849,7 +6853,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "manageOverdraftAccounts",
           "schema": {
             "description": "If \`true\`, the customer can list and manage overdraft account settings.",
+            "generatedName": "FullAccountPermissionsManageOverdraftAccounts",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -4883,7 +6889,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "items",
           "schema": {
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
+            "generatedName": "IncompleteAccountBalancesItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4916,7 +6924,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "retryCount",
           "schema": {
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
+            "generatedName": "IncompleteAccountBalancesRetryCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4950,7 +6960,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "retryCount",
           "schema": {
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
+            "generatedName": "IncompleteTransactionsRetryCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -4962,7 +6974,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "institutionId": {
       "description": "The unique immutable identifier of a financial institution.",
+      "generatedName": "InstitutionId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 9,
         "minLength": 2,
@@ -5045,7 +7059,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "found",
           "schema": {
             "description": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
+            "generatedName": "InstitutionLookupResultFound",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5059,7 +7075,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "institution",
           "schema": {
             "description": undefined,
+            "generatedName": "institutionLookupResultInstitution",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name and other information about the financial institution, if found.",
@@ -5078,11 +7096,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "intermediaryInstitutions",
           "schema": {
             "description": undefined,
+            "generatedName": "institutionLookupResultIntermediaryInstitutions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
+              "generatedName": "InstitutionLookupResultIntermediaryInstitutions",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5155,7 +7177,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "firstName",
           "schema": {
             "description": "The invitee's first name.",
+            "generatedName": "JointOwnerInvitationFieldsFirstName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 32,
               "minLength": 1,
@@ -5171,7 +7195,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "lastName",
           "schema": {
             "description": "The invitee's last name name.",
+            "generatedName": "JointOwnerInvitationFieldsLastName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 32,
               "minLength": 1,
@@ -5187,11 +7213,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "taxId",
           "schema": {
             "description": undefined,
+            "generatedName": "jointOwnerInvitationFieldsTaxId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
+              "generatedName": "JointOwnerInvitationFieldsTaxId",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 4,
                 "minLength": 4,
@@ -5208,7 +7238,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "sharedSecret",
           "schema": {
             "description": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
+            "generatedName": "JointOwnerInvitationFieldsSharedSecret",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 100,
               "minLength": 8,
@@ -5224,7 +7256,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "emailAddress",
           "schema": {
             "description": "The invitee's email address.",
+            "generatedName": "JointOwnerInvitationFieldsEmailAddress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 80,
               "minLength": undefined,
@@ -5240,11 +7274,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "disallowDebitCardAccess",
           "schema": {
             "description": undefined,
+            "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
+              "generatedName": "JointOwnerInvitationFieldsDisallowDebitCardAccess",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -5257,7 +7295,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "maskedAccountNumber": {
       "description": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
+      "generatedName": "MaskedAccountNumber",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 5,
         "minLength": 2,
@@ -5267,7 +7307,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "monetaryValue": {
       "description": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
+      "generatedName": "MonetaryValue",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5333,12 +7375,19 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "generatedName": "newTransferSchedule",
           "key": "schedule",
           "schema": {
-            "description": "When the transfer should occur and any recurrence.",
-            "generatedName": "NewTransferSchedule",
+            "description": undefined,
+            "generatedName": "newTransferSchedule",
             "groupName": undefined,
             "nameOverride": undefined,
-            "schema": "transferSchedule",
-            "type": "reference",
+            "type": "optional",
+            "value": {
+              "description": "When the transfer should occur and any recurrence.",
+              "generatedName": "NewTransferSchedule",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": "transferSchedule",
+              "type": "reference",
+            },
           },
         },
       ],
@@ -5359,7 +7408,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "overdraftAccountFieldsId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
@@ -5378,11 +7429,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "overdraftAccountFieldsLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "generatedName": "OverdraftAccountFieldsLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 80,
                 "minLength": undefined,
@@ -5399,7 +7454,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "maskedNumber",
           "schema": {
             "description": undefined,
+            "generatedName": "overdraftAccountFieldsMaskedNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -5454,7 +7511,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "maximumOverdraftAccounts",
           "schema": {
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+            "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -5479,9 +7538,13 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "accounts",
           "schema": {
             "description": undefined,
+            "generatedName": "overdraftProtectionFieldsAccounts",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
+              "generatedName": "OverdraftProtectionFieldsAccounts",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -5518,7 +7581,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "positiveIntegerRange": {
       "description": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
+      "generatedName": "PositiveIntegerRange",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5582,7 +7647,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "code",
           "schema": {
             "description": "The product's product code. Codes are unique to the financial institution.",
+            "generatedName": "ProductReferenceCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 16,
               "minLength": undefined,
@@ -5598,7 +7665,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "label",
           "schema": {
             "description": "A human-readable label for this banking product.",
+            "generatedName": "ProductReferenceLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 48,
               "minLength": undefined,
@@ -5614,7 +7683,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "description",
           "schema": {
             "description": "A human-readable description of this banking product.",
+            "generatedName": "ProductReferenceDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 400,
               "minLength": undefined,
@@ -5717,7 +7788,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "readOnlyTimestamp": {
       "description": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+      "generatedName": "ReadOnlyTimestamp",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "type": "datetime",
       },
@@ -5766,7 +7839,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "factors",
           "schema": {
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The \`labels\` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an \`sms\` factor and a \`voice\` factor.",
+            "generatedName": "RequiredIdentityChallengeFactors",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5783,7 +7858,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "resourceId": {
       "description": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
+      "generatedName": "ResourceId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 48,
         "minLength": 6,
@@ -5806,7 +7883,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "name",
           "schema": {
             "description": "The financial institution's name.",
+            "generatedName": "SimpleInstitutionName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 35,
               "minLength": undefined,
@@ -5836,7 +7915,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "locator",
           "schema": {
             "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
+            "generatedName": "SimpleInstitutionLocator",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 36,
               "minLength": undefined,
@@ -5864,7 +7945,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "timeZoneId": {
       "description": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
+      "generatedName": "TimeZoneId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 36,
         "minLength": undefined,
@@ -5887,11 +7970,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "generatedName": "timestampFieldsCreatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
+              "generatedName": "TimestampFieldsCreatedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5906,11 +7993,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "updatedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "timestampFieldsUpdatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
+              "generatedName": "TimestampFieldsUpdatedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5936,7 +8027,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "items",
           "schema": {
             "description": "An array containing transaction category items.",
+            "generatedName": "TransactionCategoriesItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5980,7 +8073,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "id",
           "schema": {
             "description": "The unique ID of this transaction's category.",
+            "generatedName": "TransactionCategorizationId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 32,
               "minLength": 1,
@@ -6036,7 +8131,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
     },
     "transactionCategoryLabel": {
       "description": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+      "generatedName": "TransactionCategoryLabel",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": 64,
         "minLength": 1,
@@ -6100,7 +8197,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "number",
           "schema": {
             "description": "The check number.",
+            "generatedName": "TransactionCheckNumber",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -6114,11 +8213,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "imageFront_url",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCheckImageFrontUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The URL for downloading the image of the front of the check.",
+              "generatedName": "TransactionCheckImageFrontUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 400,
                 "minLength": undefined,
@@ -6135,11 +8238,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "imageBack_url",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionCheckImageBackUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The URL for downloading the image of the front of the check.",
+              "generatedName": "TransactionCheckImageBackUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 400,
                 "minLength": undefined,
@@ -6167,7 +8274,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "id",
           "schema": {
             "description": "This transaction's unique identifier.",
+            "generatedName": "TransactionFieldsId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": 128,
               "minLength": 6,
@@ -6211,7 +8320,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "occurredOn",
           "schema": {
             "description": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
+            "generatedName": "TransactionFieldsOccurredOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6227,11 +8338,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "createdOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsCreatedOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
+              "generatedName": "TransactionFieldsCreatedOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6248,11 +8363,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "postedOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsPostedOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
+              "generatedName": "TransactionFieldsPostedOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6283,11 +8402,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "posted",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsPosted",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
+              "generatedName": "TransactionFieldsPosted",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -6302,7 +8425,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "balance",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsBalance",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
@@ -6321,11 +8446,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "memo",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsMemo",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The user-settable transaction memo.",
+              "generatedName": "TransactionFieldsMemo",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 128,
                 "minLength": undefined,
@@ -6342,11 +8471,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "description",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsDescription",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The transaction description assigned by the transaction cleansing service.",
+              "generatedName": "TransactionFieldsDescription",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 128,
                 "minLength": undefined,
@@ -6363,7 +8496,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "category",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsCategory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The transaction category, if assigned.",
@@ -6382,7 +8517,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "merchant",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsMerchant",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -6401,7 +8538,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "check",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionFieldsCheck",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -6458,11 +8597,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionMerchantName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The merchant\\'s name.",
+              "generatedName": "TransactionMerchantName",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 32,
                 "minLength": undefined,
@@ -6479,11 +8622,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "website_url",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionMerchantWebsiteUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The merchant's website URL.",
+              "generatedName": "TransactionMerchantWebsiteUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 400,
                 "minLength": undefined,
@@ -6500,11 +8647,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "logo_url",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionMerchantLogoUrl",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
+              "generatedName": "TransactionMerchantLogoUrl",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 400,
                 "minLength": undefined,
@@ -6632,16 +8783,25 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "generatedName": "transactionsItems",
           "key": "items",
           "schema": {
-            "description": "An array containing a page of transaction items.",
+            "description": undefined,
+            "generatedName": "transactionsItems",
             "groupName": undefined,
-            "type": "array",
+            "nameOverride": undefined,
+            "type": "optional",
             "value": {
-              "description": undefined,
-              "generatedName": "TransactionsItemsItem",
+              "description": "An array containing a page of transaction items.",
+              "generatedName": "TransactionsItems",
               "groupName": undefined,
               "nameOverride": undefined,
-              "schema": "transactionItem",
-              "type": "reference",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "generatedName": "TransactionsItemsItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "transactionItem",
+                "type": "reference",
+              },
             },
           },
         },
@@ -6652,11 +8812,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "count",
           "schema": {
             "description": undefined,
+            "generatedName": "transactionsCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
+              "generatedName": "TransactionsCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -6723,11 +8887,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "label",
           "schema": {
             "description": undefined,
+            "generatedName": "transferAccountReferenceLabel",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "generatedName": "TransferAccountReferenceLabel",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 80,
                 "minLength": undefined,
@@ -6744,7 +8912,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "type",
           "schema": {
             "description": undefined,
+            "generatedName": "transferAccountReferenceType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The product type of the account.",
@@ -6763,7 +8933,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "location",
           "schema": {
             "description": undefined,
+            "generatedName": "transferAccountReferenceLocation",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Indicates where an account is held.",
@@ -6793,7 +8965,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "occursOn",
           "schema": {
             "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
+            "generatedName": "TransferDateRestrictionOccursOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6823,11 +8997,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "creditOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferDateRestrictionCreditOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
+              "generatedName": "TransferDateRestrictionCreditOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6844,11 +9022,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "debitOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferDateRestrictionDebitOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
+              "generatedName": "TransferDateRestrictionDebitOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6967,11 +9149,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "restrictedDates",
           "schema": {
             "description": undefined,
+            "generatedName": "transferDateRestrictionsRestrictedDates",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
+              "generatedName": "TransferDateRestrictionsRestrictedDates",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -6991,11 +9177,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "accuracyEndsOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferDateRestrictionsAccuracyEndsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
+              "generatedName": "TransferDateRestrictionsAccuracyEndsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7023,7 +9213,9 @@ The response may include dates prior to requested the start date, as that is use
           "key": "amount",
           "schema": {
             "description": undefined,
+            "generatedName": "transferFieldsAmount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The amount of money to transfer between accounts.",
@@ -7042,7 +9234,9 @@ The response may include dates prior to requested the start date, as that is use
           "key": "sourceAccount",
           "schema": {
             "description": undefined,
+            "generatedName": "transferFieldsSourceAccount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The source account where the funds are withdrawn.",
@@ -7061,7 +9255,9 @@ The response may include dates prior to requested the start date, as that is use
           "key": "targetAccount",
           "schema": {
             "description": undefined,
+            "generatedName": "transferFieldsTargetAccount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The target account where the funds are deposited.",
@@ -7080,11 +9276,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "memo",
           "schema": {
             "description": undefined,
+            "generatedName": "transferFieldsMemo",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A customer-defined memo to describe the transfer.",
+              "generatedName": "TransferFieldsMemo",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 128,
                 "minLength": undefined,
@@ -7322,11 +9522,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "processedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "transferItemProcessedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date/time the transfer was processed.",
+              "generatedName": "TransferItemProcessedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -7341,11 +9545,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "updatedBy",
           "schema": {
             "description": undefined,
+            "generatedName": "transferItemUpdatedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The full name of the banking customer who last updated the transfer.",
+              "generatedName": "TransferItemUpdatedBy",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 48,
                 "minLength": undefined,
@@ -7382,11 +9590,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "debitsOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferItemScheduleDebitsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
+              "generatedName": "TransferItemScheduleDebitsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7403,11 +9615,15 @@ The response may include dates prior to requested the start date, as that is use
           "key": "creditsOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferItemScheduleCreditsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
+              "generatedName": "TransferItemScheduleCreditsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7452,7 +9668,9 @@ The response may include dates prior to requested the start date, as that is use
           "key": "schedule",
           "schema": {
             "description": undefined,
+            "generatedName": "transferPatchSchedule",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "When the transfer should occur and any recurrence.",
@@ -7525,11 +9743,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "scheduledOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferScheduleScheduledOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
+              "generatedName": "TransferScheduleScheduledOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7546,7 +9768,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "recurrenceType",
           "schema": {
             "description": undefined,
+            "generatedName": "transferScheduleRecurrenceType",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -7579,11 +9803,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "endsOn",
           "schema": {
             "description": undefined,
+            "generatedName": "transferScheduleEndsOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
+              "generatedName": "TransferScheduleEndsOn",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7600,11 +9828,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "count",
           "schema": {
             "description": undefined,
+            "generatedName": "transferScheduleCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
+              "generatedName": "TransferScheduleCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -7619,7 +9851,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "amountLimit",
           "schema": {
             "description": undefined,
+            "generatedName": "transferScheduleAmountLimit",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
@@ -7700,7 +9934,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "scheduledOn",
           "schema": {
             "description": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
+            "generatedName": "TransferScheduleItemScheduledOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7716,7 +9952,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "effectiveOn",
           "schema": {
             "description": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
+            "generatedName": "TransferScheduleItemEffectiveOn",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7752,7 +9990,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "items",
           "schema": {
             "description": "An array containing upcoming transfer schedule items.",
+            "generatedName": "TransferSchedulesItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7961,7 +10201,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "items",
           "schema": {
             "description": "An array containing a page of transfer items.",
+            "generatedName": "TransfersItems",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7980,11 +10222,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "count",
           "schema": {
             "description": undefined,
+            "generatedName": "transfersCount",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
+              "generatedName": "TransfersCount",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -8019,11 +10265,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "localClearingCode",
           "schema": {
             "description": undefined,
+            "generatedName": "wireTransferInstitutionLocalClearingCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The clearing code used to identify the financial institution for select countries.",
+              "generatedName": "WireTransferInstitutionLocalClearingCode",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": 12,
                 "minLength": 3,

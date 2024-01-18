@@ -22,10 +22,9 @@ export class Enum extends HashInstance {
     }
 }
 
-
 export class EnumReference extends HashReference {
     constructor({ name }: Enum.ReferenceInit) {
-        super({ name , keyType: "String", valueType: "String" });
+        super({ name, keyType: "String", valueType: "String" });
     }
 
     public toJson(variable: Variable | string): FunctionInvocation | undefined {
@@ -34,7 +33,7 @@ export class EnumReference extends HashReference {
             onObject: variable
         });
     }
-    
+
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "key", functionBody: [] }),
@@ -42,5 +41,4 @@ export class EnumReference extends HashReference {
             arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
         });
     }
-    
 }

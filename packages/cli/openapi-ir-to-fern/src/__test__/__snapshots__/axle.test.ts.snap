@@ -19,12 +19,23 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "carrier": "string",
+                      "createdAt": "string",
+                      "firstName": "string",
+                      "id": "string",
+                      "lastName": "string",
+                      "modifiedAt": "string",
+                      "policies": [],
+                      "refreshedAt": "string",
+                    },
+                  },
                 },
               },
             ],
@@ -78,12 +89,21 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "address": {},
+                      "domain": "string",
+                      "id": "string",
+                      "modifiedAt": "string",
+                      "name": "example-1",
+                      "phone": "string",
+                    },
+                  },
                 },
               },
             ],
@@ -111,7 +131,18 @@ exports[`open api parser axle simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [
+                      {
+                        "address": {},
+                        "domain": "string",
+                        "id": "string",
+                        "modifiedAt": "string",
+                        "name": "example-1",
+                        "phone": "string",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -153,6 +184,29 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Start Ignition",
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "redirectUri": "https://example.com/redirect",
+                  "user": {
+                    "id": "string",
+                  },
+                  "webhookUri": "https://example.com/webhook",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z",
+                      "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
+                    },
+                    "success": true,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/ignition",
             "request": {
@@ -223,12 +277,58 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": {
+                      "account": "string",
+                      "address": {},
+                      "carrier": "string",
+                      "coverages": [
+                        {
+                          "code": "BI",
+                          "label": "string",
+                        },
+                      ],
+                      "createdAt": "string",
+                      "effectiveDate": "string",
+                      "expirationDate": "string",
+                      "id": "string",
+                      "insureds": [
+                        {
+                          "firstName": "string",
+                          "lastName": "string",
+                        },
+                      ],
+                      "isActive": true,
+                      "modifiedAt": "string",
+                      "policyNumber": "string",
+                      "properties": [
+                        {
+                          "data": {
+                            "make": "string",
+                            "model": "string",
+                            "vin": "string",
+                            "year": "string",
+                          },
+                          "id": "string",
+                          "type": "vehicle",
+                        },
+                      ],
+                      "refreshedAt": "string",
+                      "thirdParties": [
+                        {
+                          "address": {},
+                          "name": "string",
+                          "type": "lienholder",
+                        },
+                      ],
+                      "type": "auto",
+                    },
+                  },
                 },
               },
             ],
@@ -280,6 +380,26 @@ exports[`open api parser axle simple 1`] = `
             "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
 
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "authCode": "string",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "accessToken": "string",
+                      "account": "string",
+                      "policies": [],
+                    },
+                    "success": true,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/token/exchange",
             "request": {

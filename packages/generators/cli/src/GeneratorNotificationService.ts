@@ -11,7 +11,7 @@ export class GeneratorNotificationServiceImpl implements GeneratorNotificationSe
 
     constructor(environment: FernGeneratorExec.RemoteGeneratorEnvironment) {
         this.client = new FernGeneratorExecClient({
-            environment: environment.coordinatorUrlV2,
+            environment: environment.coordinatorUrlV2
         });
         this.taskId = environment.id;
     }

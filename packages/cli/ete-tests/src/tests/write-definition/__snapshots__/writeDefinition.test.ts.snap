@@ -28,7 +28,7 @@ error-discrimination:
   strategy: status-code
 display-name: Swagger Petstore
 environments:
-  Default: http://petstore.swagger.io/v1
+  Default: http://petstore.swagger.io
 default-environment: Default
 ",
     "name": "api.yml",
@@ -45,7 +45,7 @@ service:
   base-path: ""
   endpoints:
     listPets:
-      path: /pets
+      path: /v1/pets
       method: GET
       auth: false
       display-name: List all pets
@@ -60,10 +60,12 @@ service:
         type: root.Pets
       examples:
         - response:
-            body: []
+            body:
+              - id: 1
+                name: string
 
     createPets:
-      path: /pets
+      path: /v1/pets
       method: POST
       auth: false
       display-name: Create a pet
@@ -71,7 +73,7 @@ service:
         - {}
 
     showPetById:
-      path: /pets/{petId}
+      path: /v1/pets/{petId}
       method: GET
       auth: false
       path-parameters:
@@ -82,6 +84,13 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      examples:
+        - path-parameters:
+            petId: string
+          response:
+            body:
+              id: 1
+              name: string
 ",
     "name": "pets.yml",
     "type": "file",

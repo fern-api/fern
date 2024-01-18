@@ -15,6 +15,7 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getExtension } from "./extensions/getExtension";
@@ -88,6 +89,18 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     if (ignoreSchema != null && ignoreSchema) {
                         return [];
                     }
+                    if (ERROR_NAMES.has(key)) {
+                        return [
+                            key,
+                            convertSchema(
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
+                                false,
+                                context,
+                                [key]
+                            )
+                        ];
+                    }
                 }
                 return [key, convertSchema(schema, false, context, [key])];
             })
@@ -145,7 +158,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     const schemas: Record<string, Schema> = Object.fromEntries(
         Object.entries(schemasWithExample).map(([key, schemaWithExample]) => {
             taskContext.logger.debug(`Converting schema ${key}`);
-            return [key, convertSchemaWithExampleToSchema(schemaWithExample)];
+            const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+            return [key, schema];
         })
     );
 

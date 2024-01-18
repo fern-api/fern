@@ -1,6 +1,1 @@
-import defaultConfig from "../../../../shared/jest.config.shared";
-
-export default {
-    ...defaultConfig,
-    testMatch: ["**/*.test.ts"]
-};
+export { default } from "../../../../shared/jest.config.shared";

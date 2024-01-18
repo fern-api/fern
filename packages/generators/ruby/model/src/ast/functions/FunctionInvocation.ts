@@ -37,18 +37,25 @@ export class FunctionInvocation extends AstNode {
 
     private writeBlock(startingTabSpaces: number) {
         if (this.block) {
-            this.addText({stringContent: " do", appendToLastString: true, startingTabSpaces});
-            this.addText({stringContent: this.block.arguments, templateString: " | %s |", appendToLastString: true, startingTabSpaces});
-            this.block.expressions.forEach((exp) => this.addText({stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces)}));
-            this.addText({stringContent: BLOCK_END, startingTabSpaces});
+            this.addText({ stringContent: " do", appendToLastString: true, startingTabSpaces });
+            this.addText({
+                stringContent: this.block.arguments,
+                templateString: " | %s |",
+                appendToLastString: true,
+                startingTabSpaces
+            });
+            this.block.expressions.forEach((exp) =>
+                this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+            );
+            this.addText({ stringContent: BLOCK_END, startingTabSpaces });
         }
-//         return this.block
-//             ? `
-// do ${this.block.arguments !== undefined && "|" + this.block.arguments + "|"}
-// ${this.block.expressions.map((exp) => exp.write(startingTabSpaces))}
-// end
-// `
-//             : undefined;
+        //         return this.block
+        //             ? `
+        // do ${this.block.arguments !== undefined && "|" + this.block.arguments + "|"}
+        // ${this.block.expressions.map((exp) => exp.write(startingTabSpaces))}
+        // end
+        // `
+        //             : undefined;
     }
 
     private writeArgmuments(): string {

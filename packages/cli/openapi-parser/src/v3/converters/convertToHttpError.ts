@@ -3,7 +3,7 @@ import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContex
 import { ErrorBodyCollector } from "../ErrorBodyCollector";
 import { convertSchema } from "./convertSchemas";
 
-const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
+export const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     400: "BadRequestError",
     401: "UnauthorizedError",
     403: "ForbiddenError",
@@ -18,6 +18,8 @@ const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     501: "NotImplementedError",
     503: "ServiceUnavailableError"
 };
+
+export const ERROR_NAMES = new Set<string>(Object.values(ERROR_NAMES_BY_STATUS_CODE));
 
 export function convertToError({
     statusCode,
@@ -46,7 +48,7 @@ export function convertToError({
     return {
         generatedName: errorName,
         nameOverride: null,
-        schema: Schema.unknown(),
+        schema: Schema.unknown({ nameOverride: undefined, generatedName: errorName }),
         description: undefined
     };
 }

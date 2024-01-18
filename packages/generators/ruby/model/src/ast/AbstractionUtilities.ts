@@ -37,7 +37,7 @@ export function generateEnumDefinitionFromTypeDeclaration(
     const enum_ = new Enum({ contents, documentation: typeDeclaration.docs });
 
     const yardoc = new Yardoc({
-        reference: { name: "typeReference", type: new EnumReference({name}) }
+        reference: { name: "typeReference", type: new EnumReference({ name }) }
     });
 
     return new Expression({

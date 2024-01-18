@@ -1,11 +1,11 @@
 <br/>
 <div align="center">
-  <a href="https://www.buildwithfern.com/">
-    <img src="fern.png" height="120" align="center" alt="header" />
+  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
+    <img src="/fern/docs/images/logo-green.png" height="80" align="center" alt="header" />
   </a>
 <br/>
 
-# Fern
+<br/>
 
 ![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -17,7 +17,9 @@
 
 Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs, API documentation, and backend server boilerplate.
 
-![Overview Diagram](/fern/docs/images/overview.png)
+<div align="center">
+    <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
+</div>
 
 ## Getting started
 
@@ -187,7 +189,3 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md).
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
-
-<!--
-Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
--->
