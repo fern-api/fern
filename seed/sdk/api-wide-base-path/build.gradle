@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    api 'com.squareup.okhttp3:okhttp:4.9.3'
+    api 'com.squareup.okhttp3:okhttp:4.12.0'
     api 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
     api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
     api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'

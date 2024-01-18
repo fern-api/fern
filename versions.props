@@ -39,7 +39,7 @@ org.springframework:spring-web = 5.3.19
 org.slf4j:slf4j-api = 1.7.36
 
 # okhttp
-com.squareup.okhttp3:okhttp = 4.9.3
+com.squareup.okhttp3:okhttp = 4.12.0
 
 # misc
 com.google.code.findbugs:annotations = 3.0.1
