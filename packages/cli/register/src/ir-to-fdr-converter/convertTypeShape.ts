@@ -43,16 +43,19 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
             };
         },
         union: (union) => {
-            const baseProperties = union.baseProperties.map((baseProperty) => {
-                return {
-                    key: baseProperty.name.wireValue,
-                    valueType: convertTypeReference(baseProperty.valueType),
-                    availability:
-                        baseProperty.availability != null
-                            ? convertIrAvailability({ availability: baseProperty.availability })
-                            : undefined
-                };
-            });
+            const baseProperties: APIV1Write.ObjectProperty[] = union.baseProperties.map(
+                (baseProperty): APIV1Write.ObjectProperty => {
+                    return {
+                        key: baseProperty.name.wireValue,
+                        valueType: convertTypeReference(baseProperty.valueType),
+                        availability:
+                            baseProperty.availability != null
+                                ? convertIrAvailability({ availability: baseProperty.availability })
+                                : undefined,
+                        description: baseProperty.docs
+                    };
+                }
+            );
             return {
                 type: "discriminatedUnion",
                 discriminant: union.discriminant.wireValue,

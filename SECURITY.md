@@ -6,8 +6,8 @@ The following versions of Fern are currently being supported with security updat
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.14.x  | :white_check_mark: |
 | 0.15.x  | :white_check_mark: |
+| 0.16.x  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 

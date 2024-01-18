@@ -71,7 +71,7 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
+        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 
     it("Apache-2.0 license", async () => {
@@ -95,7 +95,7 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
+        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 
     it("Custom license", async () => {
@@ -121,6 +121,6 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
 
-        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
+        expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("githubV2");
     });
 });

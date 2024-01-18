@@ -21,7 +21,11 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "associatedPersons": [
+                      {},
+                    ],
+                  },
                 },
               },
             ],

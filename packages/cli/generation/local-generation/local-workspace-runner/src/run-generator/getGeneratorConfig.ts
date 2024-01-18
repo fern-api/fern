@@ -57,6 +57,28 @@ export function getGeneratorConfig({
             }
             return outputConfig;
         },
+        githubV2: (value) => {
+            const repoUrl = value._visit({
+                commitAndRelease: (value) => `https://github.com/${value.owner}/${value.repo}`,
+                push: (value) => `https://github.com/${value.owner}/${value.repo}`,
+                pullRequest: (value) => `https://github.com/${value.owner}/${value.repo}`,
+                _other: () => {
+                    throw new Error("Encountered unknown github mode");
+                }
+            });
+            const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
+                mode: FernGeneratorExec.OutputMode.github({
+                    repoUrl,
+                    version: outputVersion
+                }),
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+            };
+            if (absolutePathToSnippet !== undefined) {
+                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+            }
+            return outputConfig;
+        },
         _other: () => {
             throw new Error("Output type did not match any of the types supported by Fern");
         }
