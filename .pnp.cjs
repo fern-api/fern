@@ -3771,23 +3771,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/core-utils", [\
-        ["npm:0.0.248-7-gb4189be0", {\
-          "packageLocation": "./.yarn/cache/@fern-api-core-utils-npm-0.0.248-7-gb4189be0-08769005e4-b92669edd7.zip/node_modules/@fern-api/core-utils/",\
-          "packageDependencies": [\
-            ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["strip-ansi", "npm:7.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:0.4.23", {\
-          "packageLocation": "./.yarn/cache/@fern-api-core-utils-npm-0.4.23-39baf016e0-d70b2ed85e.zip/node_modules/@fern-api/core-utils/",\
-          "packageDependencies": [\
-            ["@fern-api/core-utils", "npm:0.4.23"],\
-            ["lodash-es", "npm:4.17.21"],\
-            ["strip-ansi", "npm:7.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["workspace:packages/commons/core-utils", {\
           "packageLocation": "./packages/commons/core-utils/",\
           "packageDependencies": [\
@@ -4010,13 +3993,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fs-utils", [\
-        ["npm:0.0.248-7-gb4189be0", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fs-utils-npm-0.0.248-7-gb4189be0-bfc89ff9db-845d369336.zip/node_modules/@fern-api/fs-utils/",\
-          "packageDependencies": [\
-            ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["workspace:packages/commons/fs-utils", {\
           "packageLocation": "./packages/commons/fs-utils/",\
           "packageDependencies": [\
@@ -4063,9 +4039,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/generators/commons/",\
           "packageDependencies": [\
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
-            ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-api/logger", "npm:0.4.23"],\
-            ["@fern-api/logging-execa", "npm:0.0.248-7-gb4189be0"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4309,24 +4285,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/logger", [\
-        ["npm:0.0.248-7-gb4189be0", {\
-          "packageLocation": "./.yarn/cache/@fern-api-logger-npm-0.0.248-7-gb4189be0-5ea83de708-30cdc3fbaf.zip/node_modules/@fern-api/logger/",\
-          "packageDependencies": [\
-            ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["chalk", "npm:5.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:0.4.23", {\
-          "packageLocation": "./.yarn/cache/@fern-api-logger-npm-0.4.23-bd3dcfae57-c03f608018.zip/node_modules/@fern-api/logger/",\
-          "packageDependencies": [\
-            ["@fern-api/logger", "npm:0.4.23"],\
-            ["@fern-api/core-utils", "npm:0.4.23"],\
-            ["chalk", "npm:5.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["workspace:packages/cli/logger", {\
           "packageLocation": "./packages/cli/logger/",\
           "packageDependencies": [\
@@ -4346,16 +4304,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/logging-execa", [\
-        ["npm:0.0.248-7-gb4189be0", {\
-          "packageLocation": "./.yarn/cache/@fern-api-logging-execa-npm-0.0.248-7-gb4189be0-ee503ec8a5-36f54b4ca8.zip/node_modules/@fern-api/logging-execa/",\
-          "packageDependencies": [\
-            ["@fern-api/logging-execa", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
-            ["execa", "npm:5.1.1"],\
-            ["tmp-promise", "npm:3.0.3"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["workspace:packages/commons/logging-execa", {\
           "packageLocation": "./packages/commons/logging-execa/",\
           "packageDependencies": [\

@@ -2016,25 +2016,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/core-utils@npm:0.0.248-7-gb4189be0":
-  version: 0.0.248-7-gb4189be0
-  resolution: "@fern-api/core-utils@npm:0.0.248-7-gb4189be0"
-  dependencies:
-    strip-ansi: ^7.0.1
-  checksum: b92669edd72f96ebc771fc51175c730641d990a06af7ab76d9960ed4f47de275266eb8454805e9129f9fdaff977e00d21095f78c7ea0572f1c91fadcec25038a
-  languageName: node
-  linkType: hard
-
-"@fern-api/core-utils@npm:0.4.23":
-  version: 0.4.23
-  resolution: "@fern-api/core-utils@npm:0.4.23"
-  dependencies:
-    lodash-es: ^4.17.21
-    strip-ansi: ^7.0.1
-  checksum: d70b2ed85e4f2c0177a6ac59bf5ee013bcf69ab71c9517e1c7078b821c10bd5bb8051119654cd96807f283f3c79471f9169751de1b9981b1472acd276d4ad94d
-  languageName: node
-  linkType: hard
-
 "@fern-api/core-utils@workspace:*, @fern-api/core-utils@workspace:packages/commons/core-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
@@ -2256,13 +2237,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fs-utils@npm:0.0.248-7-gb4189be0":
-  version: 0.0.248-7-gb4189be0
-  resolution: "@fern-api/fs-utils@npm:0.0.248-7-gb4189be0"
-  checksum: 845d3693369b74181dacb34d69739d69a0d61f58f88af1da2cc54497c2886b10355a1def1f8f166f7e0647546a6dfa17fc68b928340e97e3863b0308a2f45ec9
-  languageName: node
-  linkType: hard
-
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"
@@ -2305,9 +2279,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
   dependencies:
-    "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-api/logger": 0.4.23
-    "@fern-api/logging-execa": 0.0.248-7-gb4189be0
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2535,26 +2509,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/logger@npm:0.0.248-7-gb4189be0":
-  version: 0.0.248-7-gb4189be0
-  resolution: "@fern-api/logger@npm:0.0.248-7-gb4189be0"
-  dependencies:
-    "@fern-api/core-utils": 0.0.248-7-gb4189be0
-    chalk: ^5.0.1
-  checksum: 30cdc3fbaffb24550a73f8005bf30fd743bc0a0cc7874446e7b887dcf369aa109d7f88904b467a27e9a1e87e8642df99dfb54c793606e25417b7d46ba5710032
-  languageName: node
-  linkType: hard
-
-"@fern-api/logger@npm:0.4.23":
-  version: 0.4.23
-  resolution: "@fern-api/logger@npm:0.4.23"
-  dependencies:
-    "@fern-api/core-utils": 0.4.23
-    chalk: ^5.0.1
-  checksum: c03f608018eaf8150daa82e3e8f2ed5b9012898f87b986a33d759939822bc972ec4d2a0f9b2c7ca932a2f4e0a52fcd393d900e7a493d4ab69223da74c10842e3
-  languageName: node
-  linkType: hard
-
 "@fern-api/logger@workspace:*, @fern-api/logger@workspace:packages/cli/logger":
   version: 0.0.0-use.local
   resolution: "@fern-api/logger@workspace:packages/cli/logger"
@@ -2571,17 +2525,6 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
-
-"@fern-api/logging-execa@npm:0.0.248-7-gb4189be0":
-  version: 0.0.248-7-gb4189be0
-  resolution: "@fern-api/logging-execa@npm:0.0.248-7-gb4189be0"
-  dependencies:
-    "@fern-api/logger": 0.0.248-7-gb4189be0
-    execa: ^5.1.1
-    tmp-promise: ^3.0.3
-  checksum: 36f54b4ca86a6b4aa0ebb97c67984ebec04df7101940f426d51eaf193552b571d03fff3cf446d946533b3e19c7c2dcf0d6603deffba25b07568af76660950b8b
-  languageName: node
-  linkType: hard
 
 "@fern-api/logging-execa@workspace:*, @fern-api/logging-execa@workspace:packages/commons/logging-execa":
   version: 0.0.0-use.local
