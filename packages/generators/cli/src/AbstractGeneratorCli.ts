@@ -113,7 +113,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
             throw e;
         }
-
     }
 
     // 0. Parse any custom config and forward to generator
@@ -131,9 +130,22 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     // 3. Set up package and publishing
     // Write necessary files for publishing and return any necessary package information
     // + actually publish the specified package
-    protected abstract publishPackage(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath): Promise<void>;
-    protected abstract writeForGithub(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath, githubOutputMode: FernGeneratorExec.GithubOutputMode): Promise<void>;
-    protected abstract writeForDownload(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath): Promise<void>;
+    protected abstract publishPackage(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath
+    ): Promise<void>;
+    protected abstract writeForGithub(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath,
+        githubOutputMode: FernGeneratorExec.GithubOutputMode
+    ): Promise<void>;
+    protected abstract writeForDownload(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath
+    ): Promise<void>;
 }
 
 class GeneratorContextImpl implements GeneratorContext {

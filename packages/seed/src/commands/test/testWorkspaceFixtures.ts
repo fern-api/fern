@@ -64,7 +64,7 @@ export async function testWorkspaceFixtures({
     // Start running a docker container for each script instance
     for (const script of scripts ?? []) {
         // Start script runner
-        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/bash"]);
+        const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
         runningScripts.push({ ...script, containerId: startSeedCommand.stdout });
     }
     for (const fixture of fixtures) {
@@ -337,7 +337,7 @@ async function testWithWriteToDisk({
                 [
                     "exec",
                     script.containerId,
-                    "/bin/bash",
+                    "/bin/sh",
                     "-c",
                     `chmod +x /${workDir}/test.sh`,
                     "&&",

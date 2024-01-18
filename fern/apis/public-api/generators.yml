@@ -4,13 +4,14 @@ groups:
       - external
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.0-rc0
+        version: 0.9.0
         output:
           location: npm
           package-name: '@fern-api/node-sdk'
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/node-sdk
+          license: MIT
         config:
           namespaceExport: Fern
   python-sdk:
@@ -18,12 +19,13 @@ groups:
       - external
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.6.5
+        version: 0.7.6
         output:
           location: pypi
           package-name: fern-api
           token: ${PYPI_TOKEN}
         github:
           repository: fern-api/python-sdk
+          license: MIT
         config:
           client_class_name: Fern

@@ -58,7 +58,7 @@ function convertQueryParameterExample(
         const convertedExample = convertFullExample(namedFullExample.value);
         if (Array.isArray(convertedExample)) {
             result[namedFullExample.name] = convertedExample[0];
-        } else {
+        } else if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });
@@ -75,10 +75,11 @@ function convertHeaderExamples({
     const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
+        const convertedExample = convertFullExample(namedFullExample.value);
         if (globalHeaderNames.has(namedFullExample.name)) {
             return;
-        } else {
-            result[namedFullExample.name] = convertFullExample(namedFullExample.value);
+        } else if (convertedExample != null) {
+            result[namedFullExample.name] = convertedExample;
         }
     });
     return result;
@@ -164,7 +165,6 @@ function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeRef
     }
     return convertFullExample(oneOf.undisciminated);
 }
-
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
         case "string":

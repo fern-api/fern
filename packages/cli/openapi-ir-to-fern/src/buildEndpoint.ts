@@ -137,6 +137,9 @@ export function buildEndpoint({
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference)
                 };
+                if (jsonResponse.responseProperty != null) {
+                    convertedEndpoint.response.property = jsonResponse.responseProperty;
+                }
             },
             streamingJson: (jsonResponse) => {
                 const responseTypeReference = buildTypeReference({

@@ -1,6 +1,6 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
+import { GeneratorsConfiguration, loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listFiles } from "./listFiles";
@@ -22,7 +22,10 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    let generatorsConfiguration: GeneratorsConfiguration | undefined = undefined;
+    try {
+        generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    } catch (err) {}
 
     const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIFolder);
@@ -30,7 +33,7 @@ export async function loadAPIWorkspace({
     const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
     const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
-    if (generatorsConfiguration.absolutePathToOpenAPI != null) {
+    if (generatorsConfiguration?.absolutePathToOpenAPI != null) {
         const absolutePathToAsyncAPI =
             generatorsConfiguration.absolutePathToAsyncAPI != null
                 ? await getValidAbsolutePathToAsyncAPI(context, generatorsConfiguration.absolutePathToAsyncAPI)

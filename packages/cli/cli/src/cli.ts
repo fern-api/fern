@@ -24,6 +24,7 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { mockServer } from "./commands/mock/mockServer";
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
@@ -137,6 +138,7 @@ async function tryRunCli(cliContext: CliContext) {
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addPreviewCommand(cli, cliContext);
+    addMockCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -676,6 +678,36 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 shouldFix: !argv.ci
+            });
+        }
+    );
+}
+
+function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "mock",
+        "Starts a mock server for an API.",
+        (yargs) =>
+            yargs
+                .option("port", {
+                    number: true,
+                    description: "The port the server binds to."
+                })
+                .option("api", {
+                    string: true,
+                    description: "The API to mock."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern mock"
+            });
+            await mockServer({
+                cliContext,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                port: argv.port
             });
         }
     );
