@@ -32,7 +32,6 @@
     "@fern-fern/generator-exec-sdk": "^0.0.472",
     "@fern-fern/ir-sdk": "0.0.3277",
     "lodash-es": "^4.17.21",
-    "tmp-promise": "^3.0.3",
     "zod": "^3.22.3"
   },
   "devDependencies": {
