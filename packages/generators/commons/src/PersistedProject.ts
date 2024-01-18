@@ -10,29 +10,29 @@ export abstract class PersistedProject {
         this.directory = directory;
     }
 
-    public abstract installDependencies(logger: Logger): Promise<void>
+    public abstract installDependencies(logger: Logger): Promise<void>;
 
-    public abstract format(logger: Logger): Promise<void>
+    public abstract format(logger: Logger): Promise<void>;
 
-    public abstract build(logger: Logger): Promise<void>
-    
+    public abstract build(logger: Logger): Promise<void>;
+
     public abstract copyProjectAsZipTo({
         destinationZip,
-        logger,
+        logger
     }: {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
-    }): Promise<void>
+    }): Promise<void>;
 
     public abstract copyPublishableContentAsZipTo({
         destinationZip,
-        logger,
+        logger
     }: {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
-    }): Promise<void>
+    }): Promise<void>;
 
-    public abstract deleteGitIgnoredFiles(logger: Logger): Promise<void>
+    public abstract deleteGitIgnoredFiles(logger: Logger): Promise<void>;
 
     public async zipDirectoryContents(
         directoryToZip: AbsoluteFilePath,
@@ -42,7 +42,7 @@ export abstract class PersistedProject {
             cwd: directoryToZip,
             logger,
             // zip is noisy
-            doNotPipeOutput: true,
+            doNotPipeOutput: true
         });
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
