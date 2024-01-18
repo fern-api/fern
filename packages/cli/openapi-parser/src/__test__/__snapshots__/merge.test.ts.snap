@@ -488,6 +488,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "account_type": {
+                        "enum": "SAVINGS",
+                        "type": "enum",
+                      },
                       "bank_name": {
                         "primitive": {
                           "string": "Chase",
@@ -1076,6 +1080,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "account_type": {
+                "enum": "SAVINGS",
+                "type": "enum",
               },
               "bank_name": {
                 "primitive": {
@@ -2789,6 +2797,10 @@ exports[`open api parser merge parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
+                              "type": {
+                                "enum": "SALARY",
+                                "type": "enum",
+                              },
                             },
                             "type": "object",
                           },
@@ -3565,6 +3577,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "type": {
+                        "enum": "SALARY",
+                        "type": "enum",
+                      },
                     },
                     "type": "object",
                   },
@@ -3961,12 +3977,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "employment_status": {
+                        "enum": "ACTIVE",
+                        "type": "enum",
+                      },
+                      "ethnicity": {
+                        "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                        "type": "enum",
+                      },
                       "first_name": {
                         "primitive": {
                           "string": "Greg",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "gender": {
+                        "enum": "MALE",
+                        "type": "enum",
                       },
                       "hire_date": {
                         "primitive": {
@@ -4002,6 +4030,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "marital_status": {
+                        "enum": "SINGLE",
+                        "type": "enum",
                       },
                       "mobile_phone_number": {
                         "primitive": {
@@ -6625,12 +6657,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "employment_status": {
+                    "enum": "ACTIVE",
+                    "type": "enum",
+                  },
+                  "ethnicity": {
+                    "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "type": "enum",
+                  },
                   "first_name": {
                     "primitive": {
                       "string": "Greg",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "gender": {
+                    "enum": "MALE",
+                    "type": "enum",
                   },
                   "hire_date": {
                     "primitive": {
@@ -6659,6 +6703,10 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "marital_status": {
+                    "enum": "SINGLE",
+                    "type": "enum",
                   },
                   "mobile_phone_number": {
                     "primitive": {
@@ -6868,12 +6916,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "employment_status": {
+                    "enum": "ACTIVE",
+                    "type": "enum",
+                  },
+                  "ethnicity": {
+                    "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "type": "enum",
+                  },
                   "first_name": {
                     "primitive": {
                       "string": "Greg",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "gender": {
+                    "enum": "MALE",
+                    "type": "enum",
                   },
                   "hire_date": {
                     "primitive": {
@@ -6909,6 +6969,10 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "marital_status": {
+                    "enum": "SINGLE",
+                    "type": "enum",
                   },
                   "mobile_phone_number": {
                     "primitive": {
@@ -7269,12 +7333,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "employment_status": {
+                "enum": "ACTIVE",
+                "type": "enum",
+              },
+              "ethnicity": {
+                "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                "type": "enum",
+              },
               "first_name": {
                 "primitive": {
                   "string": "Greg",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "gender": {
+                "enum": "MALE",
+                "type": "enum",
               },
               "hire_date": {
                 "primitive": {
@@ -7310,6 +7386,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "marital_status": {
+                "enum": "SINGLE",
+                "type": "enum",
               },
               "mobile_phone_number": {
                 "primitive": {
@@ -9315,7 +9395,52 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [
+            {
+              "name": "model_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "message": {
+                "primitive": {
+                  "string": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "reason": {
+                "enum": "GENERAL_CUSTOMER_REQUEST",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -9599,6 +9724,14 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "employment_type": {
+                        "enum": "FULL_TIME",
+                        "type": "enum",
+                      },
+                      "flsa_status": {
+                        "enum": "EXEMPT",
+                        "type": "enum",
+                      },
                       "id": {
                         "primitive": {
                           "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
@@ -9620,12 +9753,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "pay_currency": {
+                        "enum": "XUA",
+                        "type": "enum",
+                      },
+                      "pay_frequency": {
+                        "enum": "WEEKLY",
+                        "type": "enum",
+                      },
                       "pay_group": {
                         "primitive": {
                           "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "pay_period": {
+                        "enum": "HOUR",
+                        "type": "enum",
                       },
                       "remote_data": {
                         "array": [
@@ -10304,6 +10449,14 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "employment_type": {
+                "enum": "FULL_TIME",
+                "type": "enum",
+              },
+              "flsa_status": {
+                "enum": "EXEMPT",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
@@ -10325,12 +10478,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "pay_currency": {
+                "enum": "XUA",
+                "type": "enum",
+              },
+              "pay_frequency": {
+                "enum": "WEEKLY",
+                "type": "enum",
+              },
               "pay_group": {
                 "primitive": {
                   "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "pay_period": {
+                "enum": "HOUR",
+                "type": "enum",
               },
               "remote_data": {
                 "array": [
@@ -10916,6 +11081,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "type": {
+                        "enum": "TEAM",
+                        "type": "enum",
+                      },
                     },
                     "type": "object",
                   },
@@ -11358,6 +11527,10 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "type": {
+                "enum": "TEAM",
+                "type": "enum",
+              },
             },
             "type": "object",
           },
@@ -11573,6 +11746,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "ONGOING",
+                        "type": "enum",
                       },
                     },
                     "type": "object",
@@ -11990,6 +12167,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "status": {
+                "enum": "ONGOING",
+                "type": "enum",
               },
             },
             "type": "object",
@@ -12823,12 +13004,20 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "country": {
+                        "enum": "AF",
+                        "type": "enum",
+                      },
                       "id": {
                         "primitive": {
                           "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "location_type": {
+                        "enum": "HOME",
+                        "type": "enum",
                       },
                       "modified_at": {
                         "primitive": {
@@ -13276,12 +13465,20 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "country": {
+                "enum": "AF",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "location_type": {
+                "enum": "HOME",
+                "type": "enum",
               },
               "modified_at": {
                 "primitive": {
@@ -13550,6 +13747,10 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "encoding": {
+                        "enum": "RAW",
+                        "type": "enum",
+                      },
                       "file_name": {
                         "primitive": {
                           "string": "resume.pdf",
@@ -13606,6 +13807,10 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "response_type": {
+                "enum": "JSON",
+                "type": "enum",
               },
               "status": {
                 "primitive": {
@@ -14325,6 +14530,14 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "run_state": {
+                        "enum": "PAID",
+                        "type": "enum",
+                      },
+                      "run_type": {
+                        "enum": "REGULAR",
+                        "type": "enum",
+                      },
                       "start_date": {
                         "primitive": {
                           "datetime": "2020-11-08T00:00:00Z",
@@ -14921,6 +15134,14 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "run_state": {
+                "enum": "PAID",
+                "type": "enum",
+              },
+              "run_type": {
+                "enum": "REGULAR",
+                "type": "enum",
+              },
               "start_date": {
                 "primitive": {
                   "datetime": "2020-11-08T00:00:00Z",
@@ -15278,7 +15499,28 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "common_model": "hris.Employee",
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "field_name": "start_date",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": "2022-01-01T00:00:00Z",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15437,7 +15679,23 @@ exports[`open api parser merge parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionRequestExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": {
+                "linked_account_conditons": [
+                  {
+                    "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                    "operator": "GREATER_THAN_OR_EQUAL",
+                    "value": "2022-01-01T00:00:00Z",
+                  },
+                ],
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "SelectiveSyncConfigurationsUpdateRequestBody",
@@ -15451,7 +15709,28 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "StartDateConditionExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "common_model": "hris.Employee",
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "field_name": "start_date",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": "2022-01-01T00:00:00Z",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -15515,6 +15794,36 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "condition_type": {
+                        "enum": "BOOLEAN",
+                        "type": "enum",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "operators": {
+                        "array": [
+                          {
+                            "properties": {},
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -15622,7 +15931,38 @@ exports[`open api parser merge parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "PaginatedConditionSchemaListExample",
+            "value": {
+              "summary": "Employees that started on or after January 1st, 2022",
+              "value": {
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "common_model": "hris.Employee",
+                    "condition_type": "DATE_TIME",
+                    "field_name": "start_date",
+                    "id": "123e4567-e89b-12d3-a456-426655440000",
+                    "is_unique": true,
+                    "native_name": "Started At",
+                    "operators": [
+                      {
+                        "is_unique": true,
+                        "operator": "GREATER_THAN_OR_EQUAL",
+                      },
+                      {
+                        "is_unique": true,
+                        "operator": "LESS_THAN_OR_EQUAL",
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -16753,12 +17093,24 @@ exports[`open api parser merge parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "request_type": {
+                        "enum": "VACATION",
+                        "type": "enum",
+                      },
                       "start_time": {
                         "primitive": {
                           "datetime": "2020-11-10T00:00:00Z",
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "REQUESTED",
+                        "type": "enum",
+                      },
+                      "units": {
+                        "enum": "HOURS",
+                        "type": "enum",
                       },
                     },
                     "type": "object",
@@ -17418,12 +17770,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "request_type": {
+                    "enum": "VACATION",
+                    "type": "enum",
+                  },
                   "start_time": {
                     "primitive": {
                       "datetime": "2020-11-10T00:00:00Z",
                       "type": "datetime",
                     },
                     "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "REQUESTED",
+                    "type": "enum",
+                  },
+                  "units": {
+                    "enum": "HOURS",
+                    "type": "enum",
                   },
                 },
                 "type": "object",
@@ -17601,12 +17965,24 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "request_type": {
+                    "enum": "VACATION",
+                    "type": "enum",
+                  },
                   "start_time": {
                     "primitive": {
                       "datetime": "2020-11-10T00:00:00Z",
                       "type": "datetime",
                     },
                     "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "REQUESTED",
+                    "type": "enum",
+                  },
+                  "units": {
+                    "enum": "HOURS",
+                    "type": "enum",
                   },
                 },
                 "type": "object",
@@ -17867,6 +18243,10 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
+                      },
+                      "policy_type": {
+                        "enum": "VACATION",
+                        "type": "enum",
                       },
                       "remote_data": {
                         "array": [
@@ -18400,6 +18780,10 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "policy_type": {
+                "enum": "VACATION",
+                "type": "enum",
+              },
               "remote_data": {
                 "array": [
                   {
@@ -18719,12 +19103,24 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "request_type": {
+                "enum": "VACATION",
+                "type": "enum",
+              },
               "start_time": {
                 "primitive": {
                   "datetime": "2020-11-10T00:00:00Z",
                   "type": "datetime",
                 },
                 "type": "primitive",
+              },
+              "status": {
+                "enum": "REQUESTED",
+                "type": "enum",
+              },
+              "units": {
+                "enum": "HOURS",
+                "type": "enum",
               },
             },
             "type": "object",

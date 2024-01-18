@@ -16,7 +16,68 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "deviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "period": {
+                "primitive": {
+                  "double": 30,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "skew": {
+                "primitive": {
+                  "double": 0,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "secret": {
+                  "primitive": {
+                    "string": "JBSWY3DPEHPK3PXP",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "CreateTotpDeviceRequest",
       "headers": [
         {
@@ -265,7 +326,54 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "existingDeviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "newDeviceName": {
+                "primitive": {
+                  "string": "A better name for my TOTP device",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateTotpDeviceNameRequest",
       "headers": [
         {
@@ -494,7 +602,49 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "devices": {
+                  "array": [
+                    {
+                      "properties": {},
+                      "type": "object",
+                    },
+                  ],
+                  "type": "array",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetTotpDevicesRequest",
       "headers": [
         {
@@ -781,7 +931,54 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "deviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "didDeviceExist": {
+                  "primitive": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "RemoveTotpDeviceRequest",
       "headers": [
         {
@@ -996,7 +1193,54 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "allowUnverifiedDevices": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "totp": {
+                "primitive": {
+                  "string": "123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "VerifyTotpCodeRequest",
       "headers": [
         {
@@ -1247,7 +1491,61 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "deviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "totp": {
+                "primitive": {
+                  "string": "123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "wasAlreadyVerified": {
+                  "primitive": {
+                    "boolean": false,
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "VerifyTotpDeviceRequest",
       "headers": [
         {
@@ -1534,7 +1832,68 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userIdType",
+              "value": {
+                "enum": "SUPERTOKENS",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "externalUserId": {
+                  "primitive": {
+                    "string": "externalId",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "externalUserIdInfo": {
+                  "primitive": {
+                    "string": "Info about external userId",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "superTokensUserId": {
+                  "primitive": {
+                    "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "UserIdMappingGetMappingRequest",
       "headers": [
         {
@@ -1792,7 +2151,54 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "externalUserId": {
+                "primitive": {
+                  "string": "externalId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "externalUserIdInfo": {
+                "primitive": {
+                  "string": "Info about external userId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "superTokensUserId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "UserIdMappingCreateMappingRequest",
       "headers": [
         {
@@ -2379,7 +2785,51 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "externalUserIdInfo": {
+                "primitive": {
+                  "string": "new external userId info",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userIdType": {
+                "enum": "SUPERTOKENS",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "UserIdMappingUpateExternalUserIdInfoRequest",
       "headers": [
         {
@@ -2617,7 +3067,84 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "linkCode": {
+                "primitive": {
+                  "string": "b10lbT_SnDC4flA6Fn7pE5TtG5k5NfigLef4QMBeGA8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "preAuthSessionId": {
+                "primitive": {
+                  "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "createdNewUser": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "user": {
+                "properties": {
+                  "email": {
+                    "primitive": {
+                      "string": "johndoe@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "phoneNumber": {
+                    "primitive": {
+                      "string": "+14155552671",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "timeJoined": {
+                    "primitive": {
+                      "double": 1623918032231,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PasswordlessTryUseCodeRequest",
       "headers": [
         {
@@ -3050,7 +3577,79 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "codeId": {
+                "primitive": {
+                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "codeLifetime": {
+                "primitive": {
+                  "double": 900000,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "deviceId": {
+                "primitive": {
+                  "string": "TU/52WOcktSv99zqaAZuWJG9BSoS0aRLfCbep8rFEwk=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "linkCode": {
+                "primitive": {
+                  "string": "b10lbT_SnDC4flA6Fn7pE5TtG5k5NfigLef4QMBeGA8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "preAuthSessionId": {
+                "primitive": {
+                  "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "timeCreated": {
+                "primitive": {
+                  "double": 1637262633029,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PasswordlessStartSignInRequest",
       "headers": [
         {
@@ -4307,7 +4906,37 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PasswordlessRevokeAllCodesOfUserRequest",
       "headers": [
         {
@@ -4516,7 +5145,90 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "email",
+              "value": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "phoneNumber",
+              "value": {
+                "primitive": {
+                  "string": "+14155552671",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "user": {
+                "properties": {
+                  "email": {
+                    "primitive": {
+                      "string": "johndoe@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "phoneNumber": {
+                    "primitive": {
+                      "string": "+14155552671",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "timeJoined": {
+                    "primitive": {
+                      "double": 1623918032231,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PasswordlessGetUserRequest",
       "headers": [
         {
@@ -5102,7 +5814,73 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "user": {
+                  "properties": {
+                    "email": {
+                      "primitive": {
+                        "string": "johndoe@gmail.com",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "id": {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "timeJoined": {
+                      "primitive": {
+                        "double": 1623918032231,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailPasswordSigninRequest",
       "headers": [
         {
@@ -5323,7 +6101,73 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "user": {
+                  "properties": {
+                    "email": {
+                      "primitive": {
+                        "string": "johndoe@gmail.com",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "id": {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "timeJoined": {
+                      "primitive": {
+                        "double": 1623918032231,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailPasswordSignupRequest",
       "headers": [
         {
@@ -5546,7 +6390,73 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "email",
+              "value": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userId",
+              "value": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "user": {
+                "properties": {
+                  "email": {
+                    "primitive": {
+                      "string": "johndoe@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "timeJoined": {
+                    "primitive": {
+                      "double": 1623918032231,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmailPasswordGetUserRequest",
       "headers": [
         {
@@ -6086,7 +6996,47 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "token": {
+                  "primitive": {
+                    "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailPasswordGetPasswordResetTokenRequest",
       "headers": [
         {
@@ -6621,7 +7571,61 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "method": {
+                "literal": {
+                  "string": "token",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "newPassword": {
+                "primitive": {
+                  "string": "newpassword123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "userId": {
+                  "primitive": {
+                    "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailPasswordGetPasswordResetRequest",
       "headers": [
         {
@@ -7768,7 +8772,85 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-9253-0fde890c576",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "thirdPartyId",
+              "value": {
+                "primitive": {
+                  "string": "google",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "user": {
+                "properties": {
+                  "email": {
+                    "primitive": {
+                      "string": "johndoe@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "thirdParty": {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "google",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "timeJoined": {
+                    "primitive": {
+                      "double": 1623918032231,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ThirdPartyGetUserRequest",
       "headers": [
         {
@@ -8850,7 +9932,54 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "johndoe@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "token": {
+                  "primitive": {
+                    "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyTokenRequest",
       "headers": [
         {
@@ -9480,7 +10609,61 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "method": {
+                "literal": {
+                  "string": "token",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "token": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "email": {
+                  "primitive": {
+                    "string": "johndoe@gmail.com",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "userId": {
+                  "primitive": {
+                    "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyRequest",
       "headers": [
         {
@@ -10597,7 +11780,54 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "role": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "didUserAlreadyHaveRole": {
+                  "primitive": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "AddUserRoleRequest",
       "headers": [
         {
@@ -10806,7 +12036,54 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "role": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "userId": {
+                "primitive": {
+                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "didUserHaveRole": {
+                  "primitive": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "RemoveUserRoleRequest",
       "headers": [
         {
@@ -11244,7 +12521,52 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "role",
+              "value": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "users": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetRoleUsersRequest",
       "headers": [
         {
@@ -11707,7 +13029,52 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "role",
+              "value": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "permissions": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "permission",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetRolePermissionsRequest",
       "headers": [
         {
@@ -11899,7 +13266,52 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+              "role": {
+                "primitive": {
+                  "string": "admin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "RemoveRolePermissionsRequest",
       "headers": [
         {
@@ -12770,7 +14182,68 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "sessionHandle",
+              "value": {
+                "primitive": {
+                  "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "expiry": {
+                  "primitive": {
+                    "double": 1637262633029,
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+                "sessionHandle": {
+                  "primitive": {
+                    "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "timeCreated": {
+                  "primitive": {
+                    "double": 1637262633029,
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+                "userId": {
+                  "primitive": {
+                    "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetSessionInfoRequest",
       "headers": [
         {
@@ -13529,7 +15002,54 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "sessionHandles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "sessionHandlesRevoked": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+              "status": {
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DeleteSessionRequest",
       "headers": [
         {
@@ -13772,7 +15292,113 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "accessToken": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "antiCsrfToken": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "checkDatabase": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "doAntiCsrfCheck": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "enableAntiCsrf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "accessToken": {
+                  "properties": {
+                    "createdTime": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "expiry": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "token": {
+                      "primitive": {
+                        "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "session": {
+                  "properties": {
+                    "handle": {
+                      "primitive": {
+                        "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "userId": {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "VerifySessionRequest",
       "headers": [
         {
@@ -14113,7 +15739,132 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "antiCsrfToken": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "enableAntiCsrf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "refreshToken": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "accessToken": {
+                  "properties": {
+                    "createdTime": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "expiry": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "token": {
+                      "primitive": {
+                        "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "antiCsrfToken": {
+                  "primitive": {
+                    "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "refreshToken": {
+                  "properties": {
+                    "createdTime": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "expiry": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "token": {
+                      "primitive": {
+                        "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "session": {
+                  "properties": {
+                    "handle": {
+                      "primitive": {
+                        "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "userId": {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "RefreshSessionRequest",
       "headers": [
         {
@@ -14710,7 +16461,85 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "accessToken": {
+                "primitive": {
+                  "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "accessToken": {
+                  "properties": {
+                    "createdTime": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "expiry": {
+                      "primitive": {
+                        "double": 1637262633029,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "token": {
+                      "primitive": {
+                        "string": "ZTRiOTBjNz...jI5MTZlODkxw",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "session": {
+                  "properties": {
+                    "handle": {
+                      "primitive": {
+                        "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "userId": {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "RegenerateSessionRequest",
       "headers": [
         {
@@ -14952,7 +16781,40 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "sessionHandle",
+              "value": {
+                "primitive": {
+                  "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetSessionDataRequest",
       "headers": [
         {
@@ -15332,7 +17194,68 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "algorithm": {
+                "literal": {
+                  "string": "RS256",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "jwksDomain": {
+                "primitive": {
+                  "string": "https://api.test.com/",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "useStaticSigningKey": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "validity": {
+                "primitive": {
+                  "double": 86400,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "jwt": {
+                  "primitive": {
+                    "string": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "CreateSignedJwtRequest",
       "headers": [
         {
@@ -15741,7 +17664,40 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "sessionHandle",
+              "value": {
+                "primitive": {
+                  "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetJwtDataRequest",
       "headers": [
         {
@@ -16123,7 +18079,73 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "user": {
+                  "properties": {
+                    "email": {
+                      "primitive": {
+                        "string": "test@example.com",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "timeCreated": {
+                      "primitive": {
+                        "double": 1231321231,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "userId": {
+                      "primitive": {
+                        "string": "example-userid",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "CreateDashboardUserRequest",
       "headers": [
         {
@@ -16476,7 +18498,80 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "newEmail": {
+                "primitive": {
+                  "string": "test2@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "newPassword": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "user": {
+                  "properties": {
+                    "email": {
+                      "primitive": {
+                        "string": "test@example.com",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                    "timeCreated": {
+                      "primitive": {
+                        "double": 391238234792,
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                    "userId": {
+                      "primitive": {
+                        "string": "r23r-f235th54-g3413gf-r32dr2",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "object",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateDashboardUserRequest",
       "headers": [
         {
@@ -17543,7 +19638,40 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "sessionId": {
+                "primitive": {
+                  "string": "rf32f-f32342f-32f-323r2f3-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "VerifyDashboardUserSessionRequest",
       "headers": [
         {
@@ -17959,7 +20087,47 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "SignInDashboardUserRequest",
       "headers": [
         {
@@ -18674,7 +20842,36 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "path": {
+                  "primitive": {
+                    "string": "/usr/lib/supertokens/config.yaml",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetConfigRequest",
       "headers": [
         {
@@ -19119,7 +21316,26 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "telemetryId": {
+                "primitive": {
+                  "string": "99c87c72-1807-22d-9b39-7a88f95re56c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTelemetryRequest",
       "headers": [
         {
@@ -19783,6 +21999,46 @@ e.g.:
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "recipeId": {
+                        "enum": "emailpassword",
+                        "type": "enum",
+                      },
+                      "user": {
+                        "properties": {
+                          "email": {
+                            "primitive": {
+                              "string": "johndoe@gmail.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timeJoined": {
+                            "primitive": {
+                              "double": 1623918032231,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -20785,7 +23041,36 @@ e.g.:
         401,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "licenseKey": {
+                  "primitive": {
+                    "string": "eyJhbGciOiJIUzI1NiIsIn...",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "GetLicenseRequest",
       "headers": [
         {
@@ -20929,7 +23214,40 @@ e.g.:
         401,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "licenseKey": {
+                "primitive": {
+                  "string": "eyJhbGciOiJIUzI1NiIsIn...",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "oneOf": {
+              "discriminated": {
+                "status": {
+                  "primitive": {
+                    "string": "OK",
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "discriminated",
+            },
+            "type": "oneOf",
+          },
+        },
+      ],
       "generatedRequestName": "SetLicenseRequest",
       "headers": [
         {

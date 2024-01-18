@@ -56,7 +56,30 @@ exports[`open api parser dopt parse open api 1`] = `
           "response": {
             "properties": {
               "fields": {
-                "array": [],
+                "array": [
+                  {
+                    "oneOf": {
+                      "discriminated": {
+                        "sid": {
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                        "type": {
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                      "type": "discriminated",
+                    },
+                    "type": "oneOf",
+                  },
+                ],
                 "type": "array",
               },
               "kind": {
@@ -897,7 +920,30 @@ exports[`open api parser dopt parse open api 1`] = `
                   {
                     "properties": {
                       "fields": {
-                        "array": [],
+                        "array": [
+                          {
+                            "oneOf": {
+                              "discriminated": {
+                                "sid": {
+                                  "primitive": {
+                                    "string": "string",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "type": {
+                                  "primitive": {
+                                    "string": "string",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                              "type": "discriminated",
+                            },
+                            "type": "oneOf",
+                          },
+                        ],
                         "type": "array",
                       },
                       "kind": {

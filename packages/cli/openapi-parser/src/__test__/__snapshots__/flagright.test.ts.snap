@@ -447,7 +447,64 @@ Here are some of the most used payload fields explained (you can find the full p
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "destinationAmountDetails": {
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                },
+                "destinationPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "deviceData": {
+                  "appVersion": "1.1.0",
+                  "batteryLevel": 95,
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "ipAddress": "10.23.191.2",
+                  "operatingSystem": "Android 11.2",
+                  "vpnUsed": false,
+                },
+                "originAmountDetails": {
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                },
+                "originPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "timestamp": 1641654664000,
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "PostConsumerTransactionRequestBody",
@@ -461,7 +518,33 @@ Here are some of the most used payload fields explained (you can find the full p
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "executedRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleHit": true,
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "hitRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -911,7 +994,81 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "destinationAmountDetails": {
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                },
+                "destinationPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "deviceData": {
+                  "appVersion": "1.1.0",
+                  "batteryLevel": 95,
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "ipAddress": "10.23.191.2",
+                  "operatingSystem": "Android 11.2",
+                  "vpnUsed": false,
+                },
+                "executedRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleHit": true,
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "hitRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "originAmountDetails": {
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                },
+                "originPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "timestamp": 1641654664000,
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1426,7 +1583,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-2",
+            "value": {
+              "value": {
+                "eventDescription": "Transaction created",
+                "eventId": "aaeeb166147a406b957dd9147a406b957",
+                "metaData": {
+                  "batteryLevel": 76.3,
+                  "deviceLatitude": 13.009711,
+                  "deviceLongitude": 76.102898,
+                  "ipAddress": "79.144.2.20",
+                  "vpnUsed": true,
+                },
+                "timestamp": 1431231244001,
+                "transactionId": "443dea26147a406b957d9ee3a1247b11",
+                "transactionState": "SUCCESSFUL",
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "PostTransactionEventRequest",
@@ -1440,7 +1617,84 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "eventId": "7b80a539eea6e78acbd6d458e5971482",
+                "executedRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleHit": true,
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "hitRules": [
+                  {
+                    "ruleAction": "BLOCK",
+                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                    "ruleId": "R-1a",
+                    "ruleName": "Proof of funds for high value transactions",
+                  },
+                ],
+                "transaction": {
+                  "destinationAmountDetails": {
+                    "country": "IN",
+                    "transactionAmount": 68351.34,
+                    "transactionCurrency": "INR",
+                  },
+                  "destinationPaymentDetails": {
+                    "3dsDone": true,
+                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                    "cardIssuedCountry": "IN",
+                    "method": "CARD",
+                    "transactionReferenceField": "Deposit",
+                  },
+                  "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                  "deviceData": {
+                    "appVersion": "1.1.0",
+                    "batteryLevel": 95,
+                    "deviceIdentifier": "3c49f915d04485e34caba",
+                    "deviceLatitude": 13.0033,
+                    "deviceLongitude": 76.1004,
+                    "deviceMaker": "ASUS",
+                    "deviceModel": "Zenphone M2 Pro Max",
+                    "deviceYear": "2018",
+                    "ipAddress": "10.23.191.2",
+                    "operatingSystem": "Android 11.2",
+                    "vpnUsed": false,
+                  },
+                  "originAmountDetails": {
+                    "country": "DE",
+                    "transactionAmount": 800,
+                    "transactionCurrency": "EUR",
+                  },
+                  "originPaymentDetails": {
+                    "3dsDone": true,
+                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                    "cardIssuedCountry": "US",
+                    "method": "CARD",
+                    "transactionReferenceField": "Deposit",
+                  },
+                  "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "promotionCodeUsed": true,
+                  "reference": "loan repayment",
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "timestamp": 1641654664000,
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                },
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3424,7 +3678,76 @@ Each consumer User entity needs three mandatory fields:
       "request": {
         "contentType": undefined,
         "description": undefined,
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "contactDetails": {
+                  "addresses": [
+                    {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "contactNumbers": [
+                    "+37112345432",
+                  ],
+                  "emailIds": [
+                    "baran@flagright.com",
+                  ],
+                  "websites": [
+                    "flagright.com",
+                  ],
+                },
+                "createdTimestamp": 1641654664000,
+                "legalDocuments": [
+                  {
+                    "documentExpirationDate": 1839939034000,
+                    "documentIssuedCountry": "DE",
+                    "documentIssuedDate": 1639939034000,
+                    "documentNumber": "Z9431P",
+                    "documentType": "passport",
+                    "tags": [
+                      {
+                        "key": "customerType",
+                        "value": "wallet",
+                      },
+                    ],
+                  },
+                ],
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "userDetails": {
+                  "countryOfNationality": "DE",
+                  "countryOfResidence": "US",
+                  "dateOfBirth": "1991-01-01",
+                  "name": {
+                    "firstName": "Baran",
+                    "lastName": "Ozkan",
+                    "middleName": "Realblood",
+                  },
+                },
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+              },
+            },
+          },
+        ],
         "schema": {
           "description": undefined,
           "generatedName": "PostConsumerUserRequest",
@@ -3438,7 +3761,16 @@ Each consumer User entity needs three mandatory fields:
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -5247,7 +5579,76 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "contactDetails": {
+                  "addresses": [
+                    {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "contactNumbers": [
+                    "+37112345432",
+                  ],
+                  "emailIds": [
+                    "baran@flagright.com",
+                  ],
+                  "websites": [
+                    "flagright.com",
+                  ],
+                },
+                "createdTimestamp": 1641654664000,
+                "legalDocuments": [
+                  {
+                    "documentExpirationDate": 1839939034000,
+                    "documentIssuedCountry": "DE",
+                    "documentIssuedDate": 1639939034000,
+                    "documentNumber": "Z9431P",
+                    "documentType": "passport",
+                    "tags": [
+                      {
+                        "key": "customerType",
+                        "value": "wallet",
+                      },
+                    ],
+                  },
+                ],
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "userDetails": {
+                  "countryOfNationality": "DE",
+                  "countryOfResidence": "US",
+                  "dateOfBirth": "1991-01-01",
+                  "name": {
+                    "firstName": "Baran",
+                    "lastName": "Ozkan",
+                    "middleName": "Realblood",
+                  },
+                },
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -7723,7 +8124,16 @@ Each consumer Business entity needs three mandatory fields:
       "requestNameOverride": undefined,
       "response": {
         "description": "Created",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-1",
+            "value": {
+              "value": {
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "allOf": [
@@ -10009,7 +10419,196 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "requestNameOverride": undefined,
       "response": {
         "description": "OK",
-        "fullExamples": [],
+        "fullExamples": [
+          {
+            "name": "example-2",
+            "value": {
+              "value": {
+                "createdTimestamp": 1641654664000,
+                "directors": [
+                  {
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "+371 123132",
+                      ],
+                      "emailIds": [
+                        "baran@flagright.com",
+                      ],
+                      "websites": [
+                        "flagright.com",
+                      ],
+                    },
+                    "generalDetails": {
+                      "countryOfNationality": "DE",
+                      "countryOfResidence": "US",
+                      "dateOfBirth": "1991-01-01",
+                      "name": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                    },
+                    "legalDocuments": [
+                      {
+                        "documentExpirationDate": 1839939034000,
+                        "documentIssuedCountry": "DE",
+                        "documentIssuedDate": 1639939034000,
+                        "documentNumber": "Z9431P",
+                        "documentType": "passport",
+                        "tags": [
+                          {
+                            "key": "customerType",
+                            "value": "wallet",
+                          },
+                        ],
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                ],
+                "legalEntity": {
+                  "companyFinancialDetails": {
+                    "expectedTransactionAmountPerMonth": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "expectedTurnoverPerMonth": {
+                      "amountCurrency": "USD",
+                      "amountValue": 8000,
+                    },
+                  },
+                  "companyGeneralDetails": {
+                    "businessIndustry": [
+                      "Farming",
+                    ],
+                    "legalName": "Ozkan Hazelnut Export JSC",
+                    "mainProductsServicesSold": [
+                      "Hazelnut",
+                    ],
+                  },
+                  "companyRegistrationDetails": {
+                    "registrationCountry": "DE",
+                    "registrationIdentifier": "PSJ554342",
+                  },
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  "reasonForAccountOpening": [
+                    "string",
+                  ],
+                },
+                "shareHolders": [
+                  {
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "+371 123132",
+                      ],
+                      "emailIds": [
+                        "baran@flagright.com",
+                      ],
+                      "websites": [
+                        "flagright.com",
+                      ],
+                    },
+                    "generalDetails": {
+                      "countryOfNationality": "DE",
+                      "countryOfResidence": "US",
+                      "dateOfBirth": "1991-01-01",
+                      "name": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                    },
+                    "legalDocuments": [
+                      {
+                        "documentExpirationDate": 1839939034000,
+                        "documentIssuedCountry": "DE",
+                        "documentIssuedDate": 1639939034000,
+                        "documentNumber": "Z9431P",
+                        "documentType": "passport",
+                        "tags": [
+                          {
+                            "key": "customerType",
+                            "value": "wallet",
+                          },
+                        ],
+                      },
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                ],
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+              },
+            },
+          },
+        ],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
