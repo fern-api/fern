@@ -1,13 +1,13 @@
 import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { getLocationForTypeDeclaration } from "../AbstractionUtilities";
 import { Argument } from "../Argument";
+import { Import } from "../Import";
+import { Module_ } from "../Module_";
+import { Variable } from "../Variable";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
-import { Module_ } from "../Module_";
-import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -22,7 +22,8 @@ enum RubyClass {
     BASE64 = "String",
     OBJECT = "Object",
     JSON = "JSON",
-    OPENSTRUCT = "OpenStruct"
+    OPENSTRUCT = "OpenStruct",
+    VOID = "Void"
 }
 
 export declare namespace ClassReference {
@@ -62,6 +63,30 @@ export class ClassReference extends AstNode {
 
     public fromJson(_variable: Variable | string): FunctionInvocation | undefined {
         return;
+    }
+
+    // This creates a function meant to validate a variable holding the raw version of this class
+    // for objects that would be a hash, for primitives it is the outright type, so is_a? is the default
+    public validateRaw(variable: Variable | string, isOptional = false): FunctionInvocation | Expression {
+        const fi = new FunctionInvocation({
+            baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
+            onObject: variable,
+            arguments_: [new Argument({ value: this.qualifiedName, isNamed: false, type: GenericClassReference })],
+            optionalSafeCall: isOptional
+        });
+        return new Expression({
+            leftSide: new Expression({
+                leftSide: fi,
+                rightSide: "false",
+                operation: "!=",
+                isAssignment: false
+            }),
+            rightSide: `raise("Passed value for field ${
+                variable instanceof Variable ? variable.name : variable
+            } is not the expected type, validation failed.")`,
+            operation: "||",
+            isAssignment: false
+        });
     }
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
@@ -136,6 +161,7 @@ export class ClassReference extends AstNode {
 export const OpenStructClassReference = new ClassReference({ name: RubyClass.OPENSTRUCT });
 export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
 export const JsonClassReference = new ClassReference({ name: RubyClass.JSON });
+export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {
@@ -155,6 +181,29 @@ export class SerializableObjectReference extends ClassReference {
             ]
         });
     }
+
+    public validateRaw(variable: Variable | string, isOptional = false): FunctionInvocation | Expression {
+        const fi = new FunctionInvocation({
+            baseFunction: new Function_({ name: "validate_raw", functionBody: [] }),
+            // Recreate the variable to force isOptional to raise if a required variable is optional
+            onObject: this,
+            arguments_: [new Argument({ value: variable, isNamed: true, name: "struct", type: GenericClassReference })]
+        });
+
+        return !isOptional
+            ? fi
+            : new Expression({
+                  leftSide: new FunctionInvocation({
+                      baseFunction: new Function_({ name: "nil?", functionBody: [] }),
+                      // Recreate the variable to force isOptional to raise if a required variable is optional
+                      onObject: variable,
+                      optionalSafeCall: false
+                  }),
+                  rightSide: fi,
+                  operation: "||",
+                  isAssignment: false
+              });
+    }
 }
 
 export declare namespace ArrayReference {
@@ -170,7 +219,8 @@ export class ArrayReference extends ClassReference {
     constructor({ innerType, ...rest }: ArrayReference.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
         super({
-            name: `Array<${typeName}>`,
+            name: "Array",
+            typeHint: `Array<${typeName}>`,
             import_: innerType instanceof ClassReference ? innerType.import_ : undefined,
             ...rest
         });
@@ -234,7 +284,7 @@ export class HashReference extends ClassReference {
         const keyTypeName = keyType instanceof ClassReference ? keyType.qualifiedName : keyType;
         const valueTypeName = valueType instanceof ClassReference ? valueType.qualifiedName : valueType;
         const typeHint = `Hash{${keyTypeName} => ${valueTypeName}}`;
-        const nameDefaulted = name ?? typeHint;
+        const nameDefaulted = name ?? "Hash";
         super({ name: nameDefaulted, typeHint, ...rest });
 
         this.valueType = valueType;
@@ -297,7 +347,7 @@ export declare namespace Set_ {
 export class SetReference extends ClassReference {
     constructor({ innerType, ...rest }: Set_.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
-        super({ name: `Set<${typeName}>`, import_: new Import({ from: "set" }), ...rest });
+        super({ name: "Set", typeHint: `Set<${typeName}>`, import_: new Import({ from: "set" }), ...rest });
     }
 
     public toJson(variable: Variable | string): FunctionInvocation | undefined {

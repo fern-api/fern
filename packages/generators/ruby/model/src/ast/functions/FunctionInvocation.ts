@@ -16,6 +16,7 @@ export declare namespace FunctionInvocation {
         onObject?: Variable | AstNode | string;
         arguments_?: Argument[];
         block?: BlockConfiguration;
+        optionalSafeCall?: boolean;
     }
 }
 export class FunctionInvocation extends AstNode {
@@ -26,13 +27,23 @@ export class FunctionInvocation extends AstNode {
     // A block is usually the do ... end block you see right
     // after a traditional function invocation.
     public block: BlockConfiguration | undefined;
+    public optionalSafeCall: boolean;
 
-    constructor({ baseFunction, onObject, arguments_ = [], block, ...rest }: FunctionInvocation.Init) {
+    constructor({
+        baseFunction,
+        onObject,
+        arguments_ = [],
+        block,
+        optionalSafeCall,
+        ...rest
+    }: FunctionInvocation.Init) {
         super(rest);
         this.baseFunction = baseFunction;
         this.onObject = onObject;
         this.arguments_ = arguments_;
         this.block = block;
+        this.optionalSafeCall =
+            optionalSafeCall ?? (this.onObject instanceof Variable ? this.onObject.isOptional : false);
     }
 
     private writeBlock(startingTabSpaces: number) {
@@ -49,13 +60,6 @@ export class FunctionInvocation extends AstNode {
             );
             this.addText({ stringContent: BLOCK_END, startingTabSpaces });
         }
-        //         return this.block
-        //             ? `
-        // do ${this.block.arguments !== undefined && "|" + this.block.arguments + "|"}
-        // ${this.block.expressions.map((exp) => exp.write(startingTabSpaces))}
-        // end
-        // `
-        //             : undefined;
     }
 
     private writeArgmuments(): string {
@@ -64,13 +68,15 @@ export class FunctionInvocation extends AstNode {
 
     // When writing the definition
     public writeInternal(startingTabSpaces: number): void {
-        const isOptional = this.onObject instanceof Variable ? this.onObject.isOptional : false;
         const className = this.onObject instanceof AstNode ? this.onObject.write() : this.onObject;
-        this.addText({ stringContent: className, templateString: isOptional ? "%s&." : "%s.", startingTabSpaces });
+        this.addText({
+            stringContent: className,
+            templateString: this.optionalSafeCall ? "%s&." : "%s.",
+            startingTabSpaces
+        });
         this.addText({ stringContent: this.baseFunction.name, startingTabSpaces, appendToLastString: true });
         this.addText({ stringContent: this.writeArgmuments(), appendToLastString: true });
         this.writeBlock(startingTabSpaces);
-        // this.addText({ stringContent: this.writeBlock(startingTabSpaces), appendToLastString: true });
     }
 
     public getImports(): Set<Import> {

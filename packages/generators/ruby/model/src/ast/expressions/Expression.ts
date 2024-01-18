@@ -1,29 +1,29 @@
-import { ClassReference } from "../classes/ClassReference";
 import { AstNode } from "../core/AstNode";
-import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Import } from "../Import";
-import { Variable } from "../Variable";
 import { Yardoc } from "../Yardoc";
 
 export declare namespace Expression {
     export interface Init extends AstNode.Init {
-        leftSide?: Variable | string;
-        rightSide: Variable | FunctionInvocation | ClassReference | AstNode | string;
+        leftSide?: AstNode | string;
+        rightSide: AstNode | string;
         isAssignment?: boolean;
+        operation?: string;
         yardoc?: Yardoc;
     }
 }
 export class Expression extends AstNode {
-    public leftSide: Variable | string | undefined;
-    public rightSide: Variable | FunctionInvocation | ClassReference | AstNode | string;
+    public leftSide: AstNode | string | undefined;
+    public rightSide: AstNode | string;
     public isAssignment: boolean;
     public yardoc: Yardoc | undefined;
+    public operation?: string;
 
-    constructor({ leftSide, rightSide, yardoc, isAssignment = true, ...rest }: Expression.Init) {
+    constructor({ leftSide, rightSide, yardoc, operation, isAssignment = true, ...rest }: Expression.Init) {
         super(rest);
         this.leftSide = leftSide;
         this.rightSide = rightSide;
         this.isAssignment = isAssignment && leftSide !== undefined;
+        this.operation = isAssignment ? "=" : operation;
         this.yardoc = yardoc;
     }
 
@@ -36,7 +36,7 @@ export class Expression extends AstNode {
         }
         this.addText({
             stringContent: rightString,
-            templateString: this.isAssignment ? " = %s" : " %s",
+            templateString: this.operation !== undefined ? ` ${this.operation} %s` : " %s",
             appendToLastString: true
         });
     }
