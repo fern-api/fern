@@ -26,12 +26,12 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-cli": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.472",
     "@fern-fern/ir-sdk": "0.0.3277",
-    "zod": "^3.14.3"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
