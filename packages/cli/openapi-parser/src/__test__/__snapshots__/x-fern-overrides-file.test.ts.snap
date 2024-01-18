@@ -51,7 +51,9 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
       "schema": {
         "description": undefined,
         "example": undefined,
+        "generatedName": "InternalServerErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },

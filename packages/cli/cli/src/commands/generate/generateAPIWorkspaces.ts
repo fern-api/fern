@@ -44,7 +44,7 @@ export async function generateAPIWorkspaces({
                 return {
                     name: workspace.name,
                     group: groupName,
-                    generators: workspace.generatorsConfiguration.groups
+                    generators: workspace.generatorsConfiguration?.groups
                         .filter((group) => (groupName == null ? true : group.groupName === groupName))
                         .map((group) => {
                             return group.generators.map((generator) => {

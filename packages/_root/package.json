@@ -50,6 +50,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/manage-generator": "workspace:*",
+    "@fern-api/mock": "workspace:*",
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/openapi-parser": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",

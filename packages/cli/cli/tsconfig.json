@@ -20,6 +20,7 @@
     { "path": "../init" },
     { "path": "../logger" },
     { "path": "../login" },
+    { "path": "../mock" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../register" },

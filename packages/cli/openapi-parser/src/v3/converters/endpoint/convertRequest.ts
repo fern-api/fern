@@ -7,7 +7,7 @@ import { getExtension } from "../../extensions/getExtension";
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
-import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_REGEX = /^application.*json$/;
@@ -26,23 +26,6 @@ function getOctetStreamRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
     return requestBody.content[OCTET_STREAM]?.schema;
-}
-
-interface ParsedApplicationJsonRequest {
-    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-    // populated if the content type is not application/json
-    overridenContentType?: string;
-}
-
-export function getApplicationJsonRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): ParsedApplicationJsonRequest | undefined {
-    const schema = getApplicationJsonSchemaFromMedia(requestBody.content);
-    return schema != null
-        ? {
-              schema
-          }
-        : schema;
 }
 
 function multipartRequestHasFile(
@@ -79,7 +62,7 @@ export function convertRequest({
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
     const octetStreamSchema = getOctetStreamRequest(resolvedRequestBody);
-    const jsonSchema = getApplicationJsonRequest(resolvedRequestBody);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
 
     // convert as application/octet-stream
     if (octetStreamSchema != null) {
@@ -90,7 +73,7 @@ export function convertRequest({
 
     // convert as multipart request
     if (
-        (multipartSchema != null && jsonSchema == null) ||
+        (multipartSchema != null && jsonMediaObject == null) ||
         (multipartSchema != null && multipartRequestHasFile(multipartSchema, document))
     ) {
         const resolvedMultipartSchema = isReferenceObject(multipartSchema)
@@ -127,14 +110,15 @@ export function convertRequest({
     }
 
     // otherwise, convert as json request.
-    if (jsonSchema == null) {
+    if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
+    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, true);
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
-        contentType: jsonSchema.overridenContentType
+        contentType: undefined,
+        fullExamples: jsonMediaObject.examples
     });
 }
 

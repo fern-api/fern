@@ -31,6 +31,24 @@ service:
         body:
           properties:
             file: file
+    justFileWithQueryParams:
+      path: /just-file-with-query-params
+      method: POST
+      request:
+        name: JustFileWithQueryParamsRequet
+        query-parameters:
+          maybeString: optional<string>
+          integer: integer
+          maybeInteger: optional<integer>
+          listOfStrings:
+            type: string
+            allow-multiple: true
+          optionalListOfStrings:
+            type: optional<string>
+            allow-multiple: true
+        body:
+          properties:
+            file: file
 
 types:
   MaybeList:

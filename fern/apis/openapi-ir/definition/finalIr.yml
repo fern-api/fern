@@ -19,9 +19,9 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
-  
-  Tags: 
-    properties: 
+
+  Tags:
+    properties:
       tagsById: map<commons.TagId, commons.Tag>
       orderedTagIds: optional<list<commons.TagId>>
 
@@ -220,6 +220,7 @@ types:
     extends: commons.WithDescription
     properties:
       schema: Schema
+      responseProperty: optional<string>
 
   Schema:
     union:
@@ -233,11 +234,12 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: {}
+      unknown: commons.WithName
 
   PrimitiveSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValue
@@ -260,8 +262,9 @@ types:
       maxLength: optional<integer>
 
   LiteralSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: LiteralSchemaValue
@@ -312,30 +315,34 @@ types:
       differentSchema: boolean
 
   ArraySchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   MapSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   NullableSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
