@@ -119,18 +119,21 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             body = await response.blob();
         } else if (response.body != null && args.responseType === "streaming") {
             body = response.body;
-        } else if (response.body != null) {
-            try {
-                body = await response.json();
-            } catch (err) {
-                return {
-                    ok: false,
-                    error: {
-                        reason: "non-json",
-                        statusCode: response.status,
-                        rawBody: await response.text(),
-                    },
-                };
+        } else {
+            const text = await response.text();
+            if (text.length > 0) {
+                try {
+                    body = JSON.parse(text);
+                } catch (err) {
+                    return {
+                        ok: false,
+                        error: {
+                            reason: "non-json",
+                            statusCode: response.status,
+                            rawBody: text,
+                        },
+                    };
+                }
             }
         }
 
