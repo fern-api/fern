@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/generator-exec-sdk": "^0.0.472",
+    "@fern-fern/generator-exec-sdk": "^0.0.518",
     "@fern-fern/ir-sdk": "0.0.3088",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",

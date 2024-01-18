@@ -1920,16 +1920,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.472":
-  version: 0.0.472
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.472"
+"@fern-fern/generator-exec-sdk@npm:^0.0.518":
+  version: 0.0.518
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.518"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: 1b44ecb213711e7ecfde32f819c15c32d621d31d13c6eb7680cce29fa5df378ea077e8b04da832bb47ae568dbdbade8a84dabf04a946a8d5bbc73953b53f6a33
+  checksum: de1254f2a517664564cfdf484e5504b187d156f5cbc17d9f76f5011cabd9d6b1611b531ce89f5ba8cc86556aa7b98e9dc3ecba24f8eb19ccbff67caf6cc610c6
   languageName: node
   linkType: hard
 
@@ -1970,7 +1970,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
     "@fern-api/logger": 0.4.23
-    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/generator-exec-sdk": ^0.0.518
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -2249,7 +2249,7 @@ __metadata:
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/generator-exec-sdk": ^0.0.518
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -2642,7 +2642,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/generator-exec-sdk": ^0.0.518
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -2680,7 +2680,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/generator-exec-sdk": ^0.0.518
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"

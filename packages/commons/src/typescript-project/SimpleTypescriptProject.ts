@@ -130,6 +130,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
             };
         }
 
+        if (this.npmPackage?.license != null) {
+            packageJson = {
+                ...packageJson,
+                license: this.npmPackage.license as any,
+            };
+        }
+
         packageJson = {
             ...packageJson,
             main: "./index.js",

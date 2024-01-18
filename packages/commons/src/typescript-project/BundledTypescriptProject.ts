@@ -218,6 +218,13 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             };
         }
 
+        if (this.npmPackage?.license != null) {
+            packageJson = {
+                ...packageJson,
+                license: this.npmPackage.license as any,
+            };
+        }
+
         packageJson = {
             ...packageJson,
             files: [
