@@ -1,5 +1,6 @@
-import { AstNode } from "./AstNode";
 import { ClassReference } from "./classes/ClassReference";
+import { AstNode } from "./core/AstNode";
+import { FunctionInvocation } from "./functions/FunctionInvocation";
 
 export enum VariableType {
     CLASS,
@@ -28,14 +29,27 @@ export class Variable extends AstNode {
         this.isOptional = isOptional;
     }
 
-    public writeInternal(startingTabSpaces: number): string {
+    public writeInternal(startingTabSpaces: number): void {
+        let templateString;
         switch (this.variableType) {
             case VariableType.CLASS:
-                return this.writePaddedString(startingTabSpaces, `@@${this.name}`);
+                templateString = "@@%s";
+                break;
             case VariableType.INSTANCE:
-                return this.writePaddedString(startingTabSpaces, `@${this.name}`);
+                templateString = "@%s";
+                break;
             default:
-                return this.writePaddedString(startingTabSpaces, this.name);
+                templateString = "%s";
+                break;
         }
+        this.addText({ stringContent: this.name, templateString, startingTabSpaces });
+    }
+
+    public toJson(): FunctionInvocation | undefined {
+        return this.type.toJson(this);
+    }
+
+    public fromJson(): FunctionInvocation | undefined {
+        return this.type.fromJson(this);
     }
 }

@@ -1,8 +1,9 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { RubyModelCustomConfig, RubyModelCustomConfigSchema } from "./CustomConfig";
+import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
 import { GeneratedFile } from "./utils/GeneratedFile";
 import { TypesGenerator } from "./utils/TypesGenerator";
 
@@ -11,28 +12,30 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     generatedFiles: GeneratedFile[] = [];
 
     protected parseCustomConfig(customConfig: unknown): RubyModelCustomConfig {
-        const parsed = customConfig != null ? RubyModelCustomConfigSchema.parse(customConfig) : undefined;
-        return {
-            defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
-            extraDependencies: parsed?.extraDependencies ?? {},
-            noOptionalProperties: parsed?.noOptionalProperties ?? false
-        };
+        return parseCustomConfig(customConfig);
     }
 
     // TODO: This (as an abstract function) will probably be used across CLIs
-    private generateRepositoryBoilerPlate(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubyModelCustomConfig
-    ) {
+    // private generateRepositoryBoilerPlate(
+    //     config: FernGeneratorExec.GeneratorConfig,
+    //     customConfig: RubyModelCustomConfig
+    // ) {
+    private generateRepositoryBoilerPlate() {
         // Static files and dependencies (.github/, bin/, .gitignore, .rubocop_*, Gemfile, Rakefile, README)
     }
 
     private generateTypes(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
+        generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const generatedTypeFiles = new TypesGenerator(intermediateRepresentation).generateFiles();
+        const generatedTypeFiles = new TypesGenerator(
+            config,
+            customConfig,
+            generatorContext,
+            intermediateRepresentation
+        ).generateFiles();
         this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
     }
 
@@ -44,9 +47,9 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ) {
         generatorContext.logger.debug("Generating boilerplate");
-        this.generateRepositoryBoilerPlate(config, customConfig);
+        this.generateRepositoryBoilerPlate();
         generatorContext.logger.debug("Generating types");
-        this.generateTypes(config, customConfig, intermediateRepresentation);
+        this.generateTypes(config, customConfig, generatorContext, intermediateRepresentation);
     }
 
     protected async publishPackage(
@@ -72,5 +75,8 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
+        this.generatedFiles.forEach(async (f) => {
+            await f.write(AbsoluteFilePath.of(config.output.path));
+        });
     }
 }

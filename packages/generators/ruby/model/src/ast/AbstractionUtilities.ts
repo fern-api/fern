@@ -1,11 +1,13 @@
 import {
     AliasTypeDeclaration,
+    DeclaredTypeName,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
     TypeDeclaration,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { Enum } from "./abstractions/Enum";
+import { TYPES_DIRECTORY } from "../utils/Constants";
+import { Enum, EnumReference } from "./abstractions/Enum";
 import { SerializableObject } from "./abstractions/SerializableObject";
 import { ClassReference } from "./classes/ClassReference";
 import { Expression } from "./expressions/Expression";
@@ -35,7 +37,7 @@ export function generateEnumDefinitionFromTypeDeclaration(
     const enum_ = new Enum({ contents, documentation: typeDeclaration.docs });
 
     const yardoc = new Yardoc({
-        reference: { name: "typeReference", type: name }
+        reference: { name: "typeReference", type: new EnumReference({name}) }
     });
 
     return new Expression({
@@ -49,14 +51,16 @@ export function generateEnumDefinitionFromTypeDeclaration(
 
 function isTypeOptional(typeReference: TypeReference): boolean {
     return typeReference._visit<boolean>({
-        container: (ct) => {return ct._visit<boolean>({
-            list: () => false,
-            map: () => false,
-            optional: () => true,
-            set: () => false,
-            literal: () => false,
-            _other: () => false
-        });},
+        container: (ct) => {
+            return ct._visit<boolean>({
+                list: () => false,
+                map: () => false,
+                optional: () => true,
+                set: () => false,
+                literal: () => false,
+                _other: () => false
+            });
+        },
         named: () => false,
         primitive: () => false,
         _other: () => false,
@@ -88,4 +92,11 @@ export function generateSerializableObjectFromTypeDeclaration(
         extendedClasses,
         properties
     });
+}
+
+export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
+    return [
+        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
+        TYPES_DIRECTORY
+    ].join("/");
 }

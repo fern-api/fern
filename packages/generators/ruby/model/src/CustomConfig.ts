@@ -1,7 +1,12 @@
 import { BaseGeneratorConfig, BaseGeneratorConfigSchema } from "@fern-api/generator-commons";
+import { z } from "zod";
 
-export type RubyModelCustomConfig = BaseGeneratorConfig;
-export const RubyModelCustomConfigSchema = BaseGeneratorConfigSchema.extend({});
+export interface RubyModelCustomConfig extends BaseGeneratorConfig {
+    clientName: string | undefined;
+}
+export const RubyModelCustomConfigSchema = BaseGeneratorConfigSchema.extend({
+    clientName: z.optional(z.string())
+});
 
 // TODO: this will likely be shared between models and SDK
 export function parseCustomConfig(customConfig: unknown): RubyModelCustomConfig {
@@ -9,6 +14,7 @@ export function parseCustomConfig(customConfig: unknown): RubyModelCustomConfig 
     return {
         defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
         extraDependencies: parsed?.extraDependencies ?? {},
-        noOptionalProperties: parsed?.noOptionalProperties ?? false
+        noOptionalProperties: parsed?.noOptionalProperties ?? false,
+        clientName: parsed?.clientName
     };
 }

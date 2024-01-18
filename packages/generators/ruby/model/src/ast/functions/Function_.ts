@@ -1,6 +1,8 @@
-import { AstNode, NewLinePlacement } from "../AstNode";
+import { BLOCK_END } from "../../utils/Constants";
 import { ClassReference } from "../classes/ClassReference";
+import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
+import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Yardoc } from "../Yardoc";
 import { FunctionInvocation } from "./FunctionInvocation";
@@ -46,18 +48,36 @@ export class Function_ extends AstNode {
         this.yardoc = new Yardoc({ reference: { name: "docString", parameters, returnValue } });
     }
 
-    private writeParameters(): string {
-        return `(${this.parameters.map((a) => a.writeInternal(0)).join(", ")})`;
+    private writeParameters(): string | undefined {
+        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write()).join(", ")})` : undefined;
     }
 
-    public writeInternal(startingTabSpaces: number): string {
-        const functionSignature = this.writePaddedString(startingTabSpaces, `def ${this.isStatic && "self."}${this.name}${this.parameters.length > 0 && this.writeParameters()}`, NewLinePlacement.AFTER);
-        return `
-${this.documentation !== undefined && this.writePaddedString(startingTabSpaces, this.documentation, NewLinePlacement.AFTER)}
-${this.yardoc.writeInternal(startingTabSpaces)}
-${functionSignature}
-${this.functionBody.map(expression => expression.writeInternal(startingTabSpaces))}
-${this.writePaddedString(startingTabSpaces, "end", NewLinePlacement.AFTER)}
-`;
+    public writeInternal(startingTabSpaces: number): void {
+        this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
+        this.addText({
+            stringContent: this.yardoc.write(startingTabSpaces),
+            templateString: this.documentation !== undefined ? "#\n%s" : undefined,
+            startingTabSpaces: this.documentation !== undefined ? startingTabSpaces : 0
+        });
+        this.addText({
+            stringContent: this.isStatic ? `self.${this.name}` : this.name,
+            templateString: "def %s",
+            startingTabSpaces
+        });
+        this.addText({ stringContent: this.writeParameters(), appendToLastString: true, startingTabSpaces });
+        this.functionBody.map((exp) =>
+            this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+        );
+        this.addText({ stringContent: BLOCK_END, startingTabSpaces });
+    }
+
+    public getImports(): Set<Import> {
+        let imports = new Set<Import>();
+        this.parameters.forEach((param) => (imports = new Set([...imports, ...param.getImports()])));
+        if (this.returnValue) {
+            imports = new Set([...imports, ...this.returnValue.getImports()]);
+        }
+        this.functionBody.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+        return imports;
     }
 }

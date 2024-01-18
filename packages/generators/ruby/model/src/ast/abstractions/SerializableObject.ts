@@ -1,25 +1,39 @@
 import { Argument } from "../Argument";
-import { ClassReference, GenericClassReference, JsonClassReference } from "../classes/ClassReference";
+import {
+    ClassReference,
+    GenericClassReference,
+    HashInstance,
+    JsonClassReference,
+    OpenStructClassReference
+} from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { Import } from "../Import";
 import { Parameter } from "../Parameter";
-import { HashInstance } from "../primitives/Hash_";
 import { Property } from "../Property";
+import { Variable, VariableType } from "../Variable";
 
+const additional_properties_property = new Property({
+    name: "additional_properties",
+    type: OpenStructClassReference,
+    isOptional: true,
+    documentation: "Additional properties unmapped to the current class definition"
+});
 export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;
 }
 export class SerializableObject extends Class_ {
     constructor(init: SerializableObject.Init) {
         super({
+            ...init,
             functions: [
                 SerializableObject.createFromJsonFunction(init.properties, init.classReference),
                 SerializableObject.createToJsonFunction(init.properties, init.classReference)
             ],
             includeInitializer: true,
-            ...init
+            properties: [...(init.properties ?? []), additional_properties_property]
         });
     }
 
@@ -31,8 +45,8 @@ export class SerializableObject extends Class_ {
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
-                    onObject: "JSON",
-                    baseFunction: new Function_({ name: "new", functionBody: [] }),
+                    onObject: new ClassReference({ name: "JSON", import_: new Import({ from: "json" }) }),
+                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
                             value: "json_object",
@@ -42,32 +56,39 @@ export class SerializableObject extends Class_ {
                         new Argument({
                             name: "object_class",
                             value: "OpenStruct",
-                            type: GenericClassReference,
+                            type: OpenStructClassReference,
                             isNamed: true
                         })
                     ]
                 }),
                 isAssignment: true
             }),
-            ...(properties ?? []).map(
-                (prop) =>
-                    new Expression({ leftSide: prop.name, rightSide: `struct.${prop.wireValue}`, isAssignment: true })
-            ),
-            new Expression({ leftSide: "additional_properties", rightSide: "struct", isAssignment: true }),
+            ...(properties?.map((prop) => {
+                const variable = new Variable({
+                    name: `struct.${prop.wireValue}`,
+                    variableType: VariableType.LOCAL,
+                    type: prop.type
+                });
+
+                return new Expression({ leftSide: prop.name, rightSide: variable.fromJson() ?? variable });
+            }) ?? []),
             new FunctionInvocation({
                 baseFunction: new Function_({ name: "new", functionBody: [] }),
-                arguments_: properties?.map((prop) => prop.toArgument(prop.name, true))
+                arguments_: [
+                    ...(properties?.map((prop) => prop.toArgument(prop.name, true)) ?? []),
+                    additional_properties_property.toArgument("struct", true)
+                ]
             })
         ];
         const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
-        const toJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
+        const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
         return new Function_({
             name: "from_json",
             returnValue: classReference,
             parameters,
             functionBody,
-            isStatic: true,
-            documentation: toJsonDocumentation
+            documentation: fromJsonDocumentation,
+            isStatic: true
         });
     }
 
@@ -79,7 +100,12 @@ export class SerializableObject extends Class_ {
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                 // TODO: call to_json on these properties if they're objects
                 onObject: new HashInstance({
-                    contents: new Map(properties?.map((prop) => [prop.wireValue ?? prop.name, prop.toVariable()]))
+                    contents: new Map(
+                        properties?.map((prop) => [
+                            prop.wireValue ?? prop.name,
+                            prop.toVariable().toJson() ?? prop.toVariable()
+                        ])
+                    )
                 })
             })
         ];
@@ -88,7 +114,6 @@ export class SerializableObject extends Class_ {
             name: "to_json",
             returnValue: JsonClassReference,
             functionBody,
-            isStatic: true,
             documentation: toJsonDocumentation
         });
     }

@@ -1,5 +1,5 @@
-import { AstNode, NewLinePlacement } from "./AstNode";
 import { ClassReference } from "./classes/ClassReference";
+import { AstNode } from "./core/AstNode";
 import { Parameter } from "./Parameter";
 import { Property } from "./Property";
 
@@ -11,7 +11,7 @@ interface YardocDocString {
 }
 interface YardocTypeReference {
     readonly name: "typeReference";
-    type: Property | string;
+    type: Property | ClassReference | string;
 }
 export declare namespace Yardoc {
     export interface Init extends Omit<AstNode.Init, "documentation"> {
@@ -27,42 +27,38 @@ export class Yardoc extends AstNode {
         this.reference = reference;
     }
 
-    private writeConditionalDocumentation(documentation?: string) {
-        return documentation !== undefined ? ` ${documentation}` : "";
-    }
-    public writeInternal(startingTabSpaces: number): string {
-        let doc = "";
-        if (!this.reference) {
-            return doc;
-        } else if (this.reference.name === "typeReference") {
-            const typeName =
-                this.reference.type instanceof Property ? this.reference.type.type.name : this.reference.type;
-            const documentation =
-                this.reference.type instanceof Property ? this.reference.type.type.documentation : undefined;
-            doc += this.writePaddedString(
-                startingTabSpaces,
-                `# @type [${typeName}]${this.writeConditionalDocumentation(documentation)}`,
-                NewLinePlacement.BEFORE
-            );
-        } else {
-            doc += this.writePaddedString(startingTabSpaces, "#", NewLinePlacement.BEFORE);
-            this.reference.parameters.forEach((classReference, parameterName) => {
-                doc += this.writePaddedString(
-                    startingTabSpaces,
-                    `# @param ${parameterName} [${classReference.name}]${this.writeConditionalDocumentation(
-                        classReference.documentation
-                    )}`,
-                    NewLinePlacement.BEFORE
-                );
-            });
-            if (this.reference.returnValue !== undefined) {
-                doc += this.writePaddedString(
-                    startingTabSpaces,
-                    `# @returns [${this.reference.returnValue.name}]`,
-                    NewLinePlacement.BEFORE
-                );
+    public writeInternal(startingTabSpaces: number): void {
+        if (this.reference !== undefined) {
+            if (this.reference.name === "typeReference") {
+                const typeName =
+                    this.reference.type instanceof Property
+                        ? this.reference.type.type.typeHint
+                        : this.reference.type instanceof ClassReference
+                        ? this.reference.type.typeHint
+                        : this.reference.type;
+                const documentation =
+                    this.reference.type instanceof Property ? this.reference.type.type.documentation : undefined;
+                this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
+                this.addText({ stringContent: documentation, appendToLastString: true });
+            } else {
+                this.reference.parameters.forEach((parameter) => {
+                    this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
+                    this.addText({
+                        stringContent: parameter.type.typeHint,
+                        templateString: " [%s] ",
+                        appendToLastString: true
+                    });
+                    this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+                });
+                if (this.reference.returnValue !== undefined) {
+                    this.addText({
+                        stringContent: this.reference.returnValue.typeHint,
+                        templateString: "# @return [%s] ",
+                        startingTabSpaces
+                    });
+                    this.addText({ stringContent: this.reference.returnValue.documentation, appendToLastString: true });
+                }
             }
         }
-        return doc;
     }
 }

@@ -4,4 +4,7 @@ RUN apk --no-cache add git zip && git config --global user.name "fern" && git co
 
 ENV YARN_CACHE_FOLDER=/.yarn
 
-# TODO: Cache generator dependencies
+COPY packages/generators/docker/cache_heavy_dependencies.sh /
+RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
+
+# Cache generator files and create entry point within an extended Dockerfile

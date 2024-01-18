@@ -23,7 +23,9 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dockerTagLocal": "../../docker/create_docker.sh ruby-model --local",
+    "dockerTagVersion": "../../docker/create_docker.sh ruby-model "
   },
   "dependencies": {
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
@@ -31,16 +33,19 @@
     "@fern-api/generator-commons": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.472",
     "@fern-fern/ir-sdk": "0.0.3277",
+    "lodash-es": "^4.17.21",
     "zod": "^3.14.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.26.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
+    "tmp-promise": "^3.0.3",
     "typescript": "4.6.4"
   }
 }

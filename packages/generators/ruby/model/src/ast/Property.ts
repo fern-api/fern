@@ -1,6 +1,7 @@
 import { Argument } from "./Argument";
-import { AstNode } from "./AstNode";
 import { ClassReference } from "./classes/ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Import } from "./Import";
 import { Parameter } from "./Parameter";
 import { Variable, VariableType } from "./Variable";
 
@@ -40,6 +41,7 @@ export class Property extends AstNode {
             name: this.name,
             type: this.type,
             isOptional: this.isOptional,
+            documentation: this.documentation,
             defaultValue
         });
     }
@@ -48,12 +50,16 @@ export class Property extends AstNode {
         return new Variable({
             name: this.name,
             type: this.type,
-            variableType: VariableType.CLASS,
+            variableType: VariableType.INSTANCE,
             isOptional: this.isOptional
         });
     }
 
-    public writeInternal(startingTabSpaces: number): string {
-        return `:${this.name}`;
+    public writeInternal(): void {
+        this.addText({ stringContent: this.name, templateString: ":%s" });
+    }
+
+    public getImports(): Set<Import> {
+        return this.type.getImports();
     }
 }

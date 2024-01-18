@@ -1,5 +1,6 @@
-import { AstNode } from "./AstNode";
 import { ClassReference } from "./classes/ClassReference";
+import { AstNode } from "./core/AstNode";
+import { FunctionInvocation } from "./functions/FunctionInvocation";
 import { Variable } from "./Variable";
 
 export declare namespace Argument {
@@ -28,9 +29,15 @@ export class Argument extends AstNode {
         this.value = value;
     }
 
-    public writeInternal(startingTabSpaces: number): string {
-        return `${this.name !== undefined && this.name + ":"}${
-            this.value instanceof AstNode ? this.value.write(0) : this.value
-        }`;
+    public writeInternal(): void {
+        this.addText({ stringContent: this.name, templateString: "%s: " });
+        this.addText({
+            stringContent: this.value instanceof AstNode ? this.value.write() : this.value,
+            appendToLastString: true
+        });
+    }
+
+    public fromJson(): FunctionInvocation | undefined {
+        return;
     }
 }
