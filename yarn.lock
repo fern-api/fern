@@ -2207,6 +2207,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model"
+  dependencies:
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.26.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/fern-ruby-sdk@workspace:packages/generators/ruby/sdk":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fern-ruby-sdk@workspace:packages/generators/ruby/sdk"
+  dependencies:
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.26.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"

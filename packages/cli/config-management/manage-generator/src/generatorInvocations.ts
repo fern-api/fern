@@ -68,6 +68,16 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             importPath: "go-mod-path/generated/go"
         }
     },
+    [GeneratorName.RUBY_MODEL]: {
+        version: "0.0.1"
+    },
+    [GeneratorName.RUBY_SDK]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../generated/ruby"
+        }
+    },
     [GeneratorName.OPENAPI]: {
         version: "0.0.28",
         config: {
