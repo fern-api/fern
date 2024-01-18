@@ -2255,6 +2255,45 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/generator-cli@workspace:packages/generators/cli":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
+  dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/ir-sdk": 0.0.3277
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.26.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/generator-commons@workspace:*, @fern-api/generator-commons@workspace:packages/generators/commons":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
+  dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.26.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    tmp-promise: ^3.0.3
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/generators-configuration@workspace:*, @fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration":
   version: 0.0.0-use.local
   resolution: "@fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration"
@@ -2453,7 +2492,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.372
+    "@fern-fern/generator-exec-sdk": ^0.0.472
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3052,16 +3091,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:0.0.372":
-  version: 0.0.372
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.372"
+"@fern-fern/generator-exec-sdk@npm:^0.0.472":
+  version: 0.0.472
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.472"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: b7905c3fd5a2128a9134ddc55111036a70bd6dd25b6c8763fa53ff333ee81daa5a764f536effc2eff9bbdc7ec6e9050014dbbc7a5071262b67d9e6327c6de845
+  checksum: 1b44ecb213711e7ecfde32f819c15c32d621d31d13c6eb7680cce29fa5df378ea077e8b04da832bb47ae568dbdbade8a84dabf04a946a8d5bbc73953b53f6a33
   languageName: node
   linkType: hard
 
