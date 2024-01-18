@@ -10,6 +10,9 @@ packages/**/dist
 packages/**/tsconfig*tsbuildinfo
 packages/**/out
 
+# don't ignore the ruby lib within the playground
+!packages/**/ruby/playground/lib
+
 # next
 .next
 next-env.d.ts
