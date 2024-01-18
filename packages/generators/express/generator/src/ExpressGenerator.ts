@@ -236,6 +236,7 @@ export class ExpressGenerator {
             tsMorphProject: this.project,
             outputEsm: this.config.outputEsm,
             extraDependencies: {},
+            extraDevDependencies: {},
         });
     }
 

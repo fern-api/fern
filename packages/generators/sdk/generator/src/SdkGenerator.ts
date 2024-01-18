@@ -76,6 +76,7 @@ export declare namespace SdkGenerator {
         skipResponseValidation: boolean;
         targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
+        extraDevDependencies: Record<string, string>;
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
@@ -311,6 +312,7 @@ export class SdkGenerator {
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   extraDependencies: this.config.extraDependencies,
+                  extraDevDependencies: this.config.extraDevDependencies,
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -318,6 +320,7 @@ export class SdkGenerator {
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
                   extraDependencies: this.config.extraDependencies,
+                  extraDevDependencies: this.config.extraDevDependencies,
               });
     }
 

@@ -154,6 +154,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             draft.devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
+                ...this.extraDevDependencies,
             };
         });
 

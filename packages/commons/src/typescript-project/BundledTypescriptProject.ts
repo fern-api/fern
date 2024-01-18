@@ -264,6 +264,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             draft.devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
+                ...this.extraDevDependencies,
             };
         });
 

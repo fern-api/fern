@@ -16,6 +16,7 @@ export interface SdkCustomConfig {
     defaultTimeoutInSeconds: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
+    extraDevDependencies: Record<string, string>;
     treatUnknownAsAny: boolean;
     includeContentHeadersOnFileDownloadResponse: boolean;
     noSerdeLayer: boolean;

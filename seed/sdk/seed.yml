@@ -25,6 +25,18 @@ fixtures:
         extraDependencies: 
             lodash-es: "^4.17.21"
       outputFolder: bundle
+    - customConfig: 
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies: 
+          lodash-es: "^4.17.21"
+        extraDevDependencies: 
+          jest: "^29.7.0"
+      outputFolder: dev-dependencies
   error-property: 
     - customConfig: 
         private: true

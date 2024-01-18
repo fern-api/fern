@@ -267,7 +267,24 @@ supplement the generated client with custom code.
 # generators.yml
 config:
   extraDependencies:
-    jest: "^29.6.1"
+    lodash: "3.0.2"
+```
+
+#### ✨ `extraDevDependencies`
+
+**Type:** map\<string, string\>
+
+**Default:** `{}`
+
+_Note: This only applies when publishing to Github._
+
+You can use `extraDevDependencies` to specify extra dev dependencies in the generated package.json. 
+
+```yaml
+# generators.yml
+config:
+  extraDevDependencies:
+    jest: "29.0.7"
 ```
 
 #### ✨ `treatUnknownAsAny`

@@ -11,6 +11,7 @@ export declare namespace TypescriptProject {
     export interface Init {
         tsMorphProject: Project;
         extraDependencies: Record<string, string>;
+        extraDevDependencies: Record<string, string>;
     }
 }
 
@@ -21,10 +22,12 @@ export abstract class TypescriptProject {
     protected volume = new Volume();
     protected tsMorphProject: Project;
     protected extraDependencies: Record<string, string>;
+    protected extraDevDependencies: Record<string, string>;
 
-    constructor({ tsMorphProject, extraDependencies }: TypescriptProject.Init) {
+    constructor({ tsMorphProject, extraDependencies, extraDevDependencies }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
+        this.extraDevDependencies = extraDevDependencies;
     }
 
     public async persist(): Promise<PersistedTypescriptProject> {
