@@ -14,7 +14,7 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
     [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
     [LogLevel.Warn]: FernGeneratorExec.logging.LogLevel.Warn,
-    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error,
+    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error
 };
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
@@ -39,10 +39,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 ...rawConfig,
                 // in this version of the fiddle client, it requires unknown
                 // properties to be present
-                customConfig: rawConfig.customConfig ?? {},
+                customConfig: rawConfig.customConfig ?? {}
             },
             {
-                unrecognizedObjectKeys: "passthrough",
+                unrecognizedObjectKeys: "passthrough"
             }
         );
         const generatorNotificationService =
@@ -58,7 +58,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 void generatorNotificationService?.sendUpdateAndSwallowError(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
-                        level: LOG_LEVEL_CONVERSIONS[level],
+                        level: LOG_LEVEL_CONVERSIONS[level]
                     })
                 );
             });
@@ -69,7 +69,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         publish: () => this.registry,
                         github: () => undefined,
                         downloadFiles: () => undefined,
-                        _other: () => undefined,
+                        _other: () => undefined
                     })
                 })
             );
@@ -79,8 +79,16 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            const project = await this.generateProject({config, customConfig, generatorContext, intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)});
-            const destinationZip = join(AbsoluteFilePath.of(config.output.path), RelativeFilePath.of(OUTPUT_ZIP_FILENAME));
+            const project = await this.generateProject({
+                config,
+                customConfig,
+                generatorContext,
+                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)
+            });
+            const destinationZip = join(
+                AbsoluteFilePath.of(config.output.path),
+                RelativeFilePath.of(OUTPUT_ZIP_FILENAME)
+            );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await this.publishPackage(customConfig, project, destinationZip);
@@ -93,13 +101,13 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
-                },
+                }
             });
 
             await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.successful({
-                        zipFilename: OUTPUT_ZIP_FILENAME,
+                        zipFilename: OUTPUT_ZIP_FILENAME
                     })
                 )
             );
@@ -107,13 +115,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error",
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             );
             throw e;
         }
-
     }
 
     // 0. Parse any custom config and forward to generator
@@ -131,9 +138,22 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     // 3. Set up package and publishing
     // Write necessary files for publishing and return any necessary package information
     // + actually publish the specified package
-    protected abstract publishPackage(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath): Promise<void>;
-    protected abstract writeForGithub(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath, githubOutputMode: FernGeneratorExec.GithubOutputMode): Promise<void>;
-    protected abstract writeForDownload(customConfig: CustomConfig, project: PersistedProject, destination: AbsoluteFilePath): Promise<void>;
+    protected abstract publishPackage(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath
+    ): Promise<void>;
+    protected abstract writeForGithub(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath,
+        githubOutputMode: FernGeneratorExec.GithubOutputMode
+    ): Promise<void>;
+    protected abstract writeForDownload(
+        customConfig: CustomConfig,
+        project: PersistedProject,
+        destination: AbsoluteFilePath
+    ): Promise<void>;
 }
 
 class GeneratorContextImpl implements GeneratorContext {
