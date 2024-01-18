@@ -9,7 +9,7 @@ export declare namespace Set {
 }
 export class Set extends Class_ {
     public contents: string[];
-    constructor({ type, contents = [], ...rest }) {
+    constructor({ type, contents = [], ...rest }: Set.Init) {
         const typeName = type instanceof Class_ ? type.name : type;
         super({ name: `Set<${typeName}>`, moduleBreadcrumbs: [], ...rest });
     }
