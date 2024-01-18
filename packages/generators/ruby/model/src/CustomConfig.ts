@@ -1,6 +1,7 @@
-import { BaseGeneratorConfig, BaseGeneratorConfigSchema } from "@fern-api/generator-commons";
+import { BaseGeneratorConfigSchema } from "@fern-api/generator-commons";
+import { z } from "zod";
 
-export type RubyModelCustomConfig = BaseGeneratorConfig;
+export type RubyModelCustomConfig = z.infer<typeof RubyModelCustomConfigSchema>;
 export const RubyModelCustomConfigSchema = BaseGeneratorConfigSchema.extend({});
 
 // TODO: this will likely be shared between models and SDK
@@ -9,6 +10,6 @@ export function parseCustomConfig(customConfig: unknown): RubyModelCustomConfig 
     return {
         defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
         extraDependencies: parsed?.extraDependencies ?? {},
-        noOptionalProperties: parsed?.noOptionalProperties ?? false
+        clientClassName: parsed?.clientClassName
     };
 }

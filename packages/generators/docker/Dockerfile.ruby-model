@@ -1,6 +1,6 @@
 # syntax = edrevo/dockerfile-plus
 INCLUDE+ Dockerfile.common
 
-# TODO: Copy relevant CLI files
+COPY packages/generators/ruby/model/dist/bundle.js /bundle.js
 
 ENTRYPOINT ["node", "/bundle.js"]

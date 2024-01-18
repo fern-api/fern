@@ -1,4 +1,4 @@
-import { AstNode } from "../AstNode";
+import { AstNode } from "./core/AstNode";
 
 export declare namespace ExternalDependency {
     export interface Init extends AstNode.Init {
@@ -19,10 +19,10 @@ export class ExternalDependency extends AstNode {
         this.packageName = packageName;
     }
 
-    public writeInternal(startingTabSpaces: number): string {
-        return this.writePaddedString(
-            startingTabSpaces,
-            `spec.add_dependency "${this.packageName}", "${this.specifier} ${this.version}"`
-        );
+    public writeInternal(startingTabSpaces: number): void {
+        this.addText({
+            stringContent: `spec.add_dependency "${this.packageName}", "${this.specifier} ${this.version}"`,
+            startingTabSpaces
+        });
     }
 }
