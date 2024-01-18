@@ -18,6 +18,7 @@ enum RubyClass {
     DATETIME = "DateTime",
     DATE = "Date",
     UUID = "UUID",
+    // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
     BASE64 = "String",
     OBJECT = "Object",
     JSON = "JSON",
