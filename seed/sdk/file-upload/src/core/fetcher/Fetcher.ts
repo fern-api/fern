@@ -88,7 +88,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             headers,
             body,
             signal: controller.signal,
-            credentials: args.withCredentials ? "same-origin" : undefined,
+            credentials: args.withCredentials ? "include" : undefined,
         });
         if (abortId != null) {
             clearTimeout(abortId);
