@@ -705,6 +705,143 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "client": {
+                      "legal_entity": {
+                        "id": 1.1,
+                      },
+                      "team": {
+                        "id": 1.1,
+                      },
+                    },
+                    "compensation_details": {
+                      "amount": 100,
+                      "currency_code": "USD",
+                      "cycle_end": 25,
+                      "cycle_end_type": "DAY_OF_WEEK",
+                      "first_payment": 500,
+                      "first_payment_date": "1999-12-31",
+                      "frequency": "weekly",
+                      "notice_period": 15,
+                      "pay_before_weekends": true,
+                      "payment_due_days": 5,
+                      "payment_due_type": "REGULAR",
+                      "scale": "hourly",
+                    },
+                    "country_code": "US",
+                    "job_title": {},
+                    "meta": {
+                      "documents_required": true,
+                    },
+                    "notice_period": 15,
+                    "seniority": {},
+                    "start_date": "1999-12-31",
+                    "termination_date": "1999-12-31",
+                    "title": "string",
+                    "type": "pay_as_you_go_time_based",
+                    "who_reports": "both",
+                    "worker": {
+                      "first_name": "John",
+                      "last_name": "Doe",
+                    },
+                  },
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "client": {
+                        "full_name": "string",
+                        "id": 1000000,
+                        "legal_entity": {
+                          "id": 1000000,
+                          "name": "string",
+                          "registration_number": "string",
+                          "subtype": "string",
+                          "type": "individual",
+                          "vat_number": "string",
+                        },
+                        "team": {
+                          "id": 1.1,
+                          "name": "string",
+                        },
+                      },
+                      "compensation_details": {
+                        "amount": "string",
+                        "currency_code": "USD",
+                        "first_payment": "string",
+                        "first_payment_date": "2022-05-24T09:38:46.235Z",
+                        "frequency": "string",
+                        "gross_annual_salary": "string",
+                        "gross_signing_bonus": "string",
+                        "gross_variable_bonus": "string",
+                        "scale": "string",
+                      },
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [
+                        {
+                          "name": "Employee ID",
+                          "value": "54234",
+                        },
+                      ],
+                      "employment_details": {
+                        "country": "US",
+                        "days_per_week": 1.1,
+                        "hours_per_day": 1.1,
+                        "paid_vacation_days": 1.1,
+                        "state": "CO",
+                        "type": "string",
+                      },
+                      "id": "string",
+                      "invitations": {},
+                      "is_archived": true,
+                      "job_title": "string",
+                      "notice_period": 15,
+                      "seniority": {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                      "signatures": {
+                        "client_signature": "string",
+                        "client_signed_at": "2022-05-24T09:38:46.235Z",
+                        "signed_at": "2022-05-24T09:38:46.235Z",
+                        "worker_signature": "string",
+                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
+                      },
+                      "special_clause": "string",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "new",
+                      "termination_date": "2022-05-24T09:38:46.235Z",
+                      "title": "string",
+                      "type": "ongoing_time_based",
+                      "who_reports": "both",
+                      "worker": {
+                        "alternate_email": [
+                          {
+                            "isVerified": true,
+                          },
+                        ],
+                        "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "legal_entity": {
+                          "personal_name": "string",
+                          "registration_number": "string",
+                          "type": "individual",
+                        },
+                        "nationality": "US",
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rest/v1/contracts",
             "request": {
@@ -2909,7 +3046,49 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
+                        "contract": {
+                          "id": "string",
+                          "title": "string",
+                          "type": "ongoing_time_based",
+                        },
+                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "currency_code": "USD",
+                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "description": "string",
+                        "id": "string",
+                        "payment_cycle": {
+                          "end_date": "2022-05-24T09:38:46.235Z",
+                          "start_date": "2022-05-24T09:38:46.235Z",
+                        },
+                        "public_id": "00000000-0000-0000-0000-000000000000",
+                        "quantity": 1,
+                        "reported_by": {
+                          "full_name": "John Smith",
+                          "id": 123456,
+                        },
+                        "reviewed_by": {
+                          "full_name": "Jane Smith",
+                          "id": 123456,
+                          "remarks": "string",
+                          "reviewed_at": "2022-05-04T03:45:27.899Z",
+                        },
+                        "scale": "custom",
+                        "total_amount": "200.0000",
+                        "type": "accrued_holiday",
+                        "worksheet": {
+                          "days": 0,
+                          "hours": 1,
+                          "minutes": 0,
+                          "weeks": 0,
+                        },
+                      },
+                    ],
                     "page": {
                       "items_per_page": 1.1,
                       "offset": 1.1,
@@ -3004,7 +3183,49 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
+                        "contract": {
+                          "id": "string",
+                          "title": "string",
+                          "type": "ongoing_time_based",
+                        },
+                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "currency_code": "USD",
+                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "description": "string",
+                        "id": "string",
+                        "payment_cycle": {
+                          "end_date": "2022-05-24T09:38:46.235Z",
+                          "start_date": "2022-05-24T09:38:46.235Z",
+                        },
+                        "public_id": "00000000-0000-0000-0000-000000000000",
+                        "quantity": 1,
+                        "reported_by": {
+                          "full_name": "John Smith",
+                          "id": 123456,
+                        },
+                        "reviewed_by": {
+                          "full_name": "Jane Smith",
+                          "id": 123456,
+                          "remarks": "string",
+                          "reviewed_at": "2022-05-04T03:45:27.899Z",
+                        },
+                        "scale": "custom",
+                        "total_amount": "200.0000",
+                        "type": "accrued_holiday",
+                        "worksheet": {
+                          "days": 0,
+                          "hours": 1,
+                          "minutes": 0,
+                          "weeks": 0,
+                        },
+                      },
+                    ],
                     "page": {
                       "items_per_page": 1.1,
                       "offset": 1.1,
@@ -3834,6 +4055,40 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "string",
+                  "offcycle_payment_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "amount": "200.00",
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "currency_code": "USD",
+                      "date_submitted": "2022-05-24T09:38:46.235Z",
+                      "description": "Yearly bonus.",
+                      "id": "string",
+                      "public_id": "00000000-0000-0000-0000-000000000000",
+                      "reported_by": {
+                        "full_name": "John Smith",
+                        "id": 123456,
+                      },
+                      "reviewed_by": {
+                        "full_name": "Jane Smith",
+                        "id": 123456,
+                        "remarks": "SAP Reference id: 123",
+                        "reviewed_at": "2022-05-04T03:45:27.899Z",
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
@@ -3876,7 +4131,27 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "amount": "200.00",
+                        "created_at": "2022-05-24T09:38:46.235Z",
+                        "currency_code": "USD",
+                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "description": "Yearly bonus.",
+                        "id": "string",
+                        "public_id": "00000000-0000-0000-0000-000000000000",
+                        "reported_by": {
+                          "full_name": "John Smith",
+                          "id": 123456,
+                        },
+                        "reviewed_by": {
+                          "full_name": "Jane Smith",
+                          "id": 123456,
+                          "remarks": "SAP Reference id: 123",
+                          "reviewed_at": "2022-05-04T03:45:27.899Z",
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -5605,6 +5880,69 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "timesheet_id": 1000000,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "approvers": [
+                        {
+                          "approved": true,
+                          "email": "string",
+                          "full_name": "string",
+                        },
+                      ],
+                      "attachment": {
+                        "filename": "string",
+                        "key": "string",
+                      },
+                      "contract": {
+                        "id": "string",
+                        "title": "string",
+                        "type": "ongoing_time_based",
+                      },
+                      "created_at": "2022-05-04T03:45:27.108Z",
+                      "currency_code": "USD",
+                      "date_submitted": "2022-05-24T09:38:46.235Z",
+                      "description": "string",
+                      "id": "string",
+                      "payment_cycle": {
+                        "end_date": "2022-05-24T09:38:46.235Z",
+                        "start_date": "2022-05-24T09:38:46.235Z",
+                      },
+                      "public_id": "00000000-0000-0000-0000-000000000000",
+                      "quantity": 1,
+                      "reported_by": {
+                        "full_name": "John Smith",
+                        "id": 123456,
+                      },
+                      "reviewed_by": {
+                        "full_name": "Jane Smith",
+                        "id": 123456,
+                        "remarks": "string",
+                        "reviewed_at": "2022-05-04T03:45:27.899Z",
+                      },
+                      "scale": "custom",
+                      "status": "approved",
+                      "total_amount": "200.0000",
+                      "type": "string",
+                      "worksheet": {
+                        "days": 0,
+                        "hours": 1,
+                        "minutes": 0,
+                        "weeks": 0,
+                      },
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rest/v1/timesheets/{timesheet_id}",
             "path-parameters": {
@@ -5646,7 +5984,50 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
+                        "contract": {
+                          "id": "string",
+                          "title": "string",
+                          "type": "ongoing_time_based",
+                        },
+                        "created_at": "2022-05-04T03:45:27.108Z",
+                        "currency_code": "USD",
+                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "description": "string",
+                        "id": "string",
+                        "payment_cycle": {
+                          "end_date": "2022-05-24T09:38:46.235Z",
+                          "start_date": "2022-05-24T09:38:46.235Z",
+                        },
+                        "public_id": "00000000-0000-0000-0000-000000000000",
+                        "quantity": 1,
+                        "reported_by": {
+                          "full_name": "John Smith",
+                          "id": 123456,
+                        },
+                        "reviewed_by": {
+                          "full_name": "Jane Smith",
+                          "id": 123456,
+                          "remarks": "string",
+                          "reviewed_at": "2022-05-04T03:45:27.899Z",
+                        },
+                        "scale": "custom",
+                        "status": "approved",
+                        "total_amount": "200.0000",
+                        "type": "string",
+                        "worksheet": {
+                          "days": 0,
+                          "hours": 1,
+                          "minutes": 0,
+                          "weeks": 0,
+                        },
+                      },
+                    ],
                     "page": {
                       "total_rows": 1.1,
                     },
@@ -5730,7 +6111,50 @@ exports[`open api parser deel simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "data": [],
+                    "data": [
+                      {
+                        "attachment": {
+                          "filename": "string",
+                          "key": "string",
+                        },
+                        "contract": {
+                          "id": "string",
+                          "title": "string",
+                          "type": "ongoing_time_based",
+                        },
+                        "created_at": "2022-05-04T03:45:27.108Z",
+                        "currency_code": "USD",
+                        "date_submitted": "2022-05-24T09:38:46.235Z",
+                        "description": "string",
+                        "id": "string",
+                        "payment_cycle": {
+                          "end_date": "2022-05-24T09:38:46.235Z",
+                          "start_date": "2022-05-24T09:38:46.235Z",
+                        },
+                        "public_id": "00000000-0000-0000-0000-000000000000",
+                        "quantity": 1,
+                        "reported_by": {
+                          "full_name": "John Smith",
+                          "id": 123456,
+                        },
+                        "reviewed_by": {
+                          "full_name": "Jane Smith",
+                          "id": 123456,
+                          "remarks": "string",
+                          "reviewed_at": "2022-05-04T03:45:27.899Z",
+                        },
+                        "scale": "custom",
+                        "status": "approved",
+                        "total_amount": "200.0000",
+                        "type": "string",
+                        "worksheet": {
+                          "days": 0,
+                          "hours": 1,
+                          "minutes": 0,
+                          "weeks": 0,
+                        },
+                      },
+                    ],
                     "page": {
                       "total_rows": 1.1,
                     },

@@ -2480,7 +2480,21 @@ exports[`open api parser vocode parse open api 1`] = `
             },
           ],
           "request": {
-            "properties": {},
+            "properties": {
+              "method": {
+                "enum": "GET",
+                "type": "enum",
+              },
+              "subscriptions": {
+                "array": [
+                  {
+                    "enum": "event_message",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
           "response": {

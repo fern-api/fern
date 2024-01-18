@@ -165,6 +165,19 @@ export class ExampleTypeFactory {
                             discriminated: result
                         });
                     }
+                    case "undisciminated": {
+                        if (schema.oneOf.schemas[0] != null) {
+                            // TODO (we should select the oneOf schema based on the example)
+                            return this.buildExampleHelper({
+                                example,
+                                schema: schema.oneOf.schemas[0],
+                                isOptional,
+                                visitedSchemaIds,
+                                parameter
+                            });
+                        }
+                        break;
+                    }
                 }
                 return undefined;
             case "unknown":

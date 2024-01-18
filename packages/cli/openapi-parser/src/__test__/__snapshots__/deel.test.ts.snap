@@ -4142,7 +4142,663 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "client": {
+                    "properties": {
+                      "legal_entity": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "double": 1.1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "double": 1.1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "compensation_details": {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "double": 100,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "cycle_end": {
+                        "primitive": {
+                          "double": 25,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "cycle_end_type": {
+                        "enum": "DAY_OF_WEEK",
+                        "type": "enum",
+                      },
+                      "first_payment": {
+                        "primitive": {
+                          "double": 500,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "first_payment_date": {
+                        "primitive": {
+                          "string": "1999-12-31",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "frequency": {
+                        "enum": "weekly",
+                        "type": "enum",
+                      },
+                      "notice_period": {
+                        "primitive": {
+                          "double": 15,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "pay_before_weekends": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_due_days": {
+                        "primitive": {
+                          "double": 5,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_due_type": {
+                        "enum": "REGULAR",
+                        "type": "enum",
+                      },
+                      "scale": {
+                        "enum": "hourly",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "job_title": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "meta": {
+                    "properties": {
+                      "documents_required": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "notice_period": {
+                    "primitive": {
+                      "double": 15,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "seniority": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "start_date": {
+                    "primitive": {
+                      "string": "1999-12-31",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "termination_date": {
+                    "primitive": {
+                      "string": "1999-12-31",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "title": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "literal": {
+                      "string": "pay_as_you_go_time_based",
+                      "type": "string",
+                    },
+                    "type": "literal",
+                  },
+                  "who_reports": {
+                    "enum": "both",
+                    "type": "enum",
+                  },
+                  "worker": {
+                    "properties": {
+                      "first_name": {
+                        "primitive": {
+                          "string": "John",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_name": {
+                        "primitive": {
+                          "string": "Doe",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "client": {
+                    "properties": {
+                      "full_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "int64": 1000000,
+                          "type": "int64",
+                        },
+                        "type": "primitive",
+                      },
+                      "legal_entity": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "int64": 1000000,
+                              "type": "int64",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "registration_number": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "subtype": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "individual",
+                            "type": "enum",
+                          },
+                          "vat_number": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "team": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "double": 1.1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "compensation_details": {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "first_payment": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "first_payment_date": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "frequency": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "gross_annual_salary": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "gross_signing_bonus": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "gross_variable_bonus": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "scale": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "custom_fields": {
+                    "array": [
+                      {
+                        "properties": {
+                          "name": {
+                            "primitive": {
+                              "string": "Employee ID",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "54234",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "employment_details": {
+                    "properties": {
+                      "country": {
+                        "primitive": {
+                          "string": "US",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "days_per_week": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "hours_per_day": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "paid_vacation_days": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "state": {
+                        "primitive": {
+                          "string": "CO",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "invitations": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "is_archived": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "job_title": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "notice_period": {
+                    "primitive": {
+                      "double": 15,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "seniority": {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "level": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Mid (Individual Contributor Level 2)",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "signatures": {
+                    "properties": {
+                      "client_signature": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "client_signed_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "signed_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "worker_signature": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "worker_signed_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "special_clause": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "start_date": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "new",
+                    "type": "enum",
+                  },
+                  "termination_date": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "title": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "enum": "ongoing_time_based",
+                    "type": "enum",
+                  },
+                  "who_reports": {
+                    "enum": "both",
+                    "type": "enum",
+                  },
+                  "worker": {
+                    "properties": {
+                      "alternate_email": {
+                        "array": [
+                          {
+                            "properties": {
+                              "isVerified": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "date_of_birth": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "first_name": {
+                        "primitive": {
+                          "string": "John",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_name": {
+                        "primitive": {
+                          "string": "Doe",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "legal_entity": {
+                        "properties": {
+                          "personal_name": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "registration_number": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "individual",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "nationality": {
+                        "primitive": {
+                          "string": "US",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractRequest",
       "headers": [],
       "internal": undefined,
@@ -6909,7 +7565,236 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "attachment": {
+                        "properties": {
+                          "filename": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contract": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "title": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "ongoing_time_based",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "string": "2022-05-04T03:45:27.108Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "date_submitted": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_cycle": {
+                        "properties": {
+                          "end_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "start_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "public_id": {
+                        "primitive": {
+                          "string": "00000000-0000-0000-0000-000000000000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "quantity": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "reported_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "John Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reviewed_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "Jane Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "remarks": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "reviewed_at": {
+                            "primitive": {
+                              "string": "2022-05-04T03:45:27.899Z",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "scale": {
+                        "primitive": {
+                          "string": "custom",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "primitive": {
+                          "string": "approved",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "total_amount": {
+                        "primitive": {
+                          "string": "200.0000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "worksheet": {
+                        "properties": {
+                          "days": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "hours": {
+                            "primitive": {
+                              "double": 1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "minutes": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "weeks": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -8098,7 +8983,114 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "200.00",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "date_submitted": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "Yearly bonus.",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "public_id": {
+                        "primitive": {
+                          "string": "00000000-0000-0000-0000-000000000000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reported_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "John Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reviewed_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "Jane Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "remarks": {
+                            "primitive": {
+                              "string": "SAP Reference id: 123",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "reviewed_at": {
+                            "primitive": {
+                              "string": "2022-05-04T03:45:27.899Z",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -8304,7 +9296,146 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "offcycle_payment_id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "amount": {
+                    "primitive": {
+                      "string": "200.00",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "currency_code": {
+                    "primitive": {
+                      "string": "USD",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "date_submitted": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "Yearly bonus.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "public_id": {
+                    "primitive": {
+                      "string": "00000000-0000-0000-0000-000000000000",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "reported_by": {
+                    "properties": {
+                      "full_name": {
+                        "primitive": {
+                          "string": "John Smith",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "double": 123456,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "reviewed_by": {
+                    "properties": {
+                      "full_name": {
+                        "primitive": {
+                          "string": "Jane Smith",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "double": 123456,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "remarks": {
+                        "primitive": {
+                          "string": "SAP Reference id: 123",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reviewed_at": {
+                        "primitive": {
+                          "string": "2022-05-04T03:45:27.899Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetOffCyclePaymentByContractAndIdRequest",
       "headers": [],
       "internal": undefined,
@@ -11099,7 +12230,236 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "attachment": {
+                        "properties": {
+                          "filename": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contract": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "title": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "ongoing_time_based",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "string": "2022-05-04T03:45:27.108Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "date_submitted": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_cycle": {
+                        "properties": {
+                          "end_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "start_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "public_id": {
+                        "primitive": {
+                          "string": "00000000-0000-0000-0000-000000000000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "quantity": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "reported_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "John Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reviewed_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "Jane Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "remarks": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "reviewed_at": {
+                            "primitive": {
+                              "string": "2022-05-04T03:45:27.899Z",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "scale": {
+                        "primitive": {
+                          "string": "custom",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "primitive": {
+                          "string": "approved",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "total_amount": {
+                        "primitive": {
+                          "string": "200.0000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "worksheet": {
+                        "properties": {
+                          "days": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "hours": {
+                            "primitive": {
+                              "double": 1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "minutes": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "weeks": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -11469,7 +12829,289 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "timesheet_id",
+              "value": {
+                "primitive": {
+                  "int64": 1000000,
+                  "type": "int64",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "approvers": {
+                    "array": [
+                      {
+                        "properties": {
+                          "approved": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "email": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "full_name": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "attachment": {
+                    "properties": {
+                      "filename": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "key": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "contract": {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "title": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "ongoing_time_based",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "string": "2022-05-04T03:45:27.108Z",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "currency_code": {
+                    "primitive": {
+                      "string": "USD",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "date_submitted": {
+                    "primitive": {
+                      "datetime": "2022-05-24T09:38:46.235Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "payment_cycle": {
+                    "properties": {
+                      "end_date": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "start_date": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "public_id": {
+                    "primitive": {
+                      "string": "00000000-0000-0000-0000-000000000000",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "quantity": {
+                    "primitive": {
+                      "double": 1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "reported_by": {
+                    "properties": {
+                      "full_name": {
+                        "primitive": {
+                          "string": "John Smith",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "double": 123456,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "reviewed_by": {
+                    "properties": {
+                      "full_name": {
+                        "primitive": {
+                          "string": "Jane Smith",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "double": 123456,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "remarks": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reviewed_at": {
+                        "primitive": {
+                          "string": "2022-05-04T03:45:27.899Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "scale": {
+                    "primitive": {
+                      "string": "custom",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "primitive": {
+                      "string": "approved",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "total_amount": {
+                    "primitive": {
+                      "string": "200.0000",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "worksheet": {
+                    "properties": {
+                      "days": {
+                        "primitive": {
+                          "double": 0,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "hours": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "minutes": {
+                        "primitive": {
+                          "double": 0,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "weeks": {
+                        "primitive": {
+                          "double": 0,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTimesheetByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -12074,7 +13716,226 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "attachment": {
+                        "properties": {
+                          "filename": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contract": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "title": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "ongoing_time_based",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "date_submitted": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_cycle": {
+                        "properties": {
+                          "end_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "start_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "public_id": {
+                        "primitive": {
+                          "string": "00000000-0000-0000-0000-000000000000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "quantity": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "reported_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "John Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reviewed_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "Jane Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "remarks": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "reviewed_at": {
+                            "primitive": {
+                              "string": "2022-05-04T03:45:27.899Z",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "scale": {
+                        "primitive": {
+                          "string": "custom",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "total_amount": {
+                        "primitive": {
+                          "string": "200.0000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "accrued_holiday",
+                        "type": "enum",
+                      },
+                      "worksheet": {
+                        "properties": {
+                          "days": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "hours": {
+                            "primitive": {
+                              "double": 1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "minutes": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "weeks": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {
@@ -12414,7 +14275,226 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "attachment": {
+                        "properties": {
+                          "filename": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contract": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "title": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "ongoing_time_based",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency_code": {
+                        "primitive": {
+                          "string": "USD",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "date_submitted": {
+                        "primitive": {
+                          "datetime": "2022-05-24T09:38:46.235Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "payment_cycle": {
+                        "properties": {
+                          "end_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "start_date": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "public_id": {
+                        "primitive": {
+                          "string": "00000000-0000-0000-0000-000000000000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "quantity": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "reported_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "John Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reviewed_by": {
+                        "properties": {
+                          "full_name": {
+                            "primitive": {
+                              "string": "Jane Smith",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 123456,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "remarks": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "reviewed_at": {
+                            "primitive": {
+                              "string": "2022-05-04T03:45:27.899Z",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "scale": {
+                        "primitive": {
+                          "string": "custom",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "total_amount": {
+                        "primitive": {
+                          "string": "200.0000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "accrued_holiday",
+                        "type": "enum",
+                      },
+                      "worksheet": {
+                        "properties": {
+                          "days": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "hours": {
+                            "primitive": {
+                              "double": 1,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "minutes": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "weeks": {
+                            "primitive": {
+                              "double": 0,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "page": {

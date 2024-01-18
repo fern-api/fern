@@ -924,6 +924,47 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                },
+                "query-parameters": {
+                  "type": "userset",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "resource": {
+                          "created_at": "2024-01-15T09:30:00Z",
+                          "environment_id": "string",
+                          "id": "string",
+                          "key": "string",
+                          "name": "string",
+                          "organization_id": "string",
+                          "project_id": "string",
+                          "updated_at": "2024-01-15T09:30:00Z",
+                        },
+                        "type": "userset",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "total_count": 1,
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/condition_sets",
             "path-parameters": {
@@ -3761,6 +3802,36 @@ This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                  "resource_id": "string",
+                  "role_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "roles": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "resource_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/ancestors",
             "path-parameters": {
@@ -3792,6 +3863,36 @@ This includes any permissions granted to said role.",
             "docs": undefined,
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                  "resource_id": "string",
+                  "role_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "roles": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "resource_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/descendants",
@@ -4248,6 +4349,34 @@ A resource may also contain:
             "docs": "Lists all the resources defined in your schema.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "total_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/resources",
@@ -5036,6 +5165,34 @@ This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                  "role_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "roles": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/ancestors",
             "path-parameters": {
@@ -5064,6 +5221,34 @@ This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                  "role_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "roles": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/descendants",
             "path-parameters": {
@@ -5091,6 +5276,34 @@ This includes any permissions granted to said role.",
             "docs": "Lists all tenant roles.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "total_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/schema/{proj_id}/{env_id}/roles",
@@ -5587,6 +5800,35 @@ and will return the existing tenant object in the response body.",
             "docs": "Lists all the tenants defined within an environment.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "string",
+                  "proj_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "created_at": "2024-01-15T09:30:00Z",
+                        "environment_id": "string",
+                        "id": "string",
+                        "key": "string",
+                        "last_action_at": "2024-01-15T09:30:00Z",
+                        "name": "string",
+                        "organization_id": "string",
+                        "project_id": "string",
+                        "updated_at": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "total_count": 1,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants",

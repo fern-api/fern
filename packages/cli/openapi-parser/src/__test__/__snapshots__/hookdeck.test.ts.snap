@@ -25,12 +25,113 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
             },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
           ],
           "request": undefined,
           "response": {
             "properties": {
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "channels": {
+                        "properties": {
+                          "email": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "opsgenie": {
+                            "properties": {},
+                            "type": "object",
+                          },
+                          "slack": {
+                            "properties": {
+                              "channel_name": {
+                                "primitive": {
+                                  "string": "string",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "configs": {
+                        "properties": {
+                          "connections": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "strategy": {
+                            "enum": "first_attempt",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "delivery",
+                        "type": "enum",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -536,7 +637,134 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -695,7 +923,141 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "name": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -846,7 +1208,96 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -905,7 +1356,141 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -1192,7 +1777,96 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DisableIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -1250,7 +1924,96 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "channels": {
+                "properties": {
+                  "email": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "opsgenie": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "slack": {
+                    "properties": {
+                      "channel_name": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "configs": {
+                "properties": {
+                  "connections": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "strategy": {
+                    "enum": "first_attempt",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EnableIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -1313,7 +2076,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1383,7 +2167,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -1824,7 +2613,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1900,7 +2710,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -3579,7 +4394,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -3633,7 +4469,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -5810,10 +6651,37 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "status",
+              "value": {
+                "enum": "SCHEDULED",
+                "type": "enum",
+              },
+            },
+            {
               "name": "include",
               "value": {
                 "literal": {
                   "string": "data",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "last_attempt_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
                   "type": "string",
                 },
                 "type": "literal",
@@ -5920,7 +6788,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -8546,6 +9419,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "name": "query",
               "value": {
                 "properties": {
+                  "dir": {
+                    "literal": {
+                      "string": "asc",
+                      "type": "string",
+                    },
+                    "type": "literal",
+                  },
                   "include": {
                     "literal": {
                       "string": "data",
@@ -8553,8 +9433,39 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                     "type": "literal",
                   },
+                  "order_by": {
+                    "literal": {
+                      "string": "last_attempt_at",
+                      "type": "string",
+                    },
+                    "type": "literal",
+                  },
+                  "status": {
+                    "enum": "SCHEDULED",
+                    "type": "enum",
+                  },
                 },
                 "type": "object",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -8607,7 +9518,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -11543,7 +12459,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "request": {
             "properties": {
               "query": {
-                "properties": {},
+                "properties": {
+                  "status": {
+                    "enum": "SCHEDULED",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -13390,7 +14311,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
             {
               "name": "query",
               "value": {
-                "properties": {},
+                "properties": {
+                  "status": {
+                    "enum": "SCHEDULED",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -15421,6 +16347,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "object",
               },
             },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
           ],
           "request": undefined,
           "response": {
@@ -15471,7 +16417,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -17303,8 +18254,102 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "configs": {
+                        "properties": {
+                          "algorithm": {
+                            "enum": "md5",
+                            "type": "enum",
+                          },
+                          "encoding": {
+                            "enum": "base64",
+                            "type": "enum",
+                          },
+                          "header_key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "webhook_secret_key": {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "features": {
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "provider": {
+                        "enum": "twitter",
+                        "type": "enum",
+                      },
+                      "sources": {
+                        "array": [],
+                        "type": "array",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -17397,7 +18442,149 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "configs": {
+                "properties": {
+                  "algorithm": {
+                    "enum": "md5",
+                    "type": "enum",
+                  },
+                  "encoding": {
+                    "enum": "base64",
+                    "type": "enum",
+                  },
+                  "header_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_secret_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "features": {
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "provider": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "configs": {
+                "properties": {
+                  "algorithm": {
+                    "enum": "md5",
+                    "type": "enum",
+                  },
+                  "encoding": {
+                    "enum": "base64",
+                    "type": "enum",
+                  },
+                  "header_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_secret_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "features": {
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "provider": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+              "sources": {
+                "array": [],
+                "type": "array",
+              },
+              "team_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -17564,7 +18751,109 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "configs": {
+                "properties": {
+                  "algorithm": {
+                    "enum": "md5",
+                    "type": "enum",
+                  },
+                  "encoding": {
+                    "enum": "base64",
+                    "type": "enum",
+                  },
+                  "header_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_secret_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "features": {
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "provider": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+              "sources": {
+                "array": [],
+                "type": "array",
+              },
+              "team_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -17624,7 +18913,153 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "configs": {
+                "properties": {
+                  "algorithm": {
+                    "enum": "md5",
+                    "type": "enum",
+                  },
+                  "encoding": {
+                    "enum": "base64",
+                    "type": "enum",
+                  },
+                  "header_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_secret_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "features": {
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "provider": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "configs": {
+                "properties": {
+                  "algorithm": {
+                    "enum": "md5",
+                    "type": "enum",
+                  },
+                  "encoding": {
+                    "enum": "base64",
+                    "type": "enum",
+                  },
+                  "header_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_secret_key": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "features": {
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "label": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "provider": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+              "sources": {
+                "array": [],
+                "type": "array",
+              },
+              "team_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "updated_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -18156,10 +19591,85 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "iss_YXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "issue_trigger_id",
+              "value": {
+                "primitive": {
+                  "string": "it_BXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "literal": {
+                  "string": "delivery",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "literal": {
+                  "string": "OPENED",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "merged_with",
+              "value": {
+                "primitive": {
+                  "string": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
               "name": "aggregation_keys",
               "value": {
-                "properties": {},
+                "properties": {
+                  "error_code": {
+                    "enum": "TIMEOUT",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -18167,7 +19677,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "response": {
             "properties": {
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -19813,10 +21328,85 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "iss_YXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "issue_trigger_id",
+              "value": {
+                "primitive": {
+                  "string": "it_BXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "literal": {
+                  "string": "delivery",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "literal": {
+                  "string": "OPENED",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "merged_with",
+              "value": {
+                "primitive": {
+                  "string": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
               "name": "aggregation_keys",
               "value": {
-                "properties": {},
+                "properties": {
+                  "error_code": {
+                    "enum": "TIMEOUT",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -21711,10 +23301,37 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
             {
+              "name": "rejection_cause",
+              "value": {
+                "enum": "SOURCE_ARCHIVED",
+                "type": "enum",
+              },
+            },
+            {
               "name": "include",
               "value": {
                 "literal": {
                   "string": "data",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "ingested_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
                   "type": "string",
                 },
                 "type": "literal",
@@ -21790,7 +23407,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -23898,10 +25520,37 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [
             {
+              "name": "status",
+              "value": {
+                "enum": "SCHEDULED",
+                "type": "enum",
+              },
+            },
+            {
               "name": "include",
               "value": {
                 "literal": {
                   "string": "data",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "last_attempt_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
                   "type": "string",
                 },
                 "type": "literal",
@@ -24008,7 +25657,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -26005,7 +27659,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -26030,6 +27705,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "meta": {
+                        "enum": "body",
+                        "type": "enum",
                       },
                       "request_id": {
                         "primitive": {
@@ -26066,7 +27745,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -26394,6 +28078,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "name": "query",
               "value": {
                 "properties": {
+                  "dir": {
+                    "literal": {
+                      "string": "asc",
+                      "type": "string",
+                    },
+                    "type": "literal",
+                  },
                   "include": {
                     "literal": {
                       "string": "data",
@@ -26401,12 +28092,43 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                     "type": "literal",
                   },
+                  "order_by": {
+                    "literal": {
+                      "string": "ingested_at",
+                      "type": "string",
+                    },
+                    "type": "literal",
+                  },
+                  "rejection_cause": {
+                    "enum": "SOURCE_ARCHIVED",
+                    "type": "enum",
+                  },
                   "status": {
                     "enum": "accepted",
                     "type": "enum",
                   },
                 },
                 "type": "object",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -26459,7 +28181,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -28977,6 +30704,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "query": {
                 "properties": {
+                  "rejection_cause": {
+                    "enum": "SOURCE_ARCHIVED",
+                    "type": "enum",
+                  },
                   "status": {
                     "enum": "accepted",
                     "type": "enum",
@@ -30427,6 +32158,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "name": "query",
               "value": {
                 "properties": {
+                  "rejection_cause": {
+                    "enum": "SOURCE_ARCHIVED",
+                    "type": "enum",
+                  },
                   "status": {
                     "enum": "accepted",
                     "type": "enum",
@@ -32052,7 +33787,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -32089,7 +33845,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                       },
                       "rules": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "team_id": {
@@ -32113,7 +33886,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -33110,6 +34888,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -33144,7 +34943,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -33305,6 +35121,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -33339,7 +35176,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -33533,7 +35387,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -33631,7 +35502,29 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -33665,7 +35558,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -33914,7 +35824,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -34041,7 +35968,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -34125,7 +36069,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -34214,7 +36179,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -36226,7 +38196,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -36283,7 +38274,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -37511,6 +39507,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "request": {
                 "properties": {
+                  "body": {
+                    "properties": {},
+                    "type": "object",
+                  },
                   "headers": {
                     "map": [
                       {
@@ -37574,6 +39574,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "query": {
+                    "properties": {},
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -37972,7 +39976,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "log_level",
+              "value": {
+                "literal": {
+                  "string": "debug",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -38092,7 +40127,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -38975,7 +41015,28 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "order_by",
+              "value": {
+                "literal": {
+                  "string": "created_at",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "dir",
+              "value": {
+                "literal": {
+                  "string": "asc",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -39048,6 +41109,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
+                      "resolved_rules": {
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "rules": {
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "ruleset": {
                         "properties": {
                           "created_at": {
@@ -39079,7 +41182,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           "rules": {
-                            "array": [],
+                            "array": [
+                              {
+                                "properties": {
+                                  "strategy": {
+                                    "enum": "linear",
+                                    "type": "enum",
+                                  },
+                                  "type": {
+                                    "literal": {
+                                      "string": "retry",
+                                      "type": "string",
+                                    },
+                                    "type": "literal",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
                             "type": "array",
                           },
                           "team_id": {
@@ -39199,7 +41319,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "array",
               },
               "pagination": {
-                "properties": {},
+                "properties": {
+                  "dir": {
+                    "enum": "asc",
+                    "type": "enum",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -40271,6 +42396,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "name": {
@@ -40279,6 +42425,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "rules": {
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -40365,6 +42532,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -40396,7 +42605,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -41076,6 +43302,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "name": {
@@ -41084,6 +43331,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "rules": {
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -41170,6 +43438,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -41201,7 +43511,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -41934,6 +44261,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -41965,7 +44334,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -42160,6 +44546,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "name": {
@@ -42168,6 +44575,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "rules": {
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -42242,6 +44670,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -42273,7 +44743,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -42726,6 +45213,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -42757,7 +45286,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -43016,6 +45562,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -43047,7 +45635,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -43306,6 +45911,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -43337,7 +45984,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -43596,6 +46260,48 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "created_at": {
@@ -43627,7 +46333,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
