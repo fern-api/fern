@@ -2211,6 +2211,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model"
   dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-cli": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2255,7 +2261,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-cli@workspace:packages/generators/cli":
+"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:packages/generators/cli":
   version: 0.0.0-use.local
   resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
   dependencies:
@@ -2279,9 +2285,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
   dependencies:
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/logger": "workspace:*"
-    "@fern-api/logging-execa": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2289,8 +2292,8 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tmp-promise: ^3.0.3
     typescript: 4.6.4
+    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 

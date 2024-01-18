@@ -18,10 +18,11 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
 };
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
-    private registry: FernGeneratorExec.RegistryType;
-    constructor(registry: FernGeneratorExec.RegistryType) {
-        this.registry = registry;
-    }
+    // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
+    // private registry: FernGeneratorExec.RegistryType;
+    // constructor(registry: FernGeneratorExec.RegistryType) {
+    //     this.registry = registry;
+    // }
 
     public async runCli(): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
@@ -63,41 +64,55 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 );
             });
 
-            await generatorNotificationService?.sendUpdateOrThrow(
-                FernGeneratorExec.GeneratorUpdate.initV2({
-                    publishingToRegistry: config.output.mode._visit<FernGeneratorExec.RegistryType | undefined>({
-                        publish: () => this.registry,
-                        github: () => undefined,
-                        downloadFiles: () => undefined,
-                        _other: () => undefined
-                    })
-                })
-            );
+            // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
+            // await generatorNotificationService?.sendUpdateOrThrow(
+            //     FernGeneratorExec.GeneratorUpdate.initV2({
+            //         publishingToRegistry: config.output.mode._visit<FernGeneratorExec.RegistryType | undefined>({
+            //             publish: () => this.registry,
+            //             github: () => undefined,
+            //             downloadFiles: () => undefined,
+            //             _other: () => undefined,
+            //         })
+            //     })
+            // );
 
             const generatorContext = new GeneratorContextImpl(logger);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            const project = await this.generateProject({
-                config,
-                customConfig,
-                generatorContext,
-                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)
-            });
             const destinationZip = join(
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(OUTPUT_ZIP_FILENAME)
             );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
-                    await this.publishPackage(customConfig, project, destinationZip);
+                    await this.publishPackage(
+                        config,
+                        customConfig,
+                        generatorContext,
+                        await loadIntermediateRepresentation(config.irFilepath),
+                        destinationZip
+                    );
                 },
                 github: async (githubOutputMode) => {
-                    await this.writeForGithub(customConfig, project, destinationZip, githubOutputMode);
+                    await this.writeForGithub(
+                        config,
+                        customConfig,
+                        generatorContext,
+                        await loadIntermediateRepresentation(config.irFilepath),
+                        destinationZip,
+                        githubOutputMode
+                    );
                 },
                 downloadFiles: async () => {
-                    await this.writeForDownload(customConfig, project, destinationZip);
+                    await this.writeForDownload(
+                        config,
+                        customConfig,
+                        generatorContext,
+                        await loadIntermediateRepresentation(config.irFilepath),
+                        destinationZip
+                    );
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
@@ -126,32 +141,30 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     // 0. Parse any custom config and forward to generator
     protected abstract parseCustomConfig(customConfig: unknown): CustomConfig;
     // 1. Generate the project
-    protected abstract generateProject(args: {
-        config: FernGeneratorExec.GeneratorConfig;
-        customConfig: CustomConfig;
-        generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
-    }): Promise<PersistedProject>;
-
     // 2. Add additional files (tests, GitHub files (workflow files, .gitignore, etc.))
-
     // 3. Set up package and publishing
     // Write necessary files for publishing and return any necessary package information
     // + actually publish the specified package
     protected abstract publishPackage(
+        config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        project: PersistedProject,
+        generatorContext: GeneratorContext,
+        intermediateRepresentation: IntermediateRepresentation,
         destination: AbsoluteFilePath
     ): Promise<void>;
     protected abstract writeForGithub(
+        config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        project: PersistedProject,
+        generatorContext: GeneratorContext,
+        intermediateRepresentation: IntermediateRepresentation,
         destination: AbsoluteFilePath,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void>;
     protected abstract writeForDownload(
+        config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        project: PersistedProject,
+        generatorContext: GeneratorContext,
+        intermediateRepresentation: IntermediateRepresentation,
         destination: AbsoluteFilePath
     ): Promise<void>;
 }
