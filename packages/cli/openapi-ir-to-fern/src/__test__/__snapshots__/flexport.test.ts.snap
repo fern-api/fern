@@ -461,18 +461,18 @@ exports[`open api parser flexport simple 1`] = `
                     "marks_and_numbers": "Fragile",
                     "shipping_units": [
                       {
-                        "atomic_count": 1,
-                        "count": 1,
+                        "atomic_count": 9,
+                        "count": 9,
                         "height": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
                         "length": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
-                        "name": "Cellular phones",
-                        "unit_type": "pallet",
+                        "name": "Watches",
+                        "unit_type": "carton",
                         "volume": {
                           "unit": "cbm",
                           "value": 472.62,
@@ -483,7 +483,7 @@ exports[`open api parser flexport simple 1`] = `
                         },
                         "width": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
                       },
                     ],
@@ -520,10 +520,10 @@ exports[`open api parser flexport simple 1`] = `
                     "origin_port_us_cbp_port_code": "57078",
                     "product_descriptions": [
                       {
-                        "description": "Wristwatches",
+                        "description": "Watches",
                         "description_for_export_customs": "手表",
                         "description_for_export_customs_locale": "zh_CN",
-                        "hs_code": "9101.01",
+                        "hs_code": "9101.00",
                       },
                     ],
                     "wants_delivery_service": false,
@@ -1336,18 +1336,18 @@ exports[`open api parser flexport simple 1`] = `
                     "marks_and_numbers": "Fragile",
                     "shipping_units": [
                       {
-                        "atomic_count": 1,
-                        "count": 1,
+                        "atomic_count": 9,
+                        "count": 9,
                         "height": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
                         "length": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
-                        "name": "Cellular phones",
-                        "unit_type": "pallet",
+                        "name": "Watches",
+                        "unit_type": "carton",
                         "volume": {
                           "unit": "cbm",
                           "value": 472.62,
@@ -1358,7 +1358,7 @@ exports[`open api parser flexport simple 1`] = `
                         },
                         "width": {
                           "unit": "cm",
-                          "value": 100,
+                          "value": 472.62,
                         },
                       },
                     ],
@@ -7617,6 +7617,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
+                  "destination_location_refs": [
+                    "id-654321",
+                  ],
                   "destination_port": {
                     "code": "USFBN",
                     "code_type": "unlocode",
@@ -7626,11 +7629,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "issue_date": "2019-06-30",
                   "line_items": [
                     {
-                      "assigned_party_ref": "id-12321",
+                      "assigned_party_ref": "id-12355",
                       "cargo_ready_date": "2019-06-30",
                       "destination_locations": [
                         {
-                          "location_ref": "id-1234",
+                          "location_ref": "id-654321",
                           "units": 1,
                         },
                       ],
@@ -7640,11 +7643,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "hs_codes": [
                         {
-                          "code": "7608.20.00.00",
-                          "country_code": "CA",
+                          "code": "6204.62.80.11",
+                          "country_code": "US",
                         },
                       ],
-                      "incoterm": "EXW",
+                      "incoterm": "FOB",
                       "item_key": "item_key_1",
                       "line_item_number": 1,
                       "line_type": "main_line",
@@ -7655,7 +7658,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "value": "1.0",
                         },
                       ],
-                      "must_arrive_date": "2019-09-30",
+                      "must_arrive_date": "2019-07-31",
                       "origin_location_ref": "id-123456",
                       "origin_port": {
                         "code": "USFBN",
@@ -7664,24 +7667,24 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       "product": {
                         "color": "red",
                         "country_of_origin": "US",
-                        "dangerous": false,
-                        "ean_ucc_13": "0123456789012",
-                        "ean_ucc_8": "01234567",
-                        "lot_number": "123-456",
+                        "dangerous": true,
+                        "ean_ucc_13": "1234567890123",
+                        "ean_ucc_8": "12345678",
+                        "lot_number": "123456789",
                         "name": "AC Adapter 12",
-                        "product_category": "Cosmetics",
-                        "size": "M",
+                        "product_category": "furniture",
+                        "size": "m",
                         "sku": "SKU-123",
-                        "style": "classical",
-                        "upc": "012345678912",
+                        "style": "classic",
+                        "upc": "123456789",
                       },
-                      "transportation_mode": "air",
+                      "transportation_mode": "ocean",
                       "unit_cost": {
-                        "amount": "12.34",
+                        "amount": "100.01",
                         "currency_code": "USD",
                       },
                       "unit_of_measure": "BBL",
-                      "units": 1,
+                      "units": 10,
                     },
                   ],
                   "memo": "memo",
@@ -7698,15 +7701,15 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     {
                       "contacts": [
                         {
-                          "department": "marketing",
-                          "email": "John.Doe@example.com",
-                          "fax": "1 323 555 1234",
-                          "name": "John Doe",
-                          "phone": "767 878 8888",
+                          "department": "a department",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "name": "abc",
+                          "phone": "123456789",
                         },
                       ],
-                      "external_ref": "id-12344",
-                      "location_ref": "id-12344",
+                      "external_ref": "id-1232",
+                      "location_ref": "id-1232",
                       "role": "buyer",
                     },
                   ],
@@ -8308,6 +8311,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
+                  "destination_location_refs": [
+                    "id-654321",
+                  ],
                   "destination_port": {
                     "code": "CNSHA",
                     "code_type": "unlocode",
@@ -8335,7 +8341,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "country_code": "CA",
                         },
                       ],
-                      "incoterm": "FOB",
+                      "incoterm": "EXW",
                       "item_key": "item_key_1",
                       "line_item_number": 1,
                       "line_type": "main_line",
@@ -8346,33 +8352,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "value": "1.0",
                         },
                       ],
-                      "must_arrive_date": "2019-07-31",
+                      "must_arrive_date": "2019-09-30",
                       "origin_location_ref": "id-123456",
                       "origin_port": {
-                        "code": "USLGB",
+                        "code": "USFBN",
                         "code_type": "unlocode",
                       },
                       "product": {
                         "color": "red",
                         "country_of_origin": "US",
-                        "dangerous": true,
+                        "dangerous": false,
                         "ean_ucc_13": "0123456789012",
                         "ean_ucc_8": "01234567",
                         "lot_number": "123-456",
                         "name": "AC Adapter 12",
-                        "product_category": "furniture",
-                        "size": "m",
+                        "product_category": "Cosmetics",
+                        "size": "M",
                         "sku": "SKU-123",
-                        "style": "classic",
+                        "style": "classical",
                         "upc": "012345678912",
                       },
-                      "transportation_mode": "ocean",
+                      "transportation_mode": "air",
                       "unit_cost": {
-                        "amount": "100.01",
+                        "amount": "12.34",
                         "currency_code": "USD",
                       },
                       "unit_of_measure": "BBL",
-                      "units": 10,
+                      "units": 1,
                     },
                   ],
                   "memo": "memo",
@@ -8396,8 +8402,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "phone": "767 878 8888",
                         },
                       ],
-                      "external_ref": "id-12344",
-                      "location_ref": "id-12344",
+                      "external_ref": "id-1232",
+                      "location_ref": "id-1232",
                       "role": "buyer",
                     },
                   ],
@@ -9534,7 +9540,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "query-parameters": undefined,
                 "request": {
                   "shipment_ids": [
-                    1,
+                    123,
                   ],
                 },
                 "response": {

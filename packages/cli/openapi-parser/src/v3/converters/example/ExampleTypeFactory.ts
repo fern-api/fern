@@ -8,7 +8,7 @@ import {
     SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { convertToFullExample } from "./convertToFullExample";
-import { getFullExampleAsObject } from "./getFullExample";
+import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
 export class ExampleTypeFactory {
     private schemas: Record<SchemaId, SchemaWithExample>;
@@ -182,7 +182,7 @@ export class ExampleTypeFactory {
                 return FullExample.map([]);
             case "array": {
                 const itemExample = this.buildExampleHelper({
-                    example,
+                    example: getFullExampleAsArray(example)?.[0],
                     schema: schema.value,
                     isOptional: true,
                     visitedSchemaIds,

@@ -97,14 +97,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "properties": {
                           "atomic_count": {
                             "primitive": {
-                              "int": 1,
+                              "int": 9,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "count": {
                             "primitive": {
-                              "int": 1,
+                              "int": 9,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -117,7 +117,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -133,7 +133,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -143,14 +143,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "name": {
                             "primitive": {
-                              "string": "Cellular phones",
+                              "string": "Watches",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "unit_type": {
                             "primitive": {
-                              "string": "pallet",
+                              "string": "carton",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -195,7 +195,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -5547,14 +5547,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "properties": {
                           "atomic_count": {
                             "primitive": {
-                              "int": 1,
+                              "int": 9,
                               "type": "int",
                             },
                             "type": "primitive",
                           },
                           "count": {
                             "primitive": {
-                              "int": 1,
+                              "int": 9,
                               "type": "int",
                             },
                             "type": "primitive",
@@ -5567,7 +5567,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -5583,7 +5583,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -5593,14 +5593,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "name": {
                             "primitive": {
-                              "string": "Cellular phones",
+                              "string": "Watches",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "unit_type": {
                             "primitive": {
-                              "string": "pallet",
+                              "string": "carton",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -5645,7 +5645,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                               },
                               "value": {
                                 "primitive": {
-                                  "double": 100,
+                                  "double": 472.62,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -5834,7 +5834,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "properties": {
                           "description": {
                             "primitive": {
-                              "string": "Wristwatches",
+                              "string": "Watches",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -5855,7 +5855,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                           "hs_code": {
                             "primitive": {
-                              "string": "9101.01",
+                              "string": "9101.00",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42659,6 +42659,18 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
+              "destination_location_refs": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "id-654321",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "destination_port": {
                 "properties": {
                   "code": {
@@ -42696,7 +42708,7 @@ Other details about this invoice",
                     "properties": {
                       "assigned_party_ref": {
                         "primitive": {
-                          "string": "id-12321",
+                          "string": "id-12355",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -42714,7 +42726,7 @@ Other details about this invoice",
                             "properties": {
                               "location_ref": {
                                 "primitive": {
-                                  "string": "id-1234",
+                                  "string": "id-654321",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -42754,14 +42766,14 @@ Other details about this invoice",
                             "properties": {
                               "code": {
                                 "primitive": {
-                                  "string": "7608.20.00.00",
+                                  "string": "6204.62.80.11",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "country_code": {
                                 "primitive": {
-                                  "string": "CA",
+                                  "string": "US",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -42773,7 +42785,7 @@ Other details about this invoice",
                         "type": "array",
                       },
                       "incoterm": {
-                        "enum": "EXW",
+                        "enum": "FOB",
                         "type": "enum",
                       },
                       "item_key": {
@@ -42824,7 +42836,7 @@ Other details about this invoice",
                       },
                       "must_arrive_date": {
                         "primitive": {
-                          "string": "2019-09-30",
+                          "string": "2019-07-31",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -42870,28 +42882,28 @@ Other details about this invoice",
                           },
                           "dangerous": {
                             "primitive": {
-                              "boolean": false,
+                              "boolean": true,
                               "type": "boolean",
                             },
                             "type": "primitive",
                           },
                           "ean_ucc_13": {
                             "primitive": {
-                              "string": "0123456789012",
+                              "string": "1234567890123",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "ean_ucc_8": {
                             "primitive": {
-                              "string": "01234567",
+                              "string": "12345678",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "lot_number": {
                             "primitive": {
-                              "string": "123-456",
+                              "string": "123456789",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42905,14 +42917,14 @@ Other details about this invoice",
                           },
                           "product_category": {
                             "primitive": {
-                              "string": "Cosmetics",
+                              "string": "furniture",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "size": {
                             "primitive": {
-                              "string": "M",
+                              "string": "m",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42926,14 +42938,14 @@ Other details about this invoice",
                           },
                           "style": {
                             "primitive": {
-                              "string": "classical",
+                              "string": "classic",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "upc": {
                             "primitive": {
-                              "string": "012345678912",
+                              "string": "123456789",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42942,14 +42954,14 @@ Other details about this invoice",
                         "type": "object",
                       },
                       "transportation_mode": {
-                        "enum": "air",
+                        "enum": "ocean",
                         "type": "enum",
                       },
                       "unit_cost": {
                         "properties": {
                           "amount": {
                             "primitive": {
-                              "string": "12.34",
+                              "string": "100.01",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -42970,7 +42982,7 @@ Other details about this invoice",
                       },
                       "units": {
                         "primitive": {
-                          "int": 1,
+                          "int": 10,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -43046,35 +43058,35 @@ Other details about this invoice",
                             "properties": {
                               "department": {
                                 "primitive": {
-                                  "string": "marketing",
+                                  "string": "a department",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "email": {
                                 "primitive": {
-                                  "string": "John.Doe@example.com",
+                                  "string": "abc@173.com",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "fax": {
                                 "primitive": {
-                                  "string": "1 323 555 1234",
+                                  "string": "123456789",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "name": {
                                 "primitive": {
-                                  "string": "John Doe",
+                                  "string": "abc",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "phone": {
                                 "primitive": {
-                                  "string": "767 878 8888",
+                                  "string": "123456789",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -43087,14 +43099,14 @@ Other details about this invoice",
                       },
                       "external_ref": {
                         "primitive": {
-                          "string": "id-12344",
+                          "string": "id-1232",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "location_ref": {
                         "primitive": {
-                          "string": "id-12344",
+                          "string": "id-1232",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -45505,6 +45517,18 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
+              "destination_location_refs": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "id-654321",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "destination_port": {
                 "properties": {
                   "code": {
@@ -45619,7 +45643,7 @@ Other details about this invoice",
                         "type": "array",
                       },
                       "incoterm": {
-                        "enum": "FOB",
+                        "enum": "EXW",
                         "type": "enum",
                       },
                       "item_key": {
@@ -45670,7 +45694,7 @@ Other details about this invoice",
                       },
                       "must_arrive_date": {
                         "primitive": {
-                          "string": "2019-07-31",
+                          "string": "2019-09-30",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -45686,7 +45710,7 @@ Other details about this invoice",
                         "properties": {
                           "code": {
                             "primitive": {
-                              "string": "USLGB",
+                              "string": "USFBN",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -45716,7 +45740,7 @@ Other details about this invoice",
                           },
                           "dangerous": {
                             "primitive": {
-                              "boolean": true,
+                              "boolean": false,
                               "type": "boolean",
                             },
                             "type": "primitive",
@@ -45751,14 +45775,14 @@ Other details about this invoice",
                           },
                           "product_category": {
                             "primitive": {
-                              "string": "furniture",
+                              "string": "Cosmetics",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "size": {
                             "primitive": {
-                              "string": "m",
+                              "string": "M",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -45772,7 +45796,7 @@ Other details about this invoice",
                           },
                           "style": {
                             "primitive": {
-                              "string": "classic",
+                              "string": "classical",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -45788,14 +45812,14 @@ Other details about this invoice",
                         "type": "object",
                       },
                       "transportation_mode": {
-                        "enum": "ocean",
+                        "enum": "air",
                         "type": "enum",
                       },
                       "unit_cost": {
                         "properties": {
                           "amount": {
                             "primitive": {
-                              "string": "100.01",
+                              "string": "12.34",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -45816,7 +45840,7 @@ Other details about this invoice",
                       },
                       "units": {
                         "primitive": {
-                          "int": 10,
+                          "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
@@ -45933,14 +45957,14 @@ Other details about this invoice",
                       },
                       "external_ref": {
                         "primitive": {
-                          "string": "id-12344",
+                          "string": "id-1232",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "location_ref": {
                         "primitive": {
-                          "string": "id-12344",
+                          "string": "id-1232",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -56532,7 +56556,7 @@ Other details about this invoice",
                 "array": [
                   {
                     "primitive": {
-                      "int": 1,
+                      "int": 123,
                       "type": "int",
                     },
                     "type": "primitive",
