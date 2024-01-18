@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/armandobelardo/fern.git",
+    "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/config-management/docs-configuration"
   },
   "private": true,
