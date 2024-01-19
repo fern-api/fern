@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_user:User": {
             "name": {
@@ -373,6 +374,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {

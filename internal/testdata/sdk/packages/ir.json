@@ -51,6 +51,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_:Foo": {
             "name": {
@@ -1438,6 +1439,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -1523,6 +1525,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -1810,6 +1813,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -2131,6 +2135,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -2514,6 +2519,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2785,6 +2791,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -3004,6 +3011,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -3285,6 +3293,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3670,6 +3679,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -4066,6 +4076,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -4563,6 +4574,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -4927,6 +4939,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -5204,6 +5217,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -5366,6 +5380,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {

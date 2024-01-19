@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_bar/bar:Bar": {
             "name": {
@@ -407,110 +408,7 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Bar",
-                        "camelCase": {
-                            "unsafeName": "bar",
-                            "safeName": "bar"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "bar",
-                            "safeName": "bar"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAR",
-                            "safeName": "BAR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Bar",
-                            "safeName": "Bar"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "bar",
-                                "camelCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BAR",
-                                    "safeName": "BAR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Bar",
-                                    "safeName": "Bar"
-                                }
-                            },
-                            {
-                                "originalName": "bar",
-                                "camelCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BAR",
-                                    "safeName": "BAR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Bar",
-                                    "safeName": "Bar"
-                                }
-                            }
-                        ],
-                        "packagePath": [
-                            {
-                                "originalName": "bar",
-                                "camelCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "bar",
-                                    "safeName": "bar"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BAR",
-                                    "safeName": "BAR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Bar",
-                                    "safeName": "Bar"
-                                }
-                            }
-                        ],
-                        "file": {
-                            "originalName": "bar",
-                            "camelCase": {
-                                "unsafeName": "bar",
-                                "safeName": "bar"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "bar",
-                                "safeName": "bar"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "BAR",
-                                "safeName": "BAR"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Bar",
-                                "safeName": "Bar"
-                            }
-                        }
-                    },
-                    "typeId": "type_bar/bar:Bar"
-                }
+                "type_bar/bar:Bar"
             ],
             "examples": [],
             "availability": null,

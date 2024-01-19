@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {

@@ -51,6 +51,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -132,6 +133,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "Core",
                     "method": "GET",
                     "path": {

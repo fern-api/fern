@@ -168,7 +168,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		// import types from another package.
 		for _, typeDeclaration := range ir.Types {
 			typeImportPath := fernFilepathToImportPath(g.config.ImportPath, typeDeclaration.Name.FernFilepath)
-			for _, referencedType := range typeDeclaration.ReferencedTypes {
+			for _, referencedType := range declaredTypeNamesForTypeIDs(ir, typeDeclaration.ReferencedTypes) {
 				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
 				if typeImportPath != referencedImportPath {
 					return nil, fmt.Errorf(
@@ -638,6 +638,16 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 		return nil, fmt.Errorf("failed to unmarshal intermediate representation: %v", err)
 	}
 	return ir, nil
+}
+
+// declaredTypeNamesForTypeIDs resolves the set of typeIDs to their respective
+// declared type names.
+func declaredTypeNamesForTypeIDs(ir *fernir.IntermediateRepresentation, typeIDs []fernir.TypeId) []*fernir.DeclaredTypeName {
+	result := make([]*fernir.DeclaredTypeName, 0, len(typeIDs))
+	for _, typeDecl := range ir.Types {
+		result = append(result, typeDecl.Name)
+	}
+	return result
 }
 
 // newPointerFile returns a *File containing the pointer helper functions

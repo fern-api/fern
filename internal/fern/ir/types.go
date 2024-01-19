@@ -7,7 +7,7 @@ import (
 	fmt "fmt"
 	time "time"
 
-	core "github.com/fern-api/fern-go/internal/fern/ir/core"
+	core "github.com/fern-api/fern-go/internal/generator/model/core"
 	uuid "github.com/google/uuid"
 )
 
@@ -253,6 +253,22 @@ func (d *Declaration) String() string {
 type EndpointId = string
 
 type ErrorId = string
+
+// Defines the original string, and its escaped-equivalent (depending on the target programming language).
+// This is paricularly relevant to example string literals.
+//
+// For example, in Python we escape strings that contain single or double quotes by using triple quotes,
+// in Go we use backticks, etc.
+type EscapedString struct {
+	Original string `json:"original"`
+}
+
+func (e *EscapedString) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
 
 type FernFilepath struct {
 	AllParts    []*Name `json:"allParts,omitempty"`
@@ -541,14 +557,14 @@ func (e *ErrorDeclaration) String() string {
 type ErrorDeclarationDiscriminantValue struct {
 	Type       string
 	Property   *NameAndWireValue
-	StatusCode any
+	StatusCode interface{}
 }
 
 func NewErrorDeclarationDiscriminantValueFromProperty(value *NameAndWireValue) *ErrorDeclarationDiscriminantValue {
 	return &ErrorDeclarationDiscriminantValue{Type: "property", Property: value}
 }
 
-func NewErrorDeclarationDiscriminantValueFromStatusCode(value any) *ErrorDeclarationDiscriminantValue {
+func NewErrorDeclarationDiscriminantValueFromStatusCode(value interface{}) *ErrorDeclarationDiscriminantValue {
 	return &ErrorDeclarationDiscriminantValue{Type: "statusCode", StatusCode: value}
 }
 
@@ -568,7 +584,7 @@ func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 		}
 		e.Property = value
 	case "statusCode":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -592,8 +608,8 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "statusCode":
 		var marshaler = struct {
-			Type       string `json:"type"`
-			StatusCode any    `json:"statusCode,omitempty"`
+			Type       string      `json:"type"`
+			StatusCode interface{} `json:"statusCode,omitempty"`
 		}{
 			Type:       e.Type,
 			StatusCode: e.StatusCode,
@@ -604,7 +620,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 
 type ErrorDeclarationDiscriminantValueVisitor interface {
 	VisitProperty(*NameAndWireValue) error
-	VisitStatusCode(any) error
+	VisitStatusCode(interface{}) error
 }
 
 func (e *ErrorDeclarationDiscriminantValue) Accept(visitor ErrorDeclarationDiscriminantValueVisitor) error {
@@ -688,8 +704,8 @@ func (e *ExampleEndpointSuccessResponse) String() string {
 }
 
 type ExampleHeader struct {
-	WireKey string                `json:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty"`
+	Name  *NameAndWireValue     `json:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
 }
 
 func (e *ExampleHeader) String() string {
@@ -712,9 +728,9 @@ func (e *ExampleInlinedRequestBody) String() string {
 }
 
 type ExampleInlinedRequestBodyProperty struct {
-	WireKey string                `json:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty"`
-	// this property may have been brought in via extension. originalTypeDeclaration
+	Name  *NameAndWireValue     `json:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
+	// This property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty"`
 }
@@ -727,7 +743,7 @@ func (e *ExampleInlinedRequestBodyProperty) String() string {
 }
 
 type ExamplePathParameter struct {
-	Key   string                `json:"key"`
+	Name  *Name                 `json:"name,omitempty"`
 	Value *ExampleTypeReference `json:"value,omitempty"`
 }
 
@@ -739,8 +755,8 @@ func (e *ExamplePathParameter) String() string {
 }
 
 type ExampleQueryParameter struct {
-	WireKey string                `json:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty"`
+	Name  *NameAndWireValue     `json:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
 }
 
 func (e *ExampleQueryParameter) String() string {
@@ -1044,6 +1060,7 @@ type HttpEndpoint struct {
 	Response          *HttpResponse          `json:"response,omitempty"`
 	Errors            ResponseErrors         `json:"errors,omitempty"`
 	Auth              bool                   `json:"auth"`
+	Idempotent        bool                   `json:"idempotent"`
 	Examples          []*ExampleEndpointCall `json:"examples,omitempty"`
 }
 
@@ -1815,14 +1832,14 @@ func (s *StreamingResponse) String() string {
 type StreamingResponseChunkType struct {
 	Type string
 	Json *TypeReference
-	Text any
+	Text interface{}
 }
 
 func NewStreamingResponseChunkTypeFromJson(value *TypeReference) *StreamingResponseChunkType {
 	return &StreamingResponseChunkType{Type: "json", Json: value}
 }
 
-func NewStreamingResponseChunkTypeFromText(value any) *StreamingResponseChunkType {
+func NewStreamingResponseChunkTypeFromText(value interface{}) *StreamingResponseChunkType {
 	return &StreamingResponseChunkType{Type: "text", Text: value}
 }
 
@@ -1844,7 +1861,7 @@ func (s *StreamingResponseChunkType) UnmarshalJSON(data []byte) error {
 		}
 		s.Json = valueUnmarshaler.Json
 	case "text":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -1868,8 +1885,8 @@ func (s StreamingResponseChunkType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "text":
 		var marshaler = struct {
-			Type string `json:"type"`
-			Text any    `json:"text,omitempty"`
+			Type string      `json:"type"`
+			Text interface{} `json:"text,omitempty"`
 		}{
 			Type: s.Type,
 			Text: s.Text,
@@ -1880,7 +1897,7 @@ func (s StreamingResponseChunkType) MarshalJSON() ([]byte, error) {
 
 type StreamingResponseChunkTypeVisitor interface {
 	VisitJson(*TypeReference) error
-	VisitText(any) error
+	VisitText(interface{}) error
 }
 
 func (s *StreamingResponseChunkType) Accept(visitor StreamingResponseChunkTypeVisitor) error {
@@ -1919,11 +1936,11 @@ func (e *ErrorDiscriminationByPropertyStrategy) String() string {
 
 type ErrorDiscriminationStrategy struct {
 	Type       string
-	StatusCode any
+	StatusCode interface{}
 	Property   *ErrorDiscriminationByPropertyStrategy
 }
 
-func NewErrorDiscriminationStrategyFromStatusCode(value any) *ErrorDiscriminationStrategy {
+func NewErrorDiscriminationStrategyFromStatusCode(value interface{}) *ErrorDiscriminationStrategy {
 	return &ErrorDiscriminationStrategy{Type: "statusCode", StatusCode: value}
 }
 
@@ -1941,7 +1958,7 @@ func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "statusCode":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -1962,8 +1979,8 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "statusCode":
 		var marshaler = struct {
-			Type       string `json:"type"`
-			StatusCode any    `json:"statusCode,omitempty"`
+			Type       string      `json:"type"`
+			StatusCode interface{} `json:"statusCode,omitempty"`
 		}{
 			Type:       e.Type,
 			StatusCode: e.StatusCode,
@@ -1982,7 +1999,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 }
 
 type ErrorDiscriminationStrategyVisitor interface {
-	VisitStatusCode(any) error
+	VisitStatusCode(interface{}) error
 	VisitProperty(*ErrorDiscriminationByPropertyStrategy) error
 }
 
@@ -2006,6 +2023,8 @@ type IntermediateRepresentation struct {
 	Auth           *ApiAuth `json:"auth,omitempty"`
 	// API Wide headers that are sent on every request
 	Headers []*HttpHeader `json:"headers,omitempty"`
+	// Headers that are sent for idempotent endpoints
+	IdempotencyHeaders []*HttpHeader `json:"idempotencyHeaders,omitempty"`
 	// The types described by this API
 	Types map[TypeId]*TypeDeclaration `json:"types,omitempty"`
 	// The services exposed by this API
@@ -2475,7 +2494,7 @@ func (e *ExampleContainer) Accept(visitor ExampleContainerVisitor) error {
 }
 
 type ExampleEnumType struct {
-	WireValue string `json:"wireValue"`
+	Value *NameAndWireValue `json:"value,omitempty"`
 }
 
 func (e *ExampleEnumType) String() string {
@@ -2510,10 +2529,10 @@ func (e *ExampleNamedType) String() string {
 }
 
 type ExampleObjectProperty struct {
-	WireKey string                `json:"wireKey"`
-	Value   *ExampleTypeReference `json:"value,omitempty"`
-	// this property may have been brought in via extension. originalTypeDeclaration
-	// is the name of the type that contains this property
+	Name  *NameAndWireValue     `json:"name,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
+	// This property may have been brought in via extension. originalTypeDeclaration
+	// is the name of the type that contains this property.
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty"`
 }
 
@@ -2535,11 +2554,23 @@ func (e *ExampleObjectType) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+type ExampleObjectTypeWithTypeId struct {
+	TypeId TypeId             `json:"typeId"`
+	Object *ExampleObjectType `json:"object,omitempty"`
+}
+
+func (e *ExampleObjectTypeWithTypeId) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExamplePrimitive struct {
 	Type     string
 	Integer  int
 	Double   float64
-	String   string
+	String   *EscapedString
 	Boolean  bool
 	Long     int64
 	Datetime time.Time
@@ -2555,7 +2586,7 @@ func NewExamplePrimitiveFromDouble(value float64) *ExamplePrimitive {
 	return &ExamplePrimitive{Type: "double", Double: value}
 }
 
-func NewExamplePrimitiveFromString(value string) *ExamplePrimitive {
+func NewExamplePrimitiveFromString(value *EscapedString) *ExamplePrimitive {
 	return &ExamplePrimitive{Type: "string", String: value}
 }
 
@@ -2606,7 +2637,7 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.Double = valueUnmarshaler.Double
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"string"`
+			String *EscapedString `json:"string,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -2680,8 +2711,8 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"string"`
+			Type   string         `json:"type"`
+			String *EscapedString `json:"string,omitempty"`
 		}{
 			Type:   e.Type,
 			String: e.String,
@@ -2738,7 +2769,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 type ExamplePrimitiveVisitor interface {
 	VisitInteger(int) error
 	VisitDouble(float64) error
-	VisitString(string) error
+	VisitString(*EscapedString) error
 	VisitBoolean(bool) error
 	VisitLong(int64) error
 	VisitDatetime(time.Time) error
@@ -2770,8 +2801,8 @@ func (e *ExamplePrimitive) Accept(visitor ExamplePrimitiveVisitor) error {
 }
 
 type ExampleSingleUnionType struct {
-	WireDiscriminantValue string                            `json:"wireDiscriminantValue"`
-	Properties            *ExampleSingleUnionTypeProperties `json:"properties,omitempty"`
+	WireDiscriminantValue *NameAndWireValue                 `json:"wireDiscriminantValue,omitempty"`
+	Shape                 *ExampleSingleUnionTypeProperties `json:"shape,omitempty"`
 }
 
 func (e *ExampleSingleUnionType) String() string {
@@ -2783,12 +2814,12 @@ func (e *ExampleSingleUnionType) String() string {
 
 type ExampleSingleUnionTypeProperties struct {
 	Type                   string
-	SamePropertiesAsObject *ExampleNamedType
+	SamePropertiesAsObject *ExampleObjectTypeWithTypeId
 	SingleProperty         *ExampleTypeReference
-	NoProperties           any
+	NoProperties           interface{}
 }
 
-func NewExampleSingleUnionTypePropertiesFromSamePropertiesAsObject(value *ExampleNamedType) *ExampleSingleUnionTypeProperties {
+func NewExampleSingleUnionTypePropertiesFromSamePropertiesAsObject(value *ExampleObjectTypeWithTypeId) *ExampleSingleUnionTypeProperties {
 	return &ExampleSingleUnionTypeProperties{Type: "samePropertiesAsObject", SamePropertiesAsObject: value}
 }
 
@@ -2796,7 +2827,7 @@ func NewExampleSingleUnionTypePropertiesFromSingleProperty(value *ExampleTypeRef
 	return &ExampleSingleUnionTypeProperties{Type: "singleProperty", SingleProperty: value}
 }
 
-func NewExampleSingleUnionTypePropertiesFromNoProperties(value any) *ExampleSingleUnionTypeProperties {
+func NewExampleSingleUnionTypePropertiesFromNoProperties(value interface{}) *ExampleSingleUnionTypeProperties {
 	return &ExampleSingleUnionTypeProperties{Type: "noProperties", NoProperties: value}
 }
 
@@ -2810,7 +2841,7 @@ func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "samePropertiesAsObject":
-		value := new(ExampleNamedType)
+		value := new(ExampleObjectTypeWithTypeId)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -2822,7 +2853,7 @@ func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 		e.SingleProperty = value
 	case "noProperties":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -2838,10 +2869,10 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 	case "samePropertiesAsObject":
 		var marshaler = struct {
 			Type string `json:"type"`
-			*ExampleNamedType
+			*ExampleObjectTypeWithTypeId
 		}{
-			Type:             e.Type,
-			ExampleNamedType: e.SamePropertiesAsObject,
+			Type:                        e.Type,
+			ExampleObjectTypeWithTypeId: e.SamePropertiesAsObject,
 		}
 		return json.Marshal(marshaler)
 	case "singleProperty":
@@ -2855,8 +2886,8 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "noProperties":
 		var marshaler = struct {
-			Type         string `json:"type"`
-			NoProperties any    `json:"noProperties,omitempty"`
+			Type         string      `json:"type"`
+			NoProperties interface{} `json:"noProperties,omitempty"`
 		}{
 			Type:         e.Type,
 			NoProperties: e.NoProperties,
@@ -2866,9 +2897,9 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 }
 
 type ExampleSingleUnionTypePropertiesVisitor interface {
-	VisitSamePropertiesAsObject(*ExampleNamedType) error
+	VisitSamePropertiesAsObject(*ExampleObjectTypeWithTypeId) error
 	VisitSingleProperty(*ExampleTypeReference) error
-	VisitNoProperties(any) error
+	VisitNoProperties(interface{}) error
 }
 
 func (e *ExampleSingleUnionTypeProperties) Accept(visitor ExampleSingleUnionTypePropertiesVisitor) error {
@@ -3043,11 +3074,12 @@ func (e *ExampleTypeReferenceShape) Accept(visitor ExampleTypeReferenceShapeVisi
 }
 
 type ExampleTypeShape struct {
-	Type   string
-	Alias  *ExampleAliasType
-	Enum   *ExampleEnumType
-	Object *ExampleObjectType
-	Union  *ExampleSingleUnionType
+	Type                 string
+	Alias                *ExampleAliasType
+	Enum                 *ExampleEnumType
+	Object               *ExampleObjectType
+	Union                *ExampleUnionType
+	UndiscriminatedUnion *ExampleUndiscriminatedUnionType
 }
 
 func NewExampleTypeShapeFromAlias(value *ExampleAliasType) *ExampleTypeShape {
@@ -3062,8 +3094,12 @@ func NewExampleTypeShapeFromObject(value *ExampleObjectType) *ExampleTypeShape {
 	return &ExampleTypeShape{Type: "object", Object: value}
 }
 
-func NewExampleTypeShapeFromUnion(value *ExampleSingleUnionType) *ExampleTypeShape {
+func NewExampleTypeShapeFromUnion(value *ExampleUnionType) *ExampleTypeShape {
 	return &ExampleTypeShape{Type: "union", Union: value}
+}
+
+func NewExampleTypeShapeFromUndiscriminatedUnion(value *ExampleUndiscriminatedUnionType) *ExampleTypeShape {
+	return &ExampleTypeShape{Type: "undiscriminatedUnion", UndiscriminatedUnion: value}
 }
 
 func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
@@ -3094,11 +3130,17 @@ func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 		}
 		e.Object = value
 	case "union":
-		value := new(ExampleSingleUnionType)
+		value := new(ExampleUnionType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		e.Union = value
+	case "undiscriminatedUnion":
+		value := new(ExampleUndiscriminatedUnionType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		e.UndiscriminatedUnion = value
 	}
 	return nil
 }
@@ -3137,10 +3179,19 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 	case "union":
 		var marshaler = struct {
 			Type string `json:"type"`
-			*ExampleSingleUnionType
+			*ExampleUnionType
 		}{
-			Type:                   e.Type,
-			ExampleSingleUnionType: e.Union,
+			Type:             e.Type,
+			ExampleUnionType: e.Union,
+		}
+		return json.Marshal(marshaler)
+	case "undiscriminatedUnion":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ExampleUndiscriminatedUnionType
+		}{
+			Type:                            e.Type,
+			ExampleUndiscriminatedUnionType: e.UndiscriminatedUnion,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -3150,7 +3201,8 @@ type ExampleTypeShapeVisitor interface {
 	VisitAlias(*ExampleAliasType) error
 	VisitEnum(*ExampleEnumType) error
 	VisitObject(*ExampleObjectType) error
-	VisitUnion(*ExampleSingleUnionType) error
+	VisitUnion(*ExampleUnionType) error
+	VisitUndiscriminatedUnion(*ExampleUndiscriminatedUnionType) error
 }
 
 func (e *ExampleTypeShape) Accept(visitor ExampleTypeShapeVisitor) error {
@@ -3165,7 +3217,48 @@ func (e *ExampleTypeShape) Accept(visitor ExampleTypeShapeVisitor) error {
 		return visitor.VisitObject(e.Object)
 	case "union":
 		return visitor.VisitUnion(e.Union)
+	case "undiscriminatedUnion":
+		return visitor.VisitUndiscriminatedUnion(e.UndiscriminatedUnion)
 	}
+}
+
+type ExampleUndiscriminatedUnionType struct {
+	// The zero-based index of the undiscriminated union variant.
+	// For the following undiscriminated union
+	//
+	// ```
+	// MyUnion:
+	//
+	//	discriminated: false
+	//	union:
+	//	  - string
+	//	  - integer
+	//
+	// ```
+	//
+	// a string example would have an index 0 and an integer example
+	// would have an index 1.
+	Index           int                   `json:"index"`
+	SingleUnionType *ExampleTypeReference `json:"singleUnionType,omitempty"`
+}
+
+func (e *ExampleUndiscriminatedUnionType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+type ExampleUnionType struct {
+	Discriminant    *NameAndWireValue       `json:"discriminant,omitempty"`
+	SingleUnionType *ExampleSingleUnionType `json:"singleUnionType,omitempty"`
+}
+
+func (e *ExampleUnionType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Literal struct {
@@ -3352,7 +3445,7 @@ type ResolvedTypeReference struct {
 	Container *ContainerType
 	Named     *ResolvedNamedType
 	Primitive PrimitiveType
-	Unknown   any
+	Unknown   interface{}
 }
 
 func NewResolvedTypeReferenceFromContainer(value *ContainerType) *ResolvedTypeReference {
@@ -3367,7 +3460,7 @@ func NewResolvedTypeReferenceFromPrimitive(value PrimitiveType) *ResolvedTypeRef
 	return &ResolvedTypeReference{Type: "primitive", Primitive: value}
 }
 
-func NewResolvedTypeReferenceFromUnknown(value any) *ResolvedTypeReference {
+func NewResolvedTypeReferenceFromUnknown(value interface{}) *ResolvedTypeReference {
 	return &ResolvedTypeReference{Type: "unknown", Unknown: value}
 }
 
@@ -3403,7 +3496,7 @@ func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 		}
 		r.Primitive = valueUnmarshaler.Primitive
 	case "unknown":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -3445,8 +3538,8 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type    string `json:"_type"`
-			Unknown any    `json:"unknown,omitempty"`
+			Type    string      `json:"_type"`
+			Unknown interface{} `json:"unknown,omitempty"`
 		}{
 			Type:    r.Type,
 			Unknown: r.Unknown,
@@ -3459,7 +3552,7 @@ type ResolvedTypeReferenceVisitor interface {
 	VisitContainer(*ContainerType) error
 	VisitNamed(*ResolvedNamedType) error
 	VisitPrimitive(PrimitiveType) error
-	VisitUnknown(any) error
+	VisitUnknown(interface{}) error
 }
 
 func (r *ResolvedTypeReference) Accept(visitor ResolvedTypeReferenceVisitor) error {
@@ -3522,7 +3615,7 @@ type SingleUnionTypeProperties struct {
 	PropertiesType         string
 	SamePropertiesAsObject *DeclaredTypeName
 	SingleProperty         *SingleUnionTypeProperty
-	NoProperties           any
+	NoProperties           interface{}
 }
 
 func NewSingleUnionTypePropertiesFromSamePropertiesAsObject(value *DeclaredTypeName) *SingleUnionTypeProperties {
@@ -3533,7 +3626,7 @@ func NewSingleUnionTypePropertiesFromSingleProperty(value *SingleUnionTypeProper
 	return &SingleUnionTypeProperties{PropertiesType: "singleProperty", SingleProperty: value}
 }
 
-func NewSingleUnionTypePropertiesFromNoProperties(value any) *SingleUnionTypeProperties {
+func NewSingleUnionTypePropertiesFromNoProperties(value interface{}) *SingleUnionTypeProperties {
 	return &SingleUnionTypeProperties{PropertiesType: "noProperties", NoProperties: value}
 }
 
@@ -3559,7 +3652,7 @@ func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 		}
 		s.SingleProperty = value
 	case "noProperties":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -3592,8 +3685,8 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "noProperties":
 		var marshaler = struct {
-			PropertiesType string `json:"_type"`
-			NoProperties   any    `json:"noProperties,omitempty"`
+			PropertiesType string      `json:"_type"`
+			NoProperties   interface{} `json:"noProperties,omitempty"`
 		}{
 			PropertiesType: s.PropertiesType,
 			NoProperties:   s.NoProperties,
@@ -3605,7 +3698,7 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 type SingleUnionTypePropertiesVisitor interface {
 	VisitSamePropertiesAsObject(*DeclaredTypeName) error
 	VisitSingleProperty(*SingleUnionTypeProperty) error
-	VisitNoProperties(any) error
+	VisitNoProperties(interface{}) error
 }
 
 func (s *SingleUnionTypeProperties) Accept(visitor SingleUnionTypePropertiesVisitor) error {
@@ -3790,7 +3883,7 @@ type TypeDeclaration struct {
 	Shape        *Type             `json:"shape,omitempty"`
 	Examples     []*ExampleType    `json:"examples,omitempty"`
 	// All other named types that this type references (directly or indirectly)
-	ReferencedTypes []*DeclaredTypeName `json:"referencedTypes,omitempty"`
+	ReferencedTypes []TypeId `json:"referencedTypes,omitempty"`
 }
 
 func (t *TypeDeclaration) String() string {
@@ -3805,7 +3898,7 @@ type TypeReference struct {
 	Container *ContainerType
 	Named     *DeclaredTypeName
 	Primitive PrimitiveType
-	Unknown   any
+	Unknown   interface{}
 }
 
 func NewTypeReferenceFromContainer(value *ContainerType) *TypeReference {
@@ -3820,7 +3913,7 @@ func NewTypeReferenceFromPrimitive(value PrimitiveType) *TypeReference {
 	return &TypeReference{Type: "primitive", Primitive: value}
 }
 
-func NewTypeReferenceFromUnknown(value any) *TypeReference {
+func NewTypeReferenceFromUnknown(value interface{}) *TypeReference {
 	return &TypeReference{Type: "unknown", Unknown: value}
 }
 
@@ -3856,7 +3949,7 @@ func (t *TypeReference) UnmarshalJSON(data []byte) error {
 		}
 		t.Primitive = valueUnmarshaler.Primitive
 	case "unknown":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -3898,8 +3991,8 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type    string `json:"_type"`
-			Unknown any    `json:"unknown,omitempty"`
+			Type    string      `json:"_type"`
+			Unknown interface{} `json:"unknown,omitempty"`
 		}{
 			Type:    t.Type,
 			Unknown: t.Unknown,
@@ -3912,7 +4005,7 @@ type TypeReferenceVisitor interface {
 	VisitContainer(*ContainerType) error
 	VisitNamed(*DeclaredTypeName) error
 	VisitPrimitive(PrimitiveType) error
-	VisitUnknown(any) error
+	VisitUnknown(interface{}) error
 }
 
 func (t *TypeReference) Accept(visitor TypeReferenceVisitor) error {

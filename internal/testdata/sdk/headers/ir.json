@@ -432,6 +432,7 @@
             "docs": null
         }
     ],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -513,6 +514,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {

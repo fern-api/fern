@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_user:SetNameRequestV3Body": {
             "name": {
@@ -733,136 +734,8 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Foo",
-                        "camelCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOO",
-                            "safeName": "FOO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Foo",
-                            "safeName": "Foo"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
-                    },
-                    "typeId": "type_user:Foo"
-                },
-                {
-                    "name": {
-                        "originalName": "Bar",
-                        "camelCase": {
-                            "unsafeName": "bar",
-                            "safeName": "bar"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "bar",
-                            "safeName": "bar"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAR",
-                            "safeName": "BAR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Bar",
-                            "safeName": "Bar"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
-                    },
-                    "typeId": "type_user:Bar"
-                }
+                "type_user:Foo",
+                "type_user:Bar"
             ],
             "examples": [],
             "availability": null,
@@ -949,6 +822,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -1112,6 +986,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -1350,6 +1225,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -1697,6 +1573,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2050,6 +1927,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2279,6 +2157,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2508,6 +2387,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {

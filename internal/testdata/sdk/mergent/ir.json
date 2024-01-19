@@ -51,6 +51,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_:TaskNew": {
             "name": {
@@ -114,141 +115,11 @@
                 "properties": []
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Task",
-                        "camelCase": {
-                            "unsafeName": "task",
-                            "safeName": "task"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "task",
-                            "safeName": "task"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TASK",
-                            "safeName": "TASK"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Task",
-                            "safeName": "Task"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Task"
-                },
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                },
-                {
-                    "name": {
-                        "originalName": "TaskStatus",
-                        "camelCase": {
-                            "unsafeName": "taskStatus",
-                            "safeName": "taskStatus"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "task_status",
-                            "safeName": "task_status"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TASK_STATUS",
-                            "safeName": "TASK_STATUS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "TaskStatus",
-                            "safeName": "TaskStatus"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:TaskStatus"
-                },
-                {
-                    "name": {
-                        "originalName": "Request",
-                        "camelCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REQUEST",
-                            "safeName": "REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Request",
-                            "safeName": "Request"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Request"
-                },
-                {
-                    "name": {
-                        "originalName": "created_at",
-                        "camelCase": {
-                            "unsafeName": "createdAt",
-                            "safeName": "createdAt"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "created_at",
-                            "safeName": "created_at"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATED_AT",
-                            "safeName": "CREATED_AT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreatedAt",
-                            "safeName": "CreatedAt"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:created_at"
-                }
+                "type_:Task",
+                "type_:id",
+                "type_:TaskStatus",
+                "type_:Request",
+                "type_:created_at"
             ],
             "examples": [],
             "availability": null,
@@ -380,7 +251,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "An optional name of the Task. This string must not contain more than 100 characters.\n"
+                        "docs": "An optional name of the Task. This string must not contain more than 100 characters."
                     },
                     {
                         "name": {
@@ -416,7 +287,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "The name of the of the Task queue. This string must not contain more than 100 characters.\n"
+                        "docs": "The name of the of the Task queue. This string must not contain more than 100 characters."
                     },
                     {
                         "name": {
@@ -572,7 +443,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) for when the Task is scheduled to be executed. Example: \"2021-10-01T15:53:05Z\". When not present, the Task will be scheduled for immediate execution.\n"
+                        "docs": "The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) for when the Task is scheduled to be executed. Example: \"2021-10-01T15:53:05Z\". When not present, the Task will be scheduled for immediate execution."
                     },
                     {
                         "name": {
@@ -608,7 +479,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "A duration string containing numbers and a unit suffix of \"s\" for seconds, \"m\" for minutes, and \"h\" for hours. Examples: \"5s\"; \"1.5h\"; \"2h45m\" When both `delay` and `scheduled_for` are present, `delay` will be added to `scheduled_for`.\n"
+                        "docs": "A duration string containing numbers and a unit suffix of \"s\" for seconds, \"m\" for minutes, and \"h\" for hours. Examples: \"5s\"; \"1.5h\"; \"2h45m\" When both `delay` and `scheduled_for` are present, `delay` will be added to `scheduled_for`."
                     },
                     {
                         "name": {
@@ -673,114 +544,10 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                },
-                {
-                    "name": {
-                        "originalName": "TaskStatus",
-                        "camelCase": {
-                            "unsafeName": "taskStatus",
-                            "safeName": "taskStatus"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "task_status",
-                            "safeName": "task_status"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TASK_STATUS",
-                            "safeName": "TASK_STATUS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "TaskStatus",
-                            "safeName": "TaskStatus"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:TaskStatus"
-                },
-                {
-                    "name": {
-                        "originalName": "Request",
-                        "camelCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REQUEST",
-                            "safeName": "REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Request",
-                            "safeName": "Request"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Request"
-                },
-                {
-                    "name": {
-                        "originalName": "created_at",
-                        "camelCase": {
-                            "unsafeName": "createdAt",
-                            "safeName": "createdAt"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "created_at",
-                            "safeName": "created_at"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATED_AT",
-                            "safeName": "CREATED_AT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreatedAt",
-                            "safeName": "CreatedAt"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:created_at"
-                }
+                "type_:id",
+                "type_:TaskStatus",
+                "type_:Request",
+                "type_:created_at"
             ],
             "examples": [],
             "availability": null,
@@ -1054,7 +821,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "An optional name of the Schedule. This string must not contain more than 100 characters.\n"
+                        "docs": "An optional name of the Schedule. This string must not contain more than 100 characters."
                     },
                     {
                         "name": {
@@ -1090,7 +857,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "The name of the of the queue to schedule the Task on. This string must not contain more than 100 characters.\n"
+                        "docs": "The name of the of the queue to schedule the Task on. This string must not contain more than 100 characters."
                     },
                     {
                         "name": {
@@ -1126,7 +893,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "An optional description of the Schedule. This string must not contain more than 500 characters.\n"
+                        "docs": "An optional description of the Schedule. This string must not contain more than 500 characters."
                     },
                     {
                         "name": {
@@ -1162,7 +929,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "A [cron expression](https://crontab.guru/examples.html) describing the\nSchedule on which Tasks will run (UTC).\nNote: execution n + 1 of a Task will not begin until execution n has\ncompleted successfully.\nYou must pass either `cron` or `rrule` when creating a new Schedule.\n"
+                        "docs": "A [cron expression](https://crontab.guru/examples.html) describing the\nSchedule on which Tasks will run (UTC).\nNote: execution n + 1 of a Task will not begin until execution n has\ncompleted successfully.\nYou must pass either `cron` or `rrule` when creating a new Schedule."
                     },
                     {
                         "name": {
@@ -1198,7 +965,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "An [iCal RRule expression](https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html) describing the Schedule on which Tasks will run (UTC). The time of Schedule creation will be used as the start of the recurrence interval (i.e. `DTSTART`). Note: execution n + 1 of a Task will not begin until execution n has completed successfully. You must pass either `cron` or `rrule` when creating a new Schedule.\n"
+                        "docs": "An [iCal RRule expression](https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html) describing the Schedule on which Tasks will run (UTC). The time of Schedule creation will be used as the start of the recurrence interval (i.e. `DTSTART`). Note: execution n + 1 of a Task will not begin until execution n has completed successfully. You must pass either `cron` or `rrule` when creating a new Schedule."
                     },
                     {
                         "name": {
@@ -1234,7 +1001,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) denoting the start of an RRULE schedule. Example: \"2021-10-01T15:53:05Z\". When not set, it will be set to the current time, and the first Task will be scheduled immediately. Ignored for `cron`-type Schedules.\n"
+                        "docs": "The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) denoting the start of an RRULE schedule. Example: \"2021-10-01T15:53:05Z\". When not set, it will be set to the current time, and the first Task will be scheduled immediately. Ignored for `cron`-type Schedules."
                     },
                     {
                         "name": {
@@ -1270,7 +1037,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "If `true`, the Schedule will be paused immediately. If `false`, a paused Schedule will be resumed.\n"
+                        "docs": "If `true`, the Schedule will be paused immediately. If `false`, a paused Schedule will be resumed."
                     },
                     {
                         "name": {
@@ -1395,87 +1162,9 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                },
-                {
-                    "name": {
-                        "originalName": "Request",
-                        "camelCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REQUEST",
-                            "safeName": "REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Request",
-                            "safeName": "Request"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Request"
-                },
-                {
-                    "name": {
-                        "originalName": "created_at",
-                        "camelCase": {
-                            "unsafeName": "createdAt",
-                            "safeName": "createdAt"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "created_at",
-                            "safeName": "created_at"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATED_AT",
-                            "safeName": "CREATED_AT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreatedAt",
-                            "safeName": "CreatedAt"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:created_at"
-                }
+                "type_:id",
+                "type_:Request",
+                "type_:created_at"
             ],
             "examples": [],
             "availability": null,
@@ -1585,7 +1274,7 @@
                             "primitive": "STRING"
                         },
                         "availability": null,
-                        "docs": "The URL that the POST request will be sent to.\nFor localhost development, use something like ngrok to get a publicly\naccessible URL for your local service. See https://docs.mergent.co for\nmore info.\n"
+                        "docs": "The URL that the POST request will be sent to.\nFor localhost development, use something like ngrok to get a publicly\naccessible URL for your local service. See https://docs.mergent.co for\nmore info."
                     },
                     {
                         "name": {
@@ -1630,7 +1319,7 @@
                             }
                         },
                         "availability": null,
-                        "docs": "The headers that will accompany any Task's HTTP request. For\nexample, you can use this to set Content-Type to \"application/json\"\nor \"application/octet-stream\".\n"
+                        "docs": "The headers that will accompany any Task's HTTP request. For\nexample, you can use this to set Content-Type to \"application/json\"\nor \"application/octet-stream\"."
                     },
                     {
                         "name": {
@@ -1892,33 +1581,7 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERROR",
-                            "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Error",
-                            "safeName": "Error"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Error"
-                }
+                "type_:Error"
             ],
             "examples": [],
             "availability": null,
@@ -2292,6 +1955,7 @@
                     },
                     "displayName": "Get Tasks",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -2377,6 +2041,7 @@
                     },
                     "displayName": "Create Task",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2605,6 +2270,7 @@
                     },
                     "displayName": "Get Task",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -2831,6 +2497,7 @@
                     },
                     "displayName": "Update Task",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "PATCH",
                     "path": {
@@ -3205,6 +2872,7 @@
                     },
                     "displayName": "Delete Task",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
                     "path": {
@@ -3397,6 +3065,7 @@
                     },
                     "displayName": "Run Task",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3653,6 +3322,7 @@
                     },
                     "displayName": "Batch Create Tasks (Beta)",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3934,7 +3604,7 @@
                     ],
                     "examples": [],
                     "availability": null,
-                    "docs": "A maximum of 100 Tasks are accepted per request.\nThis operation is atomic: it will succeed for all Tasks or fail for all\nTasks; there is no partial success.\nThis endpoint is in beta and may change at any time without notice.\n"
+                    "docs": "A maximum of 100 Tasks are accepted per request.\nThis operation is atomic: it will succeed for all Tasks or fail for all\nTasks; there is no partial success.\nThis endpoint is in beta and may change at any time without notice."
                 },
                 {
                     "id": "endpoint_.postTasksBatchDelete",
@@ -3959,6 +3629,7 @@
                     },
                     "displayName": "Batch Delete Tasks (Beta)",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -4140,7 +3811,7 @@
                     ],
                     "examples": [],
                     "availability": null,
-                    "docs": "A maximum of 100 Task IDs are accepted per request.\nThis operation is atomic: it will succeed for all Tasks or fail for all\nTasks; there is no partial success.\nThis endpoint is in beta and may change at any time without notice.\n"
+                    "docs": "A maximum of 100 Task IDs are accepted per request.\nThis operation is atomic: it will succeed for all Tasks or fail for all\nTasks; there is no partial success.\nThis endpoint is in beta and may change at any time without notice."
                 },
                 {
                     "id": "endpoint_.getSchedules",
@@ -4165,6 +3836,7 @@
                     },
                     "displayName": "Get Schedules",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -4250,6 +3922,7 @@
                     },
                     "displayName": "Create Schedule",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -4473,6 +4146,7 @@
                     },
                     "displayName": "Get Schedule",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -4699,6 +4373,7 @@
                     },
                     "displayName": "Update Schedule",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "PATCH",
                     "path": {
@@ -5043,6 +4718,7 @@
                     },
                     "displayName": "Delete Schedule",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
                     "path": {
@@ -5235,6 +4911,7 @@
                     },
                     "displayName": "Get Schedule Tasks",
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {

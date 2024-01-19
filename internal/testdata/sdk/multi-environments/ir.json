@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -107,6 +108,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "Auth",
                     "method": "GET",
                     "path": {
@@ -162,6 +164,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "Auth",
                     "method": "GET",
                     "path": {
@@ -223,6 +226,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "Plants",
                     "method": "GET",
                     "path": {
@@ -341,6 +345,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "Plants",
                     "method": "GET",
                     "path": {

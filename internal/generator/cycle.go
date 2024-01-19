@@ -100,11 +100,10 @@ func typeGraphFromTypes(
 		if from == nil {
 			from = graph.GetVertexByID(irType.Name.TypeId)
 		}
-
-		for _, irReferencedType := range irType.ReferencedTypes {
-			to := graph.AddVertexByLabel(irReferencedType.TypeId)
+		for _, irReferencedTypeID := range irType.ReferencedTypes {
+			to := graph.AddVertexByLabel(irReferencedTypeID)
 			if to == nil {
-				to = graph.GetVertexByID(irReferencedType.TypeId)
+				to = graph.GetVertexByID(irReferencedTypeID)
 			}
 
 			if graph.GetEdge(from, to) == nil {
@@ -130,8 +129,8 @@ func packageGraphFromTypes(
 			from = graph.GetVertexByID(fromPackageName)
 		}
 
-		for _, irReferencedType := range irType.ReferencedTypes {
-			toPackageName := typeToPackage[irReferencedType.TypeId]
+		for _, irReferencedTypeID := range irType.ReferencedTypes {
+			toPackageName := typeToPackage[irReferencedTypeID]
 
 			to := graph.AddVertexByLabel(toPackageName)
 			if to == nil {
@@ -266,8 +265,8 @@ func referencedTypeIdsForTypeRecurse(
 		return
 	}
 	result[typeDecl.Name.TypeId] = struct{}{}
-	for _, referencedType := range typeDecl.ReferencedTypes {
-		packageName := typeToPackage[referencedType.TypeId]
+	for _, referencedTypeID := range typeDecl.ReferencedTypes {
+		packageName := typeToPackage[referencedTypeID]
 		if _, ok := componentPackageNames[packageName]; !ok {
 			// The referenced type isn't included in the SCC, so
 			// we can ignore it (and its descendants).
@@ -276,7 +275,7 @@ func referencedTypeIdsForTypeRecurse(
 		referencedTypeIdsForTypeRecurse(
 			types,
 			typeToPackage,
-			types[referencedType.TypeId],
+			types[referencedTypeID],
 			componentPackageNames,
 			result,
 		)
@@ -321,7 +320,7 @@ func replaceFilepathForTypeInIR(
 				fernFilepath,
 			)
 		}
-		for _, referencedType := range irType.ReferencedTypes {
+		for _, referencedType := range declaredTypeNamesForTypeIDs(ir, irType.ReferencedTypes) {
 			replaceFilepathForTypeInDeclaredTypeName(
 				referencedType,
 				typeId,

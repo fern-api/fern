@@ -51,6 +51,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_types:WithAuthToken": {
             "name": {

@@ -26,6 +26,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_imdb:Foo": {
             "name": {
@@ -329,71 +330,7 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Foo",
-                        "camelCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOO",
-                            "safeName": "FOO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Foo",
-                            "safeName": "Foo"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "imdb",
-                                "camelCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "IMDB",
-                                    "safeName": "IMDB"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Imdb",
-                                    "safeName": "Imdb"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "imdb",
-                            "camelCase": {
-                                "unsafeName": "imdb",
-                                "safeName": "imdb"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "imdb",
-                                "safeName": "imdb"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "IMDB",
-                                "safeName": "IMDB"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Imdb",
-                                "safeName": "Imdb"
-                            }
-                        }
-                    },
-                    "typeId": "type_imdb:Foo"
-                }
+                "type_imdb:Foo"
             ],
             "examples": [],
             "availability": null,

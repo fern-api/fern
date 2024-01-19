@@ -51,6 +51,7 @@
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_:Bar": {
             "name": {
@@ -114,114 +115,10 @@
                 "properties": []
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Foo",
-                        "camelCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "foo",
-                            "safeName": "foo"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOO",
-                            "safeName": "FOO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Foo",
-                            "safeName": "Foo"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Foo"
-                },
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                },
-                {
-                    "name": {
-                        "originalName": "FooType",
-                        "camelCase": {
-                            "unsafeName": "fooType",
-                            "safeName": "fooType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "foo_type",
-                            "safeName": "foo_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOO_TYPE",
-                            "safeName": "FOO_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "FooType",
-                            "safeName": "FooType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:FooType"
-                },
-                {
-                    "name": {
-                        "originalName": "Request",
-                        "camelCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REQUEST",
-                            "safeName": "REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Request",
-                            "safeName": "Request"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Request"
-                }
+                "type_:Foo",
+                "type_:id",
+                "type_:FooType",
+                "type_:Request"
             ],
             "examples": [],
             "availability": null,
@@ -550,87 +447,9 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                },
-                {
-                    "name": {
-                        "originalName": "FooType",
-                        "camelCase": {
-                            "unsafeName": "fooType",
-                            "safeName": "fooType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "foo_type",
-                            "safeName": "foo_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOO_TYPE",
-                            "safeName": "FOO_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "FooType",
-                            "safeName": "FooType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:FooType"
-                },
-                {
-                    "name": {
-                        "originalName": "Request",
-                        "camelCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "request",
-                            "safeName": "request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REQUEST",
-                            "safeName": "REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Request",
-                            "safeName": "Request"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Request"
-                }
+                "type_:id",
+                "type_:FooType",
+                "type_:Request"
             ],
             "examples": [],
             "availability": null,
@@ -1012,38 +831,12 @@
                             }
                         },
                         "availability": null,
-                        "docs": "This field has documentation, so it should be rendered\njust above the field.\nNote: Newlines should be preserved.\n"
+                        "docs": "This field has documentation, so it should be rendered\njust above the field.\nNote: Newlines should be preserved."
                     }
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "id",
-                        "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Id",
-                            "safeName": "Id"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:id"
-                }
+                "type_:id"
             ],
             "examples": [],
             "availability": null,
@@ -1457,33 +1250,7 @@
                 ]
             },
             "referencedTypes": [
-                {
-                    "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERROR",
-                            "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Error",
-                            "safeName": "Error"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    },
-                    "typeId": "type_:Error"
-                }
+                "type_:Error"
             ],
             "examples": [],
             "availability": null,
@@ -1857,6 +1624,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -1942,6 +1710,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -2170,6 +1939,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -2396,6 +2166,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "PATCH",
                     "path": {
@@ -2770,6 +2541,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
                     "path": {
@@ -2962,6 +2734,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3218,6 +2991,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3524,6 +3298,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -3789,6 +3564,7 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
