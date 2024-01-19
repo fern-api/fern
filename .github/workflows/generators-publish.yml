@@ -1,0 +1,40 @@
+name: Publish Generators
+on:
+  workflow_dispatch:
+    inputs:
+      generator:
+        description: "The generator to publish"
+        required: true
+        type: choice
+        options:
+          - Ruby
+      version:
+        description: "The version to publish"
+        required: true
+        type: string
+
+jobs:
+  # TODO: run seed tests and check
+  #   check:
+  #     uses: ./.github/workflows/check.yml
+  publish-ruby-sdk-docker:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.generator == 'Ruby' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Ruby Model Docker image
+        run: |
+          projectVersion=${{ inputs.version }}
+          yarn workspace @fern-api/fern-ruby-model dockerTagVersion "$projectVersion"
+          docker push fernapi/fern-ruby-model:"$projectVersion"
