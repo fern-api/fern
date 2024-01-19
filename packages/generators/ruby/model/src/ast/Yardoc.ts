@@ -52,11 +52,14 @@ export class Yardoc extends AstNode {
                 });
                 if (this.reference.returnValue !== undefined) {
                     this.addText({
-                        stringContent: this.reference.returnValue.map(rv => rv.typeHint).join(", "),
+                        stringContent: this.reference.returnValue.map((rv) => rv.typeHint).join(", "),
                         templateString: "# @return [%s] ",
                         startingTabSpaces
                     });
-                    this.addText({ stringContent: this.reference.returnValue.map(rv => rv.documentation).join(", "), appendToLastString: true });
+                    this.addText({
+                        stringContent: this.reference.returnValue.map((rv) => rv.documentation).join(", "),
+                        appendToLastString: true
+                    });
                 }
             }
         }

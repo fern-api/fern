@@ -13,39 +13,29 @@ import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
-import { CaseStatement } from "./CaseStatement";
+import { RescueStatement } from "./RescueStatement";
 
-export declare namespace DiscriminatedUnion {
-    export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions"> {
-        discriminatingField: string;
-        namedSubclasses: Map<string, ClassReference>;
-        defaultSubclassReference: ClassReference;
+export declare namespace UndiscriminatedUnion {
+    export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions" | "properties"> {
+        memberClasses: ClassReference[];
     }
 }
-export class DiscriminatedUnion extends Class_ {
-    constructor(init: DiscriminatedUnion.Init) {
+export class UndiscriminatedUnion extends Class_ {
+    constructor({ memberClasses, ...rest }: UndiscriminatedUnion.Init) {
+        // TODO: this should be multiple types
         const memberProperty = new Property({ name: "member", type: GenericClassReference });
-        const properties = [memberProperty, ...(init.properties ?? [])];
+        const properties = [memberProperty];
 
         super({
-            ...init,
+            ...rest,
             properties,
             functions: [
-                DiscriminatedUnion.createFromJsonFunction(
-                    init.discriminatingField,
-                    memberProperty,
-                    init.namedSubclasses,
-                    init.classReference,
-                    init.defaultSubclassReference
-                ),
-                DiscriminatedUnion.createToJsonFunction(memberProperty),
-                DiscriminatedUnion.createValidateRawFunction(init.discriminatingField, init.namedSubclasses),
-                DiscriminatedUnion.createIsAFunction(memberProperty),
-                ...DiscriminatedUnion.createStaticGeneratorFunctions(init.namedSubclasses, memberProperty)
+                UndiscriminatedUnion.createFromJsonFunction(memberProperty, memberClasses, rest.classReference),
+                UndiscriminatedUnion.createToJsonFunction(memberProperty),
+                UndiscriminatedUnion.createValidateRawFunction(memberClasses),
+                UndiscriminatedUnion.createIsAFunction(memberProperty)
             ],
             expressions: [
-                // Hide the initializer for union classes
-                new Expression({ rightSide: "private_class_method :new" }),
                 // Since we're overriding is_a, we also alias kind_of to it
                 new Expression({ rightSide: "alias kind_of? is_a?" })
             ],
@@ -54,13 +44,11 @@ export class DiscriminatedUnion extends Class_ {
     }
 
     private static createFromJsonFunction(
-        discriminantField: string,
         memberProperty: Property,
-        namedSubclasses: Map<string, ClassReference>,
-        classReference: ClassReference,
-        defaultSubclassReference: ClassReference
+        subclasses: ClassReference[],
+        classReference: ClassReference
     ): Function_ {
-        const jsonObjectParamName = "json_object";
+        const jsonObjectParameter = new Parameter({ name: "json_object", type: JsonClassReference });
         const functionBody = [
             new Expression({
                 leftSide: "struct",
@@ -69,7 +57,7 @@ export class DiscriminatedUnion extends Class_ {
                     baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
-                            value: jsonObjectParamName,
+                            value: jsonObjectParameter.name,
                             type: GenericClassReference,
                             isNamed: false
                         }),
@@ -83,39 +71,38 @@ export class DiscriminatedUnion extends Class_ {
                 }),
                 isAssignment: true
             }),
-            new CaseStatement({
-                case_: `struct.${discriminantField}`,
-                whenBlocks: new Map(
-                    Array.from(namedSubclasses.entries()).map(([name, classReference]) => [
-                        `"${name}"`,
-                        [
+            ...subclasses.map(
+                (sc) =>
+                    new RescueStatement({
+                        begin: [
+                            new Expression({
+                                rightSide: sc.validateRaw("struct"),
+                                isAssignment: false
+                            }),
                             new Expression({
                                 leftSide: memberProperty.name,
-                                rightSide: classReference.fromJson(jsonObjectParamName) ?? jsonObjectParamName,
+                                rightSide: sc.fromJson(jsonObjectParameter.name) ?? jsonObjectParameter.name,
                                 isAssignment: true
+                            }),
+                            new Expression({
+                                leftSide: "return",
+                                rightSide: new FunctionInvocation({
+                                    baseFunction: new Function_({ name: "new", functionBody: [] }),
+                                    arguments_: [memberProperty.toArgument(memberProperty.name, true)]
+                                }),
+                                isAssignment: false
                             })
-                        ]
-                    ])
-                ),
-                else_: [
-                    new Expression({
-                        leftSide: memberProperty.name,
-                        rightSide: defaultSubclassReference.fromJson(jsonObjectParamName) ?? jsonObjectParamName,
-                        isAssignment: true
+                        ],
+                        rescue: []
                     })
-                ]
-            }),
-            new FunctionInvocation({
-                baseFunction: new Function_({ name: "new", functionBody: [] }),
-                arguments_: [memberProperty.toArgument(memberProperty.name, true)]
-            })
+            )
         ];
-        const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
+
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
         return new Function_({
             name: "from_json",
-            returnValue: Array.from(namedSubclasses.values()),
-            parameters,
+            returnValue: subclasses,
+            parameters: [jsonObjectParameter],
             functionBody,
             documentation: fromJsonDocumentation,
             isStatic: true
@@ -137,31 +124,28 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
-    private static createValidateRawFunction(
-        discriminantField: string,
-        namedSubclasses: Map<string, ClassReference>
-    ): Function_ {
+    private static createValidateRawFunction(subclasses: ClassReference[]): Function_ {
         const parameterName = "obj";
+
         const functionBody = [
-            new CaseStatement({
-                case_: `${parameterName}.${discriminantField}`,
-                whenBlocks: new Map(
-                    Array.from(namedSubclasses.entries()).map(([name, classReference]) => [
-                        `"${name}"`,
-                        [new Expression({ rightSide: classReference.validateRaw(parameterName), isAssignment: true })]
-                    ])
-                ),
-                else_: [
-                    new Expression({
-                        rightSide: 'raise("Passed value matched no type within the union, validation failed.")',
-                        isAssignment: true
+            ...subclasses.map(
+                (sc) =>
+                    new RescueStatement({
+                        begin: [
+                            new Expression({
+                                leftSide: "return",
+                                rightSide: sc.validateRaw(parameterName),
+                                isAssignment: false
+                            })
+                        ],
+                        rescue: []
                     })
-                ]
-            })
+            ),
+            new Expression({ rightSide: 'raise("Passed value matched no type within the union, validation failed.")' })
         ];
+
         const validateRawDocumentation =
             "Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.";
-
         return new Function_({
             name: "validate_raw",
             returnValue: VoidClassReference,
@@ -170,27 +154,6 @@ export class DiscriminatedUnion extends Class_ {
             documentation: validateRawDocumentation,
             isStatic: true
         });
-    }
-
-    private static createStaticGeneratorFunctions(
-        namedSubclasses: Map<string, ClassReference>,
-        memberProperty: Property
-    ): Function_[] {
-        const parameterName = "member";
-        return Array.from(namedSubclasses.entries()).map(
-            ([name, classReference]) =>
-                new Function_({
-                    name,
-                    functionBody: [
-                        new FunctionInvocation({
-                            baseFunction: new Function_({ name: "new", functionBody: [] }),
-                            arguments_: [memberProperty.toArgument(parameterName, true)]
-                        })
-                    ],
-                    isStatic: true,
-                    parameters: [new Parameter({ name: parameterName, type: classReference })]
-                })
-        );
     }
 
     private static createIsAFunction(memberProperty: Property): Function_ {
