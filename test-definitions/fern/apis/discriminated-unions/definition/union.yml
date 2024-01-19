@@ -16,6 +16,8 @@ types:
         type: Goat
       # unionType: singleProperty
       seaAnimal: SeaCritter
+      # unionType: noProperty
+      ghost: {}
 
   SeaCritter:
     discriminant: animal
