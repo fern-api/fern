@@ -8,14 +8,16 @@ types:
       dog: Dog
       # unionType: samePropertiesAsObject
       cat: Cat
+
       # unionType: singleProperty
       lizard: string
-      # unionType: samePropertiesAsObject
+      # unionType: singleProperty
       goat:
         key: type
         type: Goat
       # unionType: singleProperty
       seaAnimal: SeaCritter
+
       # unionType: noProperty
       ghost: {}
 
