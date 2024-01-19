@@ -35,7 +35,7 @@ jobs:
         run: |
           cd packages/generators/ruby
           yarn install
-          seed test --workspace model --parallel 8
+          seed test --log-level debug --workspace model --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
