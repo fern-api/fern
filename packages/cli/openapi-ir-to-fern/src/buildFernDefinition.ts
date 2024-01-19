@@ -7,6 +7,7 @@ import { buildGlobalHeaders } from "./buildGlobalHeaders";
 import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
 import { buildTypeReference } from "./buildTypeReference";
+import { buildVariables } from "./buildVariables";
 import { buildWebhooks } from "./buildWebhooks";
 import { FernDefinition } from "./FernDefnitionBuilder";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -22,6 +23,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     buildEnvironments(context);
     buildGlobalHeaders(context);
     buildAuthSchemes(context);
+    buildVariables(context);
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
