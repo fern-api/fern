@@ -1,26 +1,25 @@
 name: publish-generator
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      generator:
+        description: "The generator to publish"
+        required: true
+        type: choice
+        options:
+          - Ruby
+      version:
+        description: "The version to publish"
+        required: true
+        type: string
 
 jobs:
   # TODO: run seed tests and check
   #   check:
   #     uses: ./.github/workflows/check.yml
-  application-version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Get version
-        id: version
-        run: |
-          version=`./scripts/git-version.sh`
-          echo "::set-output name=version::$version"
-
   publish-ruby-sdk-docker:
     runs-on: ubuntu-latest
-    needs: application-version
+    if: ${{ inputs.generator == 'Ruby' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -36,6 +35,6 @@ jobs:
 
       - name: Build and push Ruby Model Docker image
         run: |
-          projectVersion=$(./scripts/git-version.sh)
+          projectVersion=${{ inputs.version }}
           yarn workspace @fern-api/fern-ruby-model dockerTagVersion "$projectVersion"
           docker push fernapi/fern-ruby-model:"$projectVersion"
