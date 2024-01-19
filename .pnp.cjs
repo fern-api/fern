@@ -3987,6 +3987,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:3516dfa9f5005cb8eb0c0a9304c51c36735a692c4fd22a9a174546be3f5edb8ceeafaa7b251f6cf64f503f1e88a6fa52abfa98a34b240e9f7c7afc78a62cedf4#npm:2.0.0"],\
+            ["tmp-promise", "npm:3.0.3"],\
             ["ts-loader", "virtual:3516dfa9f5005cb8eb0c0a9304c51c36735a692c4fd22a9a174546be3f5edb8ceeafaa7b251f6cf64f503f1e88a6fa52abfa98a34b240e9f7c7afc78a62cedf4#npm:9.5.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["webpack", "virtual:3516dfa9f5005cb8eb0c0a9304c51c36735a692c4fd22a9a174546be3f5edb8ceeafaa7b251f6cf64f503f1e88a6fa52abfa98a34b240e9f7c7afc78a62cedf4#npm:5.76.0"],\

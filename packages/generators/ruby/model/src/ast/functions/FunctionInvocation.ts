@@ -1,14 +1,13 @@
 import { BLOCK_END } from "../../utils/Constants";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Variable } from "../Variable";
 
 interface BlockConfiguration {
     arguments?: string;
-    expressions: Expression[];
+    expressions: AstNode[];
 }
 export declare namespace FunctionInvocation {
     export interface Init extends AstNode.Init {
@@ -49,13 +48,6 @@ export class FunctionInvocation extends AstNode {
             );
             this.addText({ stringContent: BLOCK_END, startingTabSpaces });
         }
-        //         return this.block
-        //             ? `
-        // do ${this.block.arguments !== undefined && "|" + this.block.arguments + "|"}
-        // ${this.block.expressions.map((exp) => exp.write(startingTabSpaces))}
-        // end
-        // `
-        //             : undefined;
     }
 
     private writeArgmuments(): string {
@@ -70,7 +62,6 @@ export class FunctionInvocation extends AstNode {
         this.addText({ stringContent: this.baseFunction.name, startingTabSpaces, appendToLastString: true });
         this.addText({ stringContent: this.writeArgmuments(), appendToLastString: true });
         this.writeBlock(startingTabSpaces);
-        // this.addText({ stringContent: this.writeBlock(startingTabSpaces), appendToLastString: true });
     }
 
     public getImports(): Set<Import> {

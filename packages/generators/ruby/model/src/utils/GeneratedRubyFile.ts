@@ -8,12 +8,12 @@ export declare namespace GeneratedRubyFile {
     export interface Init {
         rootNode: AstNode;
         directoryPrefix: RelativeFilePath;
-        entityName: Name;
+        entityName: Name | string;
         isTestFile?: boolean;
     }
 }
 export class GeneratedRubyFile extends GeneratedFile {
-    public entityName: Name;
+    public entityName: Name | string;
     public rootNode: AstNode;
 
     constructor({ rootNode, directoryPrefix, entityName, isTestFile = false }: GeneratedRubyFile.Init) {
@@ -24,7 +24,11 @@ export class GeneratedRubyFile extends GeneratedFile {
         const updatedPrefix = isTestFile
             ? join(RelativeFilePath.of("test"), directoryPrefix)
             : join(RelativeFilePath.of("lib"), directoryPrefix);
-        super(`${entityName.snakeCase.safeName}.rb`, updatedPrefix, FROZEN_STRING_PREFIX + rootNode.write());
+        super(
+            typeof entityName === "string" ? entityName : `${entityName.snakeCase.safeName}.rb`,
+            updatedPrefix,
+            FROZEN_STRING_PREFIX + rootNode.write()
+        );
 
         this.entityName = entityName;
         this.rootNode = rootNode;
