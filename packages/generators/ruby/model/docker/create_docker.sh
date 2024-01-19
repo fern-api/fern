@@ -5,7 +5,7 @@ set -e
 TAG="$1"
 DOCKER_NAME=fernapi/fern-ruby-model:"$TAG"
 echo Creating image: "$DOCKER_NAME"
-DOCKER_DIR="$( cd -- "$( dirname -- "$( readlink -f -- "$0"; )"; )" &> /dev/null && pwd 2> /dev/null; )";
+DOCKER_DIR="$( dirname -- "$( readlink -f -- "$0"; )"; )";
 echo DOCKER_DIR: "$DOCKER_DIR"
 ROOT_DIR="$DOCKER_DIR/../../../../.."
 WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.cjs"
