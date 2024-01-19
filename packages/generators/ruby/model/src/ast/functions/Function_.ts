@@ -1,4 +1,5 @@
 import { BLOCK_END } from "../../utils/Constants";
+import { CaseStatement } from "../abstractions/CaseStatement";
 import { ClassReference } from "../classes/ClassReference";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
@@ -10,11 +11,11 @@ import { FunctionInvocation } from "./FunctionInvocation";
 export declare namespace Function_ {
     export interface Init extends AstNode.Init {
         name: string;
-        functionBody: (Expression | FunctionInvocation)[];
+        functionBody: (Expression | FunctionInvocation | CaseStatement)[];
         parameters?: Parameter[];
         isAsync?: boolean;
         isStatic?: boolean;
-        returnValue?: ClassReference;
+        returnValue?: ClassReference | ClassReference[];
     }
 }
 export class Function_ extends AstNode {
@@ -22,8 +23,8 @@ export class Function_ extends AstNode {
 
     public parameters: Parameter[];
     // Could make this an Expression, but returns are specific to functions, so might leave it here for now
-    public returnValue: ClassReference | undefined;
-    public functionBody: (Expression | FunctionInvocation)[];
+    public returnValue: ClassReference[];
+    public functionBody: (Expression | FunctionInvocation | CaseStatement)[];
     public isAsync: boolean;
     public isStatic: boolean;
     public yardoc: Yardoc;
@@ -40,12 +41,12 @@ export class Function_ extends AstNode {
         super(rest);
         this.name = name;
         this.parameters = parameters;
-        this.returnValue = returnValue;
+        this.returnValue = (returnValue instanceof ClassReference ? [returnValue] : returnValue) ?? [];
         this.functionBody = functionBody;
         this.isAsync = isAsync;
         this.isStatic = isStatic;
 
-        this.yardoc = new Yardoc({ reference: { name: "docString", parameters, returnValue } });
+        this.yardoc = new Yardoc({ reference: { name: "docString", parameters, returnValue: this.returnValue } });
     }
 
     private writeParameters(): string | undefined {
@@ -74,9 +75,7 @@ export class Function_ extends AstNode {
     public getImports(): Set<Import> {
         let imports = new Set<Import>();
         this.parameters.forEach((param) => (imports = new Set([...imports, ...param.getImports()])));
-        if (this.returnValue) {
-            imports = new Set([...imports, ...this.returnValue.getImports()]);
-        }
+        this.returnValue.forEach(rv => imports = new Set([...imports, ...rv.getImports()]));
         this.functionBody.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
         return imports;
     }

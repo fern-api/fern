@@ -7,12 +7,12 @@ export declare namespace Argument {
     export interface Named extends AstNode.Init {
         name: string;
         type: ClassReference;
-        value: Variable | string;
+        value: FunctionInvocation | Variable | string;
         readonly isNamed: true;
     }
     export interface Unnamed extends AstNode.Init {
         type: ClassReference;
-        value: Variable | string;
+        value: FunctionInvocation | Variable | string;
         readonly isNamed: false;
     }
 }
@@ -20,7 +20,7 @@ export declare namespace Argument {
 export class Argument extends AstNode {
     public name: string | undefined;
     public type: ClassReference;
-    public value: Variable | string;
+    public value: FunctionInvocation | Variable | string;
 
     constructor({ type, value, ...rest }: Argument.Named | Argument.Unnamed) {
         super(rest);

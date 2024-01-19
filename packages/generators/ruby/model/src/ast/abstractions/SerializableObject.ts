@@ -121,14 +121,17 @@ export class SerializableObject extends Class_ {
     }
 
     private static createValidateRawFunction(properties: Property[] | undefined): Function_ {
-        const functionBody = properties?.map((prop) => prop.type.validateRaw(prop.toVariable(), prop.isOptional)) ?? [];
+        const parameterName = "obj";
+        const functionBody = properties?.map((prop) => prop.type.validateRaw(`${parameterName}.${prop.name}`, prop.isOptional)) ?? [];
         const validateRawDocumentation =
             "Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.";
         return new Function_({
             name: "validate_raw",
             returnValue: VoidClassReference,
             functionBody,
-            documentation: validateRawDocumentation
+            documentation: validateRawDocumentation,
+            isStatic: true,
+            parameters: [new Parameter({name: parameterName, type: GenericClassReference})],
         });
     }
 }

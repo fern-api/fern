@@ -3,10 +3,14 @@ import {
     DeclaredTypeName,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
     TypeDeclaration,
-    TypeReference
+    TypeReference,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { TYPES_DIRECTORY } from "../utils/Constants";
+import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
 import { Enum, EnumReference } from "./abstractions/Enum";
 import { SerializableObject } from "./abstractions/SerializableObject";
 import { ClassReference } from "./classes/ClassReference";
@@ -91,6 +95,41 @@ export function generateSerializableObjectFromTypeDeclaration(
         classReference,
         extendedClasses,
         properties
+    });
+}
+
+function visitUnionType(unionShape: SingleUnionTypeProperties) {
+    return unionShape._visit({
+        samePropertiesAsObject: (value: DeclaredTypeName) => ,
+        singleProperty: (value: SingleUnionTypeProperty),
+        noProperties: () => ,
+        _other: () => {
+            throw new Error(
+                "Unknown SingleUnionTypeProperties type: " + unionShape.propertiesType
+            );
+        }
+    })
+}
+
+export function generateUnionFromTypeDeclaration(
+    unionTypeDeclaration: UnionTypeDeclaration,
+    typeDeclaration: TypeDeclaration
+): DiscriminatedUnion {
+    const extendedClasses = unionTypeDeclaration.extends.map((extendedType) =>
+        ClassReference.fromDeclaredTypeName(extendedType)
+    );
+    const namedSubclasses = unionTypeDeclaration.types.map(
+        (t) => [t.discriminantValue.name.snakeCase.safeName, new ClassReference()]
+            
+    );
+
+    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    return new DiscriminatedUnion({
+        classReference,
+        extendedClasses,
+        discriminatingField: unionTypeDeclaration.discriminant.name.snakeCase.safeName,
+        namedSubclasses,
+        defaultSubclassReference: namedSubclasses[0]
     });
 }
 

@@ -118,7 +118,7 @@ export class ClassReference extends AstNode {
             integer: () => new ClassReference({ name: RubyClass.INTEGER }),
             double: () => new ClassReference({ name: RubyClass.DOUBLE }),
             string: () => new ClassReference({ name: RubyClass.STRING }),
-            boolean: () => new ClassReference({ name: RubyClass.BOOLEAN }),
+            boolean: () => BooleanClassReference,
             long: () => new ClassReference({ name: RubyClass.LONG }),
             dateTime: () => new ClassReference({ name: RubyClass.DATETIME }),
             date: () => new ClassReference({ name: RubyClass.DATE }),
@@ -144,7 +144,7 @@ export class ClassReference extends AstNode {
             literal: (lit: Literal) =>
                 Literal._visit<ClassReference>(lit, {
                     string: () => new ClassReference({ name: RubyClass.STRING }),
-                    boolean: () => new ClassReference({ name: RubyClass.BOOLEAN }),
+                    boolean: () => BooleanClassReference,
                     _other: (value: { type: string }) => new ClassReference({ name: value.type })
                 }),
             _other: () => {
@@ -162,6 +162,7 @@ export const OpenStructClassReference = new ClassReference({ name: RubyClass.OPE
 export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
 export const JsonClassReference = new ClassReference({ name: RubyClass.JSON });
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
+export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {
@@ -187,7 +188,7 @@ export class SerializableObjectReference extends ClassReference {
             baseFunction: new Function_({ name: "validate_raw", functionBody: [] }),
             // Recreate the variable to force isOptional to raise if a required variable is optional
             onObject: this,
-            arguments_: [new Argument({ value: variable, isNamed: true, name: "struct", type: GenericClassReference })]
+            arguments_: [new Argument({ value: variable, isNamed: true, name: "obj", type: GenericClassReference })]
         });
 
         return !isOptional
