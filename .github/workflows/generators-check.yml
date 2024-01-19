@@ -16,7 +16,7 @@ jobs:
         id: filter
         with:
           filters: |
-            ruby: 'ruby/**'
+            ruby: 'packages/generators/ruby/**'
 
   seed-ruby-model-test:
     runs-on: ubuntu-latest
