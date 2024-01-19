@@ -32,6 +32,7 @@ import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.CasingUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -221,7 +222,14 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     }
 
     private static String getRootClientName(AbstractGeneratorContext<?, ?> generatorContext) {
-        return generatorContext.getIr().getApiName().getPascalCase().getSafeName();
+        return getRootClientPrefix(generatorContext) + "Client";
+    }
+
+    private static String getRootClientPrefix(AbstractGeneratorContext<?, ?> generatorContext) {
+        return CasingUtils.convertKebabCaseToUpperCamelCase(
+                        generatorContext.getGeneratorConfig().getOrganization())
+                + CasingUtils.convertKebabCaseToUpperCamelCase(
+                        generatorContext.getGeneratorConfig().getWorkspaceName());
     }
 
     private final class AuthSchemeHandler implements AuthScheme.Visitor<Void> {

@@ -8,6 +8,6 @@ import java.lang.String;
 
 public final class App {
   public static void main(String[] args) {
-    // import com.seed.singleUrlEnvironmentNoDefault.SingleUrlEnvironmentNoDefault
+    // import com.seed.singleUrlEnvironmentNoDefault.SeedSingleUrlEnvironmentNoDefaultClient
   }
 }

@@ -24,6 +24,7 @@ import com.fern.ir.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.List;
+import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
@@ -47,14 +48,13 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
     }
 
     public ClassName getClientClassName(Subpackage subpackage) {
-        String packageName =
-                getPackageForFernfilepath(subpackage.getFernFilepath().getAllParts());
+        String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
-        String packageName = getPackageForFernfilepath(
-                httpService.getName().getFernFilepath().getAllParts());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         return ClassName.get(
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }

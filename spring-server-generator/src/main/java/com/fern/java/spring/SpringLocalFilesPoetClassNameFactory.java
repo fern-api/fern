@@ -34,27 +34,27 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
 
     public ClassName getErrorControllerAdviceName(DeclaredErrorName declaredTypeName) {
         String packageName =
-                getPackageForFernfilepath(declaredTypeName.getFernFilepath().getAllParts());
+                getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("handlers"));
         return ClassName.get(
                 packageName, declaredTypeName.getName().getPascalCase().getUnsafeName() + "ExceptionHandler");
     }
 
     public ClassName getErrorClassName(DeclaredErrorName declaredTypeName) {
         String packageName =
-                getPackageForFernfilepath(declaredTypeName.getFernFilepath().getAllParts());
+                getResourcesPackage(Optional.of(declaredTypeName.getFernFilepath()), Optional.of("exceptions"));
         return ClassName.get(
                 packageName, declaredTypeName.getName().getPascalCase().getSafeName());
     }
 
     public ClassName getServiceInterfaceClassName(HttpService httpService) {
-        String packageName = getPackageForFernfilepath(
-                httpService.getName().getFernFilepath().getAllParts());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getServiceName(httpService.getName().getFernFilepath()));
     }
 
     public ClassName getInlinedRequestBodyClassName(HttpService httpService, InlinedRequestBody inlinedRequestBody) {
-        String packageName = getPackageForFernfilepath(
-                httpService.getName().getFernFilepath().getAllParts());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         return ClassName.get(
                 packageName, inlinedRequestBody.getName().getPascalCase().getSafeName());
     }
