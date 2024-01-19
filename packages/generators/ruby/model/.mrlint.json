@@ -6,6 +6,10 @@
         "dockerTagLocal": "sh ./docker/create_docker.sh local",
         "dockerTagVersion": "sh ./docker/create_docker.sh"
       }
+    },
+    "depcheck": {
+      "ignores": ["webpack", "webpack-cli", "ts-loader"],
+      "ignore-patterns": ["docker/bundle.js"]
     }
   },
   "private": false
