@@ -42,7 +42,7 @@
     "@typescript-eslint/parser": "^5.27.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.50.0",
-    "eslint-plugin-deprecation": "^1.3.2",
+    "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-jest": "^26.5.3",
     "execa": "^8.0.1",
     "husky": "^8.0.3",
