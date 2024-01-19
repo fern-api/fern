@@ -1,4 +1,12 @@
 {
   "type": "library",
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "dockerTagLocal": "sh ./docker/create_docker.sh local",
+        "dockerTagVersion": "sh ./docker/create_docker.sh"
+      }
+    }
+  },
   "private": false
 }
