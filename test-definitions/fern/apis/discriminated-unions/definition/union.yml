@@ -1,0 +1,32 @@
+types:
+  Animal:
+    discriminant: animal
+    union:
+      dog: Dog
+      cat: Cat
+      lizard: string
+      goat:
+        key: type
+        value: Goat
+      ghost:
+
+  Dog:
+    properties:
+      name: string
+      likesToWoof: boolean
+
+  Cat:
+    properties:
+      name: string
+      likesToMeow: boolean
+
+  Goat:
+    properties:
+      name: string
+      likesToBaa: boolean
+
+
+errors:
+  ErrorWithUnionBody:
+    status-code: 400
+    type: Animal #has to send either dog or cat object in error body
