@@ -13,11 +13,9 @@ types:
       # unionType: samePropertiesAsObject
       goat:
         key: type
-        value: Goat
+        type: Goat
       # unionType: singleProperty
       seaAnimal: SeaCritter
-      # unionType: noProperty
-      ghost:
 
   SeaCritter:
     discriminant: animal
@@ -49,9 +47,3 @@ types:
     properties:
       name: string
       likesToBaa: boolean
-
-
-errors:
-  ErrorWithUnionBody:
-    status-code: 400
-    type: Animal #has to send either dog or cat object in error body
