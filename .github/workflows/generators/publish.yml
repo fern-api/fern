@@ -1,4 +1,4 @@
-name: publish-generator
+name: Publish Generators
 on:
   workflow_dispatch:
     inputs:

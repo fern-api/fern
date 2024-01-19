@@ -1,0 +1,40 @@
+name: Run Seed Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      generators_changed: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            ruby: 'ruby/**'
+
+  seed-ruby-model-test:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.generators_changed.ruby == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Install Seed
+        run: npm install -g @fern-api/seed-cli@0.16.12-rc1
+
+      - name: Seed Test
+        run: |
+        cd packages/generators/ruby
+        seed test --workspace ruby-model --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
