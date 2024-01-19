@@ -1,0 +1,12 @@
+irVersion: v31
+docker: fernapi/fern-ruby-model:local
+dockerCommand: yarn workspace @fern-api/fern-ruby-model dockerTagLocal
+language: ruby
+generatorType: model
+defaultOutputMode: github
+fixtures: []
+scripts:
+  - docker: node:lts-slim
+    commands:
+      - yarn install
+      - yarn build

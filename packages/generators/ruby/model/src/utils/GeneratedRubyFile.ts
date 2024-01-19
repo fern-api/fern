@@ -21,7 +21,7 @@ export class GeneratedRubyFile extends GeneratedFile {
         // otherwise, relative path is:
         // lib/client_class_name.rb or request_client.rb or environment.rb or exception.rb OR
         // /lib/client_class_name/package_name/services/service_name.rb OR /lib/client_class_name/package_name/types/type_name.rb
-        const updatedPrefix = isTestFile ? join("test", directoryPrefix) : join("lib", directoryPrefix);
+        const updatedPrefix = isTestFile ? join(RelativeFilePath.of("test"), directoryPrefix) : join(RelativeFilePath.of("lib"), directoryPrefix);
         super(`${entityName.snakeCase.safeName}.rb`, updatedPrefix, FROZEN_STRING_PREFIX + rootNode.write());
 
         this.entityName = entityName;
