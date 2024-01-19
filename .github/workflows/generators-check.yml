@@ -33,8 +33,8 @@ jobs:
 
       - name: Seed Test
         run: |
-        cd packages/generators/ruby
-        seed test --workspace ruby-model --parallel 8
+          cd packages/generators/ruby
+          seed test --workspace ruby-model --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
