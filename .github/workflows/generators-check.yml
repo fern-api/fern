@@ -21,7 +21,7 @@ jobs:
   seed-ruby-model-test:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.generators_changed.ruby == 'true' }}
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
