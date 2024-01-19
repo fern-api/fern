@@ -1,14 +1,39 @@
+# Seed definition to demonstrate the different types of 
+# discriminated unions, defined explictly by the SingleUnionType visitor.
 types:
   Animal:
     discriminant: animal
     union:
+      # unionType: samePropertiesAsObject
       dog: Dog
+      # unionType: samePropertiesAsObject
       cat: Cat
+      # unionType: singleProperty
       lizard: string
+      # unionType: samePropertiesAsObject
       goat:
         key: type
         value: Goat
+      # unionType: singleProperty
+      seaAnimal: SeaCritter
+      # unionType: noProperty
       ghost:
+
+  SeaCritter:
+    discriminant: animal
+    union:
+      fish: Fish
+      squid: Squid
+
+  Fish:
+    properties:
+      name: string
+      likesToSwim: boolean
+
+  Squid:
+    properties:
+      name: string
+      likesToInk: boolean
 
   Dog:
     properties:
