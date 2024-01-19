@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -55,7 +56,7 @@ public final class BearerAuthGenerator extends AbstractFileGenerator {
                 .addMethod(MethodSpec.methodBuilder("toString")
                         .addModifiers(Modifier.PUBLIC)
                         .returns(String.class)
-                        .addAnnotation(Override.class)
+                        .addAnnotation(ClassName.get("", "java.lang.Override"))
                         .addStatement("return $S + $L()", "Bearer ", GET_TOKEN_METHOD_NAME)
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")

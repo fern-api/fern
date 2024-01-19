@@ -122,7 +122,7 @@ public final class ProblemInfo {
         return supportsCustomTestCases;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProblemInfo && equalTo((ProblemInfo) other);
@@ -146,7 +146,7 @@ public final class ProblemInfo {
                 && supportsCustomTestCases == other.supportsCustomTestCases;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.problemId,
@@ -161,7 +161,7 @@ public final class ProblemInfo {
                 this.supportsCustomTestCases);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -257,7 +257,7 @@ public final class ProblemInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProblemInfo other) {
             problemId(other.getProblemId());
             problemDescription(other.getProblemDescription());
@@ -272,68 +272,68 @@ public final class ProblemInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemId")
         public ProblemDescriptionStage problemId(String problemId) {
             this.problemId = problemId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemDescription")
         public ProblemNameStage problemDescription(ProblemDescription problemDescription) {
             this.problemDescription = problemDescription;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemName")
         public ProblemVersionStage problemName(String problemName) {
             this.problemName = problemName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemVersion")
         public OutputTypeStage problemVersion(int problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("outputType")
         public MethodNameStage outputType(VariableType outputType) {
             this.outputType = outputType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("methodName")
         public SupportsCustomTestCasesStage methodName(String methodName) {
             this.methodName = methodName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("supportsCustomTestCases")
         public _FinalStage supportsCustomTestCases(boolean supportsCustomTestCases) {
             this.supportsCustomTestCases = supportsCustomTestCases;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllTestcases(List<TestCaseWithExpectedResult> testcases) {
             this.testcases.addAll(testcases);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addTestcases(TestCaseWithExpectedResult testcases) {
             this.testcases.add(testcases);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "testcases", nulls = Nulls.SKIP)
         public _FinalStage testcases(List<TestCaseWithExpectedResult> testcases) {
             this.testcases.clear();
@@ -341,19 +341,19 @@ public final class ProblemInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllInputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.addAll(inputParams);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addInputParams(VariableTypeAndName inputParams) {
             this.inputParams.add(inputParams);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inputParams", nulls = Nulls.SKIP)
         public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.clear();
@@ -361,19 +361,19 @@ public final class ProblemInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage files(Language key, ProblemFiles value) {
             this.files.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllFiles(Map<Language, ProblemFiles> files) {
             this.files.putAll(files);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "files", nulls = Nulls.SKIP)
         public _FinalStage files(Map<Language, ProblemFiles> files) {
             this.files.clear();
@@ -381,7 +381,7 @@ public final class ProblemInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProblemInfo build() {
             return new ProblemInfo(
                     problemId,

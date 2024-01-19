@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,7 +49,7 @@ public final class RecordedResponseNotification {
     return testCaseId;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof RecordedResponseNotification && equalTo((RecordedResponseNotification) other);
@@ -60,12 +59,12 @@ public final class RecordedResponseNotification {
     return submissionId.equals(other.submissionId) && traceResponsesSize == other.traceResponsesSize && testCaseId.equals(other.testCaseId);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.submissionId, this.traceResponsesSize, this.testCaseId);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -105,7 +104,7 @@ public final class RecordedResponseNotification {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(RecordedResponseNotification other) {
       submissionId(other.getSubmissionId());
       traceResponsesSize(other.getTraceResponsesSize());
@@ -113,27 +112,27 @@ public final class RecordedResponseNotification {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submissionId")
     public TraceResponsesSizeStage submissionId(SubmissionId submissionId) {
       this.submissionId = submissionId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("traceResponsesSize")
     public _FinalStage traceResponsesSize(int traceResponsesSize) {
       this.traceResponsesSize = traceResponsesSize;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage testCaseId(String testCaseId) {
       this.testCaseId = Optional.of(testCaseId);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "testCaseId",
         nulls = Nulls.SKIP
@@ -143,7 +142,7 @@ public final class RecordedResponseNotification {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public RecordedResponseNotification build() {
       return new RecordedResponseNotification(submissionId, traceResponsesSize, testCaseId);
     }

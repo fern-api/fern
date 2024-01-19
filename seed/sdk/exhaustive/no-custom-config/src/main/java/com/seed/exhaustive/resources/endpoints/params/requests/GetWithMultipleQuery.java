@@ -40,7 +40,7 @@ public final class GetWithMultipleQuery {
         return numer;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetWithMultipleQuery && equalTo((GetWithMultipleQuery) other);
@@ -55,12 +55,12 @@ public final class GetWithMultipleQuery {
         return query.equals(other.query) && numer == other.numer;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.query, this.numer);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class GetWithMultipleQuery {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetWithMultipleQuery other) {
             query(other.getQuery());
             numer(other.getNumer());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("query")
         public NumerStage query(String query) {
             this.query = query;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("numer")
         public _FinalStage numer(int numer) {
             this.numer = numer;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetWithMultipleQuery build() {
             return new GetWithMultipleQuery(query, numer, additionalProperties);
         }

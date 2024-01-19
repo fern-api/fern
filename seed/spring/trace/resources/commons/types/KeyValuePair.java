@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class KeyValuePair {
     return value;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof KeyValuePair && equalTo((KeyValuePair) other);
@@ -49,12 +48,12 @@ public final class KeyValuePair {
     return key.equals(other.key) && value.equals(other.value);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.key, this.value);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class KeyValuePair {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(KeyValuePair other) {
       key(other.getKey());
       value(other.getValue());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("key")
     public ValueStage key(VariableValue key) {
       this.key = key;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("value")
     public _FinalStage value(VariableValue value) {
       this.value = value;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public KeyValuePair build() {
       return new KeyValuePair(key, value);
     }

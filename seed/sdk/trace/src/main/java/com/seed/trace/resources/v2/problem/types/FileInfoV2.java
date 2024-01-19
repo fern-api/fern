@@ -61,7 +61,7 @@ public final class FileInfoV2 {
         return editable;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FileInfoV2 && equalTo((FileInfoV2) other);
@@ -79,12 +79,12 @@ public final class FileInfoV2 {
                 && editable == other.editable;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.filename, this.directory, this.contents, this.editable);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -131,7 +131,7 @@ public final class FileInfoV2 {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FileInfoV2 other) {
             filename(other.getFilename());
             directory(other.getDirectory());
@@ -140,35 +140,35 @@ public final class FileInfoV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("filename")
         public DirectoryStage filename(String filename) {
             this.filename = filename;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("directory")
         public ContentsStage directory(String directory) {
             this.directory = directory;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("contents")
         public EditableStage contents(String contents) {
             this.contents = contents;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("editable")
         public _FinalStage editable(boolean editable) {
             this.editable = editable;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FileInfoV2 build() {
             return new FileInfoV2(filename, directory, contents, editable, additionalProperties);
         }

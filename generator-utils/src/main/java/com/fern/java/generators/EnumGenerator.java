@@ -66,7 +66,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
                     .addMethod(MethodSpec.methodBuilder("toString")
                             .addModifiers(Modifier.PUBLIC)
                             .addAnnotation(JsonValue.class)
-                            .addAnnotation(Override.class)
+                            .addAnnotation(ClassName.get("", "java.lang.Override"))
                             .returns(String.class)
                             .addStatement("return this.$L", VALUE_FIELD.name)
                             .build())

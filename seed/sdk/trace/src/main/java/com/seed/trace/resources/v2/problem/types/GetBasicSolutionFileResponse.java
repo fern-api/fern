@@ -36,7 +36,7 @@ public final class GetBasicSolutionFileResponse {
         return solutionFileByLanguage;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetBasicSolutionFileResponse && equalTo((GetBasicSolutionFileResponse) other);
@@ -51,12 +51,12 @@ public final class GetBasicSolutionFileResponse {
         return solutionFileByLanguage.equals(other.solutionFileByLanguage);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.solutionFileByLanguage);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

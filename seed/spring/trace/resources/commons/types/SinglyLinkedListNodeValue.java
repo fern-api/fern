@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,7 +48,7 @@ public final class SinglyLinkedListNodeValue {
     return next;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof SinglyLinkedListNodeValue && equalTo((SinglyLinkedListNodeValue) other);
@@ -59,12 +58,12 @@ public final class SinglyLinkedListNodeValue {
     return nodeId.equals(other.nodeId) && val == other.val && next.equals(other.next);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.nodeId, this.val, this.next);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -104,7 +103,7 @@ public final class SinglyLinkedListNodeValue {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(SinglyLinkedListNodeValue other) {
       nodeId(other.getNodeId());
       val(other.getVal());
@@ -112,27 +111,27 @@ public final class SinglyLinkedListNodeValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("nodeId")
     public ValStage nodeId(NodeId nodeId) {
       this.nodeId = nodeId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("val")
     public _FinalStage val(double val) {
       this.val = val;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage next(NodeId next) {
       this.next = Optional.of(next);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "next",
         nulls = Nulls.SKIP
@@ -142,7 +141,7 @@ public final class SinglyLinkedListNodeValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public SinglyLinkedListNodeValue build() {
       return new SinglyLinkedListNodeValue(nodeId, val, next);
     }

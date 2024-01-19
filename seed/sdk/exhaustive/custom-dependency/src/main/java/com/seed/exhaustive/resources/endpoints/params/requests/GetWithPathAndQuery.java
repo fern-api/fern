@@ -32,7 +32,7 @@ public final class GetWithPathAndQuery {
         return query;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetWithPathAndQuery && equalTo((GetWithPathAndQuery) other);
@@ -47,12 +47,12 @@ public final class GetWithPathAndQuery {
         return query.equals(other.query);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.query);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class GetWithPathAndQuery {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetWithPathAndQuery other) {
             query(other.getQuery());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("query")
         public _FinalStage query(String query) {
             this.query = query;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetWithPathAndQuery build() {
             return new GetWithPathAndQuery(query, additionalProperties);
         }

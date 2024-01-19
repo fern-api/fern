@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import resources.commons.types.Imported;
@@ -32,7 +31,7 @@ public final class ImportingType {
     return imported;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ImportingType && equalTo((ImportingType) other);
@@ -42,12 +41,12 @@ public final class ImportingType {
     return imported.equals(other.imported);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.imported);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -75,20 +74,20 @@ public final class ImportingType {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ImportingType other) {
       imported(other.getImported());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("imported")
     public _FinalStage imported(Imported imported) {
       this.imported = imported;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ImportingType build() {
       return new ImportingType(imported);
     }

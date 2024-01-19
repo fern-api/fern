@@ -32,7 +32,7 @@ public final class TestCaseHiddenGrade {
         return passed;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseHiddenGrade && equalTo((TestCaseHiddenGrade) other);
@@ -47,12 +47,12 @@ public final class TestCaseHiddenGrade {
         return passed == other.passed;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.passed);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class TestCaseHiddenGrade {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestCaseHiddenGrade other) {
             passed(other.getPassed());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("passed")
         public _FinalStage passed(boolean passed) {
             this.passed = passed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestCaseHiddenGrade build() {
             return new TestCaseHiddenGrade(passed, additionalProperties);
         }

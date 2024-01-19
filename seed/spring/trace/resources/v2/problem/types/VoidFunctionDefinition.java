@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public final class VoidFunctionDefinition {
     return code;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof VoidFunctionDefinition && equalTo((VoidFunctionDefinition) other);
@@ -53,12 +52,12 @@ public final class VoidFunctionDefinition {
     return parameters.equals(other.parameters) && code.equals(other.code);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.parameters, this.code);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -94,33 +93,33 @@ public final class VoidFunctionDefinition {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(VoidFunctionDefinition other) {
       parameters(other.getParameters());
       code(other.getCode());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("code")
     public _FinalStage code(FunctionImplementationForMultipleLanguages code) {
       this.code = code;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllParameters(List<Parameter> parameters) {
       this.parameters.addAll(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addParameters(Parameter parameters) {
       this.parameters.add(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "parameters",
         nulls = Nulls.SKIP
@@ -131,7 +130,7 @@ public final class VoidFunctionDefinition {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public VoidFunctionDefinition build() {
       return new VoidFunctionDefinition(parameters, code);
     }

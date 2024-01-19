@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public final class ProblemFiles {
     return readOnlyFiles;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ProblemFiles && equalTo((ProblemFiles) other);
@@ -53,12 +52,12 @@ public final class ProblemFiles {
     return solutionFile.equals(other.solutionFile) && readOnlyFiles.equals(other.readOnlyFiles);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.solutionFile, this.readOnlyFiles);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -94,33 +93,33 @@ public final class ProblemFiles {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ProblemFiles other) {
       solutionFile(other.getSolutionFile());
       readOnlyFiles(other.getReadOnlyFiles());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("solutionFile")
     public _FinalStage solutionFile(FileInfo solutionFile) {
       this.solutionFile = solutionFile;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllReadOnlyFiles(List<FileInfo> readOnlyFiles) {
       this.readOnlyFiles.addAll(readOnlyFiles);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addReadOnlyFiles(FileInfo readOnlyFiles) {
       this.readOnlyFiles.add(readOnlyFiles);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "readOnlyFiles",
         nulls = Nulls.SKIP
@@ -131,7 +130,7 @@ public final class ProblemFiles {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ProblemFiles build() {
       return new ProblemFiles(solutionFile, readOnlyFiles);
     }

@@ -65,7 +65,7 @@ public final class TestSubmissionStatusV2 {
         return problemInfo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestSubmissionStatusV2 && equalTo((TestSubmissionStatusV2) other);
@@ -83,12 +83,12 @@ public final class TestSubmissionStatusV2 {
                 && problemInfo.equals(other.problemInfo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.updates, this.problemId, this.problemVersion, this.problemInfo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -136,7 +136,7 @@ public final class TestSubmissionStatusV2 {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestSubmissionStatusV2 other) {
             updates(other.getUpdates());
             problemId(other.getProblemId());
@@ -145,40 +145,40 @@ public final class TestSubmissionStatusV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemId")
         public ProblemVersionStage problemId(String problemId) {
             this.problemId = problemId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemVersion")
         public ProblemInfoStage problemVersion(int problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemInfo")
         public _FinalStage problemInfo(ProblemInfoV2 problemInfo) {
             this.problemInfo = problemInfo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllUpdates(List<TestSubmissionUpdate> updates) {
             this.updates.addAll(updates);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addUpdates(TestSubmissionUpdate updates) {
             this.updates.add(updates);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "updates", nulls = Nulls.SKIP)
         public _FinalStage updates(List<TestSubmissionUpdate> updates) {
             this.updates.clear();
@@ -186,7 +186,7 @@ public final class TestSubmissionStatusV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestSubmissionStatusV2 build() {
             return new TestSubmissionStatusV2(updates, problemId, problemVersion, problemInfo, additionalProperties);
         }

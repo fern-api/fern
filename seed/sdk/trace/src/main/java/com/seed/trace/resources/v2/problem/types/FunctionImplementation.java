@@ -42,7 +42,7 @@ public final class FunctionImplementation {
         return imports;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FunctionImplementation && equalTo((FunctionImplementation) other);
@@ -57,12 +57,12 @@ public final class FunctionImplementation {
         return impl.equals(other.impl) && imports.equals(other.imports);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.impl, this.imports);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class FunctionImplementation {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FunctionImplementation other) {
             impl(other.getImpl());
             imports(other.getImports());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("impl")
         public _FinalStage impl(String impl) {
             this.impl = impl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage imports(String imports) {
             this.imports = Optional.of(imports);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "imports", nulls = Nulls.SKIP)
         public _FinalStage imports(Optional<String> imports) {
             this.imports = imports;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FunctionImplementation build() {
             return new FunctionImplementation(impl, imports, additionalProperties);
         }

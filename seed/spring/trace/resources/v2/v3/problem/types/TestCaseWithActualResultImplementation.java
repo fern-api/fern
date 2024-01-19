@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -40,7 +39,7 @@ public final class TestCaseWithActualResultImplementation {
     return assertCorrectnessCheck;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestCaseWithActualResultImplementation && equalTo((TestCaseWithActualResultImplementation) other);
@@ -50,12 +49,12 @@ public final class TestCaseWithActualResultImplementation {
     return getActualResult.equals(other.getActualResult) && assertCorrectnessCheck.equals(other.assertCorrectnessCheck);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.getActualResult, this.assertCorrectnessCheck);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class TestCaseWithActualResultImplementation {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestCaseWithActualResultImplementation other) {
       getActualResult(other.getGetActualResult());
       assertCorrectnessCheck(other.getAssertCorrectnessCheck());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("getActualResult")
     public AssertCorrectnessCheckStage getActualResult(NonVoidFunctionDefinition getActualResult) {
       this.getActualResult = getActualResult;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("assertCorrectnessCheck")
     public _FinalStage assertCorrectnessCheck(AssertCorrectnessCheck assertCorrectnessCheck) {
       this.assertCorrectnessCheck = assertCorrectnessCheck;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestCaseWithActualResultImplementation build() {
       return new TestCaseWithActualResultImplementation(getActualResult, assertCorrectnessCheck);
     }

@@ -85,7 +85,7 @@ public final class SubmitRequestV2 {
         return userId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SubmitRequestV2 && equalTo((SubmitRequestV2) other);
@@ -105,7 +105,7 @@ public final class SubmitRequestV2 {
                 && userId.equals(other.userId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.submissionId,
@@ -116,7 +116,7 @@ public final class SubmitRequestV2 {
                 this.userId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -176,7 +176,7 @@ public final class SubmitRequestV2 {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SubmitRequestV2 other) {
             submissionId(other.getSubmissionId());
             language(other.getLanguage());
@@ -187,66 +187,66 @@ public final class SubmitRequestV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public LanguageStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("language")
         public ProblemIdStage language(Language language) {
             this.language = language;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemId")
         public _FinalStage problemId(String problemId) {
             this.problemId = problemId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage userId(String userId) {
             this.userId = Optional.of(userId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "userId", nulls = Nulls.SKIP)
         public _FinalStage userId(Optional<String> userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage problemVersion(Integer problemVersion) {
             this.problemVersion = Optional.of(problemVersion);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "problemVersion", nulls = Nulls.SKIP)
         public _FinalStage problemVersion(Optional<Integer> problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSubmissionFiles(List<SubmissionFileInfo> submissionFiles) {
             this.submissionFiles.addAll(submissionFiles);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSubmissionFiles(SubmissionFileInfo submissionFiles) {
             this.submissionFiles.add(submissionFiles);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "submissionFiles", nulls = Nulls.SKIP)
         public _FinalStage submissionFiles(List<SubmissionFileInfo> submissionFiles) {
             this.submissionFiles.clear();
@@ -254,7 +254,7 @@ public final class SubmitRequestV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SubmitRequestV2 build() {
             return new SubmitRequestV2(
                     submissionId, language, submissionFiles, problemId, problemVersion, userId, additionalProperties);

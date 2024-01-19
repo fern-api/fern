@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -34,7 +33,7 @@ public final class ObjectWithMapOfMap {
     return map;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ObjectWithMapOfMap && equalTo((ObjectWithMapOfMap) other);
@@ -44,12 +43,12 @@ public final class ObjectWithMapOfMap {
     return map.equals(other.map);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.map);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }

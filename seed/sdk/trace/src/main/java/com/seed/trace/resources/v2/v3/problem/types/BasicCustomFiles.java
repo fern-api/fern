@@ -64,7 +64,7 @@ public final class BasicCustomFiles {
         return basicTestCaseTemplate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BasicCustomFiles && equalTo((BasicCustomFiles) other);
@@ -82,12 +82,12 @@ public final class BasicCustomFiles {
                 && basicTestCaseTemplate.equals(other.basicTestCaseTemplate);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.methodName, this.signature, this.additionalFiles, this.basicTestCaseTemplate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -136,7 +136,7 @@ public final class BasicCustomFiles {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BasicCustomFiles other) {
             methodName(other.getMethodName());
             signature(other.getSignature());
@@ -145,40 +145,40 @@ public final class BasicCustomFiles {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("methodName")
         public SignatureStage methodName(String methodName) {
             this.methodName = methodName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("signature")
         public BasicTestCaseTemplateStage signature(NonVoidFunctionSignature signature) {
             this.signature = signature;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("basicTestCaseTemplate")
         public _FinalStage basicTestCaseTemplate(BasicTestCaseTemplate basicTestCaseTemplate) {
             this.basicTestCaseTemplate = basicTestCaseTemplate;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage additionalFiles(Language key, Files value) {
             this.additionalFiles.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllAdditionalFiles(Map<Language, Files> additionalFiles) {
             this.additionalFiles.putAll(additionalFiles);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "additionalFiles", nulls = Nulls.SKIP)
         public _FinalStage additionalFiles(Map<Language, Files> additionalFiles) {
             this.additionalFiles.clear();
@@ -186,7 +186,7 @@ public final class BasicCustomFiles {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BasicCustomFiles build() {
             return new BasicCustomFiles(
                     methodName, signature, additionalFiles, basicTestCaseTemplate, additionalProperties);

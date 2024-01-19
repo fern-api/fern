@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class MapType {
     return valueType;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof MapType && equalTo((MapType) other);
@@ -49,12 +48,12 @@ public final class MapType {
     return keyType.equals(other.keyType) && valueType.equals(other.valueType);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.keyType, this.valueType);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class MapType {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(MapType other) {
       keyType(other.getKeyType());
       valueType(other.getValueType());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("keyType")
     public ValueTypeStage keyType(VariableType keyType) {
       this.keyType = keyType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("valueType")
     public _FinalStage valueType(VariableType valueType) {
       this.valueType = valueType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public MapType build() {
       return new MapType(keyType, valueType);
     }

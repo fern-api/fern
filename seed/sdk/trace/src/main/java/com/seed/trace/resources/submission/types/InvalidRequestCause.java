@@ -120,12 +120,12 @@ public final class InvalidRequestCause {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSubmissionIdNotFound(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SubmissionIdNotFoundValue && equalTo((SubmissionIdNotFoundValue) other);
@@ -135,12 +135,12 @@ public final class InvalidRequestCause {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "InvalidRequestCause{" + "value: " + value + "}";
         }
@@ -158,12 +158,12 @@ public final class InvalidRequestCause {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitCustomTestCasesUnsupported(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof CustomTestCasesUnsupportedValue && equalTo((CustomTestCasesUnsupportedValue) other);
@@ -173,12 +173,12 @@ public final class InvalidRequestCause {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "InvalidRequestCause{" + "value: " + value + "}";
         }
@@ -196,12 +196,12 @@ public final class InvalidRequestCause {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitUnexpectedLanguage(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof UnexpectedLanguageValue && equalTo((UnexpectedLanguageValue) other);
@@ -211,12 +211,12 @@ public final class InvalidRequestCause {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "InvalidRequestCause{" + "value: " + value + "}";
         }
@@ -231,12 +231,12 @@ public final class InvalidRequestCause {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -246,12 +246,12 @@ public final class InvalidRequestCause {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "InvalidRequestCause{" + "type: " + type + ", value: " + value + "}";
         }

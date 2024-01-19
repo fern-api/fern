@@ -65,7 +65,7 @@ public final class LightweightProblemInfoV2 {
         return variableTypes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LightweightProblemInfoV2 && equalTo((LightweightProblemInfoV2) other);
@@ -83,12 +83,12 @@ public final class LightweightProblemInfoV2 {
                 && variableTypes.equals(other.variableTypes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.problemId, this.problemName, this.problemVersion, this.variableTypes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -136,7 +136,7 @@ public final class LightweightProblemInfoV2 {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LightweightProblemInfoV2 other) {
             problemId(other.getProblemId());
             problemName(other.getProblemName());
@@ -145,40 +145,40 @@ public final class LightweightProblemInfoV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemId")
         public ProblemNameStage problemId(String problemId) {
             this.problemId = problemId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemName")
         public ProblemVersionStage problemName(String problemName) {
             this.problemName = problemName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemVersion")
         public _FinalStage problemVersion(int problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllVariableTypes(Set<VariableType> variableTypes) {
             this.variableTypes.addAll(variableTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addVariableTypes(VariableType variableTypes) {
             this.variableTypes.add(variableTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "variableTypes", nulls = Nulls.SKIP)
         public _FinalStage variableTypes(Set<VariableType> variableTypes) {
             this.variableTypes.clear();
@@ -186,7 +186,7 @@ public final class LightweightProblemInfoV2 {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LightweightProblemInfoV2 build() {
             return new LightweightProblemInfoV2(
                     problemId, problemName, problemVersion, variableTypes, additionalProperties);

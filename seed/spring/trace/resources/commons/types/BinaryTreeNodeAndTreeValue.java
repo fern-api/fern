@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class BinaryTreeNodeAndTreeValue {
     return fullTree;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof BinaryTreeNodeAndTreeValue && equalTo((BinaryTreeNodeAndTreeValue) other);
@@ -49,12 +48,12 @@ public final class BinaryTreeNodeAndTreeValue {
     return nodeId.equals(other.nodeId) && fullTree.equals(other.fullTree);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.nodeId, this.fullTree);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class BinaryTreeNodeAndTreeValue {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(BinaryTreeNodeAndTreeValue other) {
       nodeId(other.getNodeId());
       fullTree(other.getFullTree());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("nodeId")
     public FullTreeStage nodeId(NodeId nodeId) {
       this.nodeId = nodeId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("fullTree")
     public _FinalStage fullTree(BinaryTreeValue fullTree) {
       this.fullTree = fullTree;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public BinaryTreeNodeAndTreeValue build() {
       return new BinaryTreeNodeAndTreeValue(nodeId, fullTree);
     }

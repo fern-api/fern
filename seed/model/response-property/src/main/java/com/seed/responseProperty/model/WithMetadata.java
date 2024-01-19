@@ -24,12 +24,12 @@ public final class WithMetadata implements IWithMetadata {
     }
 
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Map<String, String> getMetadata() {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WithMetadata && equalTo((WithMetadata) other);
@@ -39,12 +39,12 @@ public final class WithMetadata implements IWithMetadata {
         return metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

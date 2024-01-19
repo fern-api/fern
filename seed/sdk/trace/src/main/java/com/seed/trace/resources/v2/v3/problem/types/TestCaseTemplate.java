@@ -52,7 +52,7 @@ public final class TestCaseTemplate {
         return implementation;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseTemplate && equalTo((TestCaseTemplate) other);
@@ -69,12 +69,12 @@ public final class TestCaseTemplate {
                 && implementation.equals(other.implementation);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.templateId, this.name, this.implementation);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class TestCaseTemplate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestCaseTemplate other) {
             templateId(other.getTemplateId());
             name(other.getName());
@@ -122,28 +122,28 @@ public final class TestCaseTemplate {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("templateId")
         public NameStage templateId(String templateId) {
             this.templateId = templateId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public ImplementationStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("implementation")
         public _FinalStage implementation(TestCaseImplementation implementation) {
             this.implementation = implementation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestCaseTemplate build() {
             return new TestCaseTemplate(templateId, name, implementation, additionalProperties);
         }

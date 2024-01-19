@@ -5,7 +5,6 @@
 package com.fern.sdk.resources.types.enum_.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
 import java.lang.String;
 
 public enum WeatherReport {
@@ -24,7 +23,7 @@ public enum WeatherReport {
   }
 
   @JsonValue
-  @Override
+  @java.lang.Override
   public String toString() {
     return this.value;
   }

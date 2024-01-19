@@ -48,7 +48,7 @@ public final class TestCaseMetadata {
         return hidden;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseMetadata && equalTo((TestCaseMetadata) other);
@@ -63,12 +63,12 @@ public final class TestCaseMetadata {
         return id.equals(other.id) && name.equals(other.name) && hidden == other.hidden;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.hidden);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -108,7 +108,7 @@ public final class TestCaseMetadata {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestCaseMetadata other) {
             id(other.getId());
             name(other.getName());
@@ -116,28 +116,28 @@ public final class TestCaseMetadata {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public HiddenStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("hidden")
         public _FinalStage hidden(boolean hidden) {
             this.hidden = hidden;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestCaseMetadata build() {
             return new TestCaseMetadata(id, name, hidden, additionalProperties);
         }

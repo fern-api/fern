@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import resources.commons.types.VariableType;
@@ -48,7 +47,7 @@ public final class Parameter {
     return variableType;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Parameter && equalTo((Parameter) other);
@@ -58,12 +57,12 @@ public final class Parameter {
     return parameterId.equals(other.parameterId) && name.equals(other.name) && variableType.equals(other.variableType);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.parameterId, this.name, this.variableType);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -103,7 +102,7 @@ public final class Parameter {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Parameter other) {
       parameterId(other.getParameterId());
       name(other.getName());
@@ -111,28 +110,28 @@ public final class Parameter {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("parameterId")
     public NameStage parameterId(ParameterId parameterId) {
       this.parameterId = parameterId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public VariableTypeStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("variableType")
     public _FinalStage variableType(VariableType variableType) {
       this.variableType = variableType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Parameter build() {
       return new Parameter(parameterId, name, variableType);
     }

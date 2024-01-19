@@ -42,7 +42,7 @@ public final class Record {
         return _3D;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Record && equalTo((Record) other);
@@ -57,12 +57,12 @@ public final class Record {
         return foo.equals(other.foo) && _3D == other._3D;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.foo, this._3D);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -98,33 +98,33 @@ public final class Record {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Record other) {
             foo(other.getFoo());
             _3D(other.get_3D());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("3d")
         public _FinalStage _3D(int _3D) {
             this._3D = _3D;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage foo(String key, String value) {
             this.foo.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllFoo(Map<String, String> foo) {
             this.foo.putAll(foo);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "foo", nulls = Nulls.SKIP)
         public _FinalStage foo(Map<String, String> foo) {
             this.foo.clear();
@@ -132,7 +132,7 @@ public final class Record {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Record build() {
             return new Record(foo, _3D, additionalProperties);
         }

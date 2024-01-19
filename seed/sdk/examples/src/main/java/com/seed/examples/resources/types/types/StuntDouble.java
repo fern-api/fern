@@ -40,7 +40,7 @@ public final class StuntDouble {
         return actorOrActressId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StuntDouble && equalTo((StuntDouble) other);
@@ -55,12 +55,12 @@ public final class StuntDouble {
         return name.equals(other.name) && actorOrActressId.equals(other.actorOrActressId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.actorOrActressId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class StuntDouble {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(StuntDouble other) {
             name(other.getName());
             actorOrActressId(other.getActorOrActressId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public ActorOrActressIdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("actorOrActressId")
         public _FinalStage actorOrActressId(String actorOrActressId) {
             this.actorOrActressId = actorOrActressId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public StuntDouble build() {
             return new StuntDouble(name, actorOrActressId, additionalProperties);
         }

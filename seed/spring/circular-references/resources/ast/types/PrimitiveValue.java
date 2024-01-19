@@ -5,7 +5,6 @@
 package resources.ast.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
 import java.lang.String;
 
 public enum PrimitiveValue {
@@ -20,7 +19,7 @@ public enum PrimitiveValue {
   }
 
   @JsonValue
-  @Override
+  @java.lang.Override
   public String toString() {
     return this.value;
   }

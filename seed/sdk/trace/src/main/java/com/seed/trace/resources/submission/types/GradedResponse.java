@@ -46,7 +46,7 @@ public final class GradedResponse {
         return testCases;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GradedResponse && equalTo((GradedResponse) other);
@@ -61,12 +61,12 @@ public final class GradedResponse {
         return submissionId.equals(other.submissionId) && testCases.equals(other.testCases);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId, this.testCases);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class GradedResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GradedResponse other) {
             submissionId(other.getSubmissionId());
             testCases(other.getTestCases());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public _FinalStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage testCases(String key, TestCaseResultWithStdout value) {
             this.testCases.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllTestCases(Map<String, TestCaseResultWithStdout> testCases) {
             this.testCases.putAll(testCases);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "testCases", nulls = Nulls.SKIP)
         public _FinalStage testCases(Map<String, TestCaseResultWithStdout> testCases) {
             this.testCases.clear();
@@ -136,7 +136,7 @@ public final class GradedResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GradedResponse build() {
             return new GradedResponse(submissionId, testCases, additionalProperties);
         }

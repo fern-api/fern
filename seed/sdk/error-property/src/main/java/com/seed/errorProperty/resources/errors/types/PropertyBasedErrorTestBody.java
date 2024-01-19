@@ -32,7 +32,7 @@ public final class PropertyBasedErrorTestBody {
         return message;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PropertyBasedErrorTestBody && equalTo((PropertyBasedErrorTestBody) other);
@@ -47,12 +47,12 @@ public final class PropertyBasedErrorTestBody {
         return message.equals(other.message);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.message);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class PropertyBasedErrorTestBody {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PropertyBasedErrorTestBody other) {
             message(other.getMessage());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(String message) {
             this.message = message;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PropertyBasedErrorTestBody build() {
             return new PropertyBasedErrorTestBody(message, additionalProperties);
         }

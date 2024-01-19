@@ -41,7 +41,7 @@ public final class RunningResponse {
         return state;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RunningResponse && equalTo((RunningResponse) other);
@@ -56,12 +56,12 @@ public final class RunningResponse {
         return submissionId.equals(other.submissionId) && state.equals(other.state);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId, this.state);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class RunningResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RunningResponse other) {
             submissionId(other.getSubmissionId());
             state(other.getState());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public StateStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public _FinalStage state(RunningSubmissionState state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RunningResponse build() {
             return new RunningResponse(submissionId, state, additionalProperties);
         }

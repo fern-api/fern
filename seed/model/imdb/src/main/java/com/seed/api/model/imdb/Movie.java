@@ -44,7 +44,7 @@ public final class Movie {
         return rating;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Movie && equalTo((Movie) other);
@@ -54,12 +54,12 @@ public final class Movie {
         return id.equals(other.id) && title.equals(other.title) && rating == other.rating;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.title, this.rating);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,7 +96,7 @@ public final class Movie {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Movie other) {
             id(other.getId());
             title(other.getTitle());
@@ -104,14 +104,14 @@ public final class Movie {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public TitleStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public RatingStage title(String title) {
             this.title = title;
@@ -122,14 +122,14 @@ public final class Movie {
          * <p>The rating scale is one to five stars</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("rating")
         public _FinalStage rating(double rating) {
             this.rating = rating;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Movie build() {
             return new Movie(id, title, rating);
         }

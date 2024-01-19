@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
     return code;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof VoidFunctionDefinitionThatTakesActualResult && equalTo((VoidFunctionDefinitionThatTakesActualResult) other);
@@ -53,12 +52,12 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
     return additionalParameters.equals(other.additionalParameters) && code.equals(other.code);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.additionalParameters, this.code);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -94,33 +93,33 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(VoidFunctionDefinitionThatTakesActualResult other) {
       additionalParameters(other.getAdditionalParameters());
       code(other.getCode());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("code")
     public _FinalStage code(FunctionImplementationForMultipleLanguages code) {
       this.code = code;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllAdditionalParameters(List<Parameter> additionalParameters) {
       this.additionalParameters.addAll(additionalParameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAdditionalParameters(Parameter additionalParameters) {
       this.additionalParameters.add(additionalParameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "additionalParameters",
         nulls = Nulls.SKIP
@@ -131,7 +130,7 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public VoidFunctionDefinitionThatTakesActualResult build() {
       return new VoidFunctionDefinitionThatTakesActualResult(additionalParameters, code);
     }

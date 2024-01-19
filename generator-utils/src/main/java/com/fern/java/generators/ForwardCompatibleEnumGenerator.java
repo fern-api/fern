@@ -151,7 +151,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
 
     private MethodSpec getToStringMethod() {
         return MethodSpec.methodBuilder(TO_STRING_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addAnnotation(JsonValue.class)
                 .addModifiers(Modifier.PUBLIC)
                 .addCode("return this.string;")
@@ -161,7 +161,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
 
     private MethodSpec getEqualsMethod() {
         return MethodSpec.methodBuilder(EQUALS_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ClassName.get(Object.class), "other")
                 .addCode(CodeBlock.builder()
@@ -177,7 +177,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
 
     private MethodSpec getHashCodeMethod() {
         return MethodSpec.methodBuilder(HASHCODE_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .addCode("return this.string.hashCode();")
                 .returns(int.class)

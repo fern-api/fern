@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class Package {
     return name;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Package && equalTo((Package) other);
@@ -41,12 +40,12 @@ public final class Package {
     return name.equals(other.name);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class Package {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Package other) {
       name(other.getName());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Package build() {
       return new Package(name);
     }

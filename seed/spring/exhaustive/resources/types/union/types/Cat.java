@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class Cat {
     return likesToMeow;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Cat && equalTo((Cat) other);
@@ -49,12 +48,12 @@ public final class Cat {
     return name.equals(other.name) && likesToMeow == other.likesToMeow;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name, this.likesToMeow);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class Cat {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Cat other) {
       name(other.getName());
       likesToMeow(other.getLikesToMeow());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public LikesToMeowStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("likesToMeow")
     public _FinalStage likesToMeow(boolean likesToMeow) {
       this.likesToMeow = likesToMeow;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Cat build() {
       return new Cat(name, likesToMeow);
     }

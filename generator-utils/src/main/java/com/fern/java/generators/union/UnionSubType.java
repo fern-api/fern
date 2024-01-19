@@ -93,7 +93,7 @@ public abstract class UnionSubType {
     public final MethodSpec getVisitMethod() {
         MethodSpec.Builder visitMethodBuilder = MethodSpec.methodBuilder("visit")
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addTypeVariable(VISITOR_RETURN_TYPE)
                 .returns(VISITOR_RETURN_TYPE)
                 .addParameter(ParameterSpec.builder(visitorInterfaceClassName, "visitor")

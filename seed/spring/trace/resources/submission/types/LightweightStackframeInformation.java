@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class LightweightStackframeInformation {
     return topStackFrameMethodName;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof LightweightStackframeInformation && equalTo((LightweightStackframeInformation) other);
@@ -49,12 +48,12 @@ public final class LightweightStackframeInformation {
     return numStackFrames == other.numStackFrames && topStackFrameMethodName.equals(other.topStackFrameMethodName);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.numStackFrames, this.topStackFrameMethodName);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class LightweightStackframeInformation {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(LightweightStackframeInformation other) {
       numStackFrames(other.getNumStackFrames());
       topStackFrameMethodName(other.getTopStackFrameMethodName());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("numStackFrames")
     public TopStackFrameMethodNameStage numStackFrames(int numStackFrames) {
       this.numStackFrames = numStackFrames;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("topStackFrameMethodName")
     public _FinalStage topStackFrameMethodName(String topStackFrameMethodName) {
       this.topStackFrameMethodName = topStackFrameMethodName;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public LightweightStackframeInformation build() {
       return new LightweightStackframeInformation(numStackFrames, topStackFrameMethodName);
     }

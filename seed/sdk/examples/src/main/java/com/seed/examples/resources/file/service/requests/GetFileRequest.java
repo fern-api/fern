@@ -32,7 +32,7 @@ public final class GetFileRequest {
         return xFileApiVersion;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFileRequest && equalTo((GetFileRequest) other);
@@ -47,12 +47,12 @@ public final class GetFileRequest {
         return xFileApiVersion.equals(other.xFileApiVersion);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.xFileApiVersion);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class GetFileRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetFileRequest other) {
             xFileApiVersion(other.getXFileApiVersion());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("X-File-API-Version")
         public _FinalStage xFileApiVersion(String xFileApiVersion) {
             this.xFileApiVersion = xFileApiVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetFileRequest build() {
             return new GetFileRequest(xFileApiVersion, additionalProperties);
         }

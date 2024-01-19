@@ -44,7 +44,7 @@ public final class Metadata {
         return jsonString;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Metadata && equalTo((Metadata) other);
@@ -54,12 +54,12 @@ public final class Metadata {
         return id.equals(other.id) && data.equals(other.data) && jsonString.equals(other.jsonString);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.data, this.jsonString);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,7 +96,7 @@ public final class Metadata {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Metadata other) {
             id(other.getId());
             data(other.getData());
@@ -104,40 +104,40 @@ public final class Metadata {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage jsonString(String jsonString) {
             this.jsonString = Optional.of(jsonString);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "jsonString", nulls = Nulls.SKIP)
         public _FinalStage jsonString(Optional<String> jsonString) {
             this.jsonString = jsonString;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(Map<String, String> data) {
             this.data = Optional.of(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Optional<Map<String, String>> data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Metadata build() {
             return new Metadata(id, data, jsonString);
         }

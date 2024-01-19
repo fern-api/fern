@@ -35,7 +35,7 @@ public final class VoidFunctionSignature {
         return parameters;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VoidFunctionSignature && equalTo((VoidFunctionSignature) other);
@@ -50,12 +50,12 @@ public final class VoidFunctionSignature {
         return parameters.equals(other.parameters);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.parameters);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -32,7 +32,7 @@ public final class DeepEqualityCorrectnessCheck {
         return expectedValueParameterId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeepEqualityCorrectnessCheck && equalTo((DeepEqualityCorrectnessCheck) other);
@@ -47,12 +47,12 @@ public final class DeepEqualityCorrectnessCheck {
         return expectedValueParameterId.equals(other.expectedValueParameterId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.expectedValueParameterId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class DeepEqualityCorrectnessCheck {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DeepEqualityCorrectnessCheck other) {
             expectedValueParameterId(other.getExpectedValueParameterId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("expectedValueParameterId")
         public _FinalStage expectedValueParameterId(String expectedValueParameterId) {
             this.expectedValueParameterId = expectedValueParameterId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DeepEqualityCorrectnessCheck build() {
             return new DeepEqualityCorrectnessCheck(expectedValueParameterId, additionalProperties);
         }

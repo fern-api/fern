@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class LangServerResponse {
     return response;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof LangServerResponse && equalTo((LangServerResponse) other);
@@ -41,12 +40,12 @@ public final class LangServerResponse {
     return response.equals(other.response);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.response);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class LangServerResponse {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(LangServerResponse other) {
       response(other.getResponse());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("response")
     public _FinalStage response(Object response) {
       this.response = response;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public LangServerResponse build() {
       return new LangServerResponse(response);
     }

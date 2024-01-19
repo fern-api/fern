@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +45,7 @@ public final class GetWithQuery {
     return number;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetWithQuery && equalTo((GetWithQuery) other);
@@ -61,12 +60,12 @@ public final class GetWithQuery {
     return query.equals(other.query) && number == other.number;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.query, this.number);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -103,28 +102,28 @@ public final class GetWithQuery {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GetWithQuery other) {
       query(other.getQuery());
       number(other.getNumber());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("query")
     public NumberStage query(String query) {
       this.query = query;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("number")
     public _FinalStage number(int number) {
       this.number = number;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GetWithQuery build() {
       return new GetWithQuery(query, number, additionalProperties);
     }

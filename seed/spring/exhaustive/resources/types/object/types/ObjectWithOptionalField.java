@@ -16,7 +16,6 @@ import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -134,7 +133,7 @@ public final class ObjectWithOptionalField {
     return map;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ObjectWithOptionalField && equalTo((ObjectWithOptionalField) other);
@@ -144,12 +143,12 @@ public final class ObjectWithOptionalField {
     return string.equals(other.string) && integer.equals(other.integer) && long_.equals(other.long_) && double_.equals(other.double_) && bool.equals(other.bool) && datetime.equals(other.datetime) && date.equals(other.date) && uuid.equals(other.uuid) && base64.equals(other.base64) && list.equals(other.list) && set.equals(other.set) && map.equals(other.map);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.string, this.integer, this.long_, this.double_, this.bool, this.datetime, this.date, this.uuid, this.base64, this.list, this.set, this.map);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }

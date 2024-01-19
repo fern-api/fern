@@ -58,19 +58,19 @@ public final class ExtendedMovie implements IMovie {
     }
 
     @JsonProperty("id")
-    @Override
+    @java.lang.Override
     public String getId() {
         return id;
     }
 
     @JsonProperty("title")
-    @Override
+    @java.lang.Override
     public String getTitle() {
         return title;
     }
 
     @JsonProperty("from")
-    @Override
+    @java.lang.Override
     public String getFrom() {
         return from;
     }
@@ -79,25 +79,25 @@ public final class ExtendedMovie implements IMovie {
      * @return The rating scale is one to five stars
      */
     @JsonProperty("rating")
-    @Override
+    @java.lang.Override
     public double getRating() {
         return rating;
     }
 
     @JsonProperty("type")
-    @Override
+    @java.lang.Override
     public String getType() {
         return "movie";
     }
 
     @JsonProperty("tag")
-    @Override
+    @java.lang.Override
     public String getTag() {
         return tag;
     }
 
     @JsonProperty("book")
-    @Override
+    @java.lang.Override
     public Optional<String> getBook() {
         return book;
     }
@@ -107,7 +107,7 @@ public final class ExtendedMovie implements IMovie {
         return cast;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExtendedMovie && equalTo((ExtendedMovie) other);
@@ -128,12 +128,12 @@ public final class ExtendedMovie implements IMovie {
                 && cast.equals(other.cast);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.title, this.from, this.rating, this.tag, this.book, this.cast);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -199,7 +199,7 @@ public final class ExtendedMovie implements IMovie {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ExtendedMovie other) {
             id(other.getId());
             title(other.getTitle());
@@ -211,21 +211,21 @@ public final class ExtendedMovie implements IMovie {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public TitleStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public FromStage title(String title) {
             this.title = title;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("from")
         public RatingStage from(String from) {
             this.from = from;
@@ -236,33 +236,33 @@ public final class ExtendedMovie implements IMovie {
          * <p>The rating scale is one to five stars</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("rating")
         public TagStage rating(double rating) {
             this.rating = rating;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("tag")
         public _FinalStage tag(String tag) {
             this.tag = tag;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllCast(List<String> cast) {
             this.cast.addAll(cast);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addCast(String cast) {
             this.cast.add(cast);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "cast", nulls = Nulls.SKIP)
         public _FinalStage cast(List<String> cast) {
             this.cast.clear();
@@ -270,20 +270,20 @@ public final class ExtendedMovie implements IMovie {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage book(String book) {
             this.book = Optional.of(book);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "book", nulls = Nulls.SKIP)
         public _FinalStage book(Optional<String> book) {
             this.book = book;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ExtendedMovie build() {
             return new ExtendedMovie(id, title, from, rating, tag, book, cast, additionalProperties);
         }

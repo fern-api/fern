@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,7 @@ public final class BadObjectRequestInfo {
     return message;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof BadObjectRequestInfo && equalTo((BadObjectRequestInfo) other);
@@ -53,12 +52,12 @@ public final class BadObjectRequestInfo {
     return message.equals(other.message);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.message);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,20 +88,20 @@ public final class BadObjectRequestInfo {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(BadObjectRequestInfo other) {
       message(other.getMessage());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("message")
     public _FinalStage message(String message) {
       this.message = message;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public BadObjectRequestInfo build() {
       return new BadObjectRequestInfo(message, additionalProperties);
     }

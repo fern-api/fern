@@ -45,13 +45,13 @@ public final class Playlist implements IPlaylistCreateRequest {
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("problems")
-    @Override
+    @java.lang.Override
     public List<String> getProblems() {
         return problems;
     }
@@ -66,7 +66,7 @@ public final class Playlist implements IPlaylistCreateRequest {
         return ownerId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Playlist && equalTo((Playlist) other);
@@ -84,12 +84,12 @@ public final class Playlist implements IPlaylistCreateRequest {
                 && ownerId.equals(other.ownerId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.problems, this.playlistId, this.ownerId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -137,7 +137,7 @@ public final class Playlist implements IPlaylistCreateRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Playlist other) {
             name(other.getName());
             problems(other.getProblems());
@@ -146,40 +146,40 @@ public final class Playlist implements IPlaylistCreateRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public PlaylistIdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("playlist_id")
         public OwnerIdStage playlistId(String playlistId) {
             this.playlistId = playlistId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("owner-id")
         public _FinalStage ownerId(String ownerId) {
             this.ownerId = ownerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllProblems(List<String> problems) {
             this.problems.addAll(problems);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addProblems(String problems) {
             this.problems.add(problems);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "problems", nulls = Nulls.SKIP)
         public _FinalStage problems(List<String> problems) {
             this.problems.clear();
@@ -187,7 +187,7 @@ public final class Playlist implements IPlaylistCreateRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Playlist build() {
             return new Playlist(name, problems, playlistId, ownerId, additionalProperties);
         }

@@ -32,7 +32,7 @@ public final class ObjectWithRequiredField {
         return string;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ObjectWithRequiredField && equalTo((ObjectWithRequiredField) other);
@@ -47,12 +47,12 @@ public final class ObjectWithRequiredField {
         return string.equals(other.string);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.string);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class ObjectWithRequiredField {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ObjectWithRequiredField other) {
             string(other.getString());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("string")
         public _FinalStage string(String string) {
             this.string = string;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ObjectWithRequiredField build() {
             return new ObjectWithRequiredField(string, additionalProperties);
         }

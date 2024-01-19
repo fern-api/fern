@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -165,12 +164,12 @@ public final class SubmissionRequest {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitInitializeProblemRequest(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof InitializeProblemRequestValue && equalTo((InitializeProblemRequestValue) other);
@@ -180,12 +179,12 @@ public final class SubmissionRequest {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "value: " + value + "}";
     }
@@ -199,18 +198,18 @@ public final class SubmissionRequest {
     private InitializeWorkspaceRequestValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitInitializeWorkspaceRequest();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof InitializeWorkspaceRequestValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "}";
     }
@@ -231,12 +230,12 @@ public final class SubmissionRequest {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitSubmitV2(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof SubmitV2Value && equalTo((SubmitV2Value) other);
@@ -246,12 +245,12 @@ public final class SubmissionRequest {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "value: " + value + "}";
     }
@@ -272,12 +271,12 @@ public final class SubmissionRequest {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitWorkspaceSubmit(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof WorkspaceSubmitValue && equalTo((WorkspaceSubmitValue) other);
@@ -287,12 +286,12 @@ public final class SubmissionRequest {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "value: " + value + "}";
     }
@@ -313,12 +312,12 @@ public final class SubmissionRequest {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitStop(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof StopValue && equalTo((StopValue) other);
@@ -328,12 +327,12 @@ public final class SubmissionRequest {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "value: " + value + "}";
     }
@@ -351,12 +350,12 @@ public final class SubmissionRequest {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -366,12 +365,12 @@ public final class SubmissionRequest {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionRequest{" + "type: " + type + ", value: " + value + "}";
     }

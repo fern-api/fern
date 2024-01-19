@@ -35,7 +35,7 @@ public final class Test {
         return someEnum;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Test && equalTo((Test) other);
@@ -50,12 +50,12 @@ public final class Test {
         return someEnum.equals(other.someEnum);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.someEnum);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

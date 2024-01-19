@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -52,7 +51,7 @@ public final class GeneratedFiles {
     return other;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GeneratedFiles && equalTo((GeneratedFiles) other);
@@ -62,12 +61,12 @@ public final class GeneratedFiles {
     return generatedTestCaseFiles.equals(other.generatedTestCaseFiles) && generatedTemplateFiles.equals(other.generatedTemplateFiles) && other.equals(other.other);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.generatedTestCaseFiles, this.generatedTemplateFiles, this.other);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }

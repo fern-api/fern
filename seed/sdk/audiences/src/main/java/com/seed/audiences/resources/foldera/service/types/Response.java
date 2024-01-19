@@ -35,7 +35,7 @@ public final class Response {
         return foo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Response && equalTo((Response) other);
@@ -50,12 +50,12 @@ public final class Response {
         return foo.equals(other.foo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.foo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

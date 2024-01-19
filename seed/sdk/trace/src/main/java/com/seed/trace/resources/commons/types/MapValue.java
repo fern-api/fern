@@ -35,7 +35,7 @@ public final class MapValue {
         return keyValuePairs;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MapValue && equalTo((MapValue) other);
@@ -50,12 +50,12 @@ public final class MapValue {
         return keyValuePairs.equals(other.keyValuePairs);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.keyValuePairs);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -40,7 +40,7 @@ public final class GradedTestCaseUpdate {
         return grade;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GradedTestCaseUpdate && equalTo((GradedTestCaseUpdate) other);
@@ -55,12 +55,12 @@ public final class GradedTestCaseUpdate {
         return testCaseId.equals(other.testCaseId) && grade.equals(other.grade);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.testCaseId, this.grade);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class GradedTestCaseUpdate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GradedTestCaseUpdate other) {
             testCaseId(other.getTestCaseId());
             grade(other.getGrade());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("testCaseId")
         public GradeStage testCaseId(String testCaseId) {
             this.testCaseId = testCaseId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("grade")
         public _FinalStage grade(TestCaseGrade grade) {
             this.grade = grade;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GradedTestCaseUpdate build() {
             return new GradedTestCaseUpdate(testCaseId, grade, additionalProperties);
         }

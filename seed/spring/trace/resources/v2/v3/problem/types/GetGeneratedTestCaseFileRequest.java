@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,7 +41,7 @@ public final class GetGeneratedTestCaseFileRequest {
     return testCase;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetGeneratedTestCaseFileRequest && equalTo((GetGeneratedTestCaseFileRequest) other);
@@ -52,12 +51,12 @@ public final class GetGeneratedTestCaseFileRequest {
     return template.equals(other.template) && testCase.equals(other.testCase);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.template, this.testCase);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -91,27 +90,27 @@ public final class GetGeneratedTestCaseFileRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GetGeneratedTestCaseFileRequest other) {
       template(other.getTemplate());
       testCase(other.getTestCase());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("testCase")
     public _FinalStage testCase(TestCaseV2 testCase) {
       this.testCase = testCase;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage template(TestCaseTemplate template) {
       this.template = Optional.of(template);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "template",
         nulls = Nulls.SKIP
@@ -121,7 +120,7 @@ public final class GetGeneratedTestCaseFileRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GetGeneratedTestCaseFileRequest build() {
       return new GetGeneratedTestCaseFileRequest(template, testCase);
     }

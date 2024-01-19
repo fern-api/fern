@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -115,7 +114,7 @@ public final class ProblemInfoV2 {
     return isPublic;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ProblemInfoV2 && equalTo((ProblemInfoV2) other);
@@ -125,12 +124,12 @@ public final class ProblemInfoV2 {
     return problemId.equals(other.problemId) && problemDescription.equals(other.problemDescription) && problemName.equals(other.problemName) && problemVersion == other.problemVersion && supportedLanguages.equals(other.supportedLanguages) && customFiles.equals(other.customFiles) && generatedFiles.equals(other.generatedFiles) && customTestCaseTemplates.equals(other.customTestCaseTemplates) && testcases.equals(other.testcases) && isPublic == other.isPublic;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.problemId, this.problemDescription, this.problemName, this.problemVersion, this.supportedLanguages, this.customFiles, this.generatedFiles, this.customTestCaseTemplates, this.testcases, this.isPublic);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -218,7 +217,7 @@ public final class ProblemInfoV2 {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ProblemInfoV2 other) {
       problemId(other.getProblemId());
       problemDescription(other.getProblemDescription());
@@ -233,68 +232,68 @@ public final class ProblemInfoV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemId")
     public ProblemDescriptionStage problemId(ProblemId problemId) {
       this.problemId = problemId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemDescription")
     public ProblemNameStage problemDescription(ProblemDescription problemDescription) {
       this.problemDescription = problemDescription;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemName")
     public ProblemVersionStage problemName(String problemName) {
       this.problemName = problemName;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemVersion")
     public CustomFilesStage problemVersion(int problemVersion) {
       this.problemVersion = problemVersion;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("customFiles")
     public GeneratedFilesStage customFiles(CustomFiles customFiles) {
       this.customFiles = customFiles;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("generatedFiles")
     public IsPublicStage generatedFiles(GeneratedFiles generatedFiles) {
       this.generatedFiles = generatedFiles;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("isPublic")
     public _FinalStage isPublic(boolean isPublic) {
       this.isPublic = isPublic;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllTestcases(List<TestCaseV2> testcases) {
       this.testcases.addAll(testcases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addTestcases(TestCaseV2 testcases) {
       this.testcases.add(testcases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "testcases",
         nulls = Nulls.SKIP
@@ -305,20 +304,20 @@ public final class ProblemInfoV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllCustomTestCaseTemplates(
         List<TestCaseTemplate> customTestCaseTemplates) {
       this.customTestCaseTemplates.addAll(customTestCaseTemplates);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addCustomTestCaseTemplates(TestCaseTemplate customTestCaseTemplates) {
       this.customTestCaseTemplates.add(customTestCaseTemplates);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "customTestCaseTemplates",
         nulls = Nulls.SKIP
@@ -329,19 +328,19 @@ public final class ProblemInfoV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllSupportedLanguages(Set<Language> supportedLanguages) {
       this.supportedLanguages.addAll(supportedLanguages);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addSupportedLanguages(Language supportedLanguages) {
       this.supportedLanguages.add(supportedLanguages);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "supportedLanguages",
         nulls = Nulls.SKIP
@@ -352,7 +351,7 @@ public final class ProblemInfoV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ProblemInfoV2 build() {
       return new ProblemInfoV2(problemId, problemDescription, problemName, problemVersion, supportedLanguages, customFiles, generatedFiles, customTestCaseTemplates, testcases, isPublic);
     }

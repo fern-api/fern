@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ public final class ExampleType implements IDocs {
   }
 
   @JsonProperty("docs")
-  @Override
+  @java.lang.Override
   public String getDocs() {
     return docs;
   }
@@ -40,7 +39,7 @@ public final class ExampleType implements IDocs {
     return name;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ExampleType && equalTo((ExampleType) other);
@@ -50,12 +49,12 @@ public final class ExampleType implements IDocs {
     return docs.equals(other.docs) && name.equals(other.name);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.docs, this.name);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class ExampleType implements IDocs {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ExampleType other) {
       docs(other.getDocs());
       name(other.getName());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("docs")
     public NameStage docs(String docs) {
       this.docs = docs;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ExampleType build() {
       return new ExampleType(docs, name);
     }

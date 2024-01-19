@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -94,12 +93,12 @@ public final class PlaylistIdNotFoundErrorBody {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitPlaylistId(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof PlaylistIdValue && equalTo((PlaylistIdValue) other);
@@ -109,12 +108,12 @@ public final class PlaylistIdNotFoundErrorBody {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "PlaylistIdNotFoundErrorBody{" + "value: " + value + "}";
     }
@@ -132,12 +131,12 @@ public final class PlaylistIdNotFoundErrorBody {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -147,12 +146,12 @@ public final class PlaylistIdNotFoundErrorBody {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "PlaylistIdNotFoundErrorBody{" + "type: " + type + ", value: " + value + "}";
     }

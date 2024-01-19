@@ -33,7 +33,7 @@ public final class Migration {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Migration && equalTo((Migration) other);
@@ -43,12 +43,12 @@ public final class Migration {
         return name.equals(other.name) && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -79,28 +79,28 @@ public final class Migration {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Migration other) {
             name(other.getName());
             status(other.getStatus());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public StatusStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(MigrationStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Migration build() {
             return new Migration(name, status);
         }

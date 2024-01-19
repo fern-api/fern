@@ -41,7 +41,7 @@ public final class CreatePaymentRequest {
         return currency;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreatePaymentRequest && equalTo((CreatePaymentRequest) other);
@@ -56,12 +56,12 @@ public final class CreatePaymentRequest {
         return amount == other.amount && currency.equals(other.currency);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.amount, this.currency);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class CreatePaymentRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreatePaymentRequest other) {
             amount(other.getAmount());
             currency(other.getCurrency());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("amount")
         public CurrencyStage amount(int amount) {
             this.amount = amount;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("currency")
         public _FinalStage currency(Currency currency) {
             this.currency = currency;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreatePaymentRequest build() {
             return new CreatePaymentRequest(amount, currency, additionalProperties);
         }

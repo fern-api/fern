@@ -63,7 +63,7 @@ public final class DoublyLinkedListNodeValue {
         return prev;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DoublyLinkedListNodeValue && equalTo((DoublyLinkedListNodeValue) other);
@@ -78,12 +78,12 @@ public final class DoublyLinkedListNodeValue {
         return nodeId.equals(other.nodeId) && val == other.val && next.equals(other.next) && prev.equals(other.prev);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.nodeId, this.val, this.next, this.prev);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -129,7 +129,7 @@ public final class DoublyLinkedListNodeValue {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DoublyLinkedListNodeValue other) {
             nodeId(other.getNodeId());
             val(other.getVal());
@@ -138,47 +138,47 @@ public final class DoublyLinkedListNodeValue {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("nodeId")
         public ValStage nodeId(String nodeId) {
             this.nodeId = nodeId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("val")
         public _FinalStage val(double val) {
             this.val = val;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage prev(String prev) {
             this.prev = Optional.of(prev);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "prev", nulls = Nulls.SKIP)
         public _FinalStage prev(Optional<String> prev) {
             this.prev = prev;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage next(String next) {
             this.next = Optional.of(next);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "next", nulls = Nulls.SKIP)
         public _FinalStage next(Optional<String> next) {
             this.next = next;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DoublyLinkedListNodeValue build() {
             return new DoublyLinkedListNodeValue(nodeId, val, next, prev, additionalProperties);
         }

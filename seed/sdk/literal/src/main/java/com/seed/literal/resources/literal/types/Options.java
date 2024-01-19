@@ -47,7 +47,7 @@ public final class Options {
         return values;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Options && equalTo((Options) other);
@@ -62,12 +62,12 @@ public final class Options {
         return enabled.equals(other.enabled) && values.equals(other.values);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.enabled, this.values);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -103,33 +103,33 @@ public final class Options {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Options other) {
             enabled(other.getEnabled());
             values(other.getValues());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("enabled")
         public _FinalStage enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage values(String key, String value) {
             this.values.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllValues(Map<String, String> values) {
             this.values.putAll(values);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "values", nulls = Nulls.SKIP)
         public _FinalStage values(Map<String, String> values) {
             this.values.clear();
@@ -137,7 +137,7 @@ public final class Options {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Options build() {
             return new Options(enabled, values, additionalProperties);
         }

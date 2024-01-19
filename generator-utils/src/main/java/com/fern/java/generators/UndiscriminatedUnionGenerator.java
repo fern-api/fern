@@ -162,7 +162,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
 
     private MethodSpec generateToString() {
         return MethodSpec.methodBuilder("toString")
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .addStatement("return this.$L.$L()", VALUE_FIELD_SPEC.name, "toString")
@@ -212,7 +212,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                 .addParameter(JsonParser.class, "p")
                 .addParameter(DeserializationContext.class, "ctxt")
                 .addException(IOException.class)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "$T $L = $L.readValueAs($T.class)", Object.class, VALUE_FIELD_SPEC.name, "p", Object.class);
         for (int i = 0; i < undiscriminatedUnion.getMembers().size(); ++i) {

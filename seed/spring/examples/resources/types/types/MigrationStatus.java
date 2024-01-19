@@ -5,7 +5,6 @@
 package resources.types.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
 import java.lang.String;
 
 public enum MigrationStatus {
@@ -22,7 +21,7 @@ public enum MigrationStatus {
   }
 
   @JsonValue
-  @Override
+  @java.lang.Override
   public String toString() {
     return this.value;
   }

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public final class NonVoidFunctionSignature {
     return returnType;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof NonVoidFunctionSignature && equalTo((NonVoidFunctionSignature) other);
@@ -53,12 +52,12 @@ public final class NonVoidFunctionSignature {
     return parameters.equals(other.parameters) && returnType.equals(other.returnType);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.parameters, this.returnType);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -94,33 +93,33 @@ public final class NonVoidFunctionSignature {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(NonVoidFunctionSignature other) {
       parameters(other.getParameters());
       returnType(other.getReturnType());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("returnType")
     public _FinalStage returnType(VariableType returnType) {
       this.returnType = returnType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllParameters(List<Parameter> parameters) {
       this.parameters.addAll(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addParameters(Parameter parameters) {
       this.parameters.add(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "parameters",
         nulls = Nulls.SKIP
@@ -131,7 +130,7 @@ public final class NonVoidFunctionSignature {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public NonVoidFunctionSignature build() {
       return new NonVoidFunctionSignature(parameters, returnType);
     }

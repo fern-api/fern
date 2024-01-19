@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class WorkspaceTracedUpdate {
     return traceResponsesSize;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof WorkspaceTracedUpdate && equalTo((WorkspaceTracedUpdate) other);
@@ -41,12 +40,12 @@ public final class WorkspaceTracedUpdate {
     return traceResponsesSize == other.traceResponsesSize;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.traceResponsesSize);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class WorkspaceTracedUpdate {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(WorkspaceTracedUpdate other) {
       traceResponsesSize(other.getTraceResponsesSize());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("traceResponsesSize")
     public _FinalStage traceResponsesSize(int traceResponsesSize) {
       this.traceResponsesSize = traceResponsesSize;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public WorkspaceTracedUpdate build() {
       return new WorkspaceTracedUpdate(traceResponsesSize);
     }

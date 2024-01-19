@@ -43,7 +43,7 @@ public final class NonVoidFunctionDefinition {
         return code;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof NonVoidFunctionDefinition && equalTo((NonVoidFunctionDefinition) other);
@@ -58,12 +58,12 @@ public final class NonVoidFunctionDefinition {
         return signature.equals(other.signature) && code.equals(other.code);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.signature, this.code);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,28 +97,28 @@ public final class NonVoidFunctionDefinition {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(NonVoidFunctionDefinition other) {
             signature(other.getSignature());
             code(other.getCode());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("signature")
         public CodeStage signature(NonVoidFunctionSignature signature) {
             this.signature = signature;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public _FinalStage code(FunctionImplementationForMultipleLanguages code) {
             this.code = code;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public NonVoidFunctionDefinition build() {
             return new NonVoidFunctionDefinition(signature, code, additionalProperties);
         }

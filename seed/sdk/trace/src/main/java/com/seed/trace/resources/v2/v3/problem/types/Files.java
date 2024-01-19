@@ -35,7 +35,7 @@ public final class Files {
         return files;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Files && equalTo((Files) other);
@@ -50,12 +50,12 @@ public final class Files {
         return files.equals(other.files);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.files);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

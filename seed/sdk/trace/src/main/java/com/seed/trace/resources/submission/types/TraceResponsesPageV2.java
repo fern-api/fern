@@ -49,7 +49,7 @@ public final class TraceResponsesPageV2 {
         return traceResponses;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TraceResponsesPageV2 && equalTo((TraceResponsesPageV2) other);
@@ -64,12 +64,12 @@ public final class TraceResponsesPageV2 {
         return offset.equals(other.offset) && traceResponses.equals(other.traceResponses);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.offset, this.traceResponses);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

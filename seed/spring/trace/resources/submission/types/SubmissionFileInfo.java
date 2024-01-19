@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -47,7 +46,7 @@ public final class SubmissionFileInfo {
     return contents;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof SubmissionFileInfo && equalTo((SubmissionFileInfo) other);
@@ -57,12 +56,12 @@ public final class SubmissionFileInfo {
     return directory.equals(other.directory) && filename.equals(other.filename) && contents.equals(other.contents);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.directory, this.filename, this.contents);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -102,7 +101,7 @@ public final class SubmissionFileInfo {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(SubmissionFileInfo other) {
       directory(other.getDirectory());
       filename(other.getFilename());
@@ -110,28 +109,28 @@ public final class SubmissionFileInfo {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("directory")
     public FilenameStage directory(String directory) {
       this.directory = directory;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("filename")
     public ContentsStage filename(String filename) {
       this.filename = filename;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("contents")
     public _FinalStage contents(String contents) {
       this.contents = contents;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public SubmissionFileInfo build() {
       return new SubmissionFileInfo(directory, filename, contents);
     }

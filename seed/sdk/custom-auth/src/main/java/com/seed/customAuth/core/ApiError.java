@@ -21,7 +21,7 @@ public final class ApiError extends RuntimeException {
         return this.body;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return "ApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
     }

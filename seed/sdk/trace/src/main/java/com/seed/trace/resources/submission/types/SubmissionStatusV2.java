@@ -99,12 +99,12 @@ public final class SubmissionStatusV2 {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitTest(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof TestValue && equalTo((TestValue) other);
@@ -114,12 +114,12 @@ public final class SubmissionStatusV2 {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusV2{" + "value: " + value + "}";
         }
@@ -137,12 +137,12 @@ public final class SubmissionStatusV2 {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkspace(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkspaceValue && equalTo((WorkspaceValue) other);
@@ -152,12 +152,12 @@ public final class SubmissionStatusV2 {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusV2{" + "value: " + value + "}";
         }
@@ -172,12 +172,12 @@ public final class SubmissionStatusV2 {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -187,12 +187,12 @@ public final class SubmissionStatusV2 {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusV2{" + "type: " + type + ", value: " + value + "}";
         }

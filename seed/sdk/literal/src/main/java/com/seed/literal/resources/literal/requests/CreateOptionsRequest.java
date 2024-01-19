@@ -34,7 +34,7 @@ public final class CreateOptionsRequest {
         return values;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateOptionsRequest && equalTo((CreateOptionsRequest) other);
@@ -49,12 +49,12 @@ public final class CreateOptionsRequest {
         return values.equals(other.values);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.values);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

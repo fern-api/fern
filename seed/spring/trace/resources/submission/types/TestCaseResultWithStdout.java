@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class TestCaseResultWithStdout {
     return stdout;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestCaseResultWithStdout && equalTo((TestCaseResultWithStdout) other);
@@ -49,12 +48,12 @@ public final class TestCaseResultWithStdout {
     return result.equals(other.result) && stdout.equals(other.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.result, this.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class TestCaseResultWithStdout {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestCaseResultWithStdout other) {
       result(other.getResult());
       stdout(other.getStdout());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("result")
     public StdoutStage result(TestCaseResult result) {
       this.result = result;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stdout")
     public _FinalStage stdout(String stdout) {
       this.stdout = stdout;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestCaseResultWithStdout build() {
       return new TestCaseResultWithStdout(result, stdout);
     }

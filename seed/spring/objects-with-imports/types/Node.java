@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,7 +49,7 @@ public final class Node {
     return metadata;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Node && equalTo((Node) other);
@@ -60,12 +59,12 @@ public final class Node {
     return id.equals(other.id) && label.equals(other.label) && metadata.equals(other.metadata);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.id, this.label, this.metadata);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -105,7 +104,7 @@ public final class Node {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Node other) {
       id(other.getId());
       label(other.getLabel());
@@ -113,20 +112,20 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("id")
     public _FinalStage id(String id) {
       this.id = id;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage metadata(Metadata metadata) {
       this.metadata = Optional.of(metadata);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "metadata",
         nulls = Nulls.SKIP
@@ -136,13 +135,13 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage label(String label) {
       this.label = Optional.of(label);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "label",
         nulls = Nulls.SKIP
@@ -152,7 +151,7 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Node build() {
       return new Node(id, label, metadata);
     }

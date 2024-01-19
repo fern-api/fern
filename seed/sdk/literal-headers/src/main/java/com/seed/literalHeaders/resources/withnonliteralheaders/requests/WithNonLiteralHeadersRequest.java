@@ -82,7 +82,7 @@ public final class WithNonLiteralHeadersRequest {
         return trueEndpointHeader;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WithNonLiteralHeadersRequest && equalTo((WithNonLiteralHeadersRequest) other);
@@ -101,7 +101,7 @@ public final class WithNonLiteralHeadersRequest {
                 && trueEndpointHeader.equals(other.trueEndpointHeader);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.integer,
@@ -111,7 +111,7 @@ public final class WithNonLiteralHeadersRequest {
                 this.trueEndpointHeader);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -168,7 +168,7 @@ public final class WithNonLiteralHeadersRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WithNonLiteralHeadersRequest other) {
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
@@ -178,48 +178,48 @@ public final class WithNonLiteralHeadersRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("integer")
         public TrueServiceHeaderStage integer(int integer) {
             this.integer = integer;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("trueServiceHeader")
         public NonLiteralEndpointHeaderStage trueServiceHeader(Boolean trueServiceHeader) {
             this.trueServiceHeader = trueServiceHeader;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("nonLiteralEndpointHeader")
         public TrueEndpointHeaderStage nonLiteralEndpointHeader(String nonLiteralEndpointHeader) {
             this.nonLiteralEndpointHeader = nonLiteralEndpointHeader;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("trueEndpointHeader")
         public _FinalStage trueEndpointHeader(Boolean trueEndpointHeader) {
             this.trueEndpointHeader = trueEndpointHeader;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage maybeInteger(Integer maybeInteger) {
             this.maybeInteger = Optional.of(maybeInteger);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "maybeInteger", nulls = Nulls.SKIP)
         public _FinalStage maybeInteger(Optional<Integer> maybeInteger) {
             this.maybeInteger = maybeInteger;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WithNonLiteralHeadersRequest build() {
             return new WithNonLiteralHeadersRequest(
                     integer,

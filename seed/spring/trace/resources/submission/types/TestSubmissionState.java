@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public final class TestSubmissionState {
     return status;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestSubmissionState && equalTo((TestSubmissionState) other);
@@ -71,12 +70,12 @@ public final class TestSubmissionState {
     return problemId.equals(other.problemId) && defaultTestCases.equals(other.defaultTestCases) && customTestCases.equals(other.customTestCases) && status.equals(other.status);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.problemId, this.defaultTestCases, this.customTestCases, this.status);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -126,7 +125,7 @@ public final class TestSubmissionState {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestSubmissionState other) {
       problemId(other.getProblemId());
       defaultTestCases(other.getDefaultTestCases());
@@ -135,33 +134,33 @@ public final class TestSubmissionState {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemId")
     public StatusStage problemId(ProblemId problemId) {
       this.problemId = problemId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("status")
     public _FinalStage status(TestSubmissionStatus status) {
       this.status = status;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllCustomTestCases(List<TestCase> customTestCases) {
       this.customTestCases.addAll(customTestCases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addCustomTestCases(TestCase customTestCases) {
       this.customTestCases.add(customTestCases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "customTestCases",
         nulls = Nulls.SKIP
@@ -172,19 +171,19 @@ public final class TestSubmissionState {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllDefaultTestCases(List<TestCase> defaultTestCases) {
       this.defaultTestCases.addAll(defaultTestCases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addDefaultTestCases(TestCase defaultTestCases) {
       this.defaultTestCases.add(defaultTestCases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "defaultTestCases",
         nulls = Nulls.SKIP
@@ -195,7 +194,7 @@ public final class TestSubmissionState {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestSubmissionState build() {
       return new TestSubmissionState(problemId, defaultTestCases, customTestCases, status);
     }

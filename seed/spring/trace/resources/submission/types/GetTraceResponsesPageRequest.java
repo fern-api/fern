@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Integer;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,7 +33,7 @@ public final class GetTraceResponsesPageRequest {
     return offset;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetTraceResponsesPageRequest && equalTo((GetTraceResponsesPageRequest) other);
@@ -44,12 +43,12 @@ public final class GetTraceResponsesPageRequest {
     return offset.equals(other.offset);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.offset);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }

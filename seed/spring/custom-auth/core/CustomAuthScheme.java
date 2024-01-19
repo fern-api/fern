@@ -7,7 +7,6 @@ package core;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 
 public final class CustomAuthScheme {
@@ -22,17 +21,17 @@ public final class CustomAuthScheme {
     return this.value;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     return this == other || (other instanceof CustomAuthScheme && this.value.equals(((CustomAuthScheme) other).value));
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return value.hashCode();
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return value;
   }

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -89,7 +88,7 @@ public final class CreateProblemRequest {
     return methodName;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof CreateProblemRequest && equalTo((CreateProblemRequest) other);
@@ -99,12 +98,12 @@ public final class CreateProblemRequest {
     return problemName.equals(other.problemName) && problemDescription.equals(other.problemDescription) && files.equals(other.files) && inputParams.equals(other.inputParams) && outputType.equals(other.outputType) && testcases.equals(other.testcases) && methodName.equals(other.methodName);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.problemName, this.problemDescription, this.files, this.inputParams, this.outputType, this.testcases, this.methodName);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -174,7 +173,7 @@ public final class CreateProblemRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(CreateProblemRequest other) {
       problemName(other.getProblemName());
       problemDescription(other.getProblemDescription());
@@ -186,47 +185,47 @@ public final class CreateProblemRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemName")
     public ProblemDescriptionStage problemName(String problemName) {
       this.problemName = problemName;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemDescription")
     public OutputTypeStage problemDescription(ProblemDescription problemDescription) {
       this.problemDescription = problemDescription;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("outputType")
     public MethodNameStage outputType(VariableType outputType) {
       this.outputType = outputType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("methodName")
     public _FinalStage methodName(String methodName) {
       this.methodName = methodName;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllTestcases(List<TestCaseWithExpectedResult> testcases) {
       this.testcases.addAll(testcases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addTestcases(TestCaseWithExpectedResult testcases) {
       this.testcases.add(testcases);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "testcases",
         nulls = Nulls.SKIP
@@ -237,19 +236,19 @@ public final class CreateProblemRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllInputParams(List<VariableTypeAndName> inputParams) {
       this.inputParams.addAll(inputParams);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addInputParams(VariableTypeAndName inputParams) {
       this.inputParams.add(inputParams);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "inputParams",
         nulls = Nulls.SKIP
@@ -260,19 +259,19 @@ public final class CreateProblemRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage files(Language key, ProblemFiles value) {
       this.files.put(key, value);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage putAllFiles(Map<Language, ProblemFiles> files) {
       this.files.putAll(files);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "files",
         nulls = Nulls.SKIP
@@ -283,7 +282,7 @@ public final class CreateProblemRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public CreateProblemRequest build() {
       return new CreateProblemRequest(problemName, problemDescription, files, inputParams, outputType, testcases, methodName);
     }

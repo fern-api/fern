@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Boolean;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -116,12 +115,12 @@ public final class CreateOptionsResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitOk(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof OkValue && equalTo((OkValue) other);
@@ -131,12 +130,12 @@ public final class CreateOptionsResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "CreateOptionsResponse{" + "value: " + value + "}";
     }
@@ -157,12 +156,12 @@ public final class CreateOptionsResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitOptions(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof OptionsValue && equalTo((OptionsValue) other);
@@ -172,12 +171,12 @@ public final class CreateOptionsResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "CreateOptionsResponse{" + "value: " + value + "}";
     }
@@ -195,12 +194,12 @@ public final class CreateOptionsResponse {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -210,12 +209,12 @@ public final class CreateOptionsResponse {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "CreateOptionsResponse{" + "type: " + type + ", value: " + value + "}";
     }

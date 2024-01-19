@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -59,7 +58,7 @@ public final class ExecutionSessionResponse {
     return status;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ExecutionSessionResponse && equalTo((ExecutionSessionResponse) other);
@@ -69,12 +68,12 @@ public final class ExecutionSessionResponse {
     return sessionId.equals(other.sessionId) && executionSessionUrl.equals(other.executionSessionUrl) && language.equals(other.language) && status.equals(other.status);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.sessionId, this.executionSessionUrl, this.language, this.status);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -120,7 +119,7 @@ public final class ExecutionSessionResponse {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ExecutionSessionResponse other) {
       sessionId(other.getSessionId());
       executionSessionUrl(other.getExecutionSessionUrl());
@@ -129,34 +128,34 @@ public final class ExecutionSessionResponse {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("sessionId")
     public LanguageStage sessionId(String sessionId) {
       this.sessionId = sessionId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("language")
     public StatusStage language(Language language) {
       this.language = language;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("status")
     public _FinalStage status(ExecutionSessionStatus status) {
       this.status = status;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage executionSessionUrl(String executionSessionUrl) {
       this.executionSessionUrl = Optional.of(executionSessionUrl);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "executionSessionUrl",
         nulls = Nulls.SKIP
@@ -166,7 +165,7 @@ public final class ExecutionSessionResponse {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ExecutionSessionResponse build() {
       return new ExecutionSessionResponse(sessionId, executionSessionUrl, language, status);
     }

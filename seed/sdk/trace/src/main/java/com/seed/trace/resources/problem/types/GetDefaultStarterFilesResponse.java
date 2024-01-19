@@ -36,7 +36,7 @@ public final class GetDefaultStarterFilesResponse {
         return files;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetDefaultStarterFilesResponse && equalTo((GetDefaultStarterFilesResponse) other);
@@ -51,12 +51,12 @@ public final class GetDefaultStarterFilesResponse {
         return files.equals(other.files);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.files);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

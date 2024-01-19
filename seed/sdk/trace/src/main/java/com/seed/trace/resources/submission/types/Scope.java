@@ -35,7 +35,7 @@ public final class Scope {
         return variables;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Scope && equalTo((Scope) other);
@@ -50,12 +50,12 @@ public final class Scope {
         return variables.equals(other.variables);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.variables);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

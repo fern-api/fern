@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class UnauthorizedRequestErrorBody {
     return message;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof UnauthorizedRequestErrorBody && equalTo((UnauthorizedRequestErrorBody) other);
@@ -41,12 +40,12 @@ public final class UnauthorizedRequestErrorBody {
     return message.equals(other.message);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.message);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class UnauthorizedRequestErrorBody {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(UnauthorizedRequestErrorBody other) {
       message(other.getMessage());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("message")
     public _FinalStage message(String message) {
       this.message = message;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public UnauthorizedRequestErrorBody build() {
       return new UnauthorizedRequestErrorBody(message);
     }

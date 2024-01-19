@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +49,7 @@ public final class Node {
     return trees;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Node && equalTo((Node) other);
@@ -60,12 +59,12 @@ public final class Node {
     return name.equals(other.name) && nodes.equals(other.nodes) && trees.equals(other.trees);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name, this.nodes, this.trees);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -105,7 +104,7 @@ public final class Node {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Node other) {
       name(other.getName());
       nodes(other.getNodes());
@@ -113,20 +112,20 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage trees(List<Tree> trees) {
       this.trees = Optional.of(trees);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "trees",
         nulls = Nulls.SKIP
@@ -136,13 +135,13 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage nodes(List<Node> nodes) {
       this.nodes = Optional.of(nodes);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "nodes",
         nulls = Nulls.SKIP
@@ -152,7 +151,7 @@ public final class Node {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Node build() {
       return new Node(name, nodes, trees);
     }

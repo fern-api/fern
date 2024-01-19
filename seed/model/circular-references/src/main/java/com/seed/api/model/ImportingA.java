@@ -28,7 +28,7 @@ public final class ImportingA {
         return a;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ImportingA && equalTo((ImportingA) other);
@@ -38,12 +38,12 @@ public final class ImportingA {
         return a.equals(other.a);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.a);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

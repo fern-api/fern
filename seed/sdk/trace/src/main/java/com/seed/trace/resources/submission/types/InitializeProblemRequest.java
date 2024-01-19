@@ -43,7 +43,7 @@ public final class InitializeProblemRequest {
         return problemVersion;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InitializeProblemRequest && equalTo((InitializeProblemRequest) other);
@@ -58,12 +58,12 @@ public final class InitializeProblemRequest {
         return problemId.equals(other.problemId) && problemVersion.equals(other.problemVersion);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.problemId, this.problemVersion);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,34 +97,34 @@ public final class InitializeProblemRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InitializeProblemRequest other) {
             problemId(other.getProblemId());
             problemVersion(other.getProblemVersion());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemId")
         public _FinalStage problemId(String problemId) {
             this.problemId = problemId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage problemVersion(Integer problemVersion) {
             this.problemVersion = Optional.of(problemVersion);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "problemVersion", nulls = Nulls.SKIP)
         public _FinalStage problemVersion(Optional<Integer> problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InitializeProblemRequest build() {
             return new InitializeProblemRequest(problemId, problemVersion, additionalProperties);
         }

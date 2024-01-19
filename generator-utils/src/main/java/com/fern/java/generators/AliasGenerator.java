@@ -115,7 +115,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
                 ? "return this == other || (other instanceof $T && this.$L == (($T) other).value)"
                 : "return this == other || (other instanceof $T && this.$L.equals((($T) other).value))";
         return MethodSpec.methodBuilder("equals")
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(boolean.class)
                 .addParameter(Object.class, "other")
@@ -132,7 +132,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
             hashCodeMethodBlock = CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "hashCode");
         }
         return MethodSpec.methodBuilder("hashCode")
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(int.class)
                 .addStatement(hashCodeMethodBlock)
@@ -149,7 +149,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
         return MethodSpec.methodBuilder("toString")
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(toStringMethodCodeBlock)
                 .returns(String.class)
                 .build();

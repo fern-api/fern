@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Integer;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -55,7 +54,7 @@ public final class GetExecutionSessionStateResponse {
     return warmingSessionIds;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetExecutionSessionStateResponse && equalTo((GetExecutionSessionStateResponse) other);
@@ -65,12 +64,12 @@ public final class GetExecutionSessionStateResponse {
     return states.equals(other.states) && numWarmingInstances.equals(other.numWarmingInstances) && warmingSessionIds.equals(other.warmingSessionIds);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.states, this.numWarmingInstances, this.warmingSessionIds);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }

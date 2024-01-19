@@ -46,7 +46,7 @@ public final class MaybeList {
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MaybeList && equalTo((MaybeList) other);
@@ -56,12 +56,12 @@ public final class MaybeList {
         return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return this.value.toString();
     }
@@ -103,7 +103,7 @@ public final class MaybeList {
             super(MaybeList.class);
         }
 
-        @Override
+        @java.lang.Override
         public MaybeList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {

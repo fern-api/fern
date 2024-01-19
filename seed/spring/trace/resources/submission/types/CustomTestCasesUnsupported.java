@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import resources.commons.types.ProblemId;
@@ -40,7 +39,7 @@ public final class CustomTestCasesUnsupported {
     return submissionId;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof CustomTestCasesUnsupported && equalTo((CustomTestCasesUnsupported) other);
@@ -50,12 +49,12 @@ public final class CustomTestCasesUnsupported {
     return problemId.equals(other.problemId) && submissionId.equals(other.submissionId);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.problemId, this.submissionId);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class CustomTestCasesUnsupported {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(CustomTestCasesUnsupported other) {
       problemId(other.getProblemId());
       submissionId(other.getSubmissionId());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("problemId")
     public SubmissionIdStage problemId(ProblemId problemId) {
       this.problemId = problemId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submissionId")
     public _FinalStage submissionId(SubmissionId submissionId) {
       this.submissionId = submissionId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public CustomTestCasesUnsupported build() {
       return new CustomTestCasesUnsupported(problemId, submissionId);
     }

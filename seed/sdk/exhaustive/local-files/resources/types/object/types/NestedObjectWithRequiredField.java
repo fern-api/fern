@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +46,7 @@ public final class NestedObjectWithRequiredField {
     return nestedObject;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof NestedObjectWithRequiredField && equalTo((NestedObjectWithRequiredField) other);
@@ -62,12 +61,12 @@ public final class NestedObjectWithRequiredField {
     return string.equals(other.string) && nestedObject.equals(other.nestedObject);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.string, this.nestedObject);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -104,28 +103,28 @@ public final class NestedObjectWithRequiredField {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(NestedObjectWithRequiredField other) {
       string(other.getString());
       nestedObject(other.getNestedObject());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("string")
     public NestedObjectStage string(String string) {
       this.string = string;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("NestedObject")
     public _FinalStage nestedObject(ObjectWithOptionalField nestedObject) {
       this.nestedObject = nestedObject;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public NestedObjectWithRequiredField build() {
       return new NestedObjectWithRequiredField(string, nestedObject, additionalProperties);
     }

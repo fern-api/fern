@@ -54,7 +54,7 @@ public final class GetMetadataRequest {
         return tag;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetMetadataRequest && equalTo((GetMetadataRequest) other);
@@ -69,12 +69,12 @@ public final class GetMetadataRequest {
         return xApiVersion.equals(other.xApiVersion) && shallow.equals(other.shallow) && tag.equals(other.tag);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.xApiVersion, this.shallow, this.tag);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class GetMetadataRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetMetadataRequest other) {
             xApiVersion(other.getXApiVersion());
             shallow(other.getShallow());
@@ -122,40 +122,40 @@ public final class GetMetadataRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("X-API-Version")
         public _FinalStage xApiVersion(String xApiVersion) {
             this.xApiVersion = xApiVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage tag(String tag) {
             this.tag = Optional.of(tag);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "tag", nulls = Nulls.SKIP)
         public _FinalStage tag(Optional<String> tag) {
             this.tag = tag;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage shallow(Boolean shallow) {
             this.shallow = Optional.of(shallow);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "shallow", nulls = Nulls.SKIP)
         public _FinalStage shallow(Optional<Boolean> shallow) {
             this.shallow = shallow;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetMetadataRequest build() {
             return new GetMetadataRequest(xApiVersion, shallow, tag, additionalProperties);
         }

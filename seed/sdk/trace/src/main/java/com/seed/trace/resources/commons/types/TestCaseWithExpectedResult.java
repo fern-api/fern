@@ -41,7 +41,7 @@ public final class TestCaseWithExpectedResult {
         return expectedResult;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseWithExpectedResult && equalTo((TestCaseWithExpectedResult) other);
@@ -56,12 +56,12 @@ public final class TestCaseWithExpectedResult {
         return testCase.equals(other.testCase) && expectedResult.equals(other.expectedResult);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.testCase, this.expectedResult);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class TestCaseWithExpectedResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestCaseWithExpectedResult other) {
             testCase(other.getTestCase());
             expectedResult(other.getExpectedResult());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("testCase")
         public ExpectedResultStage testCase(TestCase testCase) {
             this.testCase = testCase;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("expectedResult")
         public _FinalStage expectedResult(VariableValue expectedResult) {
             this.expectedResult = expectedResult;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestCaseWithExpectedResult build() {
             return new TestCaseWithExpectedResult(testCase, expectedResult, additionalProperties);
         }

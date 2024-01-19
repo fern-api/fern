@@ -16,7 +16,6 @@ import java.lang.Boolean;
 import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -305,12 +304,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitIntegerValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof IntegerValueValue && equalTo((IntegerValueValue) other);
@@ -320,12 +319,12 @@ public final class DebugVariableValue {
       return value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -343,12 +342,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitBooleanValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof BooleanValueValue && equalTo((BooleanValueValue) other);
@@ -358,12 +357,12 @@ public final class DebugVariableValue {
       return value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -381,12 +380,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitDoubleValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof DoubleValueValue && equalTo((DoubleValueValue) other);
@@ -396,12 +395,12 @@ public final class DebugVariableValue {
       return value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -419,12 +418,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitStringValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof StringValueValue && equalTo((StringValueValue) other);
@@ -434,12 +433,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -457,12 +456,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitCharValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof CharValueValue && equalTo((CharValueValue) other);
@@ -472,12 +471,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -498,12 +497,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitMapValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof MapValueValue && equalTo((MapValueValue) other);
@@ -513,12 +512,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -536,12 +535,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitListValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof ListValueValue && equalTo((ListValueValue) other);
@@ -551,12 +550,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -577,12 +576,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitBinaryTreeNodeValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof BinaryTreeNodeValueValue && equalTo((BinaryTreeNodeValueValue) other);
@@ -592,12 +591,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -618,12 +617,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitSinglyLinkedListNodeValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof SinglyLinkedListNodeValueValue && equalTo((SinglyLinkedListNodeValueValue) other);
@@ -633,12 +632,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -659,12 +658,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitDoublyLinkedListNodeValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof DoublyLinkedListNodeValueValue && equalTo((DoublyLinkedListNodeValueValue) other);
@@ -674,12 +673,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -693,18 +692,18 @@ public final class DebugVariableValue {
     private UndefinedValueValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitUndefinedValue();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof UndefinedValueValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "}";
     }
@@ -718,18 +717,18 @@ public final class DebugVariableValue {
     private NullValueValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitNullValue();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof NullValueValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "}";
     }
@@ -750,12 +749,12 @@ public final class DebugVariableValue {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitGenericValue(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof GenericValueValue && equalTo((GenericValueValue) other);
@@ -765,12 +764,12 @@ public final class DebugVariableValue {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "value: " + value + "}";
     }
@@ -788,12 +787,12 @@ public final class DebugVariableValue {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -803,12 +802,12 @@ public final class DebugVariableValue {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "DebugVariableValue{" + "type: " + type + ", value: " + value + "}";
     }

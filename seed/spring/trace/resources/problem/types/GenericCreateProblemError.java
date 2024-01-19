@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -47,7 +46,7 @@ public final class GenericCreateProblemError {
     return stacktrace;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GenericCreateProblemError && equalTo((GenericCreateProblemError) other);
@@ -57,12 +56,12 @@ public final class GenericCreateProblemError {
     return message.equals(other.message) && type.equals(other.type) && stacktrace.equals(other.stacktrace);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.message, this.type, this.stacktrace);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -102,7 +101,7 @@ public final class GenericCreateProblemError {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GenericCreateProblemError other) {
       message(other.getMessage());
       type(other.getType());
@@ -110,28 +109,28 @@ public final class GenericCreateProblemError {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("message")
     public TypeStage message(String message) {
       this.message = message;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("type")
     public StacktraceStage type(String type) {
       this.type = type;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stacktrace")
     public _FinalStage stacktrace(String stacktrace) {
       this.stacktrace = stacktrace;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GenericCreateProblemError build() {
       return new GenericCreateProblemError(message, type, stacktrace);
     }

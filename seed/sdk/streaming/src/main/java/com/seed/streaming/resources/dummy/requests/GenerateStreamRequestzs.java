@@ -32,7 +32,7 @@ public final class GenerateStreamRequestzs {
         return numEvents;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GenerateStreamRequestzs && equalTo((GenerateStreamRequestzs) other);
@@ -47,12 +47,12 @@ public final class GenerateStreamRequestzs {
         return numEvents == other.numEvents;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.numEvents);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class GenerateStreamRequestzs {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GenerateStreamRequestzs other) {
             numEvents(other.getNumEvents());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("num_events")
         public _FinalStage numEvents(int numEvents) {
             this.numEvents = numEvents;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GenerateStreamRequestzs build() {
             return new GenerateStreamRequestzs(numEvents, additionalProperties);
         }

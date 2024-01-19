@@ -79,7 +79,7 @@ public final class GetPlaylistsRequest {
         return multipleField;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetPlaylistsRequest && equalTo((GetPlaylistsRequest) other);
@@ -98,13 +98,13 @@ public final class GetPlaylistsRequest {
                 && multipleField.equals(other.multipleField);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.limit, this.otherField, this.multiLineDocs, this.optionalMultipleField, this.multipleField);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -156,7 +156,7 @@ public final class GetPlaylistsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetPlaylistsRequest other) {
             limit(other.getLimit());
             otherField(other.getOtherField());
@@ -170,7 +170,7 @@ public final class GetPlaylistsRequest {
          * <p>i'm another field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("otherField")
         public MultiLineDocsStage otherField(String otherField) {
             this.otherField = otherField;
@@ -182,47 +182,47 @@ public final class GetPlaylistsRequest {
          * description</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("multiLineDocs")
         public MultipleFieldStage multiLineDocs(String multiLineDocs) {
             this.multiLineDocs = multiLineDocs;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("multipleField")
         public _FinalStage multipleField(String multipleField) {
             this.multipleField = multipleField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalMultipleField(String optionalMultipleField) {
             this.optionalMultipleField = Optional.of(optionalMultipleField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalMultipleField", nulls = Nulls.SKIP)
         public _FinalStage optionalMultipleField(Optional<String> optionalMultipleField) {
             this.optionalMultipleField = optionalMultipleField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage limit(Integer limit) {
             this.limit = Optional.of(limit);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
         public _FinalStage limit(Optional<Integer> limit) {
             this.limit = limit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetPlaylistsRequest build() {
             return new GetPlaylistsRequest(
                     limit, otherField, multiLineDocs, optionalMultipleField, multipleField, additionalProperties);

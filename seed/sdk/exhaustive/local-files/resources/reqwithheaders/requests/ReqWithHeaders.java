@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +54,7 @@ public final class ReqWithHeaders {
     return body;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ReqWithHeaders && equalTo((ReqWithHeaders) other);
@@ -70,12 +69,12 @@ public final class ReqWithHeaders {
     return xTestServiceHeader.equals(other.xTestServiceHeader) && xTestEndpointHeader.equals(other.xTestEndpointHeader) && body.equals(other.body);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.xTestServiceHeader, this.xTestEndpointHeader, this.body);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -118,7 +117,7 @@ public final class ReqWithHeaders {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ReqWithHeaders other) {
       xTestServiceHeader(other.getXTestServiceHeader());
       xTestEndpointHeader(other.getXTestEndpointHeader());
@@ -126,28 +125,28 @@ public final class ReqWithHeaders {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("X-TEST-SERVICE-HEADER")
     public XTestEndpointHeaderStage xTestServiceHeader(String xTestServiceHeader) {
       this.xTestServiceHeader = xTestServiceHeader;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("X-TEST-ENDPOINT-HEADER")
     public BodyStage xTestEndpointHeader(String xTestEndpointHeader) {
       this.xTestEndpointHeader = xTestEndpointHeader;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("body")
     public _FinalStage body(String body) {
       this.body = body;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ReqWithHeaders build() {
       return new ReqWithHeaders(xTestServiceHeader, xTestEndpointHeader, body, additionalProperties);
     }

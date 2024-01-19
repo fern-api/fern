@@ -142,7 +142,7 @@ public final class MyRequest {
         return listOfObjects;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MyRequest && equalTo((MyRequest) other);
@@ -168,7 +168,7 @@ public final class MyRequest {
                 && listOfObjects.equals(other.listOfObjects);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.maybeString,
@@ -185,7 +185,7 @@ public final class MyRequest {
                 this.listOfObjects);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -285,7 +285,7 @@ public final class MyRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MyRequest other) {
             maybeString(other.getMaybeString());
             integer(other.getInteger());
@@ -302,40 +302,40 @@ public final class MyRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("integer")
         public MaybeListStage integer(int integer) {
             this.integer = integer;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("maybeList")
         public MaybeListOrSetStage maybeList(MaybeList maybeList) {
             this.maybeList = maybeList;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("maybeListOrSet")
         public _FinalStage maybeListOrSet(MaybeListOrSet maybeListOrSet) {
             this.maybeListOrSet = maybeListOrSet;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllListOfObjects(List<MyObject> listOfObjects) {
             this.listOfObjects.addAll(listOfObjects);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addListOfObjects(MyObject listOfObjects) {
             this.listOfObjects.add(listOfObjects);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "listOfObjects", nulls = Nulls.SKIP)
         public _FinalStage listOfObjects(List<MyObject> listOfObjects) {
             this.listOfObjects.clear();
@@ -343,71 +343,71 @@ public final class MyRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalMaybeListOrSet(MaybeListOrSet optionalMaybeListOrSet) {
             this.optionalMaybeListOrSet = Optional.of(optionalMaybeListOrSet);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalMaybeListOrSet", nulls = Nulls.SKIP)
         public _FinalStage optionalMaybeListOrSet(Optional<MaybeListOrSet> optionalMaybeListOrSet) {
             this.optionalMaybeListOrSet = optionalMaybeListOrSet;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalMaybeList(MaybeList optionalMaybeList) {
             this.optionalMaybeList = Optional.of(optionalMaybeList);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalMaybeList", nulls = Nulls.SKIP)
         public _FinalStage optionalMaybeList(Optional<MaybeList> optionalMaybeList) {
             this.optionalMaybeList = optionalMaybeList;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalSetOfStrings(Set<String> optionalSetOfStrings) {
             this.optionalSetOfStrings = Optional.of(optionalSetOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalSetOfStrings", nulls = Nulls.SKIP)
         public _FinalStage optionalSetOfStrings(Optional<Set<String>> optionalSetOfStrings) {
             this.optionalSetOfStrings = optionalSetOfStrings;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalListOfStrings(List<String> optionalListOfStrings) {
             this.optionalListOfStrings = Optional.of(optionalListOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalListOfStrings", nulls = Nulls.SKIP)
         public _FinalStage optionalListOfStrings(Optional<List<String>> optionalListOfStrings) {
             this.optionalListOfStrings = optionalListOfStrings;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSetOfStrings(Set<String> setOfStrings) {
             this.setOfStrings.addAll(setOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSetOfStrings(String setOfStrings) {
             this.setOfStrings.add(setOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "setOfStrings", nulls = Nulls.SKIP)
         public _FinalStage setOfStrings(Set<String> setOfStrings) {
             this.setOfStrings.clear();
@@ -415,19 +415,19 @@ public final class MyRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllListOfStrings(List<String> listOfStrings) {
             this.listOfStrings.addAll(listOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addListOfStrings(String listOfStrings) {
             this.listOfStrings.add(listOfStrings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "listOfStrings", nulls = Nulls.SKIP)
         public _FinalStage listOfStrings(List<String> listOfStrings) {
             this.listOfStrings.clear();
@@ -435,33 +435,33 @@ public final class MyRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage maybeInteger(Integer maybeInteger) {
             this.maybeInteger = Optional.of(maybeInteger);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "maybeInteger", nulls = Nulls.SKIP)
         public _FinalStage maybeInteger(Optional<Integer> maybeInteger) {
             this.maybeInteger = maybeInteger;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage maybeString(String maybeString) {
             this.maybeString = Optional.of(maybeString);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "maybeString", nulls = Nulls.SKIP)
         public _FinalStage maybeString(Optional<String> maybeString) {
             this.maybeString = maybeString;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MyRequest build() {
             return new MyRequest(
                     maybeString,

@@ -52,7 +52,7 @@ public final class StackFrame {
         return scopes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StackFrame && equalTo((StackFrame) other);
@@ -67,12 +67,12 @@ public final class StackFrame {
         return methodName.equals(other.methodName) && lineNumber == other.lineNumber && scopes.equals(other.scopes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.methodName, this.lineNumber, this.scopes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class StackFrame {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(StackFrame other) {
             methodName(other.getMethodName());
             lineNumber(other.getLineNumber());
@@ -122,33 +122,33 @@ public final class StackFrame {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("methodName")
         public LineNumberStage methodName(String methodName) {
             this.methodName = methodName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lineNumber")
         public _FinalStage lineNumber(int lineNumber) {
             this.lineNumber = lineNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllScopes(List<Scope> scopes) {
             this.scopes.addAll(scopes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addScopes(Scope scopes) {
             this.scopes.add(scopes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "scopes", nulls = Nulls.SKIP)
         public _FinalStage scopes(List<Scope> scopes) {
             this.scopes.clear();
@@ -156,7 +156,7 @@ public final class StackFrame {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public StackFrame build() {
             return new StackFrame(methodName, lineNumber, scopes, additionalProperties);
         }

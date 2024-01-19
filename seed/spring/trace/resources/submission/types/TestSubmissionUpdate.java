@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -40,7 +39,7 @@ public final class TestSubmissionUpdate {
     return updateInfo;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestSubmissionUpdate && equalTo((TestSubmissionUpdate) other);
@@ -50,12 +49,12 @@ public final class TestSubmissionUpdate {
     return updateTime.equals(other.updateTime) && updateInfo.equals(other.updateInfo);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.updateTime, this.updateInfo);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class TestSubmissionUpdate {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestSubmissionUpdate other) {
       updateTime(other.getUpdateTime());
       updateInfo(other.getUpdateInfo());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("updateTime")
     public UpdateInfoStage updateTime(OffsetDateTime updateTime) {
       this.updateTime = updateTime;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("updateInfo")
     public _FinalStage updateInfo(TestSubmissionUpdateInfo updateInfo) {
       this.updateInfo = updateInfo;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestSubmissionUpdate build() {
       return new TestSubmissionUpdate(updateTime, updateInfo);
     }

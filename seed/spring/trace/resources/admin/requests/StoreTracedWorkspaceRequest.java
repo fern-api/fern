@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public final class StoreTracedWorkspaceRequest {
     return traceResponses;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof StoreTracedWorkspaceRequest && equalTo((StoreTracedWorkspaceRequest) other);
@@ -55,12 +54,12 @@ public final class StoreTracedWorkspaceRequest {
     return workspaceRunDetails.equals(other.workspaceRunDetails) && traceResponses.equals(other.traceResponses);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.workspaceRunDetails, this.traceResponses);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -96,33 +95,33 @@ public final class StoreTracedWorkspaceRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(StoreTracedWorkspaceRequest other) {
       workspaceRunDetails(other.getWorkspaceRunDetails());
       traceResponses(other.getTraceResponses());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("workspaceRunDetails")
     public _FinalStage workspaceRunDetails(WorkspaceRunDetails workspaceRunDetails) {
       this.workspaceRunDetails = workspaceRunDetails;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllTraceResponses(List<TraceResponse> traceResponses) {
       this.traceResponses.addAll(traceResponses);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addTraceResponses(TraceResponse traceResponses) {
       this.traceResponses.add(traceResponses);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "traceResponses",
         nulls = Nulls.SKIP
@@ -133,7 +132,7 @@ public final class StoreTracedWorkspaceRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public StoreTracedWorkspaceRequest build() {
       return new StoreTracedWorkspaceRequest(workspaceRunDetails, traceResponses);
     }

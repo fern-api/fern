@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,7 +49,7 @@ public final class WorkspaceRunDetails {
     return stdout;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof WorkspaceRunDetails && equalTo((WorkspaceRunDetails) other);
@@ -60,12 +59,12 @@ public final class WorkspaceRunDetails {
     return exceptionV2.equals(other.exceptionV2) && exception.equals(other.exception) && stdout.equals(other.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.exceptionV2, this.exception, this.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -105,7 +104,7 @@ public final class WorkspaceRunDetails {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(WorkspaceRunDetails other) {
       exceptionV2(other.getExceptionV2());
       exception(other.getException());
@@ -113,20 +112,20 @@ public final class WorkspaceRunDetails {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stdout")
     public _FinalStage stdout(String stdout) {
       this.stdout = stdout;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage exception(ExceptionInfo exception) {
       this.exception = Optional.of(exception);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "exception",
         nulls = Nulls.SKIP
@@ -136,13 +135,13 @@ public final class WorkspaceRunDetails {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage exceptionV2(ExceptionV2 exceptionV2) {
       this.exceptionV2 = Optional.of(exceptionV2);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "exceptionV2",
         nulls = Nulls.SKIP
@@ -152,7 +151,7 @@ public final class WorkspaceRunDetails {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public WorkspaceRunDetails build() {
       return new WorkspaceRunDetails(exceptionV2, exception, stdout);
     }

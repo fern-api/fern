@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class ExpressionLocation {
     return offset;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ExpressionLocation && equalTo((ExpressionLocation) other);
@@ -49,12 +48,12 @@ public final class ExpressionLocation {
     return start == other.start && offset == other.offset;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.start, this.offset);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class ExpressionLocation {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ExpressionLocation other) {
       start(other.getStart());
       offset(other.getOffset());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("start")
     public OffsetStage start(int start) {
       this.start = start;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("offset")
     public _FinalStage offset(int offset) {
       this.offset = offset;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ExpressionLocation build() {
       return new ExpressionLocation(start, offset);
     }

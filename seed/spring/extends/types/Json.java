@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -30,18 +29,18 @@ public final class Json implements IJson, IDocs {
   }
 
   @JsonProperty("raw")
-  @Override
+  @java.lang.Override
   public String getRaw() {
     return raw;
   }
 
   @JsonProperty("docs")
-  @Override
+  @java.lang.Override
   public String getDocs() {
     return docs;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Json && equalTo((Json) other);
@@ -51,12 +50,12 @@ public final class Json implements IJson, IDocs {
     return raw.equals(other.raw) && docs.equals(other.docs);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.raw, this.docs);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -90,28 +89,28 @@ public final class Json implements IJson, IDocs {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Json other) {
       raw(other.getRaw());
       docs(other.getDocs());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("raw")
     public DocsStage raw(String raw) {
       this.raw = raw;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("docs")
     public _FinalStage docs(String docs) {
       this.docs = docs;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Json build() {
       return new Json(raw, docs);
     }

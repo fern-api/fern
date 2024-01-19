@@ -61,7 +61,7 @@ public final class BasicTestCaseTemplate {
         return expectedValueParameterId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BasicTestCaseTemplate && equalTo((BasicTestCaseTemplate) other);
@@ -79,12 +79,12 @@ public final class BasicTestCaseTemplate {
                 && expectedValueParameterId.equals(other.expectedValueParameterId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.templateId, this.name, this.description, this.expectedValueParameterId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -131,7 +131,7 @@ public final class BasicTestCaseTemplate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BasicTestCaseTemplate other) {
             templateId(other.getTemplateId());
             name(other.getName());
@@ -140,35 +140,35 @@ public final class BasicTestCaseTemplate {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("templateId")
         public NameStage templateId(String templateId) {
             this.templateId = templateId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public DescriptionStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public ExpectedValueParameterIdStage description(TestCaseImplementationDescription description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("expectedValueParameterId")
         public _FinalStage expectedValueParameterId(String expectedValueParameterId) {
             this.expectedValueParameterId = expectedValueParameterId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BasicTestCaseTemplate build() {
             return new BasicTestCaseTemplate(
                     templateId, name, description, expectedValueParameterId, additionalProperties);

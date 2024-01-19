@@ -42,7 +42,7 @@ public final class StreamResponse {
         return name;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StreamResponse && equalTo((StreamResponse) other);
@@ -57,12 +57,12 @@ public final class StreamResponse {
         return id.equals(other.id) && name.equals(other.name);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class StreamResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(StreamResponse other) {
             id(other.getId());
             name(other.getName());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage name(String name) {
             this.name = Optional.of(name);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public _FinalStage name(Optional<String> name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public StreamResponse build() {
             return new StreamResponse(id, name, additionalProperties);
         }

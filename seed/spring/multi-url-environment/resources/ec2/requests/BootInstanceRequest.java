@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class BootInstanceRequest {
     return size;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof BootInstanceRequest && equalTo((BootInstanceRequest) other);
@@ -41,12 +40,12 @@ public final class BootInstanceRequest {
     return size.equals(other.size);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.size);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class BootInstanceRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(BootInstanceRequest other) {
       size(other.getSize());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("size")
     public _FinalStage size(String size) {
       this.size = size;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public BootInstanceRequest build() {
       return new BootInstanceRequest(size);
     }

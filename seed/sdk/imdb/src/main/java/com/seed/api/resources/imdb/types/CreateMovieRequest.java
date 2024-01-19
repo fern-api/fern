@@ -40,7 +40,7 @@ public final class CreateMovieRequest {
         return rating;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateMovieRequest && equalTo((CreateMovieRequest) other);
@@ -55,12 +55,12 @@ public final class CreateMovieRequest {
         return title.equals(other.title) && rating == other.rating;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.title, this.rating);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class CreateMovieRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateMovieRequest other) {
             title(other.getTitle());
             rating(other.getRating());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public RatingStage title(String title) {
             this.title = title;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("rating")
         public _FinalStage rating(double rating) {
             this.rating = rating;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateMovieRequest build() {
             return new CreateMovieRequest(title, rating, additionalProperties);
         }

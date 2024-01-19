@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -27,12 +26,12 @@ public final class RootType implements IRootType {
   }
 
   @JsonProperty("s")
-  @Override
+  @java.lang.Override
   public String getS() {
     return s;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof RootType && equalTo((RootType) other);
@@ -42,12 +41,12 @@ public final class RootType implements IRootType {
     return s.equals(other.s);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.s);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -75,20 +74,20 @@ public final class RootType implements IRootType {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(RootType other) {
       s(other.getS());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("s")
     public _FinalStage s(String s) {
       this.s = s;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public RootType build() {
       return new RootType(s);
     }

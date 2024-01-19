@@ -34,18 +34,18 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("problems")
-    @Override
+    @java.lang.Override
     public List<String> getProblems() {
         return problems;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PlaylistCreateRequest && equalTo((PlaylistCreateRequest) other);
@@ -60,12 +60,12 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
         return name.equals(other.name) && problems.equals(other.problems);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.problems);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,33 +101,33 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PlaylistCreateRequest other) {
             name(other.getName());
             problems(other.getProblems());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllProblems(List<String> problems) {
             this.problems.addAll(problems);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addProblems(String problems) {
             this.problems.add(problems);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "problems", nulls = Nulls.SKIP)
         public _FinalStage problems(List<String> problems) {
             this.problems.clear();
@@ -135,7 +135,7 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PlaylistCreateRequest build() {
             return new PlaylistCreateRequest(name, problems, additionalProperties);
         }

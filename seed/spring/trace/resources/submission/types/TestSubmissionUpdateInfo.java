@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -173,12 +172,12 @@ public final class TestSubmissionUpdateInfo {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitRunning(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof RunningValue && equalTo((RunningValue) other);
@@ -188,12 +187,12 @@ public final class TestSubmissionUpdateInfo {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "value: " + value + "}";
     }
@@ -207,18 +206,18 @@ public final class TestSubmissionUpdateInfo {
     private StoppedValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitStopped();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof StoppedValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "}";
     }
@@ -236,12 +235,12 @@ public final class TestSubmissionUpdateInfo {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitErrored(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof ErroredValue && equalTo((ErroredValue) other);
@@ -251,12 +250,12 @@ public final class TestSubmissionUpdateInfo {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "value: " + value + "}";
     }
@@ -277,12 +276,12 @@ public final class TestSubmissionUpdateInfo {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitGradedTestCase(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof GradedTestCaseValue && equalTo((GradedTestCaseValue) other);
@@ -292,12 +291,12 @@ public final class TestSubmissionUpdateInfo {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "value: " + value + "}";
     }
@@ -318,12 +317,12 @@ public final class TestSubmissionUpdateInfo {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitRecordedTestCase(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof RecordedTestCaseValue && equalTo((RecordedTestCaseValue) other);
@@ -333,12 +332,12 @@ public final class TestSubmissionUpdateInfo {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "value: " + value + "}";
     }
@@ -352,18 +351,18 @@ public final class TestSubmissionUpdateInfo {
     private FinishedValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitFinished();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof FinishedValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "}";
     }
@@ -381,12 +380,12 @@ public final class TestSubmissionUpdateInfo {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -396,12 +395,12 @@ public final class TestSubmissionUpdateInfo {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "TestSubmissionUpdateInfo{" + "type: " + type + ", value: " + value + "}";
     }

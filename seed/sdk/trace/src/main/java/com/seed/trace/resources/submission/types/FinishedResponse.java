@@ -33,7 +33,7 @@ public final class FinishedResponse {
         return submissionId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FinishedResponse && equalTo((FinishedResponse) other);
@@ -48,12 +48,12 @@ public final class FinishedResponse {
         return submissionId.equals(other.submissionId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class FinishedResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FinishedResponse other) {
             submissionId(other.getSubmissionId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public _FinalStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FinishedResponse build() {
             return new FinishedResponse(submissionId, additionalProperties);
         }

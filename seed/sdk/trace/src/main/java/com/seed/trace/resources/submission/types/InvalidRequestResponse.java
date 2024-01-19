@@ -41,7 +41,7 @@ public final class InvalidRequestResponse {
         return cause;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InvalidRequestResponse && equalTo((InvalidRequestResponse) other);
@@ -56,12 +56,12 @@ public final class InvalidRequestResponse {
         return request.equals(other.request) && cause.equals(other.cause);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.request, this.cause);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class InvalidRequestResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InvalidRequestResponse other) {
             request(other.getRequest());
             cause(other.getCause());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("request")
         public CauseStage request(SubmissionRequest request) {
             this.request = request;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("cause")
         public _FinalStage cause(InvalidRequestCause cause) {
             this.cause = cause;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InvalidRequestResponse build() {
             return new InvalidRequestResponse(request, cause, additionalProperties);
         }

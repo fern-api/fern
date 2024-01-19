@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public final class UpdatePlaylistRequest {
     return problems;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof UpdatePlaylistRequest && equalTo((UpdatePlaylistRequest) other);
@@ -56,12 +55,12 @@ public final class UpdatePlaylistRequest {
     return name.equals(other.name) && problems.equals(other.problems);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name, this.problems);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -97,14 +96,14 @@ public final class UpdatePlaylistRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(UpdatePlaylistRequest other) {
       name(other.getName());
       problems(other.getProblems());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
@@ -115,7 +114,7 @@ public final class UpdatePlaylistRequest {
      * <p>The problems that make up the playlist.</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
-    @Override
+    @java.lang.Override
     public _FinalStage addAllProblems(List<ProblemId> problems) {
       this.problems.addAll(problems);
       return this;
@@ -125,13 +124,13 @@ public final class UpdatePlaylistRequest {
      * <p>The problems that make up the playlist.</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
-    @Override
+    @java.lang.Override
     public _FinalStage addProblems(ProblemId problems) {
       this.problems.add(problems);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "problems",
         nulls = Nulls.SKIP
@@ -142,7 +141,7 @@ public final class UpdatePlaylistRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public UpdatePlaylistRequest build() {
       return new UpdatePlaylistRequest(name, problems);
     }

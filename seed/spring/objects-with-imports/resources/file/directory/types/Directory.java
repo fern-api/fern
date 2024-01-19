@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +51,7 @@ public final class Directory {
     return directories;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Directory && equalTo((Directory) other);
@@ -62,12 +61,12 @@ public final class Directory {
     return name.equals(other.name) && files.equals(other.files) && directories.equals(other.directories);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name, this.files, this.directories);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -107,7 +106,7 @@ public final class Directory {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Directory other) {
       name(other.getName());
       files(other.getFiles());
@@ -115,20 +114,20 @@ public final class Directory {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage directories(List<Directory> directories) {
       this.directories = Optional.of(directories);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "directories",
         nulls = Nulls.SKIP
@@ -138,13 +137,13 @@ public final class Directory {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage files(List<File> files) {
       this.files = Optional.of(files);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "files",
         nulls = Nulls.SKIP
@@ -154,7 +153,7 @@ public final class Directory {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Directory build() {
       return new Directory(name, files, directories);
     }

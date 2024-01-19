@@ -33,7 +33,7 @@ public class ObjectMethodFactory {
     public static EqualsMethod createEqualsMethod(ClassName className, List<FieldSpec> fieldSpecs) {
         if (fieldSpecs.isEmpty()) {
             MethodSpec equalsMethod = MethodSpec.methodBuilder(EqualsConstants.EQUALS_METHOD_NAME)
-                    .addAnnotation(Override.class)
+                    .addAnnotation(ClassName.get("", "java.lang.Override"))
                     .addModifiers(Modifier.PUBLIC)
                     .returns(boolean.class)
                     .addParameter(Object.class, EqualsConstants.OTHER_PARAMETER)
@@ -44,7 +44,7 @@ public class ObjectMethodFactory {
         }
         MethodSpec equalToMethod = createEqualToMethod(className, fieldSpecs);
         MethodSpec equalsMethod = MethodSpec.methodBuilder(EqualsConstants.EQUALS_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(boolean.class)
                 .addParameter(Object.class, EqualsConstants.OTHER_PARAMETER)
@@ -93,7 +93,7 @@ public class ObjectMethodFactory {
         String commaDelimitedFields =
                 fieldSpecs.stream().map(fieldSpec -> "this." + fieldSpec.name).collect(Collectors.joining(", "));
         MethodSpec.Builder hashCodeBuilder = MethodSpec.methodBuilder(HashCodeConstants.HASHCODE_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(int.class);
         hashCodeBuilder.addStatement("return $T.hash($L)", Objects.class, commaDelimitedFields);
@@ -126,7 +126,7 @@ public class ObjectMethodFactory {
         }
         codeBlock.append(" + \"}\"");
         return MethodSpec.methodBuilder(ToStringConstants.TO_STRING_METHOD_NAME)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .addStatement("return " + codeBlock)

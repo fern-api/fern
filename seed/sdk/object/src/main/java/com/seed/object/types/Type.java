@@ -201,7 +201,7 @@ public final class Type {
         return nineteen;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Type && equalTo((Type) other);
@@ -233,7 +233,7 @@ public final class Type {
                 && nineteen.equals(other.nineteen);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.one,
@@ -256,7 +256,7 @@ public final class Type {
                 this.nineteen);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -410,7 +410,7 @@ public final class Type {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Type other) {
             one(other.getOne());
             two(other.getTwo());
@@ -433,96 +433,96 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("one")
         public TwoStage one(int one) {
             this.one = one;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("two")
         public ThreeStage two(double two) {
             this.two = two;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("three")
         public FourStage three(String three) {
             this.three = three;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("four")
         public FiveStage four(boolean four) {
             this.four = four;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("five")
         public SixStage five(long five) {
             this.five = five;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("six")
         public SevenStage six(OffsetDateTime six) {
             this.six = six;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("seven")
         public EightStage seven(String seven) {
             this.seven = seven;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("eight")
         public NineStage eight(UUID eight) {
             this.eight = eight;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("nine")
         public FourteenStage nine(byte[] nine) {
             this.nine = nine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("fourteen")
         public NineteenStage fourteen(Object fourteen) {
             this.fourteen = fourteen;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("nineteen")
         public _FinalStage nineteen(Name nineteen) {
             this.nineteen = nineteen;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSeventeen(List<Optional<UUID>> seventeen) {
             this.seventeen.addAll(seventeen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSeventeen(Optional<UUID> seventeen) {
             this.seventeen.add(seventeen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "seventeen", nulls = Nulls.SKIP)
         public _FinalStage seventeen(List<Optional<UUID>> seventeen) {
             this.seventeen.clear();
@@ -530,19 +530,19 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSixteen(List<Map<String, Integer>> sixteen) {
             this.sixteen.addAll(sixteen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSixteen(Map<String, Integer> sixteen) {
             this.sixteen.add(sixteen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sixteen", nulls = Nulls.SKIP)
         public _FinalStage sixteen(List<Map<String, Integer>> sixteen) {
             this.sixteen.clear();
@@ -550,19 +550,19 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFifteen(List<List<Integer>> fifteen) {
             this.fifteen.addAll(fifteen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addFifteen(List<Integer> fifteen) {
             this.fifteen.add(fifteen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fifteen", nulls = Nulls.SKIP)
         public _FinalStage fifteen(List<List<Integer>> fifteen) {
             this.fifteen.clear();
@@ -570,32 +570,32 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage thirteen(Long thirteen) {
             this.thirteen = Optional.of(thirteen);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "thirteen", nulls = Nulls.SKIP)
         public _FinalStage thirteen(Optional<Long> thirteen) {
             this.thirteen = thirteen;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage twelve(String key, Boolean value) {
             this.twelve.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllTwelve(Map<String, Boolean> twelve) {
             this.twelve.putAll(twelve);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "twelve", nulls = Nulls.SKIP)
         public _FinalStage twelve(Map<String, Boolean> twelve) {
             this.twelve.clear();
@@ -603,19 +603,19 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllEleven(Set<Double> eleven) {
             this.eleven.addAll(eleven);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addEleven(Double eleven) {
             this.eleven.add(eleven);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "eleven", nulls = Nulls.SKIP)
         public _FinalStage eleven(Set<Double> eleven) {
             this.eleven.clear();
@@ -623,19 +623,19 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllTen(List<Integer> ten) {
             this.ten.addAll(ten);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addTen(Integer ten) {
             this.ten.add(ten);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ten", nulls = Nulls.SKIP)
         public _FinalStage ten(List<Integer> ten) {
             this.ten.clear();
@@ -643,7 +643,7 @@ public final class Type {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Type build() {
             return new Type(
                     one,

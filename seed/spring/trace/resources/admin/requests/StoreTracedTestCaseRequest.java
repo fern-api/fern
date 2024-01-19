@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public final class StoreTracedTestCaseRequest {
     return traceResponses;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof StoreTracedTestCaseRequest && equalTo((StoreTracedTestCaseRequest) other);
@@ -55,12 +54,12 @@ public final class StoreTracedTestCaseRequest {
     return result.equals(other.result) && traceResponses.equals(other.traceResponses);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.result, this.traceResponses);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -96,33 +95,33 @@ public final class StoreTracedTestCaseRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(StoreTracedTestCaseRequest other) {
       result(other.getResult());
       traceResponses(other.getTraceResponses());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("result")
     public _FinalStage result(TestCaseResultWithStdout result) {
       this.result = result;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllTraceResponses(List<TraceResponse> traceResponses) {
       this.traceResponses.addAll(traceResponses);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addTraceResponses(TraceResponse traceResponses) {
       this.traceResponses.add(traceResponses);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "traceResponses",
         nulls = Nulls.SKIP
@@ -133,7 +132,7 @@ public final class StoreTracedTestCaseRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public StoreTracedTestCaseRequest build() {
       return new StoreTracedTestCaseRequest(result, traceResponses);
     }

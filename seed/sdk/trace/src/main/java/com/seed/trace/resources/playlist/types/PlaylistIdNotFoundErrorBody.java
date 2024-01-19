@@ -79,12 +79,12 @@ public final class PlaylistIdNotFoundErrorBody {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitPlaylistId(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof PlaylistIdValue && equalTo((PlaylistIdValue) other);
@@ -94,12 +94,12 @@ public final class PlaylistIdNotFoundErrorBody {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "PlaylistIdNotFoundErrorBody{" + "value: " + value + "}";
         }
@@ -114,12 +114,12 @@ public final class PlaylistIdNotFoundErrorBody {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -129,12 +129,12 @@ public final class PlaylistIdNotFoundErrorBody {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "PlaylistIdNotFoundErrorBody{" + "type: " + type + ", value: " + value + "}";
         }

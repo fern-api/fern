@@ -25,7 +25,7 @@ public final class MyObject {
         return unknown;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MyObject && equalTo((MyObject) other);
@@ -35,12 +35,12 @@ public final class MyObject {
         return unknown.equals(other.unknown);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.unknown);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -65,20 +65,20 @@ public final class MyObject {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MyObject other) {
             unknown(other.getUnknown());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("unknown")
         public _FinalStage unknown(Object unknown) {
             this.unknown = unknown;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MyObject build() {
             return new MyObject(unknown);
         }

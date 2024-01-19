@@ -41,7 +41,7 @@ public final class ErroredResponse {
         return errorInfo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ErroredResponse && equalTo((ErroredResponse) other);
@@ -56,12 +56,12 @@ public final class ErroredResponse {
         return submissionId.equals(other.submissionId) && errorInfo.equals(other.errorInfo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId, this.errorInfo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class ErroredResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ErroredResponse other) {
             submissionId(other.getSubmissionId());
             errorInfo(other.getErrorInfo());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public ErrorInfoStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("errorInfo")
         public _FinalStage errorInfo(ErrorInfo errorInfo) {
             this.errorInfo = errorInfo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ErroredResponse build() {
             return new ErroredResponse(submissionId, errorInfo, additionalProperties);
         }

@@ -169,12 +169,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRunning(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RunningValue && equalTo((RunningValue) other);
@@ -184,12 +184,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "value: " + value + "}";
         }
@@ -207,12 +207,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRan(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RanValue && equalTo((RanValue) other);
@@ -222,12 +222,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "value: " + value + "}";
         }
@@ -238,18 +238,18 @@ public final class WorkspaceSubmissionUpdateInfo {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private StoppedValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitStopped();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof StoppedValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "}";
         }
@@ -260,18 +260,18 @@ public final class WorkspaceSubmissionUpdateInfo {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private TracedValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitTraced();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof TracedValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "}";
         }
@@ -289,12 +289,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitTracedV2(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof TracedV2Value && equalTo((TracedV2Value) other);
@@ -304,12 +304,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "value: " + value + "}";
         }
@@ -325,12 +325,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitErrored(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ErroredValue && equalTo((ErroredValue) other);
@@ -340,12 +340,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "value: " + value + "}";
         }
@@ -356,18 +356,18 @@ public final class WorkspaceSubmissionUpdateInfo {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private FinishedValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFinished();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FinishedValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "}";
         }
@@ -382,12 +382,12 @@ public final class WorkspaceSubmissionUpdateInfo {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -397,12 +397,12 @@ public final class WorkspaceSubmissionUpdateInfo {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "WorkspaceSubmissionUpdateInfo{" + "type: " + type + ", value: " + value + "}";
         }

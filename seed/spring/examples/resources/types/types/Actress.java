@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class Actress {
     return id;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Actress && equalTo((Actress) other);
@@ -49,12 +48,12 @@ public final class Actress {
     return name.equals(other.name) && id.equals(other.id);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.name, this.id);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class Actress {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Actress other) {
       name(other.getName());
       id(other.getId());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public IdStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("id")
     public _FinalStage id(String id) {
       this.id = id;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Actress build() {
       return new Actress(name, id);
     }

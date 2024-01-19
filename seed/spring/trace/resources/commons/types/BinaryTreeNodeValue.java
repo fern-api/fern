@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,7 +57,7 @@ public final class BinaryTreeNodeValue {
     return left;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof BinaryTreeNodeValue && equalTo((BinaryTreeNodeValue) other);
@@ -68,12 +67,12 @@ public final class BinaryTreeNodeValue {
     return nodeId.equals(other.nodeId) && val == other.val && right.equals(other.right) && left.equals(other.left);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.nodeId, this.val, this.right, this.left);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -119,7 +118,7 @@ public final class BinaryTreeNodeValue {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(BinaryTreeNodeValue other) {
       nodeId(other.getNodeId());
       val(other.getVal());
@@ -128,27 +127,27 @@ public final class BinaryTreeNodeValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("nodeId")
     public ValStage nodeId(NodeId nodeId) {
       this.nodeId = nodeId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("val")
     public _FinalStage val(double val) {
       this.val = val;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage left(NodeId left) {
       this.left = Optional.of(left);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "left",
         nulls = Nulls.SKIP
@@ -158,13 +157,13 @@ public final class BinaryTreeNodeValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage right(NodeId right) {
       this.right = Optional.of(right);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "right",
         nulls = Nulls.SKIP
@@ -174,7 +173,7 @@ public final class BinaryTreeNodeValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public BinaryTreeNodeValue build() {
       return new BinaryTreeNodeValue(nodeId, val, right, left);
     }

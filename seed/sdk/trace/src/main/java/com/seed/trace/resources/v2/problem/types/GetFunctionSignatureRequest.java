@@ -32,7 +32,7 @@ public final class GetFunctionSignatureRequest {
         return functionSignature;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFunctionSignatureRequest && equalTo((GetFunctionSignatureRequest) other);
@@ -47,12 +47,12 @@ public final class GetFunctionSignatureRequest {
         return functionSignature.equals(other.functionSignature);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.functionSignature);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class GetFunctionSignatureRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetFunctionSignatureRequest other) {
             functionSignature(other.getFunctionSignature());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("functionSignature")
         public _FinalStage functionSignature(FunctionSignature functionSignature) {
             this.functionSignature = functionSignature;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetFunctionSignatureRequest build() {
             return new GetFunctionSignatureRequest(functionSignature, additionalProperties);
         }

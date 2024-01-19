@@ -17,7 +17,7 @@ public enum ReservedKeywordEnum {
     }
 
     @JsonValue
-    @Override
+    @java.lang.Override
     public String toString() {
         return this.value;
     }

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -61,7 +60,7 @@ public final class TestCaseV2 {
     return expects;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestCaseV2 && equalTo((TestCaseV2) other);
@@ -71,12 +70,12 @@ public final class TestCaseV2 {
     return metadata.equals(other.metadata) && implementation.equals(other.implementation) && arguments.equals(other.arguments) && expects.equals(other.expects);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.metadata, this.implementation, this.arguments, this.expects);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -124,7 +123,7 @@ public final class TestCaseV2 {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestCaseV2 other) {
       metadata(other.getMetadata());
       implementation(other.getImplementation());
@@ -133,27 +132,27 @@ public final class TestCaseV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("metadata")
     public ImplementationStage metadata(TestCaseMetadata metadata) {
       this.metadata = metadata;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("implementation")
     public _FinalStage implementation(TestCaseImplementationReference implementation) {
       this.implementation = implementation;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage expects(TestCaseExpects expects) {
       this.expects = Optional.of(expects);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "expects",
         nulls = Nulls.SKIP
@@ -163,19 +162,19 @@ public final class TestCaseV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage arguments(ParameterId key, VariableValue value) {
       this.arguments.put(key, value);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage putAllArguments(Map<ParameterId, VariableValue> arguments) {
       this.arguments.putAll(arguments);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "arguments",
         nulls = Nulls.SKIP
@@ -186,7 +185,7 @@ public final class TestCaseV2 {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestCaseV2 build() {
       return new TestCaseV2(metadata, implementation, arguments, expects);
     }

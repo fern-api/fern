@@ -181,7 +181,7 @@ public final class ObjectTypeSpecGenerator {
     private MethodSpec generateToString() {
         if (isSerialized) {
             return MethodSpec.methodBuilder("toString")
-                    .addAnnotation(Override.class)
+                    .addAnnotation(ClassName.get("", "java.lang.Override"))
                     .addModifiers(Modifier.PUBLIC)
                     .returns(String.class)
                     .addStatement(

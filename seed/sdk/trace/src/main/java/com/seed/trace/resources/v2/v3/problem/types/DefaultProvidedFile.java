@@ -45,7 +45,7 @@ public final class DefaultProvidedFile {
         return relatedTypes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DefaultProvidedFile && equalTo((DefaultProvidedFile) other);
@@ -60,12 +60,12 @@ public final class DefaultProvidedFile {
         return file.equals(other.file) && relatedTypes.equals(other.relatedTypes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.file, this.relatedTypes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,33 +101,33 @@ public final class DefaultProvidedFile {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DefaultProvidedFile other) {
             file(other.getFile());
             relatedTypes(other.getRelatedTypes());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("file")
         public _FinalStage file(FileInfoV2 file) {
             this.file = file;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllRelatedTypes(List<VariableType> relatedTypes) {
             this.relatedTypes.addAll(relatedTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addRelatedTypes(VariableType relatedTypes) {
             this.relatedTypes.add(relatedTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "relatedTypes", nulls = Nulls.SKIP)
         public _FinalStage relatedTypes(List<VariableType> relatedTypes) {
             this.relatedTypes.clear();
@@ -135,7 +135,7 @@ public final class DefaultProvidedFile {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DefaultProvidedFile build() {
             return new DefaultProvidedFile(file, relatedTypes, additionalProperties);
         }

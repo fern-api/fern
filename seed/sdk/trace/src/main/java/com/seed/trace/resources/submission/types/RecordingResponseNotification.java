@@ -73,7 +73,7 @@ public final class RecordingResponseNotification {
         return tracedFile;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordingResponseNotification && equalTo((RecordingResponseNotification) other);
@@ -92,13 +92,13 @@ public final class RecordingResponseNotification {
                 && tracedFile.equals(other.tracedFile);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.submissionId, this.testCaseId, this.lineNumber, this.lightweightStackInfo, this.tracedFile);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -151,7 +151,7 @@ public final class RecordingResponseNotification {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RecordingResponseNotification other) {
             submissionId(other.getSubmissionId());
             testCaseId(other.getTestCaseId());
@@ -161,54 +161,54 @@ public final class RecordingResponseNotification {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public LineNumberStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lineNumber")
         public LightweightStackInfoStage lineNumber(int lineNumber) {
             this.lineNumber = lineNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lightweightStackInfo")
         public _FinalStage lightweightStackInfo(LightweightStackframeInformation lightweightStackInfo) {
             this.lightweightStackInfo = lightweightStackInfo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage tracedFile(TracedFile tracedFile) {
             this.tracedFile = Optional.of(tracedFile);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "tracedFile", nulls = Nulls.SKIP)
         public _FinalStage tracedFile(Optional<TracedFile> tracedFile) {
             this.tracedFile = tracedFile;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage testCaseId(String testCaseId) {
             this.testCaseId = Optional.of(testCaseId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "testCaseId", nulls = Nulls.SKIP)
         public _FinalStage testCaseId(Optional<String> testCaseId) {
             this.testCaseId = testCaseId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RecordingResponseNotification build() {
             return new RecordingResponseNotification(
                     submissionId, testCaseId, lineNumber, lightweightStackInfo, tracedFile, additionalProperties);

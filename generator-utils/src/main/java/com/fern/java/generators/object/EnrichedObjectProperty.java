@@ -25,6 +25,7 @@ import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -80,7 +81,7 @@ public interface EnrichedObjectProperty {
                     .build());
         }
         if (fromInterface()) {
-            getterBuilder.addAnnotation(Override.class);
+            getterBuilder.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (docs().isPresent()) {
             getterBuilder.addJavadoc(JavaDocUtils.getReturnDocs(docs().get()));

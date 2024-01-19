@@ -42,7 +42,7 @@ public final class WorkspaceRanResponse {
         return runDetails;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceRanResponse && equalTo((WorkspaceRanResponse) other);
@@ -57,12 +57,12 @@ public final class WorkspaceRanResponse {
         return submissionId.equals(other.submissionId) && runDetails.equals(other.runDetails);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId, this.runDetails);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,28 +96,28 @@ public final class WorkspaceRanResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WorkspaceRanResponse other) {
             submissionId(other.getSubmissionId());
             runDetails(other.getRunDetails());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public RunDetailsStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("runDetails")
         public _FinalStage runDetails(WorkspaceRunDetails runDetails) {
             this.runDetails = runDetails;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WorkspaceRanResponse build() {
             return new WorkspaceRanResponse(submissionId, runDetails, additionalProperties);
         }

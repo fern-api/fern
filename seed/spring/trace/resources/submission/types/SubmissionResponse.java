@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -170,18 +169,18 @@ public final class SubmissionResponse {
     private ServerInitializedValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitServerInitialized();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof ServerInitializedValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "}";
     }
@@ -199,12 +198,12 @@ public final class SubmissionResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitProblemInitialized(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof ProblemInitializedValue && equalTo((ProblemInitializedValue) other);
@@ -214,12 +213,12 @@ public final class SubmissionResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "value: " + value + "}";
     }
@@ -233,18 +232,18 @@ public final class SubmissionResponse {
     private WorkspaceInitializedValue() {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitWorkspaceInitialized();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof WorkspaceInitializedValue;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "}";
     }
@@ -265,12 +264,12 @@ public final class SubmissionResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitServerErrored(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof ServerErroredValue && equalTo((ServerErroredValue) other);
@@ -280,12 +279,12 @@ public final class SubmissionResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "value: " + value + "}";
     }
@@ -303,12 +302,12 @@ public final class SubmissionResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitCodeExecutionUpdate(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof CodeExecutionUpdateValue && equalTo((CodeExecutionUpdateValue) other);
@@ -318,12 +317,12 @@ public final class SubmissionResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "value: " + value + "}";
     }
@@ -344,12 +343,12 @@ public final class SubmissionResponse {
       this.value = value;
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor.visitTerminated(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof TerminatedValue && equalTo((TerminatedValue) other);
@@ -359,12 +358,12 @@ public final class SubmissionResponse {
       return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "value: " + value + "}";
     }
@@ -382,12 +381,12 @@ public final class SubmissionResponse {
     private _UnknownValue(@JsonProperty("value") Object value) {
     }
 
-    @Override
+    @java.lang.Override
     public <T> T visit(Visitor<T> visitor) {
       return visitor._visitUnknown(value);
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
       if (this == other) return true;
       return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -397,12 +396,12 @@ public final class SubmissionResponse {
       return type.equals(other.type) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       return Objects.hash(this.type, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
       return "SubmissionResponse{" + "type: " + type + ", value: " + value + "}";
     }

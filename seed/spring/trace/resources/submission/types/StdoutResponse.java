@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public final class StdoutResponse {
     return stdout;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof StdoutResponse && equalTo((StdoutResponse) other);
@@ -49,12 +48,12 @@ public final class StdoutResponse {
     return submissionId.equals(other.submissionId) && stdout.equals(other.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.submissionId, this.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -88,28 +87,28 @@ public final class StdoutResponse {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(StdoutResponse other) {
       submissionId(other.getSubmissionId());
       stdout(other.getStdout());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submissionId")
     public StdoutStage submissionId(SubmissionId submissionId) {
       this.submissionId = submissionId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stdout")
     public _FinalStage stdout(String stdout) {
       this.stdout = stdout;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public StdoutResponse build() {
       return new StdoutResponse(submissionId, stdout);
     }

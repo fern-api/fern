@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -47,7 +46,7 @@ public final class ExceptionInfo {
     return exceptionStacktrace;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof ExceptionInfo && equalTo((ExceptionInfo) other);
@@ -57,12 +56,12 @@ public final class ExceptionInfo {
     return exceptionType.equals(other.exceptionType) && exceptionMessage.equals(other.exceptionMessage) && exceptionStacktrace.equals(other.exceptionStacktrace);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.exceptionType, this.exceptionMessage, this.exceptionStacktrace);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -102,7 +101,7 @@ public final class ExceptionInfo {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(ExceptionInfo other) {
       exceptionType(other.getExceptionType());
       exceptionMessage(other.getExceptionMessage());
@@ -110,28 +109,28 @@ public final class ExceptionInfo {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("exceptionType")
     public ExceptionMessageStage exceptionType(String exceptionType) {
       this.exceptionType = exceptionType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("exceptionMessage")
     public ExceptionStacktraceStage exceptionMessage(String exceptionMessage) {
       this.exceptionMessage = exceptionMessage;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("exceptionStacktrace")
     public _FinalStage exceptionStacktrace(String exceptionStacktrace) {
       this.exceptionStacktrace = exceptionStacktrace;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public ExceptionInfo build() {
       return new ExceptionInfo(exceptionType, exceptionMessage, exceptionStacktrace);
     }

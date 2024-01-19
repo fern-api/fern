@@ -254,7 +254,7 @@ public final class BuilderGenerator {
                             objectProperty.enrichedObjectProperty.getterProperty());
                 });
                 builderImpl.addReversedMethods(fromSetterImpl
-                        .addAnnotation(Override.class)
+                        .addAnnotation(ClassName.get("", "java.lang.Override"))
                         .addStatement("return this")
                         .build());
             }
@@ -267,7 +267,7 @@ public final class BuilderGenerator {
     private MethodSpec getRequiredFieldSetterWithImpl(
             EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name)
                 .addStatement("return this");
@@ -314,7 +314,7 @@ public final class BuilderGenerator {
     private PoetTypeWithClassName buildFinal(
             StagedBuilderConfig stagedBuilderConfig, ImmutableBuilderImplBuilder.Builder builderImpl) {
         builderImpl.addReversedMethods(getBaseBuildMethod()
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
                 .build());
 
@@ -378,7 +378,7 @@ public final class BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass);
         if (isOverriden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         return setter;
     }
@@ -528,7 +528,7 @@ public final class BuilderGenerator {
                 .addParameter(keyTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_KEY_PARAMETER_NAME)
                 .addParameter(valueTypeName, StageBuilderConstants.MAP_ITEM_APPENDER_VALUE_PARAMETER_NAME);
         if (isOverriden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (isOverriden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(
@@ -557,7 +557,7 @@ public final class BuilderGenerator {
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
         if (isOverridden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(
@@ -587,7 +587,7 @@ public final class BuilderGenerator {
                         returnClass)
                 .addParameter(itemTypeName, fieldName);
         if (isOverridden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(
@@ -616,7 +616,7 @@ public final class BuilderGenerator {
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
         if (isOverridden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(
@@ -642,7 +642,7 @@ public final class BuilderGenerator {
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalTypeName);
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
         if (isOverridden) {
-            setter.addAnnotation(Override.class);
+            setter.addAnnotation(ClassName.get("", "java.lang.Override"));
         }
         if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
             setter.addJavadoc(JavaDocUtils.render(

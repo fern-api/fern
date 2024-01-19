@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.UUID;
@@ -32,7 +31,7 @@ public final class Foo {
     return barProperty;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Foo && equalTo((Foo) other);
@@ -42,12 +41,12 @@ public final class Foo {
     return barProperty.equals(other.barProperty);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.barProperty);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -75,20 +74,20 @@ public final class Foo {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Foo other) {
       barProperty(other.getBarProperty());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("bar_property")
     public _FinalStage barProperty(UUID barProperty) {
       this.barProperty = barProperty;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Foo build() {
       return new Foo(barProperty);
     }

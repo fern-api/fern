@@ -139,7 +139,7 @@ public final class ObjectWithOptionalField {
         return map;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ObjectWithOptionalField && equalTo((ObjectWithOptionalField) other);
@@ -165,7 +165,7 @@ public final class ObjectWithOptionalField {
                 && map.equals(other.map);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.string,
@@ -182,7 +182,7 @@ public final class ObjectWithOptionalField {
                 this.map);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

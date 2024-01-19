@@ -7,7 +7,6 @@ package resources.unknown.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 
 public final class MyAlias {
@@ -22,17 +21,17 @@ public final class MyAlias {
     return this.value;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     return this == other || (other instanceof MyAlias && this.value.equals(((MyAlias) other).value));
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return value.hashCode();
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return value.toString();
   }

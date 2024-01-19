@@ -5,7 +5,6 @@
 package resources.playlist.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
 import java.lang.String;
 
 public enum ReservedKeywordEnum {
@@ -20,7 +19,7 @@ public enum ReservedKeywordEnum {
   }
 
   @JsonValue
-  @Override
+  @java.lang.Override
   public String toString() {
     return this.value;
   }

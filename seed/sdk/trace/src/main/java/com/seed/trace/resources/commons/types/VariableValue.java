@@ -256,12 +256,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitIntegerValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof IntegerValueValue && equalTo((IntegerValueValue) other);
@@ -271,12 +271,12 @@ public final class VariableValue {
             return value == other.value;
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -292,12 +292,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitBooleanValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof BooleanValueValue && equalTo((BooleanValueValue) other);
@@ -307,12 +307,12 @@ public final class VariableValue {
             return value == other.value;
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -328,12 +328,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDoubleValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DoubleValueValue && equalTo((DoubleValueValue) other);
@@ -343,12 +343,12 @@ public final class VariableValue {
             return value == other.value;
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -364,12 +364,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitStringValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof StringValueValue && equalTo((StringValueValue) other);
@@ -379,12 +379,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -400,12 +400,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitCharValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof CharValueValue && equalTo((CharValueValue) other);
@@ -415,12 +415,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -438,12 +438,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitMapValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof MapValueValue && equalTo((MapValueValue) other);
@@ -453,12 +453,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -474,12 +474,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitListValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ListValueValue && equalTo((ListValueValue) other);
@@ -489,12 +489,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -512,12 +512,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitBinaryTreeValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof BinaryTreeValueValue && equalTo((BinaryTreeValueValue) other);
@@ -527,12 +527,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -550,12 +550,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSinglyLinkedListValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SinglyLinkedListValueValue && equalTo((SinglyLinkedListValueValue) other);
@@ -565,12 +565,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -588,12 +588,12 @@ public final class VariableValue {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDoublyLinkedListValue(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DoublyLinkedListValueValue && equalTo((DoublyLinkedListValueValue) other);
@@ -603,12 +603,12 @@ public final class VariableValue {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "value: " + value + "}";
         }
@@ -619,18 +619,18 @@ public final class VariableValue {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private NullValueValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitNullValue();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof NullValueValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "}";
         }
@@ -645,12 +645,12 @@ public final class VariableValue {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -660,12 +660,12 @@ public final class VariableValue {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "VariableValue{" + "type: " + type + ", value: " + value + "}";
         }

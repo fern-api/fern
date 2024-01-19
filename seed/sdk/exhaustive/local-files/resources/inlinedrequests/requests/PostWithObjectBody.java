@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +55,7 @@ public final class PostWithObjectBody {
     return nestedObject;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof PostWithObjectBody && equalTo((PostWithObjectBody) other);
@@ -71,12 +70,12 @@ public final class PostWithObjectBody {
     return string.equals(other.string) && integer == other.integer && nestedObject.equals(other.nestedObject);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.string, this.integer, this.nestedObject);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -119,7 +118,7 @@ public final class PostWithObjectBody {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(PostWithObjectBody other) {
       string(other.getString());
       integer(other.getInteger());
@@ -127,28 +126,28 @@ public final class PostWithObjectBody {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("string")
     public IntegerStage string(String string) {
       this.string = string;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("integer")
     public NestedObjectStage integer(int integer) {
       this.integer = integer;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("NestedObject")
     public _FinalStage nestedObject(ObjectWithOptionalField nestedObject) {
       this.nestedObject = nestedObject;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public PostWithObjectBody build() {
       return new PostWithObjectBody(string, integer, nestedObject, additionalProperties);
     }

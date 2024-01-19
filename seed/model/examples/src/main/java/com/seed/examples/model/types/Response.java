@@ -25,7 +25,7 @@ public final class Response {
         return response;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Response && equalTo((Response) other);
@@ -35,12 +35,12 @@ public final class Response {
         return response.equals(other.response);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.response);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -65,20 +65,20 @@ public final class Response {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Response other) {
             response(other.getResponse());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("response")
         public _FinalStage response(Object response) {
             this.response = response;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Response build() {
             return new Response(response);
         }

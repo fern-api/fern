@@ -25,7 +25,7 @@ public final class Request {
         return request;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Request && equalTo((Request) other);
@@ -35,12 +35,12 @@ public final class Request {
         return request.equals(other.request);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.request);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -65,20 +65,20 @@ public final class Request {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Request other) {
             request(other.getRequest());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("request")
         public _FinalStage request(Object request) {
             this.request = request;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Request build() {
             return new Request(request);
         }

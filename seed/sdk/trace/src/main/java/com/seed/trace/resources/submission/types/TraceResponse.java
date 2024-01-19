@@ -83,7 +83,7 @@ public final class TraceResponse {
         return stdout;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TraceResponse && equalTo((TraceResponse) other);
@@ -103,13 +103,13 @@ public final class TraceResponse {
                 && stdout.equals(other.stdout);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.submissionId, this.lineNumber, this.returnValue, this.expressionLocation, this.stack, this.stdout);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -167,7 +167,7 @@ public final class TraceResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TraceResponse other) {
             submissionId(other.getSubmissionId());
             lineNumber(other.getLineNumber());
@@ -178,67 +178,67 @@ public final class TraceResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public LineNumberStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lineNumber")
         public StackStage lineNumber(int lineNumber) {
             this.lineNumber = lineNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("stack")
         public _FinalStage stack(StackInformation stack) {
             this.stack = stack;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage stdout(String stdout) {
             this.stdout = Optional.of(stdout);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "stdout", nulls = Nulls.SKIP)
         public _FinalStage stdout(Optional<String> stdout) {
             this.stdout = stdout;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage expressionLocation(ExpressionLocation expressionLocation) {
             this.expressionLocation = Optional.of(expressionLocation);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expressionLocation", nulls = Nulls.SKIP)
         public _FinalStage expressionLocation(Optional<ExpressionLocation> expressionLocation) {
             this.expressionLocation = expressionLocation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage returnValue(DebugVariableValue returnValue) {
             this.returnValue = Optional.of(returnValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "returnValue", nulls = Nulls.SKIP)
         public _FinalStage returnValue(Optional<DebugVariableValue> returnValue) {
             this.returnValue = returnValue;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TraceResponse build() {
             return new TraceResponse(
                     submissionId, lineNumber, returnValue, expressionLocation, stack, stdout, additionalProperties);

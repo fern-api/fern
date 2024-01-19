@@ -28,19 +28,19 @@ public final class WeatherReport {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     @JsonValue
     public String toString() {
         return this.string;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return (this == other)
                 || (other instanceof WeatherReport && this.string.equals(((WeatherReport) other).string));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return this.string.hashCode();
     }

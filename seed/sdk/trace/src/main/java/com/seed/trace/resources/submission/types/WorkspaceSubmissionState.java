@@ -32,7 +32,7 @@ public final class WorkspaceSubmissionState {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceSubmissionState && equalTo((WorkspaceSubmissionState) other);
@@ -47,12 +47,12 @@ public final class WorkspaceSubmissionState {
         return status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class WorkspaceSubmissionState {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WorkspaceSubmissionState other) {
             status(other.getStatus());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(WorkspaceSubmissionStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WorkspaceSubmissionState build() {
             return new WorkspaceSubmissionState(status, additionalProperties);
         }

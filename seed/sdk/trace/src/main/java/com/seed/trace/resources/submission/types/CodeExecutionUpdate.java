@@ -264,12 +264,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitBuildingExecutor(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof BuildingExecutorValue && equalTo((BuildingExecutorValue) other);
@@ -279,12 +279,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -302,12 +302,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRunning(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RunningValue && equalTo((RunningValue) other);
@@ -317,12 +317,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -340,12 +340,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitErrored(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ErroredValue && equalTo((ErroredValue) other);
@@ -355,12 +355,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -378,12 +378,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitStopped(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof StoppedValue && equalTo((StoppedValue) other);
@@ -393,12 +393,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -416,12 +416,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitGraded(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof GradedValue && equalTo((GradedValue) other);
@@ -431,12 +431,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -454,12 +454,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitGradedV2(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof GradedV2Value && equalTo((GradedV2Value) other);
@@ -469,12 +469,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -492,12 +492,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkspaceRan(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkspaceRanValue && equalTo((WorkspaceRanValue) other);
@@ -507,12 +507,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -530,12 +530,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRecording(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RecordingValue && equalTo((RecordingValue) other);
@@ -545,12 +545,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -568,12 +568,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRecorded(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RecordedValue && equalTo((RecordedValue) other);
@@ -583,12 +583,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -606,12 +606,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitInvalidRequest(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof InvalidRequestValue && equalTo((InvalidRequestValue) other);
@@ -621,12 +621,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -644,12 +644,12 @@ public final class CodeExecutionUpdate {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFinished(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FinishedValue && equalTo((FinishedValue) other);
@@ -659,12 +659,12 @@ public final class CodeExecutionUpdate {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "value: " + value + "}";
         }
@@ -679,12 +679,12 @@ public final class CodeExecutionUpdate {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -694,12 +694,12 @@ public final class CodeExecutionUpdate {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "CodeExecutionUpdate{" + "type: " + type + ", value: " + value + "}";
         }

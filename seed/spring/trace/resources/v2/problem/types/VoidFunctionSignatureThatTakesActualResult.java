@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public final class VoidFunctionSignatureThatTakesActualResult {
     return actualResultType;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof VoidFunctionSignatureThatTakesActualResult && equalTo((VoidFunctionSignatureThatTakesActualResult) other);
@@ -54,12 +53,12 @@ public final class VoidFunctionSignatureThatTakesActualResult {
     return parameters.equals(other.parameters) && actualResultType.equals(other.actualResultType);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.parameters, this.actualResultType);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -95,33 +94,33 @@ public final class VoidFunctionSignatureThatTakesActualResult {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(VoidFunctionSignatureThatTakesActualResult other) {
       parameters(other.getParameters());
       actualResultType(other.getActualResultType());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("actualResultType")
     public _FinalStage actualResultType(VariableType actualResultType) {
       this.actualResultType = actualResultType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllParameters(List<Parameter> parameters) {
       this.parameters.addAll(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addParameters(Parameter parameters) {
       this.parameters.add(parameters);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "parameters",
         nulls = Nulls.SKIP
@@ -132,7 +131,7 @@ public final class VoidFunctionSignatureThatTakesActualResult {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public VoidFunctionSignatureThatTakesActualResult build() {
       return new VoidFunctionSignatureThatTakesActualResult(parameters, actualResultType);
     }

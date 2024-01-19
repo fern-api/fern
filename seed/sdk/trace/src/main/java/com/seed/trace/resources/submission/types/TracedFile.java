@@ -40,7 +40,7 @@ public final class TracedFile {
         return directory;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TracedFile && equalTo((TracedFile) other);
@@ -55,12 +55,12 @@ public final class TracedFile {
         return filename.equals(other.filename) && directory.equals(other.directory);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.filename, this.directory);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class TracedFile {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TracedFile other) {
             filename(other.getFilename());
             directory(other.getDirectory());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("filename")
         public DirectoryStage filename(String filename) {
             this.filename = filename;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("directory")
         public _FinalStage directory(String directory) {
             this.directory = directory;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TracedFile build() {
             return new TracedFile(filename, directory, additionalProperties);
         }

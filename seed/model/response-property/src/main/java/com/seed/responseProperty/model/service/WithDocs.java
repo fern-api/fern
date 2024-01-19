@@ -21,12 +21,12 @@ public final class WithDocs implements IWithDocs {
     }
 
     @JsonProperty("docs")
-    @Override
+    @java.lang.Override
     public String getDocs() {
         return docs;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WithDocs && equalTo((WithDocs) other);
@@ -36,12 +36,12 @@ public final class WithDocs implements IWithDocs {
         return docs.equals(other.docs);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.docs);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -66,20 +66,20 @@ public final class WithDocs implements IWithDocs {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WithDocs other) {
             docs(other.getDocs());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("docs")
         public _FinalStage docs(String docs) {
             this.docs = docs;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WithDocs build() {
             return new WithDocs(docs);
         }

@@ -36,7 +36,7 @@ public final class WorkspaceSubmissionStatusV2 {
         return updates;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceSubmissionStatusV2 && equalTo((WorkspaceSubmissionStatusV2) other);
@@ -51,12 +51,12 @@ public final class WorkspaceSubmissionStatusV2 {
         return updates.equals(other.updates);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.updates);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

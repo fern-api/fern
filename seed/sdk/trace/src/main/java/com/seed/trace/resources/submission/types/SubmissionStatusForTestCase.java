@@ -120,12 +120,12 @@ public final class SubmissionStatusForTestCase {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitGraded(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof GradedValue && equalTo((GradedValue) other);
@@ -135,12 +135,12 @@ public final class SubmissionStatusForTestCase {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusForTestCase{" + "value: " + value + "}";
         }
@@ -156,12 +156,12 @@ public final class SubmissionStatusForTestCase {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitGradedV2(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof GradedV2Value && equalTo((GradedV2Value) other);
@@ -171,12 +171,12 @@ public final class SubmissionStatusForTestCase {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusForTestCase{" + "value: " + value + "}";
         }
@@ -194,12 +194,12 @@ public final class SubmissionStatusForTestCase {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitTraced(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof TracedValue && equalTo((TracedValue) other);
@@ -209,12 +209,12 @@ public final class SubmissionStatusForTestCase {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusForTestCase{" + "value: " + value + "}";
         }
@@ -229,12 +229,12 @@ public final class SubmissionStatusForTestCase {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -244,12 +244,12 @@ public final class SubmissionStatusForTestCase {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SubmissionStatusForTestCase{" + "type: " + type + ", value: " + value + "}";
         }

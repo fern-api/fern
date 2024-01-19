@@ -33,7 +33,7 @@ public final class Actor {
         return id;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Actor && equalTo((Actor) other);
@@ -43,12 +43,12 @@ public final class Actor {
         return name.equals(other.name) && id.equals(other.id);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.id);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -79,28 +79,28 @@ public final class Actor {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Actor other) {
             name(other.getName());
             id(other.getId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Actor build() {
             return new Actor(name, id);
         }

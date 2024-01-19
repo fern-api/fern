@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import resources.commons.types.VariableType;
@@ -40,7 +39,7 @@ public final class VariableTypeAndName {
     return name;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof VariableTypeAndName && equalTo((VariableTypeAndName) other);
@@ -50,12 +49,12 @@ public final class VariableTypeAndName {
     return variableType.equals(other.variableType) && name.equals(other.name);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.variableType, this.name);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class VariableTypeAndName {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(VariableTypeAndName other) {
       variableType(other.getVariableType());
       name(other.getName());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("variableType")
     public NameStage variableType(VariableType variableType) {
       this.variableType = variableType;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("name")
     public _FinalStage name(String name) {
       this.name = name;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public VariableTypeAndName build() {
       return new VariableTypeAndName(variableType, name);
     }

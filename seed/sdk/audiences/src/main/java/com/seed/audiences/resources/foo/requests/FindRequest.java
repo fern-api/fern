@@ -34,7 +34,7 @@ public final class FindRequest {
         return optionalString;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FindRequest && equalTo((FindRequest) other);
@@ -49,12 +49,12 @@ public final class FindRequest {
         return optionalString.equals(other.optionalString);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.optionalString);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

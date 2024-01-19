@@ -5,7 +5,6 @@
 package core;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.lang.Override;
 import java.lang.String;
 
 public final class BearerAuth {
@@ -20,7 +19,7 @@ public final class BearerAuth {
     return token;
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return "Bearer " + getToken();
   }

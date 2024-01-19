@@ -31,13 +31,13 @@ public final class Response implements IWithMetadata, IWithDocs {
     }
 
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Map<String, String> getMetadata() {
         return metadata;
     }
 
     @JsonProperty("docs")
-    @Override
+    @java.lang.Override
     public String getDocs() {
         return docs;
     }
@@ -47,7 +47,7 @@ public final class Response implements IWithMetadata, IWithDocs {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Response && equalTo((Response) other);
@@ -57,12 +57,12 @@ public final class Response implements IWithMetadata, IWithDocs {
         return metadata.equals(other.metadata) && docs.equals(other.docs) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.metadata, this.docs, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,7 +101,7 @@ public final class Response implements IWithMetadata, IWithDocs {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Response other) {
             metadata(other.getMetadata());
             docs(other.getDocs());
@@ -109,33 +109,33 @@ public final class Response implements IWithMetadata, IWithDocs {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("docs")
         public DataStage docs(String docs) {
             this.docs = docs;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(Movie data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(String key, String value) {
             this.metadata.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllMetadata(Map<String, String> metadata) {
             this.metadata.putAll(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Map<String, String> metadata) {
             this.metadata.clear();
@@ -143,7 +143,7 @@ public final class Response implements IWithMetadata, IWithDocs {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Response build() {
             return new Response(metadata, docs, data);
         }

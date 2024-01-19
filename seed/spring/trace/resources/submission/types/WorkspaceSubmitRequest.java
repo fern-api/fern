@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public final class WorkspaceSubmitRequest {
     return userId;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof WorkspaceSubmitRequest && equalTo((WorkspaceSubmitRequest) other);
@@ -71,12 +70,12 @@ public final class WorkspaceSubmitRequest {
     return submissionId.equals(other.submissionId) && language.equals(other.language) && submissionFiles.equals(other.submissionFiles) && userId.equals(other.userId);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.submissionId, this.language, this.submissionFiles, this.userId);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -124,7 +123,7 @@ public final class WorkspaceSubmitRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(WorkspaceSubmitRequest other) {
       submissionId(other.getSubmissionId());
       language(other.getLanguage());
@@ -133,27 +132,27 @@ public final class WorkspaceSubmitRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submissionId")
     public LanguageStage submissionId(SubmissionId submissionId) {
       this.submissionId = submissionId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("language")
     public _FinalStage language(Language language) {
       this.language = language;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage userId(String userId) {
       this.userId = Optional.of(userId);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "userId",
         nulls = Nulls.SKIP
@@ -163,19 +162,19 @@ public final class WorkspaceSubmitRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addAllSubmissionFiles(List<SubmissionFileInfo> submissionFiles) {
       this.submissionFiles.addAll(submissionFiles);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage addSubmissionFiles(SubmissionFileInfo submissionFiles) {
       this.submissionFiles.add(submissionFiles);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "submissionFiles",
         nulls = Nulls.SKIP
@@ -186,7 +185,7 @@ public final class WorkspaceSubmitRequest {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public WorkspaceSubmitRequest build() {
       return new WorkspaceSubmitRequest(submissionId, language, submissionFiles, userId);
     }

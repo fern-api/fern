@@ -43,7 +43,7 @@ public final class TestCase {
         return params;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCase && equalTo((TestCase) other);
@@ -58,12 +58,12 @@ public final class TestCase {
         return id.equals(other.id) && params.equals(other.params);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.params);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,33 +99,33 @@ public final class TestCase {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TestCase other) {
             id(other.getId());
             params(other.getParams());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllParams(List<VariableValue> params) {
             this.params.addAll(params);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addParams(VariableValue params) {
             this.params.add(params);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "params", nulls = Nulls.SKIP)
         public _FinalStage params(List<VariableValue> params) {
             this.params.clear();
@@ -133,7 +133,7 @@ public final class TestCase {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TestCase build() {
             return new TestCase(id, params, additionalProperties);
         }

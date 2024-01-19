@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -49,7 +48,7 @@ public final class Moment {
     return datetime;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Moment && equalTo((Moment) other);
@@ -59,12 +58,12 @@ public final class Moment {
     return id.equals(other.id) && date.equals(other.date) && datetime.equals(other.datetime);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.id, this.date, this.datetime);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -104,7 +103,7 @@ public final class Moment {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(Moment other) {
       id(other.getId());
       date(other.getDate());
@@ -112,28 +111,28 @@ public final class Moment {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("id")
     public DateStage id(UUID id) {
       this.id = id;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("date")
     public DatetimeStage date(String date) {
       this.date = date;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("datetime")
     public _FinalStage datetime(OffsetDateTime datetime) {
       this.datetime = datetime;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public Moment build() {
       return new Moment(id, date, datetime);
     }

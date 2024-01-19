@@ -42,7 +42,7 @@ public final class BuildingExecutorResponse {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BuildingExecutorResponse && equalTo((BuildingExecutorResponse) other);
@@ -57,12 +57,12 @@ public final class BuildingExecutorResponse {
         return submissionId.equals(other.submissionId) && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.submissionId, this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,28 +96,28 @@ public final class BuildingExecutorResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BuildingExecutorResponse other) {
             submissionId(other.getSubmissionId());
             status(other.getStatus());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("submissionId")
         public StatusStage submissionId(UUID submissionId) {
             this.submissionId = submissionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(ExecutionSessionStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BuildingExecutorResponse build() {
             return new BuildingExecutorResponse(submissionId, status, additionalProperties);
         }

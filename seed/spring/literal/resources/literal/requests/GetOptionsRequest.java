@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -32,7 +31,7 @@ public final class GetOptionsRequest {
     return dryRun;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetOptionsRequest && equalTo((GetOptionsRequest) other);
@@ -42,12 +41,12 @@ public final class GetOptionsRequest {
     return dryRun.equals(other.dryRun);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.dryRun);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -75,20 +74,20 @@ public final class GetOptionsRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GetOptionsRequest other) {
       dryRun(other.getDryRun());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("dryRun")
     public _FinalStage dryRun(Boolean dryRun) {
       this.dryRun = dryRun;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GetOptionsRequest build() {
       return new GetOptionsRequest(dryRun);
     }

@@ -85,7 +85,7 @@ public final class ExecutionSessionState {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExecutionSessionState && equalTo((ExecutionSessionState) other);
@@ -105,7 +105,7 @@ public final class ExecutionSessionState {
                 && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.lastTimeContacted,
@@ -116,7 +116,7 @@ public final class ExecutionSessionState {
                 this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -175,7 +175,7 @@ public final class ExecutionSessionState {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ExecutionSessionState other) {
             lastTimeContacted(other.getLastTimeContacted());
             sessionId(other.getSessionId());
@@ -190,61 +190,61 @@ public final class ExecutionSessionState {
          * <p>The auto-generated session id. Formatted as a uuid.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sessionId")
         public IsWarmInstanceStage sessionId(String sessionId) {
             this.sessionId = sessionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("isWarmInstance")
         public LanguageStage isWarmInstance(boolean isWarmInstance) {
             this.isWarmInstance = isWarmInstance;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("language")
         public StatusStage language(Language language) {
             this.language = language;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(ExecutionSessionStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage awsTaskId(String awsTaskId) {
             this.awsTaskId = Optional.of(awsTaskId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "awsTaskId", nulls = Nulls.SKIP)
         public _FinalStage awsTaskId(Optional<String> awsTaskId) {
             this.awsTaskId = awsTaskId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage lastTimeContacted(String lastTimeContacted) {
             this.lastTimeContacted = Optional.of(lastTimeContacted);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lastTimeContacted", nulls = Nulls.SKIP)
         public _FinalStage lastTimeContacted(Optional<String> lastTimeContacted) {
             this.lastTimeContacted = lastTimeContacted;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ExecutionSessionState build() {
             return new ExecutionSessionState(
                     lastTimeContacted, sessionId, isWarmInstance, awsTaskId, language, status, additionalProperties);

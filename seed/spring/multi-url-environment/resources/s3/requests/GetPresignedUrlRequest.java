@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public final class GetPresignedUrlRequest {
     return s3Key;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetPresignedUrlRequest && equalTo((GetPresignedUrlRequest) other);
@@ -41,12 +40,12 @@ public final class GetPresignedUrlRequest {
     return s3Key.equals(other.s3Key);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.s3Key);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -74,20 +73,20 @@ public final class GetPresignedUrlRequest {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GetPresignedUrlRequest other) {
       s3Key(other.getS3Key());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("s3Key")
     public _FinalStage s3Key(String s3Key) {
       this.s3Key = s3Key;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GetPresignedUrlRequest build() {
       return new GetPresignedUrlRequest(s3Key);
     }

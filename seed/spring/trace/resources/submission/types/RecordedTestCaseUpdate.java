@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import resources.v2.problem.types.TestCaseId;
@@ -40,7 +39,7 @@ public final class RecordedTestCaseUpdate {
     return traceResponsesSize;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof RecordedTestCaseUpdate && equalTo((RecordedTestCaseUpdate) other);
@@ -50,12 +49,12 @@ public final class RecordedTestCaseUpdate {
     return testCaseId.equals(other.testCaseId) && traceResponsesSize == other.traceResponsesSize;
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.testCaseId, this.traceResponsesSize);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class RecordedTestCaseUpdate {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(RecordedTestCaseUpdate other) {
       testCaseId(other.getTestCaseId());
       traceResponsesSize(other.getTraceResponsesSize());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("testCaseId")
     public TraceResponsesSizeStage testCaseId(TestCaseId testCaseId) {
       this.testCaseId = testCaseId;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("traceResponsesSize")
     public _FinalStage traceResponsesSize(int traceResponsesSize) {
       this.traceResponsesSize = traceResponsesSize;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public RecordedTestCaseUpdate build() {
       return new RecordedTestCaseUpdate(testCaseId, traceResponsesSize);
     }

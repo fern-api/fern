@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -59,7 +58,7 @@ public final class TestCaseNonHiddenGrade {
     return stdout;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestCaseNonHiddenGrade && equalTo((TestCaseNonHiddenGrade) other);
@@ -69,12 +68,12 @@ public final class TestCaseNonHiddenGrade {
     return passed == other.passed && actualResult.equals(other.actualResult) && exception.equals(other.exception) && stdout.equals(other.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.passed, this.actualResult, this.exception, this.stdout);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -120,7 +119,7 @@ public final class TestCaseNonHiddenGrade {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestCaseNonHiddenGrade other) {
       passed(other.getPassed());
       actualResult(other.getActualResult());
@@ -129,27 +128,27 @@ public final class TestCaseNonHiddenGrade {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("passed")
     public StdoutStage passed(boolean passed) {
       this.passed = passed;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stdout")
     public _FinalStage stdout(String stdout) {
       this.stdout = stdout;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage exception(ExceptionV2 exception) {
       this.exception = Optional.of(exception);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "exception",
         nulls = Nulls.SKIP
@@ -159,13 +158,13 @@ public final class TestCaseNonHiddenGrade {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage actualResult(VariableValue actualResult) {
       this.actualResult = Optional.of(actualResult);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "actualResult",
         nulls = Nulls.SKIP
@@ -175,7 +174,7 @@ public final class TestCaseNonHiddenGrade {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestCaseNonHiddenGrade build() {
       return new TestCaseNonHiddenGrade(passed, actualResult, exception, stdout);
     }

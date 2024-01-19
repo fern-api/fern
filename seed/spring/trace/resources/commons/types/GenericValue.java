@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,7 +40,7 @@ public final class GenericValue {
     return stringifiedValue;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GenericValue && equalTo((GenericValue) other);
@@ -51,12 +50,12 @@ public final class GenericValue {
     return stringifiedType.equals(other.stringifiedType) && stringifiedValue.equals(other.stringifiedValue);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.stringifiedType, this.stringifiedValue);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -90,27 +89,27 @@ public final class GenericValue {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GenericValue other) {
       stringifiedType(other.getStringifiedType());
       stringifiedValue(other.getStringifiedValue());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("stringifiedValue")
     public _FinalStage stringifiedValue(String stringifiedValue) {
       this.stringifiedValue = stringifiedValue;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage stringifiedType(String stringifiedType) {
       this.stringifiedType = Optional.of(stringifiedType);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "stringifiedType",
         nulls = Nulls.SKIP
@@ -120,7 +119,7 @@ public final class GenericValue {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GenericValue build() {
       return new GenericValue(stringifiedType, stringifiedValue);
     }

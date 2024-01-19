@@ -56,7 +56,7 @@ public final class CreatePlaylistRequest {
         return body;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreatePlaylistRequest && equalTo((CreatePlaylistRequest) other);
@@ -73,12 +73,12 @@ public final class CreatePlaylistRequest {
                 && body.equals(other.body);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.datetime, this.optionalDatetime, this.body);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -118,7 +118,7 @@ public final class CreatePlaylistRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreatePlaylistRequest other) {
             datetime(other.getDatetime());
             optionalDatetime(other.getOptionalDatetime());
@@ -126,34 +126,34 @@ public final class CreatePlaylistRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("datetime")
         public BodyStage datetime(OffsetDateTime datetime) {
             this.datetime = datetime;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(PlaylistCreateRequest body) {
             this.body = body;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage optionalDatetime(OffsetDateTime optionalDatetime) {
             this.optionalDatetime = Optional.of(optionalDatetime);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "optionalDatetime", nulls = Nulls.SKIP)
         public _FinalStage optionalDatetime(Optional<OffsetDateTime> optionalDatetime) {
             this.optionalDatetime = optionalDatetime;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreatePlaylistRequest build() {
             return new CreatePlaylistRequest(datetime, optionalDatetime, body, additionalProperties);
         }

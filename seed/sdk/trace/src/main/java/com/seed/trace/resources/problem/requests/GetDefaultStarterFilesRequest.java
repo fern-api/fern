@@ -67,7 +67,7 @@ public final class GetDefaultStarterFilesRequest {
         return methodName;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetDefaultStarterFilesRequest && equalTo((GetDefaultStarterFilesRequest) other);
@@ -84,12 +84,12 @@ public final class GetDefaultStarterFilesRequest {
                 && methodName.equals(other.methodName);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.inputParams, this.outputType, this.methodName);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -131,7 +131,7 @@ public final class GetDefaultStarterFilesRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetDefaultStarterFilesRequest other) {
             inputParams(other.getInputParams());
             outputType(other.getOutputType());
@@ -139,7 +139,7 @@ public final class GetDefaultStarterFilesRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("outputType")
         public MethodNameStage outputType(VariableType outputType) {
             this.outputType = outputType;
@@ -157,26 +157,26 @@ public final class GetDefaultStarterFilesRequest {
          * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("methodName")
         public _FinalStage methodName(String methodName) {
             this.methodName = methodName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllInputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.addAll(inputParams);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addInputParams(VariableTypeAndName inputParams) {
             this.inputParams.add(inputParams);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inputParams", nulls = Nulls.SKIP)
         public _FinalStage inputParams(List<VariableTypeAndName> inputParams) {
             this.inputParams.clear();
@@ -184,7 +184,7 @@ public final class GetDefaultStarterFilesRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetDefaultStarterFilesRequest build() {
             return new GetDefaultStarterFilesRequest(inputParams, outputType, methodName, additionalProperties);
         }

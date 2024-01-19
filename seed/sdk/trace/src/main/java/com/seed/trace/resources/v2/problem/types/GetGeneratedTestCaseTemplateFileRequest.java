@@ -33,7 +33,7 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
         return template;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetGeneratedTestCaseTemplateFileRequest
@@ -49,12 +49,12 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
         return template.equals(other.template);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.template);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -82,20 +82,20 @@ public final class GetGeneratedTestCaseTemplateFileRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetGeneratedTestCaseTemplateFileRequest other) {
             template(other.getTemplate());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("template")
         public _FinalStage template(TestCaseTemplate template) {
             this.template = template;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetGeneratedTestCaseTemplateFileRequest build() {
             return new GetGeneratedTestCaseTemplateFileRequest(template, additionalProperties);
         }

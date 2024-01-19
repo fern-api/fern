@@ -32,7 +32,7 @@ public final class UpdateProblemResponse {
         return problemVersion;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UpdateProblemResponse && equalTo((UpdateProblemResponse) other);
@@ -47,12 +47,12 @@ public final class UpdateProblemResponse {
         return problemVersion == other.problemVersion;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.problemVersion);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class UpdateProblemResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UpdateProblemResponse other) {
             problemVersion(other.getProblemVersion());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("problemVersion")
         public _FinalStage problemVersion(int problemVersion) {
             this.problemVersion = problemVersion;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UpdateProblemResponse build() {
             return new UpdateProblemResponse(problemVersion, additionalProperties);
         }

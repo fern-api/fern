@@ -6,7 +6,6 @@ package core;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.IllegalStateException;
-import java.lang.Override;
 import java.lang.String;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -50,7 +49,7 @@ public final class BasicAuth {
     }
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return "Basic " + getToken();
   }

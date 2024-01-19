@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -60,7 +59,7 @@ public final class GetSubmissionStateResponse {
     return submissionTypeState;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof GetSubmissionStateResponse && equalTo((GetSubmissionStateResponse) other);
@@ -70,12 +69,12 @@ public final class GetSubmissionStateResponse {
     return timeSubmitted.equals(other.timeSubmitted) && submission.equals(other.submission) && language.equals(other.language) && submissionTypeState.equals(other.submissionTypeState);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.timeSubmitted, this.submission, this.language, this.submissionTypeState);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -121,7 +120,7 @@ public final class GetSubmissionStateResponse {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(GetSubmissionStateResponse other) {
       timeSubmitted(other.getTimeSubmitted());
       submission(other.getSubmission());
@@ -130,34 +129,34 @@ public final class GetSubmissionStateResponse {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submission")
     public LanguageStage submission(String submission) {
       this.submission = submission;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("language")
     public SubmissionTypeStateStage language(Language language) {
       this.language = language;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("submissionTypeState")
     public _FinalStage submissionTypeState(SubmissionTypeState submissionTypeState) {
       this.submissionTypeState = submissionTypeState;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public _FinalStage timeSubmitted(OffsetDateTime timeSubmitted) {
       this.timeSubmitted = Optional.of(timeSubmitted);
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter(
         value = "timeSubmitted",
         nulls = Nulls.SKIP
@@ -167,7 +166,7 @@ public final class GetSubmissionStateResponse {
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public GetSubmissionStateResponse build() {
       return new GetSubmissionStateResponse(timeSubmitted, submission, language, submissionTypeState);
     }

@@ -36,7 +36,7 @@ public final class GetFunctionSignatureResponse {
         return functionByLanguage;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFunctionSignatureResponse && equalTo((GetFunctionSignatureResponse) other);
@@ -51,12 +51,12 @@ public final class GetFunctionSignatureResponse {
         return functionByLanguage.equals(other.functionByLanguage);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.functionByLanguage);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
@@ -40,7 +39,7 @@ public final class TestCaseImplementation {
     return function;
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof TestCaseImplementation && equalTo((TestCaseImplementation) other);
@@ -50,12 +49,12 @@ public final class TestCaseImplementation {
     return description.equals(other.description) && function.equals(other.function);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(this.description, this.function);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
   }
@@ -89,28 +88,28 @@ public final class TestCaseImplementation {
     private Builder() {
     }
 
-    @Override
+    @java.lang.Override
     public Builder from(TestCaseImplementation other) {
       description(other.getDescription());
       function(other.getFunction());
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("description")
     public FunctionStage description(TestCaseImplementationDescription description) {
       this.description = description;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     @JsonSetter("function")
     public _FinalStage function(TestCaseFunction function) {
       this.function = function;
       return this;
     }
 
-    @Override
+    @java.lang.Override
     public TestCaseImplementation build() {
       return new TestCaseImplementation(description, function);
     }
