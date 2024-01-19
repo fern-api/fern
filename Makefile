@@ -20,6 +20,7 @@ test: install
 	seed test --workspace sdk --fixture enum-query-params
 	seed test --workspace sdk --fixture response-property
 	seed test --workspace sdk --fixture file-upload
+	seed test --workspace sdk --fixture idempotency-headers
 	seed test --workspace sdk --fixture literal
 	seed test --workspace sdk --fixture literal-headers
 	seed test --workspace sdk --fixture streaming

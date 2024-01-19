@@ -16,3 +16,5 @@ headers:
   X-API-Optional-Date: optional<date>
   X-API-Optional-Bytes: optional<base64>
   X-API-Fern-Header: literal<"fern">
+idempotency-headers:
+  Idempotency-Key: string

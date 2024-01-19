@@ -74,3 +74,29 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 	}
 	return response, nil
 }
+
+func (c *Client) UpdateName(ctx context.Context, userId string, request *fixtures.UpdateNameRequest) (string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update-name", userId)
+
+	headers := c.header.Clone()
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	headers.Add("Idempotency-Key", fmt.Sprintf("%v", request.IdempotencyKey))
+
+	var response string
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPut,
+			Headers:  headers,
+			Response: &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response, nil
+}

@@ -24,3 +24,8 @@ type SetNameRequest struct {
 func (s *SetNameRequest) XEndpointFernHeader() string {
 	return s.xEndpointFernHeader
 }
+
+type UpdateNameRequest struct {
+	XEndpointHeader string `json:"-"`
+	IdempotencyKey  string `json:"-"`
+}

@@ -414,6 +414,7 @@ type GeneratedClient struct {
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(
 	irEndpoints []*ir.HttpEndpoint,
+	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
@@ -535,10 +536,14 @@ func (f *fileWriter) WriteClient(
 		}
 		// Add endpoint-specific headers from the request, if any.
 		headersParameter := fmt.Sprintf("%s.header", receiver)
-		if len(endpoint.Headers) > 0 {
+		headers := endpoint.Headers
+		if endpoint.Idempotent {
+			headers = append(headers, idempotencyHeaders...)
+		}
+		if len(headers) > 0 {
 			f.P()
 			f.P("headers := ", receiver, ".header.Clone()")
-			for _, header := range endpoint.Headers {
+			for _, header := range headers {
 				valueTypeFormat := formatForValueType(header.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 				if valueTypeFormat.IsOptional {
@@ -786,6 +791,7 @@ type endpoint struct {
 	IsStreaming                 bool
 	StreamDelimiter             string
 	ErrorDecoderParameterName   string
+	Idempotent                  bool
 	Errors                      ir.ResponseErrors
 	QueryParameters             []*ir.QueryParameter
 	Headers                     []*ir.HttpHeader
@@ -1002,6 +1008,7 @@ func (f *fileWriter) endpointFromIR(
 		IsStreaming:                 isStreaming,
 		StreamDelimiter:             streamDelimiter,
 		ErrorDecoderParameterName:   errorDecoderParameterName,
+		Idempotent:                  irEndpoint.Idempotent,
 		Errors:                      irEndpoint.Errors,
 		QueryParameters:             irEndpoint.QueryParameters,
 		Headers:                     irEndpoint.Headers,
@@ -1108,7 +1115,12 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 }
 
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
-func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint, includeGenericOptionals bool) error {
+func (f *fileWriter) WriteRequestType(
+	fernFilepath *ir.FernFilepath,
+	endpoint *ir.HttpEndpoint,
+	idempotencyHeaders []*ir.HttpHeader,
+	includeGenericOptionals bool,
+) error {
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
@@ -1120,7 +1132,11 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
-	for _, header := range endpoint.Headers {
+	headers := endpoint.Headers
+	if endpoint.Idempotent {
+		headers = append(headers, idempotencyHeaders...)
+	}
+	for _, header := range headers {
 		f.WriteDocs(header.Docs)
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
 			literals = append(

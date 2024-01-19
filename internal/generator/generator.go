@@ -147,7 +147,12 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 						return nil, err
 					}
 				} else if mode == ModeClient {
-					if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
+					if err := writer.WriteRequestType(
+						typeToGenerate.FernFilepath,
+						typeToGenerate.Endpoint,
+						ir.IdempotencyHeaders,
+						g.config.EnableExplicitNull,
+					); err != nil {
 						return nil, err
 					}
 				}
@@ -538,6 +543,7 @@ func (g *Generator) generateService(
 	)
 	generatedClient, err := writer.WriteClient(
 		irService.Endpoints,
+		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
 		ir.ErrorDiscriminationStrategy,
@@ -577,6 +583,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	)
 	if _, err := writer.WriteClient(
 		nil,
+		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
 		ir.ErrorDiscriminationStrategy,
@@ -610,6 +617,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 	)
 	generatedClient, err := writer.WriteClient(
 		nil,
+		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
 		ir.ErrorDiscriminationStrategy,
