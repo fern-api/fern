@@ -29,7 +29,7 @@ export async function generateWorkspace({
     token: FernToken;
     useLocalDocker: boolean;
     keepDocker: boolean;
-    irVersion: string | undefined
+    irVersion: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");

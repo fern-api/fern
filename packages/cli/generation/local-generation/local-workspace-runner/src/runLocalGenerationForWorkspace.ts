@@ -22,13 +22,13 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     keepDocker,
     irVersion,
-    context,
+    context
 }: {
     organization: string;
     workspace: FernWorkspace;
     generatorGroup: GeneratorGroup;
     keepDocker: boolean;
-    irVersion: string | undefined,
+    irVersion: string | undefined;
     context: TaskContext;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();

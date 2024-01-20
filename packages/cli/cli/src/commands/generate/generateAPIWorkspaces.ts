@@ -22,7 +22,7 @@ export async function generateAPIWorkspaces({
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
-    irVersion: string | undefined
+    irVersion: string | undefined;
 }): Promise<void> {
     const token = await cliContext.runTask(async (context) => {
         return askToLogin(context);

@@ -364,7 +364,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    irVersion: argv.irVersion,
+                    irVersion: argv.irVersion
                 });
             } else if (argv.docs != null) {
                 if (argv.group != null) {
@@ -399,7 +399,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    irVersion: argv.irVersion,
+                    irVersion: argv.irVersion
                 });
             }
         }
