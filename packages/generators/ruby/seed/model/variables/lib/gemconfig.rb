@@ -1,14 +1,15 @@
 # frozen_string_literal: true
+
 module SeedClient
-  module Gem
+  module Gemconfig
     NAME = "SeedClient"
     VERSION = ""
-    AUTHORS = [""]
+    AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = ""
-    SOURCE_CODE_URI = ""
-    CHANGELOG_URI = ""
+    HOMEPAGE = "https://github.com/REPO/URL"
+    SOURCE_CODE_URI = "https://github.com/REPO/URL"
+    CHANGELOG_URI = "https://github.com/REPO/URL/blob/master/CHANGELOG.md"
   end
 end

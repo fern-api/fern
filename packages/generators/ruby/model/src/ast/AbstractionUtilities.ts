@@ -122,17 +122,21 @@ export function generateGemConfig(gemName: string): GeneratedRubyFile {
     const gemspec = new Module_({
         name: gemName,
         child: new Module_({
-            name: "Gem",
+            name: "Gemconfig",
             child: [
                 new Expression({ leftSide: "NAME", rightSide: `"${gemName}"` }),
                 new Expression({ leftSide: "VERSION", rightSide: '""' }),
-                new Expression({ leftSide: "AUTHORS", rightSide: '[""]' }),
+                new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze' }),
                 new Expression({ leftSide: "EMAIL", rightSide: '""' }),
                 new Expression({ leftSide: "SUMMARY", rightSide: '""' }),
                 new Expression({ leftSide: "DESCRIPTION", rightSide: '""' }),
-                new Expression({ leftSide: "HOMEPAGE", rightSide: '""' }),
-                new Expression({ leftSide: "SOURCE_CODE_URI", rightSide: '""' }),
-                new Expression({ leftSide: "CHANGELOG_URI", rightSide: '""' })
+                // Input some placeholders for installation to work
+                new Expression({ leftSide: "HOMEPAGE", rightSide: '"https://github.com/REPO/URL"' }),
+                new Expression({ leftSide: "SOURCE_CODE_URI", rightSide: '"https://github.com/REPO/URL"' }),
+                new Expression({
+                    leftSide: "CHANGELOG_URI",
+                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"'
+                })
             ]
         })
     });

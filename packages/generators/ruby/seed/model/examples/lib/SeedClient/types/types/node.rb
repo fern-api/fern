@@ -4,45 +4,48 @@ module SeedClient
   module Types
     class Node
       attr_reader :name, :nodes, :trees, :additional_properties
-      # @param name [String] 
-      # @param nodes [Array<Types::Node>] 
-      # @param trees [Array<Types::Tree>] 
+
+      # @param name [String]
+      # @param nodes [Array<Types::Node>]
+      # @param trees [Array<Types::Tree>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Types::Node] 
+      # @return [Types::Node]
       def initialze(name:, nodes: nil, trees: nil, additional_properties: nil)
-        # @type [String] 
+        # @type [String]
         @name = name
-        # @type [Array<Types::Node>] 
+        # @type [Array<Types::Node>]
         @nodes = nodes
-        # @type [Array<Types::Tree>] 
+        # @type [Array<Types::Tree>]
         @trees = trees
-        # @type [OpenStruct] 
+        # @type [OpenStruct]
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of Node
       #
-      # @param json_object [JSON] 
-      # @return [Types::Node] 
+      # @param json_object [JSON]
+      # @return [Types::Node]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
-        nodes = struct.nodes.map() do | v |
- Types::Node.from_json(json_object: v)
-end
-        trees = struct.trees.map() do | v |
- Types::Tree.from_json(json_object: v)
-end
+        nodes = struct.nodes.map do |v|
+          Types::Node.from_json(json_object: v)
+        end
+        trees = struct.trees.map do |v|
+          Types::Tree.from_json(json_object: v)
+        end
         new(name: name, nodes: nodes, trees: trees, additional_properties: struct)
       end
+
       # Serialize an instance of Node to a JSON object
       #
-      # @return [JSON] 
-      def to_json
+      # @return [JSON]
+      def to_json(*_args)
         {
- name: @name,
- nodes: @nodes,
- trees: @trees
-}.to_json()
+          name: @name,
+          nodes: @nodes,
+          trees: @trees
+        }.to_json
       end
     end
   end

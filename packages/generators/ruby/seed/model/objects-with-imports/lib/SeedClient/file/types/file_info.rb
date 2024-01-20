@@ -2,10 +2,10 @@
 
 module SeedClient
   module File
-    # @type [Hash{String => String}] 
+    # @type [Hash{String => String}]
     FileInfo = {
- regular: 'REGULAR',
- directory: 'DIRECTORY'
-}.frozen
+      regular: "REGULAR",
+      directory: "DIRECTORY"
+    }.frozen
   end
 end

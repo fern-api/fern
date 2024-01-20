@@ -3,6 +3,7 @@ import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { exec } from "child_process";
 import { camelCase, upperFirst } from "lodash-es";
 import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
 import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
@@ -19,10 +20,6 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     }
 
     // TODO: This (as an abstract function) will probably be used across CLIs
-    // private generateRepositoryBoilerPlate(
-    //     config: FernGeneratorExec.GeneratorConfig,
-    //     customConfig: RubyModelCustomConfig
-    // ) {
     private generateRepositoryBoilerPlate(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig
@@ -94,5 +91,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         this.generatedFiles.forEach(async (f) => {
             await f.write(AbsoluteFilePath.of(config.output.path));
         });
+        // Run lint and generate lockfile
+        exec(`rubocop --auto-correct-all ${config.output.path}`);
     }
 }

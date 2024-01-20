@@ -4,31 +4,34 @@ module SeedClient
   module Problem
     class UpdateProblemResponse
       attr_reader :problem_version, :additional_properties
-      # @param problem_version [Integer] 
+
+      # @param problem_version [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Problem::UpdateProblemResponse] 
+      # @return [Problem::UpdateProblemResponse]
       def initialze(problem_version:, additional_properties: nil)
-        # @type [Integer] 
+        # @type [Integer]
         @problem_version = problem_version
-        # @type [OpenStruct] 
+        # @type [OpenStruct]
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of UpdateProblemResponse
       #
-      # @param json_object [JSON] 
-      # @return [Problem::UpdateProblemResponse] 
+      # @param json_object [JSON]
+      # @return [Problem::UpdateProblemResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_version = struct.problemVersion
         new(problem_version: problem_version, additional_properties: struct)
       end
+
       # Serialize an instance of UpdateProblemResponse to a JSON object
       #
-      # @return [JSON] 
-      def to_json
+      # @return [JSON]
+      def to_json(*_args)
         {
- problemVersion: @problem_version
-}.to_json()
+          problemVersion: @problem_version
+        }.to_json
       end
     end
   end

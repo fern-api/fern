@@ -4,31 +4,34 @@ module SeedClient
   module LangServer
     class LangServerResponse
       attr_reader :response, :additional_properties
-      # @param response [Object] 
+
+      # @param response [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [LangServer::LangServerResponse] 
+      # @return [LangServer::LangServerResponse]
       def initialze(response:, additional_properties: nil)
-        # @type [Object] 
+        # @type [Object]
         @response = response
-        # @type [OpenStruct] 
+        # @type [OpenStruct]
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of LangServerResponse
       #
-      # @param json_object [JSON] 
-      # @return [LangServer::LangServerResponse] 
+      # @param json_object [JSON]
+      # @return [LangServer::LangServerResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         response = struct.response
         new(response: response, additional_properties: struct)
       end
+
       # Serialize an instance of LangServerResponse to a JSON object
       #
-      # @return [JSON] 
-      def to_json
+      # @return [JSON]
+      def to_json(*_args)
         {
- response: @response
-}.to_json()
+          response: @response
+        }.to_json
       end
     end
   end

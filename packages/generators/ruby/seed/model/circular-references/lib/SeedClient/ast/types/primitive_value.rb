@@ -2,10 +2,10 @@
 
 module SeedClient
   module Ast
-    # @type [Hash{String => String}] 
+    # @type [Hash{String => String}]
     PrimitiveValue = {
- string: 'STRING',
- number: 'NUMBER'
-}.frozen
+      string: "STRING",
+      number: "NUMBER"
+    }.frozen
   end
 end
