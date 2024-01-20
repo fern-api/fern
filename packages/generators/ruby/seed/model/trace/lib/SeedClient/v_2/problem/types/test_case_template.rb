@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "v_2/problem/types/TestCaseTemplateId"
+require_relative "v_2/problem/types/TestCaseImplementation"
+require "json"
+
 module SeedClient
   module V2
     module Problem

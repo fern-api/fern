@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/NodeId"
+require "json"
+
 module SeedClient
   module Commons
     class SinglyLinkedListNodeValue

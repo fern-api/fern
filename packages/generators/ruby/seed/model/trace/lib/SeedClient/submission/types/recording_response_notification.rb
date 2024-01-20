@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "submission/types/SubmissionId"
+require_relative "submission/types/LightweightStackframeInformation"
+require_relative "submission/types/TracedFile"
+require "json"
+
 module SeedClient
   module Submission
     class RecordingResponseNotification

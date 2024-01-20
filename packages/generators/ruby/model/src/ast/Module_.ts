@@ -50,8 +50,8 @@ export class Module_ extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        const imports = new Set<Import>();
-        this.children?.forEach((c) => new Set([...imports, ...c.getImports()]));
+        let imports = new Set<Import>();
+        this.children?.forEach((c) => (imports = new Set([...imports, ...c.getImports()])));
         return imports;
     }
 }

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "file/types/FileInfo"
+require "json"
+
 module SeedClient
   module File
     class File

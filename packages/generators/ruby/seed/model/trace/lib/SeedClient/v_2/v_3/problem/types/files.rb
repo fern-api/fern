@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "v_2/v_3/problem/types/FileInfoV2"
+require "json"
+
 module SeedClient
   module V2
     module V3

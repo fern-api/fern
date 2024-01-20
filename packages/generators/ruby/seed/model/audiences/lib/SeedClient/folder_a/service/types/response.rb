@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "folder_b/common/types/Foo"
+require "json"
+
 module SeedClient
   module FolderA
     module Service

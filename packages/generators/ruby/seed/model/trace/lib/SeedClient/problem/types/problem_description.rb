@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "problem/types/ProblemDescriptionBoard"
+require "json"
+
 module SeedClient
   module Problem
     class ProblemDescription

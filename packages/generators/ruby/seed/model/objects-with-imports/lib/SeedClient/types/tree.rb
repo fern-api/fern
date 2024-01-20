@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/Node"
+require "json"
+
 module SeedClient
   class Tree
     attr_reader :nodes, :additional_properties

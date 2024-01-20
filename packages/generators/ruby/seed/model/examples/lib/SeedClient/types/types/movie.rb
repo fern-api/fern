@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "types/types/MovieId"
+require_relative "commons/types/types/Tag"
+require "json"
+
 module SeedClient
   module Types
     class Movie

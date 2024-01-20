@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/VariableValue"
+require_relative "submission/types/ExceptionV2"
+require "json"
+
 module SeedClient
   module Submission
     class TestCaseNonHiddenGrade

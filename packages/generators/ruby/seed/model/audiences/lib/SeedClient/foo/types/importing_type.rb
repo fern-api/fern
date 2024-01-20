@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/Imported"
+require "json"
+
 module SeedClient
   module Foo
     class ImportingType

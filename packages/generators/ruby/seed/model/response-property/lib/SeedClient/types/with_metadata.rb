@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module SeedClient
   class WithMetadata
     attr_reader :metadata, :additional_properties

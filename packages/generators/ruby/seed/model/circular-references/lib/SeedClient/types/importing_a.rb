@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "a/types/A"
+require "json"
+
 module SeedClient
   class ImportingA
     attr_reader :a, :additional_properties

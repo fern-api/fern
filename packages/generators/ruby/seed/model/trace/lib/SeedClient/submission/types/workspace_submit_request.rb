@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "submission/types/SubmissionId"
+require_relative "commons/types/Language"
+require_relative "submission/types/SubmissionFileInfo"
+require "json"
+
 module SeedClient
   module Submission
     class WorkspaceSubmitRequest

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/Docs"
+require "json"
+
 module SeedClient
   class ExampleType < Docs
     attr_reader :name, :additional_properties

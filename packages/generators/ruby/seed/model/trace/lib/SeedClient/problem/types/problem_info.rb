@@ -1,4 +1,10 @@
 # frozen_string_literal: true
+require_relative "commons/types/ProblemId"
+require_relative "problem/types/ProblemDescription"
+require_relative "problem/types/VariableTypeAndName"
+require_relative "commons/types/VariableType"
+require_relative "commons/types/TestCaseWithExpectedResult"
+require "json"
 
 module SeedClient
   module Problem

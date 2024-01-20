@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/metadata/types/Metadata"
+require "json"
+
 module SeedClient
   class Node
     attr_reader :id, :label, :metadata, :additional_properties

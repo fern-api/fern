@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module SeedClient
   class StringResponse
     attr_reader :data, :additional_properties

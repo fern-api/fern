@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/types/Node"
+require "json"
+
 module SeedClient
   module Types
     class Tree

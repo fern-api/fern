@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/VariableType"
+require "json"
+
 module SeedClient
   module Problem
     class VariableTypeAndName

@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/ProblemId"
+require_relative "problem/types/ProblemDescription"
+require "set"
+require_relative "v_2/v_3/problem/types/CustomFiles"
+require_relative "v_2/v_3/problem/types/GeneratedFiles"
+require_relative "v_2/v_3/problem/types/TestCaseTemplate"
+require_relative "v_2/v_3/problem/types/TestCaseV2"
+require "json"
+
 module SeedClient
   module V2
     module V3

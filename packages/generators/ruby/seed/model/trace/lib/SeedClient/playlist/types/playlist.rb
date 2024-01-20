@@ -1,4 +1,8 @@
 # frozen_string_literal: true
+require_relative "playlist/types/PlaylistCreateRequest"
+require_relative "playlist/types/PlaylistId"
+require_relative "commons/types/UserId"
+require "json"
 
 module SeedClient
   module Playlist

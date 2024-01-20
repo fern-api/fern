@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "submission/types/TraceResponseV2"
+require "json"
+
 module SeedClient
   module Submission
     class TraceResponsesPageV2

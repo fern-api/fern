@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/ProblemId"
+require_relative "submission/types/SubmissionId"
+require "json"
+
 module SeedClient
   module Submission
     class CustomTestCasesUnsupported

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/ProblemId"
+require "json"
+
 module SeedClient
   module Submission
     class InitializeProblemRequest

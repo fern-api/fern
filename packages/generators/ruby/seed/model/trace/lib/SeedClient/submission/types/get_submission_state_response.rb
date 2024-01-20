@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/Language"
+require_relative "submission/types/SubmissionTypeState"
+require "json"
+
 module SeedClient
   module Submission
     class GetSubmissionStateResponse

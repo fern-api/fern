@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/NodeId"
+require_relative "commons/types/BinaryTreeValue"
+require "json"
+
 module SeedClient
   module Commons
     class BinaryTreeNodeAndTreeValue

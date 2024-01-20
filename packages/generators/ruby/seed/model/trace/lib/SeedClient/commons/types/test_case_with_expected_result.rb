@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/TestCase"
+require_relative "commons/types/VariableValue"
+require "json"
+
 module SeedClient
   module Commons
     class TestCaseWithExpectedResult

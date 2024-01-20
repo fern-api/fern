@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "submission/types/SubmissionId"
+require_relative "submission/types/RunningSubmissionState"
+require "json"
+
 module SeedClient
   module Submission
     class RunningResponse

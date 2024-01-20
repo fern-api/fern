@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/types/Movie"
+require "json"
+
 module SeedClient
   module Types
     class ExtendedMovie < Movie

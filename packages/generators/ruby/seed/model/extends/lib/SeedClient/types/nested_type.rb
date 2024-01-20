@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/Json"
+require "json"
+
 module SeedClient
   class NestedType < Json
     attr_reader :name, :additional_properties

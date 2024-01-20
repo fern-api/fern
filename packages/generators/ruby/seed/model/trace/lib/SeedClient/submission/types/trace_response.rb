@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "submission/types/SubmissionId"
+require_relative "commons/types/DebugVariableValue"
+require_relative "submission/types/ExpressionLocation"
+require_relative "submission/types/StackInformation"
+require "json"
+
 module SeedClient
   module Submission
     class TraceResponse

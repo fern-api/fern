@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/ProblemId"
+require "set"
+require "json"
+
 module SeedClient
   module V2
     module V3

@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require "set"
+require_relative "types/Name"
+require "json"
+
 module SeedClient
   class Type
     attr_reader :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen,

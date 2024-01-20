@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/FileInfo"
+require "json"
+
 module SeedClient
   module Problem
     class ProblemFiles

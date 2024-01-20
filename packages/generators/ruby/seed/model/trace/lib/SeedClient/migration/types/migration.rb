@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "migration/types/MigrationStatus"
+require "json"
+
 module SeedClient
   module Migration
     class Migration

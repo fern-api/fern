@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/KeyValuePair"
+require "json"
+
 module SeedClient
   module Commons
     class MapValue

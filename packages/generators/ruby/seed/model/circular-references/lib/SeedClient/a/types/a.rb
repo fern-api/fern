@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/RootType"
+require "json"
+
 module SeedClient
   module A
     class A < RootType

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "types/object/types/ObjectWithOptionalField"
+require "json"
+
 module SeedClient
   module Types
     module Object

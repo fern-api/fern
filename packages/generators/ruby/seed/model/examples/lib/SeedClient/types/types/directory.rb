@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "types/types/File"
+require_relative "types/types/Directory"
+require "json"
+
 module SeedClient
   module Types
     class Directory

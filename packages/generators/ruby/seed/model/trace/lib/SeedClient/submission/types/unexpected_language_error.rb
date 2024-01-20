@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/Language"
+require "json"
+
 module SeedClient
   module Submission
     class UnexpectedLanguageError

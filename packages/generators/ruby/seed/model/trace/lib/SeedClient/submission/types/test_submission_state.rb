@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "commons/types/ProblemId"
+require_relative "commons/types/TestCase"
+require_relative "submission/types/TestSubmissionStatus"
+require "json"
+
 module SeedClient
   module Submission
     class TestSubmissionState

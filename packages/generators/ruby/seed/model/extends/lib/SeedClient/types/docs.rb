@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module SeedClient
   class Docs
     attr_reader :docs, :additional_properties

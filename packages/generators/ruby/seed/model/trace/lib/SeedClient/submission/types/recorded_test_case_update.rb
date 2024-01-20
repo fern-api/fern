@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "v_2/problem/types/TestCaseId"
+require "json"
+
 module SeedClient
   module Submission
     class RecordedTestCaseUpdate

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "imdb/types/MovieId"
+require "json"
+
 module SeedClient
   module Imdb
     class Movie
