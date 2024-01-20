@@ -1,9 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionId"
-require "commons/types/DebugVariableValue"
-require "submission/types/ExpressionLocation"
-require "submission/types/StackInformation"
-require "json"
 
 module SeedClient
   module Submission

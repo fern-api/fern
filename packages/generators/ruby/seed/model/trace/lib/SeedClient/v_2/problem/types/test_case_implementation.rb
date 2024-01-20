@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "v_2/problem/types/TestCaseImplementationDescription"
-require "v_2/problem/types/TestCaseFunction"
-require "json"
 
 module SeedClient
   module V2

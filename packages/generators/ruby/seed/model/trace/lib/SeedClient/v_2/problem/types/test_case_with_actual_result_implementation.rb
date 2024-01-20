@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "v_2/problem/types/NonVoidFunctionDefinition"
-require "v_2/problem/types/AssertCorrectnessCheck"
-require "json"
 
 module SeedClient
   module V2

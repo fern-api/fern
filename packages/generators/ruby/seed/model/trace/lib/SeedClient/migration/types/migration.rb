@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "migration/types/MigrationStatus"
-require "json"
 
 module SeedClient
   module Migration

@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "folder_b/common/types/Foo"
-require "json"
 
 module SeedClient
   module FolderA

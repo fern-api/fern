@@ -2,8 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratedFile } from "./utils/GeneratedFile";
 
 export function generateGitignore(): GeneratedFile {
-    const content = `
-/.bundle/
+    const content = `/.bundle/
 /.yardoc
 /_yardoc/
 /coverage/
@@ -18,8 +17,7 @@ export function generateGitignore(): GeneratedFile {
 }
 
 export function generateRubocopConfig(): GeneratedFile {
-    const content = `
-AllCops:
+    const content = `AllCops:
   TargetRubyVersion: 2.6
   
 Style/StringLiterals:
@@ -33,24 +31,23 @@ Style/StringLiteralsInInterpolation:
     return new GeneratedFile(".rubocop.yml", RelativeFilePath.of("."), content);
 }
 
+// TODO: this should probably be codified in a more intentional way
 export function generateGemfile(): GeneratedFile {
-    const gemfileContent = `
-# frozen_string_literal: true
+    const gemfileContent = `# frozen_string_literal: true
 
 source "https://rubygems.org"
 
 gemspec
 
-gem "rake", "~> 13.0"
 gem "minitest", "~> 5.0"
+gem "rake", "~> 13.0"
 gem "rubocop", "~> 1.21"
 `;
     return new GeneratedFile("Gemfile", RelativeFilePath.of("."), gemfileContent);
 }
 
 export function generateBinDir(gemName: string): GeneratedFile[] {
-    const setupContent = `
-#!/usr/bin/env bash
+    const setupContent = `#!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
 set -vx
@@ -59,8 +56,7 @@ bundle install
 `;
     const setup = new GeneratedFile("setup", RelativeFilePath.of("bin"), setupContent);
 
-    const consoleContent = `
-#!/usr/bin/env ruby
+    const consoleContent = `#!/usr/bin/env ruby
 # frozen_string_literal: true
 
 require "bundler/setup"
@@ -82,7 +78,6 @@ IRB.start(__FILE__)
 }
 
 export function generateReadme(): GeneratedFile {
-    const content = `
-    `;
+    const content = "";
     return new GeneratedFile("README.md", RelativeFilePath.of("."), content);
 }

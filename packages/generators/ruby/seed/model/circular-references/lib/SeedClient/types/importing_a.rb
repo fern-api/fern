@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "a/types/A"
-require "json"
 
 module SeedClient
   class ImportingA

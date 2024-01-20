@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-require "set"
-require "types/Name"
-require "json"
-require "set"
 
 module SeedClient
   class Type

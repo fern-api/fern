@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/StackFrame"
-require "json"
 
 module SeedClient
   module Submission

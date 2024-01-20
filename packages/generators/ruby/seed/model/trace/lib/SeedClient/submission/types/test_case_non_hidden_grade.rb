@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/VariableValue"
-require "submission/types/ExceptionV2"
-require "json"
 
 module SeedClient
   module Submission

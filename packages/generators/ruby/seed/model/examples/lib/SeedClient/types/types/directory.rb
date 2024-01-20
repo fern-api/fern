@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "types/types/File"
-require "types/types/Directory"
-require "json"
 
 module SeedClient
   module Types

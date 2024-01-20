@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionRequest"
-require "submission/types/InvalidRequestCause"
-require "json"
 
 module SeedClient
   module Submission

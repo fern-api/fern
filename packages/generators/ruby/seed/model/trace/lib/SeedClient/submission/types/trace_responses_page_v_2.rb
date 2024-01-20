@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/TraceResponseV2"
-require "json"
 
 module SeedClient
   module Submission

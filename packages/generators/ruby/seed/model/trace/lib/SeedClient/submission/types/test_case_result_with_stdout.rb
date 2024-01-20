@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/TestCaseResult"
-require "json"
 
 module SeedClient
   module Submission

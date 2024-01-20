@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "problem/types/ProblemDescriptionBoard"
-require "json"
 
 module SeedClient
   module Problem

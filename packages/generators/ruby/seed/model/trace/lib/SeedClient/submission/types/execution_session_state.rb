@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/Language"
-require "submission/types/ExecutionSessionStatus"
-require "json"
 
 module SeedClient
   module Submission

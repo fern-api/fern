@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "file/types/FileInfo"
-require "json"
 
 module SeedClient
   module File

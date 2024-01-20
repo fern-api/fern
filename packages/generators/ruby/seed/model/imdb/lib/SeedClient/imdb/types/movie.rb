@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "imdb/types/MovieId"
-require "json"
 
 module SeedClient
   module Imdb

@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/FileInfo"
-require "commons/types/FileInfo"
-require "json"
 
 module SeedClient
   module Problem

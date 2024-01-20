@@ -111,7 +111,8 @@ export function generateGemspec(gemName: string, extraDependencies: ExternalDepe
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        entityName: `${gemName}.gemspec`
+        entityName: `${gemName}.gemspec`,
+        isConfigurationFile: true
     });
 }
 

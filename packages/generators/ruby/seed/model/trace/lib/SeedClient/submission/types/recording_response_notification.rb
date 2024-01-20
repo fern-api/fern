@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionId"
-require "submission/types/LightweightStackframeInformation"
-require "submission/types/TracedFile"
-require "json"
 
 module SeedClient
   module Submission

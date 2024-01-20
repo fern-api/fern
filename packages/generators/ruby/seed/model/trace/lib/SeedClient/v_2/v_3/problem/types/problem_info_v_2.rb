@@ -1,13 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/ProblemId"
-require "problem/types/ProblemDescription"
-require "set"
-require "v_2/v_3/problem/types/CustomFiles"
-require "v_2/v_3/problem/types/GeneratedFiles"
-require "v_2/v_3/problem/types/TestCaseTemplate"
-require "v_2/v_3/problem/types/TestCaseV2"
-require "json"
-require "set"
 
 module SeedClient
   module V2

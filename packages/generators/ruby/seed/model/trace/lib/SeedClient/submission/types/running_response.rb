@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionId"
-require "submission/types/RunningSubmissionState"
-require "json"
 
 module SeedClient
   module Submission

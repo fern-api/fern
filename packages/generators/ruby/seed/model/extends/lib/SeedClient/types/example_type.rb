@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "types/Docs"
-require "json"
 
 module SeedClient
   class ExampleType < Docs

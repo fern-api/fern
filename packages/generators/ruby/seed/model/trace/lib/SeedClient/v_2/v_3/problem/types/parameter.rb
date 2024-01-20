@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "v_2/v_3/problem/types/ParameterId"
-require "commons/types/VariableType"
-require "json"
 
 module SeedClient
   module V2

@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "types/types/Movie"
-require "json"
 
 module SeedClient
   module Types

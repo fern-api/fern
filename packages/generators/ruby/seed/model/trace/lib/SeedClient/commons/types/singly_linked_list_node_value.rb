@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/NodeId"
-require "commons/types/NodeId"
-require "json"
 
 module SeedClient
   module Commons

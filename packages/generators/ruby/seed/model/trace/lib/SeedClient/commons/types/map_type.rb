@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require "commons/types/VariableType"
-require "commons/types/VariableType"
-require "json"
 
 module SeedClient
   module Commons

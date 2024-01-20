@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "types/Json"
-require "json"
 
 module SeedClient
   class NestedType < Json

@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require "commons/metadata/types/Metadata"
-require "json"
 
 module SeedClient
   class Node

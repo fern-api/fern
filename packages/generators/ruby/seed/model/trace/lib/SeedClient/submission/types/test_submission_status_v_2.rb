@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-require "submission/types/TestSubmissionUpdate"
-require "commons/types/ProblemId"
-require "v_2/problem/types/ProblemInfoV2"
-require "json"
 
 module SeedClient
   module Submission
