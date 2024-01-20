@@ -21,12 +21,14 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     keepDocker,
-    context
+    irVersion,
+    context,
 }: {
     organization: string;
     workspace: FernWorkspace;
     generatorGroup: GeneratorGroup;
     keepDocker: boolean;
+    irVersion: string | undefined,
     context: TaskContext;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
@@ -48,7 +50,7 @@ export async function runLocalGenerationForWorkspace({
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
-                        irVersionOverride: undefined,
+                        irVersionOverride: irVersion,
                         outputVersionOverride: undefined,
                         writeSnippets: false
                     });

@@ -12,7 +12,8 @@ export async function generateAPIWorkspaces({
     groupName,
     shouldLogS3Url,
     keepDocker,
-    useLocalDocker
+    useLocalDocker,
+    irVersion
 }: {
     project: Project;
     cliContext: CliContext;
@@ -21,6 +22,7 @@ export async function generateAPIWorkspaces({
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
+    irVersion: string | undefined
 }): Promise<void> {
     const token = await cliContext.runTask(async (context) => {
         return askToLogin(context);
@@ -78,7 +80,8 @@ export async function generateAPIWorkspaces({
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
-                    keepDocker
+                    keepDocker,
+                    irVersion
                 });
             });
         })

@@ -17,7 +17,8 @@ export async function generateWorkspace({
     shouldLogS3Url,
     token,
     useLocalDocker,
-    keepDocker
+    keepDocker,
+    irVersion
 }: {
     workspace: FernWorkspace;
     organization: string;
@@ -28,6 +29,7 @@ export async function generateWorkspace({
     token: FernToken;
     useLocalDocker: boolean;
     keepDocker: boolean;
+    irVersion: string | undefined
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -61,6 +63,7 @@ export async function generateWorkspace({
             workspace,
             generatorGroup: group,
             keepDocker,
+            irVersion,
             context
         });
     } else {
