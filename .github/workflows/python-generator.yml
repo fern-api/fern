@@ -19,12 +19,15 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install Dependencies
+        working-directory: ./generators/python
         run: poetry install
 
       - name: Type check
+        working-directory: ./generators/python
         run: poetry run mypy
 
-      - name: pre-commit
+      - name: pre-commit  
+        working-directory: ./generators/python
         run: poetry run pre-commit run --all-files
 
   test:
@@ -37,9 +40,11 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install Dependencies
+        working-directory: ./generators/python
         run: poetry install
 
       - name: Unit Test
+        working-directory: ./generators/python
         run: poetry run pytest -sv
 
   seed-sdk-test:
@@ -51,12 +56,15 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Install Seed
+        working-directory: ./generators/python
         run: npm install -g @fern-api/seed-cli@0.16.12-rc1
 
       - name: Seed Test
+        working-directory: ./generators/python
         run: seed test --workspace sdk --parallel 8
 
       - name: Ensure no changes to git-tracked files
+        working-directory: ./generators/python
         run: git --no-pager diff --exit-code
 
   seed-pydantic-test:
@@ -71,15 +79,19 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install Dependencies
+        working-directory: ./generators/python
         run: poetry install
 
       - name: Install Seed
+        working-directory: ./generators/python
         run: npm install -g @fern-api/seed-cli@0.16.12-rc1
 
       - name: Seed Test
+        working-directory: ./generators/python
         run: seed test --workspace pydantic --parallel 6
 
       - name: Ensure no changes to git-tracked files
+        working-directory: ./generators/python
         run: git --no-pager diff --exit-code
 
   seed-fastapi-test:
@@ -90,17 +102,20 @@ jobs:
 
       - uses: actions/setup-node@v3
 
-      - name: Install Poetry
+      - name: Install Poetry      
         uses: snok/install-poetry@v1
 
       - name: Install Dependencies
         run: poetry install
 
       - name: Install Seed
+        working-directory: ./generators/python
         run: npm install -g @fern-api/seed-cli@0.16.12-rc1
 
       - name: Seed Test
+        working-directory: ./generators/python
         run: seed test --workspace fastapi --parallel 6
 
       - name: Ensure no changes to git-tracked files
+        working-directory: ./generators/python
         run: git --no-pager diff --exit-code
