@@ -3,7 +3,7 @@ name: python
 on:
   pull_request:
     paths:
-      - 'generators/python/**'
+      - "generators/python/**"
     branches:
       - main
   workflow_call:
@@ -26,7 +26,7 @@ jobs:
         working-directory: ./generators/python
         run: poetry run mypy
 
-      - name: pre-commit  
+      - name: pre-commit
         working-directory: ./generators/python
         run: poetry run pre-commit run --all-files
 
@@ -102,10 +102,11 @@ jobs:
 
       - uses: actions/setup-node@v3
 
-      - name: Install Poetry      
+      - name: Install Poetry
         uses: snok/install-poetry@v1
 
       - name: Install Dependencies
+        working-directory: ./generators/python
         run: poetry install
 
       - name: Install Seed
