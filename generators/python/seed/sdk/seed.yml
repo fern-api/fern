@@ -1,0 +1,38 @@
+irVersion: v31
+docker: fernapi/fern-python-sdk:latest
+dockerCommand: docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
+language: python
+generatorType: sdk
+defaultOutputMode: github
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        timeout_in_seconds: infinity
+      outputFolder: infinite-timeout
+    - customConfig:
+        timeout_in_seconds: 5
+      outputFolder: five-second-timeout
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          version: v1
+      outputFolder: pydantic-v1
+    - customConfig:
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: extra_dependencies
+scripts:
+  - docker: fernapi/python-seed
+    commands:
+      - pyenv global 3.8
+      - dmypy run .
+      - pyenv global 3.9
+      - dmypy run .
+allowedFailures: 
+  - enum
+  - response-property
