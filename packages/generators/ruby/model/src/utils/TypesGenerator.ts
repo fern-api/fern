@@ -8,13 +8,17 @@ import {
     ObjectTypeDeclaration,
     Type,
     TypeDeclaration,
-    TypeId, UndiscriminatedUnionTypeDeclaration, UnionTypeDeclaration
+    TypeId,
+    UndiscriminatedUnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
-    generateSerializableObjectFromTypeDeclaration, generateUndiscriminatedUnionFromTypeDeclaration, generateUnionFromTypeDeclaration,
+    generateSerializableObjectFromTypeDeclaration,
+    generateUndiscriminatedUnionFromTypeDeclaration,
+    generateUnionFromTypeDeclaration,
     getLocationForTypeDeclaration
 } from "../ast/AbstractionUtilities";
 import { Module_ } from "../ast/Module_";
@@ -122,7 +126,10 @@ export class TypesGenerator {
         undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
-        const unionObject = generateUndiscriminatedUnionFromTypeDeclaration(undiscriminatedUnionTypeDeclaration, typeDeclaration);
+        const unionObject = generateUndiscriminatedUnionFromTypeDeclaration(
+            undiscriminatedUnionTypeDeclaration,
+            typeDeclaration
+        );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
         const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
         return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
@@ -141,7 +148,8 @@ export class TypesGenerator {
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, value),
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectFile(otd, value),
                 union: (utd: UnionTypeDeclaration) => this.generateUnionFile(utd, value),
-                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => this.generateUndiscriminatedUnionFile(uutd, value),
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
+                    this.generateUndiscriminatedUnionFile(uutd, value),
                 _other: () => this.generateUnkownFile(value.shape)
             });
 

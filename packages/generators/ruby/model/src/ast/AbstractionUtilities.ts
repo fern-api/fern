@@ -3,8 +3,6 @@ import {
     DeclaredTypeName,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
-    SingleUnionTypeProperties,
-    SingleUnionTypeProperty,
     TypeDeclaration,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
@@ -101,19 +99,6 @@ export function generateSerializableObjectFromTypeDeclaration(
     });
 }
 
-function visitUnionType(unionShape: SingleUnionTypeProperties) {
-    return unionShape._visit({
-        samePropertiesAsObject: (value: DeclaredTypeName) => ,
-        singleProperty: (value: SingleUnionTypeProperty),
-        noProperties: () => ,
-        _other: () => {
-            throw new Error(
-                "Unknown SingleUnionTypeProperties type: " + unionShape.propertiesType
-            );
-        }
-    })
-}
-
 export function generateUnionFromTypeDeclaration(
     unionTypeDeclaration: UnionTypeDeclaration,
     typeDeclaration: TypeDeclaration
@@ -131,10 +116,13 @@ export function generateUnionFromTypeDeclaration(
                 isOptional: isTypeOptional(property.valueType)
             })
     );
-    const namedSubclasses = unionTypeDeclaration.types.map(
-        (t) => [t.discriminantValue.name.snakeCase.safeName, new ClassReference()]
-            
-    );
+    const namedSubclasses = unionTypeDeclaration.types.map((t) => {
+        return {
+            discriminantValue: t.discriminantValue.name.snakeCase.safeName,
+            classReference: DiscriminatedUnion.classReferenceFromUnionType(t.shape),
+            unionPropertiesType: t.shape
+        };
+    });
 
     const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
     return new DiscriminatedUnion({
@@ -142,7 +130,7 @@ export function generateUnionFromTypeDeclaration(
         extendedClasses,
         discriminatingField: unionTypeDeclaration.discriminant.name.snakeCase.safeName,
         namedSubclasses,
-        defaultSubclassReference: namedSubclasses[0],
+        defaultSubclassReference: namedSubclasses[0]?.classReference,
         documentation: typeDeclaration.docs,
         properties
     });
@@ -152,12 +140,10 @@ export function generateUndiscriminatedUnionFromTypeDeclaration(
     unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): UndiscriminatedUnion {
-    const memberClasses = unionTypeDeclaration.members.map((member) =>
-        ClassReference.fromTypeReference(member.type)
-    );
+    const memberClasses = unionTypeDeclaration.members.map((member) => ClassReference.fromTypeReference(member.type));
 
     const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
-    return new UndiscriminatedUnion({memberClasses, classReference, documentation: typeDeclaration.docs});
+    return new UndiscriminatedUnion({ memberClasses, classReference, documentation: typeDeclaration.docs });
 }
 
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {

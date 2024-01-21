@@ -1,13 +1,14 @@
 import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { format } from "util";
 import { getLocationForTypeDeclaration } from "../AbstractionUtilities";
 import { Argument } from "../Argument";
-import { Import } from "../Import";
-import { Module_ } from "../Module_";
-import { Variable } from "../Variable";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { Import } from "../Import";
+import { Module_ } from "../Module_";
+import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -276,6 +277,8 @@ export declare namespace Hash_ {
     }
     export interface InitInstance extends AstNode.Init {
         contents?: Map<string, string | FunctionInvocation | Variable>;
+        // allow for spreading additional hashes into this hash.
+        additionalHashes?: AstNode[];
         isFrozen?: boolean;
     }
 }
@@ -316,22 +319,22 @@ export class HashReference extends ClassReference {
 
 export class HashInstance extends AstNode {
     public contents: Map<string, string | FunctionInvocation | Variable>;
+    public additionalHashes: AstNode[];
     public isFrozen: boolean;
 
-    constructor({ contents = new Map(), isFrozen = false, ...rest }: Hash_.InitInstance) {
+    constructor({ contents = new Map(), isFrozen = false, additionalHashes = [], ...rest }: Hash_.InitInstance) {
         super(rest);
 
         this.contents = contents;
         this.isFrozen = isFrozen;
+        this.additionalHashes = additionalHashes;
     }
 
     public writeInternal(): void {
-        const stringifiedMap = new Map(
-            Array.from(this.contents.entries()).map(([k, v]) => [k, v instanceof AstNode ? v.write() : `'${v}'`])
-        );
-
         this.addText({
-            stringContent: JSON.stringify(Object.fromEntries(stringifiedMap), null, 1).replaceAll('"', "")
+            stringContent: `{ ${Array.from(this.contents.entries())
+                .map(([k, v]) => k + (v instanceof AstNode ? v.write() : `'${v}'`))
+                .join(", ")}${this.additionalHashes.map((ah) => format(", **%s", ah.write()))} }`
         });
         this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
     }

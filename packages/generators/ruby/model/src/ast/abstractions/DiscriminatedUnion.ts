@@ -1,7 +1,9 @@
+import { SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 import { Argument } from "../Argument";
 import {
     ClassReference,
     GenericClassReference,
+    HashInstance,
     JsonClassReference,
     OpenStructClassReference,
     VoidClassReference
@@ -18,13 +20,19 @@ import { CaseStatement } from "./CaseStatement";
 export declare namespace DiscriminatedUnion {
     export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions"> {
         discriminatingField: string;
-        namedSubclasses: Map<string, ClassReference>;
-        defaultSubclassReference: ClassReference;
+        namedSubclasses: Subclass[];
+        defaultSubclassReference?: ClassReference;
+    }
+    export interface Subclass {
+        discriminantValue: string;
+        classReference: ClassReference;
+        unionPropertiesType: SingleUnionTypeProperties;
     }
 }
 export class DiscriminatedUnion extends Class_ {
     constructor(init: DiscriminatedUnion.Init) {
         const memberProperty = new Property({ name: "member", type: GenericClassReference });
+        const discriminantProperty = new Property({ name: "discriminant", type: GenericClassReference });
         const properties = [memberProperty, ...(init.properties ?? [])];
 
         super({
@@ -34,11 +42,17 @@ export class DiscriminatedUnion extends Class_ {
                 DiscriminatedUnion.createFromJsonFunction(
                     init.discriminatingField,
                     memberProperty,
+                    discriminantProperty,
                     init.namedSubclasses,
                     init.classReference,
                     init.defaultSubclassReference
                 ),
-                DiscriminatedUnion.createToJsonFunction(memberProperty),
+                DiscriminatedUnion.createToJsonFunction(
+                    memberProperty,
+                    discriminantProperty,
+                    init.discriminatingField,
+                    init.namedSubclasses
+                ),
                 DiscriminatedUnion.createValidateRawFunction(init.discriminatingField, init.namedSubclasses),
                 DiscriminatedUnion.createIsAFunction(memberProperty),
                 ...DiscriminatedUnion.createStaticGeneratorFunctions(init.namedSubclasses, memberProperty)
@@ -53,12 +67,36 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
+    private static unionPropertyTypeFromJson(
+        jsonParameter: string,
+        memberProperty: Property,
+        unionSubclass: DiscriminatedUnion.Subclass
+    ): Expression {
+        const rightSide = unionSubclass.unionPropertiesType._visit<FunctionInvocation | string>({
+            samePropertiesAsObject: () => unionSubclass.classReference.fromJson(jsonParameter) ?? jsonParameter,
+            singleProperty: (sutp: SingleUnionTypeProperty) =>
+                unionSubclass.classReference.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
+                `${jsonParameter}.${sutp.name.wireValue}`,
+            noProperties: () => "nil",
+            _other: () => {
+                throw new Error("Unknown SingleUnionProperties: " + unionSubclass.unionPropertiesType.propertiesType);
+            }
+        });
+
+        return new Expression({
+            leftSide: memberProperty.name,
+            rightSide,
+            isAssignment: true
+        });
+    }
+
     private static createFromJsonFunction(
         discriminantField: string,
         memberProperty: Property,
-        namedSubclasses: Map<string, ClassReference>,
-        classReference: ClassReference,
-        defaultSubclassReference: ClassReference
+        discriminantProperty: Property,
+        namedSubclasses: DiscriminatedUnion.Subclass[],
+        unionClassReference: ClassReference,
+        defaultSubclassReference?: ClassReference
     ): Function_ {
         const jsonObjectParamName = "json_object";
         const functionBody = [
@@ -86,35 +124,32 @@ export class DiscriminatedUnion extends Class_ {
             new CaseStatement({
                 case_: `struct.${discriminantField}`,
                 whenBlocks: new Map(
-                    Array.from(namedSubclasses.entries()).map(([name, classReference]) => [
-                        `"${name}"`,
-                        [
-                            new Expression({
-                                leftSide: memberProperty.name,
-                                rightSide: classReference.fromJson(jsonObjectParamName) ?? jsonObjectParamName,
-                                isAssignment: true
-                            })
-                        ]
+                    namedSubclasses.map((sc) => [
+                        `"${sc.discriminantValue}"`,
+                        [DiscriminatedUnion.unionPropertyTypeFromJson(jsonObjectParamName, memberProperty, sc)]
                     ])
                 ),
                 else_: [
                     new Expression({
                         leftSide: memberProperty.name,
-                        rightSide: defaultSubclassReference.fromJson(jsonObjectParamName) ?? jsonObjectParamName,
+                        rightSide: defaultSubclassReference?.fromJson(jsonObjectParamName) ?? jsonObjectParamName,
                         isAssignment: true
                     })
                 ]
             }),
             new FunctionInvocation({
                 baseFunction: new Function_({ name: "new", functionBody: [] }),
-                arguments_: [memberProperty.toArgument(memberProperty.name, true)]
+                arguments_: [
+                    memberProperty.toArgument(memberProperty.name, true),
+                    discriminantProperty.toArgument(`struct.${discriminantField}`, true)
+                ]
             })
         ];
         const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
-        const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
+        const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${unionClassReference.name}`;
         return new Function_({
             name: "from_json",
-            returnValue: Array.from(namedSubclasses.values()),
+            returnValue: namedSubclasses.map((sc) => sc.classReference),
             parameters,
             functionBody,
             documentation: fromJsonDocumentation,
@@ -122,12 +157,83 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
-    private static createToJsonFunction(memberProperty: Property): Function_ {
+    private static unionPropertyTypeToJson(
+        memberProperty: Property,
+        discriminantProperty: Property,
+        unionSubclass: DiscriminatedUnion.Subclass,
+        discriminantField: string
+    ): FunctionInvocation {
+        const objectHash = unionSubclass.unionPropertiesType._visit<HashInstance>({
+            samePropertiesAsObject: () =>
+                new HashInstance({
+                    contents: new Map([[discriminantField, discriminantProperty.toVariable()]]),
+                    // Take the member property and spread it into this hash that includes the discriminant
+                    additionalHashes: [
+                        new FunctionInvocation({
+                            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
+                            onObject: memberProperty.toVariable()
+                        })
+                    ]
+                }),
+            singleProperty: (sutp: SingleUnionTypeProperty) =>
+                new HashInstance({
+                    contents: new Map([
+                        [discriminantField, discriminantProperty.toVariable()],
+                        [sutp.name.wireValue, memberProperty.toVariable()]
+                    ])
+                }),
+            noProperties: () =>
+                new HashInstance({ contents: new Map([[discriminantField, discriminantProperty.toVariable()]]) }),
+            _other: () => {
+                throw new Error("Unknown SingleUnionProperties: " + unionSubclass.unionPropertiesType.propertiesType);
+            }
+        });
+
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
+            onObject: objectHash
+        });
+    }
+
+    // TODO
+    private static createToJsonFunction(
+        memberProperty: Property,
+        discriminantProperty: Property,
+        discriminantField: string,
+        namedSubclasses: DiscriminatedUnion.Subclass[]
+    ): Function_ {
         const toJsonDocumentation = "For Union Types, to_json functionality is delegated to the wrapped member.";
 
         return new Function_({
             name: "to_json",
             functionBody: [
+                new CaseStatement({
+                    case_: discriminantProperty.toVariable(),
+                    whenBlocks: new Map(
+                        namedSubclasses.map((sc) => [
+                            `"${sc.discriminantValue}"`,
+                            [
+                                DiscriminatedUnion.unionPropertyTypeToJson(
+                                    memberProperty,
+                                    discriminantProperty,
+                                    sc,
+                                    discriminantField
+                                )
+                            ]
+                        ])
+                    ),
+                    else_: [
+                        new FunctionInvocation({
+                            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
+                            onObject: new HashInstance({
+                                contents: new Map([
+                                    [discriminantField, discriminantProperty.toVariable()],
+                                    ["value", memberProperty.toVariable()]
+                                ])
+                            })
+                        })
+                    ]
+                }),
                 new FunctionInvocation({
                     baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                     onObject: memberProperty.toVariable()
@@ -139,22 +245,27 @@ export class DiscriminatedUnion extends Class_ {
 
     private static createValidateRawFunction(
         discriminantField: string,
-        namedSubclasses: Map<string, ClassReference>
+        namedSubclasses: DiscriminatedUnion.Subclass[]
     ): Function_ {
         const parameterName = "obj";
         const functionBody = [
             new CaseStatement({
                 case_: `${parameterName}.${discriminantField}`,
                 whenBlocks: new Map(
-                    Array.from(namedSubclasses.entries()).map(([name, classReference]) => [
-                        `"${name}"`,
-                        [new Expression({ rightSide: classReference.validateRaw(parameterName), isAssignment: true })]
+                    namedSubclasses.map((sc) => [
+                        `"${sc.discriminantValue}"`,
+                        [
+                            new Expression({
+                                rightSide: sc.classReference.validateRaw(parameterName),
+                                isAssignment: false
+                            })
+                        ]
                     ])
                 ),
                 else_: [
                     new Expression({
                         rightSide: 'raise("Passed value matched no type within the union, validation failed.")',
-                        isAssignment: true
+                        isAssignment: false
                     })
                 ]
             })
@@ -173,24 +284,23 @@ export class DiscriminatedUnion extends Class_ {
     }
 
     private static createStaticGeneratorFunctions(
-        namedSubclasses: Map<string, ClassReference>,
+        namedSubclasses: DiscriminatedUnion.Subclass[],
         memberProperty: Property
     ): Function_[] {
         const parameterName = "member";
-        return Array.from(namedSubclasses.entries()).map(
-            ([name, classReference]) =>
-                new Function_({
-                    name,
-                    functionBody: [
-                        new FunctionInvocation({
-                            baseFunction: new Function_({ name: "new", functionBody: [] }),
-                            arguments_: [memberProperty.toArgument(parameterName, true)]
-                        })
-                    ],
-                    isStatic: true,
-                    parameters: [new Parameter({ name: parameterName, type: classReference })]
-                })
-        );
+        return namedSubclasses.map((sc) => {
+            return new Function_({
+                name: sc.discriminantValue,
+                functionBody: [
+                    new FunctionInvocation({
+                        baseFunction: new Function_({ name: "new", functionBody: [] }),
+                        arguments_: [memberProperty.toArgument(parameterName, true)]
+                    })
+                ],
+                isStatic: true,
+                parameters: [new Parameter({ name: parameterName, type: sc.classReference })]
+            });
+        });
     }
 
     private static createIsAFunction(memberProperty: Property): Function_ {
@@ -208,6 +318,17 @@ export class DiscriminatedUnion extends Class_ {
             ],
             parameters: [new Parameter({ name: parameterName, type: GenericClassReference, isNamed: false })],
             documentation: isADocumentation
+        });
+    }
+
+    public static classReferenceFromUnionType(singleUnionTypeProperties: SingleUnionTypeProperties): ClassReference {
+        return singleUnionTypeProperties._visit<ClassReference>({
+            samePropertiesAsObject: (dtn) => ClassReference.fromDeclaredTypeName(dtn),
+            singleProperty: (sutp: SingleUnionTypeProperty) => ClassReference.fromTypeReference(sutp.type),
+            noProperties: () => VoidClassReference,
+            _other: () => {
+                throw new Error();
+            }
         });
     }
 }
