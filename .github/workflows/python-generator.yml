@@ -1,7 +1,9 @@
-name: ci
+name: python
 
 on:
   pull_request:
+    paths:
+      - 'generators/python/**'
     branches:
       - main
   workflow_call:
