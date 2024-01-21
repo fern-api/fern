@@ -1,7 +1,8 @@
 import logging
 
-import fastapi
 import starlette
+
+import fastapi
 
 from .fern_http_exception import FernHTTPException
 
