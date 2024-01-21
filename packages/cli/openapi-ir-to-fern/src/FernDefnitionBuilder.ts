@@ -14,6 +14,8 @@ export interface FernDefinitionBuilder {
 
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
+    addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
+
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
@@ -139,6 +141,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.headers = {};
         }
         this.rootApiFile.headers[name] = schema;
+    }
+
+    public addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void {
+        if (this.rootApiFile.variables == null) {
+            this.rootApiFile.variables = {};
+        }
+        this.rootApiFile.variables[name] = schema;
     }
 
     public addImport({

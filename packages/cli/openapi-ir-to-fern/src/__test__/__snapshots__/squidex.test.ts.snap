@@ -14521,6 +14521,12 @@ You will be assigned as owner of the new team automatically.",
       "strategy": "status-code",
     },
     "name": "api",
+    "variables": {
+      "appName": {
+        "docs": undefined,
+        "type": "string",
+      },
+    },
   },
 }
 `;

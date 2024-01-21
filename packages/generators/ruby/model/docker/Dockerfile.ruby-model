@@ -1,0 +1,6 @@
+# syntax = edrevo/dockerfile-plus
+INCLUDE+ packages/generators/docker/Dockerfile.base
+
+COPY packages/generators/ruby/model/docker/dist/bundle.js /bundle.js
+
+ENTRYPOINT ["node", "/bundle.js"]

@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+require "json"
+
+module SeedClient
+  module Errors
+    class UnauthorizedRequestErrorBody
+      attr_reader :message, :additional_properties
+      # @param message [String] 
+      # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
+      # @return [Errors::UnauthorizedRequestErrorBody] 
+      def initialze(message:, additional_properties: nil)
+        # @type [String] 
+        @message = message
+        # @type [OpenStruct] 
+        @additional_properties = additional_properties
+      end
+      # Deserialize a JSON object to an instance of UnauthorizedRequestErrorBody
+      #
+      # @param json_object [JSON] 
+      # @return [Errors::UnauthorizedRequestErrorBody] 
+      def self.from_json(json_object:)
+        struct = JSON.parse(json_object, object_class: OpenStruct)
+        message = struct.message
+        new(message: message, additional_properties: struct)
+      end
+      # Serialize an instance of UnauthorizedRequestErrorBody to a JSON object
+      #
+      # @return [JSON] 
+      def to_json
+        {
+ message: @message
+}.to_json()
+      end
+    end
+  end
+end
