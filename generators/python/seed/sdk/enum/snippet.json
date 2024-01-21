@@ -1,0 +1,7 @@
+{
+    "types": {
+        "type_:Enum": "from seed import Enum\n\nEnum.THREE\n",
+        "type_:One": "from seed import One\n\nOne.ONE\n"
+    },
+    "endpoints": []
+}
