@@ -1,7 +1,7 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: "[Bug]"
+name: Python Generator Bug report
+about: Report a bug with the Python Generator
+title: "[Python]"
 labels: ''
 assignees: ''
 
@@ -28,7 +28,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Versions**
  - Fern CLI: [found in `fern.config.json` e.g. 0.15.3]
- - Generator: [found in `generators.yml` e.g. 0.6.7]
+ - Generator Type: [one of `SDK`, `Pydantic`, `FastAPI`]
+ - Generator Version: [found in `generators.yml` e.g. 0.6.7]
 
 **Additional context**
 Add any other context about the problem here.
