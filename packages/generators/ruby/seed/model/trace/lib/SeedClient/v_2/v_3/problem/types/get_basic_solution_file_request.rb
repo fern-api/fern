@@ -29,8 +29,8 @@ module SeedClient
           # @return [V2::V3::Problem::GetBasicSolutionFileRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            method_name struct.methodName
-            signature V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
+            method_name = struct.methodName
+            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
             new(method_name: method_name, signature: signature, additional_properties: struct)
           end
 
@@ -47,7 +47,7 @@ module SeedClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
-            NonVoidFunctionSignature.validate_raw(obj: obj.signature)
+            V2::V3::Problem::NonVoidFunctionSignature.validate_raw(obj: obj.signature)
           end
         end
       end

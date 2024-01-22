@@ -8,17 +8,17 @@ module SeedClient
       class GeneratedFiles
         attr_reader :generated_test_case_files, :generated_template_files, :other, :additional_properties
 
-        # @param generated_test_case_files [Hash{Commons::Language => Commons::Language}]
-        # @param generated_template_files [Hash{Commons::Language => Commons::Language}]
-        # @param other [Hash{Commons::Language => Commons::Language}]
+        # @param generated_test_case_files [Hash{LANGUAGE => LANGUAGE}]
+        # @param generated_template_files [Hash{LANGUAGE => LANGUAGE}]
+        # @param other [Hash{LANGUAGE => LANGUAGE}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::GeneratedFiles]
         def initialze(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{LANGUAGE => LANGUAGE}]
           @generated_test_case_files = generated_test_case_files
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{LANGUAGE => LANGUAGE}]
           @generated_template_files = generated_template_files
-          # @type [Hash{Commons::Language => Commons::Language}]
+          # @type [Hash{LANGUAGE => LANGUAGE}]
           @other = other
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
@@ -30,14 +30,14 @@ module SeedClient
         # @return [V2::Problem::GeneratedFiles]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          generated_test_case_files struct.generatedTestCaseFiles.transform_values do |v|
-            Commons::Language.from_json(json_object: v)
+          generated_test_case_files = struct.generatedTestCaseFiles.transform_values do |v|
+            LANGUAGE.key(v)
           end
-          generated_template_files struct.generatedTemplateFiles.transform_values do |v|
-            Commons::Language.from_json(json_object: v)
+          generated_template_files = struct.generatedTemplateFiles.transform_values do |v|
+            LANGUAGE.key(v)
           end
-          other struct.other.transform_values do |v|
-            Commons::Language.from_json(json_object: v)
+          other = struct.other.transform_values do |v|
+            LANGUAGE.key(v)
           end
           new(generated_test_case_files: generated_test_case_files, generated_template_files: generated_template_files,
               other: other, additional_properties: struct)
@@ -48,11 +48,11 @@ module SeedClient
         # @return [JSON]
         def to_json(*_args)
           { generatedTestCaseFiles: @generated_test_case_files.transform_values do |v|
-                                      Commons::Language.from_json(json_object: v)
+                                      LANGUAGE.key(v)
                                     end, generatedTemplateFiles: @generated_template_files.transform_values do |v|
-                                                                   Commons::Language.from_json(json_object: v)
+                                                                   LANGUAGE.key(v)
                                                                  end, other: @other.transform_values do |v|
-                                                                               Commons::Language.from_json(json_object: v)
+                                                                               LANGUAGE.key(v)
                                                                              end }.to_json
         end
 

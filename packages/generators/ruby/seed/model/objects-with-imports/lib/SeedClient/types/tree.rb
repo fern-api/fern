@@ -23,7 +23,7 @@ module SeedClient
     # @return [Tree]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      nodes struct.nodes.map do |v|
+      nodes = struct.nodes.map do |v|
         Node.from_json(json_object: v)
       end
       new(nodes: nodes, additional_properties: struct)

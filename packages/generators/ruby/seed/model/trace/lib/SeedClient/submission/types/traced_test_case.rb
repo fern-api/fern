@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result Submission::TestCaseResultWithStdout.from_json(json_object: struct.result)
-        trace_responses_size struct.traceResponsesSize
+        result = Submission::TestCaseResultWithStdout.from_json(json_object: struct.result)
+        trace_responses_size = struct.traceResponsesSize
         new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
       end
 
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCaseResultWithStdout.validate_raw(obj: obj.result)
+        Submission::TestCaseResultWithStdout.validate_raw(obj: obj.result)
         obj.trace_responses_size.is_a?(Integer) != false || raise("Passed value for field obj.trace_responses_size is not the expected type, validation failed.")
       end
     end

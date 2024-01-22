@@ -31,9 +31,9 @@ module SeedClient
       # @return [Submission::WorkspaceRunDetails]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_v_2 Submission::ExceptionV2.from_json(json_object: struct.exceptionV2)
-        exception Submission::ExceptionInfo.from_json(json_object: struct.exception)
-        stdout struct.stdout
+        exception_v_2 = Submission::ExceptionV2.from_json(json_object: struct.exceptionV2)
+        exception = Submission::ExceptionInfo.from_json(json_object: struct.exception)
+        stdout = struct.stdout
         new(exception_v_2: exception_v_2, exception: exception, stdout: stdout, additional_properties: struct)
       end
 
@@ -49,8 +49,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.exception_v_2.nil? || ExceptionV2.validate_raw(obj: obj.exception_v_2)
-        obj.exception.nil? || ExceptionInfo.validate_raw(obj: obj.exception)
+        obj.exception_v_2.nil? || Submission::ExceptionV2.validate_raw(obj: obj.exception_v_2)
+        obj.exception.nil? || Submission::ExceptionInfo.validate_raw(obj: obj.exception)
         obj.stdout.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end

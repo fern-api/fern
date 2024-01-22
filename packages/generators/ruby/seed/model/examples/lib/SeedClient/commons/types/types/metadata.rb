@@ -30,9 +30,9 @@ module SeedClient
         # @return [Commons::Types::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          id struct.id
-          data struct.data
-          json_string struct.jsonString
+          id = struct.id
+          data = struct.data
+          json_string = struct.jsonString
           new(id: id, data: data, json_string: json_string, additional_properties: struct)
         end
 

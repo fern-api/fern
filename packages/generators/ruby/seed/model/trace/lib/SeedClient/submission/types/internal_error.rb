@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::InternalError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_info Submission::ExceptionInfo.from_json(json_object: struct.exceptionInfo)
+        exception_info = Submission::ExceptionInfo.from_json(json_object: struct.exceptionInfo)
         new(exception_info: exception_info, additional_properties: struct)
       end
 
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        ExceptionInfo.validate_raw(obj: obj.exception_info)
+        Submission::ExceptionInfo.validate_raw(obj: obj.exception_info)
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NodeId"
+require_relative "commons/types/NODE_ID"
 require_relative "commons/types/SinglyLinkedListValue"
 require "json"
 
@@ -9,12 +9,12 @@ module SeedClient
     class SinglyLinkedListNodeAndListValue
       attr_reader :node_id, :full_list, :additional_properties
 
-      # @param node_id [Commons::NodeId]
+      # @param node_id [Commons::NODE_ID]
       # @param full_list [Commons::SinglyLinkedListValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::SinglyLinkedListNodeAndListValue]
       def initialze(node_id:, full_list:, additional_properties: nil)
-        # @type [Commons::NodeId]
+        # @type [Commons::NODE_ID]
         @node_id = node_id
         # @type [Commons::SinglyLinkedListValue]
         @full_list = full_list
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Commons::SinglyLinkedListNodeAndListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id Commons::NodeId.from_json(json_object: struct.nodeId)
-        full_list Commons::SinglyLinkedListValue.from_json(json_object: struct.fullList)
+        node_id = Commons::NODE_ID.from_json(json_object: struct.nodeId)
+        full_list = Commons::SinglyLinkedListValue.from_json(json_object: struct.fullList)
         new(node_id: node_id, full_list: full_list, additional_properties: struct)
       end
 
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        NodeId.validate_raw(obj: obj.node_id)
-        SinglyLinkedListValue.validate_raw(obj: obj.full_list)
+        Commons::NODE_ID.validate_raw(obj: obj.node_id)
+        Commons::SinglyLinkedListValue.validate_raw(obj: obj.full_list)
       end
     end
   end

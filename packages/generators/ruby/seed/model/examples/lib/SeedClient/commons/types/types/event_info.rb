@@ -2,7 +2,7 @@
 
 require_relative "json"
 require_relative "commons/types/types/Metadata"
-require_relative "commons/types/types/Tag"
+require_relative "commons/types/types/TAG"
 
 module SeedClient
   module Commons
@@ -32,7 +32,7 @@ module SeedClient
                    when "metadata"
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    when "tag"
-                     Commons::Types::Tag.from_json(json_object: json_object.value)
+                     Commons::Types::TAG.from_json(json_object: json_object.value)
                    else
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    end
@@ -41,7 +41,7 @@ module SeedClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return []
+        # @return [JSON]
         def to_json(*_args)
           case @discriminant
           when "metadata"
@@ -61,9 +61,9 @@ module SeedClient
         def self.validate_raw(obj:)
           case obj.type
           when "metadata"
-            Metadata.validate_raw(obj: obj)
+            Commons::Types::Metadata.validate_raw(obj: obj)
           when "tag"
-            Tag.validate_raw(obj: obj)
+            Commons::Types::TAG.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -72,8 +72,8 @@ module SeedClient
         # For Union Types, is_a? functionality is delegated to the wrapped member.
         #
         # @param obj [Object]
-        # @return []
-        def is_a(obj)
+        # @return [Boolean]
+        def is_a?(obj)
           @member.is_a?(obj)
         end
 
@@ -83,7 +83,7 @@ module SeedClient
           new(member: member, discriminant: "metadata")
         end
 
-        # @param member [Commons::Types::Tag]
+        # @param member [Commons::Types::TAG]
         # @return [Commons::Types::EventInfo]
         def self.tag(member:)
           new(member: member, discriminant: "tag")

@@ -2,6 +2,6 @@
 
 module SeedClient
   module Foo
-    OptionalString = String
+    OPTIONAL_STRING = String
   end
 end

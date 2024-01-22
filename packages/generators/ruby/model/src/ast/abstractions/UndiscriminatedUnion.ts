@@ -1,5 +1,6 @@
 import { Argument } from "../Argument";
 import {
+    BooleanClassReference,
     ClassReference,
     GenericClassReference,
     JsonClassReference,
@@ -36,7 +37,7 @@ export class UndiscriminatedUnion extends Class_ {
             ],
             expressions: [
                 // Since we're overriding is_a, we also alias kind_of to it
-                new Expression({ rightSide: "alias kind_of? is_a?" })
+                new Expression({ rightSide: "alias kind_of? is_a?", isAssignment: false })
             ],
             includeInitializer: true
         });
@@ -92,7 +93,7 @@ export class UndiscriminatedUnion extends Class_ {
                                 isAssignment: false
                             })
                         ],
-                        rescue: []
+                        rescue: [new Expression({ rightSide: "# noop", isAssignment: false })]
                     })
             )
         ];
@@ -100,7 +101,7 @@ export class UndiscriminatedUnion extends Class_ {
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
         return new Function_({
             name: "from_json",
-            returnValue: subclasses,
+            returnValue: classReference,
             parameters: [jsonObjectParameter],
             functionBody,
             documentation: fromJsonDocumentation,
@@ -119,7 +120,8 @@ export class UndiscriminatedUnion extends Class_ {
                     onObject: memberProperty.toVariable()
                 })
             ],
-            documentation: toJsonDocumentation
+            documentation: toJsonDocumentation,
+            returnValue: JsonClassReference
         });
     }
 
@@ -137,10 +139,13 @@ export class UndiscriminatedUnion extends Class_ {
                                 isAssignment: false
                             })
                         ],
-                        rescue: []
+                        rescue: [new Expression({ rightSide: "# noop", isAssignment: false })]
                     })
             ),
-            new Expression({ rightSide: 'raise("Passed value matched no type within the union, validation failed.")' })
+            new Expression({
+                rightSide: 'raise("Passed value matched no type within the union, validation failed.")',
+                isAssignment: false
+            })
         ];
 
         const validateRawDocumentation =
@@ -160,7 +165,7 @@ export class UndiscriminatedUnion extends Class_ {
 
         const parameterName = "obj";
         return new Function_({
-            name: "is_a",
+            name: "is_a?",
             functionBody: [
                 new FunctionInvocation({
                     baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
@@ -169,7 +174,8 @@ export class UndiscriminatedUnion extends Class_ {
                 })
             ],
             parameters: [new Parameter({ name: parameterName, type: GenericClassReference, isNamed: false })],
-            documentation: isADocumentation
+            documentation: isADocumentation,
+            returnValue: BooleanClassReference
         });
     }
 }

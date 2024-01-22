@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "playlist/types/PlaylistId"
+require_relative "playlist/types/PLAYLIST_ID"
 
 module SeedClient
   module Playlist
@@ -28,16 +28,16 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "playlistId"
-                   Playlist::PlaylistId.from_json(json_object: json_object.value)
+                   Playlist::PLAYLIST_ID.from_json(json_object: json_object.value)
                  else
-                   Playlist::PlaylistId.from_json(json_object: json_object)
+                   Playlist::PLAYLIST_ID.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "playlistId"
@@ -53,7 +53,7 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "playlistId"
-          PlaylistId.validate_raw(obj: obj)
+          Playlist::PLAYLIST_ID.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -62,12 +62,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Playlist::PlaylistId]
+      # @param member [Playlist::PLAYLIST_ID]
       # @return [Playlist::PlaylistIdNotFoundErrorBody]
       def self.playlist_id(member:)
         new(member: member, discriminant: "playlistId")

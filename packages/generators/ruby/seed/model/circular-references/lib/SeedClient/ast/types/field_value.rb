@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "ast/types/PrimitiveValue"
 require_relative "ast/types/ObjectValue"
 require_relative "ast/types/ContainerValue"
 
@@ -30,20 +29,20 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "primitive_value"
-                   Ast::PrimitiveValue.from_json(json_object: json_object.value)
+                   PRIMITIVE_VALUE.key(json_object.value)
                  when "object_value"
                    Ast::ObjectValue.from_json(json_object: json_object)
                  when "container_value"
                    Ast::ContainerValue.from_json(json_object: json_object.value)
                  else
-                   Ast::PrimitiveValue.from_json(json_object: json_object)
+                   PRIMITIVE_VALUE.key(json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "primitive_value"
@@ -65,11 +64,11 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "primitive_value"
-          PrimitiveValue.validate_raw(obj: obj)
+          obj.is_a?(PRIMITIVE_VALUE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "object_value"
-          ObjectValue.validate_raw(obj: obj)
+          Ast::ObjectValue.validate_raw(obj: obj)
         when "container_value"
-          ContainerValue.validate_raw(obj: obj)
+          Ast::ContainerValue.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -78,12 +77,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Ast::PrimitiveValue]
+      # @param member [Hash{String => String}]
       # @return [Ast::FieldValue]
       def self.primitive_value(member:)
         new(member: member, discriminant: "primitive_value")

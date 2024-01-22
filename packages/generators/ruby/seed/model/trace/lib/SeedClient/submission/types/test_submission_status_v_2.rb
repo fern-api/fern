@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "submission/types/TestSubmissionUpdate"
-require_relative "commons/types/ProblemId"
+require_relative "commons/types/PROBLEM_ID"
 require_relative "v_2/problem/types/ProblemInfoV2"
 require "json"
 
@@ -11,7 +11,7 @@ module SeedClient
       attr_reader :updates, :problem_id, :problem_version, :problem_info, :additional_properties
 
       # @param updates [Array<Submission::TestSubmissionUpdate>]
-      # @param problem_id [Commons::ProblemId]
+      # @param problem_id [Commons::PROBLEM_ID]
       # @param problem_version [Integer]
       # @param problem_info [V2::Problem::ProblemInfoV2]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -19,7 +19,7 @@ module SeedClient
       def initialze(updates:, problem_id:, problem_version:, problem_info:, additional_properties: nil)
         # @type [Array<Submission::TestSubmissionUpdate>]
         @updates = updates
-        # @type [Commons::ProblemId]
+        # @type [Commons::PROBLEM_ID]
         @problem_id = problem_id
         # @type [Integer]
         @problem_version = problem_version
@@ -35,12 +35,12 @@ module SeedClient
       # @return [Submission::TestSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        updates struct.updates.map do |v|
+        updates = struct.updates.map do |v|
           Submission::TestSubmissionUpdate.from_json(json_object: v)
         end
-        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
-        problem_version struct.problemVersion
-        problem_info V2::Problem::ProblemInfoV2.from_json(json_object: struct.problemInfo)
+        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+        problem_version = struct.problemVersion
+        problem_info = V2::Problem::ProblemInfoV2.from_json(json_object: struct.problemInfo)
         new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info,
             additional_properties: struct)
       end
@@ -59,9 +59,9 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.updates.is_a?(Array) != false || raise("Passed value for field obj.updates is not the expected type, validation failed.")
-        ProblemId.validate_raw(obj: obj.problem_id)
+        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
         obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
-        ProblemInfoV2.validate_raw(obj: obj.problem_info)
+        V2::Problem::ProblemInfoV2.validate_raw(obj: obj.problem_info)
       end
     end
   end

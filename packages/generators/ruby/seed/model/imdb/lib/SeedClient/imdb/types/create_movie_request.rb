@@ -26,8 +26,8 @@ module SeedClient
       # @return [Imdb::CreateMovieRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        title struct.title
-        rating struct.rating
+        title = struct.title
+        rating = struct.rating
         new(title: title, rating: rating, additional_properties: struct)
       end
 

@@ -29,8 +29,8 @@ module SeedClient
         # @return [V2::Problem::TestCaseWithActualResultImplementation]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          get_actual_result V2::Problem::NonVoidFunctionDefinition.from_json(json_object: struct.getActualResult)
-          assert_correctness_check V2::Problem::AssertCorrectnessCheck.from_json(json_object: struct.assertCorrectnessCheck)
+          get_actual_result = V2::Problem::NonVoidFunctionDefinition.from_json(json_object: struct.getActualResult)
+          assert_correctness_check = V2::Problem::AssertCorrectnessCheck.from_json(json_object: struct.assertCorrectnessCheck)
           new(get_actual_result: get_actual_result, assert_correctness_check: assert_correctness_check,
               additional_properties: struct)
         end
@@ -47,8 +47,8 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          NonVoidFunctionDefinition.validate_raw(obj: obj.get_actual_result)
-          AssertCorrectnessCheck.validate_raw(obj: obj.assert_correctness_check)
+          V2::Problem::NonVoidFunctionDefinition.validate_raw(obj: obj.get_actual_result)
+          V2::Problem::AssertCorrectnessCheck.validate_raw(obj: obj.assert_correctness_check)
         end
       end
     end

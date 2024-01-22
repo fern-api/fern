@@ -1,20 +1,21 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
+import { ExternalDependency } from "../ExternalDependency";
+import { Import } from "../Import";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
-import { ExternalDependency } from "../ExternalDependency";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
 
 export declare namespace Gemspec {
     export interface Init {
-        moduleName: string;
+        clientName: string;
+        gemName: string;
         dependencies: ExternalDependency[];
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ moduleName, dependencies }: Gemspec.Init) {
+    constructor({ clientName, gemName, dependencies }: Gemspec.Init) {
         const globalDependencies: ExternalDependency[] = [];
 
         super({
@@ -26,75 +27,97 @@ export class Gemspec extends FunctionInvocation {
                     new Expression({
                         leftSide: "spec.name",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::NAME`,
+                            name: `"${gemName}"`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.version",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::VERSION`,
+                            name: `${clientName}::Gemconfig::VERSION`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.authors",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::AUTHORS`,
+                            name: `${clientName}::Gemconfig::AUTHORS`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.email",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::EMAIL`,
+                            name: `${clientName}::Gemconfig::EMAIL`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.summary",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::SUMMARY`,
+                            name: `${clientName}::Gemconfig::SUMMARY`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.description",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::DESCRIPTION`,
+                            name: `${clientName}::Gemconfig::DESCRIPTION`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: "spec.homepage",
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::HOMEPAGE`,
+                            name: `${clientName}::Gemconfig::HOMEPAGE`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
-                    new Expression({ leftSide: "spec.required_ruby_version", rightSide: '">= 2.6.0"' }),
-                    new Expression({ leftSide: 'spec.metadata["homepage_uri"]', rightSide: "spec.homepage" }),
+                    new Expression({
+                        leftSide: "spec.required_ruby_version",
+                        rightSide: '">= 2.6.0"',
+                        isAssignment: true
+                    }),
+                    new Expression({
+                        leftSide: 'spec.metadata["homepage_uri"]',
+                        rightSide: "spec.homepage",
+                        isAssignment: true
+                    }),
                     new Expression({
                         leftSide: 'spec.metadata["source_code_uri"]',
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::SOURCE_CODE_URI`,
+                            name: `${clientName}::Gemconfig::SOURCE_CODE_URI`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
                     new Expression({
                         leftSide: 'spec.metadata["changelog_uri"]',
                         rightSide: new ClassReference({
-                            name: `${moduleName}::Gemconfig::CHANGELOG_URI`,
+                            name: `${clientName}::Gemconfig::CHANGELOG_URI`,
                             import_: new Import({ from: "lib/gemconfig" })
-                        })
+                        }),
+                        isAssignment: true
                     }),
-                    new Expression({ leftSide: "spec.files", rightSide: 'Dir.glob("lib/**/*") << "LICENSE.md"' }),
-                    new Expression({ leftSide: "spec.bindir", rightSide: '"exe"' }),
+                    new Expression({
+                        leftSide: "spec.files",
+                        rightSide: 'Dir.glob("lib/**/*") << "LICENSE.md"',
+                        isAssignment: true
+                    }),
+                    new Expression({ leftSide: "spec.bindir", rightSide: '"exe"', isAssignment: true }),
                     new Expression({
                         leftSide: "spec.executables",
-                        rightSide: "spec.files.grep(%r{\\Aexe/}) { |f| File.basename(f) }"
+                        rightSide: "spec.files.grep(%r{\\Aexe/}) { |f| File.basename(f) }",
+                        isAssignment: true
                     }),
-                    new Expression({ leftSide: "spec.require_paths", rightSide: '["lib"]' }),
+                    new Expression({ leftSide: "spec.require_paths", rightSide: '["lib"]', isAssignment: true }),
                     ...dependencies.concat(globalDependencies)
                 ]
             },

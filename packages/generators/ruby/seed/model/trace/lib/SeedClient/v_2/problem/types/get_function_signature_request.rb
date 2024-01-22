@@ -25,7 +25,7 @@ module SeedClient
         # @return [V2::Problem::GetFunctionSignatureRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          function_signature V2::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
+          function_signature = V2::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
           new(function_signature: function_signature, additional_properties: struct)
         end
 
@@ -41,7 +41,7 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          FunctionSignature.validate_raw(obj: obj.function_signature)
+          V2::Problem::FunctionSignature.validate_raw(obj: obj.function_signature)
         end
       end
     end

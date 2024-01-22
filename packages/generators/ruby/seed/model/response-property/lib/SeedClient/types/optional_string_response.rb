@@ -3,5 +3,5 @@
 require_relative "types/StringResponse"
 
 module SeedClient
-  OptionalStringResponse = StringResponse
+  OPTIONAL_STRING_RESPONSE = StringResponse
 end

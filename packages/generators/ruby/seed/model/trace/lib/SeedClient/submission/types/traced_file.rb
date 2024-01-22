@@ -26,8 +26,8 @@ module SeedClient
       # @return [Submission::TracedFile]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        filename struct.filename
-        directory struct.directory
+        filename = struct.filename
+        directory = struct.directory
         new(filename: filename, directory: directory, additional_properties: struct)
       end
 

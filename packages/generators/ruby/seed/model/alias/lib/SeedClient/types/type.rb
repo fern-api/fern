@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "types/TypeId"
+require_relative "types/TYPE_ID"
 require "json"
 
 module SeedClient
@@ -8,12 +8,12 @@ module SeedClient
   class Type
     attr_reader :id, :name, :additional_properties
 
-    # @param id [TypeId]
+    # @param id [TYPE_ID]
     # @param name [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Type]
     def initialze(id:, name:, additional_properties: nil)
-      # @type [TypeId]
+      # @type [TYPE_ID]
       @id = id
       # @type [String]
       @name = name
@@ -27,8 +27,8 @@ module SeedClient
     # @return [Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id TypeId.from_json(json_object: struct.id)
-      name struct.name
+      id = TYPE_ID.from_json(json_object: struct.id)
+      name = struct.name
       new(id: id, name: name, additional_properties: struct)
     end
 
@@ -44,7 +44,7 @@ module SeedClient
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      TypeId.validate_raw(obj: obj.id)
+      TYPE_ID.validate_raw(obj: obj.id)
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end

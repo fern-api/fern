@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "types/types/MigrationStatus"
 require "json"
 
 module SeedClient
@@ -9,13 +8,13 @@ module SeedClient
       attr_reader :name, :status, :additional_properties
 
       # @param name [String]
-      # @param status [Types::MigrationStatus]
+      # @param status [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Migration]
       def initialze(name:, status:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [Types::MigrationStatus]
+        # @type [Hash{String => String}]
         @status = status
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,8 +26,8 @@ module SeedClient
       # @return [Types::Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        status Types::MigrationStatus.from_json(json_object: struct.status)
+        name = struct.name
+        status = MIGRATION_STATUS.key(struct.status)
         new(name: name, status: status, additional_properties: struct)
       end
 
@@ -36,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { name: @name, status: @status }.to_json
+        { name: @name, status: @status.fetch }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -45,7 +44,7 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        MigrationStatus.validate_raw(obj: obj.status)
+        obj.status.is_a?(MIGRATION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

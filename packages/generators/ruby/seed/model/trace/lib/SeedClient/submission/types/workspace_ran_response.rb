@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionId"
+require_relative "submission/types/SUBMISSION_ID"
 require_relative "submission/types/WorkspaceRunDetails"
 require "json"
 
@@ -9,12 +9,12 @@ module SeedClient
     class WorkspaceRanResponse
       attr_reader :submission_id, :run_details, :additional_properties
 
-      # @param submission_id [Submission::SubmissionId]
+      # @param submission_id [Submission::SUBMISSION_ID]
       # @param run_details [Submission::WorkspaceRunDetails]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceRanResponse]
       def initialze(submission_id:, run_details:, additional_properties: nil)
-        # @type [Submission::SubmissionId]
+        # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Submission::WorkspaceRunDetails]
         @run_details = run_details
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::WorkspaceRanResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        run_details Submission::WorkspaceRunDetails.from_json(json_object: struct.runDetails)
+        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        run_details = Submission::WorkspaceRunDetails.from_json(json_object: struct.runDetails)
         new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
       end
 
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionId.validate_raw(obj: obj.submission_id)
-        WorkspaceRunDetails.validate_raw(obj: obj.run_details)
+        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        Submission::WorkspaceRunDetails.validate_raw(obj: obj.run_details)
       end
     end
   end

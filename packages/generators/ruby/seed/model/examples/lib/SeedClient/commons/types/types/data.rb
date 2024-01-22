@@ -39,7 +39,7 @@ module SeedClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return []
+        # @return [JSON]
         def to_json(*_args)
           case @discriminant
           when "string"
@@ -67,8 +67,8 @@ module SeedClient
         # For Union Types, is_a? functionality is delegated to the wrapped member.
         #
         # @param obj [Object]
-        # @return []
-        def is_a(obj)
+        # @return [Boolean]
+        def is_a?(obj)
           @member.is_a?(obj)
         end
 

@@ -23,7 +23,7 @@ module SeedClient
       # @return [Submission::TestCaseHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        passed struct.passed
+        passed = struct.passed
         new(passed: passed, additional_properties: struct)
       end
 

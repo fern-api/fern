@@ -25,7 +25,7 @@ module SeedClient
         # @return [FolderA::Service::Response]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          foo FolderB::Common::Foo.from_json(json_object: struct.foo)
+          foo = FolderB::Common::Foo.from_json(json_object: struct.foo)
           new(foo: foo, additional_properties: struct)
         end
 
@@ -41,7 +41,7 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.foo.nil? || Foo.validate_raw(obj: obj.foo)
+          obj.foo.nil? || FolderB::Common::Foo.validate_raw(obj: obj.foo)
         end
       end
     end

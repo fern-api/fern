@@ -28,8 +28,8 @@ module SeedClient
         # @return [Types::Object::NestedObjectWithOptionalField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          string struct.string
-          nested_object Types::Object::ObjectWithOptionalField.from_json(json_object: struct.NestedObject)
+          string = struct.string
+          nested_object = Types::Object::ObjectWithOptionalField.from_json(json_object: struct.NestedObject)
           new(string: string, nested_object: nested_object, additional_properties: struct)
         end
 
@@ -46,7 +46,7 @@ module SeedClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.string&.is_a?(String) != false || raise("Passed value for field obj.string is not the expected type, validation failed.")
-          obj.nested_object.nil? || ObjectWithOptionalField.validate_raw(obj: obj.nested_object)
+          obj.nested_object.nil? || Types::Object::ObjectWithOptionalField.validate_raw(obj: obj.nested_object)
         end
       end
     end

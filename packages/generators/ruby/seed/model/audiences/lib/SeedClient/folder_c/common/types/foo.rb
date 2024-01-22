@@ -24,7 +24,7 @@ module SeedClient
         # @return [FolderC::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          bar_property struct.bar_property
+          bar_property = struct.bar_property
           new(bar_property: bar_property, additional_properties: struct)
         end
 

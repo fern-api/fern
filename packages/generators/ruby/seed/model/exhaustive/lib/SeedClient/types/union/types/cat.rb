@@ -27,8 +27,8 @@ module SeedClient
         # @return [Types::Union::Cat]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          name struct.name
-          likes_to_meow struct.likesToMeow
+          name = struct.name
+          likes_to_meow = struct.likesToMeow
           new(name: name, likes_to_meow: likes_to_meow, additional_properties: struct)
         end
 

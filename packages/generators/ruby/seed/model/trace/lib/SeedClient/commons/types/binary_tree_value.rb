@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NodeId"
+require_relative "commons/types/NODE_ID"
 require "json"
 
 module SeedClient
@@ -8,14 +8,14 @@ module SeedClient
     class BinaryTreeValue
       attr_reader :root, :nodes, :additional_properties
 
-      # @param root [Commons::NodeId]
-      # @param nodes [Hash{Commons::NodeId => Commons::NodeId}]
+      # @param root [Commons::NODE_ID]
+      # @param nodes [Hash{Commons::NODE_ID => Commons::NODE_ID}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::BinaryTreeValue]
       def initialze(nodes:, root: nil, additional_properties: nil)
-        # @type [Commons::NodeId]
+        # @type [Commons::NODE_ID]
         @root = root
-        # @type [Hash{Commons::NodeId => Commons::NodeId}]
+        # @type [Hash{Commons::NODE_ID => Commons::NODE_ID}]
         @nodes = nodes
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,9 @@ module SeedClient
       # @return [Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        root Commons::NodeId.from_json(json_object: struct.root)
-        nodes struct.nodes.transform_values do |v|
-          Commons::NodeId.from_json(json_object: v)
+        root = Commons::NODE_ID.from_json(json_object: struct.root)
+        nodes = struct.nodes.transform_values do |v|
+          Commons::NODE_ID.from_json(json_object: v)
         end
         new(root: root, nodes: nodes, additional_properties: struct)
       end
@@ -39,7 +39,7 @@ module SeedClient
       # @return [JSON]
       def to_json(*_args)
         { root: @root, nodes: @nodes.transform_values do |v|
-                                Commons::NodeId.from_json(json_object: v)
+                                Commons::NODE_ID.from_json(json_object: v)
                               end }.to_json
       end
 
@@ -48,7 +48,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.root.nil? || NodeId.validate_raw(obj: obj.root)
+        obj.root.nil? || Commons::NODE_ID.validate_raw(obj: obj.root)
         obj.nodes.is_a?(Hash) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
       end
     end

@@ -27,8 +27,8 @@ module SeedClient
       # @return [Commons::ListType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        value_type Commons::VariableType.from_json(json_object: struct.valueType)
-        is_fixed_length struct.isFixedLength
+        value_type = Commons::VariableType.from_json(json_object: struct.valueType)
+        is_fixed_length = struct.isFixedLength
         new(value_type: value_type, is_fixed_length: is_fixed_length, additional_properties: struct)
       end
 
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        VariableType.validate_raw(obj: obj.value_type)
+        Commons::VariableType.validate_raw(obj: obj.value_type)
         obj.is_fixed_length&.is_a?(Boolean) != false || raise("Passed value for field obj.is_fixed_length is not the expected type, validation failed.")
       end
     end

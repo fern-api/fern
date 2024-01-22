@@ -28,8 +28,8 @@ module SeedClient
           # @return [V2::V3::Problem::FunctionImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            impl struct.impl
-            imports struct.imports
+            impl = struct.impl
+            imports = struct.imports
             new(impl: impl, imports: imports, additional_properties: struct)
           end
 

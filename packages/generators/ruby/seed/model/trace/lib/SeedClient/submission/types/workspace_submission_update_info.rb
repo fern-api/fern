@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "submission/types/RunningSubmissionState"
 require_relative "submission/types/WorkspaceRunDetails"
 require_relative "submission/types/WorkspaceTracedUpdate"
 require_relative "submission/types/ErrorInfo"
@@ -31,7 +30,7 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "running"
-                   Submission::RunningSubmissionState.from_json(json_object: json_object.value)
+                   RUNNING_SUBMISSION_STATE.key(json_object.value)
                  when "ran"
                    Submission::WorkspaceRunDetails.from_json(json_object: json_object)
                  when "stopped"
@@ -45,14 +44,14 @@ module SeedClient
                  when "finished"
                    nil
                  else
-                   Submission::RunningSubmissionState.from_json(json_object: json_object)
+                   RUNNING_SUBMISSION_STATE.key(json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "running"
@@ -82,17 +81,17 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "running"
-          RunningSubmissionState.validate_raw(obj: obj)
+          obj.is_a?(RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "ran"
-          WorkspaceRunDetails.validate_raw(obj: obj)
+          Submission::WorkspaceRunDetails.validate_raw(obj: obj)
         when "stopped"
           # noop
         when "traced"
           # noop
         when "tracedV2"
-          WorkspaceTracedUpdate.validate_raw(obj: obj)
+          Submission::WorkspaceTracedUpdate.validate_raw(obj: obj)
         when "errored"
-          ErrorInfo.validate_raw(obj: obj)
+          Submission::ErrorInfo.validate_raw(obj: obj)
         when "finished"
           # noop
         else
@@ -103,12 +102,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Submission::RunningSubmissionState]
+      # @param member [Hash{String => String}]
       # @return [Submission::WorkspaceSubmissionUpdateInfo]
       def self.running(member:)
         new(member: member, discriminant: "running")

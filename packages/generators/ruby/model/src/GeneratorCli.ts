@@ -1,13 +1,13 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { camelCase, upperFirst } from "lodash-es";
-import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
-import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
+import { RubyModelCustomConfig, parseCustomConfig } from "./CustomConfig";
 import { generateBinDir, generateGemfile, generateGitignore, generateReadme, generateRubocopConfig } from "./GemFiles";
+import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
 import { GeneratedFile } from "./utils/GeneratedFile";
 import { TypesGenerator } from "./utils/TypesGenerator";
 
@@ -19,19 +19,29 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         return parseCustomConfig(customConfig);
     }
 
+    private getGemName(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig): string {
+        return customConfig.gemName ?? this.getClientName(config, customConfig);
+    }
+
+    private getClientName(config: FernGeneratorExec.GeneratorConfig, customConfig: RubyModelCustomConfig): string {
+        return customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client";
+    }
+
     // TODO: This (as an abstract function) will probably be used across CLIs
     private generateRepositoryBoilerPlate(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig
     ) {
-        const gemName = customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client";
+        const gemName = this.getGemName(config, customConfig);
+        const clientName = this.getClientName(config, customConfig);
+
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateGitignore());
         boilerPlateFiles.push(generateRubocopConfig());
         boilerPlateFiles.push(generateGemfile());
         boilerPlateFiles.push(generateReadme());
-        boilerPlateFiles.push(generateGemspec(gemName, []));
-        boilerPlateFiles.push(generateGemConfig(gemName));
+        boilerPlateFiles.push(generateGemspec(clientName, gemName, []));
+        boilerPlateFiles.push(generateGemConfig(clientName));
         boilerPlateFiles.concat(generateBinDir(gemName));
 
         this.generatedFiles.push(...boilerPlateFiles);
@@ -44,8 +54,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            config,
-            customConfig,
+            RelativeFilePath.of(this.getClientName(config, customConfig)),
             generatorContext,
             intermediateRepresentation
         ).generateFiles();

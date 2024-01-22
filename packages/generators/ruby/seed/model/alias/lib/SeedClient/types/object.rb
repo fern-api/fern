@@ -3,5 +3,5 @@
 require_relative "types/Type"
 
 module SeedClient
-  Object = Type
+  OBJECT = Type
 end

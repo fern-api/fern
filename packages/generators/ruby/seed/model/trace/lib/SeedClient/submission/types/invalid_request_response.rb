@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        request Submission::SubmissionRequest.from_json(json_object: struct.request)
-        cause Submission::InvalidRequestCause.from_json(json_object: struct.cause)
+        request = Submission::SubmissionRequest.from_json(json_object: struct.request)
+        cause = Submission::InvalidRequestCause.from_json(json_object: struct.cause)
         new(request: request, cause: cause, additional_properties: struct)
       end
 
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionRequest.validate_raw(obj: obj.request)
-        InvalidRequestCause.validate_raw(obj: obj.cause)
+        Submission::SubmissionRequest.validate_raw(obj: obj.request)
+        Submission::InvalidRequestCause.validate_raw(obj: obj.cause)
       end
     end
   end

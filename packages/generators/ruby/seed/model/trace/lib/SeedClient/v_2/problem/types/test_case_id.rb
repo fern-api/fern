@@ -3,7 +3,7 @@
 module SeedClient
   module V2
     module Problem
-      TestCaseId = String
+      TEST_CASE_ID = String
     end
   end
 end

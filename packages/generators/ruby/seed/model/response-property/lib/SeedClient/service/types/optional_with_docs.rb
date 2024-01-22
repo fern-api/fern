@@ -4,6 +4,6 @@ require_relative "service/types/WithDocs"
 
 module SeedClient
   module Service
-    OptionalWithDocs = WithDocs
+    OPTIONAL_WITH_DOCS = Service::WithDocs
   end
 end

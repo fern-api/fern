@@ -26,8 +26,8 @@ module SeedClient
       # @return [Dummy::StreamResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id struct.id
-        name struct.name
+        id = struct.id
+        name = struct.name
         new(id: id, name: name, additional_properties: struct)
       end
 

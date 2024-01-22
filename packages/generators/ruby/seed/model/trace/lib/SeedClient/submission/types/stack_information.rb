@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::StackInformation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        num_stack_frames struct.numStackFrames
-        top_stack_frame Submission::StackFrame.from_json(json_object: struct.topStackFrame)
+        num_stack_frames = struct.numStackFrames
+        top_stack_frame = Submission::StackFrame.from_json(json_object: struct.topStackFrame)
         new(num_stack_frames: num_stack_frames, top_stack_frame: top_stack_frame, additional_properties: struct)
       end
 
@@ -45,7 +45,7 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.num_stack_frames.is_a?(Integer) != false || raise("Passed value for field obj.num_stack_frames is not the expected type, validation failed.")
-        obj.top_stack_frame.nil? || StackFrame.validate_raw(obj: obj.top_stack_frame)
+        obj.top_stack_frame.nil? || Submission::StackFrame.validate_raw(obj: obj.top_stack_frame)
       end
     end
   end

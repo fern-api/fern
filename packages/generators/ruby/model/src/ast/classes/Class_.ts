@@ -70,7 +70,9 @@ export class Class_ extends AstNode {
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
         this.addText({
             stringContent:
-                this.extendedClasses.length > 0 ? this.extendedClasses.map((cl) => cl.name).join(", ") : undefined,
+                this.extendedClasses.length > 0
+                    ? this.extendedClasses.map((cl) => cl.qualifiedName).join(", ")
+                    : undefined,
             templateString: " < %s",
             appendToLastString: true
         });

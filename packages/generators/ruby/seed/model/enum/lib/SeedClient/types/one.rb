@@ -2,5 +2,5 @@
 
 module SeedClient
   # @type [Hash{String => String}]
-  One = { one: "ONE", o_ne: "ONe" }.frozen
+  ONE = { one: "ONE", o_ne: "ONe" }.frozen
 end

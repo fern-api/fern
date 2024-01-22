@@ -4,7 +4,7 @@ module SeedClient
   module A
     module D
       module Types
-        Foo = String
+        FOO = String
       end
     end
   end

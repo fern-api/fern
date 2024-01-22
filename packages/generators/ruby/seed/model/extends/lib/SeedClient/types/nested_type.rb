@@ -23,7 +23,7 @@ module SeedClient
     # @return [NestedType]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      name struct.name
+      name = struct.name
       new(name: name, additional_properties: struct)
     end
 

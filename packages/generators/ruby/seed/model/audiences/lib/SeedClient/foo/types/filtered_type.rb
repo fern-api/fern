@@ -26,8 +26,8 @@ module SeedClient
       # @return [Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        public_property struct.public_property
-        private_property struct.private_property
+        public_property = struct.public_property
+        private_property = struct.private_property
         new(public_property: public_property, private_property: private_property, additional_properties: struct)
       end
 

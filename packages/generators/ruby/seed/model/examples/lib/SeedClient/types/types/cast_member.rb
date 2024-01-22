@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "json"
 require_relative "types/types/Actor"
 require_relative "types/types/Actress"
 require_relative "types/types/StuntDouble"
-require_relative "json"
 
 module SeedClient
   module Types
@@ -20,32 +20,35 @@ module SeedClient
       # Deserialize a JSON object to an instance of CastMember
       #
       # @param json_object [JSON]
-      # @return [Types::Actor, Types::Actress, Types::StuntDouble] , ,
+      # @return [Types::CastMember]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
-          Actor.validate_raw(obj: struct)
+          Types::Actor.validate_raw(obj: struct)
           member = Types::Actor.from_json(json_object: json_object)
           return new(member: member)
-          resuce StandardError
+        rescue StandardError
+          # noop
         end
         begin
-          Actress.validate_raw(obj: struct)
+          Types::Actress.validate_raw(obj: struct)
           member = Types::Actress.from_json(json_object: json_object)
           return new(member: member)
-          resuce StandardError
+        rescue StandardError
+          # noop
         end
         begin
-          StuntDouble.validate_raw(obj: struct)
+          Types::StuntDouble.validate_raw(obj: struct)
           member = Types::StuntDouble.from_json(json_object: json_object)
-          return new(member: member)
-          resuce StandardError
+          new(member: member)
+        rescue StandardError
+          # noop
         end
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         @member.to_json
       end
@@ -56,16 +59,19 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         begin
-          return Actor.validate_raw(obj: obj)
-          resuce StandardError
+          return Types::Actor.validate_raw(obj: obj)
+        rescue StandardError
+          # noop
         end
         begin
-          return Actress.validate_raw(obj: obj)
-          resuce StandardError
+          return Types::Actress.validate_raw(obj: obj)
+        rescue StandardError
+          # noop
         end
         begin
-          return StuntDouble.validate_raw(obj: obj)
-          resuce StandardError
+          return Types::StuntDouble.validate_raw(obj: obj)
+        rescue StandardError
+          # noop
         end
         raise("Passed value matched no type within the union, validation failed.")
       end
@@ -73,8 +79,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
     end

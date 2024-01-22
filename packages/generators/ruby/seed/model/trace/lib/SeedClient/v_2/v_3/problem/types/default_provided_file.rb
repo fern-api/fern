@@ -30,8 +30,8 @@ module SeedClient
           # @return [V2::V3::Problem::DefaultProvidedFile]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            file V2::V3::Problem::FileInfoV2.from_json(json_object: struct.file)
-            related_types struct.relatedTypes.map do |v|
+            file = V2::V3::Problem::FileInfoV2.from_json(json_object: struct.file)
+            related_types = struct.relatedTypes.map do |v|
               Commons::VariableType.from_json(json_object: v)
             end
             new(file: file, related_types: related_types, additional_properties: struct)
@@ -49,7 +49,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            FileInfoV2.validate_raw(obj: obj.file)
+            V2::V3::Problem::FileInfoV2.validate_raw(obj: obj.file)
             obj.related_types.is_a?(Array) != false || raise("Passed value for field obj.related_types is not the expected type, validation failed.")
           end
         end

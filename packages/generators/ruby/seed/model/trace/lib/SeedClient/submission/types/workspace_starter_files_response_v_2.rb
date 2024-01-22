@@ -7,11 +7,11 @@ module SeedClient
     class WorkspaceStarterFilesResponseV2
       attr_reader :files_by_language, :additional_properties
 
-      # @param files_by_language [Hash{Commons::Language => Commons::Language}]
+      # @param files_by_language [Hash{LANGUAGE => LANGUAGE}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceStarterFilesResponseV2]
       def initialze(files_by_language:, additional_properties: nil)
-        # @type [Hash{Commons::Language => Commons::Language}]
+        # @type [Hash{LANGUAGE => LANGUAGE}]
         @files_by_language = files_by_language
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,8 +23,8 @@ module SeedClient
       # @return [Submission::WorkspaceStarterFilesResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        files_by_language struct.filesByLanguage.transform_values do |v|
-          Commons::Language.from_json(json_object: v)
+        files_by_language = struct.filesByLanguage.transform_values do |v|
+          LANGUAGE.key(v)
         end
         new(files_by_language: files_by_language, additional_properties: struct)
       end
@@ -34,7 +34,7 @@ module SeedClient
       # @return [JSON]
       def to_json(*_args)
         { filesByLanguage: @files_by_language.transform_values do |v|
-                             Commons::Language.from_json(json_object: v)
+                             LANGUAGE.key(v)
                            end }.to_json
       end
 

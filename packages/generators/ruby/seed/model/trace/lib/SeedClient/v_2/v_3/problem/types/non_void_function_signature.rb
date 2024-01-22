@@ -30,10 +30,10 @@ module SeedClient
           # @return [V2::V3::Problem::NonVoidFunctionSignature]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters struct.parameters.map do |v|
+            parameters = struct.parameters.map do |v|
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
-            return_type Commons::VariableType.from_json(json_object: struct.returnType)
+            return_type = Commons::VariableType.from_json(json_object: struct.returnType)
             new(parameters: parameters, return_type: return_type, additional_properties: struct)
           end
 
@@ -50,7 +50,7 @@ module SeedClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
-            VariableType.validate_raw(obj: obj.return_type)
+            Commons::VariableType.validate_raw(obj: obj.return_type)
           end
         end
       end

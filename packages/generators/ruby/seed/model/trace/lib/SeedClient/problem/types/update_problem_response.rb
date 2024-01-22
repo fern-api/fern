@@ -23,7 +23,7 @@ module SeedClient
       # @return [Problem::UpdateProblemResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_version struct.problemVersion
+        problem_version = struct.problemVersion
         new(problem_version: problem_version, additional_properties: struct)
       end
 

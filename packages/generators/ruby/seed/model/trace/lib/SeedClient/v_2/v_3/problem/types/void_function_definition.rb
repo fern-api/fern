@@ -30,10 +30,10 @@ module SeedClient
           # @return [V2::V3::Problem::VoidFunctionDefinition]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters struct.parameters.map do |v|
+            parameters = struct.parameters.map do |v|
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
-            code V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
+            code = V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
             new(parameters: parameters, code: code, additional_properties: struct)
           end
 
@@ -50,7 +50,7 @@ module SeedClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
-            FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
+            V2::V3::Problem::FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
           end
         end
       end

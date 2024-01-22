@@ -29,8 +29,8 @@ module SeedClient
         # @return [V2::Problem::TestCaseImplementation]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          description V2::Problem::TestCaseImplementationDescription.from_json(json_object: struct.description)
-          function V2::Problem::TestCaseFunction.from_json(json_object: struct.function)
+          description = V2::Problem::TestCaseImplementationDescription.from_json(json_object: struct.description)
+          function = V2::Problem::TestCaseFunction.from_json(json_object: struct.function)
           new(description: description, function: function, additional_properties: struct)
         end
 
@@ -46,8 +46,8 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          TestCaseImplementationDescription.validate_raw(obj: obj.description)
-          TestCaseFunction.validate_raw(obj: obj.function)
+          V2::Problem::TestCaseImplementationDescription.validate_raw(obj: obj.description)
+          V2::Problem::TestCaseFunction.validate_raw(obj: obj.function)
         end
       end
     end

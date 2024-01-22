@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/ProblemId"
+require_relative "commons/types/PROBLEM_ID"
 require "json"
 
 module SeedClient
@@ -9,13 +9,13 @@ module SeedClient
       attr_reader :name, :problems, :additional_properties
 
       # @param name [String]
-      # @param problems [Array<Commons::ProblemId>]
+      # @param problems [Array<Commons::PROBLEM_ID>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Playlist::PlaylistCreateRequest]
       def initialze(name:, problems:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [Array<Commons::ProblemId>]
+        # @type [Array<Commons::PROBLEM_ID>]
         @problems = problems
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,9 @@ module SeedClient
       # @return [Playlist::PlaylistCreateRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        problems struct.problems.map do |v|
-          Commons::ProblemId.from_json(json_object: v)
+        name = struct.name
+        problems = struct.problems.map do |v|
+          Commons::PROBLEM_ID.from_json(json_object: v)
         end
         new(name: name, problems: problems, additional_properties: struct)
       end

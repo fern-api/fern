@@ -14,7 +14,7 @@ module SeedClient
 
           # @param metadata [V2::V3::Problem::TestCaseMetadata]
           # @param implementation [V2::V3::Problem::TestCaseImplementationReference]
-          # @param arguments [Hash{V2::V3::Problem::ParameterId => V2::V3::Problem::ParameterId}]
+          # @param arguments [Hash{V2::V3::Problem::PARAMETER_ID => V2::V3::Problem::PARAMETER_ID}]
           # @param expects [V2::V3::Problem::TestCaseExpects]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::TestCaseV2]
@@ -23,7 +23,7 @@ module SeedClient
             @metadata = metadata
             # @type [V2::V3::Problem::TestCaseImplementationReference]
             @implementation = implementation
-            # @type [Hash{V2::V3::Problem::ParameterId => V2::V3::Problem::ParameterId}]
+            # @type [Hash{V2::V3::Problem::PARAMETER_ID => V2::V3::Problem::PARAMETER_ID}]
             @arguments = arguments
             # @type [V2::V3::Problem::TestCaseExpects]
             @expects = expects
@@ -37,12 +37,12 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            metadata V2::V3::Problem::TestCaseMetadata.from_json(json_object: struct.metadata)
-            implementation V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: struct.implementation)
-            arguments struct.arguments.transform_values do |v|
-              V2::V3::Problem::ParameterId.from_json(json_object: v)
+            metadata = V2::V3::Problem::TestCaseMetadata.from_json(json_object: struct.metadata)
+            implementation = V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: struct.implementation)
+            arguments = struct.arguments.transform_values do |v|
+              V2::V3::Problem::PARAMETER_ID.from_json(json_object: v)
             end
-            expects V2::V3::Problem::TestCaseExpects.from_json(json_object: struct.expects)
+            expects = V2::V3::Problem::TestCaseExpects.from_json(json_object: struct.expects)
             new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
                 additional_properties: struct)
           end
@@ -52,7 +52,7 @@ module SeedClient
           # @return [JSON]
           def to_json(*_args)
             { metadata: @metadata, implementation: @implementation, arguments: @arguments.transform_values do |v|
-                                                                                 V2::V3::Problem::ParameterId.from_json(json_object: v)
+                                                                                 V2::V3::Problem::PARAMETER_ID.from_json(json_object: v)
                                                                                end, expects: @expects }.to_json
           end
 
@@ -61,10 +61,10 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            TestCaseMetadata.validate_raw(obj: obj.metadata)
-            TestCaseImplementationReference.validate_raw(obj: obj.implementation)
+            V2::V3::Problem::TestCaseMetadata.validate_raw(obj: obj.metadata)
+            V2::V3::Problem::TestCaseImplementationReference.validate_raw(obj: obj.implementation)
             obj.arguments.is_a?(Hash) != false || raise("Passed value for field obj.arguments is not the expected type, validation failed.")
-            obj.expects.nil? || TestCaseExpects.validate_raw(obj: obj.expects)
+            obj.expects.nil? || V2::V3::Problem::TestCaseExpects.validate_raw(obj: obj.expects)
           end
         end
       end

@@ -75,7 +75,11 @@ export class SerializableObject extends Class_ {
                     type: prop.type
                 });
 
-                return new Expression({ leftSide: prop.name, rightSide: variable.fromJson() ?? variable });
+                return new Expression({
+                    leftSide: prop.name,
+                    rightSide: variable.fromJson() ?? variable,
+                    isAssignment: true
+                });
             }) ?? []),
             new FunctionInvocation({
                 baseFunction: new Function_({ name: "new", functionBody: [] }),

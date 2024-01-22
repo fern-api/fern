@@ -26,7 +26,7 @@ module SeedClient
           # @return [V2::V3::Problem::GetGeneratedTestCaseTemplateFileRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            template V2::V3::Problem::TestCaseTemplate.from_json(json_object: struct.template)
+            template = V2::V3::Problem::TestCaseTemplate.from_json(json_object: struct.template)
             new(template: template, additional_properties: struct)
           end
 
@@ -42,7 +42,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            TestCaseTemplate.validate_raw(obj: obj.template)
+            V2::V3::Problem::TestCaseTemplate.validate_raw(obj: obj.template)
           end
         end
       end

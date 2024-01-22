@@ -29,9 +29,9 @@ module SeedClient
       # @return [Literal::Options]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id struct.id
-        enabled struct.enabled
-        values struct.values
+        id = struct.id
+        enabled = struct.enabled
+        values = struct.values
         new(id: id, enabled: enabled, values: values, additional_properties: struct)
       end
 

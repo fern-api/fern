@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/Imported"
+require_relative "commons/types/IMPORTED"
 require "json"
 
 module SeedClient
@@ -8,11 +8,11 @@ module SeedClient
     class ImportingType
       attr_reader :imported, :additional_properties
 
-      # @param imported [Commons::Imported]
+      # @param imported [Commons::IMPORTED]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Foo::ImportingType]
       def initialze(imported:, additional_properties: nil)
-        # @type [Commons::Imported]
+        # @type [Commons::IMPORTED]
         @imported = imported
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -24,7 +24,7 @@ module SeedClient
       # @return [Foo::ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        imported Commons::Imported.from_json(json_object: struct.imported)
+        imported = Commons::IMPORTED.from_json(json_object: struct.imported)
         new(imported: imported, additional_properties: struct)
       end
 
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Imported.validate_raw(obj: obj.imported)
+        Commons::IMPORTED.validate_raw(obj: obj.imported)
       end
     end
   end

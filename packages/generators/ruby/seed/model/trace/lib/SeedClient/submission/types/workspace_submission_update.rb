@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::WorkspaceSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time struct.updateTime
-        update_info Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
+        update_time = struct.updateTime
+        update_info = Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 
@@ -45,7 +45,7 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.update_time.is_a?(DateTime) != false || raise("Passed value for field obj.update_time is not the expected type, validation failed.")
-        WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
+        Submission::WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
       end
     end
   end

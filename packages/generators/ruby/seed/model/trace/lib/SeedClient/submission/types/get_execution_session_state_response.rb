@@ -29,9 +29,9 @@ module SeedClient
       # @return [Submission::GetExecutionSessionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        states struct.states
-        num_warming_instances struct.numWarmingInstances
-        warming_session_ids struct.warmingSessionIds
+        states = struct.states
+        num_warming_instances = struct.numWarmingInstances
+        warming_session_ids = struct.warmingSessionIds
         new(states: states, num_warming_instances: num_warming_instances, warming_session_ids: warming_session_ids,
             additional_properties: struct)
       end

@@ -3,7 +3,7 @@
 module SeedClient
   module Commons
     module Types
-      Tag = String
+      TAG = String
     end
   end
 end

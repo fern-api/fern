@@ -2,6 +2,6 @@
 
 module SeedClient
   module Commons
-    NodeId = String
+    NODE_ID = String
   end
 end

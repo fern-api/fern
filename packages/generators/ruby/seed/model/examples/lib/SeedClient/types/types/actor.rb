@@ -26,8 +26,8 @@ module SeedClient
       # @return [Types::Actor]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        id struct.id
+        name = struct.name
+        id = struct.id
         new(name: name, id: id, additional_properties: struct)
       end
 

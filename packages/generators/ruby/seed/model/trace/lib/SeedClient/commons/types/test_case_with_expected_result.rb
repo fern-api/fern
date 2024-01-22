@@ -28,8 +28,8 @@ module SeedClient
       # @return [Commons::TestCaseWithExpectedResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case Commons::TestCase.from_json(json_object: struct.testCase)
-        expected_result Commons::VariableValue.from_json(json_object: struct.expectedResult)
+        test_case = Commons::TestCase.from_json(json_object: struct.testCase)
+        expected_result = Commons::VariableValue.from_json(json_object: struct.expectedResult)
         new(test_case: test_case, expected_result: expected_result, additional_properties: struct)
       end
 
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCase.validate_raw(obj: obj.test_case)
-        VariableValue.validate_raw(obj: obj.expected_result)
+        Commons::TestCase.validate_raw(obj: obj.test_case)
+        Commons::VariableValue.validate_raw(obj: obj.expected_result)
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/ProblemId"
+require_relative "commons/types/PROBLEM_ID"
 require_relative "problem/types/ProblemDescription"
 require "set"
 require_relative "v_2/problem/types/CustomFiles"
@@ -16,11 +16,11 @@ module SeedClient
         attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :supported_languages,
                     :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties
 
-        # @param problem_id [Commons::ProblemId]
+        # @param problem_id [Commons::PROBLEM_ID]
         # @param problem_description [Problem::ProblemDescription]
         # @param problem_name [String]
         # @param problem_version [Integer]
-        # @param supported_languages [Set<Commons::Language>]
+        # @param supported_languages [Set<LANGUAGE>]
         # @param custom_files [V2::Problem::CustomFiles]
         # @param generated_files [V2::Problem::GeneratedFiles]
         # @param custom_test_case_templates [Array<V2::Problem::TestCaseTemplate>]
@@ -30,7 +30,7 @@ module SeedClient
         # @return [V2::Problem::ProblemInfoV2]
         def initialze(problem_id:, problem_description:, problem_name:, problem_version:, supported_languages:,
                       custom_files:, generated_files:, custom_test_case_templates:, testcases:, is_public:, additional_properties: nil)
-          # @type [Commons::ProblemId]
+          # @type [Commons::PROBLEM_ID]
           @problem_id = problem_id
           # @type [Problem::ProblemDescription]
           @problem_description = problem_description
@@ -38,7 +38,7 @@ module SeedClient
           @problem_name = problem_name
           # @type [Integer]
           @problem_version = problem_version
-          # @type [Set<Commons::Language>]
+          # @type [Set<LANGUAGE>]
           @supported_languages = supported_languages
           # @type [V2::Problem::CustomFiles]
           @custom_files = custom_files
@@ -60,20 +60,20 @@ module SeedClient
         # @return [V2::Problem::ProblemInfoV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
-          problem_description Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-          problem_name struct.problemName
-          problem_version struct.problemVersion
-          supported_languages Set.new(struct.supportedLanguages)
-          custom_files V2::Problem::CustomFiles.from_json(json_object: struct.customFiles)
-          generated_files V2::Problem::GeneratedFiles.from_json(json_object: struct.generatedFiles)
-          custom_test_case_templates struct.customTestCaseTemplates.map do |v|
+          problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+          problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
+          problem_name = struct.problemName
+          problem_version = struct.problemVersion
+          supported_languages = Set.new(struct.supportedLanguages)
+          custom_files = V2::Problem::CustomFiles.from_json(json_object: struct.customFiles)
+          generated_files = V2::Problem::GeneratedFiles.from_json(json_object: struct.generatedFiles)
+          custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
             V2::Problem::TestCaseTemplate.from_json(json_object: v)
           end
-          testcases struct.testcases.map do |v|
+          testcases = struct.testcases.map do |v|
             V2::Problem::TestCaseV2.from_json(json_object: v)
           end
-          is_public struct.isPublic
+          is_public = struct.isPublic
           new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name,
               problem_version: problem_version, supported_languages: supported_languages, custom_files: custom_files, generated_files: generated_files, custom_test_case_templates: custom_test_case_templates, testcases: testcases, is_public: is_public, additional_properties: struct)
         end
@@ -91,13 +91,13 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          ProblemId.validate_raw(obj: obj.problem_id)
-          ProblemDescription.validate_raw(obj: obj.problem_description)
+          Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+          Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
           obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
           obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
           obj.supported_languages.is_a?(Set) != false || raise("Passed value for field obj.supported_languages is not the expected type, validation failed.")
-          CustomFiles.validate_raw(obj: obj.custom_files)
-          GeneratedFiles.validate_raw(obj: obj.generated_files)
+          V2::Problem::CustomFiles.validate_raw(obj: obj.custom_files)
+          V2::Problem::GeneratedFiles.validate_raw(obj: obj.generated_files)
           obj.custom_test_case_templates.is_a?(Array) != false || raise("Passed value for field obj.custom_test_case_templates is not the expected type, validation failed.")
           obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
           obj.is_public.is_a?(Boolean) != false || raise("Passed value for field obj.is_public is not the expected type, validation failed.")

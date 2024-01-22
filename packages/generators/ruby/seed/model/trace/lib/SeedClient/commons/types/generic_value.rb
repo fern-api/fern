@@ -26,8 +26,8 @@ module SeedClient
       # @return [Commons::GenericValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        stringified_type struct.stringifiedType
-        stringified_value struct.stringifiedValue
+        stringified_type = struct.stringifiedType
+        stringified_value = struct.stringifiedValue
         new(stringified_type: stringified_type, stringified_value: stringified_value, additional_properties: struct)
       end
 

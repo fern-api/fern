@@ -60,18 +60,18 @@ module SeedClient
         # @return [Types::Object::ObjectWithOptionalField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          string struct.string
-          integer struct.integer
-          long struct.long
-          double struct.double
-          bool struct.bool
-          datetime struct.datetime
-          date struct.date
-          uuid struct.uuid
-          base_64 struct.base64
-          list struct.list
-          set Set.new(struct.set)
-          map struct.map
+          string = struct.string
+          integer = struct.integer
+          long = struct.long
+          double = struct.double
+          bool = struct.bool
+          datetime = struct.datetime
+          date = struct.date
+          uuid = struct.uuid
+          base_64 = struct.base64
+          list = struct.list
+          set = Set.new(struct.set)
+          map = struct.map
           new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
               uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)
         end

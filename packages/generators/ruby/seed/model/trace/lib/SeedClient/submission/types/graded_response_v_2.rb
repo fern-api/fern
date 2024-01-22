@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionId"
+require_relative "submission/types/SUBMISSION_ID"
 require "json"
 
 module SeedClient
@@ -8,14 +8,14 @@ module SeedClient
     class GradedResponseV2
       attr_reader :submission_id, :test_cases, :additional_properties
 
-      # @param submission_id [Submission::SubmissionId]
-      # @param test_cases [Hash{V2::Problem::TestCaseId => V2::Problem::TestCaseId}]
+      # @param submission_id [Submission::SUBMISSION_ID]
+      # @param test_cases [Hash{V2::Problem::TEST_CASE_ID => V2::Problem::TEST_CASE_ID}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GradedResponseV2]
       def initialze(submission_id:, test_cases:, additional_properties: nil)
-        # @type [Submission::SubmissionId]
+        # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Hash{V2::Problem::TestCaseId => V2::Problem::TestCaseId}]
+        # @type [Hash{V2::Problem::TEST_CASE_ID => V2::Problem::TEST_CASE_ID}]
         @test_cases = test_cases
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,9 +27,9 @@ module SeedClient
       # @return [Submission::GradedResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        test_cases struct.testCases.transform_values do |v|
-          V2::Problem::TestCaseId.from_json(json_object: v)
+        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        test_cases = struct.testCases.transform_values do |v|
+          V2::Problem::TEST_CASE_ID.from_json(json_object: v)
         end
         new(submission_id: submission_id, test_cases: test_cases, additional_properties: struct)
       end
@@ -39,7 +39,7 @@ module SeedClient
       # @return [JSON]
       def to_json(*_args)
         { submissionId: @submission_id, testCases: @test_cases.transform_values do |v|
-                                                     V2::Problem::TestCaseId.from_json(json_object: v)
+                                                     V2::Problem::TEST_CASE_ID.from_json(json_object: v)
                                                    end }.to_json
       end
 
@@ -48,7 +48,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionId.validate_raw(obj: obj.submission_id)
+        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
         obj.test_cases.is_a?(Hash) != false || raise("Passed value for field obj.test_cases is not the expected type, validation failed.")
       end
     end

@@ -1,5 +1,5 @@
 irVersion: v32
-docker: fernapi/fern-ruby-model:local
+docker: fernapi/fern-ruby-model:0.0.1-rc2
 dockerCommand: yarn workspace @fern-api/fern-ruby-model dockerTagLocal
 language: ruby
 generatorType: model

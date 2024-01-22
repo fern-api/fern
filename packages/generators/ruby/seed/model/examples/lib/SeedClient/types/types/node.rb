@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "types/types/Node"
 require_relative "types/types/Tree"
 require "json"
 
@@ -31,11 +30,11 @@ module SeedClient
       # @return [Types::Node]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        nodes struct.nodes.map do |v|
+        name = struct.name
+        nodes = struct.nodes.map do |v|
           Types::Node.from_json(json_object: v)
         end
-        trees struct.trees.map do |v|
+        trees = struct.trees.map do |v|
           Types::Tree.from_json(json_object: v)
         end
         new(name: name, nodes: nodes, trees: trees, additional_properties: struct)

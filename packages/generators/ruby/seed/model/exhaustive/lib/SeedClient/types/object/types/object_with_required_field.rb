@@ -24,7 +24,7 @@ module SeedClient
         # @return [Types::Object::ObjectWithRequiredField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          string struct.string
+          string = struct.string
           new(string: string, additional_properties: struct)
         end
 

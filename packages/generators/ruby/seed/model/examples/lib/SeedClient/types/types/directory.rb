@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "types/types/File"
-require_relative "types/types/Directory"
 require "json"
 
 module SeedClient
@@ -31,11 +30,11 @@ module SeedClient
       # @return [Types::Directory]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        files struct.files.map do |v|
+        name = struct.name
+        files = struct.files.map do |v|
           Types::File.from_json(json_object: v)
         end
-        directories struct.directories.map do |v|
+        directories = struct.directories.map do |v|
           Types::Directory.from_json(json_object: v)
         end
         new(name: name, files: files, directories: directories, additional_properties: struct)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionId"
+require_relative "submission/types/SUBMISSION_ID"
 require "json"
 
 module SeedClient
@@ -8,12 +8,12 @@ module SeedClient
     class StderrResponse
       attr_reader :submission_id, :stderr, :additional_properties
 
-      # @param submission_id [Submission::SubmissionId]
+      # @param submission_id [Submission::SUBMISSION_ID]
       # @param stderr [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::StderrResponse]
       def initialze(submission_id:, stderr:, additional_properties: nil)
-        # @type [Submission::SubmissionId]
+        # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [String]
         @stderr = stderr
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::StderrResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        stderr struct.stderr
+        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        stderr = struct.stderr
         new(submission_id: submission_id, stderr: stderr, additional_properties: struct)
       end
 
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionId.validate_raw(obj: obj.submission_id)
+        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
         obj.stderr.is_a?(String) != false || raise("Passed value for field obj.stderr is not the expected type, validation failed.")
       end
     end

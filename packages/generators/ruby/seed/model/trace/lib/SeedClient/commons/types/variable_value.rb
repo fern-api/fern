@@ -5,7 +5,6 @@ require_relative "commons/types/MapValue"
 require_relative "commons/types/BinaryTreeValue"
 require_relative "commons/types/SinglyLinkedListValue"
 require_relative "commons/types/DoublyLinkedListValue"
-require_relative "commons/types/VariableValue"
 
 module SeedClient
   module Commons
@@ -63,7 +62,7 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "integerValue"
@@ -111,15 +110,15 @@ module SeedClient
         when "charValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "mapValue"
-          MapValue.validate_raw(obj: obj)
+          Commons::MapValue.validate_raw(obj: obj)
         when "listValue"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "binaryTreeValue"
-          BinaryTreeValue.validate_raw(obj: obj)
+          Commons::BinaryTreeValue.validate_raw(obj: obj)
         when "singlyLinkedListValue"
-          SinglyLinkedListValue.validate_raw(obj: obj)
+          Commons::SinglyLinkedListValue.validate_raw(obj: obj)
         when "doublyLinkedListValue"
-          DoublyLinkedListValue.validate_raw(obj: obj)
+          Commons::DoublyLinkedListValue.validate_raw(obj: obj)
         when "nullValue"
           # noop
         else
@@ -130,8 +129,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

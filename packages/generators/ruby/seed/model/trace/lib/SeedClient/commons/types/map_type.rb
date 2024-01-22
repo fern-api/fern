@@ -27,8 +27,8 @@ module SeedClient
       # @return [Commons::MapType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key_type Commons::VariableType.from_json(json_object: struct.keyType)
-        value_type Commons::VariableType.from_json(json_object: struct.valueType)
+        key_type = Commons::VariableType.from_json(json_object: struct.keyType)
+        value_type = Commons::VariableType.from_json(json_object: struct.valueType)
         new(key_type: key_type, value_type: value_type, additional_properties: struct)
       end
 
@@ -44,8 +44,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        VariableType.validate_raw(obj: obj.key_type)
-        VariableType.validate_raw(obj: obj.value_type)
+        Commons::VariableType.validate_raw(obj: obj.key_type)
+        Commons::VariableType.validate_raw(obj: obj.value_type)
       end
     end
   end

@@ -26,7 +26,7 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseImplementationDescription]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            boards struct.boards.map do |v|
+            boards = struct.boards.map do |v|
               V2::V3::Problem::TestCaseImplementationDescriptionBoard.from_json(json_object: v)
             end
             new(boards: boards, additional_properties: struct)

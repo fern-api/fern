@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/ProblemId"
+require_relative "commons/types/PROBLEM_ID"
 require_relative "problem/types/ProblemDescription"
 require_relative "problem/types/VariableTypeAndName"
 require_relative "commons/types/VariableType"
@@ -13,11 +13,11 @@ module SeedClient
       attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :files, :input_params,
                   :output_type, :testcases, :method_name, :supports_custom_test_cases, :additional_properties
 
-      # @param problem_id [Commons::ProblemId]
+      # @param problem_id [Commons::PROBLEM_ID]
       # @param problem_description [Problem::ProblemDescription]
       # @param problem_name [String]
       # @param problem_version [Integer]
-      # @param files [Hash{Commons::Language => Commons::Language}]
+      # @param files [Hash{LANGUAGE => LANGUAGE}]
       # @param input_params [Array<Problem::VariableTypeAndName>]
       # @param output_type [Commons::VariableType]
       # @param testcases [Array<Commons::TestCaseWithExpectedResult>]
@@ -27,7 +27,7 @@ module SeedClient
       # @return [Problem::ProblemInfo]
       def initialze(problem_id:, problem_description:, problem_name:, problem_version:, files:, input_params:,
                     output_type:, testcases:, method_name:, supports_custom_test_cases:, additional_properties: nil)
-        # @type [Commons::ProblemId]
+        # @type [Commons::PROBLEM_ID]
         @problem_id = problem_id
         # @type [Problem::ProblemDescription]
         @problem_description = problem_description
@@ -35,7 +35,7 @@ module SeedClient
         @problem_name = problem_name
         # @type [Integer]
         @problem_version = problem_version
-        # @type [Hash{Commons::Language => Commons::Language}]
+        # @type [Hash{LANGUAGE => LANGUAGE}]
         @files = files
         # @type [Array<Problem::VariableTypeAndName>]
         @input_params = input_params
@@ -57,22 +57,22 @@ module SeedClient
       # @return [Problem::ProblemInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
-        problem_description Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-        problem_name struct.problemName
-        problem_version struct.problemVersion
-        files struct.files.transform_values do |v|
-          Commons::Language.from_json(json_object: v)
+        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+        problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
+        problem_name = struct.problemName
+        problem_version = struct.problemVersion
+        files = struct.files.transform_values do |v|
+          LANGUAGE.key(v)
         end
-        input_params struct.inputParams.map do |v|
+        input_params = struct.inputParams.map do |v|
           Problem::VariableTypeAndName.from_json(json_object: v)
         end
-        output_type Commons::VariableType.from_json(json_object: struct.outputType)
-        testcases struct.testcases.map do |v|
+        output_type = Commons::VariableType.from_json(json_object: struct.outputType)
+        testcases = struct.testcases.map do |v|
           Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
-        method_name struct.methodName
-        supports_custom_test_cases struct.supportsCustomTestCases
+        method_name = struct.methodName
+        supports_custom_test_cases = struct.supportsCustomTestCases
         new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name,
             problem_version: problem_version, files: files, input_params: input_params, output_type: output_type, testcases: testcases, method_name: method_name, supports_custom_test_cases: supports_custom_test_cases, additional_properties: struct)
       end
@@ -82,7 +82,7 @@ module SeedClient
       # @return [JSON]
       def to_json(*_args)
         { problemId: @problem_id, problemDescription: @problem_description, problemName: @problem_name, problemVersion: @problem_version, files: @files.transform_values do |v|
-                                                                                                                                                   Commons::Language.from_json(json_object: v)
+                                                                                                                                                   LANGUAGE.key(v)
                                                                                                                                                  end, inputParams: @input_params, outputType: @output_type, testcases: @testcases, methodName: @method_name, supportsCustomTestCases: @supports_custom_test_cases }.to_json
       end
 
@@ -91,13 +91,13 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        ProblemId.validate_raw(obj: obj.problem_id)
-        ProblemDescription.validate_raw(obj: obj.problem_description)
+        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+        Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
         obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
         obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
         obj.files.is_a?(Hash) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
         obj.input_params.is_a?(Array) != false || raise("Passed value for field obj.input_params is not the expected type, validation failed.")
-        VariableType.validate_raw(obj: obj.output_type)
+        Commons::VariableType.validate_raw(obj: obj.output_type)
         obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
         obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
         obj.supports_custom_test_cases.is_a?(Boolean) != false || raise("Passed value for field obj.supports_custom_test_cases is not the expected type, validation failed.")

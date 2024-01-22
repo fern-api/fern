@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::WorkspaceSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        updates struct.updates.map do |v|
+        updates = struct.updates.map do |v|
           Submission::WorkspaceSubmissionUpdate.from_json(json_object: v)
         end
         new(updates: updates, additional_properties: struct)

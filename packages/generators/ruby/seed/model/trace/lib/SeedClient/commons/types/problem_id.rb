@@ -2,6 +2,6 @@
 
 module SeedClient
   module Commons
-    ProblemId = String
+    PROBLEM_ID = String
   end
 end

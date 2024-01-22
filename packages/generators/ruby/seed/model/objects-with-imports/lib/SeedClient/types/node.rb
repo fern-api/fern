@@ -29,9 +29,9 @@ module SeedClient
     # @return [Node]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id struct.id
-      label struct.label
-      metadata Commons::Metadata::Metadata.from_json(json_object: struct.metadata)
+      id = struct.id
+      label = struct.label
+      metadata = Commons::Metadata::Metadata.from_json(json_object: struct.metadata)
       new(id: id, label: label, metadata: metadata, additional_properties: struct)
     end
 
@@ -49,7 +49,7 @@ module SeedClient
     def self.validate_raw(obj:)
       obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       obj.label&.is_a?(String) != false || raise("Passed value for field obj.label is not the expected type, validation failed.")
-      obj.metadata.nil? || Metadata.validate_raw(obj: obj.metadata)
+      obj.metadata.nil? || Commons::Metadata::Metadata.validate_raw(obj: obj.metadata)
     end
   end
 end

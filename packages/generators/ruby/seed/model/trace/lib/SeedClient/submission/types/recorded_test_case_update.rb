@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/TestCaseId"
+require_relative "v_2/problem/types/TEST_CASE_ID"
 require "json"
 
 module SeedClient
@@ -8,12 +8,12 @@ module SeedClient
     class RecordedTestCaseUpdate
       attr_reader :test_case_id, :trace_responses_size, :additional_properties
 
-      # @param test_case_id [V2::Problem::TestCaseId]
+      # @param test_case_id [V2::Problem::TEST_CASE_ID]
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::RecordedTestCaseUpdate]
       def initialze(test_case_id:, trace_responses_size:, additional_properties: nil)
-        # @type [V2::Problem::TestCaseId]
+        # @type [V2::Problem::TEST_CASE_ID]
         @test_case_id = test_case_id
         # @type [Integer]
         @trace_responses_size = trace_responses_size
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::RecordedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case_id V2::Problem::TestCaseId.from_json(json_object: struct.testCaseId)
-        trace_responses_size struct.traceResponsesSize
+        test_case_id = V2::Problem::TEST_CASE_ID.from_json(json_object: struct.testCaseId)
+        trace_responses_size = struct.traceResponsesSize
         new(test_case_id: test_case_id, trace_responses_size: trace_responses_size, additional_properties: struct)
       end
 
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCaseId.validate_raw(obj: obj.test_case_id)
+        V2::Problem::TEST_CASE_ID.validate_raw(obj: obj.test_case_id)
         obj.trace_responses_size.is_a?(Integer) != false || raise("Passed value for field obj.trace_responses_size is not the expected type, validation failed.")
       end
     end

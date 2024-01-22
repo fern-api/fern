@@ -2,6 +2,6 @@
 
 module SeedClient
   module Unknown
-    MyAlias = Object
+    MY_ALIAS = Object
   end
 end

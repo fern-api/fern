@@ -1,6 +1,7 @@
 import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 import { Argument } from "../Argument";
 import {
+    BooleanClassReference,
     ClassReference,
     GenericClassReference,
     HashInstance,
@@ -244,6 +245,7 @@ export class DiscriminatedUnion extends Class_ {
                     onObject: memberProperty.toVariable()
                 })
             ],
+            returnValue: JsonClassReference,
             documentation: toJsonDocumentation
         });
     }
@@ -322,7 +324,7 @@ export class DiscriminatedUnion extends Class_ {
 
         const parameterName = "obj";
         return new Function_({
-            name: "is_a",
+            name: "is_a?",
             functionBody: [
                 new FunctionInvocation({
                     baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
@@ -331,20 +333,8 @@ export class DiscriminatedUnion extends Class_ {
                 })
             ],
             parameters: [new Parameter({ name: parameterName, type: GenericClassReference, isNamed: false })],
-            documentation: isADocumentation
-        });
-    }
-
-    public static classReferenceFromUnionType(
-        singleUnionTypeProperties: SingleUnionTypeProperties
-    ): ClassReference | undefined {
-        return singleUnionTypeProperties._visit<ClassReference | undefined>({
-            samePropertiesAsObject: (dtn) => ClassReference.fromDeclaredTypeName(dtn),
-            singleProperty: (sutp: SingleUnionTypeProperty) => ClassReference.fromTypeReference(sutp.type),
-            noProperties: () => undefined,
-            _other: () => {
-                throw new Error();
-            }
+            documentation: isADocumentation,
+            returnValue: BooleanClassReference
         });
     }
 }

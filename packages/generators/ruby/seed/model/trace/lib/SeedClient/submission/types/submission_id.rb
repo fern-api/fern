@@ -2,6 +2,6 @@
 
 module SeedClient
   module Submission
-    SubmissionId = UUID
+    SUBMISSION_ID = UUID
   end
 end

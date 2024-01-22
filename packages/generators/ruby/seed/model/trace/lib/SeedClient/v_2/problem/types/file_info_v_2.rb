@@ -33,10 +33,10 @@ module SeedClient
         # @return [V2::Problem::FileInfoV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          filename struct.filename
-          directory struct.directory
-          contents struct.contents
-          editable struct.editable
+          filename = struct.filename
+          directory = struct.directory
+          contents = struct.contents
+          editable = struct.editable
           new(filename: filename, directory: directory, contents: contents, editable: editable,
               additional_properties: struct)
         end

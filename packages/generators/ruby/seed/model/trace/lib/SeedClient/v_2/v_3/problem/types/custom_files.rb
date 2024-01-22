@@ -33,7 +33,7 @@ module SeedClient
                        V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
                      when "custom"
                        json_object.value.transform_values do |v|
-                         Commons::Language.from_json(json_object: v)
+                         LANGUAGE.key(v)
                        end
                      else
                        V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
@@ -43,7 +43,7 @@ module SeedClient
 
           # For Union Types, to_json functionality is delegated to the wrapped member.
           #
-          # @return []
+          # @return [JSON]
           def to_json(*_args)
             case @discriminant
             when "basic"
@@ -63,7 +63,7 @@ module SeedClient
           def self.validate_raw(obj:)
             case obj.type
             when "basic"
-              BasicCustomFiles.validate_raw(obj: obj)
+              V2::V3::Problem::BasicCustomFiles.validate_raw(obj: obj)
             when "custom"
               obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             else
@@ -74,8 +74,8 @@ module SeedClient
           # For Union Types, is_a? functionality is delegated to the wrapped member.
           #
           # @param obj [Object]
-          # @return []
-          def is_a(obj)
+          # @return [Boolean]
+          def is_a?(obj)
             @member.is_a?(obj)
           end
 
@@ -85,7 +85,7 @@ module SeedClient
             new(member: member, discriminant: "basic")
           end
 
-          # @param member [Hash{Commons::Language => Commons::Language}]
+          # @param member [Hash{LANGUAGE => LANGUAGE}]
           # @return [V2::V3::Problem::CustomFiles]
           def self.custom(member:)
             new(member: member, discriminant: "custom")

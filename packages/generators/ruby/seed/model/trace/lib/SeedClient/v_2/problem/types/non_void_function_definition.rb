@@ -29,8 +29,8 @@ module SeedClient
         # @return [V2::Problem::NonVoidFunctionDefinition]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          signature V2::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
-          code V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
+          signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
+          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
           new(signature: signature, code: code, additional_properties: struct)
         end
 
@@ -46,8 +46,8 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          NonVoidFunctionSignature.validate_raw(obj: obj.signature)
-          FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
+          V2::Problem::NonVoidFunctionSignature.validate_raw(obj: obj.signature)
+          V2::Problem::FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
         end
       end
     end

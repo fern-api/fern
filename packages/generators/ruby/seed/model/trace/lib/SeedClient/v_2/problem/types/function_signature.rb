@@ -44,7 +44,7 @@ module SeedClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return []
+        # @return [JSON]
         def to_json(*_args)
           case @discriminant
           when "void"
@@ -66,11 +66,11 @@ module SeedClient
         def self.validate_raw(obj:)
           case obj.type
           when "void"
-            VoidFunctionSignature.validate_raw(obj: obj)
+            V2::Problem::VoidFunctionSignature.validate_raw(obj: obj)
           when "nonVoid"
-            NonVoidFunctionSignature.validate_raw(obj: obj)
+            V2::Problem::NonVoidFunctionSignature.validate_raw(obj: obj)
           when "voidThatTakesActualResult"
-            VoidFunctionSignatureThatTakesActualResult.validate_raw(obj: obj)
+            V2::Problem::VoidFunctionSignatureThatTakesActualResult.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -79,8 +79,8 @@ module SeedClient
         # For Union Types, is_a? functionality is delegated to the wrapped member.
         #
         # @param obj [Object]
-        # @return []
-        def is_a(obj)
+        # @return [Boolean]
+        def is_a?(obj)
           @member.is_a?(obj)
         end
 

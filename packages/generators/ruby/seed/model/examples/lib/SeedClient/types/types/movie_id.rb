@@ -2,6 +2,6 @@
 
 module SeedClient
   module Types
-    MovieId = String
+    MOVIE_ID = String
   end
 end

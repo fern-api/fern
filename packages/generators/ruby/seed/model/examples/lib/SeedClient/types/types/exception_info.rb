@@ -29,9 +29,9 @@ module SeedClient
       # @return [Types::ExceptionInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_type struct.exceptionType
-        exception_message struct.exceptionMessage
-        exception_stacktrace struct.exceptionStacktrace
+        exception_type = struct.exceptionType
+        exception_message = struct.exceptionMessage
+        exception_stacktrace = struct.exceptionStacktrace
         new(exception_type: exception_type, exception_message: exception_message,
             exception_stacktrace: exception_stacktrace, additional_properties: struct)
       end

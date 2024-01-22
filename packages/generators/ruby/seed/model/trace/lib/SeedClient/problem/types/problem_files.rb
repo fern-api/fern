@@ -27,8 +27,8 @@ module SeedClient
       # @return [Problem::ProblemFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        solution_file Commons::FileInfo.from_json(json_object: struct.solutionFile)
-        read_only_files struct.readOnlyFiles.map do |v|
+        solution_file = Commons::FileInfo.from_json(json_object: struct.solutionFile)
+        read_only_files = struct.readOnlyFiles.map do |v|
           Commons::FileInfo.from_json(json_object: v)
         end
         new(solution_file: solution_file, read_only_files: read_only_files, additional_properties: struct)
@@ -46,7 +46,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        FileInfo.validate_raw(obj: obj.solution_file)
+        Commons::FileInfo.validate_raw(obj: obj.solution_file)
         obj.read_only_files.is_a?(Array) != false || raise("Passed value for field obj.read_only_files is not the expected type, validation failed.")
       end
     end

@@ -6,7 +6,6 @@ require_relative "commons/types/BinaryTreeNodeAndTreeValue"
 require_relative "commons/types/SinglyLinkedListNodeAndListValue"
 require_relative "commons/types/DoublyLinkedListNodeAndListValue"
 require_relative "commons/types/GenericValue"
-require_relative "commons/types/DebugVariableValue"
 
 module SeedClient
   module Commons
@@ -68,7 +67,7 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "integerValue"
@@ -120,21 +119,21 @@ module SeedClient
         when "charValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "mapValue"
-          DebugMapValue.validate_raw(obj: obj)
+          Commons::DebugMapValue.validate_raw(obj: obj)
         when "listValue"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "binaryTreeNodeValue"
-          BinaryTreeNodeAndTreeValue.validate_raw(obj: obj)
+          Commons::BinaryTreeNodeAndTreeValue.validate_raw(obj: obj)
         when "singlyLinkedListNodeValue"
-          SinglyLinkedListNodeAndListValue.validate_raw(obj: obj)
+          Commons::SinglyLinkedListNodeAndListValue.validate_raw(obj: obj)
         when "doublyLinkedListNodeValue"
-          DoublyLinkedListNodeAndListValue.validate_raw(obj: obj)
+          Commons::DoublyLinkedListNodeAndListValue.validate_raw(obj: obj)
         when "undefinedValue"
           # noop
         when "nullValue"
           # noop
         when "genericValue"
-          GenericValue.validate_raw(obj: obj)
+          Commons::GenericValue.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -143,8 +142,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

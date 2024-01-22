@@ -23,7 +23,7 @@ module SeedClient
       # @return [Submission::RuntimeError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message struct.message
+        message = struct.message
         new(message: message, additional_properties: struct)
       end
 

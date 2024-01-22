@@ -29,9 +29,9 @@ module SeedClient
       # @return [Problem::GenericCreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message struct.message
-        type struct.type
-        stacktrace struct.stacktrace
+        message = struct.message
+        type = struct.type
+        stacktrace = struct.stacktrace
         new(message: message, type: type, stacktrace: stacktrace, additional_properties: struct)
       end
 

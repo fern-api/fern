@@ -24,7 +24,7 @@ module SeedClient
         # @return [Types::Object::ObjectWithMapOfMap]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          map struct.map
+          map = struct.map
           new(map: map, additional_properties: struct)
         end
 

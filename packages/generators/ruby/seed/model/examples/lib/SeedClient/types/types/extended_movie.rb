@@ -5,7 +5,7 @@ require "json"
 
 module SeedClient
   module Types
-    class ExtendedMovie < Movie
+    class ExtendedMovie < Types::Movie
       attr_reader :cast, :additional_properties
 
       # @param cast [Array<String>]
@@ -24,7 +24,7 @@ module SeedClient
       # @return [Types::ExtendedMovie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        cast struct.cast
+        cast = struct.cast
         new(cast: cast, additional_properties: struct)
       end
 

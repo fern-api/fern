@@ -27,8 +27,8 @@ module SeedClient
       # @return [Commons::DebugKeyValuePairs]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key Commons::DebugVariableValue.from_json(json_object: struct.key)
-        value Commons::DebugVariableValue.from_json(json_object: struct.value)
+        key = Commons::DebugVariableValue.from_json(json_object: struct.key)
+        value = Commons::DebugVariableValue.from_json(json_object: struct.value)
         new(key: key, value: value, additional_properties: struct)
       end
 
@@ -44,8 +44,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        DebugVariableValue.validate_raw(obj: obj.key)
-        DebugVariableValue.validate_raw(obj: obj.value)
+        Commons::DebugVariableValue.validate_raw(obj: obj.key)
+        Commons::DebugVariableValue.validate_raw(obj: obj.value)
       end
     end
   end
