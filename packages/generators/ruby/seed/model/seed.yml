@@ -3,6 +3,6 @@ docker: fernapi/fern-ruby-model:local
 dockerCommand: yarn workspace @fern-api/fern-ruby-model dockerTagLocal
 language: ruby
 generatorType: model
-defaultOutputMode: local_files
+defaultOutputMode: github
 fixtures: []
 scripts: []
