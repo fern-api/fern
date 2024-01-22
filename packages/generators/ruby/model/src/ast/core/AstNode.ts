@@ -10,6 +10,7 @@ export declare namespace AstNode {
     export interface Init {
         documentation?: string;
         contentOverride?: string;
+        writeImports?: boolean;
     }
 
     export interface AddText {
@@ -27,13 +28,16 @@ export abstract class AstNode {
     // should be used if you know exactly the content you'd like to generate
     public contentOverride: string | undefined;
 
+    public writeImports: boolean;
+
     // Pretty print content
     private text: string[] = [];
 
-    constructor({ documentation, contentOverride }: AstNode.Init) {
+    constructor({ documentation, contentOverride, writeImports = false }: AstNode.Init) {
         // TODO: Make documentation a list of strings split by returns then make them multi-line comments
         this.documentation = documentation?.replace("\n", " ");
         this.contentOverride = contentOverride;
+        this.writeImports = writeImports;
     }
 
     public abstract writeInternal(startingTabSpaces: number): void;
@@ -70,6 +74,12 @@ export abstract class AstNode {
     }
 
     public write(startingTabSpaces = 0): string {
+        if (this.writeImports) {
+            this.getImports().forEach((i) =>
+                this.addText({ stringContent: i.write(startingTabSpaces), startingTabSpaces })
+            );
+            this.addNewLine();
+        }
         this.writeInternal(startingTabSpaces);
         const text =
             this.contentOverride !== undefined

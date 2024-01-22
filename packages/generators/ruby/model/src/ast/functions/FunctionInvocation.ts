@@ -1,14 +1,13 @@
 import { BLOCK_END } from "../../utils/Constants";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Variable } from "../Variable";
 
 interface BlockConfiguration {
     arguments?: string;
-    expressions: Expression[];
+    expressions: AstNode[];
 }
 export declare namespace FunctionInvocation {
     export interface Init extends AstNode.Init {

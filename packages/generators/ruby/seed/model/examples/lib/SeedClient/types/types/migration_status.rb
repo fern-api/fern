@@ -2,7 +2,7 @@
 
 module SeedClient
   module Types
-    # @type [Hash{String => String}] 
-    MigrationStatus = { running: 'RUNNING', failed: 'FAILED', finished: 'FINISHED' }.frozen
+    # @type [Hash{String => String}]
+    MigrationStatus = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.frozen
   end
 end

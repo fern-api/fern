@@ -1,0 +1,27 @@
+openapi: 3.0.1
+info:
+  title: api-wide-base-path
+  version: ''
+paths:
+  /{serviceParam}/{endpointParam}:
+    post:
+      operationId: service_post
+      tags:
+        - Service
+      parameters:
+        - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: endpointParam
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: ''
+components:
+  schemas: {}
+  securitySchemes: {}

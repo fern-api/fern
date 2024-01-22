@@ -8,23 +8,32 @@ export declare namespace GeneratedRubyFile {
     export interface Init {
         rootNode: AstNode;
         directoryPrefix: RelativeFilePath;
-        entityName: Name;
+        entityName: Name | string;
         isTestFile?: boolean;
+        isConfigurationFile?: boolean;
     }
 }
 export class GeneratedRubyFile extends GeneratedFile {
-    public entityName: Name;
+    public entityName: Name | string;
     public rootNode: AstNode;
 
-    constructor({ rootNode, directoryPrefix, entityName, isTestFile = false }: GeneratedRubyFile.Init) {
+    constructor({
+        rootNode,
+        directoryPrefix,
+        entityName,
+        isTestFile = false,
+        isConfigurationFile = false
+    }: GeneratedRubyFile.Init) {
         // Path needs lib or test, if test: test/ is relative path
         // otherwise, relative path is:
         // lib/client_class_name.rb or request_client.rb or environment.rb or exception.rb OR
         // /lib/client_class_name/package_name/services/service_name.rb OR /lib/client_class_name/package_name/types/type_name.rb
-        const updatedPrefix = isTestFile
-            ? join(RelativeFilePath.of("test"), directoryPrefix)
-            : join(RelativeFilePath.of("lib"), directoryPrefix);
-        super(`${entityName.snakeCase.safeName}.rb`, updatedPrefix, FROZEN_STRING_PREFIX + rootNode.write());
+        const updatedPrefix = isConfigurationFile ? "" : isTestFile ? "test" : "lib";
+        super(
+            typeof entityName === "string" ? entityName : `${entityName.snakeCase.safeName}.rb`,
+            join(RelativeFilePath.of(updatedPrefix), directoryPrefix),
+            FROZEN_STRING_PREFIX + rootNode.write()
+        );
 
         this.entityName = entityName;
         this.rootNode = rootNode;

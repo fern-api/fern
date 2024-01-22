@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -9,14 +10,18 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { TYPES_DIRECTORY } from "../utils/Constants";
+import { GeneratedRubyFile } from "../utils/GeneratedRubyFile";
+import { ExternalDependency } from "./ExternalDependency";
+import { Module_ } from "./Module_";
+import { Property } from "./Property";
+import { Yardoc } from "./Yardoc";
 import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
 import { Enum, EnumReference } from "./abstractions/Enum";
 import { SerializableObject } from "./abstractions/SerializableObject";
 import { UndiscriminatedUnion } from "./abstractions/UndiscriminatedUnion";
 import { ClassReference } from "./classes/ClassReference";
 import { Expression } from "./expressions/Expression";
-import { Property } from "./Property";
-import { Yardoc } from "./Yardoc";
+import { Gemspec } from "./gem/Gemspec";
 
 export function generateAliasDefinitionFromTypeDeclaration(
     aliasTypeDeclaration: AliasTypeDeclaration,
@@ -151,4 +156,45 @@ export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName
         ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
         TYPES_DIRECTORY
     ].join("/");
+}
+
+export function generateGemspec(gemName: string, extraDependencies: ExternalDependency[]): GeneratedRubyFile {
+    const gemspec = new Gemspec({ moduleName: gemName, dependencies: extraDependencies });
+    return new GeneratedRubyFile({
+        rootNode: gemspec,
+        directoryPrefix: RelativeFilePath.of("."),
+        entityName: `${gemName}.gemspec`,
+        isConfigurationFile: true
+    });
+}
+
+// To ensure configuration may be managed independently from dependenies, we introduce a new config file that
+// users are encouraged to fernignore and update, while allowing the traditional gemspec to remain generated
+export function generateGemConfig(gemName: string): GeneratedRubyFile {
+    const gemspec = new Module_({
+        name: gemName,
+        child: new Module_({
+            name: "Gemconfig",
+            child: [
+                new Expression({ leftSide: "NAME", rightSide: `"${gemName}"` }),
+                new Expression({ leftSide: "VERSION", rightSide: '""' }),
+                new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze' }),
+                new Expression({ leftSide: "EMAIL", rightSide: '""' }),
+                new Expression({ leftSide: "SUMMARY", rightSide: '""' }),
+                new Expression({ leftSide: "DESCRIPTION", rightSide: '""' }),
+                // Input some placeholders for installation to work
+                new Expression({ leftSide: "HOMEPAGE", rightSide: '"https://github.com/REPO/URL"' }),
+                new Expression({ leftSide: "SOURCE_CODE_URI", rightSide: '"https://github.com/REPO/URL"' }),
+                new Expression({
+                    leftSide: "CHANGELOG_URI",
+                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"'
+                })
+            ]
+        })
+    });
+    return new GeneratedRubyFile({
+        rootNode: gemspec,
+        directoryPrefix: RelativeFilePath.of("."),
+        entityName: "gemconfig.rb"
+    });
 }

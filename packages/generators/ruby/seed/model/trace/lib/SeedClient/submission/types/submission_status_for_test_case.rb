@@ -1,62 +1,67 @@
 # frozen_string_literal: true
-require "json"
-require "submission/types/TestCaseResultWithStdout"
-require "submission/types/TestCaseGrade"
-require "submission/types/TracedTestCase"
+
+require_relative "json"
+require_relative "submission/types/TestCaseResultWithStdout"
+require_relative "submission/types/TestCaseGrade"
+require_relative "submission/types/TracedTestCase"
 
 module SeedClient
   module Submission
     class SubmissionStatusForTestCase
       attr_reader :member, :discriminant
+
       private_class_method :new
       alias kind_of? is_a?
-      # @param member [Object] 
-      # @param discriminant [String] 
-      # @return [Submission::SubmissionStatusForTestCase] 
+      # @param member [Object]
+      # @param discriminant [String]
+      # @return [Submission::SubmissionStatusForTestCase]
       def initialze(member:, discriminant:)
-        # @type [Object] 
+        # @type [Object]
         @member = member
-        # @type [String] 
+        # @type [String]
         @discriminant = discriminant
       end
+
       # Deserialize a JSON object to an instance of SubmissionStatusForTestCase
       #
-      # @param json_object [JSON] 
-      # @return [Submission::SubmissionStatusForTestCase] 
+      # @param json_object [JSON]
+      # @return [Submission::SubmissionStatusForTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct.type
-        when "graded"
-          member = Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
-        when "gradedV2"
-          member = Submission::TestCaseGrade.from_json(json_object: json_object.value)
-        when "traced"
-          member = Submission::TracedTestCase.from_json(json_object: json_object)
-        else
-          member = Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
-        end
+        member = case struct.type
+                 when "graded"
+                   Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
+                 when "gradedV2"
+                   Submission::TestCaseGrade.from_json(json_object: json_object.value)
+                 when "traced"
+                   Submission::TracedTestCase.from_json(json_object: json_object)
+                 else
+                   Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
+                 end
         new(member: member, discriminant: struct.type)
       end
+
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [] 
-      def to_json
+      # @return []
+      def to_json(*_args)
         case @discriminant
         when "graded"
-          { type: @discriminant, **@member.to_json() }.to_json()
+          { type: @discriminant, **@member.to_json }.to_json
         when "gradedV2"
-          { type: @discriminant, value: @member }.to_json()
+          { type: @discriminant, value: @member }.to_json
         when "traced"
-          { type: @discriminant, **@member.to_json() }.to_json()
+          { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json()
+          { type: @discriminant, value: @member }.to_json
         end
-        @member.to_json()
+        @member.to_json
       end
+
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
       #
-      # @param obj [Object] 
-      # @return [Void] 
+      # @param obj [Object]
+      # @return [Void]
       def self.validate_raw(obj:)
         case obj.type
         when "graded"
@@ -69,25 +74,29 @@ module SeedClient
           raise("Passed value matched no type within the union, validation failed.")
         end
       end
+
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
-      # @param obj [Object] 
-      # @return [] 
+      # @param obj [Object]
+      # @return []
       def is_a(obj)
         @member.is_a?(obj)
       end
-      # @param member [Submission::TestCaseResultWithStdout] 
-      # @return [Submission::SubmissionStatusForTestCase] 
+
+      # @param member [Submission::TestCaseResultWithStdout]
+      # @return [Submission::SubmissionStatusForTestCase]
       def self.graded(member:)
         new(member: member, discriminant: "graded")
       end
-      # @param member [Submission::TestCaseGrade] 
-      # @return [Submission::SubmissionStatusForTestCase] 
+
+      # @param member [Submission::TestCaseGrade]
+      # @return [Submission::SubmissionStatusForTestCase]
       def self.graded_v_2(member:)
         new(member: member, discriminant: "gradedV2")
       end
-      # @param member [Submission::TracedTestCase] 
-      # @return [Submission::SubmissionStatusForTestCase] 
+
+      # @param member [Submission::TracedTestCase]
+      # @return [Submission::SubmissionStatusForTestCase]
       def self.traced(member:)
         new(member: member, discriminant: "traced")
       end

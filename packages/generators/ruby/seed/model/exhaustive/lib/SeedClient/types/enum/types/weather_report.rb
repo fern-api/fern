@@ -3,8 +3,8 @@
 module SeedClient
   module Types
     module Enum
-      # @type [Hash{String => String}] 
-      WeatherReport = { sunny: 'SUNNY', cloudy: 'CLOUDY', raining: 'RAINING', snowing: 'SNOWING' }.frozen
+      # @type [Hash{String => String}]
+      WeatherReport = { sunny: "SUNNY", cloudy: "CLOUDY", raining: "RAINING", snowing: "SNOWING" }.frozen
     end
   end
 end

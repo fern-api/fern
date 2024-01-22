@@ -47,7 +47,10 @@ export class SerializableObject extends Class_ {
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
-                    onObject: new ClassReference({ name: "JSON", import_: new Import({ from: "json" }) }),
+                    onObject: new ClassReference({
+                        name: "JSON",
+                        import_: new Import({ from: "json", isExternal: true })
+                    }),
                     baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({

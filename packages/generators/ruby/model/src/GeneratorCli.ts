@@ -3,7 +3,11 @@ import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { exec } from "child_process";
+import { camelCase, upperFirst } from "lodash-es";
+import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
 import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
+import { generateBinDir, generateGemfile, generateGitignore, generateReadme, generateRubocopConfig } from "./GemFiles";
 import { GeneratedFile } from "./utils/GeneratedFile";
 import { TypesGenerator } from "./utils/TypesGenerator";
 
@@ -16,12 +20,21 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     }
 
     // TODO: This (as an abstract function) will probably be used across CLIs
-    // private generateRepositoryBoilerPlate(
-    //     config: FernGeneratorExec.GeneratorConfig,
-    //     customConfig: RubyModelCustomConfig
-    // ) {
-    private generateRepositoryBoilerPlate() {
-        // Static files and dependencies (.github/, bin/, .gitignore, .rubocop_*, Gemfile, Rakefile, README)
+    private generateRepositoryBoilerPlate(
+        config: FernGeneratorExec.GeneratorConfig,
+        customConfig: RubyModelCustomConfig
+    ) {
+        const gemName = customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client";
+        const boilerPlateFiles = [];
+        boilerPlateFiles.push(generateGitignore());
+        boilerPlateFiles.push(generateRubocopConfig());
+        boilerPlateFiles.push(generateGemfile());
+        boilerPlateFiles.push(generateReadme());
+        boilerPlateFiles.push(generateGemspec(gemName, []));
+        boilerPlateFiles.push(generateGemConfig(gemName));
+        boilerPlateFiles.concat(generateBinDir(gemName));
+
+        this.generatedFiles.push(...boilerPlateFiles);
     }
 
     private generateTypes(
@@ -47,7 +60,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ) {
         generatorContext.logger.debug("Generating boilerplate");
-        this.generateRepositoryBoilerPlate();
+        this.generateRepositoryBoilerPlate(config, customConfig);
         generatorContext.logger.debug("Generating types");
         this.generateTypes(config, customConfig, generatorContext, intermediateRepresentation);
     }
@@ -78,5 +91,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         this.generatedFiles.forEach(async (f) => {
             await f.write(AbsoluteFilePath.of(config.output.path));
         });
+        // Run lint and generate lockfile
+        exec(`rubocop --auto-correct-all ${config.output.path}`);
     }
 }

@@ -7,32 +7,25 @@ import { Import } from "./Import";
 export declare namespace Module_ {
     export interface Init extends AstNode.Init {
         name: string;
-        child?: Module_ | Class_ | AstNode;
-        isOuterModule?: boolean;
+        child?: Module_ | Class_ | AstNode | AstNode[];
     }
 }
 
 export class Module_ extends AstNode {
     public name: string;
-    public child?: AstNode;
-    private isOuterModule: boolean;
+    public children?: AstNode[];
 
-    constructor({ name, child, isOuterModule = true, ...rest }: Module_.Init) {
+    constructor({ name, child, ...rest }: Module_.Init) {
         super(rest);
         this.name = name;
-        this.child = child;
-        this.isOuterModule = isOuterModule;
+        this.children = child instanceof AstNode ? [child] : child;
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        if (this.isOuterModule) {
-            this.getImports().forEach((i) =>
-                this.addText({ stringContent: i.write(startingTabSpaces), startingTabSpaces })
-            );
-            this.addNewLine();
-        }
         this.addText({ stringContent: this.name, templateString: "module %s", startingTabSpaces });
-        this.addText({ stringContent: this.child?.write(this.tabSizeSpaces + startingTabSpaces) });
+        this.children?.forEach((child) =>
+            this.addText({ stringContent: child.write(this.tabSizeSpaces + startingTabSpaces) })
+        );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 
@@ -45,7 +38,7 @@ export class Module_ extends AstNode {
                 (moduleWrappedItem = new Module_({
                     name: mod,
                     child: moduleWrappedItem,
-                    isOuterModule: rootModule === mod
+                    writeImports: rootModule === mod
                 }))
         );
 
@@ -57,6 +50,8 @@ export class Module_ extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        return this.child?.getImports() ?? new Set();
+        let imports = new Set<Import>();
+        this.children?.forEach((c) => (imports = new Set([...imports, ...c.getImports()])));
+        return imports;
     }
 }

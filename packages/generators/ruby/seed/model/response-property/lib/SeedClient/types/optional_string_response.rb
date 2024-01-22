@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "types/StringResponse"
+
+require_relative "types/StringResponse"
 
 module SeedClient
   OptionalStringResponse = StringResponse

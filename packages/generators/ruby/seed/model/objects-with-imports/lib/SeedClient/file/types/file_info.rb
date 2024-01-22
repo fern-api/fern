@@ -2,7 +2,7 @@
 
 module SeedClient
   module File
-    # @type [Hash{String => String}] 
-    FileInfo = { regular: 'REGULAR', directory: 'DIRECTORY' }.frozen
+    # @type [Hash{String => String}]
+    FileInfo = { regular: "REGULAR", directory: "DIRECTORY" }.frozen
   end
 end

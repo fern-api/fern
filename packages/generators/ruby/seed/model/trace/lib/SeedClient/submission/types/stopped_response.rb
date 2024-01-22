@@ -1,39 +1,44 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionId"
+
+require_relative "submission/types/SubmissionId"
 require "json"
 
 module SeedClient
   module Submission
     class StoppedResponse
       attr_reader :submission_id, :additional_properties
-      # @param submission_id [Submission::SubmissionId] 
+
+      # @param submission_id [Submission::SubmissionId]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::StoppedResponse] 
+      # @return [Submission::StoppedResponse]
       def initialze(submission_id:, additional_properties: nil)
-        # @type [Submission::SubmissionId] 
+        # @type [Submission::SubmissionId]
         @submission_id = submission_id
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of StoppedResponse
       #
-      # @param json_object [JSON] 
-      # @return [Submission::StoppedResponse] 
+      # @param json_object [JSON]
+      # @return [Submission::StoppedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
         new(submission_id: submission_id, additional_properties: struct)
       end
+
       # Serialize an instance of StoppedResponse to a JSON object
       #
-      # @return [JSON] 
-      def to_json
-        { submissionId: @submission_id }.to_json()
+      # @return [JSON]
+      def to_json(*_args)
+        { submissionId: @submission_id }.to_json
       end
+
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
       #
-      # @param obj [Object] 
-      # @return [Void] 
+      # @param obj [Object]
+      # @return [Void]
       def self.validate_raw(obj:)
         SubmissionId.validate_raw(obj: obj.submission_id)
       end

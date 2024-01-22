@@ -2,7 +2,7 @@
 
 module SeedClient
   module Submission
-    # @type [Hash{String => String}] 
-    SubmissionTypeEnum = { test: 'TEST' }.frozen
+    # @type [Hash{String => String}]
+    SubmissionTypeEnum = { test: "TEST" }.frozen
   end
 end

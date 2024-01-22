@@ -2,13 +2,13 @@ import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeR
 import { format } from "util";
 import { getLocationForTypeDeclaration } from "../AbstractionUtilities";
 import { Argument } from "../Argument";
+import { Import } from "../Import";
+import { Module_ } from "../Module_";
+import { Variable } from "../Variable";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
-import { Module_ } from "../Module_";
-import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -352,7 +352,7 @@ export declare namespace Set_ {
 export class SetReference extends ClassReference {
     constructor({ innerType, ...rest }: Set_.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
-        super({ name: "Set", typeHint: `Set<${typeName}>`, import_: new Import({ from: "set" }), ...rest });
+        super({ name: "Set", typeHint: `Set<${typeName}>`, import_: new Import({ from: "set", isExternal: true }), ...rest });
     }
 
     public toJson(variable: Variable | string): FunctionInvocation | undefined {
@@ -365,7 +365,7 @@ export class SetReference extends ClassReference {
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
-            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set" }) }),
+            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
             arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
         });
     }

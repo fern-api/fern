@@ -1,61 +1,62 @@
 # frozen_string_literal: true
-require "json"
-require "ast/types/FieldValue"
-require "ast/types/FieldValue"
+
+require_relative "json"
+require_relative "ast/types/FieldValue"
 
 module SeedClient
   module Ast
     class ContainerValue
       attr_reader :member, :discriminant
+
       private_class_method :new
       alias kind_of? is_a?
-      # @param member [Object] 
-      # @param discriminant [String] 
-      # @return [Ast::ContainerValue] 
+      # @param member [Object]
+      # @param discriminant [String]
+      # @return [Ast::ContainerValue]
       def initialze(member:, discriminant:)
-        # @type [Object] 
+        # @type [Object]
         @member = member
-        # @type [String] 
+        # @type [String]
         @discriminant = discriminant
       end
+
       # Deserialize a JSON object to an instance of ContainerValue
       #
-      # @param json_object [JSON] 
-      # @return [Ast::ContainerValue] 
+      # @param json_object [JSON]
+      # @return [Ast::ContainerValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct.type
-        when "list"
-          member = json_object.value.map() do | v |
-  Ast::FieldValue.from_json(json_object: v)
-end
-        when "optional"
-          member = Ast::FieldValue.from_json(json_object: json_object.value)
-        else
-          member = json_object.map() do | v |
-  Ast::FieldValue.from_json(json_object: v)
-end
-        end
+        member = case struct.type
+                 when "list"
+                   json_object.value.map do |v|
+                     Ast::FieldValue.from_json(json_object: v)
+                   end
+                 when "optional"
+                   Ast::FieldValue.from_json(json_object: json_object.value)
+                 else
+                   json_object.map do |v|
+                     Ast::FieldValue.from_json(json_object: v)
+                   end
+                 end
         new(member: member, discriminant: struct.type)
       end
+
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [] 
-      def to_json
+      # @return []
+      def to_json(*_args)
         case @discriminant
         when "list"
-          { type: @discriminant, value: @member }.to_json()
         when "optional"
-          { type: @discriminant, value: @member }.to_json()
-        else
-          { type: @discriminant, value: @member }.to_json()
         end
-        @member.to_json()
+        { type: @discriminant, value: @member }.to_json
+        @member.to_json
       end
+
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
       #
-      # @param obj [Object] 
-      # @return [Void] 
+      # @param obj [Object]
+      # @return [Void]
       def self.validate_raw(obj:)
         case obj.type
         when "list"
@@ -66,20 +67,23 @@ end
           raise("Passed value matched no type within the union, validation failed.")
         end
       end
+
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
-      # @param obj [Object] 
-      # @return [] 
+      # @param obj [Object]
+      # @return []
       def is_a(obj)
         @member.is_a?(obj)
       end
-      # @param member [Array<Ast::FieldValue>] 
-      # @return [Ast::ContainerValue] 
+
+      # @param member [Array<Ast::FieldValue>]
+      # @return [Ast::ContainerValue]
       def self.list(member:)
         new(member: member, discriminant: "list")
       end
-      # @param member [Ast::FieldValue] 
-      # @return [Ast::ContainerValue] 
+
+      # @param member [Ast::FieldValue]
+      # @return [Ast::ContainerValue]
       def self.optional(member:)
         new(member: member, discriminant: "optional")
       end
