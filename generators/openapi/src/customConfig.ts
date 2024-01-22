@@ -2,7 +2,7 @@ import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
 
 export interface FernOpenapiCustomConfig {
     format: "yaml" | "json";
-    customOverrides: {};
+    customOverrides: Record<string, unknown>;
 }
 
 const DEFAULT_FERN_OPENAPI_CUSTOM_CONFIG: FernOpenapiCustomConfig = {

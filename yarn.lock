@@ -2658,7 +2658,6 @@ __metadata:
     openapi-types: ^12.1.3
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    simple-progress-webpack-plugin: ^2.0.0
     typescript: 4.6.4
     url-join: ^5.0.0
     webpack: ^5.76.0

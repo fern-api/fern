@@ -4451,7 +4451,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["openapi-types", "npm:12.1.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["simple-progress-webpack-plugin", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:2.0.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"],\
             ["webpack", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:5.89.0"],\
@@ -18072,22 +18071,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["figures", "npm:3.2.0"],\
             ["log-update", "npm:4.0.0"],\
             ["webpack", "virtual:3516dfa9f5005cb8eb0c0a9304c51c36735a692c4fd22a9a174546be3f5edb8ceeafaa7b251f6cf64f503f1e88a6fa52abfa98a34b240e9f7c7afc78a62cedf4#npm:5.89.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/webpack",\
-            "webpack"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:2.0.0", {\
-          "packageLocation": "./.yarn/__virtual__/simple-progress-webpack-plugin-virtual-7b4fc219ed/0/cache/simple-progress-webpack-plugin-npm-2.0.0-acf418c11f-6e51960c9e.zip/node_modules/simple-progress-webpack-plugin/",\
-          "packageDependencies": [\
-            ["simple-progress-webpack-plugin", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:2.0.0"],\
-            ["@types/webpack", null],\
-            ["chalk", "npm:4.1.2"],\
-            ["figures", "npm:3.2.0"],\
-            ["log-update", "npm:4.0.0"],\
-            ["webpack", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:5.89.0"]\
           ],\
           "packagePeers": [\
             "@types/webpack",\
