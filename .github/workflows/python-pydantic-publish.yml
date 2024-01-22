@@ -18,6 +18,7 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Install
+        working-directory: ./generators/python
         run: poetry install
 
       - name: Log in to Docker Hub
