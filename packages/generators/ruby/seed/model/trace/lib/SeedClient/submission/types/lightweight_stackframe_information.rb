@@ -36,7 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { numStackFrames: @num_stack_frames, topStackFrameMethodName: @top_stack_frame_method_name }.to_json
+        { "numStackFrames": @num_stack_frames, "topStackFrameMethodName": @top_stack_frame_method_name }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

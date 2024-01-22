@@ -49,7 +49,7 @@ module SeedClient
         when "list"
         when "optional"
         end
-        { type: @discriminant, value: @member }.to_json
+        { "type": @discriminant, "value": @member }.to_json
         @member.to_json
       end
 

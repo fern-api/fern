@@ -47,7 +47,7 @@ module SeedClient
         when "timeout"
           { type: @discriminant }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

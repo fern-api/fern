@@ -46,13 +46,13 @@ module SeedClient
       def to_json(*_args)
         case @discriminant
         when "primitive_value"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "object_value"
           { type: @discriminant, **@member.to_json }.to_json
         when "container_value"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

@@ -93,7 +93,7 @@ module SeedClient
         when "finished"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

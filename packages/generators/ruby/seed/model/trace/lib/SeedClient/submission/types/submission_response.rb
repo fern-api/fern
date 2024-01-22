@@ -56,17 +56,17 @@ module SeedClient
         when "serverInitialized"
           { type: @discriminant }.to_json
         when "problemInitialized"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "workspaceInitialized"
           { type: @discriminant }.to_json
         when "serverErrored"
           { type: @discriminant, **@member.to_json }.to_json
         when "codeExecutionUpdate"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "terminated"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

@@ -41,7 +41,7 @@ module SeedClient
         when "generic"
           { _type: @discriminant, **@member.to_json }.to_json
         else
-          { _type: @discriminant, value: @member }.to_json
+          { "_type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

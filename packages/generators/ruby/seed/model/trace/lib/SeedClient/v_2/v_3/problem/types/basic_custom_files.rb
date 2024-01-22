@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "v_2/v_3/problem/types/NonVoidFunctionSignature"
 require_relative "v_2/v_3/problem/types/BasicTestCaseTemplate"
 require "json"
@@ -9,49 +10,55 @@ module SeedClient
       module Problem
         class BasicCustomFiles
           attr_reader :method_name, :signature, :additional_files, :basic_test_case_template, :additional_properties
-          # @param method_name [String] 
-          # @param signature [V2::V3::Problem::NonVoidFunctionSignature] 
-          # @param additional_files [Hash{LANGUAGE => LANGUAGE}] 
-          # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate] 
+
+          # @param method_name [String]
+          # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
+          # @param additional_files [Hash{LANGUAGE => LANGUAGE}]
+          # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
-          def initialze(method_name:, signature:, additional_files:, basic_test_case_template:, additional_properties: nil)
-            # @type [String] 
+          def initialze(method_name:, signature:, additional_files:, basic_test_case_template:,
+                        additional_properties: nil)
+            # @type [String]
             @method_name = method_name
-            # @type [V2::V3::Problem::NonVoidFunctionSignature] 
+            # @type [V2::V3::Problem::NonVoidFunctionSignature]
             @signature = signature
-            # @type [Hash{LANGUAGE => LANGUAGE}] 
+            # @type [Hash{LANGUAGE => LANGUAGE}]
             @additional_files = additional_files
-            # @type [V2::V3::Problem::BasicTestCaseTemplate] 
+            # @type [V2::V3::Problem::BasicTestCaseTemplate]
             @basic_test_case_template = basic_test_case_template
             # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
           end
+
           # Deserialize a JSON object to an instance of BasicCustomFiles
           #
-          # @param json_object [JSON] 
+          # @param json_object [JSON]
           # @return [V2::V3::Problem::BasicCustomFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             method_name = struct.methodName
             signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
-            additional_files = struct.additionalFiles.transform_values() do | v |
-  LANGUAGE.key(v)
-end
+            additional_files = struct.additionalFiles.transform_values do |v|
+              LANGUAGE.key(v)
+            end
             basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: struct.basicTestCaseTemplate)
-            new(method_name: method_name, signature: signature, additional_files: additional_files, basic_test_case_template: basic_test_case_template, additional_properties: struct)
+            new(method_name: method_name, signature: signature, additional_files: additional_files,
+                basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end
+
           # Serialize an instance of BasicCustomFiles to a JSON object
           #
           # @return [JSON]
-          def to_json
-            { methodName: @method_name, signature: @signature, additionalFiles: @additional_files.transform_values() do | v |
-  LANGUAGE.key(v)
-end, basicTestCaseTemplate: @basic_test_case_template }.to_json()
+          def to_json(*_args)
+            { "methodName": @method_name, "signature": @signature, "additionalFiles": @additional_files.transform_values do |v|
+                                                                                        LANGUAGE.key(v)
+                                                                                      end, "basicTestCaseTemplate": @basic_test_case_template }.to_json
           end
+
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
           #
-          # @param obj [Object] 
+          # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
             obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")

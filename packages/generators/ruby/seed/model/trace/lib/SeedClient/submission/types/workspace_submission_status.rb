@@ -52,15 +52,15 @@ module SeedClient
         when "stopped"
           { type: @discriminant }.to_json
         when "errored"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "running"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "ran"
           { type: @discriminant, **@member.to_json }.to_json
         when "traced"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

@@ -40,8 +40,8 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { exceptionType: @exception_type, exceptionMessage: @exception_message,
-          exceptionStacktrace: @exception_stacktrace }.to_json
+        { "exceptionType": @exception_type, "exceptionMessage": @exception_message,
+          "exceptionStacktrace": @exception_stacktrace }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

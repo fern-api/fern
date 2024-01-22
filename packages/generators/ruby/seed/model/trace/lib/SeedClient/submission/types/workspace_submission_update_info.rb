@@ -55,7 +55,7 @@ module SeedClient
       def to_json(*_args)
         case @discriminant
         when "running"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "ran"
           { type: @discriminant, **@member.to_json }.to_json
         when "stopped"
@@ -65,11 +65,11 @@ module SeedClient
         when "tracedV2"
           { type: @discriminant, **@member.to_json }.to_json
         when "errored"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "finished"
           { type: @discriminant }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

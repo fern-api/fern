@@ -45,8 +45,8 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { timeSubmitted: @time_submitted, submission: @submission, language: @language.fetch,
-          submissionTypeState: @submission_type_state }.to_json
+        { "timeSubmitted": @time_submitted, "submission": @submission, "language": @language.fetch,
+          "submissionTypeState": @submission_type_state }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

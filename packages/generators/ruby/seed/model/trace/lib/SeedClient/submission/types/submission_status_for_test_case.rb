@@ -49,11 +49,11 @@ module SeedClient
         when "graded"
           { type: @discriminant, **@member.to_json }.to_json
         when "gradedV2"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "traced"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

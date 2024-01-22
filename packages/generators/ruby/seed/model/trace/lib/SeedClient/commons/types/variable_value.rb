@@ -66,19 +66,19 @@ module SeedClient
       def to_json(*_args)
         case @discriminant
         when "integerValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "booleanValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "doubleValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "stringValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "charValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "mapValue"
           { type: @discriminant, **@member.to_json }.to_json
         when "listValue"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "binaryTreeValue"
           { type: @discriminant, **@member.to_json }.to_json
         when "singlyLinkedListValue"
@@ -88,7 +88,7 @@ module SeedClient
         when "nullValue"
           { type: @discriminant }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end

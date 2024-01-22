@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { stringifiedType: @stringified_type, stringifiedValue: @stringified_value }.to_json
+        { "stringifiedType": @stringified_type, "stringifiedValue": @stringified_value }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

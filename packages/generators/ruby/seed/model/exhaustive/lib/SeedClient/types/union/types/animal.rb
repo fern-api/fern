@@ -49,7 +49,7 @@ module SeedClient
           when "cat"
             { animal: @discriminant, **@member.to_json }.to_json
           else
-            { animal: @discriminant, value: @member }.to_json
+            { "animal": @discriminant, value: @member }.to_json
           end
           @member.to_json
         end

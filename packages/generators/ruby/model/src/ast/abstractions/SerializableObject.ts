@@ -1,8 +1,4 @@
 import { Argument } from "../Argument";
-import { Import } from "../Import";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
-import { Variable, VariableType } from "../Variable";
 import {
     ClassReference,
     GenericClassReference,
@@ -15,6 +11,10 @@ import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { Import } from "../Import";
+import { Parameter } from "../Parameter";
+import { Property } from "../Property";
+import { Variable, VariableType } from "../Variable";
 
 const additional_properties_property = new Property({
     name: "additional_properties",
@@ -111,7 +111,7 @@ export class SerializableObject extends Class_ {
                 onObject: new HashInstance({
                     contents: new Map(
                         properties?.map((prop) => [
-                            prop.wireValue ?? prop.name,
+                            `"${prop.wireValue ?? prop.name}"`,
                             prop.toVariable().toJson() ?? prop.toVariable()
                         ])
                     )

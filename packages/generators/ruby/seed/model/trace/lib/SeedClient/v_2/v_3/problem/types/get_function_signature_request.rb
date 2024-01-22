@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "v_2/v_3/problem/types/FunctionSignature"
 require "json"
 
@@ -8,33 +9,37 @@ module SeedClient
       module Problem
         class GetFunctionSignatureRequest
           attr_reader :function_signature, :additional_properties
-          # @param function_signature [V2::V3::Problem::FunctionSignature] 
+
+          # @param function_signature [V2::V3::Problem::FunctionSignature]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::GetFunctionSignatureRequest]
           def initialze(function_signature:, additional_properties: nil)
-            # @type [V2::V3::Problem::FunctionSignature] 
+            # @type [V2::V3::Problem::FunctionSignature]
             @function_signature = function_signature
             # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
           end
+
           # Deserialize a JSON object to an instance of GetFunctionSignatureRequest
           #
-          # @param json_object [JSON] 
+          # @param json_object [JSON]
           # @return [V2::V3::Problem::GetFunctionSignatureRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             function_signature = V2::V3::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
             new(function_signature: function_signature, additional_properties: struct)
           end
+
           # Serialize an instance of GetFunctionSignatureRequest to a JSON object
           #
           # @return [JSON]
-          def to_json
-            { functionSignature: @function_signature }.to_json()
+          def to_json(*_args)
+            { "functionSignature": @function_signature }.to_json
           end
+
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
           #
-          # @param obj [Object] 
+          # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
             V2::V3::Problem::FunctionSignature.validate_raw(obj: obj.function_signature)

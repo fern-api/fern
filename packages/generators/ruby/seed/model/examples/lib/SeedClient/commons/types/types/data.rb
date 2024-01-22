@@ -45,7 +45,7 @@ module SeedClient
           when "string"
           when "base64"
           end
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
           @member.to_json
         end
 

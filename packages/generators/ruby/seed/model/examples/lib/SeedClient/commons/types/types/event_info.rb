@@ -47,9 +47,9 @@ module SeedClient
           when "metadata"
             { type: @discriminant, **@member.to_json }.to_json
           when "tag"
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, "value": @member }.to_json
           else
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, value: @member }.to_json
           end
           @member.to_json
         end

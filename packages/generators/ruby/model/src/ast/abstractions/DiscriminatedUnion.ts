@@ -185,8 +185,8 @@ export class DiscriminatedUnion extends Class_ {
             singleProperty: (sutp: SingleUnionTypeProperty) =>
                 new HashInstance({
                     contents: new Map([
-                        [discriminantField, discriminantProperty.toVariable()],
-                        [sutp.name.wireValue, memberProperty.toVariable()]
+                        [`"${discriminantField}"`, discriminantProperty.toVariable()],
+                        [`"${sutp.name.wireValue}"`, memberProperty.toVariable()]
                     ])
                 }),
             noProperties: () =>
@@ -233,7 +233,7 @@ export class DiscriminatedUnion extends Class_ {
                             baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                             onObject: new HashInstance({
                                 contents: new Map([
-                                    [discriminantField, discriminantProperty.toVariable()],
+                                    [`"${discriminantField}"`, discriminantProperty.toVariable()],
                                     ["value", memberProperty.toVariable()]
                                 ])
                             })
