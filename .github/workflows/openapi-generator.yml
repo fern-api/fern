@@ -27,7 +27,9 @@ jobs:
         run: npm install -g @fern-api/seed-cli@0.15.0-rc51
 
       - name: Test
+        working-directory: ./generators/openapi
         run: seed test --workspace openapi --parallel 10
 
       - name: Ensure no changes to git-tracked files
+        working-directory: ./generators/openapi
         run: git --no-pager diff
