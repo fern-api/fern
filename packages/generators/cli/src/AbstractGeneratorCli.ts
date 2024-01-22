@@ -10,8 +10,6 @@ import tmp from "tmp-promise";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
-const OUTPUT_ZIP_FILENAME = "output.zip";
-
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
     [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
@@ -83,10 +81,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            const destinationZip = join(
-                AbsoluteFilePath.of(config.output.path),
-                RelativeFilePath.of(OUTPUT_ZIP_FILENAME)
-            );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await this.publishPackage(
@@ -104,11 +98,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         await loadIntermediateRepresentation(config.irFilepath),
                         githubOutputMode
                     );
-                    await this.zipDirectoryContents({
-                        directoryToZip: AbsoluteFilePath.of(config.output.path),
-                        destinationZip,
-                        logger: generatorContext.logger
-                    });
                 },
                 downloadFiles: async () => {
                     await this.writeForDownload(
@@ -124,11 +113,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             await generatorNotificationService?.sendUpdateOrThrow(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
-                    FernGeneratorExec.ExitStatusUpdate.successful({
-                        zipFilename: OUTPUT_ZIP_FILENAME
-                    })
-                )
+                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
             await generatorNotificationService?.sendUpdateOrThrow(
