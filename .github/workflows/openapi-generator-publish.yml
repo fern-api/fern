@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - "generators/openapi/VERSION"
-    # branches:
-    #   - main
+    branches:
+      - main
 
 jobs:
   check:
