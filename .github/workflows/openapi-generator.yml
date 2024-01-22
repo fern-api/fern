@@ -1,0 +1,67 @@
+name: openapi
+
+on:
+  workflow_call:
+  pull_request:
+    paths:
+      - "generators/openapi/**"
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Lint
+        run: yarn workspace @fern-api/openapi-generator lint
+
+      - name: Format
+        run: yarn workspace @fern-api/openapi-generator format:check
+
+      - name: Check dependencies
+        run: yarn workspace @fern-api/openapi-generator depcheck
+
+      - name: Compile
+        run: yarn workspace @fern-api/openapi-generator compile
+
+      - name: Run tests
+        run: |
+          npm install -g fern-api
+          yarn workspace @fern-api/openapi-generator test --ci
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff
+
+  seed-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Install seed
+        run: npm install -g @fern-api/seed-cli@0.15.0-rc51
+
+      - name: Test
+        run: seed test --workspace openapi --parallel 10
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff
