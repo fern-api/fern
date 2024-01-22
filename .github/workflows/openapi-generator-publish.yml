@@ -32,9 +32,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Compile
-        working-directory: ./generators/python
-        run: yarn compile
+      - name: Build CLI
+        working-directory: ./generators/openapi
+        run: yarn dist:cli
 
       - name: Print Version
         run: |
@@ -42,8 +42,11 @@ jobs:
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-      - name: Publish Docker
-        run: |
-          yarn openapi:dockerTagVersion "$VERSION"
-          docker tag fern-openapi:"$VERSION" fernapi/fern-openapi:"$VERSION"
-          docker push fernapi/fern-openapi:"$VERSION"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/openapi
+          file: ./generators/openapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-openapi:${{env.VERSION}}
