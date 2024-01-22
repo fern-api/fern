@@ -75,8 +75,8 @@ class VariableType(pydantic.BaseModel):
         boolean_type: typing.Callable[[], T_Result],
         string_type: typing.Callable[[], T_Result],
         char_type: typing.Callable[[], T_Result],
-        list_type: typing.Callable[[commons_types_list_type_ListType], T_Result],
-        map_type: typing.Callable[[commons_types_map_type_MapType], T_Result],
+        list_type: typing.Callable[["commons_types_list_type_ListType"], T_Result],
+        map_type: typing.Callable[["commons_types_map_type_MapType"], T_Result],
         binary_tree_type: typing.Callable[[], T_Result],
         singly_linked_list_type: typing.Callable[[], T_Result],
         doubly_linked_list_type: typing.Callable[[], T_Result],
@@ -181,4 +181,6 @@ _VariableType.ListType.update_forward_refs(
 _VariableType.MapType.update_forward_refs(
     ListType=commons_types_list_type_ListType, MapType=commons_types_map_type_MapType, VariableType=VariableType
 )
-VariableType.update_forward_refs()
+VariableType.update_forward_refs(
+    ListType=commons_types_list_type_ListType, MapType=commons_types_map_type_MapType, VariableType=VariableType
+)

@@ -14,7 +14,7 @@ except ImportError:
 
 
 class MapValue(pydantic.BaseModel):
-    key_value_pairs: typing.List[KeyValuePair] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -31,5 +31,6 @@ class MapValue(pydantic.BaseModel):
 
 
 from .key_value_pair import KeyValuePair  # noqa: E402
+from .variable_value import VariableValue  # noqa: E402
 
-MapValue.update_forward_refs()
+MapValue.update_forward_refs(KeyValuePair=KeyValuePair)

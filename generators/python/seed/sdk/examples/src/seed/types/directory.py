@@ -42,7 +42,7 @@ class Directory(pydantic.BaseModel):
 
     name: str
     files: typing.Optional[typing.List[File]]
-    directories: typing.Optional[typing.List[Directory]]
+    directories: typing.Optional[typing.List["Directory"]]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -58,4 +58,4 @@ class Directory(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-Directory.update_forward_refs()
+Directory.update_forward_refs(Directory=Directory)

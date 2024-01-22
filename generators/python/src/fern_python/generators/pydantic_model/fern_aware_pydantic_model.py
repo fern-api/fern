@@ -218,7 +218,7 @@ class FernAwarePydanticModel:
                     if self._context.does_type_reference_other_type(referenced_type_id, type_id):
                         self.add_ghost_reference(referenced_type_id)
 
-            self._pydantic_model.finish()
+        self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
         root_type = self._pydantic_model.get_root_type()

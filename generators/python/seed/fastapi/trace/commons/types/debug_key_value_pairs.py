@@ -14,8 +14,8 @@ except ImportError:
 
 
 class DebugKeyValuePairs(pydantic.BaseModel):
-    key: DebugVariableValue
-    value: DebugVariableValue
+    key: "DebugVariableValue"
+    value: "DebugVariableValue"
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -30,6 +30,7 @@ class DebugKeyValuePairs(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+from .debug_map_value import DebugMapValue  # noqa: E402
 from .debug_variable_value import DebugVariableValue  # noqa: E402
 
-DebugKeyValuePairs.update_forward_refs()
+DebugKeyValuePairs.update_forward_refs(DebugVariableValue=DebugVariableValue)

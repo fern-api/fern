@@ -43,8 +43,8 @@ class Node(pydantic.BaseModel):
     """
 
     name: str
-    nodes: typing.Optional[typing.List[Node]]
-    trees: typing.Optional[typing.List[Tree]]
+    nodes: typing.Optional[typing.List["Node"]]
+    trees: typing.Optional[typing.List["Tree"]]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -62,4 +62,4 @@ class Node(pydantic.BaseModel):
 
 from .tree import Tree  # noqa: E402
 
-Node.update_forward_refs()
+Node.update_forward_refs(Node=Node, Tree=Tree)

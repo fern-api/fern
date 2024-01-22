@@ -42,7 +42,7 @@ class FieldValue(pydantic.BaseModel):
         self,
         primitive_value: typing.Callable[[ast_types_primitive_value_PrimitiveValue], T_Result],
         object_value: typing.Callable[[ast_types_object_value_ObjectValue], T_Result],
-        container_value: typing.Callable[[ast_types_container_value_ContainerValue], T_Result],
+        container_value: typing.Callable[["ast_types_container_value_ContainerValue"], T_Result],
     ) -> T_Result:
         if self.__root__.type == "primitive_value":
             return primitive_value(self.__root__.value)
@@ -93,4 +93,4 @@ class _FieldValue:
 _FieldValue.ContainerValue.update_forward_refs(
     ContainerValue=ast_types_container_value_ContainerValue, FieldValue=FieldValue
 )
-FieldValue.update_forward_refs()
+FieldValue.update_forward_refs(ContainerValue=ast_types_container_value_ContainerValue, FieldValue=FieldValue)

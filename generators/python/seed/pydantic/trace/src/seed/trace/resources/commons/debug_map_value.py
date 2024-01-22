@@ -14,7 +14,7 @@ except ImportError:
 
 
 class DebugMapValue(pydantic.BaseModel):
-    key_value_pairs: typing.List[DebugKeyValuePairs] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(alias="keyValuePairs")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -30,5 +30,6 @@ class DebugMapValue(pydantic.BaseModel):
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
+from .debug_variable_value import DebugVariableValue  # noqa: E402
 
-DebugMapValue.update_forward_refs()
+DebugMapValue.update_forward_refs(DebugKeyValuePairs=DebugKeyValuePairs)

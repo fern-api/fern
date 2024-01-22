@@ -14,8 +14,8 @@ except ImportError:
 
 
 class MapType(pydantic.BaseModel):
-    key_type: VariableType = pydantic.Field(alias="keyType")
-    value_type: VariableType = pydantic.Field(alias="valueType")
+    key_type: "VariableType" = pydantic.Field(alias="keyType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -30,6 +30,7 @@ class MapType(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+from .list_type import ListType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
-MapType.update_forward_refs()
+MapType.update_forward_refs(VariableType=VariableType)
