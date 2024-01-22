@@ -1,79 +1,83 @@
 # frozen_string_literal: true
+
 require "set"
-require "types/Name"
+require_relative "types/Name"
 require "json"
-require "set"
 
 module SeedClient
   class Type
-    attr_reader :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen, :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :nineteen, :additional_properties
-    # @param one [Integer] 
-    # @param two [Float] 
-    # @param three [String] 
-    # @param four [Boolean] 
-    # @param five [Long] 
-    # @param six [DateTime] 
-    # @param seven [Date] 
-    # @param eight [UUID] 
-    # @param nine [String] 
-    # @param ten [Array<Integer>] 
-    # @param eleven [Set<Float>] 
-    # @param twelve [Hash{String => String}] 
-    # @param thirteen [Long] 
-    # @param fourteen [Object] 
-    # @param fifteen [Array<Array<Integer>>] 
-    # @param sixteen [Array<Hash{String => String}>] 
-    # @param seventeen [Array<UUID>] 
-    # @param eighteen [String] 
-    # @param nineteen [Name] 
+    attr_reader :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen,
+                :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :nineteen, :additional_properties
+
+    # @param one [Integer]
+    # @param two [Float]
+    # @param three [String]
+    # @param four [Boolean]
+    # @param five [Long]
+    # @param six [DateTime]
+    # @param seven [Date]
+    # @param eight [UUID]
+    # @param nine [String]
+    # @param ten [Array<Integer>]
+    # @param eleven [Set<Float>]
+    # @param twelve [Hash{String => String}]
+    # @param thirteen [Long]
+    # @param fourteen [Object]
+    # @param fifteen [Array<Array<Integer>>]
+    # @param sixteen [Array<Hash{String => String}>]
+    # @param seventeen [Array<UUID>]
+    # @param eighteen [String]
+    # @param nineteen [Name]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Type] 
-    def initialze(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, thirteen: nil, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:, additional_properties: nil)
-      # @type [Integer] 
+    # @return [Type]
+    def initialze(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:,
+                  fifteen:, sixteen:, seventeen:, eighteen:, nineteen:, thirteen: nil, additional_properties: nil)
+      # @type [Integer]
       @one = one
-      # @type [Float] 
+      # @type [Float]
       @two = two
-      # @type [String] 
+      # @type [String]
       @three = three
-      # @type [Boolean] 
+      # @type [Boolean]
       @four = four
-      # @type [Long] 
+      # @type [Long]
       @five = five
-      # @type [DateTime] 
+      # @type [DateTime]
       @six = six
-      # @type [Date] 
+      # @type [Date]
       @seven = seven
-      # @type [UUID] 
+      # @type [UUID]
       @eight = eight
-      # @type [String] 
+      # @type [String]
       @nine = nine
-      # @type [Array<Integer>] 
+      # @type [Array<Integer>]
       @ten = ten
-      # @type [Set<Float>] 
+      # @type [Set<Float>]
       @eleven = eleven
-      # @type [Hash{String => String}] 
+      # @type [Hash{String => String}]
       @twelve = twelve
-      # @type [Long] 
+      # @type [Long]
       @thirteen = thirteen
-      # @type [Object] 
+      # @type [Object]
       @fourteen = fourteen
-      # @type [Array<Array<Integer>>] 
+      # @type [Array<Array<Integer>>]
       @fifteen = fifteen
-      # @type [Array<Hash{String => String}>] 
+      # @type [Array<Hash{String => String}>]
       @sixteen = sixteen
-      # @type [Array<UUID>] 
+      # @type [Array<UUID>]
       @seventeen = seventeen
-      # @type [String] 
+      # @type [String]
       @eighteen = eighteen
-      # @type [Name] 
+      # @type [Name]
       @nineteen = nineteen
-      # @type [OpenStruct] 
+      # @type [OpenStruct]
       @additional_properties = additional_properties
     end
+
     # Deserialize a JSON object to an instance of Type
     #
-    # @param json_object [JSON] 
-    # @return [Type] 
+    # @param json_object [JSON]
+    # @return [Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       one = struct.one
@@ -95,33 +99,35 @@ module SeedClient
       seventeen = struct.seventeen
       eighteen = struct.eighteen
       nineteen = Name.from_json(json_object: struct.nineteen)
-      new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine, ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
+      new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
+          ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
     end
+
     # Serialize an instance of Type to a JSON object
     #
-    # @return [JSON] 
-    def to_json
+    # @return [JSON]
+    def to_json(*_args)
       {
- one: @one,
- two: @two,
- three: @three,
- four: @four,
- five: @five,
- six: @six,
- seven: @seven,
- eight: @eight,
- nine: @nine,
- ten: @ten,
- eleven: @eleven.to_a(),
- twelve: @twelve,
- thirteen: @thirteen,
- fourteen: @fourteen,
- fifteen: @fifteen,
- sixteen: @sixteen,
- seventeen: @seventeen,
- eighteen: @eighteen,
- nineteen: @nineteen
-}.to_json()
+        one: @one,
+        two: @two,
+        three: @three,
+        four: @four,
+        five: @five,
+        six: @six,
+        seven: @seven,
+        eight: @eight,
+        nine: @nine,
+        ten: @ten,
+        eleven: @eleven.to_a,
+        twelve: @twelve,
+        thirteen: @thirteen,
+        fourteen: @fourteen,
+        fifteen: @fifteen,
+        sixteen: @sixteen,
+        seventeen: @seventeen,
+        eighteen: @eighteen,
+        nineteen: @nineteen
+      }.to_json
     end
   end
 end

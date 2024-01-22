@@ -37,7 +37,7 @@ export class EnumReference extends HashReference {
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "key", functionBody: [] }),
-            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set" }) }),
+            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
             arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
         });
     }

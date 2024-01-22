@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "v_2/problem/types/TestCaseId"
+
+require_relative "v_2/problem/types/TestCaseId"
 require "json"
 
 module SeedClient
@@ -7,25 +8,27 @@ module SeedClient
     module Problem
       class TestCaseMetadata
         attr_reader :id, :name, :hidden, :additional_properties
-        # @param id [V2::Problem::TestCaseId] 
-        # @param name [String] 
-        # @param hidden [Boolean] 
+
+        # @param id [V2::Problem::TestCaseId]
+        # @param name [String]
+        # @param hidden [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Problem::TestCaseMetadata] 
+        # @return [V2::Problem::TestCaseMetadata]
         def initialze(id:, name:, hidden:, additional_properties: nil)
-          # @type [V2::Problem::TestCaseId] 
+          # @type [V2::Problem::TestCaseId]
           @id = id
-          # @type [String] 
+          # @type [String]
           @name = name
-          # @type [Boolean] 
+          # @type [Boolean]
           @hidden = hidden
-          # @type [OpenStruct] 
+          # @type [OpenStruct]
           @additional_properties = additional_properties
         end
+
         # Deserialize a JSON object to an instance of TestCaseMetadata
         #
-        # @param json_object [JSON] 
-        # @return [V2::Problem::TestCaseMetadata] 
+        # @param json_object [JSON]
+        # @return [V2::Problem::TestCaseMetadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           id = V2::Problem::TestCaseId.from_json(json_object: struct.id)
@@ -33,15 +36,16 @@ module SeedClient
           hidden = struct.hidden
           new(id: id, name: name, hidden: hidden, additional_properties: struct)
         end
+
         # Serialize an instance of TestCaseMetadata to a JSON object
         #
-        # @return [JSON] 
-        def to_json
+        # @return [JSON]
+        def to_json(*_args)
           {
- id: @id,
- name: @name,
- hidden: @hidden
-}.to_json()
+            id: @id,
+            name: @name,
+            hidden: @hidden
+          }.to_json
         end
       end
     end

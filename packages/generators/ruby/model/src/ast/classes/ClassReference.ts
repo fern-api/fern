@@ -297,7 +297,7 @@ export declare namespace Set_ {
 export class SetReference extends ClassReference {
     constructor({ innerType, ...rest }: Set_.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
-        super({ name: `Set<${typeName}>`, import_: new Import({ from: "set" }), ...rest });
+        super({ name: `Set<${typeName}>`, import_: new Import({ from: "set", isExternal: true }), ...rest });
     }
 
     public toJson(variable: Variable | string): FunctionInvocation | undefined {
@@ -310,7 +310,7 @@ export class SetReference extends ClassReference {
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
-            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set" }) }),
+            onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
             arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
         });
     }

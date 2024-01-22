@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require "commons/types/NodeId"
+require_relative "commons/types/NodeId"
 require "json"
 
 module SeedClient

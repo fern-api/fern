@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-require "v_2/v_3/problem/types/Parameter"
-require "commons/types/VariableType"
+
+require_relative "v_2/v_3/problem/types/Parameter"
+require_relative "commons/types/VariableType"
 require "json"
 
 module SeedClient
@@ -9,38 +10,41 @@ module SeedClient
       module Problem
         class VoidFunctionSignatureThatTakesActualResult
           attr_reader :parameters, :actual_result_type, :additional_properties
-          # @param parameters [Array<V2::V3::Problem::Parameter>] 
-          # @param actual_result_type [Commons::VariableType] 
+
+          # @param parameters [Array<V2::V3::Problem::Parameter>]
+          # @param actual_result_type [Commons::VariableType]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult] 
+          # @return [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult]
           def initialze(parameters:, actual_result_type:, additional_properties: nil)
-            # @type [Array<V2::V3::Problem::Parameter>] 
+            # @type [Array<V2::V3::Problem::Parameter>]
             @parameters = parameters
-            # @type [Commons::VariableType] 
+            # @type [Commons::VariableType]
             @actual_result_type = actual_result_type
-            # @type [OpenStruct] 
+            # @type [OpenStruct]
             @additional_properties = additional_properties
           end
+
           # Deserialize a JSON object to an instance of VoidFunctionSignatureThatTakesActualResult
           #
-          # @param json_object [JSON] 
-          # @return [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult] 
+          # @param json_object [JSON]
+          # @return [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters = struct.parameters.map() do | v |
- V2::V3::Problem::Parameter.from_json(json_object: v)
-end
+            parameters = struct.parameters.map do |v|
+              V2::V3::Problem::Parameter.from_json(json_object: v)
+            end
             actual_result_type = Commons::VariableType.from_json(json_object: struct.actualResultType)
             new(parameters: parameters, actual_result_type: actual_result_type, additional_properties: struct)
           end
+
           # Serialize an instance of VoidFunctionSignatureThatTakesActualResult to a JSON object
           #
-          # @return [JSON] 
-          def to_json
+          # @return [JSON]
+          def to_json(*_args)
             {
- parameters: @parameters,
- actualResultType: @actual_result_type
-}.to_json()
+              parameters: @parameters,
+              actualResultType: @actual_result_type
+            }.to_json
           end
         end
       end

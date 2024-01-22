@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require "v_2/problem/types/NonVoidFunctionSignature"
-require "v_2/problem/types/BasicTestCaseTemplate"
+require_relative "v_2/problem/types/NonVoidFunctionSignature"
+require_relative "v_2/problem/types/BasicTestCaseTemplate"
 require "json"
 
 module SeedClient

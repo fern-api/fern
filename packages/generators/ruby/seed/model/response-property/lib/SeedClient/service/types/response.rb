@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require "types/WithMetadata"
-require "service/types/WithDocs"
-require "service/types/Movie"
+require_relative "types/WithMetadata"
+require_relative "service/types/WithDocs"
+require_relative "service/types/Movie"
 require "json"
 
 module SeedClient

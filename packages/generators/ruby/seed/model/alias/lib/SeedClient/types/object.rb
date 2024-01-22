@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require "types/Type"
+
+require_relative "types/Type"
 
 module SeedClient
   Object = Type

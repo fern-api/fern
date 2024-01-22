@@ -2,10 +2,10 @@
 
 module SeedClient
   module Playlist
-    # @type [Hash{String => String}] 
+    # @type [Hash{String => String}]
     ReservedKeywordEnum = {
- is: 'is',
- as: 'as'
-}.frozen
+      is: "is",
+      as: "as"
+    }.frozen
   end
 end

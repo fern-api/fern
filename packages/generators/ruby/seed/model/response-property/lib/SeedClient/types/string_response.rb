@@ -1,34 +1,38 @@
 # frozen_string_literal: true
+
 require "json"
 
 module SeedClient
   class StringResponse
     attr_reader :data, :additional_properties
-    # @param data [String] 
+
+    # @param data [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [StringResponse] 
+    # @return [StringResponse]
     def initialze(data:, additional_properties: nil)
-      # @type [String] 
+      # @type [String]
       @data = data
-      # @type [OpenStruct] 
+      # @type [OpenStruct]
       @additional_properties = additional_properties
     end
+
     # Deserialize a JSON object to an instance of StringResponse
     #
-    # @param json_object [JSON] 
-    # @return [StringResponse] 
+    # @param json_object [JSON]
+    # @return [StringResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       data = struct.data
       new(data: data, additional_properties: struct)
     end
+
     # Serialize an instance of StringResponse to a JSON object
     #
-    # @return [JSON] 
-    def to_json
+    # @return [JSON]
+    def to_json(*_args)
       {
- data: @data
-}.to_json()
+        data: @data
+      }.to_json
     end
   end
 end

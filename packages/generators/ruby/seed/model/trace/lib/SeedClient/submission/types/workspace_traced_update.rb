@@ -1,35 +1,39 @@
 # frozen_string_literal: true
+
 require "json"
 
 module SeedClient
   module Submission
     class WorkspaceTracedUpdate
       attr_reader :trace_responses_size, :additional_properties
-      # @param trace_responses_size [Integer] 
+
+      # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::WorkspaceTracedUpdate] 
+      # @return [Submission::WorkspaceTracedUpdate]
       def initialze(trace_responses_size:, additional_properties: nil)
-        # @type [Integer] 
+        # @type [Integer]
         @trace_responses_size = trace_responses_size
-        # @type [OpenStruct] 
+        # @type [OpenStruct]
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of WorkspaceTracedUpdate
       #
-      # @param json_object [JSON] 
-      # @return [Submission::WorkspaceTracedUpdate] 
+      # @param json_object [JSON]
+      # @return [Submission::WorkspaceTracedUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         trace_responses_size = struct.traceResponsesSize
         new(trace_responses_size: trace_responses_size, additional_properties: struct)
       end
+
       # Serialize an instance of WorkspaceTracedUpdate to a JSON object
       #
-      # @return [JSON] 
-      def to_json
+      # @return [JSON]
+      def to_json(*_args)
         {
- traceResponsesSize: @trace_responses_size
-}.to_json()
+          traceResponsesSize: @trace_responses_size
+        }.to_json
       end
     end
   end

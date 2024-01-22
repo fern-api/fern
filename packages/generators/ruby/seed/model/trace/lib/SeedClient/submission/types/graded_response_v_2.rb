@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require "submission/types/SubmissionId"
+require_relative "submission/types/SubmissionId"
 require "json"
 
 module SeedClient

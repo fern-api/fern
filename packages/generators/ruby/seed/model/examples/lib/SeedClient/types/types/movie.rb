@@ -1,43 +1,46 @@
 # frozen_string_literal: true
-require "types/types/MovieId"
-require "commons/types/types/Tag"
+
+require_relative "types/types/MovieId"
+require_relative "commons/types/types/Tag"
 require "json"
 
 module SeedClient
   module Types
     class Movie
       attr_reader :id, :title, :from, :rating, :type, :tag, :book, :additional_properties
-      # @param id [Types::MovieId] 
-      # @param title [String] 
-      # @param from [String] 
+
+      # @param id [Types::MovieId]
+      # @param title [String]
+      # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
-      # @param type [String] 
-      # @param tag [Commons::Types::Tag] 
-      # @param book [String] 
+      # @param type [String]
+      # @param tag [Commons::Types::Tag]
+      # @param book [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Types::Movie] 
+      # @return [Types::Movie]
       def initialze(id:, title:, from:, rating:, type:, tag:, book: nil, additional_properties: nil)
-        # @type [Types::MovieId] 
+        # @type [Types::MovieId]
         @id = id
-        # @type [String] 
+        # @type [String]
         @title = title
-        # @type [String] 
+        # @type [String]
         @from = from
-        # @type [Float] 
+        # @type [Float]
         @rating = rating
-        # @type [String] 
+        # @type [String]
         @type = type
-        # @type [Commons::Types::Tag] 
+        # @type [Commons::Types::Tag]
         @tag = tag
-        # @type [String] 
+        # @type [String]
         @book = book
-        # @type [OpenStruct] 
+        # @type [OpenStruct]
         @additional_properties = additional_properties
       end
+
       # Deserialize a JSON object to an instance of Movie
       #
-      # @param json_object [JSON] 
-      # @return [Types::Movie] 
+      # @param json_object [JSON]
+      # @return [Types::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = Types::MovieId.from_json(json_object: struct.id)
@@ -47,21 +50,23 @@ module SeedClient
         type = struct.type
         tag = Commons::Types::Tag.from_json(json_object: struct.tag)
         book = struct.book
-        new(id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book, additional_properties: struct)
+        new(id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
+            additional_properties: struct)
       end
+
       # Serialize an instance of Movie to a JSON object
       #
-      # @return [JSON] 
-      def to_json
+      # @return [JSON]
+      def to_json(*_args)
         {
- id: @id,
- title: @title,
- from: @from,
- rating: @rating,
- type: @type,
- tag: @tag,
- book: @book
-}.to_json()
+          id: @id,
+          title: @title,
+          from: @from,
+          rating: @rating,
+          type: @type,
+          tag: @tag,
+          book: @book
+        }.to_json
       end
     end
   end
