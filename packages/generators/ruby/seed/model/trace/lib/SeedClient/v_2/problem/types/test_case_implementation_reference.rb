@@ -26,7 +26,7 @@ module SeedClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           case struct.type
-          when "template_id"
+          when "templateId"
             member = V2::Problem::TestCaseTemplateId.from_json(json_object: json_object.value)
           when "implementation"
             member = V2::Problem::TestCaseImplementation.from_json(json_object: json_object)
@@ -40,7 +40,7 @@ module SeedClient
         # @return [] 
         def to_json
           case @discriminant
-          when "template_id"
+          when "templateId"
             { type: @discriminant, value: @member }.to_json()
           when "implementation"
             { type: @discriminant, **@member.to_json() }.to_json()
@@ -55,7 +55,7 @@ module SeedClient
         # @return [Void] 
         def self.validate_raw(obj:)
           case obj.type
-          when "template_id"
+          when "templateId"
             TestCaseTemplateId.validate_raw(obj: obj)
           when "implementation"
             TestCaseImplementation.validate_raw(obj: obj)
@@ -73,7 +73,7 @@ module SeedClient
         # @param member [V2::Problem::TestCaseTemplateId] 
         # @return [V2::Problem::TestCaseImplementationReference] 
         def self.template_id(member:)
-          new(member: member, discriminant: "template_id")
+          new(member: member, discriminant: "templateId")
         end
         # @param member [V2::Problem::TestCaseImplementation] 
         # @return [V2::Problem::TestCaseImplementationReference] 

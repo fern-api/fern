@@ -34,7 +34,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "building_executor"
+        when "buildingExecutor"
           member = Submission::BuildingExecutorResponse.from_json(json_object: json_object)
         when "running"
           member = Submission::RunningResponse.from_json(json_object: json_object)
@@ -44,15 +44,15 @@ module SeedClient
           member = Submission::StoppedResponse.from_json(json_object: json_object)
         when "graded"
           member = Submission::GradedResponse.from_json(json_object: json_object)
-        when "graded_v_2"
+        when "gradedV2"
           member = Submission::GradedResponseV2.from_json(json_object: json_object)
-        when "workspace_ran"
+        when "workspaceRan"
           member = Submission::WorkspaceRanResponse.from_json(json_object: json_object)
         when "recording"
           member = Submission::RecordingResponseNotification.from_json(json_object: json_object)
         when "recorded"
           member = Submission::RecordedResponseNotification.from_json(json_object: json_object)
-        when "invalid_request"
+        when "invalidRequest"
           member = Submission::InvalidRequestResponse.from_json(json_object: json_object)
         when "finished"
           member = Submission::FinishedResponse.from_json(json_object: json_object)
@@ -66,7 +66,7 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "building_executor"
+        when "buildingExecutor"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "running"
           { type: @discriminant, **@member.to_json() }.to_json()
@@ -76,15 +76,15 @@ module SeedClient
           { type: @discriminant, **@member.to_json() }.to_json()
         when "graded"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "graded_v_2"
+        when "gradedV2"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "workspace_ran"
+        when "workspaceRan"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "recording"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "recorded"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "invalid_request"
+        when "invalidRequest"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "finished"
           { type: @discriminant, **@member.to_json() }.to_json()
@@ -99,7 +99,7 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "building_executor"
+        when "buildingExecutor"
           BuildingExecutorResponse.validate_raw(obj: obj)
         when "running"
           RunningResponse.validate_raw(obj: obj)
@@ -109,15 +109,15 @@ module SeedClient
           StoppedResponse.validate_raw(obj: obj)
         when "graded"
           GradedResponse.validate_raw(obj: obj)
-        when "graded_v_2"
+        when "gradedV2"
           GradedResponseV2.validate_raw(obj: obj)
-        when "workspace_ran"
+        when "workspaceRan"
           WorkspaceRanResponse.validate_raw(obj: obj)
         when "recording"
           RecordingResponseNotification.validate_raw(obj: obj)
         when "recorded"
           RecordedResponseNotification.validate_raw(obj: obj)
-        when "invalid_request"
+        when "invalidRequest"
           InvalidRequestResponse.validate_raw(obj: obj)
         when "finished"
           FinishedResponse.validate_raw(obj: obj)
@@ -135,7 +135,7 @@ module SeedClient
       # @param member [Submission::BuildingExecutorResponse] 
       # @return [Submission::CodeExecutionUpdate] 
       def self.building_executor(member:)
-        new(member: member, discriminant: "building_executor")
+        new(member: member, discriminant: "buildingExecutor")
       end
       # @param member [Submission::RunningResponse] 
       # @return [Submission::CodeExecutionUpdate] 
@@ -160,12 +160,12 @@ module SeedClient
       # @param member [Submission::GradedResponseV2] 
       # @return [Submission::CodeExecutionUpdate] 
       def self.graded_v_2(member:)
-        new(member: member, discriminant: "graded_v_2")
+        new(member: member, discriminant: "gradedV2")
       end
       # @param member [Submission::WorkspaceRanResponse] 
       # @return [Submission::CodeExecutionUpdate] 
       def self.workspace_ran(member:)
-        new(member: member, discriminant: "workspace_ran")
+        new(member: member, discriminant: "workspaceRan")
       end
       # @param member [Submission::RecordingResponseNotification] 
       # @return [Submission::CodeExecutionUpdate] 
@@ -180,7 +180,7 @@ module SeedClient
       # @param member [Submission::InvalidRequestResponse] 
       # @return [Submission::CodeExecutionUpdate] 
       def self.invalid_request(member:)
-        new(member: member, discriminant: "invalid_request")
+        new(member: member, discriminant: "invalidRequest")
       end
       # @param member [Submission::FinishedResponse] 
       # @return [Submission::CodeExecutionUpdate] 

@@ -24,7 +24,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "playlist_id"
+        when "playlistId"
           member = Playlist::PlaylistId.from_json(json_object: json_object.value)
         else
           member = Playlist::PlaylistId.from_json(json_object: json_object)
@@ -36,7 +36,7 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "playlist_id"
+        when "playlistId"
           { type: @discriminant, value: @member }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -49,7 +49,7 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "playlist_id"
+        when "playlistId"
           PlaylistId.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -65,7 +65,7 @@ module SeedClient
       # @param member [Playlist::PlaylistId] 
       # @return [Playlist::PlaylistIdNotFoundErrorBody] 
       def self.playlist_id(member:)
-        new(member: member, discriminant: "playlist_id")
+        new(member: member, discriminant: "playlistId")
       end
     end
   end

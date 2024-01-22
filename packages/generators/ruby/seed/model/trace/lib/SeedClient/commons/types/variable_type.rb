@@ -25,25 +25,25 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "integer_type"
+        when "integerType"
           member = nil
-        when "double_type"
+        when "doubleType"
           member = nil
-        when "boolean_type"
+        when "booleanType"
           member = nil
-        when "string_type"
+        when "stringType"
           member = nil
-        when "char_type"
+        when "charType"
           member = nil
-        when "list_type"
+        when "listType"
           member = Commons::ListType.from_json(json_object: json_object)
-        when "map_type"
+        when "mapType"
           member = Commons::MapType.from_json(json_object: json_object)
-        when "binary_tree_type"
+        when "binaryTreeType"
           member = nil
-        when "singly_linked_list_type"
+        when "singlyLinkedListType"
           member = nil
-        when "doubly_linked_list_type"
+        when "doublyLinkedListType"
           member = nil
         else
           member = json_object
@@ -55,25 +55,25 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "integer_type"
+        when "integerType"
           { type: @discriminant }.to_json()
-        when "double_type"
+        when "doubleType"
           { type: @discriminant }.to_json()
-        when "boolean_type"
+        when "booleanType"
           { type: @discriminant }.to_json()
-        when "string_type"
+        when "stringType"
           { type: @discriminant }.to_json()
-        when "char_type"
+        when "charType"
           { type: @discriminant }.to_json()
-        when "list_type"
+        when "listType"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "map_type"
+        when "mapType"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "binary_tree_type"
+        when "binaryTreeType"
           { type: @discriminant }.to_json()
-        when "singly_linked_list_type"
+        when "singlyLinkedListType"
           { type: @discriminant }.to_json()
-        when "doubly_linked_list_type"
+        when "doublyLinkedListType"
           { type: @discriminant }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -86,25 +86,25 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "integer_type"
+        when "integerType"
           # noop
-        when "double_type"
+        when "doubleType"
           # noop
-        when "boolean_type"
+        when "booleanType"
           # noop
-        when "string_type"
+        when "stringType"
           # noop
-        when "char_type"
+        when "charType"
           # noop
-        when "list_type"
+        when "listType"
           ListType.validate_raw(obj: obj)
-        when "map_type"
+        when "mapType"
           MapType.validate_raw(obj: obj)
-        when "binary_tree_type"
+        when "binaryTreeType"
           # noop
-        when "singly_linked_list_type"
+        when "singlyLinkedListType"
           # noop
-        when "doubly_linked_list_type"
+        when "doublyLinkedListType"
           # noop
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -119,45 +119,45 @@ module SeedClient
       end
       # @return [Commons::VariableType] 
       def self.integer_type
-        new(member: nil, discriminant: "integer_type")
+        new(member: nil, discriminant: "integerType")
       end
       # @return [Commons::VariableType] 
       def self.double_type
-        new(member: nil, discriminant: "double_type")
+        new(member: nil, discriminant: "doubleType")
       end
       # @return [Commons::VariableType] 
       def self.boolean_type
-        new(member: nil, discriminant: "boolean_type")
+        new(member: nil, discriminant: "booleanType")
       end
       # @return [Commons::VariableType] 
       def self.string_type
-        new(member: nil, discriminant: "string_type")
+        new(member: nil, discriminant: "stringType")
       end
       # @return [Commons::VariableType] 
       def self.char_type
-        new(member: nil, discriminant: "char_type")
+        new(member: nil, discriminant: "charType")
       end
       # @param member [Commons::ListType] 
       # @return [Commons::VariableType] 
       def self.list_type(member:)
-        new(member: member, discriminant: "list_type")
+        new(member: member, discriminant: "listType")
       end
       # @param member [Commons::MapType] 
       # @return [Commons::VariableType] 
       def self.map_type(member:)
-        new(member: member, discriminant: "map_type")
+        new(member: member, discriminant: "mapType")
       end
       # @return [Commons::VariableType] 
       def self.binary_tree_type
-        new(member: nil, discriminant: "binary_tree_type")
+        new(member: nil, discriminant: "binaryTreeType")
       end
       # @return [Commons::VariableType] 
       def self.singly_linked_list_type
-        new(member: nil, discriminant: "singly_linked_list_type")
+        new(member: nil, discriminant: "singlyLinkedListType")
       end
       # @return [Commons::VariableType] 
       def self.doubly_linked_list_type
-        new(member: nil, discriminant: "doubly_linked_list_type")
+        new(member: nil, discriminant: "doublyLinkedListType")
       end
     end
   end

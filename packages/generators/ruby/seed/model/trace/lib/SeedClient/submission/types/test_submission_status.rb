@@ -31,7 +31,7 @@ module SeedClient
           member = Submission::ErrorInfo.from_json(json_object: json_object.value)
         when "running"
           member = Submission::RunningSubmissionState.from_json(json_object: json_object.value)
-        when "test_case_id_to_state"
+        when "testCaseIdToState"
           member = json_object.value
         else
           member = json_object
@@ -49,7 +49,7 @@ module SeedClient
           { type: @discriminant, value: @member }.to_json()
         when "running"
           { type: @discriminant, value: @member }.to_json()
-        when "test_case_id_to_state"
+        when "testCaseIdToState"
           { type: @discriminant, value: @member }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -68,7 +68,7 @@ module SeedClient
           ErrorInfo.validate_raw(obj: obj)
         when "running"
           RunningSubmissionState.validate_raw(obj: obj)
-        when "test_case_id_to_state"
+        when "testCaseIdToState"
           obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -98,7 +98,7 @@ module SeedClient
       # @param member [Hash{String => String}] 
       # @return [Submission::TestSubmissionStatus] 
       def self.test_case_id_to_state(member:)
-        new(member: member, discriminant: "test_case_id_to_state")
+        new(member: member, discriminant: "testCaseIdToState")
       end
     end
   end

@@ -26,7 +26,7 @@ module SeedClient
           case struct.type
           when "string"
             member = json_object.value
-          when "base_64"
+          when "base64"
             member = json_object.value
           else
             member = json_object
@@ -40,7 +40,7 @@ module SeedClient
           case @discriminant
           when "string"
             { type: @discriminant, value: @member }.to_json()
-          when "base_64"
+          when "base64"
             { type: @discriminant, value: @member }.to_json()
           else
             { type: @discriminant, value: @member }.to_json()
@@ -55,7 +55,7 @@ module SeedClient
           case obj.type
           when "string"
             obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-          when "base_64"
+          when "base64"
             obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           else
             raise("Passed value matched no type within the union, validation failed.")
@@ -76,7 +76,7 @@ module SeedClient
         # @param member [String] 
         # @return [Commons::Types::Data] 
         def self.base_64(member:)
-          new(member: member, discriminant: "base_64")
+          new(member: member, discriminant: "base64")
         end
       end
     end

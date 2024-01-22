@@ -30,9 +30,9 @@ module SeedClient
             case struct.type
             when "void"
               member = V2::V3::Problem::VoidFunctionSignature.from_json(json_object: json_object)
-            when "non_void"
+            when "nonVoid"
               member = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: json_object)
-            when "void_that_takes_actual_result"
+            when "voidThatTakesActualResult"
               member = V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult.from_json(json_object: json_object)
             else
               member = V2::V3::Problem::VoidFunctionSignature.from_json(json_object: json_object)
@@ -46,9 +46,9 @@ module SeedClient
             case @discriminant
             when "void"
               { type: @discriminant, **@member.to_json() }.to_json()
-            when "non_void"
+            when "nonVoid"
               { type: @discriminant, **@member.to_json() }.to_json()
-            when "void_that_takes_actual_result"
+            when "voidThatTakesActualResult"
               { type: @discriminant, **@member.to_json() }.to_json()
             else
               { type: @discriminant, value: @member }.to_json()
@@ -63,9 +63,9 @@ module SeedClient
             case obj.type
             when "void"
               VoidFunctionSignature.validate_raw(obj: obj)
-            when "non_void"
+            when "nonVoid"
               NonVoidFunctionSignature.validate_raw(obj: obj)
-            when "void_that_takes_actual_result"
+            when "voidThatTakesActualResult"
               VoidFunctionSignatureThatTakesActualResult.validate_raw(obj: obj)
             else
               raise("Passed value matched no type within the union, validation failed.")
@@ -86,12 +86,12 @@ module SeedClient
           # @param member [V2::V3::Problem::NonVoidFunctionSignature] 
           # @return [V2::V3::Problem::FunctionSignature] 
           def self.non_void(member:)
-            new(member: member, discriminant: "non_void")
+            new(member: member, discriminant: "nonVoid")
           end
           # @param member [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult] 
           # @return [V2::V3::Problem::FunctionSignature] 
           def self.void_that_takes_actual_result(member:)
-            new(member: member, discriminant: "void_that_takes_actual_result")
+            new(member: member, discriminant: "voidThatTakesActualResult")
           end
         end
       end

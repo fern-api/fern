@@ -26,11 +26,11 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "compile_error"
+        when "compileError"
           member = Submission::CompileError.from_json(json_object: json_object)
-        when "runtime_error"
+        when "runtimeError"
           member = Submission::RuntimeError.from_json(json_object: json_object)
-        when "internal_error"
+        when "internalError"
           member = Submission::InternalError.from_json(json_object: json_object)
         else
           member = Submission::CompileError.from_json(json_object: json_object)
@@ -42,11 +42,11 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "compile_error"
+        when "compileError"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "runtime_error"
+        when "runtimeError"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "internal_error"
+        when "internalError"
           { type: @discriminant, **@member.to_json() }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -59,11 +59,11 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "compile_error"
+        when "compileError"
           CompileError.validate_raw(obj: obj)
-        when "runtime_error"
+        when "runtimeError"
           RuntimeError.validate_raw(obj: obj)
-        when "internal_error"
+        when "internalError"
           InternalError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -79,17 +79,17 @@ module SeedClient
       # @param member [Submission::CompileError] 
       # @return [Submission::ErrorInfo] 
       def self.compile_error(member:)
-        new(member: member, discriminant: "compile_error")
+        new(member: member, discriminant: "compileError")
       end
       # @param member [Submission::RuntimeError] 
       # @return [Submission::ErrorInfo] 
       def self.runtime_error(member:)
-        new(member: member, discriminant: "runtime_error")
+        new(member: member, discriminant: "runtimeError")
       end
       # @param member [Submission::InternalError] 
       # @return [Submission::ErrorInfo] 
       def self.internal_error(member:)
-        new(member: member, discriminant: "internal_error")
+        new(member: member, discriminant: "internalError")
       end
     end
   end

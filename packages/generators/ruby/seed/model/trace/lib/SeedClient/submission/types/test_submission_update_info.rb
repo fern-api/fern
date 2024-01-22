@@ -33,9 +33,9 @@ module SeedClient
           member = nil
         when "errored"
           member = Submission::ErrorInfo.from_json(json_object: json_object.value)
-        when "graded_test_case"
+        when "gradedTestCase"
           member = Submission::GradedTestCaseUpdate.from_json(json_object: json_object)
-        when "recorded_test_case"
+        when "recordedTestCase"
           member = Submission::RecordedTestCaseUpdate.from_json(json_object: json_object)
         when "finished"
           member = nil
@@ -55,9 +55,9 @@ module SeedClient
           { type: @discriminant }.to_json()
         when "errored"
           { type: @discriminant, value: @member }.to_json()
-        when "graded_test_case"
+        when "gradedTestCase"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "recorded_test_case"
+        when "recordedTestCase"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "finished"
           { type: @discriminant }.to_json()
@@ -78,9 +78,9 @@ module SeedClient
           # noop
         when "errored"
           ErrorInfo.validate_raw(obj: obj)
-        when "graded_test_case"
+        when "gradedTestCase"
           GradedTestCaseUpdate.validate_raw(obj: obj)
-        when "recorded_test_case"
+        when "recordedTestCase"
           RecordedTestCaseUpdate.validate_raw(obj: obj)
         when "finished"
           # noop
@@ -112,12 +112,12 @@ module SeedClient
       # @param member [Submission::GradedTestCaseUpdate] 
       # @return [Submission::TestSubmissionUpdateInfo] 
       def self.graded_test_case(member:)
-        new(member: member, discriminant: "graded_test_case")
+        new(member: member, discriminant: "gradedTestCase")
       end
       # @param member [Submission::RecordedTestCaseUpdate] 
       # @return [Submission::TestSubmissionUpdateInfo] 
       def self.recorded_test_case(member:)
-        new(member: member, discriminant: "recorded_test_case")
+        new(member: member, discriminant: "recordedTestCase")
       end
       # @return [Submission::TestSubmissionUpdateInfo] 
       def self.finished

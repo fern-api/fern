@@ -35,7 +35,7 @@ module SeedClient
           member = nil
         when "traced"
           member = nil
-        when "traced_v_2"
+        when "tracedV2"
           member = Submission::WorkspaceTracedUpdate.from_json(json_object: json_object)
         when "errored"
           member = Submission::ErrorInfo.from_json(json_object: json_object.value)
@@ -59,7 +59,7 @@ module SeedClient
           { type: @discriminant }.to_json()
         when "traced"
           { type: @discriminant }.to_json()
-        when "traced_v_2"
+        when "tracedV2"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "errored"
           { type: @discriminant, value: @member }.to_json()
@@ -84,7 +84,7 @@ module SeedClient
           # noop
         when "traced"
           # noop
-        when "traced_v_2"
+        when "tracedV2"
           WorkspaceTracedUpdate.validate_raw(obj: obj)
         when "errored"
           ErrorInfo.validate_raw(obj: obj)
@@ -122,7 +122,7 @@ module SeedClient
       # @param member [Submission::WorkspaceTracedUpdate] 
       # @return [Submission::WorkspaceSubmissionUpdateInfo] 
       def self.traced_v_2(member:)
-        new(member: member, discriminant: "traced_v_2")
+        new(member: member, discriminant: "tracedV2")
       end
       # @param member [Submission::ErrorInfo] 
       # @return [Submission::WorkspaceSubmissionUpdateInfo] 

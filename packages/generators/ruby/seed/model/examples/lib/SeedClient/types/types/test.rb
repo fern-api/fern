@@ -23,9 +23,9 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "and_"
+        when "and"
           member = json_object.value
-        when "or_"
+        when "or"
           member = json_object.value
         else
           member = json_object
@@ -37,9 +37,9 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "and_"
+        when "and"
           { type: @discriminant, value: @member }.to_json()
-        when "or_"
+        when "or"
           { type: @discriminant, value: @member }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -52,9 +52,9 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "and_"
+        when "and"
           obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "or_"
+        when "or"
           obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -70,12 +70,12 @@ module SeedClient
       # @param member [Boolean] 
       # @return [Types::Test] 
       def self.and_(member:)
-        new(member: member, discriminant: "and_")
+        new(member: member, discriminant: "and")
       end
       # @param member [Boolean] 
       # @return [Types::Test] 
       def self.or_(member:)
-        new(member: member, discriminant: "or_")
+        new(member: member, discriminant: "or")
       end
     end
   end

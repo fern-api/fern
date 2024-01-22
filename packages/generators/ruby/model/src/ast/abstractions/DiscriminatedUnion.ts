@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
+import { NameAndWireValue, SingleUnionTypeProperties, SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 import { Argument } from "../Argument";
 import {
     ClassReference,
@@ -20,18 +20,18 @@ import { CaseStatement } from "./CaseStatement";
 
 export declare namespace DiscriminatedUnion {
     export interface Init extends Omit<Class_.Init, "functions" | "includeInitializer" | "expressions"> {
-        discriminatingField: string;
+        discriminantField: string;
         namedSubclasses: Subclass[];
         defaultSubclassReference?: ClassReference;
     }
     export interface Subclass {
-        discriminantValue: string;
+        discriminantValue: NameAndWireValue;
         classReference: ClassReference | undefined;
         unionPropertiesType: SingleUnionTypeProperties;
     }
 }
 export class DiscriminatedUnion extends Class_ {
-    constructor({ discriminatingField, namedSubclasses, defaultSubclassReference, ...rest }: DiscriminatedUnion.Init) {
+    constructor({ discriminantField, namedSubclasses, defaultSubclassReference, ...rest }: DiscriminatedUnion.Init) {
         const memberProperty = new Property({ name: "member", type: GenericClassReference });
         const discriminantProperty = new Property({ name: "discriminant", type: StringClassReference });
         const properties = [memberProperty, discriminantProperty, ...(rest.properties ?? [])];
@@ -41,7 +41,7 @@ export class DiscriminatedUnion extends Class_ {
             properties,
             functions: [
                 DiscriminatedUnion.createFromJsonFunction(
-                    discriminatingField,
+                    discriminantField,
                     memberProperty,
                     discriminantProperty,
                     namedSubclasses,
@@ -51,10 +51,10 @@ export class DiscriminatedUnion extends Class_ {
                 DiscriminatedUnion.createToJsonFunction(
                     memberProperty,
                     discriminantProperty,
-                    discriminatingField,
+                    discriminantField,
                     namedSubclasses
                 ),
-                DiscriminatedUnion.createValidateRawFunction(discriminatingField, namedSubclasses),
+                DiscriminatedUnion.createValidateRawFunction(discriminantField, namedSubclasses),
                 DiscriminatedUnion.createIsAFunction(memberProperty),
                 ...DiscriminatedUnion.createStaticGeneratorFunctions(
                     namedSubclasses,
@@ -131,7 +131,7 @@ export class DiscriminatedUnion extends Class_ {
                 case_: `struct.${discriminantField}`,
                 whenBlocks: new Map(
                     namedSubclasses.map((sc) => [
-                        `"${sc.discriminantValue}"`,
+                        `"${sc.discriminantValue.wireValue}"`,
                         [DiscriminatedUnion.unionPropertyTypeFromJson(jsonObjectParamName, memberProperty, sc)]
                     ])
                 ),
@@ -201,7 +201,6 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
-    // TODO
     private static createToJsonFunction(
         memberProperty: Property,
         discriminantProperty: Property,
@@ -217,7 +216,7 @@ export class DiscriminatedUnion extends Class_ {
                     case_: discriminantProperty.toVariable(),
                     whenBlocks: new Map(
                         namedSubclasses.map((sc) => [
-                            `"${sc.discriminantValue}"`,
+                            `"${sc.discriminantValue.wireValue}"`,
                             [
                                 DiscriminatedUnion.unionPropertyTypeToJson(
                                     memberProperty,
@@ -259,7 +258,7 @@ export class DiscriminatedUnion extends Class_ {
                 case_: `${parameterName}.${discriminantField}`,
                 whenBlocks: new Map(
                     namedSubclasses.map((sc) => [
-                        `"${sc.discriminantValue}"`,
+                        `"${sc.discriminantValue.wireValue}"`,
                         [
                             new Expression({
                                 rightSide: sc.classReference?.validateRaw(parameterName) ?? "# noop",
@@ -289,7 +288,6 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
-    // TODO: Add in the discriminant as a param to the `new` call
     private static createStaticGeneratorFunctions(
         namedSubclasses: DiscriminatedUnion.Subclass[],
         memberProperty: Property,
@@ -298,21 +296,22 @@ export class DiscriminatedUnion extends Class_ {
     ): Function_[] {
         const parameterName = "member";
         return namedSubclasses.map((sc) => {
-            const includeParameter = sc.classReference !== undefined;
             return new Function_({
-                name: sc.discriminantValue,
+                name: sc.discriminantValue.name.snakeCase.safeName,
                 functionBody: [
                     new FunctionInvocation({
                         baseFunction: new Function_({ name: "new", functionBody: [] }),
                         arguments_: [
-                            memberProperty.toArgument(includeParameter ? parameterName : "nil", true),
-                            discriminantProperty.toArgument(`"${sc.discriminantValue}"`, true)
+                            memberProperty.toArgument(sc.classReference !== undefined ? parameterName : "nil", true),
+                            discriminantProperty.toArgument(`"${sc.discriminantValue.wireValue}"`, true)
                         ]
                     })
                 ],
                 isStatic: true,
-                // This is a safe reference, TS isn't propagating the undefined check to the type here.
-                parameters: includeParameter ? [new Parameter({ name: parameterName, type: sc.classReference! })] : [],
+                parameters:
+                    sc.classReference !== undefined
+                        ? [new Parameter({ name: parameterName, type: sc.classReference })]
+                        : [],
                 returnValue: classReference
             });
         });

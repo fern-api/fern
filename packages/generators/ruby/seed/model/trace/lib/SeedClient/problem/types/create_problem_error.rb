@@ -23,13 +23,13 @@ module SeedClient
       # @return [Problem::CreateProblemError] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        case struct.error_type
+        case struct._type
         when "generic"
           member = Problem::GenericCreateProblemError.from_json(json_object: json_object)
         else
           member = Problem::GenericCreateProblemError.from_json(json_object: json_object)
         end
-        new(member: member, discriminant: struct.error_type)
+        new(member: member, discriminant: struct._type)
       end
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
@@ -37,9 +37,9 @@ module SeedClient
       def to_json
         case @discriminant
         when "generic"
-          { error_type: @discriminant, **@member.to_json() }.to_json()
+          { _type: @discriminant, **@member.to_json() }.to_json()
         else
-          { error_type: @discriminant, value: @member }.to_json()
+          { _type: @discriminant, value: @member }.to_json()
         end
         @member.to_json()
       end
@@ -48,7 +48,7 @@ module SeedClient
       # @param obj [Object] 
       # @return [Void] 
       def self.validate_raw(obj:)
-        case obj.error_type
+        case obj._type
         when "generic"
           GenericCreateProblemError.validate_raw(obj: obj)
         else

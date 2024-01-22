@@ -118,7 +118,7 @@ export function generateUnionFromTypeDeclaration(
     );
     const namedSubclasses = unionTypeDeclaration.types.map((t) => {
         return {
-            discriminantValue: t.discriminantValue.name.snakeCase.safeName,
+            discriminantValue: t.discriminantValue,
             classReference: DiscriminatedUnion.classReferenceFromUnionType(t.shape),
             unionPropertiesType: t.shape
         };
@@ -128,7 +128,7 @@ export function generateUnionFromTypeDeclaration(
     return new DiscriminatedUnion({
         classReference,
         extendedClasses,
-        discriminatingField: unionTypeDeclaration.discriminant.name.snakeCase.safeName,
+        discriminantField: unionTypeDeclaration.discriminant.wireValue,
         namedSubclasses,
         defaultSubclassReference: namedSubclasses[0]?.classReference,
         documentation: typeDeclaration.docs,

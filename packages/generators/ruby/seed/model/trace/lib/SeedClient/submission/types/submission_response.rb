@@ -27,15 +27,15 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "server_initialized"
+        when "serverInitialized"
           member = nil
-        when "problem_initialized"
+        when "problemInitialized"
           member = Commons::ProblemId.from_json(json_object: json_object.value)
-        when "workspace_initialized"
+        when "workspaceInitialized"
           member = nil
-        when "server_errored"
+        when "serverErrored"
           member = Submission::ExceptionInfo.from_json(json_object: json_object)
-        when "code_execution_update"
+        when "codeExecutionUpdate"
           member = Submission::CodeExecutionUpdate.from_json(json_object: json_object.value)
         when "terminated"
           member = Submission::TerminatedResponse.from_json(json_object: json_object)
@@ -49,15 +49,15 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "server_initialized"
+        when "serverInitialized"
           { type: @discriminant }.to_json()
-        when "problem_initialized"
+        when "problemInitialized"
           { type: @discriminant, value: @member }.to_json()
-        when "workspace_initialized"
+        when "workspaceInitialized"
           { type: @discriminant }.to_json()
-        when "server_errored"
+        when "serverErrored"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "code_execution_update"
+        when "codeExecutionUpdate"
           { type: @discriminant, value: @member }.to_json()
         when "terminated"
           { type: @discriminant, **@member.to_json() }.to_json()
@@ -72,15 +72,15 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "server_initialized"
+        when "serverInitialized"
           # noop
-        when "problem_initialized"
+        when "problemInitialized"
           ProblemId.validate_raw(obj: obj)
-        when "workspace_initialized"
+        when "workspaceInitialized"
           # noop
-        when "server_errored"
+        when "serverErrored"
           ExceptionInfo.validate_raw(obj: obj)
-        when "code_execution_update"
+        when "codeExecutionUpdate"
           CodeExecutionUpdate.validate_raw(obj: obj)
         when "terminated"
           TerminatedResponse.validate_raw(obj: obj)
@@ -97,26 +97,26 @@ module SeedClient
       end
       # @return [Submission::SubmissionResponse] 
       def self.server_initialized
-        new(member: nil, discriminant: "server_initialized")
+        new(member: nil, discriminant: "serverInitialized")
       end
       # @param member [Commons::ProblemId] 
       # @return [Submission::SubmissionResponse] 
       def self.problem_initialized(member:)
-        new(member: member, discriminant: "problem_initialized")
+        new(member: member, discriminant: "problemInitialized")
       end
       # @return [Submission::SubmissionResponse] 
       def self.workspace_initialized
-        new(member: nil, discriminant: "workspace_initialized")
+        new(member: nil, discriminant: "workspaceInitialized")
       end
       # @param member [Submission::ExceptionInfo] 
       # @return [Submission::SubmissionResponse] 
       def self.server_errored(member:)
-        new(member: member, discriminant: "server_errored")
+        new(member: member, discriminant: "serverErrored")
       end
       # @param member [Submission::CodeExecutionUpdate] 
       # @return [Submission::SubmissionResponse] 
       def self.code_execution_update(member:)
-        new(member: member, discriminant: "code_execution_update")
+        new(member: member, discriminant: "codeExecutionUpdate")
       end
       # @param member [Submission::TerminatedResponse] 
       # @return [Submission::SubmissionResponse] 

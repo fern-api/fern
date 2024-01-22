@@ -26,7 +26,7 @@ module SeedClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           case struct.type
-          when "deep_equality"
+          when "deepEquality"
             member = V2::Problem::DeepEqualityCorrectnessCheck.from_json(json_object: json_object)
           when "custom"
             member = V2::Problem::VoidFunctionDefinitionThatTakesActualResult.from_json(json_object: json_object)
@@ -40,7 +40,7 @@ module SeedClient
         # @return [] 
         def to_json
           case @discriminant
-          when "deep_equality"
+          when "deepEquality"
             { type: @discriminant, **@member.to_json() }.to_json()
           when "custom"
             { type: @discriminant, **@member.to_json() }.to_json()
@@ -55,7 +55,7 @@ module SeedClient
         # @return [Void] 
         def self.validate_raw(obj:)
           case obj.type
-          when "deep_equality"
+          when "deepEquality"
             DeepEqualityCorrectnessCheck.validate_raw(obj: obj)
           when "custom"
             VoidFunctionDefinitionThatTakesActualResult.validate_raw(obj: obj)
@@ -73,7 +73,7 @@ module SeedClient
         # @param member [V2::Problem::DeepEqualityCorrectnessCheck] 
         # @return [V2::Problem::AssertCorrectnessCheck] 
         def self.deep_equality(member:)
-          new(member: member, discriminant: "deep_equality")
+          new(member: member, discriminant: "deepEquality")
         end
         # @param member [V2::Problem::VoidFunctionDefinitionThatTakesActualResult] 
         # @return [V2::Problem::AssertCorrectnessCheck] 

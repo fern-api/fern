@@ -27,7 +27,7 @@ module SeedClient
         case struct.type
         when "hidden"
           member = Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
-        when "non_hidden"
+        when "nonHidden"
           member = Submission::TestCaseNonHiddenGrade.from_json(json_object: json_object)
         else
           member = Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
@@ -41,7 +41,7 @@ module SeedClient
         case @discriminant
         when "hidden"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "non_hidden"
+        when "nonHidden"
           { type: @discriminant, **@member.to_json() }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -56,7 +56,7 @@ module SeedClient
         case obj.type
         when "hidden"
           TestCaseHiddenGrade.validate_raw(obj: obj)
-        when "non_hidden"
+        when "nonHidden"
           TestCaseNonHiddenGrade.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -77,7 +77,7 @@ module SeedClient
       # @param member [Submission::TestCaseNonHiddenGrade] 
       # @return [Submission::TestCaseGrade] 
       def self.non_hidden(member:)
-        new(member: member, discriminant: "non_hidden")
+        new(member: member, discriminant: "nonHidden")
       end
     end
   end

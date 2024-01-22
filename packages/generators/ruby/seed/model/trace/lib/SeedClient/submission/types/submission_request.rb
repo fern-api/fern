@@ -27,13 +27,13 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "initialize_problem_request"
+        when "initializeProblemRequest"
           member = Submission::InitializeProblemRequest.from_json(json_object: json_object)
-        when "initialize_workspace_request"
+        when "initializeWorkspaceRequest"
           member = nil
-        when "submit_v_2"
+        when "submitV2"
           member = Submission::SubmitRequestV2.from_json(json_object: json_object)
-        when "workspace_submit"
+        when "workspaceSubmit"
           member = Submission::WorkspaceSubmitRequest.from_json(json_object: json_object)
         when "stop"
           member = Submission::StopRequest.from_json(json_object: json_object)
@@ -47,13 +47,13 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "initialize_problem_request"
+        when "initializeProblemRequest"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "initialize_workspace_request"
+        when "initializeWorkspaceRequest"
           { type: @discriminant }.to_json()
-        when "submit_v_2"
+        when "submitV2"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "workspace_submit"
+        when "workspaceSubmit"
           { type: @discriminant, **@member.to_json() }.to_json()
         when "stop"
           { type: @discriminant, **@member.to_json() }.to_json()
@@ -68,13 +68,13 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "initialize_problem_request"
+        when "initializeProblemRequest"
           InitializeProblemRequest.validate_raw(obj: obj)
-        when "initialize_workspace_request"
+        when "initializeWorkspaceRequest"
           # noop
-        when "submit_v_2"
+        when "submitV2"
           SubmitRequestV2.validate_raw(obj: obj)
-        when "workspace_submit"
+        when "workspaceSubmit"
           WorkspaceSubmitRequest.validate_raw(obj: obj)
         when "stop"
           StopRequest.validate_raw(obj: obj)
@@ -92,21 +92,21 @@ module SeedClient
       # @param member [Submission::InitializeProblemRequest] 
       # @return [Submission::SubmissionRequest] 
       def self.initialize_problem_request(member:)
-        new(member: member, discriminant: "initialize_problem_request")
+        new(member: member, discriminant: "initializeProblemRequest")
       end
       # @return [Submission::SubmissionRequest] 
       def self.initialize_workspace_request
-        new(member: nil, discriminant: "initialize_workspace_request")
+        new(member: nil, discriminant: "initializeWorkspaceRequest")
       end
       # @param member [Submission::SubmitRequestV2] 
       # @return [Submission::SubmissionRequest] 
       def self.submit_v_2(member:)
-        new(member: member, discriminant: "submit_v_2")
+        new(member: member, discriminant: "submitV2")
       end
       # @param member [Submission::WorkspaceSubmitRequest] 
       # @return [Submission::SubmissionRequest] 
       def self.workspace_submit(member:)
-        new(member: member, discriminant: "workspace_submit")
+        new(member: member, discriminant: "workspaceSubmit")
       end
       # @param member [Submission::StopRequest] 
       # @return [Submission::SubmissionRequest] 

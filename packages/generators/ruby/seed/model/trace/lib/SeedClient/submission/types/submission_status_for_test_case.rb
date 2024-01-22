@@ -28,7 +28,7 @@ module SeedClient
         case struct.type
         when "graded"
           member = Submission::TestCaseResultWithStdout.from_json(json_object: json_object)
-        when "graded_v_2"
+        when "gradedV2"
           member = Submission::TestCaseGrade.from_json(json_object: json_object.value)
         when "traced"
           member = Submission::TracedTestCase.from_json(json_object: json_object)
@@ -44,7 +44,7 @@ module SeedClient
         case @discriminant
         when "graded"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "graded_v_2"
+        when "gradedV2"
           { type: @discriminant, value: @member }.to_json()
         when "traced"
           { type: @discriminant, **@member.to_json() }.to_json()
@@ -61,7 +61,7 @@ module SeedClient
         case obj.type
         when "graded"
           TestCaseResultWithStdout.validate_raw(obj: obj)
-        when "graded_v_2"
+        when "gradedV2"
           TestCaseGrade.validate_raw(obj: obj)
         when "traced"
           TracedTestCase.validate_raw(obj: obj)
@@ -84,7 +84,7 @@ module SeedClient
       # @param member [Submission::TestCaseGrade] 
       # @return [Submission::SubmissionStatusForTestCase] 
       def self.graded_v_2(member:)
-        new(member: member, discriminant: "graded_v_2")
+        new(member: member, discriminant: "gradedV2")
       end
       # @param member [Submission::TracedTestCase] 
       # @return [Submission::SubmissionStatusForTestCase] 

@@ -27,7 +27,7 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             case struct.type
-            when "with_actual_result"
+            when "withActualResult"
               member = V2::V3::Problem::TestCaseWithActualResultImplementation.from_json(json_object: json_object)
             when "custom"
               member = V2::V3::Problem::VoidFunctionDefinition.from_json(json_object: json_object)
@@ -41,7 +41,7 @@ module SeedClient
           # @return [] 
           def to_json
             case @discriminant
-            when "with_actual_result"
+            when "withActualResult"
               { type: @discriminant, **@member.to_json() }.to_json()
             when "custom"
               { type: @discriminant, **@member.to_json() }.to_json()
@@ -56,7 +56,7 @@ module SeedClient
           # @return [Void] 
           def self.validate_raw(obj:)
             case obj.type
-            when "with_actual_result"
+            when "withActualResult"
               TestCaseWithActualResultImplementation.validate_raw(obj: obj)
             when "custom"
               VoidFunctionDefinition.validate_raw(obj: obj)
@@ -74,7 +74,7 @@ module SeedClient
           # @param member [V2::V3::Problem::TestCaseWithActualResultImplementation] 
           # @return [V2::V3::Problem::TestCaseFunction] 
           def self.with_actual_result(member:)
-            new(member: member, discriminant: "with_actual_result")
+            new(member: member, discriminant: "withActualResult")
           end
           # @param member [V2::V3::Problem::VoidFunctionDefinition] 
           # @return [V2::V3::Problem::TestCaseFunction] 

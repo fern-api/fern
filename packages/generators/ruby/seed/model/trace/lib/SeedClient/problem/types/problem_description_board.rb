@@ -28,7 +28,7 @@ module SeedClient
           member = json_object.value
         when "variable"
           member = Commons::VariableValue.from_json(json_object: json_object.value)
-        when "test_case_id"
+        when "testCaseId"
           member = json_object.value
         else
           member = json_object
@@ -44,7 +44,7 @@ module SeedClient
           { type: @discriminant, value: @member }.to_json()
         when "variable"
           { type: @discriminant, value: @member }.to_json()
-        when "test_case_id"
+        when "testCaseId"
           { type: @discriminant, value: @member }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -61,7 +61,7 @@ module SeedClient
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "variable"
           VariableValue.validate_raw(obj: obj)
-        when "test_case_id"
+        when "testCaseId"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -87,7 +87,7 @@ module SeedClient
       # @param member [String] 
       # @return [Problem::ProblemDescriptionBoard] 
       def self.test_case_id(member:)
-        new(member: member, discriminant: "test_case_id")
+        new(member: member, discriminant: "testCaseId")
       end
     end
   end

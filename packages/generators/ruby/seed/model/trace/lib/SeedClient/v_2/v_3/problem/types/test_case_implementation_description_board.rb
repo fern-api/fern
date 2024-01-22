@@ -28,7 +28,7 @@ module SeedClient
             case struct.type
             when "html"
               member = json_object.value
-            when "param_id"
+            when "paramId"
               member = V2::V3::Problem::ParameterId.from_json(json_object: json_object.value)
             else
               member = json_object
@@ -42,7 +42,7 @@ module SeedClient
             case @discriminant
             when "html"
               { type: @discriminant, value: @member }.to_json()
-            when "param_id"
+            when "paramId"
               { type: @discriminant, value: @member }.to_json()
             else
               { type: @discriminant, value: @member }.to_json()
@@ -57,7 +57,7 @@ module SeedClient
             case obj.type
             when "html"
               obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-            when "param_id"
+            when "paramId"
               ParameterId.validate_raw(obj: obj)
             else
               raise("Passed value matched no type within the union, validation failed.")
@@ -78,7 +78,7 @@ module SeedClient
           # @param member [V2::V3::Problem::ParameterId] 
           # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard] 
           def self.param_id(member:)
-            new(member: member, discriminant: "param_id")
+            new(member: member, discriminant: "paramId")
           end
         end
       end

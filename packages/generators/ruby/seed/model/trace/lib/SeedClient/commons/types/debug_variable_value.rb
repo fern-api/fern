@@ -29,33 +29,33 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "integer_value"
+        when "integerValue"
           member = json_object.value
-        when "boolean_value"
+        when "booleanValue"
           member = json_object.value
-        when "double_value"
+        when "doubleValue"
           member = json_object.value
-        when "string_value"
+        when "stringValue"
           member = json_object.value
-        when "char_value"
+        when "charValue"
           member = json_object.value
-        when "map_value"
+        when "mapValue"
           member = Commons::DebugMapValue.from_json(json_object: json_object)
-        when "list_value"
+        when "listValue"
           member = json_object.value.map() do | v |
   Commons::DebugVariableValue.from_json(json_object: v)
 end
-        when "binary_tree_node_value"
+        when "binaryTreeNodeValue"
           member = Commons::BinaryTreeNodeAndTreeValue.from_json(json_object: json_object)
-        when "singly_linked_list_node_value"
+        when "singlyLinkedListNodeValue"
           member = Commons::SinglyLinkedListNodeAndListValue.from_json(json_object: json_object)
-        when "doubly_linked_list_node_value"
+        when "doublyLinkedListNodeValue"
           member = Commons::DoublyLinkedListNodeAndListValue.from_json(json_object: json_object)
-        when "undefined_value"
+        when "undefinedValue"
           member = nil
-        when "null_value"
+        when "nullValue"
           member = nil
-        when "generic_value"
+        when "genericValue"
           member = Commons::GenericValue.from_json(json_object: json_object)
         else
           member = json_object
@@ -67,31 +67,31 @@ end
       # @return [] 
       def to_json
         case @discriminant
-        when "integer_value"
+        when "integerValue"
           { type: @discriminant, value: @member }.to_json()
-        when "boolean_value"
+        when "booleanValue"
           { type: @discriminant, value: @member }.to_json()
-        when "double_value"
+        when "doubleValue"
           { type: @discriminant, value: @member }.to_json()
-        when "string_value"
+        when "stringValue"
           { type: @discriminant, value: @member }.to_json()
-        when "char_value"
+        when "charValue"
           { type: @discriminant, value: @member }.to_json()
-        when "map_value"
+        when "mapValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "list_value"
+        when "listValue"
           { type: @discriminant, value: @member }.to_json()
-        when "binary_tree_node_value"
+        when "binaryTreeNodeValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "singly_linked_list_node_value"
+        when "singlyLinkedListNodeValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "doubly_linked_list_node_value"
+        when "doublyLinkedListNodeValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "undefined_value"
+        when "undefinedValue"
           { type: @discriminant }.to_json()
-        when "null_value"
+        when "nullValue"
           { type: @discriminant }.to_json()
-        when "generic_value"
+        when "genericValue"
           { type: @discriminant, **@member.to_json() }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -104,31 +104,31 @@ end
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "integer_value"
+        when "integerValue"
           obj.is_a?(Integer) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "boolean_value"
+        when "booleanValue"
           obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "double_value"
+        when "doubleValue"
           obj.is_a?(Float) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "string_value"
+        when "stringValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "char_value"
+        when "charValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "map_value"
+        when "mapValue"
           DebugMapValue.validate_raw(obj: obj)
-        when "list_value"
+        when "listValue"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "binary_tree_node_value"
+        when "binaryTreeNodeValue"
           BinaryTreeNodeAndTreeValue.validate_raw(obj: obj)
-        when "singly_linked_list_node_value"
+        when "singlyLinkedListNodeValue"
           SinglyLinkedListNodeAndListValue.validate_raw(obj: obj)
-        when "doubly_linked_list_node_value"
+        when "doublyLinkedListNodeValue"
           DoublyLinkedListNodeAndListValue.validate_raw(obj: obj)
-        when "undefined_value"
+        when "undefinedValue"
           # noop
-        when "null_value"
+        when "nullValue"
           # noop
-        when "generic_value"
+        when "genericValue"
           GenericValue.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -144,65 +144,65 @@ end
       # @param member [Integer] 
       # @return [Commons::DebugVariableValue] 
       def self.integer_value(member:)
-        new(member: member, discriminant: "integer_value")
+        new(member: member, discriminant: "integerValue")
       end
       # @param member [Boolean] 
       # @return [Commons::DebugVariableValue] 
       def self.boolean_value(member:)
-        new(member: member, discriminant: "boolean_value")
+        new(member: member, discriminant: "booleanValue")
       end
       # @param member [Float] 
       # @return [Commons::DebugVariableValue] 
       def self.double_value(member:)
-        new(member: member, discriminant: "double_value")
+        new(member: member, discriminant: "doubleValue")
       end
       # @param member [String] 
       # @return [Commons::DebugVariableValue] 
       def self.string_value(member:)
-        new(member: member, discriminant: "string_value")
+        new(member: member, discriminant: "stringValue")
       end
       # @param member [String] 
       # @return [Commons::DebugVariableValue] 
       def self.char_value(member:)
-        new(member: member, discriminant: "char_value")
+        new(member: member, discriminant: "charValue")
       end
       # @param member [Commons::DebugMapValue] 
       # @return [Commons::DebugVariableValue] 
       def self.map_value(member:)
-        new(member: member, discriminant: "map_value")
+        new(member: member, discriminant: "mapValue")
       end
       # @param member [Array<Commons::DebugVariableValue>] 
       # @return [Commons::DebugVariableValue] 
       def self.list_value(member:)
-        new(member: member, discriminant: "list_value")
+        new(member: member, discriminant: "listValue")
       end
       # @param member [Commons::BinaryTreeNodeAndTreeValue] 
       # @return [Commons::DebugVariableValue] 
       def self.binary_tree_node_value(member:)
-        new(member: member, discriminant: "binary_tree_node_value")
+        new(member: member, discriminant: "binaryTreeNodeValue")
       end
       # @param member [Commons::SinglyLinkedListNodeAndListValue] 
       # @return [Commons::DebugVariableValue] 
       def self.singly_linked_list_node_value(member:)
-        new(member: member, discriminant: "singly_linked_list_node_value")
+        new(member: member, discriminant: "singlyLinkedListNodeValue")
       end
       # @param member [Commons::DoublyLinkedListNodeAndListValue] 
       # @return [Commons::DebugVariableValue] 
       def self.doubly_linked_list_node_value(member:)
-        new(member: member, discriminant: "doubly_linked_list_node_value")
+        new(member: member, discriminant: "doublyLinkedListNodeValue")
       end
       # @return [Commons::DebugVariableValue] 
       def self.undefined_value
-        new(member: nil, discriminant: "undefined_value")
+        new(member: nil, discriminant: "undefinedValue")
       end
       # @return [Commons::DebugVariableValue] 
       def self.null_value
-        new(member: nil, discriminant: "null_value")
+        new(member: nil, discriminant: "nullValue")
       end
       # @param member [Commons::GenericValue] 
       # @return [Commons::DebugVariableValue] 
       def self.generic_value(member:)
-        new(member: member, discriminant: "generic_value")
+        new(member: member, discriminant: "genericValue")
       end
     end
   end

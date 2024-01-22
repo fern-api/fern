@@ -28,29 +28,29 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "integer_value"
+        when "integerValue"
           member = json_object.value
-        when "boolean_value"
+        when "booleanValue"
           member = json_object.value
-        when "double_value"
+        when "doubleValue"
           member = json_object.value
-        when "string_value"
+        when "stringValue"
           member = json_object.value
-        when "char_value"
+        when "charValue"
           member = json_object.value
-        when "map_value"
+        when "mapValue"
           member = Commons::MapValue.from_json(json_object: json_object)
-        when "list_value"
+        when "listValue"
           member = json_object.value.map() do | v |
   Commons::VariableValue.from_json(json_object: v)
 end
-        when "binary_tree_value"
+        when "binaryTreeValue"
           member = Commons::BinaryTreeValue.from_json(json_object: json_object)
-        when "singly_linked_list_value"
+        when "singlyLinkedListValue"
           member = Commons::SinglyLinkedListValue.from_json(json_object: json_object)
-        when "doubly_linked_list_value"
+        when "doublyLinkedListValue"
           member = Commons::DoublyLinkedListValue.from_json(json_object: json_object)
-        when "null_value"
+        when "nullValue"
           member = nil
         else
           member = json_object
@@ -62,27 +62,27 @@ end
       # @return [] 
       def to_json
         case @discriminant
-        when "integer_value"
+        when "integerValue"
           { type: @discriminant, value: @member }.to_json()
-        when "boolean_value"
+        when "booleanValue"
           { type: @discriminant, value: @member }.to_json()
-        when "double_value"
+        when "doubleValue"
           { type: @discriminant, value: @member }.to_json()
-        when "string_value"
+        when "stringValue"
           { type: @discriminant, value: @member }.to_json()
-        when "char_value"
+        when "charValue"
           { type: @discriminant, value: @member }.to_json()
-        when "map_value"
+        when "mapValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "list_value"
+        when "listValue"
           { type: @discriminant, value: @member }.to_json()
-        when "binary_tree_value"
+        when "binaryTreeValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "singly_linked_list_value"
+        when "singlyLinkedListValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "doubly_linked_list_value"
+        when "doublyLinkedListValue"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "null_value"
+        when "nullValue"
           { type: @discriminant }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -95,27 +95,27 @@ end
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "integer_value"
+        when "integerValue"
           obj.is_a?(Integer) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "boolean_value"
+        when "booleanValue"
           obj.is_a?(Boolean) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "double_value"
+        when "doubleValue"
           obj.is_a?(Float) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "string_value"
+        when "stringValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "char_value"
+        when "charValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "map_value"
+        when "mapValue"
           MapValue.validate_raw(obj: obj)
-        when "list_value"
+        when "listValue"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
-        when "binary_tree_value"
+        when "binaryTreeValue"
           BinaryTreeValue.validate_raw(obj: obj)
-        when "singly_linked_list_value"
+        when "singlyLinkedListValue"
           SinglyLinkedListValue.validate_raw(obj: obj)
-        when "doubly_linked_list_value"
+        when "doublyLinkedListValue"
           DoublyLinkedListValue.validate_raw(obj: obj)
-        when "null_value"
+        when "nullValue"
           # noop
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -131,56 +131,56 @@ end
       # @param member [Integer] 
       # @return [Commons::VariableValue] 
       def self.integer_value(member:)
-        new(member: member, discriminant: "integer_value")
+        new(member: member, discriminant: "integerValue")
       end
       # @param member [Boolean] 
       # @return [Commons::VariableValue] 
       def self.boolean_value(member:)
-        new(member: member, discriminant: "boolean_value")
+        new(member: member, discriminant: "booleanValue")
       end
       # @param member [Float] 
       # @return [Commons::VariableValue] 
       def self.double_value(member:)
-        new(member: member, discriminant: "double_value")
+        new(member: member, discriminant: "doubleValue")
       end
       # @param member [String] 
       # @return [Commons::VariableValue] 
       def self.string_value(member:)
-        new(member: member, discriminant: "string_value")
+        new(member: member, discriminant: "stringValue")
       end
       # @param member [String] 
       # @return [Commons::VariableValue] 
       def self.char_value(member:)
-        new(member: member, discriminant: "char_value")
+        new(member: member, discriminant: "charValue")
       end
       # @param member [Commons::MapValue] 
       # @return [Commons::VariableValue] 
       def self.map_value(member:)
-        new(member: member, discriminant: "map_value")
+        new(member: member, discriminant: "mapValue")
       end
       # @param member [Array<Commons::VariableValue>] 
       # @return [Commons::VariableValue] 
       def self.list_value(member:)
-        new(member: member, discriminant: "list_value")
+        new(member: member, discriminant: "listValue")
       end
       # @param member [Commons::BinaryTreeValue] 
       # @return [Commons::VariableValue] 
       def self.binary_tree_value(member:)
-        new(member: member, discriminant: "binary_tree_value")
+        new(member: member, discriminant: "binaryTreeValue")
       end
       # @param member [Commons::SinglyLinkedListValue] 
       # @return [Commons::VariableValue] 
       def self.singly_linked_list_value(member:)
-        new(member: member, discriminant: "singly_linked_list_value")
+        new(member: member, discriminant: "singlyLinkedListValue")
       end
       # @param member [Commons::DoublyLinkedListValue] 
       # @return [Commons::VariableValue] 
       def self.doubly_linked_list_value(member:)
-        new(member: member, discriminant: "doubly_linked_list_value")
+        new(member: member, discriminant: "doublyLinkedListValue")
       end
       # @return [Commons::VariableValue] 
       def self.null_value
-        new(member: nil, discriminant: "null_value")
+        new(member: nil, discriminant: "nullValue")
       end
     end
   end

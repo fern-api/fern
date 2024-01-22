@@ -26,11 +26,11 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         case struct.type
-        when "submission_id_not_found"
+        when "submissionIdNotFound"
           member = Submission::SubmissionIdNotFound.from_json(json_object: json_object)
-        when "custom_test_cases_unsupported"
+        when "customTestCasesUnsupported"
           member = Submission::CustomTestCasesUnsupported.from_json(json_object: json_object)
-        when "unexpected_language"
+        when "unexpectedLanguage"
           member = Submission::UnexpectedLanguageError.from_json(json_object: json_object)
         else
           member = Submission::SubmissionIdNotFound.from_json(json_object: json_object)
@@ -42,11 +42,11 @@ module SeedClient
       # @return [] 
       def to_json
         case @discriminant
-        when "submission_id_not_found"
+        when "submissionIdNotFound"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "custom_test_cases_unsupported"
+        when "customTestCasesUnsupported"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "unexpected_language"
+        when "unexpectedLanguage"
           { type: @discriminant, **@member.to_json() }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -59,11 +59,11 @@ module SeedClient
       # @return [Void] 
       def self.validate_raw(obj:)
         case obj.type
-        when "submission_id_not_found"
+        when "submissionIdNotFound"
           SubmissionIdNotFound.validate_raw(obj: obj)
-        when "custom_test_cases_unsupported"
+        when "customTestCasesUnsupported"
           CustomTestCasesUnsupported.validate_raw(obj: obj)
-        when "unexpected_language"
+        when "unexpectedLanguage"
           UnexpectedLanguageError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -79,17 +79,17 @@ module SeedClient
       # @param member [Submission::SubmissionIdNotFound] 
       # @return [Submission::InvalidRequestCause] 
       def self.submission_id_not_found(member:)
-        new(member: member, discriminant: "submission_id_not_found")
+        new(member: member, discriminant: "submissionIdNotFound")
       end
       # @param member [Submission::CustomTestCasesUnsupported] 
       # @return [Submission::InvalidRequestCause] 
       def self.custom_test_cases_unsupported(member:)
-        new(member: member, discriminant: "custom_test_cases_unsupported")
+        new(member: member, discriminant: "customTestCasesUnsupported")
       end
       # @param member [Submission::UnexpectedLanguageError] 
       # @return [Submission::InvalidRequestCause] 
       def self.unexpected_language(member:)
-        new(member: member, discriminant: "unexpected_language")
+        new(member: member, discriminant: "unexpectedLanguage")
       end
     end
   end

@@ -30,7 +30,7 @@ module SeedClient
           member = Commons::VariableValue.from_json(json_object: json_object.value)
         when "exception"
           member = Submission::ExceptionInfo.from_json(json_object: json_object)
-        when "exception_v_2"
+        when "exceptionV2"
           member = Submission::ExceptionV2.from_json(json_object: json_object.value)
         else
           member = Commons::VariableValue.from_json(json_object: json_object)
@@ -46,7 +46,7 @@ module SeedClient
           { type: @discriminant, value: @member }.to_json()
         when "exception"
           { type: @discriminant, **@member.to_json() }.to_json()
-        when "exception_v_2"
+        when "exceptionV2"
           { type: @discriminant, value: @member }.to_json()
         else
           { type: @discriminant, value: @member }.to_json()
@@ -63,7 +63,7 @@ module SeedClient
           VariableValue.validate_raw(obj: obj)
         when "exception"
           ExceptionInfo.validate_raw(obj: obj)
-        when "exception_v_2"
+        when "exceptionV2"
           ExceptionV2.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
@@ -89,7 +89,7 @@ module SeedClient
       # @param member [Submission::ExceptionV2] 
       # @return [Submission::ActualResult] 
       def self.exception_v_2(member:)
-        new(member: member, discriminant: "exception_v_2")
+        new(member: member, discriminant: "exceptionV2")
       end
     end
   end
