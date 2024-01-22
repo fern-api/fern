@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -32,10 +32,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        check_is_circular_reference: Optional[
+            Callable[[ir_types.DeclaredTypeName, ir_types.DeclaredTypeName], bool]
+        ] = None,
     ) -> AST.TypeHint:
         return self._type_reference_to_type_hint_converter.get_type_hint_for_type_reference(
             type_reference,
             must_import_after_current_declaration=must_import_after_current_declaration,
+            check_is_circular_reference=check_is_circular_reference,
         )
 
     def get_class_reference_for_type_id(
@@ -59,7 +63,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         referenced_types = self.get_referenced_types(type_id)
         return other_type_id in referenced_types
 
-    def get_referenced_types(self, type_id: ir_types.TypeId) -> List[ir_types.TypeId]:
+    def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
         declaration = self.ir.types[type_id]
         return self.get_referenced_types_of_type_declaration(declaration)
 
@@ -91,41 +95,43 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def get_referenced_types_of_type_declaration(
         self, type_declaration: ir_types.TypeDeclaration
-    ) -> List[ir_types.TypeId]:
+    ) -> Set[ir_types.TypeId]:
         return type_declaration.referenced_types
 
-    def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
+    def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         return type_reference.visit(
             container=lambda container: container.visit(
                 list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type)
-                    + self.get_referenced_types_of_type_reference(map_type.value_type)
+                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                        self.get_referenced_types_of_type_reference(map_type.value_type)
+                    )
                 ),
-                literal=lambda literal: [],
+                literal=lambda literal: set(),
             ),
-            primitive=lambda primitive: [],
+            primitive=lambda primitive: set(),
             named=lambda type_name: self.get_referenced_types_of_type_declaration(
                 self.get_declaration_for_type_id(type_name.type_id),
             ),
-            unknown=lambda: [],
+            unknown=lambda: set(),
         )
 
-    def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
+    def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         return type_reference.visit(
             container=lambda container: container.visit(
                 list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 map=lambda map_type: (
-                    self.get_referenced_types_of_type_reference(map_type.key_type)
-                    + self.get_referenced_types_of_type_reference(map_type.value_type)
+                    self.get_referenced_types_of_type_reference(map_type.key_type).union(
+                        self.get_referenced_types_of_type_reference(map_type.value_type)
+                    )
                 ),
-                literal=lambda literal: [],
+                literal=lambda literal: set(),
             ),
-            primitive=lambda primitive: [],
-            named=lambda type_name: [type_name.type_id],
-            unknown=lambda: [],
+            primitive=lambda primitive: set(),
+            named=lambda type_name: set([type_name.type_id]),
+            unknown=lambda: set(),
         )

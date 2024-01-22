@@ -128,12 +128,12 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
                 # we assume that the forward-refed types are the ones
                 # that circularly reference this union type
-                referenced_type_ids: List[ir_types.TypeId] = single_union_type.shape.visit(
+                referenced_type_ids: set[ir_types.TypeId] = single_union_type.shape.visit(
                     same_properties_as_object=lambda type_name: self._context.get_referenced_types(type_name.type_id),
                     single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                         single_property.type
                     ),
-                    no_properties=lambda: [],
+                    no_properties=lambda: set(),
                 )
                 forward_refed_types = [
                     referenced_type_id

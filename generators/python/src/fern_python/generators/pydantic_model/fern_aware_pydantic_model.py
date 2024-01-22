@@ -66,6 +66,7 @@ class FernAwarePydanticModel:
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
         )
+        self._forward_refed_types: set[ir_types.TypeId] = set()
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(
                 AST.ClassReference(
@@ -134,6 +135,7 @@ class FernAwarePydanticModel:
         is_circular_reference = self._context.do_types_reference_each_other(self._type_name.type_id, type_name.type_id)
         if is_circular_reference:
             self._model_contains_forward_refs = True
+            self._forward_refed_types.add(type_name.type_id)
         return is_circular_reference
 
     def add_method(
@@ -192,6 +194,9 @@ class FernAwarePydanticModel:
             self.get_class_reference_for_type_id(type_id),
         )
 
+    def add_ghost_reference_by_reference(self, class_reference: AST.ClassReference) -> None:
+        self._pydantic_model.add_ghost_reference(class_reference)
+
     def finish(self) -> None:
         if self._custom_config.include_validators:
             if self._pydantic_model._root_type is None:
@@ -200,8 +205,20 @@ class FernAwarePydanticModel:
         self._override_json()
         self._override_dict()
         if self._model_contains_forward_refs:
-            self._pydantic_model.update_forward_refs()
-        self._pydantic_model.finish()
+            self._pydantic_model.update_forward_refs(
+                {self._context.get_class_reference_for_type_id(type_id) for type_id in self._forward_refed_types}
+            )
+
+            if self._type_name is not None:
+                type_id = self._type_name.type_id
+                additional_references = self._context.get_referenced_types(type_id).difference(
+                    self._forward_refed_types
+                )
+                for referenced_type_id in additional_references:
+                    if self._context.does_type_reference_other_type(referenced_type_id, type_id):
+                        self.add_ghost_reference(referenced_type_id)
+
+            self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
         root_type = self._pydantic_model.get_root_type()

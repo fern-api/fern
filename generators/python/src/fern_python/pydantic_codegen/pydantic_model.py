@@ -5,9 +5,10 @@ import re
 from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
+from pydantic import BaseModel
+
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
-from pydantic import BaseModel
 
 from .pydantic_field import PydanticField
 
