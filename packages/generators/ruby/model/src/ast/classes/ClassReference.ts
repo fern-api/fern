@@ -352,7 +352,12 @@ export declare namespace Set_ {
 export class SetReference extends ClassReference {
     constructor({ innerType, ...rest }: Set_.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
-        super({ name: "Set", typeHint: `Set<${typeName}>`, import_: new Import({ from: "set", isExternal: true }), ...rest });
+        super({
+            name: "Set",
+            typeHint: `Set<${typeName}>`,
+            import_: new Import({ from: "set", isExternal: true }),
+            ...rest
+        });
     }
 
     public toJson(variable: Variable | string): FunctionInvocation | undefined {
