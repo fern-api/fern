@@ -1,10 +1,12 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { readFile } from "fs/promises";
+import { cp, readdir, readFile } from "fs/promises";
+import tmp from "tmp-promise";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
@@ -91,8 +93,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         config,
                         customConfig,
                         generatorContext,
-                        await loadIntermediateRepresentation(config.irFilepath),
-                        destinationZip
+                        await loadIntermediateRepresentation(config.irFilepath)
                     );
                 },
                 github: async (githubOutputMode) => {
@@ -101,17 +102,20 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         customConfig,
                         generatorContext,
                         await loadIntermediateRepresentation(config.irFilepath),
-                        destinationZip,
                         githubOutputMode
                     );
+                    await this.zipDirectoryContents({
+                        directoryToZip: AbsoluteFilePath.of(config.output.path),
+                        destinationZip,
+                        logger: generatorContext.logger
+                    });
                 },
                 downloadFiles: async () => {
                     await this.writeForDownload(
                         config,
                         customConfig,
                         generatorContext,
-                        await loadIntermediateRepresentation(config.irFilepath),
-                        destinationZip
+                        await loadIntermediateRepresentation(config.irFilepath)
                     );
                 },
                 _other: ({ type }) => {
@@ -149,24 +153,42 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
-        destination: AbsoluteFilePath
+        intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
     protected abstract writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
-        destination: AbsoluteFilePath,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void>;
     protected abstract writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
-        destination: AbsoluteFilePath
+        intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
+
+    async zipDirectoryContents({
+        directoryToZip,
+        destinationZip,
+        logger
+    }: {
+        directoryToZip: AbsoluteFilePath;
+        destinationZip: AbsoluteFilePath;
+        logger: Logger;
+    }): Promise<void> {
+        const zip = createLoggingExecutable("zip", {
+            cwd: directoryToZip,
+            logger,
+            // zip is noisy
+            doNotPipeOutput: true
+        });
+
+        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
+        await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
+        await cp(tmpZipLocation, destinationZip);
+    }
 }
 
 class GeneratorContextImpl implements GeneratorContext {
