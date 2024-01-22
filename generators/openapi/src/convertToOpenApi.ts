@@ -3,7 +3,7 @@ import {
     DeclaredTypeName,
     ErrorDeclaration,
     IntermediateRepresentation,
-    TypeDeclaration,
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { OpenAPIV3 } from "openapi-types";
 import { convertServices } from "./converters/servicesConverter";
@@ -14,7 +14,7 @@ import { Mode } from "./writeOpenApi";
 export function convertToOpenApi({
     apiName,
     ir,
-    mode,
+    mode
 }: {
     apiName: string;
     ir: IntermediateRepresentation;
@@ -28,7 +28,7 @@ export function convertToOpenApi({
         const convertedType = convertType(typeDeclaration, ir);
         schemas[convertedType.schemaName] = {
             title: convertedType.schemaName,
-            ...convertedType.openApiSchema,
+            ...convertedType.openApiSchema
         };
         // populates typesByName map
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
@@ -48,12 +48,12 @@ export function convertToOpenApi({
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
         environments: ir.environments ?? undefined,
-        mode,
+        mode
     });
 
     const info: OpenAPIV3.InfoObject = {
         title: ir.apiDisplayName ?? apiName,
-        version: "",
+        version: ""
     };
     if (ir.apiDocs != null) {
         info.description = ir.apiDocs;
@@ -65,8 +65,8 @@ export function convertToOpenApi({
         paths,
         components: {
             schemas,
-            securitySchemes: constructSecuritySchemes(ir.auth),
-        },
+            securitySchemes: constructSecuritySchemes(ir.auth)
+        }
     };
 
     if (ir.environments != null && ir.environments.environments.type === "singleBaseUrl") {
@@ -76,7 +76,7 @@ export function convertToOpenApi({
                 description:
                     environment.docs != null
                         ? `${environment.name.originalName} (${environment.docs})`
-                        : environment.name.originalName,
+                        : environment.name.originalName
             };
         });
     }
@@ -87,13 +87,13 @@ export function convertToOpenApi({
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredTypeName.name.originalName,
+        declaredTypeName.name.originalName
     ].join("-");
 }
 
 export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
     return [
         ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredErrorName.name.originalName,
+        declaredErrorName.name.originalName
     ].join("-");
 }

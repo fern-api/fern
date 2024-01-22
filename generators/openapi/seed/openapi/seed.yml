@@ -1,6 +1,6 @@
 irVersion: v23
-docker: fern-openapi:local
-dockerCommand: yarn openapi:dockerTagLocal
+docker: fern-openapi:latest
+dockerCommand: yarn dist:cli && docker build -f ./Dockerfile -t fern-openapi:latest .
 generatorType: documentation
 fixtures:
   imdb:

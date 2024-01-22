@@ -26,15 +26,15 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
         try {
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.init({
-                    packagesToPublish: [],
-                }),
+                    packagesToPublish: []
+                })
             );
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
             const openApiDefinition = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
-                mode,
+                mode
             });
 
             const openApiDefinitionWithCustomOverrides = merge(customConfig.customOverrides, openApiDefinition);
@@ -42,26 +42,28 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             if (customConfig.format === "json") {
                 await writeFile(
                     path.join(config.output.path, OPENAPI_JSON_FILENAME),
-                    JSON.stringify(openApiDefinitionWithCustomOverrides, undefined, 2),
+                    JSON.stringify(openApiDefinitionWithCustomOverrides, undefined, 2)
                 );
             } else {
                 await writeFile(
                     path.join(config.output.path, OPENAPI_YML_FILENAME),
-                    yaml.dump(openApiDefinitionWithCustomOverrides),
+                    yaml.dump(openApiDefinitionWithCustomOverrides)
                 );
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.log("Encountered error", e);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error",
-                    }),
-                ),
+                        message: e instanceof Error ? e.message : "Encountered error"
+                    })
+                )
             );
         }
     } catch (e) {
+        // eslint-disable-next-line no-console
         console.log("Encountered error", e);
         throw e;
     }

@@ -8,19 +8,19 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
                 apiAuth.schemes.reduce<OpenAPIV3.SecurityRequirementObject>(
                     (acc, scheme) => ({
                         ...acc,
-                        [getNameForAuthScheme(scheme)]: [],
+                        [getNameForAuthScheme(scheme)]: []
                     }),
                     {}
-                ),
+                )
             ];
         },
         any: () =>
             apiAuth.schemes.map((scheme) => ({
-                [getNameForAuthScheme(scheme)]: [],
+                [getNameForAuthScheme(scheme)]: []
             })),
         _other: () => {
             throw new Error("Unknown auth scheme requiremen: " + apiAuth.requirement);
-        },
+        }
     });
 }
 
@@ -31,20 +31,20 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
         securitySchemes[getNameForAuthScheme(scheme)] = AuthScheme._visit<OpenAPIV3.SecuritySchemeObject>(scheme, {
             bearer: () => ({
                 type: "http",
-                scheme: "bearer",
+                scheme: "bearer"
             }),
             basic: () => ({
                 type: "http",
-                scheme: "basic",
+                scheme: "basic"
             }),
             header: (header) => ({
                 type: "apiKey",
                 in: "header",
-                name: header.name.wireValue,
+                name: header.name.wireValue
             }),
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
-            },
+            }
         });
     }
 
@@ -58,6 +58,6 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
-        },
+        }
     });
 }

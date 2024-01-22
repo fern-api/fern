@@ -1,4 +1,0 @@
-{
-  "testMatch": ["**/__test__/**/*.test.ts{,x}"],
-  "transformIgnorePatterns": []
-}
