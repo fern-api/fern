@@ -3,7 +3,7 @@ import {
     ExampleInlinedRequestBodyProperty,
     ExampleObjectProperty,
     NameAndWireValue,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
@@ -18,7 +18,7 @@ export interface ObjectProperty {
 export function convertObject({
     docs,
     properties,
-    extensions,
+    extensions
 }: {
     docs: string | undefined;
     properties: ObjectProperty[];
@@ -44,7 +44,7 @@ export function convertObject({
         convertedProperties[objectProperty.name.wireValue] = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
-            example,
+            example
         };
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
@@ -55,7 +55,7 @@ export function convertObject({
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {
         type: "object",
         description: docs,
-        properties: convertedProperties,
+        properties: convertedProperties
     };
     if (required.length > 0) {
         convertedSchemaObject.required = required;
@@ -63,7 +63,7 @@ export function convertObject({
     if (extensions.length > 0) {
         convertedSchemaObject.allOf = extensions.map((declaredTypeName) => {
             return {
-                $ref: getReferenceFromDeclaredTypeName(declaredTypeName),
+                $ref: getReferenceFromDeclaredTypeName(declaredTypeName)
             };
         });
     }

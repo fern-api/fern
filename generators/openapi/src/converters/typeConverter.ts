@@ -14,7 +14,7 @@ import {
     TypeDeclaration,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
@@ -79,11 +79,11 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         docs: property.docs ?? undefined,
                         name: property.name,
                         valueType: property.valueType,
-                        example: exampleProperty,
+                        example: exampleProperty
                     };
                 }),
                 extensions: objectTypeDeclaration.extends,
-                docs,
+                docs
             });
         },
         union: (unionTypeDeclaration) => {
@@ -94,17 +94,17 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
         },
         _other: () => {
             throw new Error("Encountered unknown type: " + shape.type);
-        },
+        }
     });
     return {
         openApiSchema,
-        schemaName: getNameFromDeclaredTypeName(typeDeclaration.name),
+        schemaName: getNameFromDeclaredTypeName(typeDeclaration.name)
     };
 }
 
 export function convertAlias({
     aliasTypeDeclaration,
-    docs,
+    docs
 }: {
     aliasTypeDeclaration: AliasTypeDeclaration;
     docs: string | undefined;
@@ -112,13 +112,13 @@ export function convertAlias({
     const convertedAliasOf = convertTypeReference(aliasTypeDeclaration.aliasOf);
     return {
         ...convertedAliasOf,
-        description: docs,
+        description: docs
     };
 }
 
 export function convertEnum({
     enumTypeDeclaration,
-    docs,
+    docs
 }: {
     enumTypeDeclaration: EnumTypeDeclaration;
     docs: string | undefined;
@@ -128,13 +128,13 @@ export function convertEnum({
         enum: enumTypeDeclaration.values.map((enumValue) => {
             return enumValue.name.wireValue;
         }),
-        description: docs,
+        description: docs
     };
 }
 
 export function convertUnion({
     unionTypeDeclaration,
-    docs,
+    docs
 }: {
     unionTypeDeclaration: UnionTypeDeclaration;
     docs: string | undefined;
@@ -143,45 +143,45 @@ export function convertUnion({
         const discriminantProperty: OpenAPIV3.BaseSchemaObject["properties"] = {
             [unionTypeDeclaration.discriminant.wireValue]: {
                 type: "string",
-                enum: [singleUnionType.discriminantValue.wireValue],
-            },
+                enum: [singleUnionType.discriminantValue.wireValue]
+            }
         };
         return SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
             noProperties: () => ({
                 type: "object",
                 properties: discriminantProperty,
-                required: [unionTypeDeclaration.discriminant.wireValue],
+                required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             singleProperty: (singleProperty) => ({
                 type: "object",
                 properties: {
                     ...discriminantProperty,
-                    [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type),
+                    [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type)
                 },
-                required: [unionTypeDeclaration.discriminant.wireValue],
+                required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             samePropertiesAsObject: (typeName) => ({
                 type: "object",
                 allOf: [
                     {
                         type: "object",
-                        properties: discriminantProperty,
+                        properties: discriminantProperty
                     },
                     {
-                        $ref: getReferenceFromDeclaredTypeName(typeName),
-                    },
+                        $ref: getReferenceFromDeclaredTypeName(typeName)
+                    }
                 ],
-                required: [unionTypeDeclaration.discriminant.wireValue],
+                required: [unionTypeDeclaration.discriminant.wireValue]
             }),
             _other: () => {
                 throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
-            },
+            }
         });
     });
 
     const schema: OpenAPIV3.SchemaObject = {
         oneOf: oneOfTypes,
-        description: docs,
+        description: docs
     };
 
     if (unionTypeDeclaration.baseProperties.length > 0) {
@@ -190,7 +190,7 @@ export function convertUnion({
         >((acc, property) => {
             acc[property.name.wireValue] = {
                 description: property.docs ?? undefined,
-                ...convertTypeReference(property.valueType),
+                ...convertTypeReference(property.valueType)
             };
             if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
                 schema.required = [...(schema.required ?? []), property.name.wireValue];
@@ -204,7 +204,7 @@ export function convertUnion({
 
 export function convertUndiscriminatedUnion({
     undiscriminatedUnionDeclaration,
-    docs,
+    docs
 }: {
     undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
     docs: string | undefined;
@@ -212,9 +212,9 @@ export function convertUndiscriminatedUnion({
     return {
         oneOf: undiscriminatedUnionDeclaration.members.map((member) => ({
             description: member.docs ?? undefined,
-            ...convertTypeReference(member.type),
+            ...convertTypeReference(member.type)
         })),
-        description: docs,
+        description: docs
     };
 }
 
@@ -225,7 +225,7 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
         },
         named: (declaredTypeName) => {
             return {
-                $ref: getReferenceFromDeclaredTypeName(declaredTypeName),
+                $ref: getReferenceFromDeclaredTypeName(declaredTypeName)
             };
         },
         primitive: (primitiveType) => {
@@ -236,7 +236,7 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
         },
         _other: () => {
             throw new Error("Encountered unknown typeReference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -248,24 +248,24 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
         dateTime: () => {
             return {
                 type: "string",
-                format: "date-time",
+                format: "date-time"
             };
         },
         double: () => {
             return {
                 type: "number",
-                format: "double",
+                format: "double"
             };
         },
         integer: () => {
             return {
-                type: "integer",
+                type: "integer"
             };
         },
         long: () => {
             return {
                 type: "integer",
-                format: "int64",
+                format: "int64"
             };
         },
         string: () => {
@@ -274,24 +274,24 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
         uuid: () => {
             return {
                 type: "string",
-                format: "uuid",
+                format: "uuid"
             };
         },
         date: () => {
             return {
                 type: "string",
-                format: "date",
+                format: "date"
             };
         },
         base64: () => {
             return {
                 type: "string",
-                format: "byte",
+                format: "byte"
             };
         },
         _other: () => {
             throw new Error("Encountered unknown primitiveType: " + primitiveType);
-        },
+        }
     });
 }
 
@@ -300,13 +300,13 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         list: (listType) => {
             return {
                 type: "array",
-                items: convertTypeReference(listType),
+                items: convertTypeReference(listType)
             };
         },
         set: (setType) => {
             return {
                 type: "array",
-                items: convertTypeReference(setType),
+                items: convertTypeReference(setType)
             };
         },
         map: (mapType) => {
@@ -317,29 +317,29 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             ) {
                 return {
                     type: "object",
-                    additionalProperties: true,
+                    additionalProperties: true
                 };
             }
             return {
                 type: "object",
-                additionalProperties: convertTypeReference(mapType.valueType),
+                additionalProperties: convertTypeReference(mapType.valueType)
             };
         },
         optional: (optionalType) => {
             return {
                 ...convertTypeReference(optionalType),
-                nullable: true,
+                nullable: true
             };
         },
         literal: (literalType) => {
             return {
                 type: "string",
-                enum: [literalType.string],
+                enum: [literalType.string]
             };
         },
         _other: () => {
             throw new Error("Encountered unknown containerType: " + containerType.type);
-        },
+        }
     });
 }
 
@@ -350,7 +350,7 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
-        declaredTypeName.name.originalName,
+        declaredTypeName.name.originalName
     ].join("");
 }
 

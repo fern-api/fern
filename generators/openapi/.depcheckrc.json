@@ -1,4 +1,4 @@
 {
-  "ignores": ["@types/jest", "@types/node", "@fern-typescript/testing-utils", "lint-staged", "webpack", "webpack-cli"],
-  "ignore-patterns": ["lib"]
+  "ignores": ["@types/jest", "@types/node", "webpack", "webpack-cli", "ts-loader"],
+  "ignore-patterns": ["lib", "docker/bundle.js"]
 }

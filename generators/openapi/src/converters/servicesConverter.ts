@@ -20,7 +20,7 @@ import {
     ResponseErrors,
     Type,
     TypeDeclaration,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -28,7 +28,7 @@ import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
-import { OpenApiComponentSchema, convertTypeReference } from "./typeConverter";
+import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
     httpServices,
@@ -37,7 +37,7 @@ export function convertServices({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode,
+    mode
 }: {
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
@@ -58,7 +58,7 @@ export function convertServices({
                 errorDiscriminationStrategy,
                 security,
                 environments,
-                mode,
+                mode
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
@@ -84,7 +84,7 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy,
     security,
     environments,
-    mode,
+    mode
 }: {
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
@@ -114,19 +114,19 @@ function convertHttpEndpoint({
         ...convertedServicePathParameters,
         ...convertedEndpointPathParameters,
         ...convertedQueryParameters,
-        ...convertedHeaders,
+        ...convertedHeaders
     ];
 
     const tag =
         mode === "stoplight"
             ? httpService.displayName ??
-            httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
+              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
             : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
         operationId: [
             ...httpService.name.fernFilepath.allParts.map((name) => name.camelCase.unsafeName),
-            httpEndpoint.name.originalName,
+            httpEndpoint.name.originalName
         ].join("_"),
         tags: [tag],
         parameters,
@@ -136,10 +136,10 @@ function convertHttpEndpoint({
                 responseErrors: httpEndpoint.errors,
                 errorsByName,
                 errorDiscriminationStrategy,
-                examples: httpEndpoint.examples,
-            }),
+                examples: httpEndpoint.examples
+            })
         },
-        summary: httpEndpoint.displayName ?? undefined,
+        summary: httpEndpoint.displayName ?? undefined
     };
 
     if (httpEndpoint.baseUrl != null) {
@@ -168,13 +168,13 @@ function convertHttpEndpoint({
         operationObject.requestBody = convertRequestBody({
             httpRequest: httpEndpoint.requestBody,
             typesByName,
-            examples: httpEndpoint.examples,
+            examples: httpEndpoint.examples
         });
     }
     return {
         fullPath,
         convertedHttpMethod,
-        operationObject,
+        operationObject
     };
 }
 
@@ -197,14 +197,14 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
         },
         _other: () => {
             throw new Error("Encountered unknown http method: " + httpMethod);
-        },
+        }
     });
 }
 
 function convertRequestBody({
     httpRequest,
     typesByName,
-    examples,
+    examples
 }: {
     httpRequest: HttpRequestBody;
     typesByName: Record<string, TypeDeclaration>;
@@ -213,14 +213,13 @@ function convertRequestBody({
     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
     for (const example of examples) {
         if (example.request != null) {
-            if (example.name && example.name.originalName != "") {
+            if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
-                    value: example.request.jsonExample,
+                    value: example.request.jsonExample
                 };
-            }
-            else {
+            } else {
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: example.request.jsonExample,
+                    value: example.request.jsonExample
                 };
             }
         }
@@ -242,11 +241,11 @@ function convertRequestBody({
                             docs: property.docs ?? undefined,
                             name: property.name,
                             valueType: property.valueType,
-                            example: exampleProperty,
+                            example: exampleProperty
                         };
                     }),
-                    extensions: inlinedRequestBody.extends,
-                }),
+                    extensions: inlinedRequestBody.extends
+                })
             };
 
             if (size(openapiExamples) > 0) {
@@ -256,13 +255,13 @@ function convertRequestBody({
             return {
                 required: true,
                 content: {
-                    "application/json": convertedRequest,
-                },
+                    "application/json": convertedRequest
+                }
             };
         },
         reference: (reference) => {
             const convertedRequest: OpenAPIV3.MediaTypeObject = {
-                schema: convertTypeReference(reference.requestBodyType),
+                schema: convertTypeReference(reference.requestBodyType)
             };
             if (size(openapiExamples) > 0) {
                 convertedRequest.examples = openapiExamples;
@@ -271,8 +270,8 @@ function convertRequestBody({
                 description: reference.docs ?? undefined,
                 required: isTypeReferenceRequired({ typeReference: reference.requestBodyType, typesByName }),
                 content: {
-                    "application/json": convertedRequest,
-                },
+                    "application/json": convertedRequest
+                }
             };
         },
         fileUpload: (fileUploadRequest) => {
@@ -289,26 +288,26 @@ function convertRequestBody({
                                     file: (fileProperty) => {
                                         acc[fileProperty.key.wireValue] = {
                                             type: "string",
-                                            format: "binary",
+                                            format: "binary"
                                         };
                                     },
                                     bodyProperty: (bodyProperty) => {
                                         acc[bodyProperty.name.wireValue] = {
                                             description: bodyProperty.docs ?? undefined,
-                                            ...convertTypeReference(bodyProperty.valueType),
+                                            ...convertTypeReference(bodyProperty.valueType)
                                         };
                                     },
                                     _other: () => {
                                         throw new Error("Unkonwn FileUploadRequestProperty: " + property.type);
-                                    },
+                                    }
                                 });
                                 return {
-                                    ...acc,
+                                    ...acc
                                 };
-                            }, {}),
-                        },
-                    },
-                },
+                            }, {})
+                        }
+                    }
+                }
             };
         },
         bytes: () => {
@@ -316,7 +315,7 @@ function convertRequestBody({
         },
         _other: () => {
             throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
-        },
+        }
     });
 }
 
@@ -325,7 +324,7 @@ function convertResponse({
     responseErrors,
     errorsByName,
     errorDiscriminationStrategy,
-    examples,
+    examples
 }: {
     httpResponse: HttpResponse | null | undefined;
     responseErrors: ResponseErrors;
@@ -336,24 +335,23 @@ function convertResponse({
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
     if (httpResponse == null) {
         responseByStatusCode["204"] = {
-            description: "",
+            description: ""
         };
     } else if (httpResponse.type === "json") {
         const convertedResponse: OpenAPIV3.MediaTypeObject = {
-            schema: convertTypeReference(httpResponse.responseBodyType),
+            schema: convertTypeReference(httpResponse.responseBodyType)
         };
 
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
         for (const example of examples) {
             if (example.response.type === "ok" && example.response.body != null) {
-                if (example.name && example.name.originalName != "") {
+                if (example.name && example.name.originalName !== "") {
                     openapiExamples[example.name.originalName] = {
-                        value: example.response.body.jsonExample,
+                        value: example.response.body.jsonExample
                     };
-                }
-                else {
+                } else {
                     openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                        value: example.response.body.jsonExample,
+                        value: example.response.body.jsonExample
                     };
                 }
             }
@@ -365,8 +363,8 @@ function convertResponse({
         responseByStatusCode["200"] = {
             description: httpResponse.docs ?? "",
             content: {
-                "application/json": convertedResponse,
-            },
+                "application/json": convertedResponse
+            }
         };
     }
 
@@ -380,11 +378,11 @@ function convertResponse({
                     );
                 }
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
-                    description: responseError.docs ?? "",
+                    description: responseError.docs ?? ""
                 };
                 if (errorDeclaration.type != null) {
                     const convertedResponse: OpenAPIV3.MediaTypeObject = {
-                        schema: convertTypeReference(errorDeclaration.type),
+                        schema: convertTypeReference(errorDeclaration.type)
                     };
 
                     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
@@ -394,14 +392,13 @@ function convertResponse({
                             example.response.body != null &&
                             isEqual(responseError.error, example.response.error)
                         ) {
-                            if (example.name && example.name.originalName != "") {
+                            if (example.name && example.name.originalName !== "") {
                                 openapiExamples[example.name.originalName] = {
-                                    value: example.response.body.jsonExample,
+                                    value: example.response.body.jsonExample
                                 };
-                            }
-                            else {
+                            } else {
                                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                                    value: example.response.body.jsonExample,
+                                    value: example.response.body.jsonExample
                                 };
                             }
                         }
@@ -411,7 +408,7 @@ function convertResponse({
                     }
 
                     responseForStatusCode.content = {
-                        "application/json": convertedResponse,
+                        "application/json": convertedResponse
                     };
                 }
                 responseByStatusCode[errorDeclaration.statusCode] = responseForStatusCode;
@@ -420,7 +417,7 @@ function convertResponse({
         property: (property) => {
             const errorInfoByStatusCode: Record<string, ErrorInfo[]> = getErrorInfoByStatusCode({
                 responseErrors,
-                errorsByName,
+                errorsByName
             });
             for (const statusCode of Object.keys(errorInfoByStatusCode)) {
                 const errorInfos = errorInfoByStatusCode[statusCode];
@@ -433,10 +430,10 @@ function convertResponse({
                         oneOf: errorInfos.map((errorInfo) =>
                             getDiscriminatedErrorInfoOpenApiSchema({
                                 errorInfo,
-                                property,
+                                property
                             })
-                        ),
-                    },
+                        )
+                    }
                 };
 
                 const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
@@ -444,14 +441,13 @@ function convertResponse({
                     if (example.response.type === "error" && example.response.body != null) {
                         const errorForExample = example.response.error;
                         if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
-                            if (example.name && example.name.originalName != "") {
+                            if (example.name && example.name.originalName !== "") {
                                 openapiExamples[example.name.originalName] = {
-                                    value: example.response.body.jsonExample,
+                                    value: example.response.body.jsonExample
                                 };
-                            }
-                            else {
+                            } else {
                                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                                    value: example.response.body.jsonExample,
+                                    value: example.response.body.jsonExample
                                 };
                             }
                         }
@@ -464,14 +460,14 @@ function convertResponse({
                 responseByStatusCode[statusCode] = {
                     description: "",
                     content: {
-                        "application/json": convertedResponse,
-                    },
+                        "application/json": convertedResponse
+                    }
                 };
             }
         },
         _other: () => {
             throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
-        },
+        }
     });
     return responseByStatusCode;
 }
@@ -499,7 +495,7 @@ function typeReferenceIsObject(typeReference: TypeReference, typesByName: Record
 
 function getDiscriminatedErrorInfoOpenApiSchema({
     errorInfo,
-    property,
+    property
 }: {
     errorInfo: ErrorInfo;
     property: ErrorDiscriminationByPropertyStrategy;
@@ -510,8 +506,8 @@ function getDiscriminatedErrorInfoOpenApiSchema({
     const properties: Record<string, OpenApiComponentSchema> = {
         [property.discriminant.wireValue]: {
             type: "string",
-            enum: [discriminantValue],
-        },
+            enum: [discriminantValue]
+        }
     };
 
     if (errorInfo.errorDeclaration.type != null) {
@@ -521,7 +517,7 @@ function getDiscriminatedErrorInfoOpenApiSchema({
     return {
         type: "object",
         description,
-        properties,
+        properties
     };
 }
 
@@ -532,7 +528,7 @@ interface ErrorInfo {
 
 function getErrorInfoByStatusCode({
     responseErrors,
-    errorsByName,
+    errorsByName
 }: {
     responseErrors: ResponseErrors;
     errorsByName: Record<string, ErrorDeclaration>;
@@ -556,7 +552,7 @@ function getErrorInfoByStatusCode({
 
 function convertPathParameter({
     pathParameter,
-    examples,
+    examples
 }: {
     pathParameter: PathParameter;
     examples: ExampleEndpointCall[];
@@ -566,7 +562,7 @@ function convertPathParameter({
         in: "path",
         description: pathParameter.docs ?? undefined,
         required: true,
-        schema: convertTypeReference(pathParameter.valueType),
+        schema: convertTypeReference(pathParameter.valueType)
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
@@ -575,14 +571,13 @@ function convertPathParameter({
             (param) => param.key === pathParameter.name.originalName
         );
         if (pathParameterExample != null) {
-            if (example.name && example.name.originalName != "") {
+            if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
-                    value: pathParameterExample.value.jsonExample,
+                    value: pathParameterExample.value.jsonExample
                 };
-            }
-            else {
+            } else {
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: pathParameterExample.value.jsonExample,
+                    value: pathParameterExample.value.jsonExample
                 };
             }
         }
@@ -597,7 +592,7 @@ function convertPathParameter({
 function convertQueryParameter({
     queryParameter,
     typesByName,
-    examples,
+    examples
 }: {
     queryParameter: QueryParameter;
     typesByName: Record<string, TypeDeclaration>;
@@ -610,7 +605,7 @@ function convertQueryParameter({
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
             ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
-            : convertTypeReference(queryParameter.valueType),
+            : convertTypeReference(queryParameter.valueType)
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
@@ -619,14 +614,13 @@ function convertQueryParameter({
             (param) => param.wireKey === queryParameter.name.wireValue
         );
         if (queryParameterExample != null) {
-            if (example.name && example.name.originalName != "") {
+            if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
-                    value: queryParameterExample.value.jsonExample,
+                    value: queryParameterExample.value.jsonExample
                 };
-            }
-            else {
+            } else {
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: queryParameterExample.value.jsonExample,
+                    value: queryParameterExample.value.jsonExample
                 };
             }
         }
@@ -641,7 +635,7 @@ function convertQueryParameter({
 function convertHeader({
     httpHeader,
     typesByName,
-    examples,
+    examples
 }: {
     httpHeader: HttpHeader;
     typesByName: Record<string, TypeDeclaration>;
@@ -652,7 +646,7 @@ function convertHeader({
         in: "header",
         description: httpHeader.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: httpHeader.valueType, typesByName }),
-        schema: convertTypeReference(httpHeader.valueType),
+        schema: convertTypeReference(httpHeader.valueType)
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
@@ -661,14 +655,13 @@ function convertHeader({
             (headerFromExample) => headerFromExample.wireKey === httpHeader.name.wireValue
         );
         if (headerExample != null) {
-            if (example.name && example.name.originalName != "") {
+            if (example.name && example.name.originalName !== "") {
                 openapiExamples[example.name.originalName] = {
-                    value: headerExample.value.jsonExample,
+                    value: headerExample.value.jsonExample
                 };
-            }
-            else {
+            } else {
                 openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: headerExample.value.jsonExample,
+                    value: headerExample.value.jsonExample
                 };
             }
         }
@@ -690,7 +683,7 @@ function convertHttpPathToString(httpPath: HttpPath): string {
 
 function isTypeReferenceRequired({
     typeReference,
-    typesByName,
+    typesByName
 }: {
     typeReference: TypeReference;
     typesByName: Record<string, TypeDeclaration>;

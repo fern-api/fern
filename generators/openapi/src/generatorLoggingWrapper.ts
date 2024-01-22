@@ -10,13 +10,13 @@ export class GeneratorLoggingWrapper {
     constructor(generatorConfig: GeneratorConfig) {
         if (generatorConfig.environment._type === "remote") {
             const generatorLoggingClient = new GeneratorLoggingService({
-                origin: generatorConfig.environment.coordinatorUrl,
+                origin: generatorConfig.environment.coordinatorUrl
             });
             const taskId = generatorConfig.environment.id;
             this.maybeSendUpdates = async (updates) => {
                 await generatorLoggingClient.sendUpdate({
                     taskId,
-                    body: updates,
+                    body: updates
                 });
             };
         }

@@ -7,7 +7,7 @@ export interface FernOpenapiCustomConfig {
 
 const DEFAULT_FERN_OPENAPI_CUSTOM_CONFIG: FernOpenapiCustomConfig = {
     format: "yaml",
-    customOverrides: {},
+    customOverrides: {}
 };
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernOpenapiCustomConfig {

@@ -36,36 +36,37 @@ describe("convertToOpenApi", () => {
                                                 authorizationUrl: "https://foo.bar",
                                                 scopes: {
                                                     read: "Grants read access",
-                                                    write: "Grants write access",
+                                                    write: "Grants write access"
                                                 },
                                                 "x-google-audiences": "foo-bar",
                                                 "x-google-issuer": "https://securetoken.google.com/foo-bar",
                                                 "x-google-jwks_uri":
-                                                    "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
+                                                    "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
-                    environment: GeneratorEnvironment.local(),
+                    environment: GeneratorEnvironment.local()
                 };
 
                 await writeFile(configPath, JSON.stringify(generatorConfig, undefined, 4));
 
                 await execa("fern", ["ir", irPath, "--api", fixture], {
-                    cwd: fixtureDir,
+                    cwd: fixtureDir
                 });
 
                 await writeOpenApi("openapi", configPath);
+                // eslint-disable-next-line no-console
                 console.log(`Wrote ${openapiPath}`);
 
                 const openApi = (await readFile(openapiPath)).toString();
 
                 expect(openApi).toMatchSnapshot();
             },
-            90_000,
+            90_000
         );
     }
 });
