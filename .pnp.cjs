@@ -3660,7 +3660,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tar", "npm:6.1.7"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.28"],\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14"],\
             ["ansi-escapes", "npm:5.0.0"],\
             ["axios", "npm:0.27.2"],\
             ["boxen", "npm:7.0.0"],\
@@ -4440,9 +4440,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.6"],\
+            ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
+            ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
-            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
@@ -4450,7 +4452,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:2.0.0"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["url-join", "npm:5.0.0"],\
             ["webpack", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:5.89.0"],\
@@ -4677,7 +4678,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.28"],\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["esbuild", "npm:0.15.7"],\
@@ -4718,7 +4719,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.28"],\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
@@ -7687,10 +7688,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14", {\
-          "packageLocation": "./.yarn/__virtual__/@yarnpkg-esbuild-plugin-pnp-virtual-83b91a6969/0/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.14-1f35c4d7ab-7213b06d80.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
+        ["virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14", {\
+          "packageLocation": "./.yarn/__virtual__/@yarnpkg-esbuild-plugin-pnp-virtual-231f7ad5f1/0/cache/@yarnpkg-esbuild-plugin-pnp-npm-3.0.0-rc.14-1f35c4d7ab-7213b06d80.zip/node_modules/@yarnpkg/esbuild-plugin-pnp/",\
           "packageDependencies": [\
-            ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
+            ["@yarnpkg/esbuild-plugin-pnp", "virtual:f8c2c21ccf4a7bff0441fa7ad0112165eef5a99e1541a7f735814dca224460f0aac610b288e46779d03f09b1af2c6d92073604dc78c5efe37c27cfff6010d3d2#npm:3.0.0-rc.14"],\
             ["@types/esbuild", null],\
             ["esbuild", "npm:0.15.7"],\
             ["tslib", "npm:1.14.1"]\

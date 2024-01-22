@@ -14,6 +14,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
+  "bin": {
+    "fern-openapi": "./dist/bundle.cjs"
+  },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -24,8 +27,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dockerTagLocal": "sh ./docker/create_docker.sh local",
-    "dockerTagVersion": "sh ./docker/create_docker.sh"
+    "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
+    "dist:cli": "yarn compile && node build.cjs",
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",
@@ -40,14 +44,15 @@
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
+    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
+    "env-cmd": "toddbluhm/env-cmd",
+    "esbuild": "^0.15.7",
     "eslint": "^8.26.0",
-    "execa": "^5.1.1",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "simple-progress-webpack-plugin": "^2.0.0",
-    "tmp-promise": "^3.0.3",
     "typescript": "4.6.4",
     "webpack": "^5.76.0",
     "webpack-cli": "5.1.4"

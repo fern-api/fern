@@ -1,12 +1,16 @@
 {
-  "type": "library",
-  "rules": {
-    "package-json": {
-      "scripts": {
-        "dockerTagLocal": "sh ./docker/create_docker.sh local",
-        "dockerTagVersion": "sh ./docker/create_docker.sh"
+  "type": "cli",
+  "cliName": "fern-openapi",
+  "environment": {
+    "environments": {
+      "prod": {
+        "cliName": "fern-openapi",
+        "cliPackageName": "@fern-api/openapi-generator"
       }
     },
+    "variables": []
+  },
+  "rules": {
     "depcheck": {
       "ignores": ["webpack", "webpack-cli", "ts-loader", "@fern-fern/ir-sdk"],
       "ignore-patterns": ["docker/bundle.js"]
