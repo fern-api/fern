@@ -4435,7 +4435,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
             ["@fern-fern/generator-exec-client", "npm:0.0.6"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3277"],\
+            ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -4992,6 +4992,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-sdk", [\
+        ["npm:0.0.2828", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.2828-43f6c61c8e-5fa0842320.zip/node_modules/@fern-fern/ir-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/ir-sdk", "npm:0.0.2828"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:0.0.3277", {\
           "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3277-543cd2fc1a-d9a619d9ed.zip/node_modules/@fern-fern/ir-sdk/",\
           "packageDependencies": [\

@@ -2642,7 +2642,7 @@ __metadata:
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
     "@fern-fern/generator-exec-client": ^0.0.6
-    "@fern-fern/ir-sdk": 0.0.3277
+    "@fern-fern/ir-sdk": 0.0.2828
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
@@ -3160,6 +3160,13 @@ __metadata:
     axios-retry: 3.2.0
     url-join: 4.0.1
   checksum: 1b44ecb213711e7ecfde32f819c15c32d621d31d13c6eb7680cce29fa5df378ea077e8b04da832bb47ae568dbdbade8a84dabf04a946a8d5bbc73953b53f6a33
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:0.0.2828":
+  version: 0.0.2828
+  resolution: "@fern-fern/ir-sdk@npm:0.0.2828"
+  checksum: 5fa08423209d8c7b8d9d60be822eeae3d955ac893d61abdaf3ba36750f98f1a4969480a3bc65294e59444fec43defa34f0b3f71fe5a55d90faa0c04658c5d918
   languageName: node
   linkType: hard
 
