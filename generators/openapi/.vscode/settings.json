@@ -1,0 +1,4 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"]
+}

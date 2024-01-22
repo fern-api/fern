@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: nursery-api
+  version: ''
+paths:
+  /no-headers:
+    post:
+      operationId: noHeaders_get
+      tags:
+        - NoHeaders
+      parameters: []
+      responses:
+        '204':
+          description: ''
+  /only-literal-headers:
+    post:
+      operationId: onlyLiteralHeaders_get
+      tags:
+        - OnlyLiteralHeaders
+      parameters:
+        - name: literalEndpointHeader
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - endpoint header
+      responses:
+        '204':
+          description: ''
+  /with-non-literal-headers:
+    post:
+      operationId: withNonLiteralHeaders_get
+      tags:
+        - WithNonLiteralHeaders
+      parameters:
+        - name: nonLiteralEndpointHeader
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: literalEndpointHeader
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - endpoint header
+      responses:
+        '204':
+          description: ''
+components:
+  schemas: {}
+  securitySchemes: {}

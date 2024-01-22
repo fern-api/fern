@@ -1,0 +1,10 @@
+types:
+  MyObject:
+    properties:
+      foo: string
+  MyUnion:
+    union:
+      a: string
+      b: MyObject
+    base-properties:
+      base: integer

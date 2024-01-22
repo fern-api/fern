@@ -1,0 +1,14 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    createPost:
+      docs: Creates a blog post
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            name: string
+            heroImage: file
