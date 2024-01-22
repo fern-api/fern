@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "commons/types/ProblemId"
 require_relative "submission/types/ExceptionInfo"
 require_relative "submission/types/CodeExecutionUpdate"
 require_relative "submission/types/TerminatedResponse"
+require_relative "commons/types/PROBLEM_ID"
 
 module SeedClient
   module Submission
@@ -33,7 +33,7 @@ module SeedClient
                  when "serverInitialized"
                    nil
                  when "problemInitialized"
-                   Commons::ProblemId.from_json(json_object: json_object.value)
+                   json_object.value
                  when "workspaceInitialized"
                    nil
                  when "serverErrored"
@@ -50,23 +50,23 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "serverInitialized"
           { type: @discriminant }.to_json
         when "problemInitialized"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "workspaceInitialized"
           { type: @discriminant }.to_json
         when "serverErrored"
           { type: @discriminant, **@member.to_json }.to_json
         when "codeExecutionUpdate"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "terminated"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end
@@ -80,15 +80,15 @@ module SeedClient
         when "serverInitialized"
           # noop
         when "problemInitialized"
-          ProblemId.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "workspaceInitialized"
           # noop
         when "serverErrored"
-          ExceptionInfo.validate_raw(obj: obj)
+          Submission::ExceptionInfo.validate_raw(obj: obj)
         when "codeExecutionUpdate"
-          CodeExecutionUpdate.validate_raw(obj: obj)
+          Submission::CodeExecutionUpdate.validate_raw(obj: obj)
         when "terminated"
-          TerminatedResponse.validate_raw(obj: obj)
+          Submission::TerminatedResponse.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -97,8 +97,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
@@ -107,7 +107,7 @@ module SeedClient
         new(member: nil, discriminant: "serverInitialized")
       end
 
-      # @param member [Commons::ProblemId]
+      # @param member [Commons::PROBLEM_ID]
       # @return [Submission::SubmissionResponse]
       def self.problem_initialized(member:)
         new(member: member, discriminant: "problemInitialized")

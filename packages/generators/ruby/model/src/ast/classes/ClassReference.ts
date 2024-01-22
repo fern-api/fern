@@ -1,14 +1,26 @@
-import { ContainerType, DeclaredTypeName, Literal, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    AliasTypeDeclaration,
+    ContainerType,
+    DeclaredTypeName,
+    Literal,
+    MapType,
+    PrimitiveType,
+    SingleUnionTypeProperties,
+    SingleUnionTypeProperty,
+    TypeDeclaration,
+    TypeId,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 import { getLocationForTypeDeclaration } from "../AbstractionUtilities";
 import { Argument } from "../Argument";
-import { Import } from "../Import";
-import { Module_ } from "../Module_";
-import { Variable } from "../Variable";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { Import } from "../Import";
+import { Module_ } from "../Module_";
+import { Variable } from "../Variable";
 
 enum RubyClass {
     INTEGER = "Integer",
@@ -55,7 +67,7 @@ export class ClassReference extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.name, startingTabSpaces });
+        this.addText({ stringContent: this.qualifiedName, startingTabSpaces });
     }
 
     public toJson(_variable: Variable | string): FunctionInvocation | undefined {
@@ -87,70 +99,6 @@ export class ClassReference extends AstNode {
             } is not the expected type, validation failed.")`,
             operation: "||",
             isAssignment: false
-        });
-    }
-
-    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
-        // are written to a "types" subdirectory
-        const crName = declaredTypeName.name.pascalCase.safeName;
-        const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
-        return new SerializableObjectReference({
-            name: crName,
-            import_: new Import({ from: `${location}/${crName}` }),
-            location,
-            moduleBreadcrumbs
-        });
-    }
-
-    static fromTypeReference(typeReference: TypeReference): ClassReference {
-        return typeReference._visit<ClassReference>({
-            container: (ct) => ClassReference.forContainerType(ct),
-            named: (dtn) => ClassReference.fromDeclaredTypeName(dtn),
-            primitive: (pt) => ClassReference.forPrimitiveType(pt),
-            _other: (value: { type: string }) => new ClassReference({ name: value.type }),
-            unknown: () => GenericClassReference
-        });
-    }
-
-    static forPrimitiveType(primitive: PrimitiveType): ClassReference {
-        return PrimitiveType._visit<ClassReference>(primitive, {
-            integer: () => new ClassReference({ name: RubyClass.INTEGER }),
-            double: () => new ClassReference({ name: RubyClass.DOUBLE }),
-            string: () => StringClassReference,
-            boolean: () => BooleanClassReference,
-            long: () => new ClassReference({ name: RubyClass.LONG }),
-            dateTime: () => new ClassReference({ name: RubyClass.DATETIME }),
-            date: () => new ClassReference({ name: RubyClass.DATE }),
-            uuid: () => new ClassReference({ name: RubyClass.UUID }),
-            base64: () => new ClassReference({ name: RubyClass.BASE64 }),
-            _other: () => {
-                throw new Error("Unexpected primitive type: " + primitive);
-            }
-        });
-    }
-
-    static forContainerType(containerType: ContainerType): ClassReference {
-        return containerType._visit<ClassReference>({
-            list: (tr: TypeReference) => new ArrayReference({ innerType: ClassReference.fromTypeReference(tr) }),
-            map: (mt: MapType) =>
-                new HashReference({
-                    keyType: ClassReference.fromTypeReference(mt.keyType),
-                    valueType: ClassReference.fromTypeReference(mt.keyType)
-                }),
-            // Optional types in Ruby look the same except they're defaulted to nil in signatures.
-            optional: (tr: TypeReference) => ClassReference.fromTypeReference(tr),
-            set: (tr: TypeReference) => new SetReference({ innerType: ClassReference.fromTypeReference(tr) }),
-            literal: (lit: Literal) =>
-                Literal._visit<ClassReference>(lit, {
-                    string: () => StringClassReference,
-                    boolean: () => BooleanClassReference,
-                    _other: (value: { type: string }) => new ClassReference({ name: value.type })
-                }),
-            _other: () => {
-                throw new Error("Unexpected primitive type: " + containerType.type);
-            }
         });
     }
 
@@ -207,6 +155,60 @@ export class SerializableObjectReference extends ClassReference {
                   isAssignment: false
               });
     }
+
+    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
+        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
+        // are written to a "types" subdirectory
+        const crName = declaredTypeName.name.pascalCase.safeName;
+        const location = getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        return new SerializableObjectReference({
+            name: crName,
+            import_: new Import({ from: `${location}/${crName}` }),
+            location,
+            moduleBreadcrumbs
+        });
+    }
+}
+
+export declare namespace AliasReference {
+    export interface Init extends ClassReference.Init {
+        aliasOf: ClassReference;
+    }
+}
+export class AliasReference extends ClassReference {
+    private aliasOf: ClassReference;
+    constructor({ aliasOf, ...rest }: AliasReference.Init) {
+        super(rest);
+        this.aliasOf = aliasOf;
+    }
+
+    public fromJson(variable: string | Variable): FunctionInvocation | undefined {
+        return this.aliasOf.fromJson(variable);
+    }
+
+    public toJson(variable: string | Variable): FunctionInvocation | undefined {
+        return this.aliasOf.toJson(variable);
+    }
+
+    public validateRaw(variable: string | Variable, isOptional?: boolean): FunctionInvocation | Expression {
+        return this.aliasOf.validateRaw(variable, isOptional);
+    }
+
+    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName, aliasOf: ClassReference): ClassReference {
+        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
+        // are written to a "types" subdirectory
+        const crName = declaredTypeName.name.screamingSnakeCase.safeName;
+        const location = getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        return new AliasReference({
+            aliasOf,
+            name: crName,
+            import_: new Import({ from: `${location}/${crName}` }),
+            location,
+            moduleBreadcrumbs
+        });
+    }
 }
 
 export declare namespace ArrayReference {
@@ -238,7 +240,10 @@ export class ArrayReference extends ClassReference {
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "map", functionBody: [] }),
                   onObject: variable,
-                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueFromJsonFunction })] }
+                  block: {
+                      arguments: "v",
+                      expressions: [new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -249,7 +254,10 @@ export class ArrayReference extends ClassReference {
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "map", functionBody: [] }),
                   onObject: variable,
-                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueToJsonFunction })] }
+                  block: {
+                      arguments: "v",
+                      expressions: [new Expression({ rightSide: valueToJsonFunction, isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -271,7 +279,7 @@ export class ArrayInstance extends AstNode {
 }
 
 export declare namespace Hash_ {
-    export interface InitReference extends AstNode.Init {
+    export interface InitReference extends Omit<ClassReference.Init, "name" | "typeHint"> {
         name?: string;
         keyType: ClassReference | string;
         valueType: ClassReference | string;
@@ -301,7 +309,10 @@ export class HashReference extends ClassReference {
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                   onObject: variable,
-                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueFromJsonFunction })] }
+                  block: {
+                      arguments: "v",
+                      expressions: [new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -312,7 +323,10 @@ export class HashReference extends ClassReference {
             ? new FunctionInvocation({
                   baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                   onObject: variable,
-                  block: { arguments: "v", expressions: [new Expression({ rightSide: valueToJsonFunction })] }
+                  block: {
+                      arguments: "v",
+                      expressions: [new Expression({ rightSide: valueToJsonFunction, isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -338,6 +352,55 @@ export class HashInstance extends AstNode {
                 .join(", ")}${this.additionalHashes.map((ah) => format(", **%s", ah.write()))} }`
         });
         this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
+    }
+}
+
+export declare namespace Enum {
+    export interface ReferenceInit extends ClassReference.Init {
+        name: string;
+    }
+    export interface InstanceInit extends ClassReference.Init {
+        contents: Map<string, string>;
+    }
+}
+
+// TODO: allow for per-enum documentation
+export class Enum extends HashInstance {
+    constructor({ contents, documentation }: Enum.InstanceInit) {
+        super({ contents, isFrozen: true, documentation });
+    }
+}
+
+export class EnumReference extends HashReference {
+    constructor({ name }: Enum.ReferenceInit) {
+        super({ name, keyType: "String", valueType: "String" });
+    }
+
+    public toJson(variable: Variable | string): FunctionInvocation | undefined {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "fetch", functionBody: [] }),
+            onObject: variable
+        });
+    }
+
+    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "key", functionBody: [] }),
+            onObject: this,
+            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+        });
+    }
+
+    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): EnumReference {
+        const crName = declaredTypeName.name.screamingSnakeCase.safeName;
+        const location = getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        return new EnumReference({
+            name: crName,
+            import_: new Import({ from: `${location}/${crName}` }),
+            location,
+            moduleBreadcrumbs
+        });
     }
 }
 
@@ -387,6 +450,118 @@ export class SetInstance extends AstNode {
         this.addText({
             stringContent: this.contents.length > 0 ? this.contents.join(", ") : undefined,
             templateString: "Set[%s]"
+        });
+    }
+}
+
+export class ClassReferenceFactory {
+    private typeDeclarations: Map<TypeId, TypeDeclaration>;
+    private generatedReferences: Map<TypeId, ClassReference>;
+
+    constructor(typeDeclarations: Map<TypeId, TypeDeclaration>) {
+        this.typeDeclarations = typeDeclarations;
+        this.generatedReferences = new Map();
+        for (const [_, type] of typeDeclarations) {
+            this.fromTypeDeclaration(type);
+        }
+    }
+
+    public fromTypeDeclaration(type: TypeDeclaration): ClassReference {
+        const typeId = type.name.typeId;
+        let cr = this.generatedReferences.get(typeId);
+        if (cr === undefined) {
+            cr = type.shape._visit<ClassReference>({
+                alias: (atd: AliasTypeDeclaration) => {
+                    const aliasOfCr = this.fromTypeReference(atd.aliasOf);
+                    return AliasReference.fromDeclaredTypeName(type.name, aliasOfCr);
+                },
+                enum: () => EnumReference.fromDeclaredTypeName(type.name),
+                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                union: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                undiscriminatedUnion: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                _other: () => {
+                    throw new Error("Attempting to generate a class reference for an unknown type.");
+                }
+            });
+            this.generatedReferences.set(typeId, cr);
+        }
+        return cr;
+    }
+
+    public fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
+        const cr = this.generatedReferences.get(declaredTypeName.typeId);
+        // Likely you care attempting to generate an alias and the aliased class has not yet been created.
+        // Create it now!
+        if (cr === undefined) {
+            const td = this.typeDeclarations.get(declaredTypeName.typeId);
+            if (td !== undefined) {
+                return this.fromTypeDeclaration(td);
+            }
+            throw new Error("ClassReference requested does not exist");
+        }
+        return cr;
+    }
+
+    public fromTypeReference(typeReference: TypeReference): ClassReference {
+        return typeReference._visit<ClassReference>({
+            container: (ct) => this.forContainerType(ct),
+            named: (dtn) => this.fromDeclaredTypeName(dtn),
+            primitive: (pt) => this.forPrimitiveType(pt),
+            _other: (value: { type: string }) => new ClassReference({ name: value.type }),
+            unknown: () => GenericClassReference
+        });
+    }
+
+    public forPrimitiveType(primitive: PrimitiveType): ClassReference {
+        return PrimitiveType._visit<ClassReference>(primitive, {
+            integer: () => new ClassReference({ name: RubyClass.INTEGER }),
+            double: () => new ClassReference({ name: RubyClass.DOUBLE }),
+            string: () => StringClassReference,
+            boolean: () => BooleanClassReference,
+            long: () => new ClassReference({ name: RubyClass.LONG }),
+            dateTime: () => new ClassReference({ name: RubyClass.DATETIME }),
+            date: () => new ClassReference({ name: RubyClass.DATE }),
+            uuid: () => new ClassReference({ name: RubyClass.UUID }),
+            base64: () => new ClassReference({ name: RubyClass.BASE64 }),
+            _other: () => {
+                throw new Error("Unexpected primitive type: " + primitive);
+            }
+        });
+    }
+
+    public forContainerType(containerType: ContainerType): ClassReference {
+        return containerType._visit<ClassReference>({
+            list: (tr: TypeReference) => new ArrayReference({ innerType: this.fromTypeReference(tr) }),
+            map: (mt: MapType) =>
+                new HashReference({
+                    keyType: this.fromTypeReference(mt.keyType),
+                    valueType: this.fromTypeReference(mt.keyType)
+                }),
+            // Optional types in Ruby look the same except they're defaulted to nil in signatures.
+            optional: (tr: TypeReference) => this.fromTypeReference(tr),
+            set: (tr: TypeReference) => new SetReference({ innerType: this.fromTypeReference(tr) }),
+            literal: (lit: Literal) =>
+                Literal._visit<ClassReference>(lit, {
+                    string: () => StringClassReference,
+                    boolean: () => BooleanClassReference,
+                    _other: (value: { type: string }) => new ClassReference({ name: value.type })
+                }),
+            _other: () => {
+                throw new Error("Unexpected primitive type: " + containerType.type);
+            }
+        });
+    }
+
+    public classReferenceFromUnionType(
+        singleUnionTypeProperties: SingleUnionTypeProperties
+    ): ClassReference | undefined {
+        return singleUnionTypeProperties._visit<ClassReference | undefined>({
+            samePropertiesAsObject: (dtn) => this.fromDeclaredTypeName(dtn),
+            singleProperty: (sutp: SingleUnionTypeProperty) => this.fromTypeReference(sutp.type),
+            noProperties: () => undefined,
+            _other: () => {
+                throw new Error();
+            }
         });
     }
 }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/Imported"
+require_relative "commons/types/IMPORTED"
 require "json"
 
 module SeedClient
@@ -8,11 +8,11 @@ module SeedClient
     class ImportingType
       attr_reader :imported, :additional_properties
 
-      # @param imported [Commons::Imported]
+      # @param imported [Commons::IMPORTED]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Foo::ImportingType]
       def initialze(imported:, additional_properties: nil)
-        # @type [Commons::Imported]
+        # @type [Commons::IMPORTED]
         @imported = imported
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -24,7 +24,7 @@ module SeedClient
       # @return [Foo::ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        imported Commons::Imported.from_json(json_object: struct.imported)
+        imported = struct.imported
         new(imported: imported, additional_properties: struct)
       end
 
@@ -32,7 +32,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { imported: @imported }.to_json
+        { "imported": @imported }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Imported.validate_raw(obj: obj.imported)
+        obj.imported.is_a?(String) != false || raise("Passed value for field obj.imported is not the expected type, validation failed.")
       end
     end
   end

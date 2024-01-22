@@ -67,7 +67,7 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "buildingExecutor"
@@ -93,7 +93,7 @@ module SeedClient
         when "finished"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end
@@ -105,27 +105,27 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "buildingExecutor"
-          BuildingExecutorResponse.validate_raw(obj: obj)
+          Submission::BuildingExecutorResponse.validate_raw(obj: obj)
         when "running"
-          RunningResponse.validate_raw(obj: obj)
+          Submission::RunningResponse.validate_raw(obj: obj)
         when "errored"
-          ErroredResponse.validate_raw(obj: obj)
+          Submission::ErroredResponse.validate_raw(obj: obj)
         when "stopped"
-          StoppedResponse.validate_raw(obj: obj)
+          Submission::StoppedResponse.validate_raw(obj: obj)
         when "graded"
-          GradedResponse.validate_raw(obj: obj)
+          Submission::GradedResponse.validate_raw(obj: obj)
         when "gradedV2"
-          GradedResponseV2.validate_raw(obj: obj)
+          Submission::GradedResponseV2.validate_raw(obj: obj)
         when "workspaceRan"
-          WorkspaceRanResponse.validate_raw(obj: obj)
+          Submission::WorkspaceRanResponse.validate_raw(obj: obj)
         when "recording"
-          RecordingResponseNotification.validate_raw(obj: obj)
+          Submission::RecordingResponseNotification.validate_raw(obj: obj)
         when "recorded"
-          RecordedResponseNotification.validate_raw(obj: obj)
+          Submission::RecordedResponseNotification.validate_raw(obj: obj)
         when "invalidRequest"
-          InvalidRequestResponse.validate_raw(obj: obj)
+          Submission::InvalidRequestResponse.validate_raw(obj: obj)
         when "finished"
-          FinishedResponse.validate_raw(obj: obj)
+          Submission::FinishedResponse.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -134,8 +134,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

@@ -2,6 +2,6 @@
 
 module SeedClient
   module Commons
-    UserId = String
+    USER_ID = String
   end
 end

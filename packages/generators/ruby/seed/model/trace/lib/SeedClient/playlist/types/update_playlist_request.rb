@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/ProblemId"
+require_relative "commons/types/PROBLEM_ID"
 require "json"
 
 module SeedClient
@@ -9,13 +9,13 @@ module SeedClient
       attr_reader :name, :problems, :additional_properties
 
       # @param name [String]
-      # @param problems [Array<Commons::ProblemId>] The problems that make up the playlist.
+      # @param problems [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Playlist::UpdatePlaylistRequest]
       def initialze(name:, problems:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [Array<Commons::ProblemId>] The problems that make up the playlist.
+        # @type [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.
         @problems = problems
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -27,10 +27,8 @@ module SeedClient
       # @return [Playlist::UpdatePlaylistRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        problems struct.problems.map do |v|
-          Commons::ProblemId.from_json(json_object: v)
-        end
+        name = struct.name
+        problems = struct.problems
         new(name: name, problems: problems, additional_properties: struct)
       end
 
@@ -38,7 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { name: @name, problems: @problems }.to_json
+        { "name": @name, "problems": @problems }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

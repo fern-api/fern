@@ -43,13 +43,13 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "list"
         when "optional"
         end
-        { type: @discriminant, value: @member }.to_json
+        { "type": @discriminant, "value": @member }.to_json
         @member.to_json
       end
 
@@ -62,7 +62,7 @@ module SeedClient
         when "list"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "optional"
-          FieldValue.validate_raw(obj: obj)
+          Ast::FieldValue.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -71,8 +71,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

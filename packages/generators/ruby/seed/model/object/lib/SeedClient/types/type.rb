@@ -81,25 +81,25 @@ module SeedClient
     # @return [Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      one struct.one
-      two struct.two
-      three struct.three
-      four struct.four
-      five struct.five
-      six struct.six
-      seven struct.seven
-      eight struct.eight
-      nine struct.nine
-      ten struct.ten
-      eleven Set.new(struct.eleven)
-      twelve struct.twelve
-      thirteen struct.thirteen
-      fourteen struct.fourteen
-      fifteen struct.fifteen
-      sixteen struct.sixteen
-      seventeen struct.seventeen
-      eighteen struct.eighteen
-      nineteen Name.from_json(json_object: struct.nineteen)
+      one = struct.one
+      two = struct.two
+      three = struct.three
+      four = struct.four
+      five = struct.five
+      six = struct.six
+      seven = struct.seven
+      eight = struct.eight
+      nine = struct.nine
+      ten = struct.ten
+      eleven = Set.new(struct.eleven)
+      twelve = struct.twelve
+      thirteen = struct.thirteen
+      fourteen = struct.fourteen
+      fifteen = struct.fifteen
+      sixteen = struct.sixteen
+      seventeen = struct.seventeen
+      eighteen = struct.eighteen
+      nineteen = Name.from_json(json_object: struct.nineteen)
       new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
           ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
     end
@@ -108,8 +108,8 @@ module SeedClient
     #
     # @return [JSON]
     def to_json(*_args)
-      { one: @one, two: @two, three: @three, four: @four, five: @five, six: @six, seven: @seven, eight: @eight,
-        nine: @nine, ten: @ten, eleven: @eleven.to_a, twelve: @twelve, thirteen: @thirteen, fourteen: @fourteen, fifteen: @fifteen, sixteen: @sixteen, seventeen: @seventeen, eighteen: @eighteen, nineteen: @nineteen }.to_json
+      { "one": @one, "two": @two, "three": @three, "four": @four, "five": @five, "six": @six, "seven": @seven,
+        "eight": @eight, "nine": @nine, "ten": @ten, "eleven": @eleven.to_a, "twelve": @twelve, "thirteen": @thirteen, "fourteen": @fourteen, "fifteen": @fifteen, "sixteen": @sixteen, "seventeen": @seventeen, "eighteen": @eighteen, "nineteen": @nineteen }.to_json
     end
 
     # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

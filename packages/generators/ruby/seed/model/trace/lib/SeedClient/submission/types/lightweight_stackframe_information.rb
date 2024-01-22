@@ -26,8 +26,8 @@ module SeedClient
       # @return [Submission::LightweightStackframeInformation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        num_stack_frames struct.numStackFrames
-        top_stack_frame_method_name struct.topStackFrameMethodName
+        num_stack_frames = struct.numStackFrames
+        top_stack_frame_method_name = struct.topStackFrameMethodName
         new(num_stack_frames: num_stack_frames, top_stack_frame_method_name: top_stack_frame_method_name,
             additional_properties: struct)
       end
@@ -36,7 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { numStackFrames: @num_stack_frames, topStackFrameMethodName: @top_stack_frame_method_name }.to_json
+        { "numStackFrames": @num_stack_frames, "topStackFrameMethodName": @top_stack_frame_method_name }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

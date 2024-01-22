@@ -3,7 +3,7 @@
 module SeedClient
   module V2
     module Problem
-      ParameterId = String
+      PARAMETER_ID = String
     end
   end
 end

@@ -26,8 +26,8 @@ module SeedClient
       # @return [Submission::ExpressionLocation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        start struct.start
-        offset struct.offset
+        start = struct.start
+        offset = struct.offset
         new(start: start, offset: offset, additional_properties: struct)
       end
 
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { start: @start, offset: @offset }.to_json
+        { "start": @start, "offset": @offset }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

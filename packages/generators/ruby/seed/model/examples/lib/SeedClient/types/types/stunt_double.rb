@@ -26,8 +26,8 @@ module SeedClient
       # @return [Types::StuntDouble]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name struct.name
-        actor_or_actress_id struct.actorOrActressId
+        name = struct.name
+        actor_or_actress_id = struct.actorOrActressId
         new(name: name, actor_or_actress_id: actor_or_actress_id, additional_properties: struct)
       end
 
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { name: @name, actorOrActressId: @actor_or_actress_id }.to_json
+        { "name": @name, "actorOrActressId": @actor_or_actress_id }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

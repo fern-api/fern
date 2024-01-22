@@ -4,7 +4,7 @@ module SeedClient
   module V2
     module V3
       module Problem
-        TestCaseTemplateId = String
+        TEST_CASE_TEMPLATE_ID = String
       end
     end
   end

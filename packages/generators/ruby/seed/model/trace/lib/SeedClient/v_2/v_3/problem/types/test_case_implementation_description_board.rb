@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "v_2/v_3/problem/types/ParameterId"
+require_relative "v_2/v_3/problem/types/PARAMETER_ID"
 
 module SeedClient
   module V2
@@ -32,7 +32,7 @@ module SeedClient
                      when "html"
                        json_object.value
                      when "paramId"
-                       V2::V3::Problem::ParameterId.from_json(json_object: json_object.value)
+                       json_object.value
                      else
                        json_object
                      end
@@ -41,13 +41,13 @@ module SeedClient
 
           # For Union Types, to_json functionality is delegated to the wrapped member.
           #
-          # @return []
+          # @return [JSON]
           def to_json(*_args)
             case @discriminant
             when "html"
             when "paramId"
             end
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, "value": @member }.to_json
             @member.to_json
           end
 
@@ -60,7 +60,7 @@ module SeedClient
             when "html"
               obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             when "paramId"
-              ParameterId.validate_raw(obj: obj)
+              obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             else
               raise("Passed value matched no type within the union, validation failed.")
             end
@@ -69,8 +69,8 @@ module SeedClient
           # For Union Types, is_a? functionality is delegated to the wrapped member.
           #
           # @param obj [Object]
-          # @return []
-          def is_a(obj)
+          # @return [Boolean]
+          def is_a?(obj)
             @member.is_a?(obj)
           end
 
@@ -80,7 +80,7 @@ module SeedClient
             new(member: member, discriminant: "html")
           end
 
-          # @param member [V2::V3::Problem::ParameterId]
+          # @param member [V2::V3::Problem::PARAMETER_ID]
           # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard]
           def self.param_id(member:)
             new(member: member, discriminant: "paramId")

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "submission/types/RunningSubmissionState"
 require_relative "submission/types/ErrorInfo"
 require_relative "submission/types/GradedTestCaseUpdate"
 require_relative "submission/types/RecordedTestCaseUpdate"
@@ -31,7 +30,7 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "running"
-                   Submission::RunningSubmissionState.from_json(json_object: json_object.value)
+                   RUNNING_SUBMISSION_STATE.key(json_object.value)
                  when "stopped"
                    nil
                  when "errored"
@@ -43,22 +42,22 @@ module SeedClient
                  when "finished"
                    nil
                  else
-                   Submission::RunningSubmissionState.from_json(json_object: json_object)
+                   RUNNING_SUBMISSION_STATE.key(json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "running"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "stopped"
           { type: @discriminant }.to_json
         when "errored"
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, "value": @member }.to_json
         when "gradedTestCase"
           { type: @discriminant, **@member.to_json }.to_json
         when "recordedTestCase"
@@ -66,7 +65,7 @@ module SeedClient
         when "finished"
           { type: @discriminant }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end
@@ -78,15 +77,15 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "running"
-          RunningSubmissionState.validate_raw(obj: obj)
+          obj.is_a?(RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "stopped"
           # noop
         when "errored"
-          ErrorInfo.validate_raw(obj: obj)
+          Submission::ErrorInfo.validate_raw(obj: obj)
         when "gradedTestCase"
-          GradedTestCaseUpdate.validate_raw(obj: obj)
+          Submission::GradedTestCaseUpdate.validate_raw(obj: obj)
         when "recordedTestCase"
-          RecordedTestCaseUpdate.validate_raw(obj: obj)
+          Submission::RecordedTestCaseUpdate.validate_raw(obj: obj)
         when "finished"
           # noop
         else
@@ -97,12 +96,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Submission::RunningSubmissionState]
+      # @param member [Hash{String => String}]
       # @return [Submission::TestSubmissionUpdateInfo]
       def self.running(member:)
         new(member: member, discriminant: "running")

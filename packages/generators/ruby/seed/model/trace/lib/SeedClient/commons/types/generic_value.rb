@@ -26,8 +26,8 @@ module SeedClient
       # @return [Commons::GenericValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        stringified_type struct.stringifiedType
-        stringified_value struct.stringifiedValue
+        stringified_type = struct.stringifiedType
+        stringified_value = struct.stringifiedValue
         new(stringified_type: stringified_type, stringified_value: stringified_value, additional_properties: struct)
       end
 
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { stringifiedType: @stringified_type, stringifiedValue: @stringified_value }.to_json
+        { "stringifiedType": @stringified_type, "stringifiedValue": @stringified_value }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

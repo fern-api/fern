@@ -2,6 +2,6 @@
 
 module SeedClient
   module Imdb
-    MovieId = String
+    MOVIE_ID = String
   end
 end

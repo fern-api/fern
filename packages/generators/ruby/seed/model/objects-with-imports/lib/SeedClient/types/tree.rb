@@ -23,7 +23,7 @@ module SeedClient
     # @return [Tree]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      nodes struct.nodes.map do |v|
+      nodes = struct.nodes.map do |v|
         Node.from_json(json_object: v)
       end
       new(nodes: nodes, additional_properties: struct)
@@ -33,7 +33,7 @@ module SeedClient
     #
     # @return [JSON]
     def to_json(*_args)
-      { nodes: @nodes }.to_json
+      { "nodes": @nodes }.to_json
     end
 
     # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -3,6 +3,6 @@
 module SeedClient
   module Payment
     # @type [Hash{String => String}]
-    Currency = { usd: "USD", yen: "YEN" }.frozen
+    CURRENCY = { usd: "USD", yen: "YEN" }.frozen
   end
 end

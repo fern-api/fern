@@ -29,9 +29,9 @@ module SeedClient
       # @return [Problem::GenericCreateProblemError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        message struct.message
-        type struct.type
-        stacktrace struct.stacktrace
+        message = struct.message
+        type = struct.type
+        stacktrace = struct.stacktrace
         new(message: message, type: type, stacktrace: stacktrace, additional_properties: struct)
       end
 
@@ -39,7 +39,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { message: @message, type: @type, stacktrace: @stacktrace }.to_json
+        { "message": @message, "type": @type, "stacktrace": @stacktrace }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

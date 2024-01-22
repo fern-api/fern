@@ -29,9 +29,9 @@ module SeedClient
       # @return [Types::Moment]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id struct.id
-        date struct.date
-        datetime struct.datetime
+        id = struct.id
+        date = struct.date
+        datetime = struct.datetime
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 
@@ -39,7 +39,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { id: @id, date: @date, datetime: @datetime }.to_json
+        { "id": @id, "date": @date, "datetime": @datetime }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "playlist/types/PlaylistId"
+require_relative "playlist/types/PLAYLIST_ID"
 
 module SeedClient
   module Playlist
@@ -28,21 +28,21 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "playlistId"
-                   Playlist::PlaylistId.from_json(json_object: json_object.value)
+                   json_object.value
                  else
-                   Playlist::PlaylistId.from_json(json_object: json_object)
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "playlistId"
         end
-        { type: @discriminant, value: @member }.to_json
+        { "type": @discriminant, "value": @member }.to_json
         @member.to_json
       end
 
@@ -53,7 +53,7 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "playlistId"
-          PlaylistId.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -62,12 +62,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Playlist::PlaylistId]
+      # @param member [Playlist::PLAYLIST_ID]
       # @return [Playlist::PlaylistIdNotFoundErrorBody]
       def self.playlist_id(member:)
         new(member: member, discriminant: "playlistId")

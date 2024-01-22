@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "file/types/File"
-require_relative "file/directory/types/Directory"
 require "json"
 
 module SeedClient
@@ -32,11 +31,11 @@ module SeedClient
         # @return [File::Directory::Directory]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          name struct.name
-          files struct.files.map do |v|
+          name = struct.name
+          files = struct.files.map do |v|
             File::File.from_json(json_object: v)
           end
-          directories struct.directories.map do |v|
+          directories = struct.directories.map do |v|
             File::Directory::Directory.from_json(json_object: v)
           end
           new(name: name, files: files, directories: directories, additional_properties: struct)
@@ -46,7 +45,7 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { name: @name, files: @files, directories: @directories }.to_json
+          { "name": @name, "files": @files, "directories": @directories }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

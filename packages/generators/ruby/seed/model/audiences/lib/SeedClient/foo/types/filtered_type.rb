@@ -26,8 +26,8 @@ module SeedClient
       # @return [Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        public_property struct.public_property
-        private_property struct.private_property
+        public_property = struct.public_property
+        private_property = struct.private_property
         new(public_property: public_property, private_property: private_property, additional_properties: struct)
       end
 
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { public_property: @public_property, private_property: @private_property }.to_json
+        { "public_property": @public_property, "private_property": @private_property }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -30,9 +30,9 @@ module SeedClient
       # @return [Submission::StackFrame]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        method_name struct.methodName
-        line_number struct.lineNumber
-        scopes struct.scopes.map do |v|
+        method_name = struct.methodName
+        line_number = struct.lineNumber
+        scopes = struct.scopes.map do |v|
           Submission::Scope.from_json(json_object: v)
         end
         new(method_name: method_name, line_number: line_number, scopes: scopes, additional_properties: struct)
@@ -42,7 +42,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { methodName: @method_name, lineNumber: @line_number, scopes: @scopes }.to_json
+        { "methodName": @method_name, "lineNumber": @line_number, "scopes": @scopes }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

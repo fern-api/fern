@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "commons/types/ProblemId"
 require_relative "problem/types/CreateProblemError"
+require_relative "commons/types/PROBLEM_ID"
 
 module SeedClient
   module Problem
@@ -29,24 +29,24 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "success"
-                   Commons::ProblemId.from_json(json_object: json_object.value)
+                   json_object.value
                  when "error"
                    Problem::CreateProblemError.from_json(json_object: json_object.value)
                  else
-                   Commons::ProblemId.from_json(json_object: json_object)
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "success"
         when "error"
         end
-        { type: @discriminant, value: @member }.to_json
+        { "type": @discriminant, "value": @member }.to_json
         @member.to_json
       end
 
@@ -57,9 +57,9 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "success"
-          ProblemId.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "error"
-          CreateProblemError.validate_raw(obj: obj)
+          Problem::CreateProblemError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -68,12 +68,12 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 
-      # @param member [Commons::ProblemId]
+      # @param member [Commons::PROBLEM_ID]
       # @return [Problem::CreateProblemResponse]
       def self.success(member:)
         new(member: member, discriminant: "success")

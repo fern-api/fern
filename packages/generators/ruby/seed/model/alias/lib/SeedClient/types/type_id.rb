@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module SeedClient
-  TypeId = String
+  TYPE_ID = String
 end

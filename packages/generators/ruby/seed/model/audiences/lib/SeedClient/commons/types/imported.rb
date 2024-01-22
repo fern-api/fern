@@ -2,6 +2,6 @@
 
 module SeedClient
   module Commons
-    Imported = String
+    IMPORTED = String
   end
 end

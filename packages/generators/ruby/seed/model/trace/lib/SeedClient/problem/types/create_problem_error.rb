@@ -35,13 +35,13 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "generic"
           { _type: @discriminant, **@member.to_json }.to_json
         else
-          { _type: @discriminant, value: @member }.to_json
+          { "_type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end
@@ -53,7 +53,7 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj._type
         when "generic"
-          GenericCreateProblemError.validate_raw(obj: obj)
+          Problem::GenericCreateProblemError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -62,8 +62,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

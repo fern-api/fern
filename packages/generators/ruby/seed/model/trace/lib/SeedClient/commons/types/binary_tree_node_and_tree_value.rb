@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NodeId"
+require_relative "commons/types/NODE_ID"
 require_relative "commons/types/BinaryTreeValue"
 require "json"
 
@@ -9,12 +9,12 @@ module SeedClient
     class BinaryTreeNodeAndTreeValue
       attr_reader :node_id, :full_tree, :additional_properties
 
-      # @param node_id [Commons::NodeId]
+      # @param node_id [Commons::NODE_ID]
       # @param full_tree [Commons::BinaryTreeValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::BinaryTreeNodeAndTreeValue]
       def initialze(node_id:, full_tree:, additional_properties: nil)
-        # @type [Commons::NodeId]
+        # @type [Commons::NODE_ID]
         @node_id = node_id
         # @type [Commons::BinaryTreeValue]
         @full_tree = full_tree
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Commons::BinaryTreeNodeAndTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id Commons::NodeId.from_json(json_object: struct.nodeId)
-        full_tree Commons::BinaryTreeValue.from_json(json_object: struct.fullTree)
+        node_id = struct.nodeId
+        full_tree = Commons::BinaryTreeValue.from_json(json_object: struct.fullTree)
         new(node_id: node_id, full_tree: full_tree, additional_properties: struct)
       end
 
@@ -37,7 +37,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { nodeId: @node_id, fullTree: @full_tree }.to_json
+        { "nodeId": @node_id, "fullTree": @full_tree }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        NodeId.validate_raw(obj: obj.node_id)
-        BinaryTreeValue.validate_raw(obj: obj.full_tree)
+        obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
+        Commons::BinaryTreeValue.validate_raw(obj: obj.full_tree)
       end
     end
   end

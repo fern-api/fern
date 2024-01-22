@@ -26,7 +26,7 @@ module SeedClient
           # @return [V2::V3::Problem::VoidFunctionSignature]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters struct.parameters.map do |v|
+            parameters = struct.parameters.map do |v|
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
             new(parameters: parameters, additional_properties: struct)
@@ -36,7 +36,7 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { parameters: @parameters }.to_json
+            { "parameters": @parameters }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

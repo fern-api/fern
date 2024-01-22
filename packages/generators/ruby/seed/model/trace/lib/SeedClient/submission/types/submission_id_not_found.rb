@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionId"
+require_relative "submission/types/SUBMISSION_ID"
 require "json"
 
 module SeedClient
@@ -8,11 +8,11 @@ module SeedClient
     class SubmissionIdNotFound
       attr_reader :missing_submission_id, :additional_properties
 
-      # @param missing_submission_id [Submission::SubmissionId]
+      # @param missing_submission_id [Submission::SUBMISSION_ID]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::SubmissionIdNotFound]
       def initialze(missing_submission_id:, additional_properties: nil)
-        # @type [Submission::SubmissionId]
+        # @type [Submission::SUBMISSION_ID]
         @missing_submission_id = missing_submission_id
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        missing_submission_id Submission::SubmissionId.from_json(json_object: struct.missingSubmissionId)
+        missing_submission_id = struct.missingSubmissionId
         new(missing_submission_id: missing_submission_id, additional_properties: struct)
       end
 
@@ -32,7 +32,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { missingSubmissionId: @missing_submission_id }.to_json
+        { "missingSubmissionId": @missing_submission_id }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionId.validate_raw(obj: obj.missing_submission_id)
+        obj.missing_submission_id.is_a?(UUID) != false || raise("Passed value for field obj.missing_submission_id is not the expected type, validation failed.")
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/ParameterId"
+require_relative "v_2/v_3/problem/types/PARAMETER_ID"
 require "json"
 
 module SeedClient
@@ -10,11 +10,11 @@ module SeedClient
         class DeepEqualityCorrectnessCheck
           attr_reader :expected_value_parameter_id, :additional_properties
 
-          # @param expected_value_parameter_id [V2::V3::Problem::ParameterId]
+          # @param expected_value_parameter_id [V2::V3::Problem::PARAMETER_ID]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def initialze(expected_value_parameter_id:, additional_properties: nil)
-            # @type [V2::V3::Problem::ParameterId]
+            # @type [V2::V3::Problem::PARAMETER_ID]
             @expected_value_parameter_id = expected_value_parameter_id
             # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
@@ -26,7 +26,7 @@ module SeedClient
           # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            expected_value_parameter_id V2::V3::Problem::ParameterId.from_json(json_object: struct.expectedValueParameterId)
+            expected_value_parameter_id = struct.expectedValueParameterId
             new(expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
           end
 
@@ -34,7 +34,7 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { expectedValueParameterId: @expected_value_parameter_id }.to_json
+            { "expectedValueParameterId": @expected_value_parameter_id }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -42,7 +42,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            ParameterId.validate_raw(obj: obj.expected_value_parameter_id)
+            obj.expected_value_parameter_id.is_a?(String) != false || raise("Passed value for field obj.expected_value_parameter_id is not the expected type, validation failed.")
           end
         end
       end

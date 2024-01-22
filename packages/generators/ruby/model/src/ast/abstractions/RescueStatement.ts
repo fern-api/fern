@@ -24,7 +24,7 @@ export class RescueStatement extends AstNode {
         this.begin.forEach((exp) =>
             this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
-        this.addText({ stringContent: "resuce StandardError", startingTabSpaces });
+        this.addText({ stringContent: "rescue StandardError", startingTabSpaces });
         this.rescue.forEach((exp) =>
             this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );

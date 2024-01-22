@@ -2,6 +2,6 @@
 
 module SeedClient
   module Submission
-    ShareId = String
+    SHARE_ID = String
   end
 end

@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::TestSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time struct.updateTime
-        update_info Submission::TestSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
+        update_time = struct.updateTime
+        update_info = Submission::TestSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 
@@ -36,7 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { updateTime: @update_time, updateInfo: @update_info }.to_json
+        { "updateTime": @update_time, "updateInfo": @update_info }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -45,7 +45,7 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.update_time.is_a?(DateTime) != false || raise("Passed value for field obj.update_time is not the expected type, validation failed.")
-        TestSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
+        Submission::TestSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
       end
     end
   end

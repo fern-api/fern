@@ -3,7 +3,7 @@
 module SeedClient
   module File
     module Service
-      Filename = String
+      FILENAME = String
     end
   end
 end

@@ -48,7 +48,7 @@ module SeedClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return []
+      # @return [JSON]
       def to_json(*_args)
         case @discriminant
         when "initializeProblemRequest"
@@ -62,7 +62,7 @@ module SeedClient
         when "stop"
           { type: @discriminant, **@member.to_json }.to_json
         else
-          { type: @discriminant, value: @member }.to_json
+          { "type": @discriminant, value: @member }.to_json
         end
         @member.to_json
       end
@@ -74,15 +74,15 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "initializeProblemRequest"
-          InitializeProblemRequest.validate_raw(obj: obj)
+          Submission::InitializeProblemRequest.validate_raw(obj: obj)
         when "initializeWorkspaceRequest"
           # noop
         when "submitV2"
-          SubmitRequestV2.validate_raw(obj: obj)
+          Submission::SubmitRequestV2.validate_raw(obj: obj)
         when "workspaceSubmit"
-          WorkspaceSubmitRequest.validate_raw(obj: obj)
+          Submission::WorkspaceSubmitRequest.validate_raw(obj: obj)
         when "stop"
-          StopRequest.validate_raw(obj: obj)
+          Submission::StopRequest.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -91,8 +91,8 @@ module SeedClient
       # For Union Types, is_a? functionality is delegated to the wrapped member.
       #
       # @param obj [Object]
-      # @return []
-      def is_a(obj)
+      # @return [Boolean]
+      def is_a?(obj)
         @member.is_a?(obj)
       end
 

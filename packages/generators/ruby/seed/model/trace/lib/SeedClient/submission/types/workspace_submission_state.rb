@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::WorkspaceSubmissionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        status Submission::WorkspaceSubmissionStatus.from_json(json_object: struct.status)
+        status = Submission::WorkspaceSubmissionStatus.from_json(json_object: struct.status)
         new(status: status, additional_properties: struct)
       end
 
@@ -32,7 +32,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { status: @status }.to_json
+        { "status": @status }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        WorkspaceSubmissionStatus.validate_raw(obj: obj.status)
+        Submission::WorkspaceSubmissionStatus.validate_raw(obj: obj.status)
       end
     end
   end

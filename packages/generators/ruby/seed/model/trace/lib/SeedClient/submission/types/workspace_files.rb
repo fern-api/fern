@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::WorkspaceFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        main_file Commons::FileInfo.from_json(json_object: struct.mainFile)
-        read_only_files struct.readOnlyFiles.map do |v|
+        main_file = Commons::FileInfo.from_json(json_object: struct.mainFile)
+        read_only_files = struct.readOnlyFiles.map do |v|
           Commons::FileInfo.from_json(json_object: v)
         end
         new(main_file: main_file, read_only_files: read_only_files, additional_properties: struct)
@@ -38,7 +38,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { mainFile: @main_file, readOnlyFiles: @read_only_files }.to_json
+        { "mainFile": @main_file, "readOnlyFiles": @read_only_files }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -46,7 +46,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        FileInfo.validate_raw(obj: obj.main_file)
+        Commons::FileInfo.validate_raw(obj: obj.main_file)
         obj.read_only_files.is_a?(Array) != false || raise("Passed value for field obj.read_only_files is not the expected type, validation failed.")
       end
     end

@@ -26,8 +26,8 @@ module SeedClient
       # @return [Submission::TracedFile]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        filename struct.filename
-        directory struct.directory
+        filename = struct.filename
+        directory = struct.directory
         new(filename: filename, directory: directory, additional_properties: struct)
       end
 
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { filename: @filename, directory: @directory }.to_json
+        { "filename": @filename, "directory": @directory }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

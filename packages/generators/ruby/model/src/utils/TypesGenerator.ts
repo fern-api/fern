@@ -1,6 +1,5 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     AliasTypeDeclaration,
     EnumTypeDeclaration,
@@ -12,7 +11,6 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
@@ -21,18 +19,15 @@ import {
     generateUnionFromTypeDeclaration,
     getLocationForTypeDeclaration
 } from "../ast/AbstractionUtilities";
+import { ClassReferenceFactory } from "../ast/classes/ClassReference";
 import { Module_ } from "../ast/Module_";
-import { RubyModelCustomConfig } from "../CustomConfig";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private gc: GeneratorContext;
-    // Ruby does not have a concept of interfaces directly and so we'd want to
-    // create the type/class as normal and note for the inheriting classes to
-    // specify the inheritence (e.g. class InheritingClass < BaseClass)
-    private typeExtends: Map<TypeId, TypeId[]>;
+    private classReferenceFactory: ClassReferenceFactory;
     private directoryPrefix: RelativeFilePath;
 
     // Config
@@ -40,45 +35,36 @@ export class TypesGenerator {
     // private customConfig: RubyModelCustomConfig;
 
     constructor(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubyModelCustomConfig,
+        directoryPrefix: RelativeFilePath,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
         this.types = new Map();
-        this.typeExtends = new Map();
         this.gc = generatorContext;
 
         // this.config = config;
         // this.customConfig = customConfig;
 
-        this.directoryPrefix = RelativeFilePath.of(
-            customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client"
-        );
+        this.directoryPrefix = directoryPrefix;
 
         // For convenience just get what's inheriting what ahead of time.
         this.gc.logger.debug(`[TESTING] Found this many types: ${intermediateRepresentation.types.length}`);
         for (const type of Object.values(intermediateRepresentation.types)) {
-            // this.gc.logger.debug(`[TESTING] adding type: ${type.name.name.camelCase.safeName}`);
             this.types.set(type.name.typeId, type);
-
-            const extendedTypes = type.shape._visit<TypeId[]>({
-                alias: () => [],
-                enum: () => [],
-                object: (value: ObjectTypeDeclaration) => value.extends.map((extendedType) => extendedType.typeId),
-                union: () => [],
-                undiscriminatedUnion: () => [],
-                _other: () => []
-            });
-            this.typeExtends.set(type.name.typeId, extendedTypes);
         }
+
+        this.classReferenceFactory = new ClassReferenceFactory(this.types);
     }
 
     private generateAliasFile(
         aliasTypeDeclaration: AliasTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
-        const aliasExpression = generateAliasDefinitionFromTypeDeclaration(aliasTypeDeclaration, typeDeclaration);
+        const aliasExpression = generateAliasDefinitionFromTypeDeclaration(
+            this.classReferenceFactory,
+            aliasTypeDeclaration,
+            typeDeclaration
+        );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, aliasExpression);
         const location = join(
             this.directoryPrefix,
@@ -103,6 +89,7 @@ export class TypesGenerator {
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const serializableObject = generateSerializableObjectFromTypeDeclaration(
+            this.classReferenceFactory,
             objectTypeDeclaration,
             typeDeclaration
         );
@@ -117,7 +104,11 @@ export class TypesGenerator {
         unionTypeDeclaration: UnionTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
-        const unionObject = generateUnionFromTypeDeclaration(unionTypeDeclaration, typeDeclaration);
+        const unionObject = generateUnionFromTypeDeclaration(
+            this.classReferenceFactory,
+            unionTypeDeclaration,
+            typeDeclaration
+        );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
         const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
         return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
@@ -127,6 +118,7 @@ export class TypesGenerator {
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const unionObject = generateUndiscriminatedUnionFromTypeDeclaration(
+            this.classReferenceFactory,
             undiscriminatedUnionTypeDeclaration,
             typeDeclaration
         );

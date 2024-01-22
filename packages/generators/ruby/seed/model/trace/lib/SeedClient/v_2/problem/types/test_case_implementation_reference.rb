@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "v_2/problem/types/TestCaseTemplateId"
 require_relative "v_2/problem/types/TestCaseImplementation"
+require_relative "v_2/problem/types/TEST_CASE_TEMPLATE_ID"
 
 module SeedClient
   module V2
@@ -30,26 +30,26 @@ module SeedClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "templateId"
-                     V2::Problem::TestCaseTemplateId.from_json(json_object: json_object.value)
+                     json_object.value
                    when "implementation"
                      V2::Problem::TestCaseImplementation.from_json(json_object: json_object)
                    else
-                     V2::Problem::TestCaseTemplateId.from_json(json_object: json_object)
+                     json_object
                    end
           new(member: member, discriminant: struct.type)
         end
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return []
+        # @return [JSON]
         def to_json(*_args)
           case @discriminant
           when "templateId"
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, "value": @member }.to_json
           when "implementation"
             { type: @discriminant, **@member.to_json }.to_json
           else
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, value: @member }.to_json
           end
           @member.to_json
         end
@@ -61,9 +61,9 @@ module SeedClient
         def self.validate_raw(obj:)
           case obj.type
           when "templateId"
-            TestCaseTemplateId.validate_raw(obj: obj)
+            obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           when "implementation"
-            TestCaseImplementation.validate_raw(obj: obj)
+            V2::Problem::TestCaseImplementation.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -72,12 +72,12 @@ module SeedClient
         # For Union Types, is_a? functionality is delegated to the wrapped member.
         #
         # @param obj [Object]
-        # @return []
-        def is_a(obj)
+        # @return [Boolean]
+        def is_a?(obj)
           @member.is_a?(obj)
         end
 
-        # @param member [V2::Problem::TestCaseTemplateId]
+        # @param member [V2::Problem::TEST_CASE_TEMPLATE_ID]
         # @return [V2::Problem::TestCaseImplementationReference]
         def self.template_id(member:)
           new(member: member, discriminant: "templateId")

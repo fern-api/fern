@@ -23,7 +23,7 @@ module SeedClient
     # @return [ImportingA]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      a A::A.from_json(json_object: struct.a)
+      a = A::A.from_json(json_object: struct.a)
       new(a: a, additional_properties: struct)
     end
 
@@ -31,7 +31,7 @@ module SeedClient
     #
     # @return [JSON]
     def to_json(*_args)
-      { a: @a }.to_json
+      { "a": @a }.to_json
     end
 
     # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -39,7 +39,7 @@ module SeedClient
     # @param obj [Object]
     # @return [Void]
     def self.validate_raw(obj:)
-      obj.a.nil? || A.validate_raw(obj: obj.a)
+      obj.a.nil? || A::A.validate_raw(obj: obj.a)
     end
   end
 end

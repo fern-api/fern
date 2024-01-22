@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::TestCaseResultWithStdout]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result Submission::TestCaseResult.from_json(json_object: struct.result)
-        stdout struct.stdout
+        result = Submission::TestCaseResult.from_json(json_object: struct.result)
+        stdout = struct.stdout
         new(result: result, stdout: stdout, additional_properties: struct)
       end
 
@@ -36,7 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { result: @result, stdout: @stdout }.to_json
+        { "result": @result, "stdout": @stdout }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        TestCaseResult.validate_raw(obj: obj.result)
+        Submission::TestCaseResult.validate_raw(obj: obj.result)
         obj.stdout.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end

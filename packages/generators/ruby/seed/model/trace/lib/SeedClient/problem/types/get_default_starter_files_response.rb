@@ -7,11 +7,11 @@ module SeedClient
     class GetDefaultStarterFilesResponse
       attr_reader :files, :additional_properties
 
-      # @param files [Hash{Commons::Language => Commons::Language}]
+      # @param files [Hash{LANGUAGE => LANGUAGE}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::GetDefaultStarterFilesResponse]
       def initialze(files:, additional_properties: nil)
-        # @type [Hash{Commons::Language => Commons::Language}]
+        # @type [Hash{LANGUAGE => LANGUAGE}]
         @files = files
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,8 +23,8 @@ module SeedClient
       # @return [Problem::GetDefaultStarterFilesResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        files struct.files.transform_values do |v|
-          Commons::Language.from_json(json_object: v)
+        files = struct.files.transform_values do |v|
+          LANGUAGE.key(v)
         end
         new(files: files, additional_properties: struct)
       end
@@ -33,9 +33,9 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { files: @files.transform_values do |v|
-                   Commons::Language.from_json(json_object: v)
-                 end }.to_json
+        { "files": @files.transform_values do |v|
+                     LANGUAGE.key(v)
+                   end }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

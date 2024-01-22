@@ -20,7 +20,7 @@ module SeedClient
           # @param custom_files [V2::V3::Problem::CustomFiles]
           # @param custom_test_case_templates [Array<V2::V3::Problem::TestCaseTemplate>]
           # @param testcases [Array<V2::V3::Problem::TestCaseV2>]
-          # @param supported_languages [Set<Commons::Language>]
+          # @param supported_languages [Set<LANGUAGE>]
           # @param is_public [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::CreateProblemRequestV2]
@@ -36,7 +36,7 @@ module SeedClient
             @custom_test_case_templates = custom_test_case_templates
             # @type [Array<V2::V3::Problem::TestCaseV2>]
             @testcases = testcases
-            # @type [Set<Commons::Language>]
+            # @type [Set<LANGUAGE>]
             @supported_languages = supported_languages
             # @type [Boolean]
             @is_public = is_public
@@ -50,17 +50,17 @@ module SeedClient
           # @return [V2::V3::Problem::CreateProblemRequestV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            problem_name struct.problemName
-            problem_description Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-            custom_files V2::V3::Problem::CustomFiles.from_json(json_object: struct.customFiles)
-            custom_test_case_templates struct.customTestCaseTemplates.map do |v|
+            problem_name = struct.problemName
+            problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
+            custom_files = V2::V3::Problem::CustomFiles.from_json(json_object: struct.customFiles)
+            custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
               V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
             end
-            testcases struct.testcases.map do |v|
+            testcases = struct.testcases.map do |v|
               V2::V3::Problem::TestCaseV2.from_json(json_object: v)
             end
-            supported_languages Set.new(struct.supportedLanguages)
-            is_public struct.isPublic
+            supported_languages = Set.new(struct.supportedLanguages)
+            is_public = struct.isPublic
             new(problem_name: problem_name, problem_description: problem_description, custom_files: custom_files,
                 custom_test_case_templates: custom_test_case_templates, testcases: testcases, supported_languages: supported_languages, is_public: is_public, additional_properties: struct)
           end
@@ -69,8 +69,8 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { problemName: @problem_name, problemDescription: @problem_description, customFiles: @custom_files,
-              customTestCaseTemplates: @custom_test_case_templates, testcases: @testcases, supportedLanguages: @supported_languages.to_a, isPublic: @is_public }.to_json
+            { "problemName": @problem_name, "problemDescription": @problem_description, "customFiles": @custom_files,
+              "customTestCaseTemplates": @custom_test_case_templates, "testcases": @testcases, "supportedLanguages": @supported_languages.to_a, "isPublic": @is_public }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -79,8 +79,8 @@ module SeedClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
-            ProblemDescription.validate_raw(obj: obj.problem_description)
-            CustomFiles.validate_raw(obj: obj.custom_files)
+            Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
+            V2::V3::Problem::CustomFiles.validate_raw(obj: obj.custom_files)
             obj.custom_test_case_templates.is_a?(Array) != false || raise("Passed value for field obj.custom_test_case_templates is not the expected type, validation failed.")
             obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
             obj.supported_languages.is_a?(Set) != false || raise("Passed value for field obj.supported_languages is not the expected type, validation failed.")

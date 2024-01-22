@@ -25,7 +25,7 @@ module SeedClient
         # @return [V2::Problem::GetFunctionSignatureRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          function_signature V2::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
+          function_signature = V2::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
           new(function_signature: function_signature, additional_properties: struct)
         end
 
@@ -33,7 +33,7 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { functionSignature: @function_signature }.to_json
+          { "functionSignature": @function_signature }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -41,7 +41,7 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          FunctionSignature.validate_raw(obj: obj.function_signature)
+          V2::Problem::FunctionSignature.validate_raw(obj: obj.function_signature)
         end
       end
     end

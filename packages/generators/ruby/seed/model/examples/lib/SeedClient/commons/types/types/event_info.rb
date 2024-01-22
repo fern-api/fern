@@ -2,7 +2,7 @@
 
 require_relative "json"
 require_relative "commons/types/types/Metadata"
-require_relative "commons/types/types/Tag"
+require_relative "commons/types/types/TAG"
 
 module SeedClient
   module Commons
@@ -32,7 +32,7 @@ module SeedClient
                    when "metadata"
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    when "tag"
-                     Commons::Types::Tag.from_json(json_object: json_object.value)
+                     json_object.value
                    else
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    end
@@ -41,15 +41,15 @@ module SeedClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return []
+        # @return [JSON]
         def to_json(*_args)
           case @discriminant
           when "metadata"
             { type: @discriminant, **@member.to_json }.to_json
           when "tag"
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, "value": @member }.to_json
           else
-            { type: @discriminant, value: @member }.to_json
+            { "type": @discriminant, value: @member }.to_json
           end
           @member.to_json
         end
@@ -61,9 +61,9 @@ module SeedClient
         def self.validate_raw(obj:)
           case obj.type
           when "metadata"
-            Metadata.validate_raw(obj: obj)
+            Commons::Types::Metadata.validate_raw(obj: obj)
           when "tag"
-            Tag.validate_raw(obj: obj)
+            obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -72,8 +72,8 @@ module SeedClient
         # For Union Types, is_a? functionality is delegated to the wrapped member.
         #
         # @param obj [Object]
-        # @return []
-        def is_a(obj)
+        # @return [Boolean]
+        def is_a?(obj)
           @member.is_a?(obj)
         end
 
@@ -83,7 +83,7 @@ module SeedClient
           new(member: member, discriminant: "metadata")
         end
 
-        # @param member [Commons::Types::Tag]
+        # @param member [Commons::Types::TAG]
         # @return [Commons::Types::EventInfo]
         def self.tag(member:)
           new(member: member, discriminant: "tag")

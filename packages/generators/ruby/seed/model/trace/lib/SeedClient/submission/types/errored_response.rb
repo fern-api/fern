@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionId"
+require_relative "submission/types/SUBMISSION_ID"
 require_relative "submission/types/ErrorInfo"
 require "json"
 
@@ -9,12 +9,12 @@ module SeedClient
     class ErroredResponse
       attr_reader :submission_id, :error_info, :additional_properties
 
-      # @param submission_id [Submission::SubmissionId]
+      # @param submission_id [Submission::SUBMISSION_ID]
       # @param error_info [Submission::ErrorInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ErroredResponse]
       def initialze(submission_id:, error_info:, additional_properties: nil)
-        # @type [Submission::SubmissionId]
+        # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Submission::ErrorInfo]
         @error_info = error_info
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::ErroredResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        error_info Submission::ErrorInfo.from_json(json_object: struct.errorInfo)
+        submission_id = struct.submissionId
+        error_info = Submission::ErrorInfo.from_json(json_object: struct.errorInfo)
         new(submission_id: submission_id, error_info: error_info, additional_properties: struct)
       end
 
@@ -37,7 +37,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { submissionId: @submission_id, errorInfo: @error_info }.to_json
+        { "submissionId": @submission_id, "errorInfo": @error_info }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SubmissionId.validate_raw(obj: obj.submission_id)
-        ErrorInfo.validate_raw(obj: obj.error_info)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
+        Submission::ErrorInfo.validate_raw(obj: obj.error_info)
       end
     end
   end

@@ -11,24 +11,27 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { TYPES_DIRECTORY } from "../utils/Constants";
 import { GeneratedRubyFile } from "../utils/GeneratedRubyFile";
+import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
+import { SerializableObject } from "./abstractions/SerializableObject";
+import { UndiscriminatedUnion } from "./abstractions/UndiscriminatedUnion";
+import { ClassReferenceFactory, Enum, EnumReference } from "./classes/ClassReference";
+import { Expression } from "./expressions/Expression";
 import { ExternalDependency } from "./ExternalDependency";
+import { Gemspec } from "./gem/Gemspec";
 import { Module_ } from "./Module_";
 import { Property } from "./Property";
 import { Yardoc } from "./Yardoc";
-import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
-import { Enum, EnumReference } from "./abstractions/Enum";
-import { SerializableObject } from "./abstractions/SerializableObject";
-import { UndiscriminatedUnion } from "./abstractions/UndiscriminatedUnion";
-import { ClassReference } from "./classes/ClassReference";
-import { Expression } from "./expressions/Expression";
-import { Gemspec } from "./gem/Gemspec";
 
 export function generateAliasDefinitionFromTypeDeclaration(
+    classReferenceFactory: ClassReferenceFactory,
     aliasTypeDeclaration: AliasTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Expression {
-    const name = typeDeclaration.name.name.pascalCase.safeName;
-    const rightSide = ClassReference.fromTypeReference(aliasTypeDeclaration.aliasOf);
+    // TODO: Make this screaming snake case
+    // ideally we make a map of typeID to ClassReference and leverage that instead of generating them by type
+    // declaration etc.
+    const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
+    const rightSide = classReferenceFactory.fromTypeReference(aliasTypeDeclaration.aliasOf);
     return new Expression({ leftSide: name, rightSide, isAssignment: true, documentation: typeDeclaration.docs });
 }
 
@@ -36,14 +39,17 @@ export function generateEnumDefinitionFromTypeDeclaration(
     enumTypeDeclaration: EnumTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Expression {
-    const name = typeDeclaration.name.name.pascalCase.safeName;
+    // TODO: Make this screaming snake case
+    // ideally we make a map of typeID to ClassReference and leverage that instead of generating them by type
+    // declaration etc.
+    const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
     const contents = new Map(
         enumTypeDeclaration.values.map((enumValue) => [
             enumValue.name.name.snakeCase.safeName,
             enumValue.name.wireValue
         ])
     );
-    const enum_ = new Enum({ contents, documentation: typeDeclaration.docs });
+    const enum_ = new Enum({ name, contents, documentation: typeDeclaration.docs });
 
     const yardoc = new Yardoc({
         reference: { name: "typeReference", type: new EnumReference({ name }) }
@@ -78,24 +84,25 @@ function isTypeOptional(typeReference: TypeReference): boolean {
 }
 
 export function generateSerializableObjectFromTypeDeclaration(
+    classReferenceFactory: ClassReferenceFactory,
     objectTypeDeclaration: ObjectTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): SerializableObject {
     const extendedClasses = objectTypeDeclaration.extends.map((extendedType) =>
-        ClassReference.fromDeclaredTypeName(extendedType)
+        classReferenceFactory.fromDeclaredTypeName(extendedType)
     );
     const properties = objectTypeDeclaration.properties.map(
         (property) =>
             new Property({
                 name: property.name.name.snakeCase.safeName,
-                type: ClassReference.fromTypeReference(property.valueType),
+                type: classReferenceFactory.fromTypeReference(property.valueType),
                 documentation: property.docs,
                 wireValue: property.name.wireValue,
                 isOptional: isTypeOptional(property.valueType)
             })
     );
 
-    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
     return new SerializableObject({
         classReference,
         extendedClasses,
@@ -105,17 +112,18 @@ export function generateSerializableObjectFromTypeDeclaration(
 }
 
 export function generateUnionFromTypeDeclaration(
+    classReferenceFactory: ClassReferenceFactory,
     unionTypeDeclaration: UnionTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): DiscriminatedUnion {
     const extendedClasses = unionTypeDeclaration.extends.map((extendedType) =>
-        ClassReference.fromDeclaredTypeName(extendedType)
+        classReferenceFactory.fromDeclaredTypeName(extendedType)
     );
     const properties = unionTypeDeclaration.baseProperties.map(
         (property) =>
             new Property({
                 name: property.name.name.snakeCase.safeName,
-                type: ClassReference.fromTypeReference(property.valueType),
+                type: classReferenceFactory.fromTypeReference(property.valueType),
                 documentation: property.docs,
                 wireValue: property.name.wireValue,
                 isOptional: isTypeOptional(property.valueType)
@@ -124,12 +132,12 @@ export function generateUnionFromTypeDeclaration(
     const namedSubclasses = unionTypeDeclaration.types.map((t) => {
         return {
             discriminantValue: t.discriminantValue,
-            classReference: DiscriminatedUnion.classReferenceFromUnionType(t.shape),
+            classReference: classReferenceFactory.classReferenceFromUnionType(t.shape),
             unionPropertiesType: t.shape
         };
     });
 
-    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
     return new DiscriminatedUnion({
         classReference,
         extendedClasses,
@@ -142,12 +150,15 @@ export function generateUnionFromTypeDeclaration(
 }
 
 export function generateUndiscriminatedUnionFromTypeDeclaration(
+    classReferenceFactory: ClassReferenceFactory,
     unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): UndiscriminatedUnion {
-    const memberClasses = unionTypeDeclaration.members.map((member) => ClassReference.fromTypeReference(member.type));
+    const memberClasses = unionTypeDeclaration.members.map((member) =>
+        classReferenceFactory.fromTypeReference(member.type)
+    );
 
-    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
     return new UndiscriminatedUnion({ memberClasses, classReference, documentation: typeDeclaration.docs });
 }
 
@@ -158,8 +169,12 @@ export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName
     ].join("/");
 }
 
-export function generateGemspec(gemName: string, extraDependencies: ExternalDependency[]): GeneratedRubyFile {
-    const gemspec = new Gemspec({ moduleName: gemName, dependencies: extraDependencies });
+export function generateGemspec(
+    clientName: string,
+    gemName: string,
+    extraDependencies: ExternalDependency[]
+): GeneratedRubyFile {
+    const gemspec = new Gemspec({ clientName, gemName, dependencies: extraDependencies });
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
@@ -170,24 +185,32 @@ export function generateGemspec(gemName: string, extraDependencies: ExternalDepe
 
 // To ensure configuration may be managed independently from dependenies, we introduce a new config file that
 // users are encouraged to fernignore and update, while allowing the traditional gemspec to remain generated
-export function generateGemConfig(gemName: string): GeneratedRubyFile {
+export function generateGemConfig(clientName: string): GeneratedRubyFile {
     const gemspec = new Module_({
-        name: gemName,
+        name: clientName,
         child: new Module_({
             name: "Gemconfig",
             child: [
-                new Expression({ leftSide: "NAME", rightSide: `"${gemName}"` }),
-                new Expression({ leftSide: "VERSION", rightSide: '""' }),
-                new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze' }),
-                new Expression({ leftSide: "EMAIL", rightSide: '""' }),
-                new Expression({ leftSide: "SUMMARY", rightSide: '""' }),
-                new Expression({ leftSide: "DESCRIPTION", rightSide: '""' }),
+                new Expression({ leftSide: "VERSION", rightSide: '""', isAssignment: true }),
+                new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze', isAssignment: true }),
+                new Expression({ leftSide: "EMAIL", rightSide: '""', isAssignment: true }),
+                new Expression({ leftSide: "SUMMARY", rightSide: '""', isAssignment: true }),
+                new Expression({ leftSide: "DESCRIPTION", rightSide: '""', isAssignment: true }),
                 // Input some placeholders for installation to work
-                new Expression({ leftSide: "HOMEPAGE", rightSide: '"https://github.com/REPO/URL"' }),
-                new Expression({ leftSide: "SOURCE_CODE_URI", rightSide: '"https://github.com/REPO/URL"' }),
+                new Expression({
+                    leftSide: "HOMEPAGE",
+                    rightSide: '"https://github.com/REPO/URL"',
+                    isAssignment: true
+                }),
+                new Expression({
+                    leftSide: "SOURCE_CODE_URI",
+                    rightSide: '"https://github.com/REPO/URL"',
+                    isAssignment: true
+                }),
                 new Expression({
                     leftSide: "CHANGELOG_URI",
-                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"'
+                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"',
+                    isAssignment: true
                 })
             ]
         })

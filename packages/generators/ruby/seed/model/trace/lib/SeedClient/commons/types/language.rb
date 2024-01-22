@@ -3,6 +3,6 @@
 module SeedClient
   module Commons
     # @type [Hash{String => String}]
-    Language = { java: "JAVA", javascript: "JAVASCRIPT", python: "PYTHON" }.frozen
+    LANGUAGE = { java: "JAVA", javascript: "JAVASCRIPT", python: "PYTHON" }.frozen
   end
 end

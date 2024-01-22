@@ -13,7 +13,7 @@ module SeedClient
 
           # @param method_name [String]
           # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
-          # @param additional_files [Hash{Commons::Language => Commons::Language}]
+          # @param additional_files [Hash{LANGUAGE => LANGUAGE}]
           # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
@@ -23,7 +23,7 @@ module SeedClient
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
             @signature = signature
-            # @type [Hash{Commons::Language => Commons::Language}]
+            # @type [Hash{LANGUAGE => LANGUAGE}]
             @additional_files = additional_files
             # @type [V2::V3::Problem::BasicTestCaseTemplate]
             @basic_test_case_template = basic_test_case_template
@@ -37,12 +37,12 @@ module SeedClient
           # @return [V2::V3::Problem::BasicCustomFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            method_name struct.methodName
-            signature V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
-            additional_files struct.additionalFiles.transform_values do |v|
-              Commons::Language.from_json(json_object: v)
+            method_name = struct.methodName
+            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
+            additional_files = struct.additionalFiles.transform_values do |v|
+              LANGUAGE.key(v)
             end
-            basic_test_case_template V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: struct.basicTestCaseTemplate)
+            basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: struct.basicTestCaseTemplate)
             new(method_name: method_name, signature: signature, additional_files: additional_files,
                 basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end
@@ -51,9 +51,9 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { methodName: @method_name, signature: @signature, additionalFiles: @additional_files.transform_values do |v|
-                                                                                  Commons::Language.from_json(json_object: v)
-                                                                                end, basicTestCaseTemplate: @basic_test_case_template }.to_json
+            { "methodName": @method_name, "signature": @signature, "additionalFiles": @additional_files.transform_values do |v|
+                                                                                        LANGUAGE.key(v)
+                                                                                      end, "basicTestCaseTemplate": @basic_test_case_template }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -62,9 +62,9 @@ module SeedClient
           # @return [Void]
           def self.validate_raw(obj:)
             obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
-            NonVoidFunctionSignature.validate_raw(obj: obj.signature)
+            V2::V3::Problem::NonVoidFunctionSignature.validate_raw(obj: obj.signature)
             obj.additional_files.is_a?(Hash) != false || raise("Passed value for field obj.additional_files is not the expected type, validation failed.")
-            BasicTestCaseTemplate.validate_raw(obj: obj.basic_test_case_template)
+            V2::V3::Problem::BasicTestCaseTemplate.validate_raw(obj: obj.basic_test_case_template)
           end
         end
       end

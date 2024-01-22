@@ -2,6 +2,6 @@
 
 module SeedClient
   module Playlist
-    PlaylistId = String
+    PLAYLIST_ID = String
   end
 end
