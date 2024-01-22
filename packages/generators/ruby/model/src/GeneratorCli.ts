@@ -89,9 +89,11 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
-        this.generatedFiles.forEach(async (f) => {
-            await f.write(AbsoluteFilePath.of(config.output.path));
-        });
+        await Promise.all(
+            this.generatedFiles.map(async (f) => {
+                await f.write(AbsoluteFilePath.of(config.output.path));
+            })
+        );
         // Run lint and generate lockfile
         exec(`rubocop --auto-correct-all ${config.output.path}`);
     }
@@ -102,9 +104,11 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
-        this.generatedFiles.forEach(async (f) => {
-            await f.write(AbsoluteFilePath.of(config.output.path));
-        });
+        await Promise.all(
+            this.generatedFiles.map(async (f) => {
+                await f.write(AbsoluteFilePath.of(config.output.path));
+            })
+        );
         // Run lint and generate lockfile
         exec(`rubocop --auto-correct-all ${config.output.path}`);
     }
