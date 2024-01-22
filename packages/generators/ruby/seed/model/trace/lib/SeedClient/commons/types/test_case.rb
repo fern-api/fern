@@ -17,7 +17,7 @@ module SeedClient
         @id = id
         # @type [Array<Commons::VariableValue>]
         @params = params
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Commons::TestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = struct.id
-        params = struct.params.map do |v|
+        id struct.id
+        params struct.params.map do |v|
           Commons::VariableValue.from_json(json_object: v)
         end
         new(id: id, params: params, additional_properties: struct)
@@ -38,10 +38,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          id: @id,
-          params: @params
-        }.to_json
+        { id: @id, params: @params }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+        obj.params.is_a?(Array) != false || raise("Passed value for field obj.params is not the expected type, validation failed.")
       end
     end
   end

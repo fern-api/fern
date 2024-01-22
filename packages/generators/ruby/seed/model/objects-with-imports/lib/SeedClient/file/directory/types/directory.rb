@@ -22,7 +22,7 @@ module SeedClient
           @files = files
           # @type [Array<File::Directory::Directory>]
           @directories = directories
-          # @type [OpenStruct]
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
 
@@ -32,11 +32,11 @@ module SeedClient
         # @return [File::Directory::Directory]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          name = struct.name
-          files = struct.files.map do |v|
+          name struct.name
+          files struct.files.map do |v|
             File::File.from_json(json_object: v)
           end
-          directories = struct.directories.map do |v|
+          directories struct.directories.map do |v|
             File::Directory::Directory.from_json(json_object: v)
           end
           new(name: name, files: files, directories: directories, additional_properties: struct)
@@ -46,11 +46,17 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          {
-            name: @name,
-            files: @files,
-            directories: @directories
-          }.to_json
+          { name: @name, files: @files, directories: @directories }.to_json
+        end
+
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object]
+        # @return [Void]
+        def self.validate_raw(obj:)
+          obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+          obj.files&.is_a?(Array) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
+          obj.directories&.is_a?(Array) != false || raise("Passed value for field obj.directories is not the expected type, validation failed.")
         end
       end
     end

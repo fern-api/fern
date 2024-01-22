@@ -8,13 +8,17 @@ import {
     ObjectTypeDeclaration,
     Type,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    UndiscriminatedUnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
     generateSerializableObjectFromTypeDeclaration,
+    generateUndiscriminatedUnionFromTypeDeclaration,
+    generateUnionFromTypeDeclaration,
     getLocationForTypeDeclaration
 } from "../ast/AbstractionUtilities";
 import { Module_ } from "../ast/Module_";
@@ -109,21 +113,26 @@ export class TypesGenerator {
         );
         return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
     }
-    // private generateUnionFile(
-    //     unionTypeDeclaration: UnionTypeDeclaration,
-    //     typeDeclaration: TypeDeclaration
-    // ): GeneratedRubyFile | undefined {
-    private generateUnionFile(): GeneratedRubyFile | undefined {
-        // TODO
-        return;
+    private generateUnionFile(
+        unionTypeDeclaration: UnionTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
+        const unionObject = generateUnionFromTypeDeclaration(unionTypeDeclaration, typeDeclaration);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
+        const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
     }
-    // private generateUndiscriminatedUnionFile(
-    //     undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
-    //     typeDeclaration: TypeDeclaration
-    // ): GeneratedRubyFile | undefined {
-    private generateUndiscriminatedUnionFile(): GeneratedRubyFile | undefined {
-        // TODO
-        return;
+    private generateUndiscriminatedUnionFile(
+        undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
+        typeDeclaration: TypeDeclaration
+    ): GeneratedRubyFile | undefined {
+        const unionObject = generateUndiscriminatedUnionFromTypeDeclaration(
+            undiscriminatedUnionTypeDeclaration,
+            typeDeclaration
+        );
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
+        const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
@@ -138,8 +147,9 @@ export class TypesGenerator {
                 alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(atd, value),
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, value),
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectFile(otd, value),
-                union: () => this.generateUnionFile(),
-                undiscriminatedUnion: () => this.generateUndiscriminatedUnionFile(),
+                union: (utd: UnionTypeDeclaration) => this.generateUnionFile(utd, value),
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
+                    this.generateUndiscriminatedUnionFile(uutd, value),
                 _other: () => this.generateUnkownFile(value.shape)
             });
 

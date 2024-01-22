@@ -24,7 +24,7 @@ module SeedClient
         @exception = exception
         # @type [String]
         @stdout = stdout
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -34,10 +34,10 @@ module SeedClient
       # @return [Submission::TestCaseNonHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        passed = struct.passed
-        actual_result = Commons::VariableValue.from_json(json_object: struct.actualResult)
-        exception = Submission::ExceptionV2.from_json(json_object: struct.exception)
-        stdout = struct.stdout
+        passed struct.passed
+        actual_result Commons::VariableValue.from_json(json_object: struct.actualResult)
+        exception Submission::ExceptionV2.from_json(json_object: struct.exception)
+        stdout struct.stdout
         new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
             additional_properties: struct)
       end
@@ -46,12 +46,18 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          passed: @passed,
-          actualResult: @actual_result,
-          exception: @exception,
-          stdout: @stdout
-        }.to_json
+        { passed: @passed, actualResult: @actual_result, exception: @exception, stdout: @stdout }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        obj.passed.is_a?(Boolean) != false || raise("Passed value for field obj.passed is not the expected type, validation failed.")
+        obj.actual_result.nil? || VariableValue.validate_raw(obj: obj.actual_result)
+        obj.exception.nil? || ExceptionV2.validate_raw(obj: obj.exception)
+        obj.stdout.is_a?(String) != false || raise("Passed value for field obj.stdout is not the expected type, validation failed.")
       end
     end
   end

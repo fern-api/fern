@@ -17,7 +17,7 @@ module SeedClient
         @name = name
         # @type [Array<Commons::ProblemId>]
         @problems = problems
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Playlist::PlaylistCreateRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct.name
-        problems = struct.problems.map do |v|
+        name struct.name
+        problems struct.problems.map do |v|
           Commons::ProblemId.from_json(json_object: v)
         end
         new(name: name, problems: problems, additional_properties: struct)
@@ -38,10 +38,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          name: @name,
-          problems: @problems
-        }.to_json
+        { name: @name, problems: @problems }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+        obj.problems.is_a?(Array) != false || raise("Passed value for field obj.problems is not the expected type, validation failed.")
       end
     end
   end

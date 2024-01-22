@@ -34,7 +34,7 @@ module SeedClient
         @problem_version = problem_version
         # @type [String]
         @user_id = user_id
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -44,14 +44,14 @@ module SeedClient
       # @return [Submission::SubmitRequestV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        language = Commons::Language.from_json(json_object: struct.language)
-        submission_files = struct.submissionFiles.map do |v|
+        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
+        language Commons::Language.from_json(json_object: struct.language)
+        submission_files struct.submissionFiles.map do |v|
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
-        problem_id = Commons::ProblemId.from_json(json_object: struct.problemId)
-        problem_version = struct.problemVersion
-        user_id = struct.userId
+        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
+        problem_version struct.problemVersion
+        user_id struct.userId
         new(submission_id: submission_id, language: language, submission_files: submission_files,
             problem_id: problem_id, problem_version: problem_version, user_id: user_id, additional_properties: struct)
       end
@@ -60,14 +60,21 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          submissionId: @submission_id,
-          language: @language,
-          submissionFiles: @submission_files,
-          problemId: @problem_id,
-          problemVersion: @problem_version,
-          userId: @user_id
-        }.to_json
+        { submissionId: @submission_id, language: @language, submissionFiles: @submission_files,
+          problemId: @problem_id, problemVersion: @problem_version, userId: @user_id }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        SubmissionId.validate_raw(obj: obj.submission_id)
+        Language.validate_raw(obj: obj.language)
+        obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
+        ProblemId.validate_raw(obj: obj.problem_id)
+        obj.problem_version&.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
+        obj.user_id&.is_a?(String) != false || raise("Passed value for field obj.user_id is not the expected type, validation failed.")
       end
     end
   end

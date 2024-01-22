@@ -13,7 +13,7 @@ module SeedClient
       def initialze(unknown:, additional_properties: nil)
         # @type [Object]
         @unknown = unknown
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -23,7 +23,7 @@ module SeedClient
       # @return [Unknown::MyObject]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        unknown = struct.unknown
+        unknown struct.unknown
         new(unknown: unknown, additional_properties: struct)
       end
 
@@ -31,9 +31,15 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          unknown: @unknown
-        }.to_json
+        { unknown: @unknown }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        obj.unknown.is_a?(Object) != false || raise("Passed value for field obj.unknown is not the expected type, validation failed.")
       end
     end
   end

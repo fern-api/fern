@@ -22,7 +22,7 @@ module SeedClient
           @name = name
           # @type [V2::Problem::TestCaseImplementation]
           @implementation = implementation
-          # @type [OpenStruct]
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
 
@@ -32,9 +32,9 @@ module SeedClient
         # @return [V2::Problem::TestCaseTemplate]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          template_id = V2::Problem::TestCaseTemplateId.from_json(json_object: struct.templateId)
-          name = struct.name
-          implementation = V2::Problem::TestCaseImplementation.from_json(json_object: struct.implementation)
+          template_id V2::Problem::TestCaseTemplateId.from_json(json_object: struct.templateId)
+          name struct.name
+          implementation V2::Problem::TestCaseImplementation.from_json(json_object: struct.implementation)
           new(template_id: template_id, name: name, implementation: implementation, additional_properties: struct)
         end
 
@@ -42,11 +42,17 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          {
-            templateId: @template_id,
-            name: @name,
-            implementation: @implementation
-          }.to_json
+          { templateId: @template_id, name: @name, implementation: @implementation }.to_json
+        end
+
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object]
+        # @return [Void]
+        def self.validate_raw(obj:)
+          TestCaseTemplateId.validate_raw(obj: obj.template_id)
+          obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+          TestCaseImplementation.validate_raw(obj: obj.implementation)
         end
       end
     end

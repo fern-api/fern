@@ -18,7 +18,7 @@ module SeedClient
         @node_id = node_id
         # @type [Commons::DoublyLinkedListValue]
         @full_list = full_list
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Commons::DoublyLinkedListNodeAndListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = Commons::NodeId.from_json(json_object: struct.nodeId)
-        full_list = Commons::DoublyLinkedListValue.from_json(json_object: struct.fullList)
+        node_id Commons::NodeId.from_json(json_object: struct.nodeId)
+        full_list Commons::DoublyLinkedListValue.from_json(json_object: struct.fullList)
         new(node_id: node_id, full_list: full_list, additional_properties: struct)
       end
 
@@ -37,10 +37,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          nodeId: @node_id,
-          fullList: @full_list
-        }.to_json
+        { nodeId: @node_id, fullList: @full_list }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        NodeId.validate_raw(obj: obj.node_id)
+        DoublyLinkedListValue.validate_raw(obj: obj.full_list)
       end
     end
   end

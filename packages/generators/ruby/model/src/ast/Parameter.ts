@@ -9,6 +9,7 @@ export declare namespace Parameter {
         type: ClassReference;
         defaultValue?: Variable | string;
         isOptional?: boolean;
+        isNamed?: boolean;
     }
 }
 
@@ -17,17 +18,19 @@ export class Parameter extends AstNode {
     public type: ClassReference;
     // TODO: deal with constants in a more structured way.
     public defaultValue: Variable | string | undefined;
+    public isNamed: boolean;
 
-    constructor({ name, type, defaultValue, isOptional = false, ...rest }: Parameter.Init) {
+    constructor({ name, type, defaultValue, isOptional = false, isNamed = true, ...rest }: Parameter.Init) {
         super(rest);
         this.name = name;
         this.type = type;
         this.defaultValue = defaultValue ?? (isOptional ? NilValue : undefined);
+        this.isNamed = isNamed || this.defaultValue !== undefined;
     }
 
     public writeInternal(): void {
         const defaultString = this.defaultValue instanceof Variable ? this.defaultValue.write() : this.defaultValue;
-        this.addText({ stringContent: this.name, templateString: "%s:" });
+        this.addText({ stringContent: this.name, templateString: this.isNamed ? "%s:" : undefined });
         this.addText({ stringContent: defaultString, templateString: " %s", appendToLastString: true });
     }
 

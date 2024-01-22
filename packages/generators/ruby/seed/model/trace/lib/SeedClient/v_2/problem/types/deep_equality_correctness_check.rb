@@ -15,7 +15,7 @@ module SeedClient
         def initialze(expected_value_parameter_id:, additional_properties: nil)
           # @type [V2::Problem::ParameterId]
           @expected_value_parameter_id = expected_value_parameter_id
-          # @type [OpenStruct]
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
 
@@ -25,7 +25,7 @@ module SeedClient
         # @return [V2::Problem::DeepEqualityCorrectnessCheck]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          expected_value_parameter_id = V2::Problem::ParameterId.from_json(json_object: struct.expectedValueParameterId)
+          expected_value_parameter_id V2::Problem::ParameterId.from_json(json_object: struct.expectedValueParameterId)
           new(expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
         end
 
@@ -33,9 +33,15 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          {
-            expectedValueParameterId: @expected_value_parameter_id
-          }.to_json
+          { expectedValueParameterId: @expected_value_parameter_id }.to_json
+        end
+
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object]
+        # @return [Void]
+        def self.validate_raw(obj:)
+          ParameterId.validate_raw(obj: obj.expected_value_parameter_id)
         end
       end
     end

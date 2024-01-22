@@ -17,7 +17,7 @@ module SeedClient
         @name = name
         # @type [Types::MigrationStatus]
         @status = status
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Types::Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct.name
-        status = Types::MigrationStatus.from_json(json_object: struct.status)
+        name struct.name
+        status Types::MigrationStatus.from_json(json_object: struct.status)
         new(name: name, status: status, additional_properties: struct)
       end
 
@@ -36,10 +36,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          name: @name,
-          status: @status
-        }.to_json
+        { name: @name, status: @status }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+        MigrationStatus.validate_raw(obj: obj.status)
       end
     end
   end

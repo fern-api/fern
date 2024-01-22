@@ -14,7 +14,7 @@ module SeedClient
       def initialze(missing_submission_id:, additional_properties: nil)
         # @type [Submission::SubmissionId]
         @missing_submission_id = missing_submission_id
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        missing_submission_id = Submission::SubmissionId.from_json(json_object: struct.missingSubmissionId)
+        missing_submission_id Submission::SubmissionId.from_json(json_object: struct.missingSubmissionId)
         new(missing_submission_id: missing_submission_id, additional_properties: struct)
       end
 
@@ -32,9 +32,15 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          missingSubmissionId: @missing_submission_id
-        }.to_json
+        { missingSubmissionId: @missing_submission_id }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        SubmissionId.validate_raw(obj: obj.missing_submission_id)
       end
     end
   end

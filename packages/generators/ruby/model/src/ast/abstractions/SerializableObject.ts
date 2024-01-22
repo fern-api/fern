@@ -1,19 +1,20 @@
 import { Argument } from "../Argument";
+import { Import } from "../Import";
+import { Parameter } from "../Parameter";
+import { Property } from "../Property";
+import { Variable, VariableType } from "../Variable";
 import {
     ClassReference,
     GenericClassReference,
     HashInstance,
     JsonClassReference,
-    OpenStructClassReference
+    OpenStructClassReference,
+    VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
-import { Parameter } from "../Parameter";
-import { Property } from "../Property";
-import { Variable, VariableType } from "../Variable";
 
 const additional_properties_property = new Property({
     name: "additional_properties",
@@ -30,7 +31,8 @@ export class SerializableObject extends Class_ {
             ...init,
             functions: [
                 SerializableObject.createFromJsonFunction(init.properties, init.classReference),
-                SerializableObject.createToJsonFunction(init.properties, init.classReference)
+                SerializableObject.createToJsonFunction(init.properties, init.classReference),
+                SerializableObject.createValidateRawFunction(init.properties)
             ],
             includeInitializer: true,
             properties: [...(init.properties ?? []), additional_properties_property]
@@ -118,6 +120,22 @@ export class SerializableObject extends Class_ {
             returnValue: JsonClassReference,
             functionBody,
             documentation: toJsonDocumentation
+        });
+    }
+
+    private static createValidateRawFunction(properties: Property[] | undefined): Function_ {
+        const parameterName = "obj";
+        const functionBody =
+            properties?.map((prop) => prop.type.validateRaw(`${parameterName}.${prop.name}`, prop.isOptional)) ?? [];
+        const validateRawDocumentation =
+            "Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.";
+        return new Function_({
+            name: "validate_raw",
+            returnValue: VoidClassReference,
+            functionBody,
+            documentation: validateRawDocumentation,
+            isStatic: true,
+            parameters: [new Parameter({ name: parameterName, type: GenericClassReference })]
         });
     }
 }

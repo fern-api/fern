@@ -5,19 +5,23 @@ import {
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
     TypeDeclaration,
-    TypeReference
+    TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { TYPES_DIRECTORY } from "../utils/Constants";
 import { GeneratedRubyFile } from "../utils/GeneratedRubyFile";
-import { Enum, EnumReference } from "./abstractions/Enum";
-import { SerializableObject } from "./abstractions/SerializableObject";
-import { ClassReference } from "./classes/ClassReference";
-import { Expression } from "./expressions/Expression";
 import { ExternalDependency } from "./ExternalDependency";
-import { Gemspec } from "./gem/Gemspec";
 import { Module_ } from "./Module_";
 import { Property } from "./Property";
 import { Yardoc } from "./Yardoc";
+import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
+import { Enum, EnumReference } from "./abstractions/Enum";
+import { SerializableObject } from "./abstractions/SerializableObject";
+import { UndiscriminatedUnion } from "./abstractions/UndiscriminatedUnion";
+import { ClassReference } from "./classes/ClassReference";
+import { Expression } from "./expressions/Expression";
+import { Gemspec } from "./gem/Gemspec";
 
 export function generateAliasDefinitionFromTypeDeclaration(
     aliasTypeDeclaration: AliasTypeDeclaration,
@@ -95,8 +99,56 @@ export function generateSerializableObjectFromTypeDeclaration(
     return new SerializableObject({
         classReference,
         extendedClasses,
+        properties,
+        documentation: typeDeclaration.docs
+    });
+}
+
+export function generateUnionFromTypeDeclaration(
+    unionTypeDeclaration: UnionTypeDeclaration,
+    typeDeclaration: TypeDeclaration
+): DiscriminatedUnion {
+    const extendedClasses = unionTypeDeclaration.extends.map((extendedType) =>
+        ClassReference.fromDeclaredTypeName(extendedType)
+    );
+    const properties = unionTypeDeclaration.baseProperties.map(
+        (property) =>
+            new Property({
+                name: property.name.name.snakeCase.safeName,
+                type: ClassReference.fromTypeReference(property.valueType),
+                documentation: property.docs,
+                wireValue: property.name.wireValue,
+                isOptional: isTypeOptional(property.valueType)
+            })
+    );
+    const namedSubclasses = unionTypeDeclaration.types.map((t) => {
+        return {
+            discriminantValue: t.discriminantValue,
+            classReference: DiscriminatedUnion.classReferenceFromUnionType(t.shape),
+            unionPropertiesType: t.shape
+        };
+    });
+
+    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    return new DiscriminatedUnion({
+        classReference,
+        extendedClasses,
+        discriminantField: unionTypeDeclaration.discriminant.wireValue,
+        namedSubclasses,
+        defaultSubclassReference: namedSubclasses[0]?.classReference,
+        documentation: typeDeclaration.docs,
         properties
     });
+}
+
+export function generateUndiscriminatedUnionFromTypeDeclaration(
+    unionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
+    typeDeclaration: TypeDeclaration
+): UndiscriminatedUnion {
+    const memberClasses = unionTypeDeclaration.members.map((member) => ClassReference.fromTypeReference(member.type));
+
+    const classReference = ClassReference.fromDeclaredTypeName(typeDeclaration.name);
+    return new UndiscriminatedUnion({ memberClasses, classReference, documentation: typeDeclaration.docs });
 }
 
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {

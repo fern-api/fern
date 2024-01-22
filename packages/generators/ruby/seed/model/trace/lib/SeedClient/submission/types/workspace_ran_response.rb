@@ -18,7 +18,7 @@ module SeedClient
         @submission_id = submission_id
         # @type [Submission::WorkspaceRunDetails]
         @run_details = run_details
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::WorkspaceRanResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SubmissionId.from_json(json_object: struct.submissionId)
-        run_details = Submission::WorkspaceRunDetails.from_json(json_object: struct.runDetails)
+        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
+        run_details Submission::WorkspaceRunDetails.from_json(json_object: struct.runDetails)
         new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
       end
 
@@ -37,10 +37,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          submissionId: @submission_id,
-          runDetails: @run_details
-        }.to_json
+        { submissionId: @submission_id, runDetails: @run_details }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        SubmissionId.validate_raw(obj: obj.submission_id)
+        WorkspaceRunDetails.validate_raw(obj: obj.run_details)
       end
     end
   end

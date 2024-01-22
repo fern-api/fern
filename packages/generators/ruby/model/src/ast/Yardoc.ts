@@ -7,7 +7,7 @@ interface YardocDocString {
     readonly name: "docString";
 
     parameters: Parameter[];
-    returnValue: ClassReference | undefined;
+    returnValue: ClassReference[] | undefined;
 }
 interface YardocTypeReference {
     readonly name: "typeReference";
@@ -37,7 +37,7 @@ export class Yardoc extends AstNode {
                         ? this.reference.type.typeHint
                         : this.reference.type;
                 const documentation =
-                    this.reference.type instanceof Property ? this.reference.type.type.documentation : undefined;
+                    this.reference.type instanceof Property ? this.reference.type.documentation : undefined;
                 this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
                 this.addText({ stringContent: documentation, appendToLastString: true });
             } else {
@@ -52,11 +52,14 @@ export class Yardoc extends AstNode {
                 });
                 if (this.reference.returnValue !== undefined) {
                     this.addText({
-                        stringContent: this.reference.returnValue.typeHint,
+                        stringContent: this.reference.returnValue.map((rv) => rv.typeHint).join(", "),
                         templateString: "# @return [%s] ",
                         startingTabSpaces
                     });
-                    this.addText({ stringContent: this.reference.returnValue.documentation, appendToLastString: true });
+                    this.addText({
+                        stringContent: this.reference.returnValue.map((rv) => rv.documentation).join(", "),
+                        appendToLastString: true
+                    });
                 }
             }
         }

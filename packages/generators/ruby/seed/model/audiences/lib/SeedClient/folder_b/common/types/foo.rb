@@ -15,7 +15,7 @@ module SeedClient
         def initialze(foo: nil, additional_properties: nil)
           # @type [FolderC::Common::Foo]
           @foo = foo
-          # @type [OpenStruct]
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
 
@@ -25,7 +25,7 @@ module SeedClient
         # @return [FolderB::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          foo = FolderC::Common::Foo.from_json(json_object: struct.foo)
+          foo FolderC::Common::Foo.from_json(json_object: struct.foo)
           new(foo: foo, additional_properties: struct)
         end
 
@@ -33,9 +33,15 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          {
-            foo: @foo
-          }.to_json
+          { foo: @foo }.to_json
+        end
+
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object]
+        # @return [Void]
+        def self.validate_raw(obj:)
+          obj.foo.nil? || Foo.validate_raw(obj: obj.foo)
         end
       end
     end

@@ -17,7 +17,7 @@ module SeedClient
         @expected_language = expected_language
         # @type [Commons::Language]
         @actual_language = actual_language
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -27,8 +27,8 @@ module SeedClient
       # @return [Submission::UnexpectedLanguageError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        expected_language = Commons::Language.from_json(json_object: struct.expectedLanguage)
-        actual_language = Commons::Language.from_json(json_object: struct.actualLanguage)
+        expected_language Commons::Language.from_json(json_object: struct.expectedLanguage)
+        actual_language Commons::Language.from_json(json_object: struct.actualLanguage)
         new(expected_language: expected_language, actual_language: actual_language, additional_properties: struct)
       end
 
@@ -36,10 +36,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          expectedLanguage: @expected_language,
-          actualLanguage: @actual_language
-        }.to_json
+        { expectedLanguage: @expected_language, actualLanguage: @actual_language }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        Language.validate_raw(obj: obj.expected_language)
+        Language.validate_raw(obj: obj.actual_language)
       end
     end
   end

@@ -18,7 +18,7 @@ module SeedClient
         @test_case_id = test_case_id
         # @type [Submission::TestCaseGrade]
         @grade = grade
-        # @type [OpenStruct]
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
 
@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::GradedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case_id = V2::Problem::TestCaseId.from_json(json_object: struct.testCaseId)
-        grade = Submission::TestCaseGrade.from_json(json_object: struct.grade)
+        test_case_id V2::Problem::TestCaseId.from_json(json_object: struct.testCaseId)
+        grade Submission::TestCaseGrade.from_json(json_object: struct.grade)
         new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
       end
 
@@ -37,10 +37,16 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        {
-          testCaseId: @test_case_id,
-          grade: @grade
-        }.to_json
+        { testCaseId: @test_case_id, grade: @grade }.to_json
+      end
+
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object]
+      # @return [Void]
+      def self.validate_raw(obj:)
+        TestCaseId.validate_raw(obj: obj.test_case_id)
+        TestCaseGrade.validate_raw(obj: obj.grade)
       end
     end
   end
