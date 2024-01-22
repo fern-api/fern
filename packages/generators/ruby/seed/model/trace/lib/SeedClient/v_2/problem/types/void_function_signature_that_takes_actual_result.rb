@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require_relative "v_2/problem/types/Parameter"
 require_relative "commons/types/VariableType"
 require "json"
@@ -9,43 +8,39 @@ module SeedClient
     module Problem
       class VoidFunctionSignatureThatTakesActualResult
         attr_reader :parameters, :actual_result_type, :additional_properties
-
-        # @param parameters [Array<V2::Problem::Parameter>]
-        # @param actual_result_type [Commons::VariableType]
+        # @param parameters [Array<V2::Problem::Parameter>] 
+        # @param actual_result_type [Commons::VariableType] 
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::VoidFunctionSignatureThatTakesActualResult]
         def initialze(parameters:, actual_result_type:, additional_properties: nil)
-          # @type [Array<V2::Problem::Parameter>]
+          # @type [Array<V2::Problem::Parameter>] 
           @parameters = parameters
-          # @type [Commons::VariableType]
+          # @type [Commons::VariableType] 
           @actual_result_type = actual_result_type
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
-
         # Deserialize a JSON object to an instance of VoidFunctionSignatureThatTakesActualResult
         #
-        # @param json_object [JSON]
+        # @param json_object [JSON] 
         # @return [V2::Problem::VoidFunctionSignatureThatTakesActualResult]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameters = struct.parameters.map do |v|
-            V2::Problem::Parameter.from_json(json_object: v)
-          end
+          parameters = struct.parameters.map() do | v |
+  V2::Problem::Parameter.from_json(json_object: v)
+end
           actual_result_type = Commons::VariableType.from_json(json_object: struct.actualResultType)
           new(parameters: parameters, actual_result_type: actual_result_type, additional_properties: struct)
         end
-
         # Serialize an instance of VoidFunctionSignatureThatTakesActualResult to a JSON object
         #
         # @return [JSON]
-        def to_json(*_args)
-          { parameters: @parameters, actualResultType: @actual_result_type }.to_json
+        def to_json
+          { parameters: @parameters, actualResultType: @actual_result_type }.to_json()
         end
-
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
         #
-        # @param obj [Object]
+        # @param obj [Object] 
         # @return [Void]
         def self.validate_raw(obj:)
           obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
