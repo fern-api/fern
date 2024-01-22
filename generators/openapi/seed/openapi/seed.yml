@@ -1,6 +1,6 @@
 irVersion: v23
 docker: fern-openapi:local
-dockerCommand: yarn openapi:dockerTagLocal
+dockerCommand: yarn workspace @fern-api/openapi-generator dockerTagLocal
 generatorType: documentation
 fixtures:
   imdb:

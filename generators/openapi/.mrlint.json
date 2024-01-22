@@ -8,7 +8,7 @@
       }
     },
     "depcheck": {
-      "ignores": ["webpack", "webpack-cli", "ts-loader"],
+      "ignores": ["webpack", "webpack-cli", "ts-loader", "@fern-fern/ir-sdk"],
       "ignore-patterns": ["docker/bundle.js"]
     }
   },

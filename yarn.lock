@@ -2644,6 +2644,8 @@ __metadata:
     "@fern-fern/generator-exec-client": ^0.0.6
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
+    "@types/js-yaml": ^4.0.8
+    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.26.0
