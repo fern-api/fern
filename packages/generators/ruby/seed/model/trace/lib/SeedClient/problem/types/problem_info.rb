@@ -43,7 +43,7 @@ module SeedClient
         @method_name = method_name
         # @type [Boolean] 
         @supports_custom_test_cases = supports_custom_test_cases
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of ProblemInfo
@@ -52,40 +52,47 @@ module SeedClient
       # @return [Problem::ProblemInfo] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = Commons::ProblemId.from_json(json_object: struct.problemId)
-        problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-        problem_name = struct.problemName
-        problem_version = struct.problemVersion
-        files = struct.files.transform_values() do | v |
- Commons::Language.from_json(json_object: v)
+        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
+        problem_description Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
+        problem_name struct.problemName
+        problem_version struct.problemVersion
+        files struct.files.transform_values() do | v |
+  Commons::Language.from_json(json_object: v)
 end
-        input_params = struct.inputParams.map() do | v |
- Problem::VariableTypeAndName.from_json(json_object: v)
+        input_params struct.inputParams.map() do | v |
+  Problem::VariableTypeAndName.from_json(json_object: v)
 end
-        output_type = Commons::VariableType.from_json(json_object: struct.outputType)
-        testcases = struct.testcases.map() do | v |
- Commons::TestCaseWithExpectedResult.from_json(json_object: v)
+        output_type Commons::VariableType.from_json(json_object: struct.outputType)
+        testcases struct.testcases.map() do | v |
+  Commons::TestCaseWithExpectedResult.from_json(json_object: v)
 end
-        method_name = struct.methodName
-        supports_custom_test_cases = struct.supportsCustomTestCases
+        method_name struct.methodName
+        supports_custom_test_cases struct.supportsCustomTestCases
         new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name, problem_version: problem_version, files: files, input_params: input_params, output_type: output_type, testcases: testcases, method_name: method_name, supports_custom_test_cases: supports_custom_test_cases, additional_properties: struct)
       end
       # Serialize an instance of ProblemInfo to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- problemId: @problem_id,
- problemDescription: @problem_description,
- problemName: @problem_name,
- problemVersion: @problem_version,
- files: @files.transform_values() do | v |\n Commons::Language.from_json(json_object: v)\nend,
- inputParams: @input_params,
- outputType: @output_type,
- testcases: @testcases,
- methodName: @method_name,
- supportsCustomTestCases: @supports_custom_test_cases
-}.to_json()
+        { problemId: @problem_id, problemDescription: @problem_description, problemName: @problem_name, problemVersion: @problem_version, files: @files.transform_values() do | v |
+  Commons::Language.from_json(json_object: v)
+end, inputParams: @input_params, outputType: @output_type, testcases: @testcases, methodName: @method_name, supportsCustomTestCases: @supports_custom_test_cases }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        ProblemId.validate_raw(obj: obj.problem_id)
+        ProblemDescription.validate_raw(obj: obj.problem_description)
+        obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
+        obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
+        obj.files.is_a?(Hash) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
+        obj.input_params.is_a?(Array) != false || raise("Passed value for field obj.input_params is not the expected type, validation failed.")
+        VariableType.validate_raw(obj: obj.output_type)
+        obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
+        obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
+        obj.supports_custom_test_cases.is_a?(Boolean) != false || raise("Passed value for field obj.supports_custom_test_cases is not the expected type, validation failed.")
       end
     end
   end

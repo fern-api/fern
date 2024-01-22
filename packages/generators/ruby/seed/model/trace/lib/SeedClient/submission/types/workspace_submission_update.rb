@@ -15,7 +15,7 @@ module SeedClient
         @update_time = update_time
         # @type [Submission::WorkspaceSubmissionUpdateInfo] 
         @update_info = update_info
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of WorkspaceSubmissionUpdate
@@ -24,18 +24,23 @@ module SeedClient
       # @return [Submission::WorkspaceSubmissionUpdate] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time = struct.updateTime
-        update_info = Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
+        update_time struct.updateTime
+        update_info Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
       # Serialize an instance of WorkspaceSubmissionUpdate to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- updateTime: @update_time,
- updateInfo: @update_info
-}.to_json()
+        { updateTime: @update_time, updateInfo: @update_info }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.update_time.is_a?(DateTime) != false || raise("Passed value for field obj.update_time is not the expected type, validation failed.")
+        WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
       end
     end
   end

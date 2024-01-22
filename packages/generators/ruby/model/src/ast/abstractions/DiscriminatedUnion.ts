@@ -6,6 +6,7 @@ import {
     HashInstance,
     JsonClassReference,
     OpenStructClassReference,
+    StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
@@ -25,43 +26,48 @@ export declare namespace DiscriminatedUnion {
     }
     export interface Subclass {
         discriminantValue: string;
-        classReference: ClassReference;
+        classReference: ClassReference | undefined;
         unionPropertiesType: SingleUnionTypeProperties;
     }
 }
 export class DiscriminatedUnion extends Class_ {
-    constructor(init: DiscriminatedUnion.Init) {
+    constructor({ discriminatingField, namedSubclasses, defaultSubclassReference, ...rest }: DiscriminatedUnion.Init) {
         const memberProperty = new Property({ name: "member", type: GenericClassReference });
-        const discriminantProperty = new Property({ name: "discriminant", type: GenericClassReference });
-        const properties = [memberProperty, ...(init.properties ?? [])];
+        const discriminantProperty = new Property({ name: "discriminant", type: StringClassReference });
+        const properties = [memberProperty, discriminantProperty, ...(rest.properties ?? [])];
 
         super({
-            ...init,
+            ...rest,
             properties,
             functions: [
                 DiscriminatedUnion.createFromJsonFunction(
-                    init.discriminatingField,
+                    discriminatingField,
                     memberProperty,
                     discriminantProperty,
-                    init.namedSubclasses,
-                    init.classReference,
-                    init.defaultSubclassReference
+                    namedSubclasses,
+                    rest.classReference,
+                    defaultSubclassReference
                 ),
                 DiscriminatedUnion.createToJsonFunction(
                     memberProperty,
                     discriminantProperty,
-                    init.discriminatingField,
-                    init.namedSubclasses
+                    discriminatingField,
+                    namedSubclasses
                 ),
-                DiscriminatedUnion.createValidateRawFunction(init.discriminatingField, init.namedSubclasses),
+                DiscriminatedUnion.createValidateRawFunction(discriminatingField, namedSubclasses),
                 DiscriminatedUnion.createIsAFunction(memberProperty),
-                ...DiscriminatedUnion.createStaticGeneratorFunctions(init.namedSubclasses, memberProperty)
+                ...DiscriminatedUnion.createStaticGeneratorFunctions(
+                    namedSubclasses,
+                    memberProperty,
+                    discriminantProperty,
+                    rest.classReference
+                )
             ],
             expressions: [
                 // Hide the initializer for union classes
-                new Expression({ rightSide: "private_class_method :new" }),
+                new Expression({ rightSide: "private_class_method :new", isAssignment: false }),
                 // Since we're overriding is_a, we also alias kind_of to it
-                new Expression({ rightSide: "alias kind_of? is_a?" })
+                new Expression({ rightSide: "alias kind_of? is_a?", isAssignment: false })
             ],
             includeInitializer: true
         });
@@ -73,9 +79,9 @@ export class DiscriminatedUnion extends Class_ {
         unionSubclass: DiscriminatedUnion.Subclass
     ): Expression {
         const rightSide = unionSubclass.unionPropertiesType._visit<FunctionInvocation | string>({
-            samePropertiesAsObject: () => unionSubclass.classReference.fromJson(jsonParameter) ?? jsonParameter,
+            samePropertiesAsObject: () => unionSubclass.classReference?.fromJson(jsonParameter) ?? jsonParameter,
             singleProperty: (sutp: SingleUnionTypeProperty) =>
-                unionSubclass.classReference.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
+                unionSubclass.classReference?.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
                 `${jsonParameter}.${sutp.name.wireValue}`,
             noProperties: () => "nil",
             _other: () => {
@@ -149,7 +155,7 @@ export class DiscriminatedUnion extends Class_ {
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${unionClassReference.name}`;
         return new Function_({
             name: "from_json",
-            returnValue: namedSubclasses.map((sc) => sc.classReference),
+            returnValue: unionClassReference,
             parameters,
             functionBody,
             documentation: fromJsonDocumentation,
@@ -256,7 +262,7 @@ export class DiscriminatedUnion extends Class_ {
                         `"${sc.discriminantValue}"`,
                         [
                             new Expression({
-                                rightSide: sc.classReference.validateRaw(parameterName),
+                                rightSide: sc.classReference?.validateRaw(parameterName) ?? "# noop",
                                 isAssignment: false
                             })
                         ]
@@ -283,22 +289,31 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
+    // TODO: Add in the discriminant as a param to the `new` call
     private static createStaticGeneratorFunctions(
         namedSubclasses: DiscriminatedUnion.Subclass[],
-        memberProperty: Property
+        memberProperty: Property,
+        discriminantProperty: Property,
+        classReference: ClassReference
     ): Function_[] {
         const parameterName = "member";
         return namedSubclasses.map((sc) => {
+            const includeParameter = sc.classReference !== undefined;
             return new Function_({
                 name: sc.discriminantValue,
                 functionBody: [
                     new FunctionInvocation({
                         baseFunction: new Function_({ name: "new", functionBody: [] }),
-                        arguments_: [memberProperty.toArgument(parameterName, true)]
+                        arguments_: [
+                            memberProperty.toArgument(includeParameter ? parameterName : "nil", true),
+                            discriminantProperty.toArgument(`"${sc.discriminantValue}"`, true)
+                        ]
                     })
                 ],
                 isStatic: true,
-                parameters: [new Parameter({ name: parameterName, type: sc.classReference })]
+                // This is a safe reference, TS isn't propagating the undefined check to the type here.
+                parameters: includeParameter ? [new Parameter({ name: parameterName, type: sc.classReference! })] : [],
+                returnValue: classReference
             });
         });
     }
@@ -321,11 +336,13 @@ export class DiscriminatedUnion extends Class_ {
         });
     }
 
-    public static classReferenceFromUnionType(singleUnionTypeProperties: SingleUnionTypeProperties): ClassReference {
-        return singleUnionTypeProperties._visit<ClassReference>({
+    public static classReferenceFromUnionType(
+        singleUnionTypeProperties: SingleUnionTypeProperties
+    ): ClassReference | undefined {
+        return singleUnionTypeProperties._visit<ClassReference | undefined>({
             samePropertiesAsObject: (dtn) => ClassReference.fromDeclaredTypeName(dtn),
             singleProperty: (sutp: SingleUnionTypeProperty) => ClassReference.fromTypeReference(sutp.type),
-            noProperties: () => VoidClassReference,
+            noProperties: () => undefined,
             _other: () => {
                 throw new Error();
             }

@@ -16,7 +16,7 @@ module SeedClient
         @key = key
         # @type [Commons::DebugVariableValue] 
         @value = value
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of DebugKeyValuePairs
@@ -25,18 +25,23 @@ module SeedClient
       # @return [Commons::DebugKeyValuePairs] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key = Commons::DebugVariableValue.from_json(json_object: struct.key)
-        value = Commons::DebugVariableValue.from_json(json_object: struct.value)
+        key Commons::DebugVariableValue.from_json(json_object: struct.key)
+        value Commons::DebugVariableValue.from_json(json_object: struct.value)
         new(key: key, value: value, additional_properties: struct)
       end
       # Serialize an instance of DebugKeyValuePairs to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- key: @key,
- value: @value
-}.to_json()
+        { key: @key, value: @value }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        DebugVariableValue.validate_raw(obj: obj.key)
+        DebugVariableValue.validate_raw(obj: obj.value)
       end
     end
   end

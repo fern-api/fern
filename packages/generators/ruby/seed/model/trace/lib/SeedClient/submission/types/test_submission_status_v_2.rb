@@ -23,7 +23,7 @@ module SeedClient
         @problem_version = problem_version
         # @type [V2::Problem::ProblemInfoV2] 
         @problem_info = problem_info
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of TestSubmissionStatusV2
@@ -32,24 +32,29 @@ module SeedClient
       # @return [Submission::TestSubmissionStatusV2] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        updates = struct.updates.map() do | v |
- Submission::TestSubmissionUpdate.from_json(json_object: v)
+        updates struct.updates.map() do | v |
+  Submission::TestSubmissionUpdate.from_json(json_object: v)
 end
-        problem_id = Commons::ProblemId.from_json(json_object: struct.problemId)
-        problem_version = struct.problemVersion
-        problem_info = V2::Problem::ProblemInfoV2.from_json(json_object: struct.problemInfo)
+        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
+        problem_version struct.problemVersion
+        problem_info V2::Problem::ProblemInfoV2.from_json(json_object: struct.problemInfo)
         new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info, additional_properties: struct)
       end
       # Serialize an instance of TestSubmissionStatusV2 to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- updates: @updates,
- problemId: @problem_id,
- problemVersion: @problem_version,
- problemInfo: @problem_info
-}.to_json()
+        { updates: @updates, problemId: @problem_id, problemVersion: @problem_version, problemInfo: @problem_info }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.updates.is_a?(Array) != false || raise("Passed value for field obj.updates is not the expected type, validation failed.")
+        ProblemId.validate_raw(obj: obj.problem_id)
+        obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
+        ProblemInfoV2.validate_raw(obj: obj.problem_info)
       end
     end
   end

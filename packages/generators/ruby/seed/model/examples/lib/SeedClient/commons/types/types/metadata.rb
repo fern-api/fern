@@ -18,7 +18,7 @@ module SeedClient
           @data = data
           # @type [String] 
           @json_string = json_string
-          # @type [OpenStruct] 
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
         # Deserialize a JSON object to an instance of Metadata
@@ -27,20 +27,25 @@ module SeedClient
         # @return [Commons::Types::Metadata] 
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          id = struct.id
-          data = struct.data
-          json_string = struct.jsonString
+          id struct.id
+          data struct.data
+          json_string struct.jsonString
           new(id: id, data: data, json_string: json_string, additional_properties: struct)
         end
         # Serialize an instance of Metadata to a JSON object
         #
         # @return [JSON] 
         def to_json
-          {
- id: @id,
- data: @data,
- jsonString: @json_string
-}.to_json()
+          { id: @id, data: @data, jsonString: @json_string }.to_json()
+        end
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object] 
+        # @return [Void] 
+        def self.validate_raw(obj:)
+          obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
+          obj.data&.is_a?(Hash) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")
+          obj.json_string&.is_a?(String) != false || raise("Passed value for field obj.json_string is not the expected type, validation failed.")
         end
       end
     end

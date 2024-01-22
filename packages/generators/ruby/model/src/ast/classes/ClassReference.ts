@@ -118,7 +118,7 @@ export class ClassReference extends AstNode {
         return PrimitiveType._visit<ClassReference>(primitive, {
             integer: () => new ClassReference({ name: RubyClass.INTEGER }),
             double: () => new ClassReference({ name: RubyClass.DOUBLE }),
-            string: () => new ClassReference({ name: RubyClass.STRING }),
+            string: () => StringClassReference,
             boolean: () => BooleanClassReference,
             long: () => new ClassReference({ name: RubyClass.LONG }),
             dateTime: () => new ClassReference({ name: RubyClass.DATETIME }),
@@ -144,7 +144,7 @@ export class ClassReference extends AstNode {
             set: (tr: TypeReference) => new SetReference({ innerType: ClassReference.fromTypeReference(tr) }),
             literal: (lit: Literal) =>
                 Literal._visit<ClassReference>(lit, {
-                    string: () => new ClassReference({ name: RubyClass.STRING }),
+                    string: () => StringClassReference,
                     boolean: () => BooleanClassReference,
                     _other: (value: { type: string }) => new ClassReference({ name: value.type })
                 }),
@@ -164,6 +164,7 @@ export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT
 export const JsonClassReference = new ClassReference({ name: RubyClass.JSON });
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
+export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {
@@ -333,7 +334,7 @@ export class HashInstance extends AstNode {
     public writeInternal(): void {
         this.addText({
             stringContent: `{ ${Array.from(this.contents.entries())
-                .map(([k, v]) => k + (v instanceof AstNode ? v.write() : `'${v}'`))
+                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write() : `'${v}'`))
                 .join(", ")}${this.additionalHashes.map((ah) => format(", **%s", ah.write()))} }`
         });
         this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });

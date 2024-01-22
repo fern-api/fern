@@ -14,7 +14,7 @@ module SeedClient
         @name = name
         # @type [String] 
         @id = id
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of Actor
@@ -23,18 +23,23 @@ module SeedClient
       # @return [Types::Actor] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct.name
-        id = struct.id
+        name struct.name
+        id struct.id
         new(name: name, id: id, additional_properties: struct)
       end
       # Serialize an instance of Actor to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- name: @name,
- id: @id
-}.to_json()
+        { name: @name, id: @id }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+        obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
       end
     end
   end

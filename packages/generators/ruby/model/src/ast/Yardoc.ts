@@ -37,7 +37,7 @@ export class Yardoc extends AstNode {
                         ? this.reference.type.typeHint
                         : this.reference.type;
                 const documentation =
-                    this.reference.type instanceof Property ? this.reference.type.type.documentation : undefined;
+                    this.reference.type instanceof Property ? this.reference.type.documentation : undefined;
                 this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
                 this.addText({ stringContent: documentation, appendToLastString: true });
             } else {

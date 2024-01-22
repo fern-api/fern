@@ -18,7 +18,7 @@ export class Expression extends AstNode {
     public yardoc: Yardoc | undefined;
     public operation?: string;
 
-    constructor({ leftSide, rightSide, yardoc, operation, isAssignment = true, ...rest }: Expression.Init) {
+    constructor({ leftSide, rightSide, yardoc, operation, isAssignment = false, ...rest }: Expression.Init) {
         super(rest);
         this.leftSide = leftSide;
         this.rightSide = rightSide;
@@ -36,8 +36,10 @@ export class Expression extends AstNode {
         }
         this.addText({
             stringContent: rightString,
-            templateString: this.operation !== undefined ? ` ${this.operation} %s` : " %s",
-            appendToLastString: true
+            templateString:
+                this.operation !== undefined ? ` ${this.operation} %s` : leftString === undefined ? undefined : " %s",
+            appendToLastString: true,
+            startingTabSpaces: leftString === undefined ? startingTabSpaces : undefined
         });
     }
 

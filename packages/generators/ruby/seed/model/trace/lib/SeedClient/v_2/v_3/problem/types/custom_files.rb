@@ -1,0 +1,89 @@
+# frozen_string_literal: true
+require "json"
+require "v_2/v_3/problem/types/BasicCustomFiles"
+
+module SeedClient
+  module V2
+    module V3
+      module Problem
+        class CustomFiles
+          attr_reader :member, :discriminant
+          private_class_method :new
+          alias kind_of? is_a?
+          # @param member [Object] 
+          # @param discriminant [String] 
+          # @return [V2::V3::Problem::CustomFiles] 
+          def initialze(member:, discriminant:)
+            # @type [Object] 
+            @member = member
+            # @type [String] 
+            @discriminant = discriminant
+          end
+          # Deserialize a JSON object to an instance of CustomFiles
+          #
+          # @param json_object [JSON] 
+          # @return [V2::V3::Problem::CustomFiles] 
+          def self.from_json(json_object:)
+            struct = JSON.parse(json_object, object_class: OpenStruct)
+            case struct.type
+            when "basic"
+              member = V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
+            when "custom"
+              member = json_object.value.transform_values() do | v |
+  Commons::Language.from_json(json_object: v)
+end
+            else
+              member = V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
+            end
+            new(member: member, discriminant: struct.type)
+          end
+          # For Union Types, to_json functionality is delegated to the wrapped member.
+          #
+          # @return [] 
+          def to_json
+            case @discriminant
+            when "basic"
+              { type: @discriminant, **@member.to_json() }.to_json()
+            when "custom"
+              { type: @discriminant, value: @member }.to_json()
+            else
+              { type: @discriminant, value: @member }.to_json()
+            end
+            @member.to_json()
+          end
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          #
+          # @param obj [Object] 
+          # @return [Void] 
+          def self.validate_raw(obj:)
+            case obj.type
+            when "basic"
+              BasicCustomFiles.validate_raw(obj: obj)
+            when "custom"
+              obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+            else
+              raise("Passed value matched no type within the union, validation failed.")
+            end
+          end
+          # For Union Types, is_a? functionality is delegated to the wrapped member.
+          #
+          # @param obj [Object] 
+          # @return [] 
+          def is_a(obj)
+            @member.is_a?(obj)
+          end
+          # @param member [V2::V3::Problem::BasicCustomFiles] 
+          # @return [V2::V3::Problem::CustomFiles] 
+          def self.basic(member:)
+            new(member: member, discriminant: "basic")
+          end
+          # @param member [Hash{Commons::Language => Commons::Language}] 
+          # @return [V2::V3::Problem::CustomFiles] 
+          def self.custom(member:)
+            new(member: member, discriminant: "custom")
+          end
+        end
+      end
+    end
+  end
+end

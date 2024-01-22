@@ -3,11 +3,6 @@
 module SeedClient
   module Svc
     # @type [Hash{String => String}] 
-    MyEnum = {
- one: 'one',
- two: 'two',
- three: 'three',
- four: 'four'
-}.frozen
+    MyEnum = { one: 'one', two: 'two', three: 'three', four: 'four' }.frozen
   end
 end

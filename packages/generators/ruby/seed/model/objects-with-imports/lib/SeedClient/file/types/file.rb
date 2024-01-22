@@ -18,7 +18,7 @@ module SeedClient
         @contents = contents
         # @type [File::FileInfo] 
         @info = info
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of File
@@ -27,20 +27,25 @@ module SeedClient
       # @return [File::File] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct.name
-        contents = struct.contents
-        info = File::FileInfo.from_json(json_object: struct.info)
+        name struct.name
+        contents struct.contents
+        info File::FileInfo.from_json(json_object: struct.info)
         new(name: name, contents: contents, info: info, additional_properties: struct)
       end
       # Serialize an instance of File to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- name: @name,
- contents: @contents,
- info: @info
-}.to_json()
+        { name: @name, contents: @contents, info: @info }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+        obj.contents.is_a?(String) != false || raise("Passed value for field obj.contents is not the expected type, validation failed.")
+        FileInfo.validate_raw(obj: obj.info)
       end
     end
   end

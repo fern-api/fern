@@ -19,7 +19,7 @@ module SeedClient
         @nodes = nodes
         # @type [Array<Types::Tree>] 
         @trees = trees
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of Node
@@ -28,12 +28,12 @@ module SeedClient
       # @return [Types::Node] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        name = struct.name
-        nodes = struct.nodes.map() do | v |
- Types::Node.from_json(json_object: v)
+        name struct.name
+        nodes struct.nodes.map() do | v |
+  Types::Node.from_json(json_object: v)
 end
-        trees = struct.trees.map() do | v |
- Types::Tree.from_json(json_object: v)
+        trees struct.trees.map() do | v |
+  Types::Tree.from_json(json_object: v)
 end
         new(name: name, nodes: nodes, trees: trees, additional_properties: struct)
       end
@@ -41,11 +41,16 @@ end
       #
       # @return [JSON] 
       def to_json
-        {
- name: @name,
- nodes: @nodes,
- trees: @trees
-}.to_json()
+        { name: @name, nodes: @nodes, trees: @trees }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+        obj.nodes&.is_a?(Array) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
+        obj.trees&.is_a?(Array) != false || raise("Passed value for field obj.trees is not the expected type, validation failed.")
       end
     end
   end

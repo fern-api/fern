@@ -25,7 +25,7 @@ module SeedClient
             @problem_version = problem_version
             # @type [Set<Commons::VariableType>] 
             @variable_types = variable_types
-            # @type [OpenStruct] 
+            # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
           end
           # Deserialize a JSON object to an instance of LightweightProblemInfoV2
@@ -34,22 +34,27 @@ module SeedClient
           # @return [V2::V3::Problem::LightweightProblemInfoV2] 
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            problem_id = Commons::ProblemId.from_json(json_object: struct.problemId)
-            problem_name = struct.problemName
-            problem_version = struct.problemVersion
-            variable_types = Set.new(struct.variableTypes)
+            problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
+            problem_name struct.problemName
+            problem_version struct.problemVersion
+            variable_types Set.new(struct.variableTypes)
             new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version, variable_types: variable_types, additional_properties: struct)
           end
           # Serialize an instance of LightweightProblemInfoV2 to a JSON object
           #
           # @return [JSON] 
           def to_json
-            {
- problemId: @problem_id,
- problemName: @problem_name,
- problemVersion: @problem_version,
- variableTypes: @variable_types.to_a()
-}.to_json()
+            { problemId: @problem_id, problemName: @problem_name, problemVersion: @problem_version, variableTypes: @variable_types.to_a() }.to_json()
+          end
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          #
+          # @param obj [Object] 
+          # @return [Void] 
+          def self.validate_raw(obj:)
+            ProblemId.validate_raw(obj: obj.problem_id)
+            obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
+            obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
+            obj.variable_types.is_a?(Set) != false || raise("Passed value for field obj.variable_types is not the expected type, validation failed.")
           end
         end
       end

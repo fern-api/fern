@@ -23,7 +23,7 @@ module SeedClient
         @title = title
         # @type [String] 
         @from = from
-        # @type [Float] 
+        # @type [Float] The rating scale is one to five stars
         @rating = rating
         # @type [String] 
         @type = type
@@ -31,7 +31,7 @@ module SeedClient
         @tag = tag
         # @type [String] 
         @book = book
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of Movie
@@ -40,28 +40,33 @@ module SeedClient
       # @return [Types::Movie] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = Types::MovieId.from_json(json_object: struct.id)
-        title = struct.title
-        from = struct.from
-        rating = struct.rating
-        type = struct.type
-        tag = Commons::Types::Tag.from_json(json_object: struct.tag)
-        book = struct.book
+        id Types::MovieId.from_json(json_object: struct.id)
+        title struct.title
+        from struct.from
+        rating struct.rating
+        type struct.type
+        tag Commons::Types::Tag.from_json(json_object: struct.tag)
+        book struct.book
         new(id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book, additional_properties: struct)
       end
       # Serialize an instance of Movie to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- id: @id,
- title: @title,
- from: @from,
- rating: @rating,
- type: @type,
- tag: @tag,
- book: @book
-}.to_json()
+        { id: @id, title: @title, from: @from, rating: @rating, type: @type, tag: @tag, book: @book }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        MovieId.validate_raw(obj: obj.id)
+        obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
+        obj.from.is_a?(String) != false || raise("Passed value for field obj.from is not the expected type, validation failed.")
+        obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")
+        obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+        Tag.validate_raw(obj: obj.tag)
+        obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
       end
     end
   end

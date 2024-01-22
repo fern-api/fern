@@ -14,7 +14,7 @@ module SeedClient
         @stringified_type = stringified_type
         # @type [String] 
         @stringified_value = stringified_value
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of GenericValue
@@ -23,18 +23,23 @@ module SeedClient
       # @return [Commons::GenericValue] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        stringified_type = struct.stringifiedType
-        stringified_value = struct.stringifiedValue
+        stringified_type struct.stringifiedType
+        stringified_value struct.stringifiedValue
         new(stringified_type: stringified_type, stringified_value: stringified_value, additional_properties: struct)
       end
       # Serialize an instance of GenericValue to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- stringifiedType: @stringified_type,
- stringifiedValue: @stringified_value
-}.to_json()
+        { stringifiedType: @stringified_type, stringifiedValue: @stringified_value }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        obj.stringified_type&.is_a?(String) != false || raise("Passed value for field obj.stringified_type is not the expected type, validation failed.")
+        obj.stringified_value.is_a?(String) != false || raise("Passed value for field obj.stringified_value is not the expected type, validation failed.")
       end
     end
   end

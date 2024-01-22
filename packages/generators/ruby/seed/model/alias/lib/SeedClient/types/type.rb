@@ -3,6 +3,7 @@ require "types/TypeId"
 require "json"
 
 module SeedClient
+  # A simple type with just a name.
   class Type
     attr_reader :id, :name, :additional_properties
     # @param id [TypeId] 
@@ -14,7 +15,7 @@ module SeedClient
       @id = id
       # @type [String] 
       @name = name
-      # @type [OpenStruct] 
+      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
     end
     # Deserialize a JSON object to an instance of Type
@@ -23,18 +24,23 @@ module SeedClient
     # @return [Type] 
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = TypeId.from_json(json_object: struct.id)
-      name = struct.name
+      id TypeId.from_json(json_object: struct.id)
+      name struct.name
       new(id: id, name: name, additional_properties: struct)
     end
     # Serialize an instance of Type to a JSON object
     #
     # @return [JSON] 
     def to_json
-      {
- id: @id,
- name: @name
-}.to_json()
+      { id: @id, name: @name }.to_json()
+    end
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    #
+    # @param obj [Object] 
+    # @return [Void] 
+    def self.validate_raw(obj:)
+      TypeId.validate_raw(obj: obj.id)
+      obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
     end
   end
 end

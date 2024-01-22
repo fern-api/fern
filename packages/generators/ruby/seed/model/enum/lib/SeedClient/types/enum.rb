@@ -2,9 +2,5 @@
 
 module SeedClient
   # @type [Hash{String => String}] 
-  Enum = {
- one: 'ONE',
- two: 'TWO',
- three: 'THREE'
-}.frozen
+  Enum = { one: 'ONE', two: 'TWO', three: 'THREE' }.frozen
 end

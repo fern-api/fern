@@ -16,7 +16,7 @@ module SeedClient
         @problem_id = problem_id
         # @type [Submission::SubmissionId] 
         @submission_id = submission_id
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of CustomTestCasesUnsupported
@@ -25,18 +25,23 @@ module SeedClient
       # @return [Submission::CustomTestCasesUnsupported] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = Commons::ProblemId.from_json(json_object: struct.problemId)
-        submission_id = Submission::SubmissionId.from_json(json_object: struct.submissionId)
+        problem_id Commons::ProblemId.from_json(json_object: struct.problemId)
+        submission_id Submission::SubmissionId.from_json(json_object: struct.submissionId)
         new(problem_id: problem_id, submission_id: submission_id, additional_properties: struct)
       end
       # Serialize an instance of CustomTestCasesUnsupported to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- problemId: @problem_id,
- submissionId: @submission_id
-}.to_json()
+        { problemId: @problem_id, submissionId: @submission_id }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        ProblemId.validate_raw(obj: obj.problem_id)
+        SubmissionId.validate_raw(obj: obj.submission_id)
       end
     end
   end

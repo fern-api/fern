@@ -8,7 +8,7 @@ module SeedClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TerminatedResponse] 
       def initialze(additional_properties: nil)
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of TerminatedResponse
@@ -23,7 +23,13 @@ module SeedClient
       #
       # @return [JSON] 
       def to_json
-        {}.to_json()
+        {  }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
       end
     end
   end

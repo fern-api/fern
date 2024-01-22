@@ -17,7 +17,7 @@ module SeedClient
           @file = file
           # @type [Array<Commons::VariableType>] 
           @related_types = related_types
-          # @type [OpenStruct] 
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
         # Deserialize a JSON object to an instance of DefaultProvidedFile
@@ -26,9 +26,9 @@ module SeedClient
         # @return [V2::Problem::DefaultProvidedFile] 
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          file = V2::Problem::FileInfoV2.from_json(json_object: struct.file)
-          related_types = struct.relatedTypes.map() do | v |
- Commons::VariableType.from_json(json_object: v)
+          file V2::Problem::FileInfoV2.from_json(json_object: struct.file)
+          related_types struct.relatedTypes.map() do | v |
+  Commons::VariableType.from_json(json_object: v)
 end
           new(file: file, related_types: related_types, additional_properties: struct)
         end
@@ -36,10 +36,15 @@ end
         #
         # @return [JSON] 
         def to_json
-          {
- file: @file,
- relatedTypes: @related_types
-}.to_json()
+          { file: @file, relatedTypes: @related_types }.to_json()
+        end
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object] 
+        # @return [Void] 
+        def self.validate_raw(obj:)
+          FileInfoV2.validate_raw(obj: obj.file)
+          obj.related_types.is_a?(Array) != false || raise("Passed value for field obj.related_types is not the expected type, validation failed.")
         end
       end
     end

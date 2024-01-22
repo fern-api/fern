@@ -19,7 +19,7 @@ module SeedClient
         @val = val
         # @type [Commons::NodeId] 
         @next_ = next_
-        # @type [OpenStruct] 
+        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end
       # Deserialize a JSON object to an instance of SinglyLinkedListNodeValue
@@ -28,20 +28,25 @@ module SeedClient
       # @return [Commons::SinglyLinkedListNodeValue] 
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = Commons::NodeId.from_json(json_object: struct.nodeId)
-        val = struct.val
-        next_ = Commons::NodeId.from_json(json_object: struct.next)
+        node_id Commons::NodeId.from_json(json_object: struct.nodeId)
+        val struct.val
+        next_ Commons::NodeId.from_json(json_object: struct.next)
         new(node_id: node_id, val: val, next_: next_, additional_properties: struct)
       end
       # Serialize an instance of SinglyLinkedListNodeValue to a JSON object
       #
       # @return [JSON] 
       def to_json
-        {
- nodeId: @node_id,
- val: @val,
- next: @next_
-}.to_json()
+        { nodeId: @node_id, val: @val, next: @next_ }.to_json()
+      end
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      #
+      # @param obj [Object] 
+      # @return [Void] 
+      def self.validate_raw(obj:)
+        NodeId.validate_raw(obj: obj.node_id)
+        obj.val.is_a?(Float) != false || raise("Passed value for field obj.val is not the expected type, validation failed.")
+        obj.next_.nil?() || NodeId.validate_raw(obj: obj.next_)
       end
     end
   end

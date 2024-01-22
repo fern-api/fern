@@ -22,7 +22,6 @@ export declare namespace UndiscriminatedUnion {
 }
 export class UndiscriminatedUnion extends Class_ {
     constructor({ memberClasses, ...rest }: UndiscriminatedUnion.Init) {
-        // TODO: this should be multiple types
         const memberProperty = new Property({ name: "member", type: GenericClassReference });
         const properties = [memberProperty];
 

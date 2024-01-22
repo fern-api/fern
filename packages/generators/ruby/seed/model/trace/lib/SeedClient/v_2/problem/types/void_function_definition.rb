@@ -17,7 +17,7 @@ module SeedClient
           @parameters = parameters
           # @type [V2::Problem::FunctionImplementationForMultipleLanguages] 
           @code = code
-          # @type [OpenStruct] 
+          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
         end
         # Deserialize a JSON object to an instance of VoidFunctionDefinition
@@ -26,20 +26,25 @@ module SeedClient
         # @return [V2::Problem::VoidFunctionDefinition] 
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameters = struct.parameters.map() do | v |
- V2::Problem::Parameter.from_json(json_object: v)
+          parameters struct.parameters.map() do | v |
+  V2::Problem::Parameter.from_json(json_object: v)
 end
-          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
+          code V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
           new(parameters: parameters, code: code, additional_properties: struct)
         end
         # Serialize an instance of VoidFunctionDefinition to a JSON object
         #
         # @return [JSON] 
         def to_json
-          {
- parameters: @parameters,
- code: @code
-}.to_json()
+          { parameters: @parameters, code: @code }.to_json()
+        end
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        #
+        # @param obj [Object] 
+        # @return [Void] 
+        def self.validate_raw(obj:)
+          obj.parameters.is_a?(Array) != false || raise("Passed value for field obj.parameters is not the expected type, validation failed.")
+          FunctionImplementationForMultipleLanguages.validate_raw(obj: obj.code)
         end
       end
     end
