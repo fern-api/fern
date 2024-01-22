@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  check-ir-definitions:
+  check-definitions:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
