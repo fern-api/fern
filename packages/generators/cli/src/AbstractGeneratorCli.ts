@@ -104,11 +104,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         await loadIntermediateRepresentation(config.irFilepath),
                         githubOutputMode
                     );
-                    await this.zipDirectoryContents({
-                        directoryToZip: AbsoluteFilePath.of(config.output.path),
-                        destinationZip,
-                        logger: generatorContext.logger
-                    });
                 },
                 downloadFiles: async () => {
                     await this.writeForDownload(
@@ -124,11 +119,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             await generatorNotificationService?.sendUpdateOrThrow(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
-                    FernGeneratorExec.ExitStatusUpdate.successful({
-                        zipFilename: OUTPUT_ZIP_FILENAME
-                    })
-                )
+                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
             await generatorNotificationService?.sendUpdateOrThrow(
