@@ -1,0 +1,14 @@
+name: test-api
+default-environment: prod
+environments:
+  prod:
+    urls:
+      foo: https://foo.buildwithfern.com
+      bar: https://bar.buildwithfern.com
+  dev:
+    docs: i'm dev!
+    urls:
+      foo: https://foo-dev.buildwithfern.com
+      bar: https://bar-dev.buildwithfern.com
+error-discrimination:
+  strategy: status-code

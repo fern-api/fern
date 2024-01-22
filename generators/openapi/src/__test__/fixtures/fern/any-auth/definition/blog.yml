@@ -1,0 +1,38 @@
+types:
+  PostId: string
+  Author:
+    properties:
+      name: string
+  BlogPost:
+    properties:
+      id: PostId
+      title: string
+      author: Author
+      content: string
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    createPost:
+      display-name: Create Blog Post
+      method: POST
+      path: /create
+      request: BlogPost
+      response: PostId
+    getPost:
+      method: GET
+      auth: false
+      path: /{postId}
+      path-parameters:
+        postId: PostId
+      response: BlogPost
+      examples:
+        - path-parameters:
+            postId: 1234abc
+          response:
+            body:
+              id: 1234abc
+              title: My Post
+              author:
+                name: Fernie
+              content: This is my post.

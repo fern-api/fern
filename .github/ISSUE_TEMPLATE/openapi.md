@@ -1,7 +1,7 @@
 ---
-name: Python Generator Bug report
-about: Report a bug with the Python Generator
-title: "[Python]"
+name: OpenAPI Generator Bug Report
+about: Report a bug with the OpenAPI Generator
+title: OpenAPI
 labels: bug
 assignees: dsinghvi
 
@@ -17,8 +17,8 @@ The version of the Fern CLI you are
 using (found in `fern.config.json`). 
 
 ### Generator Version
-The version of the Python generator you 
-are using (found in `generators.yml`). 
+The version of the OpenAPI generator y
+ou are using (found in `generators.yml`). 
 
 ### Custom Config
 Any custom configuration requires to r
@@ -39,25 +39,22 @@ types:
    rating: double
 ```
 
-### Actual Python SDK
-The buggy Python SDK that is produced: 
-```python
-# client.py
-
-class PetStore: 
-  def __init__(self): 
-    self._client = None # <-------- This part is buggy
+### Actual OpenAPI
+The buggy OpenAPI document that is produced: 
+```yaml
+paths: 
+  /my/path: 
+   post: 
+     foo: bar # <----- This part is buggy
 ```
 
-### Expected Python SDK
-The expected Python SDK
-```python
-import httpx
-
-# client.py
-class PetStore: 
-  def __init__(self): 
-    self._client = new httpx.Client() # <----- This is the fix
+### Expected OpenAPI
+The buggy OpenAPI document that is produced: 
+```yaml
+paths: 
+  /my/path: 
+   post: 
+     baz: faz # <----- This is the fix
 ```
 
 ## Additional Context
