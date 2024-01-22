@@ -1,7 +1,6 @@
 from typing import Dict, Literal, Optional, Union
 
 import pydantic
-
 from fern_python.generators.pydantic_model import PydanticModelCustomConfig
 
 
