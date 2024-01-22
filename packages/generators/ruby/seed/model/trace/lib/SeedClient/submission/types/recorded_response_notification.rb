@@ -30,7 +30,7 @@ module SeedClient
       # @return [Submission::RecordedResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         trace_responses_size = struct.traceResponsesSize
         test_case_id = struct.testCaseId
         new(submission_id: submission_id, trace_responses_size: trace_responses_size, test_case_id: test_case_id,
@@ -49,7 +49,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.trace_responses_size.is_a?(Integer) != false || raise("Passed value for field obj.trace_responses_size is not the expected type, validation failed.")
         obj.test_case_id&.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
       end

@@ -27,10 +27,8 @@ module SeedClient
       # @return [Commons::SinglyLinkedListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        head = Commons::NODE_ID.from_json(json_object: struct.head)
-        nodes = struct.nodes.transform_values do |v|
-          Commons::NODE_ID.from_json(json_object: v)
-        end
+        head = struct.head
+        nodes = struct.nodes
         new(head: head, nodes: nodes, additional_properties: struct)
       end
 
@@ -38,9 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { head: @head, nodes: @nodes.transform_values do |v|
-                                Commons::NODE_ID.from_json(json_object: v)
-                              end }.to_json
+        { head: @head, nodes: @nodes }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -48,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.head.nil? || Commons::NODE_ID.validate_raw(obj: obj.head)
+        obj.head&.is_a?(String) != false || raise("Passed value for field obj.head is not the expected type, validation failed.")
         obj.nodes.is_a?(Hash) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
       end
     end

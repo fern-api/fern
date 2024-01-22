@@ -33,10 +33,10 @@ module SeedClient
       # @return [Commons::BinaryTreeNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = Commons::NODE_ID.from_json(json_object: struct.nodeId)
+        node_id = struct.nodeId
         val = struct.val
-        right = Commons::NODE_ID.from_json(json_object: struct.right)
-        left = Commons::NODE_ID.from_json(json_object: struct.left)
+        right = struct.right
+        left = struct.left
         new(node_id: node_id, val: val, right: right, left: left, additional_properties: struct)
       end
 
@@ -52,10 +52,10 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::NODE_ID.validate_raw(obj: obj.node_id)
+        obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
         obj.val.is_a?(Float) != false || raise("Passed value for field obj.val is not the expected type, validation failed.")
-        obj.right.nil? || Commons::NODE_ID.validate_raw(obj: obj.right)
-        obj.left.nil? || Commons::NODE_ID.validate_raw(obj: obj.left)
+        obj.right&.is_a?(String) != false || raise("Passed value for field obj.right is not the expected type, validation failed.")
+        obj.left&.is_a?(String) != false || raise("Passed value for field obj.left is not the expected type, validation failed.")
       end
     end
   end

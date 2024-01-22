@@ -27,7 +27,7 @@ module SeedClient
       # @return [Submission::RecordedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case_id = V2::Problem::TEST_CASE_ID.from_json(json_object: struct.testCaseId)
+        test_case_id = struct.testCaseId
         trace_responses_size = struct.traceResponsesSize
         new(test_case_id: test_case_id, trace_responses_size: trace_responses_size, additional_properties: struct)
       end
@@ -44,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        V2::Problem::TEST_CASE_ID.validate_raw(obj: obj.test_case_id)
+        obj.test_case_id.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
         obj.trace_responses_size.is_a?(Integer) != false || raise("Passed value for field obj.trace_responses_size is not the expected type, validation failed.")
       end
     end

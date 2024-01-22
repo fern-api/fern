@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "commons/types/PROBLEM_ID"
 require_relative "submission/types/ExceptionInfo"
 require_relative "submission/types/CodeExecutionUpdate"
 require_relative "submission/types/TerminatedResponse"
+require_relative "commons/types/PROBLEM_ID"
 
 module SeedClient
   module Submission
@@ -33,7 +33,7 @@ module SeedClient
                  when "serverInitialized"
                    nil
                  when "problemInitialized"
-                   Commons::PROBLEM_ID.from_json(json_object: json_object.value)
+                   json_object.value
                  when "workspaceInitialized"
                    nil
                  when "serverErrored"
@@ -80,7 +80,7 @@ module SeedClient
         when "serverInitialized"
           # noop
         when "problemInitialized"
-          Commons::PROBLEM_ID.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "workspaceInitialized"
           # noop
         when "serverErrored"

@@ -35,7 +35,7 @@ module SeedClient
       # @return [Submission::TestSubmissionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+        problem_id = struct.problemId
         default_test_cases = struct.defaultTestCases.map do |v|
           Commons::TestCase.from_json(json_object: v)
         end
@@ -60,7 +60,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+        obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.default_test_cases.is_a?(Array) != false || raise("Passed value for field obj.default_test_cases is not the expected type, validation failed.")
         obj.custom_test_cases.is_a?(Array) != false || raise("Passed value for field obj.custom_test_cases is not the expected type, validation failed.")
         Submission::TestSubmissionStatus.validate_raw(obj: obj.status)

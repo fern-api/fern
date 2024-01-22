@@ -38,9 +38,7 @@ module SeedClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           metadata = V2::Problem::TestCaseMetadata.from_json(json_object: struct.metadata)
           implementation = V2::Problem::TestCaseImplementationReference.from_json(json_object: struct.implementation)
-          arguments = struct.arguments.transform_values do |v|
-            V2::Problem::PARAMETER_ID.from_json(json_object: v)
-          end
+          arguments = struct.arguments
           expects = V2::Problem::TestCaseExpects.from_json(json_object: struct.expects)
           new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
               additional_properties: struct)
@@ -50,9 +48,7 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { metadata: @metadata, implementation: @implementation, arguments: @arguments.transform_values do |v|
-                                                                               V2::Problem::PARAMETER_ID.from_json(json_object: v)
-                                                                             end, expects: @expects }.to_json
+          { metadata: @metadata, implementation: @implementation, arguments: @arguments, expects: @expects }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

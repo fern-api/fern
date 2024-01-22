@@ -1,4 +1,5 @@
 import {
+    AliasTypeDeclaration,
     ContainerType,
     DeclaredTypeName,
     Literal,
@@ -6,6 +7,7 @@ import {
     PrimitiveType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
+    TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -193,13 +195,14 @@ export class AliasReference extends ClassReference {
         return this.aliasOf.validateRaw(variable, isOptional);
     }
 
-    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
+    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName, aliasOf: ClassReference): ClassReference {
         // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
         // are written to a "types" subdirectory
         const crName = declaredTypeName.name.screamingSnakeCase.safeName;
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
-        return new SerializableObjectReference({
+        return new AliasReference({
+            aliasOf,
             name: crName,
             import_: new Import({ from: `${location}/${crName}` }),
             location,
@@ -352,6 +355,55 @@ export class HashInstance extends AstNode {
     }
 }
 
+export declare namespace Enum {
+    export interface ReferenceInit extends ClassReference.Init {
+        name: string;
+    }
+    export interface InstanceInit extends ClassReference.Init {
+        contents: Map<string, string>;
+    }
+}
+
+// TODO: allow for per-enum documentation
+export class Enum extends HashInstance {
+    constructor({ contents, documentation }: Enum.InstanceInit) {
+        super({ contents, isFrozen: true, documentation });
+    }
+}
+
+export class EnumReference extends HashReference {
+    constructor({ name }: Enum.ReferenceInit) {
+        super({ name, keyType: "String", valueType: "String" });
+    }
+
+    public toJson(variable: Variable | string): FunctionInvocation | undefined {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "fetch", functionBody: [] }),
+            onObject: variable
+        });
+    }
+
+    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "key", functionBody: [] }),
+            onObject: this,
+            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+        });
+    }
+
+    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): EnumReference {
+        const crName = declaredTypeName.name.screamingSnakeCase.safeName;
+        const location = getLocationForTypeDeclaration(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        return new EnumReference({
+            name: crName,
+            import_: new Import({ from: `${location}/${crName}` }),
+            location,
+            moduleBreadcrumbs
+        });
+    }
+}
+
 export declare namespace Set_ {
     export interface InitReference extends AstNode.Init {
         innerType: ClassReference | string;
@@ -403,15 +455,48 @@ export class SetInstance extends AstNode {
 }
 
 export class ClassReferenceFactory {
+    private typeDeclarations: Map<TypeId, TypeDeclaration>;
     private generatedReferences: Map<TypeId, ClassReference>;
 
-    constructor(generatedReferences: Map<TypeId, ClassReference>) {
-        this.generatedReferences = generatedReferences;
+    constructor(typeDeclarations: Map<TypeId, TypeDeclaration>) {
+        this.typeDeclarations = typeDeclarations;
+        this.generatedReferences = new Map();
+        for (const [_, type] of typeDeclarations) {
+            this.fromTypeDeclaration(type);
+        }
+    }
+
+    public fromTypeDeclaration(type: TypeDeclaration): ClassReference {
+        const typeId = type.name.typeId;
+        let cr = this.generatedReferences.get(typeId);
+        if (cr === undefined) {
+            cr = type.shape._visit<ClassReference>({
+                alias: (atd: AliasTypeDeclaration) => {
+                    const aliasOfCr = this.fromTypeReference(atd.aliasOf);
+                    return AliasReference.fromDeclaredTypeName(type.name, aliasOfCr);
+                },
+                enum: () => EnumReference.fromDeclaredTypeName(type.name),
+                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                union: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                undiscriminatedUnion: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
+                _other: () => {
+                    throw new Error("Attempting to generate a class reference for an unknown type.");
+                }
+            });
+            this.generatedReferences.set(typeId, cr);
+        }
+        return cr;
     }
 
     public fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
         const cr = this.generatedReferences.get(declaredTypeName.typeId);
+        // Likely you care attempting to generate an alias and the aliased class has not yet been created.
+        // Create it now!
         if (cr === undefined) {
+            const td = this.typeDeclarations.get(declaredTypeName.typeId);
+            if (td !== undefined) {
+                return this.fromTypeDeclaration(td);
+            }
             throw new Error("ClassReference requested does not exist");
         }
         return cr;

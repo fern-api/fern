@@ -24,7 +24,7 @@ module SeedClient
       # @return [Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        missing_submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.missingSubmissionId)
+        missing_submission_id = struct.missingSubmissionId
         new(missing_submission_id: missing_submission_id, additional_properties: struct)
       end
 
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.missing_submission_id)
+        obj.missing_submission_id.is_a?(UUID) != false || raise("Passed value for field obj.missing_submission_id is not the expected type, validation failed.")
       end
     end
   end

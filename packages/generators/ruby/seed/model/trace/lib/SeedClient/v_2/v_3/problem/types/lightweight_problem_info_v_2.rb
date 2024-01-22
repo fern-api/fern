@@ -36,7 +36,7 @@ module SeedClient
           # @return [V2::V3::Problem::LightweightProblemInfoV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+            problem_id = struct.problemId
             problem_name = struct.problemName
             problem_version = struct.problemVersion
             variable_types = Set.new(struct.variableTypes)
@@ -57,7 +57,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+            obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
             obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
             obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
             obj.variable_types.is_a?(Set) != false || raise("Passed value for field obj.variable_types is not the expected type, validation failed.")

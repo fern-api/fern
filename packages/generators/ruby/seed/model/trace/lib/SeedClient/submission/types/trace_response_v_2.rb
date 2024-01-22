@@ -48,7 +48,7 @@ module SeedClient
       # @return [Submission::TraceResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         line_number = struct.lineNumber
         file = Submission::TracedFile.from_json(json_object: struct.file)
         return_value = Commons::DebugVariableValue.from_json(json_object: struct.returnValue)
@@ -72,7 +72,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.line_number.is_a?(Integer) != false || raise("Passed value for field obj.line_number is not the expected type, validation failed.")
         Submission::TracedFile.validate_raw(obj: obj.file)
         obj.return_value.nil? || Commons::DebugVariableValue.validate_raw(obj: obj.return_value)

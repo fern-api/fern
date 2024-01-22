@@ -38,7 +38,7 @@ module SeedClient
         updates = struct.updates.map do |v|
           Submission::TestSubmissionUpdate.from_json(json_object: v)
         end
-        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+        problem_id = struct.problemId
         problem_version = struct.problemVersion
         problem_info = V2::Problem::ProblemInfoV2.from_json(json_object: struct.problemInfo)
         new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info,
@@ -59,7 +59,7 @@ module SeedClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.updates.is_a?(Array) != false || raise("Passed value for field obj.updates is not the expected type, validation failed.")
-        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+        obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.problem_version.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
         V2::Problem::ProblemInfoV2.validate_raw(obj: obj.problem_info)
       end

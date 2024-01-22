@@ -30,7 +30,7 @@ module SeedClient
       # @return [Imdb::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = Imdb::MOVIE_ID.from_json(json_object: struct.id)
+        id = struct.id
         title = struct.title
         rating = struct.rating
         new(id: id, title: title, rating: rating, additional_properties: struct)
@@ -48,7 +48,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Imdb::MOVIE_ID.validate_raw(obj: obj.id)
+        obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
         obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
         obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")
       end

@@ -28,9 +28,9 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "playlistId"
-                   Playlist::PLAYLIST_ID.from_json(json_object: json_object.value)
+                   json_object.value
                  else
-                   Playlist::PLAYLIST_ID.from_json(json_object: json_object)
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -53,7 +53,7 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "playlistId"
-          Playlist::PLAYLIST_ID.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
           raise("Passed value matched no type within the union, validation failed.")
         end

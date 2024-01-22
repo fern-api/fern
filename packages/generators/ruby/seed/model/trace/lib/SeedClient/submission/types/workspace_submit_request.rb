@@ -34,7 +34,7 @@ module SeedClient
       # @return [Submission::WorkspaceSubmitRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         language = LANGUAGE.key(struct.language)
         submission_files = struct.submissionFiles.map do |v|
           Submission::SubmissionFileInfo.from_json(json_object: v)
@@ -57,7 +57,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
         obj.user_id&.is_a?(String) != false || raise("Passed value for field obj.user_id is not the expected type, validation failed.")

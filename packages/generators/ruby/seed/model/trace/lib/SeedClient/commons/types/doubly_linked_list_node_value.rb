@@ -33,10 +33,10 @@ module SeedClient
       # @return [Commons::DoublyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = Commons::NODE_ID.from_json(json_object: struct.nodeId)
+        node_id = struct.nodeId
         val = struct.val
-        next_ = Commons::NODE_ID.from_json(json_object: struct.next)
-        prev = Commons::NODE_ID.from_json(json_object: struct.prev)
+        next_ = struct.next
+        prev = struct.prev
         new(node_id: node_id, val: val, next_: next_, prev: prev, additional_properties: struct)
       end
 
@@ -52,10 +52,10 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::NODE_ID.validate_raw(obj: obj.node_id)
+        obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
         obj.val.is_a?(Float) != false || raise("Passed value for field obj.val is not the expected type, validation failed.")
-        obj.next_.nil? || Commons::NODE_ID.validate_raw(obj: obj.next_)
-        obj.prev.nil? || Commons::NODE_ID.validate_raw(obj: obj.prev)
+        obj.next_&.is_a?(String) != false || raise("Passed value for field obj.next_ is not the expected type, validation failed.")
+        obj.prev&.is_a?(String) != false || raise("Passed value for field obj.prev is not the expected type, validation failed.")
       end
     end
   end

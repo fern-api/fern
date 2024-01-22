@@ -40,7 +40,7 @@ module SeedClient
       # @return [Submission::RecordingResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         test_case_id = struct.testCaseId
         line_number = struct.lineNumber
         lightweight_stack_info = Submission::LightweightStackframeInformation.from_json(json_object: struct.lightweightStackInfo)
@@ -62,7 +62,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.test_case_id&.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
         obj.line_number.is_a?(Integer) != false || raise("Passed value for field obj.line_number is not the expected type, validation failed.")
         Submission::LightweightStackframeInformation.validate_raw(obj: obj.lightweight_stack_info)

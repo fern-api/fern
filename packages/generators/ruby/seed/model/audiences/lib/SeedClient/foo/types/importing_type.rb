@@ -24,7 +24,7 @@ module SeedClient
       # @return [Foo::ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        imported = Commons::IMPORTED.from_json(json_object: struct.imported)
+        imported = struct.imported
         new(imported: imported, additional_properties: struct)
       end
 
@@ -40,7 +40,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::IMPORTED.validate_raw(obj: obj.imported)
+        obj.imported.is_a?(String) != false || raise("Passed value for field obj.imported is not the expected type, validation failed.")
       end
     end
   end

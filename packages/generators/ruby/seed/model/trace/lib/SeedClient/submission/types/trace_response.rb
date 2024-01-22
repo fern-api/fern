@@ -44,7 +44,7 @@ module SeedClient
       # @return [Submission::TraceResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         line_number = struct.lineNumber
         return_value = Commons::DebugVariableValue.from_json(json_object: struct.returnValue)
         expression_location = Submission::ExpressionLocation.from_json(json_object: struct.expressionLocation)
@@ -67,7 +67,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.line_number.is_a?(Integer) != false || raise("Passed value for field obj.line_number is not the expected type, validation failed.")
         obj.return_value.nil? || Commons::DebugVariableValue.validate_raw(obj: obj.return_value)
         obj.expression_location.nil? || Submission::ExpressionLocation.validate_raw(obj: obj.expression_location)

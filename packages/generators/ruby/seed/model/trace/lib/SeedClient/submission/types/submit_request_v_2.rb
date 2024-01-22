@@ -43,12 +43,12 @@ module SeedClient
       # @return [Submission::SubmitRequestV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        submission_id = struct.submissionId
         language = LANGUAGE.key(struct.language)
         submission_files = struct.submissionFiles.map do |v|
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
-        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
+        problem_id = struct.problemId
         problem_version = struct.problemVersion
         user_id = struct.userId
         new(submission_id: submission_id, language: language, submission_files: submission_files,
@@ -68,10 +68,10 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
         obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
-        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
+        obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
         obj.problem_version&.is_a?(Integer) != false || raise("Passed value for field obj.problem_version is not the expected type, validation failed.")
         obj.user_id&.is_a?(String) != false || raise("Passed value for field obj.user_id is not the expected type, validation failed.")
       end

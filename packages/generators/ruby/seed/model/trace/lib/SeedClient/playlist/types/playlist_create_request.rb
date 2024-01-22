@@ -28,9 +28,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
-        problems = struct.problems.map do |v|
-          Commons::PROBLEM_ID.from_json(json_object: v)
-        end
+        problems = struct.problems
         new(name: name, problems: problems, additional_properties: struct)
       end
 

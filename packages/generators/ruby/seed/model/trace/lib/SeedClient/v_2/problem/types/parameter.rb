@@ -32,7 +32,7 @@ module SeedClient
         # @return [V2::Problem::Parameter]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameter_id = V2::Problem::PARAMETER_ID.from_json(json_object: struct.parameterId)
+          parameter_id = struct.parameterId
           name = struct.name
           variable_type = Commons::VariableType.from_json(json_object: struct.variableType)
           new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
@@ -50,7 +50,7 @@ module SeedClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          V2::Problem::PARAMETER_ID.validate_raw(obj: obj.parameter_id)
+          obj.parameter_id.is_a?(String) != false || raise("Passed value for field obj.parameter_id is not the expected type, validation failed.")
           obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
           Commons::VariableType.validate_raw(obj: obj.variable_type)
         end

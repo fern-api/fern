@@ -32,7 +32,7 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseMetadata]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            id = V2::V3::Problem::TEST_CASE_ID.from_json(json_object: struct.id)
+            id = struct.id
             name = struct.name
             hidden = struct.hidden
             new(id: id, name: name, hidden: hidden, additional_properties: struct)
@@ -50,7 +50,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::Problem::TEST_CASE_ID.validate_raw(obj: obj.id)
+            obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
             obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
             obj.hidden.is_a?(Boolean) != false || raise("Passed value for field obj.hidden is not the expected type, validation failed.")
           end

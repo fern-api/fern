@@ -28,8 +28,8 @@ module SeedClient
       # @return [Submission::CustomTestCasesUnsupported]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        problem_id = Commons::PROBLEM_ID.from_json(json_object: struct.problemId)
-        submission_id = Submission::SUBMISSION_ID.from_json(json_object: struct.submissionId)
+        problem_id = struct.problemId
+        submission_id = struct.submissionId
         new(problem_id: problem_id, submission_id: submission_id, additional_properties: struct)
       end
 
@@ -45,8 +45,8 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::PROBLEM_ID.validate_raw(obj: obj.problem_id)
-        Submission::SUBMISSION_ID.validate_raw(obj: obj.submission_id)
+        obj.problem_id.is_a?(String) != false || raise("Passed value for field obj.problem_id is not the expected type, validation failed.")
+        obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
       end
     end
   end

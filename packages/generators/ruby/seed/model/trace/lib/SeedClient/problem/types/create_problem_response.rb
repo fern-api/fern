@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "commons/types/PROBLEM_ID"
 require_relative "problem/types/CreateProblemError"
+require_relative "commons/types/PROBLEM_ID"
 
 module SeedClient
   module Problem
@@ -29,11 +29,11 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "success"
-                   Commons::PROBLEM_ID.from_json(json_object: json_object.value)
+                   json_object.value
                  when "error"
                    Problem::CreateProblemError.from_json(json_object: json_object.value)
                  else
-                   Commons::PROBLEM_ID.from_json(json_object: json_object)
+                   json_object
                  end
         new(member: member, discriminant: struct.type)
       end
@@ -57,7 +57,7 @@ module SeedClient
       def self.validate_raw(obj:)
         case obj.type
         when "success"
-          Commons::PROBLEM_ID.validate_raw(obj: obj)
+          obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "error"
           Problem::CreateProblemError.validate_raw(obj: obj)
         else

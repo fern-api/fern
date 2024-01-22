@@ -32,7 +32,7 @@ module SeedClient
                      when "html"
                        json_object.value
                      when "paramId"
-                       V2::V3::Problem::PARAMETER_ID.from_json(json_object: json_object.value)
+                       json_object.value
                      else
                        json_object
                      end
@@ -60,7 +60,7 @@ module SeedClient
             when "html"
               obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             when "paramId"
-              V2::V3::Problem::PARAMETER_ID.validate_raw(obj: obj)
+              obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             else
               raise("Passed value matched no type within the union, validation failed.")
             end

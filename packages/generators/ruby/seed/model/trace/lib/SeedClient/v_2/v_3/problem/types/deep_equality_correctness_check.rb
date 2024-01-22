@@ -26,7 +26,7 @@ module SeedClient
           # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            expected_value_parameter_id = V2::V3::Problem::PARAMETER_ID.from_json(json_object: struct.expectedValueParameterId)
+            expected_value_parameter_id = struct.expectedValueParameterId
             new(expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
           end
 
@@ -42,7 +42,7 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::Problem::PARAMETER_ID.validate_raw(obj: obj.expected_value_parameter_id)
+            obj.expected_value_parameter_id.is_a?(String) != false || raise("Passed value for field obj.expected_value_parameter_id is not the expected type, validation failed.")
           end
         end
       end

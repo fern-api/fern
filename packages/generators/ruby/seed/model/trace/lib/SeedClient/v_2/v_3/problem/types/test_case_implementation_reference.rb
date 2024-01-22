@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "json"
-require_relative "v_2/v_3/problem/types/TEST_CASE_TEMPLATE_ID"
 require_relative "v_2/v_3/problem/types/TestCaseImplementation"
+require_relative "v_2/v_3/problem/types/TEST_CASE_TEMPLATE_ID"
 
 module SeedClient
   module V2
@@ -31,11 +31,11 @@ module SeedClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             member = case struct.type
                      when "templateId"
-                       V2::V3::Problem::TEST_CASE_TEMPLATE_ID.from_json(json_object: json_object.value)
+                       json_object.value
                      when "implementation"
                        V2::V3::Problem::TestCaseImplementation.from_json(json_object: json_object)
                      else
-                       V2::V3::Problem::TEST_CASE_TEMPLATE_ID.from_json(json_object: json_object)
+                       json_object
                      end
             new(member: member, discriminant: struct.type)
           end
@@ -62,7 +62,7 @@ module SeedClient
           def self.validate_raw(obj:)
             case obj.type
             when "templateId"
-              V2::V3::Problem::TEST_CASE_TEMPLATE_ID.validate_raw(obj: obj)
+              obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             when "implementation"
               V2::V3::Problem::TestCaseImplementation.validate_raw(obj: obj)
             else

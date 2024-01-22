@@ -43,12 +43,12 @@ module SeedClient
       # @return [Types::Movie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        id = Types::MOVIE_ID.from_json(json_object: struct.id)
+        id = struct.id
         title = struct.title
         from = struct.from
         rating = struct.rating
         type = struct.type
-        tag = Commons::Types::TAG.from_json(json_object: struct.tag)
+        tag = struct.tag
         book = struct.book
         new(id: id, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
             additional_properties: struct)
@@ -66,12 +66,12 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Types::MOVIE_ID.validate_raw(obj: obj.id)
+        obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
         obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
         obj.from.is_a?(String) != false || raise("Passed value for field obj.from is not the expected type, validation failed.")
         obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")
         obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
-        Commons::Types::TAG.validate_raw(obj: obj.tag)
+        obj.tag.is_a?(String) != false || raise("Passed value for field obj.tag is not the expected type, validation failed.")
         obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
       end
     end

@@ -27,10 +27,8 @@ module SeedClient
       # @return [Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        root = Commons::NODE_ID.from_json(json_object: struct.root)
-        nodes = struct.nodes.transform_values do |v|
-          Commons::NODE_ID.from_json(json_object: v)
-        end
+        root = struct.root
+        nodes = struct.nodes
         new(root: root, nodes: nodes, additional_properties: struct)
       end
 
@@ -38,9 +36,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { root: @root, nodes: @nodes.transform_values do |v|
-                                Commons::NODE_ID.from_json(json_object: v)
-                              end }.to_json
+        { root: @root, nodes: @nodes }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -48,7 +44,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.root.nil? || Commons::NODE_ID.validate_raw(obj: obj.root)
+        obj.root&.is_a?(String) != false || raise("Passed value for field obj.root is not the expected type, validation failed.")
         obj.nodes.is_a?(Hash) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
       end
     end

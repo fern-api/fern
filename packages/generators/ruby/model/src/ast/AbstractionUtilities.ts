@@ -12,10 +12,9 @@ import {
 import { TYPES_DIRECTORY } from "../utils/Constants";
 import { GeneratedRubyFile } from "../utils/GeneratedRubyFile";
 import { DiscriminatedUnion } from "./abstractions/DiscriminatedUnion";
-import { Enum, EnumReference } from "./abstractions/Enum";
 import { SerializableObject } from "./abstractions/SerializableObject";
 import { UndiscriminatedUnion } from "./abstractions/UndiscriminatedUnion";
-import { ClassReferenceFactory } from "./classes/ClassReference";
+import { ClassReferenceFactory, Enum, EnumReference } from "./classes/ClassReference";
 import { Expression } from "./expressions/Expression";
 import { ExternalDependency } from "./ExternalDependency";
 import { Gemspec } from "./gem/Gemspec";

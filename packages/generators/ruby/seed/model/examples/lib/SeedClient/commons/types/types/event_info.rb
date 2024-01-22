@@ -32,7 +32,7 @@ module SeedClient
                    when "metadata"
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    when "tag"
-                     Commons::Types::TAG.from_json(json_object: json_object.value)
+                     json_object.value
                    else
                      Commons::Types::Metadata.from_json(json_object: json_object)
                    end
@@ -63,7 +63,7 @@ module SeedClient
           when "metadata"
             Commons::Types::Metadata.validate_raw(obj: obj)
           when "tag"
-            Commons::Types::TAG.validate_raw(obj: obj)
+            obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           else
             raise("Passed value matched no type within the union, validation failed.")
           end

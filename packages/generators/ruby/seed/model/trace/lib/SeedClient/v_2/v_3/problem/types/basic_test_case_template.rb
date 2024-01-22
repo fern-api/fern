@@ -37,10 +37,10 @@ module SeedClient
           # @return [V2::V3::Problem::BasicTestCaseTemplate]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            template_id = V2::V3::Problem::TEST_CASE_TEMPLATE_ID.from_json(json_object: struct.templateId)
+            template_id = struct.templateId
             name = struct.name
             description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: struct.description)
-            expected_value_parameter_id = V2::V3::Problem::PARAMETER_ID.from_json(json_object: struct.expectedValueParameterId)
+            expected_value_parameter_id = struct.expectedValueParameterId
             new(template_id: template_id, name: name, description: description,
                 expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
           end
@@ -58,10 +58,10 @@ module SeedClient
           # @param obj [Object]
           # @return [Void]
           def self.validate_raw(obj:)
-            V2::V3::Problem::TEST_CASE_TEMPLATE_ID.validate_raw(obj: obj.template_id)
+            obj.template_id.is_a?(String) != false || raise("Passed value for field obj.template_id is not the expected type, validation failed.")
             obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
             V2::V3::Problem::TestCaseImplementationDescription.validate_raw(obj: obj.description)
-            V2::V3::Problem::PARAMETER_ID.validate_raw(obj: obj.expected_value_parameter_id)
+            obj.expected_value_parameter_id.is_a?(String) != false || raise("Passed value for field obj.expected_value_parameter_id is not the expected type, validation failed.")
           end
         end
       end

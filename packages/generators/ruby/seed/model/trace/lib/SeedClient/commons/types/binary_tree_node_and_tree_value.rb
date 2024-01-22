@@ -28,7 +28,7 @@ module SeedClient
       # @return [Commons::BinaryTreeNodeAndTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        node_id = Commons::NODE_ID.from_json(json_object: struct.nodeId)
+        node_id = struct.nodeId
         full_tree = Commons::BinaryTreeValue.from_json(json_object: struct.fullTree)
         new(node_id: node_id, full_tree: full_tree, additional_properties: struct)
       end
@@ -45,7 +45,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Commons::NODE_ID.validate_raw(obj: obj.node_id)
+        obj.node_id.is_a?(String) != false || raise("Passed value for field obj.node_id is not the expected type, validation failed.")
         Commons::BinaryTreeValue.validate_raw(obj: obj.full_tree)
       end
     end

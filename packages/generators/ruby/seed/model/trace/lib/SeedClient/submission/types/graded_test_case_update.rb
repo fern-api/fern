@@ -28,7 +28,7 @@ module SeedClient
       # @return [Submission::GradedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case_id = V2::Problem::TEST_CASE_ID.from_json(json_object: struct.testCaseId)
+        test_case_id = struct.testCaseId
         grade = Submission::TestCaseGrade.from_json(json_object: struct.grade)
         new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
       end
@@ -45,7 +45,7 @@ module SeedClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        V2::Problem::TEST_CASE_ID.validate_raw(obj: obj.test_case_id)
+        obj.test_case_id.is_a?(String) != false || raise("Passed value for field obj.test_case_id is not the expected type, validation failed.")
         Submission::TestCaseGrade.validate_raw(obj: obj.grade)
       end
     end

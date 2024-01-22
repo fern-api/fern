@@ -11,7 +11,6 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
-import { EnumReference } from "../ast/abstractions/Enum";
 import {
     generateAliasDefinitionFromTypeDeclaration,
     generateEnumDefinitionFromTypeDeclaration,
@@ -20,12 +19,7 @@ import {
     generateUnionFromTypeDeclaration,
     getLocationForTypeDeclaration
 } from "../ast/AbstractionUtilities";
-import {
-    AliasReference,
-    ClassReference,
-    ClassReferenceFactory,
-    SerializableObjectReference
-} from "../ast/classes/ClassReference";
+import { ClassReferenceFactory } from "../ast/classes/ClassReference";
 import { Module_ } from "../ast/Module_";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
@@ -33,7 +27,6 @@ import { GeneratedRubyFile } from "./GeneratedRubyFile";
 export class TypesGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private gc: GeneratorContext;
-    private classReferences: Map<TypeId, ClassReference>;
     private classReferenceFactory: ClassReferenceFactory;
     private directoryPrefix: RelativeFilePath;
 
@@ -47,7 +40,6 @@ export class TypesGenerator {
         intermediateRepresentation: IntermediateRepresentation
     ) {
         this.types = new Map();
-        this.classReferences = new Map();
         this.gc = generatorContext;
 
         // this.config = config;
@@ -58,22 +50,10 @@ export class TypesGenerator {
         // For convenience just get what's inheriting what ahead of time.
         this.gc.logger.debug(`[TESTING] Found this many types: ${intermediateRepresentation.types.length}`);
         for (const type of Object.values(intermediateRepresentation.types)) {
-            // this.gc.logger.debug(`[TESTING] adding type: ${type.name.name.camelCase.safeName}`);
             this.types.set(type.name.typeId, type);
-
-            const reference = type.shape._visit<ClassReference>({
-                alias: () => AliasReference.fromDeclaredTypeName(type.name),
-                enum: () => EnumReference.fromDeclaredTypeName(type.name),
-                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
-                union: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
-                undiscriminatedUnion: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
-                _other: () => {
-                    throw new Error("Attempting to generate a class reference for an unknown type.");
-                }
-            });
-            this.classReferences.set(type.name.typeId, reference);
         }
-        this.classReferenceFactory = new ClassReferenceFactory(this.classReferences);
+
+        this.classReferenceFactory = new ClassReferenceFactory(this.types);
     }
 
     private generateAliasFile(

@@ -26,8 +26,8 @@ module SeedClient
       # @return [Playlist::Playlist]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        playlist_id = Playlist::PLAYLIST_ID.from_json(json_object: struct.playlist_id)
-        owner_id = Commons::USER_ID.from_json(json_object: struct.owner-id)
+        playlist_id = struct.playlist_id
+        owner_id = struct.owner-id
         new(playlist_id: playlist_id, owner_id: owner_id, additional_properties: struct)
       end
       # Serialize an instance of Playlist to a JSON object
@@ -41,8 +41,8 @@ module SeedClient
       # @param obj [Object] 
       # @return [Void]
       def self.validate_raw(obj:)
-        Playlist::PLAYLIST_ID.validate_raw(obj: obj.playlist_id)
-        Commons::USER_ID.validate_raw(obj: obj.owner_id)
+        obj.playlist_id.is_a?(String) != false || raise("Passed value for field obj.playlist_id is not the expected type, validation failed.")
+        obj.owner_id.is_a?(String) != false || raise("Passed value for field obj.owner_id is not the expected type, validation failed.")
       end
     end
   end

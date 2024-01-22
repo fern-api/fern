@@ -5,9 +5,9 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { camelCase, upperFirst } from "lodash-es";
-import { RubyModelCustomConfig, parseCustomConfig } from "./CustomConfig";
-import { generateBinDir, generateGemfile, generateGitignore, generateReadme, generateRubocopConfig } from "./GemFiles";
 import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
+import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
+import { generateBinDir, generateGemfile, generateGitignore, generateReadme, generateRubocopConfig } from "./GemFiles";
 import { GeneratedFile } from "./utils/GeneratedFile";
 import { TypesGenerator } from "./utils/TypesGenerator";
 
@@ -75,12 +75,12 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     }
 
     protected async publishPackage(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubyModelCustomConfig,
-        generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        _config: FernGeneratorExec.GeneratorConfig,
+        _customConfig: RubyModelCustomConfig,
+        _generatorContext: GeneratorContext,
+        _intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
-        this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
+        throw new Error("Unimplemented Exception");
     }
     protected async writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
@@ -89,6 +89,11 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
+        this.generatedFiles.forEach(async (f) => {
+            await f.write(AbsoluteFilePath.of(config.output.path));
+        });
+        // Run lint and generate lockfile
+        exec(`rubocop --auto-correct-all ${config.output.path}`);
     }
     protected async writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
