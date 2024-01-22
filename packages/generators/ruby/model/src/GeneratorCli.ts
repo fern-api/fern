@@ -3,7 +3,7 @@ import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { exec } from "child_process";
+import { execSync } from "child_process";
 import { camelCase, upperFirst } from "lodash-es";
 import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
 import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
@@ -95,7 +95,11 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
             })
         );
         // Run lint and generate lockfile
-        exec(`rubocop --auto-correct-all ${config.output.path}`);
+        try {
+            execSync(`rubocop --autocorrect-all ${config.output.path}`);
+        } catch {
+            // NOOP, ignore warns
+        }
     }
     protected async writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
@@ -110,6 +114,10 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
             })
         );
         // Run lint and generate lockfile
-        exec(`rubocop --auto-correct-all ${config.output.path}`);
+        try {
+            execSync(`rubocop --autocorrect-all ${config.output.path}`);
+        } catch {
+            // NOOP, ignore warns
+        }
     }
 }
