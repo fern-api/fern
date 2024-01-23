@@ -1,6 +1,6 @@
 irVersion: v23
-docker: fern-openapi:latest
-dockerCommand: yarn workspace @fern-api/openapi-generator dist:cli && docker build -f ./generators/openapi/Dockerfile -t fern-openapi:latest ./generators/openapi
+docker: fernapi/fern-openapi:latest
+dockerCommand: yarn workspace @fern-api/openapi-generator dockerTagLatest
 generatorType: Documentation
 defaultOutputMode: local_files
 fixtures:

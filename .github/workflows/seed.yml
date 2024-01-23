@@ -121,7 +121,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace openapi --parallel 8
+          yarn seed:local test --workspace fastapi --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
