@@ -47,7 +47,7 @@
     "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "@types/tmp": "^0.2.3",
-    "@types/webpack-bundle-analyzer": "^4.6.2",
+    "@types/webpack-bundle-analyzer": "^4.6.3",
     "depcheck": "^1.4.3",
     "eslint": "^8.52.0",
     "jest": "^28.1.3",
@@ -58,7 +58,7 @@
     "ts-node": "^10.9.1",
     "typescript": "4.6.4",
     "webpack": "5.76.0",
-    "webpack-bundle-analyzer": "4.9.1",
+    "webpack-bundle-analyzer": "4.10.1",
     "webpack-cli": "5.1.4"
   }
 }
