@@ -13,7 +13,7 @@
     "dependencies": {
         "url-join": "4.0.1",
         "@types/url-join": "4.0.1",
-        "axios": "0.27.2",
+        "axios": "1.6.0",
         "qs": "6.11.2",
         "@types/qs": "6.9.8"
     },
