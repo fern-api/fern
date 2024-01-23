@@ -1,4 +1,4 @@
-name: Seed Tests
+name: seed
 
 on:
   pull_request:

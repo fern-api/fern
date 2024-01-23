@@ -2665,7 +2665,7 @@ __metadata:
     webpack: ^5.76.0
     webpack-cli: 5.1.4
   bin:
-    fern-openapi: ./dist/bundle.cjs
+    fern-openapi-cli: ./dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
