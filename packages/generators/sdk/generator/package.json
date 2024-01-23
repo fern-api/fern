@@ -48,7 +48,7 @@
     "@fern-typescript/type-schema-generator": "workspace:*",
     "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0",
-    "url-join": "4.0.1"
+    "url-join": "5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
