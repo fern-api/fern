@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "commons/types/ListType"
-require_relative "commons/types/MapType"
+require "json"
+require_relative "list_type"
+require_relative "map_type"
 
 module SeedClient
   module Commons
@@ -14,7 +14,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Commons::VariableType]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

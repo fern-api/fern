@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "types/types/MOVIE_ID"
-require_relative "commons/types/types/TAG"
+require_relative "movie_id"
+require_relative "../../commons/types/types/tag"
 require "json"
 
 module SeedClient
@@ -18,7 +18,7 @@ module SeedClient
       # @param book [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Movie]
-      def initialze(id:, title:, from:, rating:, type:, tag:, book: nil, additional_properties: nil)
+      def initialize(id:, title:, from:, rating:, type:, tag:, book: nil, additional_properties: nil)
         # @type [Types::MOVIE_ID]
         @id = id
         # @type [String]
@@ -58,8 +58,15 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "id": @id, "title": @title, "from": @from, "rating": @rating, "type": @type, "tag": @tag,
-          "book": @book }.to_json
+        {
+          "id": @id,
+          "title": @title,
+          "from": @from,
+          "rating": @rating,
+          "type": @type,
+          "tag": @tag,
+          "book": @book
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

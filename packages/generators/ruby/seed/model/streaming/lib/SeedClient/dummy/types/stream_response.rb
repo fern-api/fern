@@ -11,7 +11,7 @@ module SeedClient
       # @param name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Dummy::StreamResponse]
-      def initialze(id:, name: nil, additional_properties: nil)
+      def initialize(id:, name: nil, additional_properties: nil)
         # @type [String]
         @id = id
         # @type [String]

@@ -11,7 +11,7 @@ module SeedClient
         # @param map [Hash{String => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::ObjectWithMapOfMap]
-        def initialze(map:, additional_properties: nil)
+        def initialize(map:, additional_properties: nil)
           # @type [Hash{String => String}]
           @map = map
           # @type [OpenStruct] Additional properties unmapped to the current class definition

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "problem/types/ProblemDescription"
-require_relative "v_2/v_3/problem/types/CustomFiles"
-require_relative "v_2/v_3/problem/types/TestCaseTemplate"
-require_relative "v_2/v_3/problem/types/TestCaseV2"
+require_relative "../../../../problem/types/problem_description"
+require_relative "custom_files"
+require_relative "test_case_template"
+require_relative "test_case_v_2"
 require "set"
 require "json"
 
@@ -24,8 +24,8 @@ module SeedClient
           # @param is_public [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::CreateProblemRequestV2]
-          def initialze(problem_name:, problem_description:, custom_files:, custom_test_case_templates:, testcases:,
-                        supported_languages:, is_public:, additional_properties: nil)
+          def initialize(problem_name:, problem_description:, custom_files:, custom_test_case_templates:, testcases:,
+                         supported_languages:, is_public:, additional_properties: nil)
             # @type [String]
             @problem_name = problem_name
             # @type [Problem::ProblemDescription]
@@ -51,15 +51,20 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             problem_name = struct.problemName
-            problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-            custom_files = V2::V3::Problem::CustomFiles.from_json(json_object: struct.customFiles)
+            problem_description = struct.problemDescription.to_h.to_json
+            problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+            custom_files = struct.customFiles.to_h.to_json
+            custom_files = V2::V3::Problem::CustomFiles.from_json(json_object: custom_files)
             custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
+              v = v.to_h.to_json
               V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
             end
             testcases = struct.testcases.map do |v|
+              v = v.to_h.to_json
               V2::V3::Problem::TestCaseV2.from_json(json_object: v)
             end
-            supported_languages = Set.new(struct.supportedLanguages)
+            supported_languages = struct.supportedLanguages.to_h.to_json
+            supported_languages = Set.new(supported_languages)
             is_public = struct.isPublic
             new(problem_name: problem_name, problem_description: problem_description, custom_files: custom_files,
                 custom_test_case_templates: custom_test_case_templates, testcases: testcases, supported_languages: supported_languages, is_public: is_public, additional_properties: struct)
@@ -69,8 +74,15 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "problemName": @problem_name, "problemDescription": @problem_description, "customFiles": @custom_files,
-              "customTestCaseTemplates": @custom_test_case_templates, "testcases": @testcases, "supportedLanguages": @supported_languages.to_a, "isPublic": @is_public }.to_json
+            {
+              "problemName": @problem_name,
+              "problemDescription": @problem_description,
+              "customFiles": @custom_files,
+              "customTestCaseTemplates": @custom_test_case_templates,
+              "testcases": @testcases,
+              "supportedLanguages": @supported_languages,
+              "isPublic": @is_public
+            }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

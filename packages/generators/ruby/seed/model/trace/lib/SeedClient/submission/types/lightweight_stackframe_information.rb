@@ -11,7 +11,7 @@ module SeedClient
       # @param top_stack_frame_method_name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::LightweightStackframeInformation]
-      def initialze(num_stack_frames:, top_stack_frame_method_name:, additional_properties: nil)
+      def initialize(num_stack_frames:, top_stack_frame_method_name:, additional_properties: nil)
         # @type [Integer]
         @num_stack_frames = num_stack_frames
         # @type [String]

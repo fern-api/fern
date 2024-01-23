@@ -11,7 +11,7 @@ module SeedClient
       # @param private_property [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Foo::FilteredType]
-      def initialze(private_property:, public_property: nil, additional_properties: nil)
+      def initialize(private_property:, public_property: nil, additional_properties: nil)
         # @type [String]
         @public_property = public_property
         # @type [Integer]

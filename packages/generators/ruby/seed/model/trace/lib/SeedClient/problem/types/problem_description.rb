@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "problem/types/ProblemDescriptionBoard"
+require_relative "problem_description_board"
 require "json"
 
 module SeedClient
@@ -11,7 +11,7 @@ module SeedClient
       # @param boards [Array<Problem::ProblemDescriptionBoard>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::ProblemDescription]
-      def initialze(boards:, additional_properties: nil)
+      def initialize(boards:, additional_properties: nil)
         # @type [Array<Problem::ProblemDescriptionBoard>]
         @boards = boards
         # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,6 +25,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         boards = struct.boards.map do |v|
+          v = v.to_h.to_json
           Problem::ProblemDescriptionBoard.from_json(json_object: v)
         end
         new(boards: boards, additional_properties: struct)

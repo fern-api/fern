@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/TestSubmissionStatusV2"
-require_relative "submission/types/WorkspaceSubmissionStatusV2"
+require "json"
+require_relative "test_submission_status_v_2"
+require_relative "workspace_submission_status_v_2"
 
 module SeedClient
   module Submission
@@ -14,7 +14,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::SubmissionStatusV2]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

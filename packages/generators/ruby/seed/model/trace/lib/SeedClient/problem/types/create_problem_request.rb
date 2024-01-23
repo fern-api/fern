@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "problem/types/ProblemDescription"
-require_relative "problem/types/VariableTypeAndName"
-require_relative "commons/types/VariableType"
-require_relative "commons/types/TestCaseWithExpectedResult"
+require_relative "problem_description"
+require_relative "variable_type_and_name"
+require_relative "../../commons/types/variable_type"
+require_relative "../../commons/types/test_case_with_expected_result"
 require "json"
 
 module SeedClient
@@ -21,8 +21,8 @@ module SeedClient
       # @param method_name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::CreateProblemRequest]
-      def initialze(problem_name:, problem_description:, files:, input_params:, output_type:, testcases:, method_name:,
-                    additional_properties: nil)
+      def initialize(problem_name:, problem_description:, files:, input_params:, output_type:, testcases:,
+                     method_name:, additional_properties: nil)
         # @type [String]
         @problem_name = problem_name
         # @type [Problem::ProblemDescription]
@@ -48,15 +48,20 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_name = struct.problemName
-        problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
-        files = struct.files.transform_values do |v|
+        problem_description = struct.problemDescription.to_h.to_json
+        problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+        files = struct.files.transform_values do |_k, v|
+          v = v.to_h.to_json
           LANGUAGE.key(v)
         end
         input_params = struct.inputParams.map do |v|
+          v = v.to_h.to_json
           Problem::VariableTypeAndName.from_json(json_object: v)
         end
-        output_type = Commons::VariableType.from_json(json_object: struct.outputType)
+        output_type = struct.outputType.to_h.to_json
+        output_type = Commons::VariableType.from_json(json_object: output_type)
         testcases = struct.testcases.map do |v|
+          v = v.to_h.to_json
           Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
         method_name = struct.methodName
@@ -68,9 +73,15 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "problemName": @problem_name, "problemDescription": @problem_description, "files": @files.transform_values do |v|
-                                                                                               LANGUAGE.key(v)
-                                                                                             end, "inputParams": @input_params, "outputType": @output_type, "testcases": @testcases, "methodName": @method_name }.to_json
+        {
+          "problemName": @problem_name,
+          "problemDescription": @problem_description,
+          "files": @files,
+          "inputParams": @input_params,
+          "outputType": @output_type,
+          "testcases": @testcases,
+          "methodName": @method_name
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

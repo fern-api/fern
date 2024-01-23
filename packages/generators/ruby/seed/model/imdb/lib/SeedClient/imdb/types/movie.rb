@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "imdb/types/MOVIE_ID"
+require_relative "movie_id"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param rating [Float] The rating scale is one to five stars
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Imdb::Movie]
-      def initialze(id:, title:, rating:, additional_properties: nil)
+      def initialize(id:, title:, rating:, additional_properties: nil)
         # @type [Imdb::MOVIE_ID]
         @id = id
         # @type [String]

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/InitializeProblemRequest"
-require_relative "submission/types/SubmitRequestV2"
-require_relative "submission/types/WorkspaceSubmitRequest"
-require_relative "submission/types/StopRequest"
+require "json"
+require_relative "initialize_problem_request"
+require_relative "submit_request_v_2"
+require_relative "workspace_submit_request"
+require_relative "stop_request"
 
 module SeedClient
   module Submission
@@ -16,7 +16,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::SubmissionRequest]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

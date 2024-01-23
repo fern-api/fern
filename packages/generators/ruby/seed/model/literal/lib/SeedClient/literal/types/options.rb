@@ -12,7 +12,7 @@ module SeedClient
       # @param values [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Literal::Options]
-      def initialze(id:, enabled:, values:, additional_properties: nil)
+      def initialize(id:, enabled:, values:, additional_properties: nil)
         # @type [String]
         @id = id
         # @type [Boolean]

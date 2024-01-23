@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/TEST_CASE_TEMPLATE_ID"
-require_relative "v_2/v_3/problem/types/TestCaseImplementationDescription"
-require_relative "v_2/v_3/problem/types/PARAMETER_ID"
+require_relative "test_case_template_id"
+require_relative "test_case_implementation_description"
+require_relative "parameter_id"
 require "json"
 
 module SeedClient
@@ -18,7 +18,7 @@ module SeedClient
           # @param expected_value_parameter_id [V2::V3::Problem::PARAMETER_ID]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicTestCaseTemplate]
-          def initialze(template_id:, name:, description:, expected_value_parameter_id:, additional_properties: nil)
+          def initialize(template_id:, name:, description:, expected_value_parameter_id:, additional_properties: nil)
             # @type [V2::V3::Problem::TEST_CASE_TEMPLATE_ID]
             @template_id = template_id
             # @type [String]
@@ -39,7 +39,8 @@ module SeedClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             template_id = struct.templateId
             name = struct.name
-            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: struct.description)
+            description = struct.description.to_h.to_json
+            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
             expected_value_parameter_id = struct.expectedValueParameterId
             new(template_id: template_id, name: name, description: description,
                 expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
@@ -49,8 +50,12 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "templateId": @template_id, "name": @name, "description": @description,
-              "expectedValueParameterId": @expected_value_parameter_id }.to_json
+            {
+              "templateId": @template_id,
+              "name": @name,
+              "description": @description,
+              "expectedValueParameterId": @expected_value_parameter_id
+            }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

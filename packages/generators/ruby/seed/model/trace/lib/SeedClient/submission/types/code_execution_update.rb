@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/BuildingExecutorResponse"
-require_relative "submission/types/RunningResponse"
-require_relative "submission/types/ErroredResponse"
-require_relative "submission/types/StoppedResponse"
-require_relative "submission/types/GradedResponse"
-require_relative "submission/types/GradedResponseV2"
-require_relative "submission/types/WorkspaceRanResponse"
-require_relative "submission/types/RecordingResponseNotification"
-require_relative "submission/types/RecordedResponseNotification"
-require_relative "submission/types/InvalidRequestResponse"
-require_relative "submission/types/FinishedResponse"
+require "json"
+require_relative "building_executor_response"
+require_relative "running_response"
+require_relative "errored_response"
+require_relative "stopped_response"
+require_relative "graded_response"
+require_relative "graded_response_v_2"
+require_relative "workspace_ran_response"
+require_relative "recording_response_notification"
+require_relative "recorded_response_notification"
+require_relative "invalid_request_response"
+require_relative "finished_response"
 
 module SeedClient
   module Submission
@@ -23,7 +23,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::CodeExecutionUpdate]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

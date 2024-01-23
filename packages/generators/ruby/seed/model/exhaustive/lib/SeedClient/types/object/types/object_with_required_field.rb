@@ -11,7 +11,7 @@ module SeedClient
         # @param string [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::ObjectWithRequiredField]
-        def initialze(string:, additional_properties: nil)
+        def initialize(string:, additional_properties: nil)
           # @type [String]
           @string = string
           # @type [OpenStruct] Additional properties unmapped to the current class definition

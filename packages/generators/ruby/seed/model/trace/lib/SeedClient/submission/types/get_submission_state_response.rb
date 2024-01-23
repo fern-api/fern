@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionTypeState"
+require "date"
+require_relative "submission_type_state"
 require "json"
 
 module SeedClient
@@ -14,7 +15,7 @@ module SeedClient
       # @param submission_type_state [Submission::SubmissionTypeState]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GetSubmissionStateResponse]
-      def initialze(submission:, language:, submission_type_state:, time_submitted: nil, additional_properties: nil)
+      def initialize(submission:, language:, submission_type_state:, time_submitted: nil, additional_properties: nil)
         # @type [DateTime]
         @time_submitted = time_submitted
         # @type [String]
@@ -33,10 +34,11 @@ module SeedClient
       # @return [Submission::GetSubmissionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        time_submitted = struct.timeSubmitted
+        time_submitted = DateTime.parse(struct.timeSubmitted)
         submission = struct.submission
         language = LANGUAGE.key(struct.language)
-        submission_type_state = Submission::SubmissionTypeState.from_json(json_object: struct.submissionTypeState)
+        submission_type_state = struct.submissionTypeState.to_h.to_json
+        submission_type_state = Submission::SubmissionTypeState.from_json(json_object: submission_type_state)
         new(time_submitted: time_submitted, submission: submission, language: language,
             submission_type_state: submission_type_state, additional_properties: struct)
       end
@@ -45,8 +47,12 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "timeSubmitted": @time_submitted, "submission": @submission, "language": @language.fetch,
-          "submissionTypeState": @submission_type_state }.to_json
+        {
+          "timeSubmitted": @time_submitted,
+          "submission": @submission,
+          "language": @language,
+          "submissionTypeState": @submission_type_state
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

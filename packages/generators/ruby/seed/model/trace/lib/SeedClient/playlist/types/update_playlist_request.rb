@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param problems [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Playlist::UpdatePlaylistRequest]
-      def initialze(name:, problems:, additional_properties: nil)
+      def initialize(name:, problems:, additional_properties: nil)
         # @type [String]
         @name = name
         # @type [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.

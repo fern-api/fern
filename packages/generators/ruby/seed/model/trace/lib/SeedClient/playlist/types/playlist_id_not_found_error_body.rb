@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "playlist/types/PLAYLIST_ID"
+require "json"
+require_relative "playlist_id"
 
 module SeedClient
   module Playlist
@@ -13,7 +13,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Playlist::PlaylistIdNotFoundErrorBody]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

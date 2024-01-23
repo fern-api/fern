@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
-require_relative "submission/types/SUBMISSION_ID"
+require_relative "../../commons/types/problem_id"
+require_relative "submission_id"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param submission_id [Submission::SUBMISSION_ID]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::CustomTestCasesUnsupported]
-      def initialze(problem_id:, submission_id:, additional_properties: nil)
+      def initialize(problem_id:, submission_id:, additional_properties: nil)
         # @type [Commons::PROBLEM_ID]
         @problem_id = problem_id
         # @type [Submission::SUBMISSION_ID]

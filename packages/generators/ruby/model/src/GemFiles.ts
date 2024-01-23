@@ -28,6 +28,12 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
 # Generated files may be more complex than standard, disable
 # these rules for now as a known limitation.
 Metrics/ParameterLists:

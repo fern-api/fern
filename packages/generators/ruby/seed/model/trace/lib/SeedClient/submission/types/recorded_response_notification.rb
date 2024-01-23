@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
+require_relative "submission_id"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param test_case_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::RecordedResponseNotification]
-      def initialze(submission_id:, trace_responses_size:, test_case_id: nil, additional_properties: nil)
+      def initialize(submission_id:, trace_responses_size:, test_case_id: nil, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Integer]
@@ -41,8 +41,11 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "submissionId": @submission_id, "traceResponsesSize": @trace_responses_size,
-          "testCaseId": @test_case_id }.to_json
+        {
+          "submissionId": @submission_id,
+          "traceResponsesSize": @trace_responses_size,
+          "testCaseId": @test_case_id
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

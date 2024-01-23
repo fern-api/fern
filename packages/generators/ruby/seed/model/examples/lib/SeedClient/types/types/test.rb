@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "json"
+require "json"
 
 module SeedClient
   module Types
@@ -12,7 +12,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Types::Test]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

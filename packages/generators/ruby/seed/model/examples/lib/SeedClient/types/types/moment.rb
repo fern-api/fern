@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "date"
 require "json"
 
 module SeedClient
@@ -12,7 +13,7 @@ module SeedClient
       # @param datetime [DateTime]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Moment]
-      def initialze(id:, date:, datetime:, additional_properties: nil)
+      def initialize(id:, date:, datetime:, additional_properties: nil)
         # @type [UUID]
         @id = id
         # @type [Date]
@@ -30,8 +31,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct.id
-        date = struct.date
-        datetime = struct.datetime
+        date = Date.parse(struct.date)
+        datetime = DateTime.parse(struct.datetime)
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/DebugKeyValuePairs"
+require_relative "debug_key_value_pairs"
 require "json"
 
 module SeedClient
@@ -11,7 +11,7 @@ module SeedClient
       # @param key_value_pairs [Array<Commons::DebugKeyValuePairs>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::DebugMapValue]
-      def initialze(key_value_pairs:, additional_properties: nil)
+      def initialize(key_value_pairs:, additional_properties: nil)
         # @type [Array<Commons::DebugKeyValuePairs>]
         @key_value_pairs = key_value_pairs
         # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,6 +25,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         key_value_pairs = struct.keyValuePairs.map do |v|
+          v = v.to_h.to_json
           Commons::DebugKeyValuePairs.from_json(json_object: v)
         end
         new(key_value_pairs: key_value_pairs, additional_properties: struct)

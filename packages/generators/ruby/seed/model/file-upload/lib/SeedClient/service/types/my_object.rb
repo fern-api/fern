@@ -10,7 +10,7 @@ module SeedClient
       # @param foo [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Service::MyObject]
-      def initialze(foo:, additional_properties: nil)
+      def initialize(foo:, additional_properties: nil)
         # @type [String]
         @foo = foo
         # @type [OpenStruct] Additional properties unmapped to the current class definition

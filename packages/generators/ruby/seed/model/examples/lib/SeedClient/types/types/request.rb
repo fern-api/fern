@@ -10,7 +10,7 @@ module SeedClient
       # @param request [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Request]
-      def initialze(request:, additional_properties: nil)
+      def initialize(request:, additional_properties: nil)
         # @type [Object]
         @request = request
         # @type [OpenStruct] Additional properties unmapped to the current class definition

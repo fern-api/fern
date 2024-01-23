@@ -10,7 +10,7 @@ module SeedClient
       # @param passed [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestCaseHiddenGrade]
-      def initialze(passed:, additional_properties: nil)
+      def initialize(passed:, additional_properties: nil)
         # @type [Boolean]
         @passed = passed
         # @type [OpenStruct] Additional properties unmapped to the current class definition

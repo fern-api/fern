@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/SubmissionIdNotFound"
-require_relative "submission/types/CustomTestCasesUnsupported"
-require_relative "submission/types/UnexpectedLanguageError"
+require "json"
+require_relative "submission_id_not_found"
+require_relative "custom_test_cases_unsupported"
+require_relative "unexpected_language_error"
 
 module SeedClient
   module Submission
@@ -15,7 +15,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::InvalidRequestCause]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/TEST_CASE_ID"
+require_relative "../../v_2/problem/types/test_case_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::RecordedTestCaseUpdate]
-      def initialze(test_case_id:, trace_responses_size:, additional_properties: nil)
+      def initialize(test_case_id:, trace_responses_size:, additional_properties: nil)
         # @type [V2::Problem::TEST_CASE_ID]
         @test_case_id = test_case_id
         # @type [Integer]

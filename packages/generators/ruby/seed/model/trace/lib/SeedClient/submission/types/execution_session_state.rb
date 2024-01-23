@@ -16,8 +16,8 @@ module SeedClient
       # @param status [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ExecutionSessionState]
-      def initialze(session_id:, is_warm_instance:, language:, status:, last_time_contacted: nil, aws_task_id: nil,
-                    additional_properties: nil)
+      def initialize(session_id:, is_warm_instance:, language:, status:, last_time_contacted: nil, aws_task_id: nil,
+                     additional_properties: nil)
         # @type [String]
         @last_time_contacted = last_time_contacted
         # @type [String] The auto-generated session id. Formatted as a uuid.
@@ -54,8 +54,14 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "lastTimeContacted": @last_time_contacted, "sessionId": @session_id, "isWarmInstance": @is_warm_instance,
-          "awsTaskId": @aws_task_id, "language": @language.fetch, "status": @status.fetch }.to_json
+        {
+          "lastTimeContacted": @last_time_contacted,
+          "sessionId": @session_id,
+          "isWarmInstance": @is_warm_instance,
+          "awsTaskId": @aws_task_id,
+          "language": @language,
+          "status": @status
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

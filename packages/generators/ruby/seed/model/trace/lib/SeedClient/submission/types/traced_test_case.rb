@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/TestCaseResultWithStdout"
+require_relative "test_case_result_with_stdout"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TracedTestCase]
-      def initialze(result:, trace_responses_size:, additional_properties: nil)
+      def initialize(result:, trace_responses_size:, additional_properties: nil)
         # @type [Submission::TestCaseResultWithStdout]
         @result = result
         # @type [Integer]
@@ -27,7 +27,8 @@ module SeedClient
       # @return [Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result = Submission::TestCaseResultWithStdout.from_json(json_object: struct.result)
+        result = struct.result.to_h.to_json
+        result = Submission::TestCaseResultWithStdout.from_json(json_object: result)
         trace_responses_size = struct.traceResponsesSize
         new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
       end

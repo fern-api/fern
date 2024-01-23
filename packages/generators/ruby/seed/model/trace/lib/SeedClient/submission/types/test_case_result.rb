@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/VariableValue"
-require_relative "submission/types/ActualResult"
+require_relative "../../commons/types/variable_value"
+require_relative "actual_result"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
       # @param passed [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestCaseResult]
-      def initialze(expected_result:, actual_result:, passed:, additional_properties: nil)
+      def initialize(expected_result:, actual_result:, passed:, additional_properties: nil)
         # @type [Commons::VariableValue]
         @expected_result = expected_result
         # @type [Submission::ActualResult]
@@ -31,8 +31,10 @@ module SeedClient
       # @return [Submission::TestCaseResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        expected_result = Commons::VariableValue.from_json(json_object: struct.expectedResult)
-        actual_result = Submission::ActualResult.from_json(json_object: struct.actualResult)
+        expected_result = struct.expectedResult.to_h.to_json
+        expected_result = Commons::VariableValue.from_json(json_object: expected_result)
+        actual_result = struct.actualResult.to_h.to_json
+        actual_result = Submission::ActualResult.from_json(json_object: actual_result)
         passed = struct.passed
         new(expected_result: expected_result, actual_result: actual_result, passed: passed,
             additional_properties: struct)

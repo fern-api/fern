@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "v_2/problem/types/TestCaseImplementation"
-require_relative "v_2/problem/types/TEST_CASE_TEMPLATE_ID"
+require "json"
+require_relative "test_case_implementation"
+require_relative "test_case_template_id"
 
 module SeedClient
   module V2
@@ -15,7 +15,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [V2::Problem::TestCaseImplementationReference]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]

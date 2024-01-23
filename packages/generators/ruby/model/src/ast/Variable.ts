@@ -45,10 +45,6 @@ export class Variable extends AstNode {
         this.addText({ stringContent: this.name, templateString, startingTabSpaces });
     }
 
-    public toJson(): FunctionInvocation | undefined {
-        return this.type.toJson(this);
-    }
-
     public fromJson(): FunctionInvocation | undefined {
         return this.type.fromJson(this);
     }

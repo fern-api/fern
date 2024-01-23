@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "types/object/types/ObjectWithOptionalField"
+require_relative "object_with_optional_field"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
         # @param nested_object [Types::Object::ObjectWithOptionalField]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::NestedObjectWithOptionalField]
-        def initialze(string: nil, nested_object: nil, additional_properties: nil)
+        def initialize(string: nil, nested_object: nil, additional_properties: nil)
           # @type [String]
           @string = string
           # @type [Types::Object::ObjectWithOptionalField]
@@ -29,7 +29,8 @@ module SeedClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           string = struct.string
-          nested_object = Types::Object::ObjectWithOptionalField.from_json(json_object: struct.NestedObject)
+          nested_object = struct.NestedObject.to_h.to_json
+          nested_object = Types::Object::ObjectWithOptionalField.from_json(json_object: nested_object)
           new(string: string, nested_object: nested_object, additional_properties: struct)
         end
 

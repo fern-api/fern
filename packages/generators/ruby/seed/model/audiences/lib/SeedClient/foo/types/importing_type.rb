@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/IMPORTED"
+require_relative "../../commons/types/imported"
 require "json"
 
 module SeedClient
@@ -11,7 +11,7 @@ module SeedClient
       # @param imported [Commons::IMPORTED]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Foo::ImportingType]
-      def initialze(imported:, additional_properties: nil)
+      def initialize(imported:, additional_properties: nil)
         # @type [Commons::IMPORTED]
         @imported = imported
         # @type [OpenStruct] Additional properties unmapped to the current class definition

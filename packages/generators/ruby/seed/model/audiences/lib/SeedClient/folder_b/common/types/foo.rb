@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "folder_c/common/types/Foo"
+require_relative "../../../folder_c/common/types/foo"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
         # @param foo [FolderC::Common::Foo]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [FolderB::Common::Foo]
-        def initialze(foo: nil, additional_properties: nil)
+        def initialize(foo: nil, additional_properties: nil)
           # @type [FolderC::Common::Foo]
           @foo = foo
           # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,7 +25,8 @@ module SeedClient
         # @return [FolderB::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          foo = FolderC::Common::Foo.from_json(json_object: struct.foo)
+          foo = struct.foo.to_h.to_json
+          foo = FolderC::Common::Foo.from_json(json_object: foo)
           new(foo: foo, additional_properties: struct)
         end
 

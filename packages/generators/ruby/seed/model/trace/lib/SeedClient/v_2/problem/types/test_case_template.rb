@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/TEST_CASE_TEMPLATE_ID"
-require_relative "v_2/problem/types/TestCaseImplementation"
+require_relative "test_case_template_id"
+require_relative "test_case_implementation"
 require "json"
 
 module SeedClient
@@ -15,7 +15,7 @@ module SeedClient
         # @param implementation [V2::Problem::TestCaseImplementation]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::TestCaseTemplate]
-        def initialze(template_id:, name:, implementation:, additional_properties: nil)
+        def initialize(template_id:, name:, implementation:, additional_properties: nil)
           # @type [V2::Problem::TEST_CASE_TEMPLATE_ID]
           @template_id = template_id
           # @type [String]
@@ -34,7 +34,8 @@ module SeedClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           template_id = struct.templateId
           name = struct.name
-          implementation = V2::Problem::TestCaseImplementation.from_json(json_object: struct.implementation)
+          implementation = struct.implementation.to_h.to_json
+          implementation = V2::Problem::TestCaseImplementation.from_json(json_object: implementation)
           new(template_id: template_id, name: name, implementation: implementation, additional_properties: struct)
         end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/TestSubmissionUpdateInfo"
+require "date"
+require_relative "test_submission_update_info"
 require "json"
 
 module SeedClient
@@ -12,7 +13,7 @@ module SeedClient
       # @param update_info [Submission::TestSubmissionUpdateInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestSubmissionUpdate]
-      def initialze(update_time:, update_info:, additional_properties: nil)
+      def initialize(update_time:, update_info:, additional_properties: nil)
         # @type [DateTime]
         @update_time = update_time
         # @type [Submission::TestSubmissionUpdateInfo]
@@ -27,8 +28,9 @@ module SeedClient
       # @return [Submission::TestSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time = struct.updateTime
-        update_info = Submission::TestSubmissionUpdateInfo.from_json(json_object: struct.updateInfo)
+        update_time = DateTime.parse(struct.updateTime)
+        update_info = struct.updateInfo.to_h.to_json
+        update_info = Submission::TestSubmissionUpdateInfo.from_json(json_object: update_info)
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 

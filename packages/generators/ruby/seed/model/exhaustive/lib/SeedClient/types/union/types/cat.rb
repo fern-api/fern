@@ -12,7 +12,7 @@ module SeedClient
         # @param likes_to_meow [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Union::Cat]
-        def initialze(name:, likes_to_meow:, additional_properties: nil)
+        def initialize(name:, likes_to_meow:, additional_properties: nil)
           # @type [String]
           @name = name
           # @type [Boolean]

@@ -11,7 +11,7 @@ module SeedClient
       # @param id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Actress]
-      def initialze(name:, id:, additional_properties: nil)
+      def initialize(name:, id:, additional_properties: nil)
         # @type [String]
         @name = name
         # @type [String]

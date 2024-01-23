@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require "date"
 require "set"
-require_relative "types/Name"
+require_relative "name"
 require "json"
 
 module SeedClient
@@ -31,8 +32,8 @@ module SeedClient
     # @param nineteen [Name]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Type]
-    def initialze(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:,
-                  fifteen:, sixteen:, seventeen:, eighteen:, nineteen:, thirteen: nil, additional_properties: nil)
+    def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:,
+                   thirteen: nil, additional_properties: nil)
       # @type [Integer]
       @one = one
       # @type [Float]
@@ -86,12 +87,13 @@ module SeedClient
       three = struct.three
       four = struct.four
       five = struct.five
-      six = struct.six
-      seven = struct.seven
+      six = DateTime.parse(struct.six)
+      seven = Date.parse(struct.seven)
       eight = struct.eight
       nine = struct.nine
       ten = struct.ten
-      eleven = Set.new(struct.eleven)
+      eleven = struct.eleven.to_h.to_json
+      eleven = Set.new(eleven)
       twelve = struct.twelve
       thirteen = struct.thirteen
       fourteen = struct.fourteen
@@ -99,7 +101,8 @@ module SeedClient
       sixteen = struct.sixteen
       seventeen = struct.seventeen
       eighteen = struct.eighteen
-      nineteen = Name.from_json(json_object: struct.nineteen)
+      nineteen = struct.nineteen.to_h.to_json
+      nineteen = Name.from_json(json_object: nineteen)
       new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
           ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
     end
@@ -108,8 +111,27 @@ module SeedClient
     #
     # @return [JSON]
     def to_json(*_args)
-      { "one": @one, "two": @two, "three": @three, "four": @four, "five": @five, "six": @six, "seven": @seven,
-        "eight": @eight, "nine": @nine, "ten": @ten, "eleven": @eleven.to_a, "twelve": @twelve, "thirteen": @thirteen, "fourteen": @fourteen, "fifteen": @fifteen, "sixteen": @sixteen, "seventeen": @seventeen, "eighteen": @eighteen, "nineteen": @nineteen }.to_json
+      {
+        "one": @one,
+        "two": @two,
+        "three": @three,
+        "four": @four,
+        "five": @five,
+        "six": @six,
+        "seven": @seven,
+        "eight": @eight,
+        "nine": @nine,
+        "ten": @ten,
+        "eleven": @eleven,
+        "twelve": @twelve,
+        "thirteen": @thirteen,
+        "fourteen": @fourteen,
+        "fifteen": @fifteen,
+        "sixteen": @sixteen,
+        "seventeen": @seventeen,
+        "eighteen": @eighteen,
+        "nineteen": @nineteen
+      }.to_json
     end
 
     # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

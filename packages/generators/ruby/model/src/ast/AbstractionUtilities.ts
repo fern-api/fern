@@ -163,7 +163,8 @@ export function generateUndiscriminatedUnionFromTypeDeclaration(
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        TYPES_DIRECTORY
+        TYPES_DIRECTORY,
+        declaredTypeName.name.snakeCase.safeName
     ].join("/");
 }
 
@@ -176,7 +177,7 @@ export function generateGemspec(
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        entityName: `${gemName}.gemspec`,
+        name: `${gemName}.gemspec`,
         isConfigurationFile: true
     });
 }
@@ -216,6 +217,6 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        entityName: "gemconfig.rb"
+        name: "gemconfig.rb"
     });
 }

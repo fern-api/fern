@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/NonVoidFunctionSignature"
+require_relative "non_void_function_signature"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
           # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::GetBasicSolutionFileRequest]
-          def initialze(method_name:, signature:, additional_properties: nil)
+          def initialize(method_name:, signature:, additional_properties: nil)
             # @type [String]
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
@@ -30,7 +30,8 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             method_name = struct.methodName
-            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
+            signature = struct.signature.to_h.to_json
+            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
             new(method_name: method_name, signature: signature, additional_properties: struct)
           end
 

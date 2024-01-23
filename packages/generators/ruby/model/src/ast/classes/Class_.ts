@@ -42,7 +42,7 @@ export class Class_ extends AstNode {
         this.properties = properties;
         if (includeInitializer) {
             const initializer = new Function_({
-                name: "initialze",
+                name: "initialize",
                 parameters: properties.map((prop) => prop.toParameter()),
                 returnValue: classReference,
                 functionBody: properties.map((prop) => {

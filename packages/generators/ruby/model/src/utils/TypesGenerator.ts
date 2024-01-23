@@ -1,4 +1,4 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import {
     AliasTypeDeclaration,
@@ -18,8 +18,7 @@ import {
     generateEnumDefinitionFromTypeDeclaration,
     generateSerializableObjectFromTypeDeclaration,
     generateUndiscriminatedUnionFromTypeDeclaration,
-    generateUnionFromTypeDeclaration,
-    getLocationForTypeDeclaration
+    generateUnionFromTypeDeclaration
 } from "../ast/AbstractionUtilities";
 import { ClassReferenceFactory } from "../ast/classes/ClassReference";
 import { Module_ } from "../ast/Module_";
@@ -63,38 +62,47 @@ export class TypesGenerator {
     // properties from Modules appears non-standard (functions is the more common usecase)
     private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
         const td = this.types.get(typeId);
-        return td === undefined ? [] :  this.flattenedProperties.get(typeId) ??  td.shape._visit<ObjectProperty[]>({
-            alias: (atd: AliasTypeDeclaration) => {
-                return atd.aliasOf._visit<ObjectProperty[]>({
-                    container: () => [],
-                    named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
-                    primitive: () => [],
-                    unknown: () => [],
-                    _other: () => [],
-                });
-            },
-            enum: () => {
-                this.flattenedProperties.set(typeId, []);
-                return [];
-            },
-            object: (otd: ObjectTypeDeclaration) => {
-                const props = [...otd.properties, ...otd.extends.flatMap(eo => this.getFlattenedProperties(eo.typeId))];
-                this.flattenedProperties.set(typeId, props);
-                return props;
-            },
-            union: (utd: UnionTypeDeclaration) => {
-                const props = [...utd.baseProperties, ...utd.extends.flatMap(eo => this.getFlattenedProperties(eo.typeId))];
-                this.flattenedProperties.set(typeId, props);
-                return props;
-            },
-            undiscriminatedUnion: () => {
-                this.flattenedProperties.set(typeId, []);
-                return [];
-            },
-            _other: () => {
-                throw new Error("Attempting to type declaration for an unknown type.");
-            }
-        });
+        return td === undefined
+            ? []
+            : this.flattenedProperties.get(typeId) ??
+                  td.shape._visit<ObjectProperty[]>({
+                      alias: (atd: AliasTypeDeclaration) => {
+                          return atd.aliasOf._visit<ObjectProperty[]>({
+                              container: () => [],
+                              named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
+                              primitive: () => [],
+                              unknown: () => [],
+                              _other: () => []
+                          });
+                      },
+                      enum: () => {
+                          this.flattenedProperties.set(typeId, []);
+                          return [];
+                      },
+                      object: (otd: ObjectTypeDeclaration) => {
+                          const props = [
+                              ...otd.properties,
+                              ...otd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
+                          ];
+                          this.flattenedProperties.set(typeId, props);
+                          return props;
+                      },
+                      union: (utd: UnionTypeDeclaration) => {
+                          const props = [
+                              ...utd.baseProperties,
+                              ...utd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
+                          ];
+                          this.flattenedProperties.set(typeId, props);
+                          return props;
+                      },
+                      undiscriminatedUnion: () => {
+                          this.flattenedProperties.set(typeId, []);
+                          return [];
+                      },
+                      _other: () => {
+                          throw new Error("Attempting to type declaration for an unknown type.");
+                      }
+                  });
     }
 
     private generateAliasFile(
@@ -107,11 +115,7 @@ export class TypesGenerator {
             typeDeclaration
         );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, aliasExpression);
-        const location = join(
-            this.directoryPrefix,
-            RelativeFilePath.of(getLocationForTypeDeclaration(typeDeclaration.name))
-        );
-        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateEnumFile(
         enumTypeDeclaration: EnumTypeDeclaration,
@@ -119,11 +123,7 @@ export class TypesGenerator {
     ): GeneratedRubyFile | undefined {
         const enumExpression = generateEnumDefinitionFromTypeDeclaration(enumTypeDeclaration, typeDeclaration);
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, enumExpression);
-        const location = join(
-            this.directoryPrefix,
-            RelativeFilePath.of(getLocationForTypeDeclaration(typeDeclaration.name))
-        );
-        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateObjectFile(
         typeId: TypeId,
@@ -138,11 +138,7 @@ export class TypesGenerator {
             typeDeclaration
         );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, serializableObject);
-        const location = join(
-            this.directoryPrefix,
-            RelativeFilePath.of(serializableObject.classReference.location ?? "")
-        );
-        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUnionFile(
         typeId: TypeId,
@@ -157,8 +153,7 @@ export class TypesGenerator {
             typeDeclaration
         );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
-        const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
-        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUndiscriminatedUnionFile(
         undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
@@ -170,8 +165,7 @@ export class TypesGenerator {
             typeDeclaration
         );
         const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
-        const location = join(this.directoryPrefix, RelativeFilePath.of(unionObject.classReference.location ?? ""));
-        return new GeneratedRubyFile({ rootNode, directoryPrefix: location, entityName: typeDeclaration.name.name });
+        return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);

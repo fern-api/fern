@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
-require_relative "submission/types/TracedFile"
-require_relative "commons/types/DebugVariableValue"
-require_relative "submission/types/ExpressionLocation"
-require_relative "submission/types/StackInformation"
+require_relative "submission_id"
+require_relative "traced_file"
+require_relative "../../commons/types/debug_variable_value"
+require_relative "expression_location"
+require_relative "stack_information"
 require "json"
 
 module SeedClient
@@ -22,8 +22,8 @@ module SeedClient
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TraceResponseV2]
-      def initialze(submission_id:, line_number:, file:, stack:, return_value: nil, expression_location: nil,
-                    stdout: nil, additional_properties: nil)
+      def initialize(submission_id:, line_number:, file:, stack:, return_value: nil, expression_location: nil,
+                     stdout: nil, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Integer]
@@ -50,10 +50,14 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
         line_number = struct.lineNumber
-        file = Submission::TracedFile.from_json(json_object: struct.file)
-        return_value = Commons::DebugVariableValue.from_json(json_object: struct.returnValue)
-        expression_location = Submission::ExpressionLocation.from_json(json_object: struct.expressionLocation)
-        stack = Submission::StackInformation.from_json(json_object: struct.stack)
+        file = struct.file.to_h.to_json
+        file = Submission::TracedFile.from_json(json_object: file)
+        return_value = struct.returnValue.to_h.to_json
+        return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
+        expression_location = struct.expressionLocation.to_h.to_json
+        expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
+        stack = struct.stack.to_h.to_json
+        stack = Submission::StackInformation.from_json(json_object: stack)
         stdout = struct.stdout
         new(submission_id: submission_id, line_number: line_number, file: file, return_value: return_value,
             expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)
@@ -63,8 +67,15 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "submissionId": @submission_id, "lineNumber": @line_number, "file": @file, "returnValue": @return_value,
-          "expressionLocation": @expression_location, "stack": @stack, "stdout": @stdout }.to_json
+        {
+          "submissionId": @submission_id,
+          "lineNumber": @line_number,
+          "file": @file,
+          "returnValue": @return_value,
+          "expressionLocation": @expression_location,
+          "stack": @stack,
+          "stdout": @stdout
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

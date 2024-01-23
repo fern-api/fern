@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/PARAMETER_ID"
+require_relative "parameter_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
         # @param expected_value_parameter_id [V2::Problem::PARAMETER_ID]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::DeepEqualityCorrectnessCheck]
-        def initialze(expected_value_parameter_id:, additional_properties: nil)
+        def initialize(expected_value_parameter_id:, additional_properties: nil)
           # @type [V2::Problem::PARAMETER_ID]
           @expected_value_parameter_id = expected_value_parameter_id
           # @type [OpenStruct] Additional properties unmapped to the current class definition

@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { format } from "util";
 import { Import } from "../Import";
 
@@ -11,6 +12,8 @@ export declare namespace AstNode {
         documentation?: string;
         contentOverride?: string;
         writeImports?: boolean;
+        // Where is this node, since any node can be written loose to a file
+        location?: string;
     }
 
     export interface AddText {
@@ -29,9 +32,9 @@ export abstract class AstNode {
     public contentOverride: string | undefined;
 
     public writeImports: boolean;
-
+    public location: string | undefined;
     // Pretty print content
-    private text: string[] = [];
+    text: string[] = [];
 
     constructor({ documentation, contentOverride, writeImports = false }: AstNode.Init) {
         // TODO: Make documentation a list of strings split by returns then make them multi-line comments
@@ -73,10 +76,16 @@ export abstract class AstNode {
         this.text.push("");
     }
 
-    public write(startingTabSpaces = 0): string {
+    public write(startingTabSpaces = 0, filePath?: AbsoluteFilePath): string {
         if (this.writeImports) {
             this.getImports().forEach((i) =>
-                this.addText({ stringContent: i.write(startingTabSpaces), startingTabSpaces })
+                this.addText({
+                    stringContent:
+                        filePath !== undefined
+                            ? i.writeRelative(startingTabSpaces, filePath)
+                            : i.write(startingTabSpaces),
+                    startingTabSpaces
+                })
             );
             this.addNewLine();
         }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/VariableValue"
+require_relative "variable_value"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param params [Array<Commons::VariableValue>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::TestCase]
-      def initialze(id:, params:, additional_properties: nil)
+      def initialize(id:, params:, additional_properties: nil)
         # @type [String]
         @id = id
         # @type [Array<Commons::VariableValue>]
@@ -29,6 +29,7 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct.id
         params = struct.params.map do |v|
+          v = v.to_h.to_json
           Commons::VariableValue.from_json(json_object: v)
         end
         new(id: id, params: params, additional_properties: struct)

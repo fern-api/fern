@@ -11,7 +11,7 @@ module SeedClient
         # @param expected_stdout [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::TestCaseExpects]
-        def initialze(expected_stdout: nil, additional_properties: nil)
+        def initialize(expected_stdout: nil, additional_properties: nil)
           # @type [String]
           @expected_stdout = expected_stdout
           # @type [OpenStruct] Additional properties unmapped to the current class definition

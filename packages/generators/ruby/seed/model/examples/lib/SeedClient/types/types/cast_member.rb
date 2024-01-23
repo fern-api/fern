@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "types/types/Actor"
-require_relative "types/types/Actress"
-require_relative "types/types/StuntDouble"
+require "json"
+require_relative "actor"
+require_relative "actress"
+require_relative "stunt_double"
 
 module SeedClient
   module Types
@@ -12,7 +12,7 @@ module SeedClient
       alias kind_of? is_a?
       # @param member [Object]
       # @return [Types::CastMember]
-      def initialze(member:)
+      def initialize(member:)
         # @type [Object]
         @member = member
       end
@@ -40,10 +40,11 @@ module SeedClient
         begin
           Types::StuntDouble.validate_raw(obj: struct)
           member = Types::StuntDouble.from_json(json_object: json_object)
-          new(member: member)
+          return new(member: member)
         rescue StandardError
           # noop
         end
+        new(member: struct)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.

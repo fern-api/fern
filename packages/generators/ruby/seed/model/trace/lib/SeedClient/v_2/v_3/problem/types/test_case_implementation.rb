@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/TestCaseImplementationDescription"
-require_relative "v_2/v_3/problem/types/TestCaseFunction"
+require_relative "test_case_implementation_description"
+require_relative "test_case_function"
 require "json"
 
 module SeedClient
@@ -15,7 +15,7 @@ module SeedClient
           # @param function [V2::V3::Problem::TestCaseFunction]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::TestCaseImplementation]
-          def initialze(description:, function:, additional_properties: nil)
+          def initialize(description:, function:, additional_properties: nil)
             # @type [V2::V3::Problem::TestCaseImplementationDescription]
             @description = description
             # @type [V2::V3::Problem::TestCaseFunction]
@@ -30,8 +30,10 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: struct.description)
-            function = V2::V3::Problem::TestCaseFunction.from_json(json_object: struct.function)
+            description = struct.description.to_h.to_json
+            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
+            function = struct.function.to_h.to_json
+            function = V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
             new(description: description, function: function, additional_properties: struct)
           end
 

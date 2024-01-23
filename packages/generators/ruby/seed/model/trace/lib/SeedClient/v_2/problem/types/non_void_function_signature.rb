@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/Parameter"
-require_relative "commons/types/VariableType"
+require_relative "parameter"
+require_relative "../../../commons/types/variable_type"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
         # @param return_type [Commons::VariableType]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::NonVoidFunctionSignature]
-        def initialze(parameters:, return_type:, additional_properties: nil)
+        def initialize(parameters:, return_type:, additional_properties: nil)
           # @type [Array<V2::Problem::Parameter>]
           @parameters = parameters
           # @type [Commons::VariableType]
@@ -30,9 +30,11 @@ module SeedClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parameters = struct.parameters.map do |v|
+            v = v.to_h.to_json
             V2::Problem::Parameter.from_json(json_object: v)
           end
-          return_type = Commons::VariableType.from_json(json_object: struct.returnType)
+          return_type = struct.returnType.to_h.to_json
+          return_type = Commons::VariableType.from_json(json_object: return_type)
           new(parameters: parameters, return_type: return_type, additional_properties: struct)
         end
 

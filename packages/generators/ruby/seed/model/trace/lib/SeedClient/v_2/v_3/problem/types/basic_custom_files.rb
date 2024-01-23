@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/NonVoidFunctionSignature"
-require_relative "v_2/v_3/problem/types/BasicTestCaseTemplate"
+require_relative "non_void_function_signature"
+require_relative "basic_test_case_template"
 require "json"
 
 module SeedClient
@@ -17,8 +17,8 @@ module SeedClient
           # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
-          def initialze(method_name:, signature:, additional_files:, basic_test_case_template:,
-                        additional_properties: nil)
+          def initialize(method_name:, signature:, additional_files:, basic_test_case_template:,
+                         additional_properties: nil)
             # @type [String]
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
@@ -38,11 +38,14 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             method_name = struct.methodName
-            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
-            additional_files = struct.additionalFiles.transform_values do |v|
+            signature = struct.signature.to_h.to_json
+            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+            additional_files = struct.additionalFiles.transform_values do |_k, v|
+              v = v.to_h.to_json
               LANGUAGE.key(v)
             end
-            basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: struct.basicTestCaseTemplate)
+            basic_test_case_template = struct.basicTestCaseTemplate.to_h.to_json
+            basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
             new(method_name: method_name, signature: signature, additional_files: additional_files,
                 basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end
@@ -51,9 +54,12 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "methodName": @method_name, "signature": @signature, "additionalFiles": @additional_files.transform_values do |v|
-                                                                                        LANGUAGE.key(v)
-                                                                                      end, "basicTestCaseTemplate": @basic_test_case_template }.to_json
+            {
+              "methodName": @method_name,
+              "signature": @signature,
+              "additionalFiles": @additional_files,
+              "basicTestCaseTemplate": @basic_test_case_template
+            }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "commons/types/VariableValue"
-require_relative "submission/types/ExceptionInfo"
-require_relative "submission/types/ExceptionV2"
+require "json"
+require_relative "../../commons/types/variable_value"
+require_relative "exception_info"
+require_relative "exception_v_2"
 
 module SeedClient
   module Submission
@@ -15,7 +15,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::ActualResult]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/FileInfo"
+require_relative "../../commons/types/file_info"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param read_only_files [Array<Commons::FileInfo>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::ProblemFiles]
-      def initialze(solution_file:, read_only_files:, additional_properties: nil)
+      def initialize(solution_file:, read_only_files:, additional_properties: nil)
         # @type [Commons::FileInfo]
         @solution_file = solution_file
         # @type [Array<Commons::FileInfo>]
@@ -27,8 +27,10 @@ module SeedClient
       # @return [Problem::ProblemFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        solution_file = Commons::FileInfo.from_json(json_object: struct.solutionFile)
+        solution_file = struct.solutionFile.to_h.to_json
+        solution_file = Commons::FileInfo.from_json(json_object: solution_file)
         read_only_files = struct.readOnlyFiles.map do |v|
+          v = v.to_h.to_json
           Commons::FileInfo.from_json(json_object: v)
         end
         new(solution_file: solution_file, read_only_files: read_only_files, additional_properties: struct)

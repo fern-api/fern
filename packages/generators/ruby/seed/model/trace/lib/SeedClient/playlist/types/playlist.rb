@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "playlist/types/PLAYLIST_ID"
-require_relative "commons/types/USER_ID"
-require_relative "commons/types/PROBLEM_ID"
+require_relative "playlist_id"
+require_relative "../../commons/types/user_id"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedClient
@@ -16,7 +16,7 @@ module SeedClient
       # @param problems [Array<Commons::PROBLEM_ID>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Playlist::Playlist]
-      def initialze(playlist_id:, owner_id:, name:, problems:, additional_properties: nil)
+      def initialize(playlist_id:, owner_id:, name:, problems:, additional_properties: nil)
         # @type [Playlist::PLAYLIST_ID]
         @playlist_id = playlist_id
         # @type [Commons::USER_ID]

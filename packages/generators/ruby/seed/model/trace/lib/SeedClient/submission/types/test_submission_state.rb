@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
-require_relative "commons/types/TestCase"
-require_relative "submission/types/TestSubmissionStatus"
+require_relative "../../commons/types/problem_id"
+require_relative "../../commons/types/test_case"
+require_relative "test_submission_status"
 require "json"
 
 module SeedClient
@@ -16,7 +16,7 @@ module SeedClient
       # @param status [Submission::TestSubmissionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestSubmissionState]
-      def initialze(problem_id:, default_test_cases:, custom_test_cases:, status:, additional_properties: nil)
+      def initialize(problem_id:, default_test_cases:, custom_test_cases:, status:, additional_properties: nil)
         # @type [Commons::PROBLEM_ID]
         @problem_id = problem_id
         # @type [Array<Commons::TestCase>]
@@ -37,12 +37,15 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct.problemId
         default_test_cases = struct.defaultTestCases.map do |v|
+          v = v.to_h.to_json
           Commons::TestCase.from_json(json_object: v)
         end
         custom_test_cases = struct.customTestCases.map do |v|
+          v = v.to_h.to_json
           Commons::TestCase.from_json(json_object: v)
         end
-        status = Submission::TestSubmissionStatus.from_json(json_object: struct.status)
+        status = struct.status.to_h.to_json
+        status = Submission::TestSubmissionStatus.from_json(json_object: status)
         new(problem_id: problem_id, default_test_cases: default_test_cases, custom_test_cases: custom_test_cases,
             status: status, additional_properties: struct)
       end
@@ -51,8 +54,12 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "problemId": @problem_id, "defaultTestCases": @default_test_cases, "customTestCases": @custom_test_cases,
-          "status": @status }.to_json
+        {
+          "problemId": @problem_id,
+          "defaultTestCases": @default_test_cases,
+          "customTestCases": @custom_test_cases,
+          "status": @status
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

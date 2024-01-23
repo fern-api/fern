@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SubmissionRequest"
-require_relative "submission/types/InvalidRequestCause"
+require_relative "submission_request"
+require_relative "invalid_request_cause"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param cause [Submission::InvalidRequestCause]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::InvalidRequestResponse]
-      def initialze(request:, cause:, additional_properties: nil)
+      def initialize(request:, cause:, additional_properties: nil)
         # @type [Submission::SubmissionRequest]
         @request = request
         # @type [Submission::InvalidRequestCause]
@@ -28,8 +28,10 @@ module SeedClient
       # @return [Submission::InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        request = Submission::SubmissionRequest.from_json(json_object: struct.request)
-        cause = Submission::InvalidRequestCause.from_json(json_object: struct.cause)
+        request = struct.request.to_h.to_json
+        request = Submission::SubmissionRequest.from_json(json_object: request)
+        cause = struct.cause.to_h.to_json
+        cause = Submission::InvalidRequestCause.from_json(json_object: cause)
         new(request: request, cause: cause, additional_properties: struct)
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/FunctionSignature"
+require_relative "function_signature"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
         # @param function_signature [V2::Problem::FunctionSignature]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::GetFunctionSignatureRequest]
-        def initialze(function_signature:, additional_properties: nil)
+        def initialize(function_signature:, additional_properties: nil)
           # @type [V2::Problem::FunctionSignature]
           @function_signature = function_signature
           # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,7 +25,8 @@ module SeedClient
         # @return [V2::Problem::GetFunctionSignatureRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          function_signature = V2::Problem::FunctionSignature.from_json(json_object: struct.functionSignature)
+          function_signature = struct.functionSignature.to_h.to_json
+          function_signature = V2::Problem::FunctionSignature.from_json(json_object: function_signature)
           new(function_signature: function_signature, additional_properties: struct)
         end
 

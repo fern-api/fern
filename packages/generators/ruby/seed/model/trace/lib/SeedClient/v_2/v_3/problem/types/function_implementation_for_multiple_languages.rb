@@ -12,7 +12,7 @@ module SeedClient
           # @param code_by_language [Hash{LANGUAGE => LANGUAGE}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
-          def initialze(code_by_language:, additional_properties: nil)
+          def initialize(code_by_language:, additional_properties: nil)
             # @type [Hash{LANGUAGE => LANGUAGE}]
             @code_by_language = code_by_language
             # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,7 +25,8 @@ module SeedClient
           # @return [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            code_by_language = struct.codeByLanguage.transform_values do |v|
+            code_by_language = struct.codeByLanguage.transform_values do |_k, v|
+              v = v.to_h.to_json
               LANGUAGE.key(v)
             end
             new(code_by_language: code_by_language, additional_properties: struct)
@@ -35,9 +36,7 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "codeByLanguage": @code_by_language.transform_values do |v|
-                                  LANGUAGE.key(v)
-                                end }.to_json
+            { "codeByLanguage": @code_by_language }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

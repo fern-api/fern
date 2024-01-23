@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "service/types/Movie"
+require_relative "movie"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param docs [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Service::Response]
-      def initialze(data:, metadata:, docs:, additional_properties: nil)
+      def initialize(data:, metadata:, docs:, additional_properties: nil)
         # @type [Service::Movie]
         @data = data
         # @type [Hash{String => String}]
@@ -30,7 +30,8 @@ module SeedClient
       # @return [Service::Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        data = Service::Movie.from_json(json_object: struct.data)
+        data = struct.data.to_h.to_json
+        data = Service::Movie.from_json(json_object: data)
         metadata = struct.metadata
         docs = struct.docs
         new(data: data, metadata: metadata, docs: docs, additional_properties: struct)

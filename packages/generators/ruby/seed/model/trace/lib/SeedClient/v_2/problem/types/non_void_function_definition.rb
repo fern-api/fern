@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/NonVoidFunctionSignature"
-require_relative "v_2/problem/types/FunctionImplementationForMultipleLanguages"
+require_relative "non_void_function_signature"
+require_relative "function_implementation_for_multiple_languages"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
         # @param code [V2::Problem::FunctionImplementationForMultipleLanguages]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::NonVoidFunctionDefinition]
-        def initialze(signature:, code:, additional_properties: nil)
+        def initialize(signature:, code:, additional_properties: nil)
           # @type [V2::Problem::NonVoidFunctionSignature]
           @signature = signature
           # @type [V2::Problem::FunctionImplementationForMultipleLanguages]
@@ -29,8 +29,10 @@ module SeedClient
         # @return [V2::Problem::NonVoidFunctionDefinition]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: struct.signature)
-          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
+          signature = struct.signature.to_h.to_json
+          signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+          code = struct.code.to_h.to_json
+          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
           new(signature: signature, code: code, additional_properties: struct)
         end
 

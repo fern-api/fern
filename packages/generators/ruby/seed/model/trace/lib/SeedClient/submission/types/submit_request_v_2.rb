@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
-require_relative "submission/types/SubmissionFileInfo"
-require_relative "commons/types/PROBLEM_ID"
+require_relative "submission_id"
+require_relative "submission_file_info"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedClient
@@ -19,8 +19,8 @@ module SeedClient
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::SubmitRequestV2]
-      def initialze(submission_id:, language:, submission_files:, problem_id:, problem_version: nil, user_id: nil,
-                    additional_properties: nil)
+      def initialize(submission_id:, language:, submission_files:, problem_id:, problem_version: nil, user_id: nil,
+                     additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Hash{String => String}]
@@ -46,6 +46,7 @@ module SeedClient
         submission_id = struct.submissionId
         language = LANGUAGE.key(struct.language)
         submission_files = struct.submissionFiles.map do |v|
+          v = v.to_h.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
         problem_id = struct.problemId
@@ -59,8 +60,14 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "submissionId": @submission_id, "language": @language.fetch, "submissionFiles": @submission_files,
-          "problemId": @problem_id, "problemVersion": @problem_version, "userId": @user_id }.to_json
+        {
+          "submissionId": @submission_id,
+          "language": @language,
+          "submissionFiles": @submission_files,
+          "problemId": @problem_id,
+          "problemVersion": @problem_version,
+          "userId": @user_id
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

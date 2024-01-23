@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NODE_ID"
+require_relative "node_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param nodes [Hash{Commons::NODE_ID => Commons::NODE_ID}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::SinglyLinkedListValue]
-      def initialze(nodes:, head: nil, additional_properties: nil)
+      def initialize(nodes:, head: nil, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @head = head
         # @type [Hash{Commons::NODE_ID => Commons::NODE_ID}]

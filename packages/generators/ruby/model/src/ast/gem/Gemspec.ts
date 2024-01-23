@@ -1,11 +1,11 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
-import { ExternalDependency } from "../ExternalDependency";
-import { Import } from "../Import";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
+import { ExternalDependency } from "../ExternalDependency";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
+import { Import } from "../Import";
 
 export declare namespace Gemspec {
     export interface Init {
@@ -106,9 +106,10 @@ export class Gemspec extends FunctionInvocation {
                         }),
                         isAssignment: true
                     }),
+                    // TODO: add  `<< "LICENSE.md"` if a license file is added through config
                     new Expression({
                         leftSide: "spec.files",
-                        rightSide: 'Dir.glob("lib/**/*") << "LICENSE.md"',
+                        rightSide: 'Dir.glob("lib/**/*")',
                         isAssignment: true
                     }),
                     new Expression({ leftSide: "spec.bindir", rightSide: '"exe"', isAssignment: true }),

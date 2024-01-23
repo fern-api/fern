@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "problem/types/CreateProblemError"
-require_relative "commons/types/PROBLEM_ID"
+require "json"
+require_relative "create_problem_error"
+require_relative "../../commons/types/problem_id"
 
 module SeedClient
   module Problem
@@ -14,7 +14,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Problem::CreateProblemResponse]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

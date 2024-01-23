@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/TEST_CASE_ID"
-require_relative "submission/types/TestCaseGrade"
+require_relative "../../v_2/problem/types/test_case_id"
+require_relative "test_case_grade"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param grade [Submission::TestCaseGrade]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GradedTestCaseUpdate]
-      def initialze(test_case_id:, grade:, additional_properties: nil)
+      def initialize(test_case_id:, grade:, additional_properties: nil)
         # @type [V2::Problem::TEST_CASE_ID]
         @test_case_id = test_case_id
         # @type [Submission::TestCaseGrade]
@@ -29,7 +29,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         test_case_id = struct.testCaseId
-        grade = Submission::TestCaseGrade.from_json(json_object: struct.grade)
+        grade = struct.grade.to_h.to_json
+        grade = Submission::TestCaseGrade.from_json(json_object: grade)
         new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
       end
 

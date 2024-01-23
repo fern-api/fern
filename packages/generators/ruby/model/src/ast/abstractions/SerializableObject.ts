@@ -1,8 +1,11 @@
 import { Argument } from "../Argument";
 import {
+    ArrayReference,
     ClassReference,
+    DateReference,
     GenericClassReference,
     HashInstance,
+    HashReference,
     JsonClassReference,
     OpenStructClassReference,
     VoidClassReference
@@ -11,7 +14,6 @@ import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { Variable, VariableType } from "../Variable";
@@ -47,10 +49,7 @@ export class SerializableObject extends Class_ {
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
-                    onObject: new ClassReference({
-                        name: "JSON",
-                        import_: new Import({ from: "json", isExternal: true })
-                    }),
+                    onObject: JsonClassReference,
                     baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
@@ -68,18 +67,50 @@ export class SerializableObject extends Class_ {
                 }),
                 isAssignment: true
             }),
-            ...(properties?.map((prop) => {
+            ...(properties?.flatMap((prop) => {
                 const variable = new Variable({
                     name: `struct.${prop.wireValue}`,
                     variableType: VariableType.LOCAL,
                     type: prop.type
                 });
 
-                return new Expression({
-                    leftSide: prop.name,
-                    rightSide: variable.fromJson() ?? variable,
-                    isAssignment: true
-                });
+                const hasFromJson =
+                    variable.fromJson() !== undefined &&
+                    !(prop.type instanceof ArrayReference) &&
+                    !(prop.type instanceof HashReference) &&
+                    !(prop.type instanceof DateReference);
+                if (hasFromJson) {
+                    // If there's a special fromJson, then cast the object back to JSON before proceeding
+                    const variable = new Variable({
+                        name: prop.name,
+                        variableType: VariableType.LOCAL,
+                        type: prop.type
+                    });
+
+                    return [
+                        new Expression({
+                            leftSide: variable.name,
+                            rightSide: new FunctionInvocation({
+                                onObject: `struct.${prop.wireValue}`,
+                                baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                            }),
+                            isAssignment: true
+                        }),
+                        new Expression({
+                            leftSide: prop.name,
+                            rightSide: variable.fromJson() ?? variable,
+                            isAssignment: true
+                        })
+                    ];
+                } else {
+                    return [
+                        new Expression({
+                            leftSide: prop.name,
+                            rightSide: variable.fromJson() ?? variable,
+                            isAssignment: true
+                        })
+                    ];
+                }
             }) ?? []),
             new FunctionInvocation({
                 baseFunction: new Function_({ name: "new", functionBody: [] }),
@@ -110,10 +141,7 @@ export class SerializableObject extends Class_ {
                 // TODO: call to_json on these properties if they're objects
                 onObject: new HashInstance({
                     contents: new Map(
-                        properties?.map((prop) => [
-                            `"${prop.wireValue ?? prop.name}"`,
-                            prop.toVariable().toJson() ?? prop.toVariable()
-                        ])
+                        properties?.map((prop) => [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()])
                     )
                 })
             })

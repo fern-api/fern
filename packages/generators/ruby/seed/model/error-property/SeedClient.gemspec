@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = SeedClient::Gemconfig::SOURCE_CODE_URI
   spec.metadata["changelog_uri"] = SeedClient::Gemconfig::CHANGELOG_URI
-  spec.files = Dir.glob("lib/**/*") << "LICENSE.md"
+  spec.files = Dir.glob("lib/**/*")
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
-require_relative "submission/types/ErrorInfo"
+require_relative "submission_id"
+require_relative "error_info"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param error_info [Submission::ErrorInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ErroredResponse]
-      def initialze(submission_id:, error_info:, additional_properties: nil)
+      def initialize(submission_id:, error_info:, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Submission::ErrorInfo]
@@ -29,7 +29,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
-        error_info = Submission::ErrorInfo.from_json(json_object: struct.errorInfo)
+        error_info = struct.errorInfo.to_h.to_json
+        error_info = Submission::ErrorInfo.from_json(json_object: error_info)
         new(submission_id: submission_id, error_info: error_info, additional_properties: struct)
       end
 

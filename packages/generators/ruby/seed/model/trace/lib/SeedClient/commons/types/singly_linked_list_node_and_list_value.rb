@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NODE_ID"
-require_relative "commons/types/SinglyLinkedListValue"
+require_relative "node_id"
+require_relative "singly_linked_list_value"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param full_list [Commons::SinglyLinkedListValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::SinglyLinkedListNodeAndListValue]
-      def initialze(node_id:, full_list:, additional_properties: nil)
+      def initialize(node_id:, full_list:, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @node_id = node_id
         # @type [Commons::SinglyLinkedListValue]
@@ -29,7 +29,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         node_id = struct.nodeId
-        full_list = Commons::SinglyLinkedListValue.from_json(json_object: struct.fullList)
+        full_list = struct.fullList.to_h.to_json
+        full_list = Commons::SinglyLinkedListValue.from_json(json_object: full_list)
         new(node_id: node_id, full_list: full_list, additional_properties: struct)
       end
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/TestCaseResultWithStdout"
-require_relative "submission/types/TestCaseGrade"
-require_relative "submission/types/TracedTestCase"
+require "json"
+require_relative "test_case_result_with_stdout"
+require_relative "test_case_grade"
+require_relative "traced_test_case"
 
 module SeedClient
   module Submission
@@ -15,7 +15,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::SubmissionStatusForTestCase]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

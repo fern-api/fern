@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "date"
 require "set"
 require "json"
 
@@ -24,8 +25,8 @@ module SeedClient
         # @param map [Hash{Integer => Integer}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Types::Object::ObjectWithOptionalField]
-        def initialze(string: nil, integer: nil, long: nil, double: nil, bool: nil, datetime: nil, date: nil,
-                      uuid: nil, base_64: nil, list: nil, set: nil, map: nil, additional_properties: nil)
+        def initialize(string: nil, integer: nil, long: nil, double: nil, bool: nil, datetime: nil, date: nil,
+                       uuid: nil, base_64: nil, list: nil, set: nil, map: nil, additional_properties: nil)
           # @type [String]
           @string = string
           # @type [Integer]
@@ -65,12 +66,13 @@ module SeedClient
           long = struct.long
           double = struct.double
           bool = struct.bool
-          datetime = struct.datetime
-          date = struct.date
+          datetime = DateTime.parse(struct.datetime)
+          date = Date.parse(struct.date)
           uuid = struct.uuid
           base_64 = struct.base64
           list = struct.list
-          set = Set.new(struct.set)
+          set = struct.set.to_h.to_json
+          set = Set.new(set)
           map = struct.map
           new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
               uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)
@@ -80,8 +82,20 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { "string": @string, "integer": @integer, "long": @long, "double": @double, "bool": @bool,
-            "datetime": @datetime, "date": @date, "uuid": @uuid, "base64": @base_64, "list": @list, "set": @set&.to_a(), "map": @map }.to_json
+          {
+            "string": @string,
+            "integer": @integer,
+            "long": @long,
+            "double": @double,
+            "bool": @bool,
+            "datetime": @datetime,
+            "date": @date,
+            "uuid": @uuid,
+            "base64": @base_64,
+            "list": @list,
+            "set": @set,
+            "map": @map
+          }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

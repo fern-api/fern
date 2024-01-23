@@ -14,7 +14,7 @@ module SeedClient
         # @param editable [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::FileInfoV2]
-        def initialze(filename:, directory:, contents:, editable:, additional_properties: nil)
+        def initialize(filename:, directory:, contents:, editable:, additional_properties: nil)
           # @type [String]
           @filename = filename
           # @type [String]
