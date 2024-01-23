@@ -43,7 +43,7 @@ navigation:
             slug: generators
       - section: CLI
         contents:
-          - page: Overview
+          - page: CLI Overview
             path: ./docs/pages/cli/overview.mdx
             slug: cli
           - page: fern generate
@@ -54,7 +54,7 @@ navigation:
             path: ./docs/pages/cli/fern-add.mdx
           - page: fern init
             path: ./docs/pages/cli/fern-init.mdx
-          - page: fern write definition
+          - page: fern write-definition
             path: ./docs/pages/cli/fern-write-definition.mdx
           - page: fern upgrade
             path: ./docs/pages/cli/fern-upgrade.mdx
