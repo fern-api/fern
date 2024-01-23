@@ -260,7 +260,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedEnvironment *GeneratedEnvironment
 		)
 		// Generate the core API files.
-		fileInfo := fileInfoForClientOptionsDefinition()
+		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -269,7 +269,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if err := writer.WriteClientOptionsDefinition(ir.Auth, ir.Headers, ir.SdkConfig, g.config.ModuleConfig, g.config.Version); err != nil {
+		if err := writer.WriteRequestOptionsDefinition(ir.Auth, ir.Headers, ir.SdkConfig, g.config.ModuleConfig, g.config.Version); err != nil {
 			return nil, err
 		}
 		file, err := writer.File()
@@ -299,8 +299,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 			files = append(files, file)
 		}
-		// Generate the client options.
-		fileInfo = fileInfoForClientOptions(ir.ApiName, generatedNames)
+		// Generate the request options.
+		fileInfo = fileInfoForRequestOptions(ir.ApiName, generatedNames)
 		writer = newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -309,7 +309,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteClientOptions(ir.Auth, ir.Headers)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers)
 		if err != nil {
 			return nil, err
 		}
@@ -340,13 +340,17 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalFile(g.coordinator))
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
-		files = append(files, newClientTestFile(g.coordinator))
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
+		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, clientTestFile)
 		// Generate the error types, if any.
 		for fileInfo, irErrors := range fileInfoToErrors(ir.ApiName, ir.Errors) {
 			writer := newFileWriter(
@@ -704,12 +708,20 @@ func newPointerFile(coordinator *coordinator.Client, apiName *fernir.Name, gener
 	)
 }
 
-func newClientTestFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
+func newClientTestFile(
+	baseImportPath string,
+	coordinator *coordinator.Client,
+) (*File, error) {
+	f := newFileWriter(
 		"client/client_test.go",
-		[]byte(clientTestFile),
+		"client",
+		baseImportPath,
+		nil,
+		nil,
+		coordinator,
 	)
+	f.WriteRaw(clientTestFile)
+	return f.File()
 }
 
 func newCoreFile(coordinator *coordinator.Client) *File {
@@ -765,27 +777,17 @@ type fileInfo struct {
 	packageName string
 }
 
-func fileInfoForClientOptionsDefinition() *fileInfo {
+func fileInfoForRequestOptionsDefinition() *fileInfo {
 	return &fileInfo{
-		filename:    "core/client_option.go",
+		filename:    "core/request_option.go",
 		packageName: "core",
 	}
 }
 
-// TODO: We need to guard against the case when the user defines a client.yml file.
-func fileInfoForClientOptions(apiName *fernir.Name, generatedNames map[string]struct{}) *fileInfo {
+func fileInfoForRequestOptions(apiName *fernir.Name, generatedNames map[string]struct{}) *fileInfo {
 	return &fileInfo{
-		filename:    "client/options.go",
-		packageName: "client",
-	}
-}
-
-// fileInfoForCoreClientOptions is used when the client options need to be generated in
-// the core package.
-func fileInfoForCoreClientOptions() *fileInfo {
-	return &fileInfo{
-		filename:    "core/client_options.go",
-		packageName: "core",
+		filename:    "option/request_option.go",
+		packageName: "option",
 	}
 }
 

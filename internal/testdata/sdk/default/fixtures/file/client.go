@@ -9,6 +9,7 @@ import (
 	io "io"
 	http "net/http"
 	core "sdk/core"
+	option "sdk/option"
 )
 
 type Client struct {
@@ -17,11 +18,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

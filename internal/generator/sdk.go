@@ -17,7 +17,7 @@ import (
 const goLanguageHeader = "Go"
 
 var (
-	//go:embed sdk/client/client_test.go
+	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
 
 	//go:embed sdk/core/core.go
@@ -71,10 +71,10 @@ func (f *fileWriter) WriteOptionalHelpers(useCore bool) error {
 	return nil
 }
 
-// WriteClientOptionsDefinition writes the ClientOption interface and
-// *ClientOptions type. These types are always deposited in the core
+// WriteRequestOptionsDefinition writes the RequestOption interface and
+// *RequestOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.
-func (f *fileWriter) WriteClientOptionsDefinition(
+func (f *fileWriter) WriteRequestOptionsDefinition(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	sdkConfig *ir.SdkConfig,
@@ -82,19 +82,22 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 	sdkVersion string,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
-	f.P("// ClientOption adapts the behavior of the generated client.")
-	f.P("type ClientOption func(*ClientOptions)")
+	f.P("// RequestOption adapts the behavior of the client or an individual request.")
+	f.P("type RequestOption interface {")
+	f.P("applyRequestOptions(*RequestOptions)")
+	f.P("}")
 	f.P()
 
-	f.P("// ClientOptions defines all of the possible client options.")
-	f.P("// This type is primarily used by the generated code and is")
-	f.P("// not meant to be used directly; use ClientOption instead.")
-	f.P("type ClientOptions struct {")
+	f.P("// RequestOptions defines all of the possible request options.")
+	f.P("//")
+	f.P("// This type is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use the option package instead.")
+	f.P("type RequestOptions struct {")
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
 
-	// Generate the exported ClientOptions type that all clients can act upon.
+	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
@@ -105,7 +108,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 		}
 		if authScheme.Header != nil {
 			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
-				// We don't want to generate a client option for literal values.
+				// We don't want to generate a request option for literal values.
 				continue
 			}
 			f.P(
@@ -117,7 +120,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 	}
 	for _, header := range headers {
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
-			// We don't want to generate a client option for literal values.
+			// We don't want to generate a request option for literal values.
 			continue
 		}
 		f.P(
@@ -130,29 +133,38 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 	f.P()
 
 	// Generate the constructor.
-	f.P("// NewClientOptions returns a new *ClientOptions value.")
-	f.P("// This function is primarily used by the generated code and is")
-	f.P("// not meant to be used directly; use ClientOption instead.")
-	f.P("func NewClientOptions() *ClientOptions {")
-	f.P("return &ClientOptions{")
+	f.P("// NewRequestOptions returns a new *RequestOptions value.")
+	f.P("//")
+	f.P("// This function is primarily used by the generated code and is not meant")
+	f.P("// to be used directly; use RequestOption instead.")
+	f.P("func NewRequestOptions(opts ...RequestOption) *RequestOptions {")
+	f.P("options := &RequestOptions{")
 	f.P("HTTPClient: http.DefaultClient,")
 	f.P("HTTPHeader: make(http.Header),")
 	f.P("}")
+	f.P("for _, opt := range opts {")
+	f.P("opt.applyRequestOptions(options)")
+	f.P("}")
+	f.P("return options")
 	f.P("}")
 	f.P()
 
 	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
-		f.P("// ToHeader maps the configured client options into a http.Header issued")
-		f.P("// on every request.")
-		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.cloneHeader() }")
+		f.P("// ToHeader maps the configured request options into a http.Header used")
+		f.P("// for the request(s).")
+		f.P("func (c *RequestOptions) ToHeader() http.Header { return c.cloneHeader() }")
 		f.P()
-		return f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion)
+		if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
+			return err
+		}
+		f.P()
+		return f.writeOptionStructs(auth, headers)
 	}
 
 	// Generate the ToHeader method.
-	f.P("// ToHeader maps the configured client options into a http.Header issued")
-	f.P("// on every request.")
-	f.P("func (c *ClientOptions) ToHeader() http.Header {")
+	f.P("// ToHeader maps the configured request options into a http.Header used")
+	f.P("// for the request(s).")
+	f.P("func (c *RequestOptions) ToHeader() http.Header {")
 	f.P("header := c.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
@@ -208,6 +220,12 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 		return err
 	}
 
+	f.P()
+
+	if err := f.writeOptionStructs(auth, headers); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -218,13 +236,13 @@ func (f *fileWriter) writePlatformHeaders(
 	sdkVersion string,
 ) error {
 	if sdkVersion == "" {
-		f.P("func (c *ClientOptions) cloneHeader() http.Header {")
+		f.P("func (c *RequestOptions) cloneHeader() http.Header {")
 		f.P("return c.HTTPHeader.Clone()")
 		f.P("}")
 		return nil
 	}
 	if sdkConfig.PlatformHeaders != nil {
-		f.P("func (c *ClientOptions) cloneHeader() http.Header {")
+		f.P("func (c *RequestOptions) cloneHeader() http.Header {")
 		f.P("headers := c.HTTPHeader.Clone()")
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
 		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
@@ -235,45 +253,146 @@ func (f *fileWriter) writePlatformHeaders(
 	return nil
 }
 
+// TODO: Add support for idempotency headers.
+func (f *fileWriter) writeOptionStructs(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+) error {
+	if err := f.writeOptionStruct("BaseURL", "string"); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("HTTPClient", "HTTPClient"); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("HTTPHeader", "http.Header"); err != nil {
+		return err
+	}
+
+	if auth != nil {
+		for _, authScheme := range auth.Schemes {
+			if authScheme.Bearer != nil {
+				var (
+					pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+					goType     = "string"
+				)
+				if err := f.writeOptionStruct(pascalCase, goType); err != nil {
+					return err
+				}
+			}
+			if authScheme.Basic != nil {
+				// The basic auth option requires special care because it requires
+				// two parameters.
+				f.P("// BasicAuthOption implements the RequestOption interface.")
+				f.P("type BasicAuthOption struct {")
+				f.P("Username string")
+				f.P("Password string")
+				f.P("}")
+				f.P()
+
+				f.P("func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.Username = b.Username")
+				f.P("opts.Password = b.Password")
+				f.P("}")
+				f.P()
+			}
+			if authScheme.Header != nil {
+				if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+					// We don't want to generate a request option for literal values.
+					continue
+				}
+				var (
+					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				)
+				if err := f.writeOptionStruct(pascalCase, goType); err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	for _, header := range headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			// We don't want to generate a request option for literal values.
+			continue
+		}
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+		)
+		if err := f.writeOptionStruct(pascalCase, goType); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// writeOptionStruct writes an individual option struct, like the following:
+//
+//	type BaseURLOption struct {
+//	  BaseURL string
+//	}
+func (f *fileWriter) writeOptionStruct(pascalCase string, goType string) error {
+	var (
+		typeName = pascalCase + "Option"
+		receiver = typeNameToReceiver(typeName)
+	)
+	f.P("// ", typeName, " implements the RequestOption interface.")
+	f.P("type ", typeName, " struct {")
+	f.P(pascalCase, " ", goType)
+	f.P("}")
+	f.P()
+
+	f.P("func (", receiver, " *", typeName, ") applyRequestOptions(opts *RequestOptions) {")
+	f.P("opts.", pascalCase, " = ", receiver, ".", pascalCase)
+	f.P("}")
+	f.P()
+
+	return nil
+}
+
 type GeneratedAuth struct {
 	Option ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
 }
 
-// WriteClientOptions writes the client options available to the generated
+// WriteRequestOptions writes the request options available to the generated
 // client code.
-func (f *fileWriter) WriteClientOptions(
+func (f *fileWriter) WriteRequestOptions(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
-		importPath        = path.Join(f.baseImportPath, "client")
-		httpClientType    = "core.HTTPClient"
-		clientOptionType  = "core.ClientOption"
-		clientOptionsType = "*core.ClientOptions"
+		importPath     = path.Join(f.baseImportPath, "option")
+		httpClientType = "core.HTTPClient"
 	)
+
+	// Generate the option.RequestOption type alias.
+	f.P("// RequestOption adapts the behavior of an indivdual request.")
+	f.P("type RequestOption = core.RequestOption")
+
 	// Generate the options for setting the base URL and HTTP client.
-	f.P("// WithBaseURL sets the client's base URL, overriding the")
-	f.P("// default environment, if any.")
-	f.P("func WithBaseURL(baseURL string) ", clientOptionType, " {")
-	f.P("return func(opts ", clientOptionsType, ") {")
-	f.P("opts.BaseURL = baseURL")
+	f.P("// WithBaseURL sets the base URL, overriding the default")
+	f.P("// environment, if any.")
+	f.P("func WithBaseURL(baseURL string) *core.BaseURLOption {")
+	f.P("return &core.BaseURLOption{")
+	f.P("BaseURL: baseURL,")
 	f.P("}")
 	f.P("}")
 	f.P()
-	f.P("// WithHTTPClient uses the given HTTPClient to issue all HTTP requests.")
-	f.P("func WithHTTPClient(httpClient ", httpClientType, ") ", clientOptionType, " {")
-	f.P("return func(opts ", clientOptionsType, ") {")
-	f.P("opts.HTTPClient = httpClient")
+	f.P("// WithHTTPClient uses the given HTTPClient to issue the request.")
+	f.P("func WithHTTPClient(httpClient ", httpClientType, ") *core.HTTPClientOption {")
+	f.P("return &core.HTTPClientOption{")
+	f.P("HTTPClient: httpClient,")
 	f.P("}")
 	f.P("}")
 	f.P()
-	f.P("// WithHTTPHeader adds the given http.Header to all requests")
-	f.P("// issued by the client.")
-	f.P("func WithHTTPHeader(httpHeader http.Header) ", clientOptionType, " {")
-	f.P("return func(opts ", clientOptionsType, ") {")
+	f.P("// WithHTTPHeader adds the given http.Header to the request.")
+	f.P("func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {")
+	f.P("return &core.HTTPHeaderOption{")
 	f.P("// Clone the headers so they can't be modified after the option call.")
-	f.P("opts.HTTPHeader = httpHeader.Clone()")
+	f.P("HTTPHeader: httpHeader.Clone(),")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -287,11 +406,12 @@ func (f *fileWriter) WriteClientOptions(
 			var (
 				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
 				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
 					ast.NewImportedObject(
-						"With"+pascalCase,
+						optionName,
 						importPath,
 					),
 					[]ast.Expr{
@@ -299,14 +419,15 @@ func (f *fileWriter) WriteClientOptions(
 					},
 				)
 			}
-			f.P("// With", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
+			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func With", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
-			f.P("return func(opts ", clientOptionsType, ") {")
-			f.P("opts.", pascalCase, " = ", camelCase)
+			typeName := "core." + pascalCase + "Option"
+			f.P("func ", optionName, "(", camelCase, " string) *", typeName, " {")
+			f.P("return &", typeName, "{")
+			f.P(pascalCase, ": ", camelCase, ",")
 			f.P("}")
 			f.P("}")
 			f.P()
@@ -324,22 +445,23 @@ func (f *fileWriter) WriteClientOptions(
 					},
 				)
 			}
-			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' header on every request.")
+			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func WithBasicAuth(username, password string) ", clientOptionType, " {")
-			f.P("return func(opts ", clientOptionsType, ") {")
-			f.P("opts.Username = username")
-			f.P("opts.Password = password")
+			typeName := "core.BasicAuthOption"
+			f.P("func WithBasicAuth(username, password string) *", typeName, " {")
+			f.P("return &", typeName, "{")
+			f.P("Username: username,")
+			f.P("Password: password,")
 			f.P("}")
 			f.P("}")
 			f.P()
 		}
 		if authScheme.Header != nil {
 			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
-				// We don't want to generate a client option for literal values.
+				// We don't want to generate a request option for literal values.
 				continue
 			}
 			var (
@@ -352,7 +474,7 @@ func (f *fileWriter) WriteClientOptions(
 			if i == 0 {
 				option = ast.NewCallExpr(
 					ast.NewImportedObject(
-						"With"+pascalCase,
+						optionName,
 						importPath,
 					),
 					[]ast.Expr{
@@ -360,14 +482,15 @@ func (f *fileWriter) WriteClientOptions(
 					},
 				)
 			}
-			f.P("// ", optionName, " sets the ", param, " auth header on every request.")
+			f.P("// ", optionName, " sets the ", param, " auth request header.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
-			f.P("return func(opts ", clientOptionsType, ") {")
-			f.P("opts.", field, " = ", param)
+			typeName := "core." + pascalCase + "Option"
+			f.P("func ", optionName, "(", param, " ", value, ") *", typeName, " {")
+			f.P("return &", typeName, "{")
+			f.P(field, ": ", param, ",")
 			f.P("}")
 			f.P("}")
 			f.P()
@@ -376,25 +499,27 @@ func (f *fileWriter) WriteClientOptions(
 
 	for _, header := range headers {
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
-			// We don't want to generate a client option for literal values.
+			// We don't want to generate a request option for literal values.
 			continue
 		}
 		var (
-			optionName = fmt.Sprintf("With%s", header.Name.Name.PascalCase.UnsafeName)
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			optionName = fmt.Sprintf("With%s", pascalCase)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
 			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 		)
-		f.P("// ", optionName, " sets the ", param, " header on every request.")
+		f.P("// ", optionName, " sets the ", param, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
 			// If the header has any custom documentation, include it immediately below the standard
 			// option signature comment.
 			f.P("//")
 			f.WriteDocs(header.Docs)
 		}
-		f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
-		f.P("return func(opts ", clientOptionsType, ") {")
-		f.P("opts.", field, " = ", param)
+		typeName := "core." + pascalCase + "Option"
+		f.P("func ", optionName, "(", param, " ", value, ") *", typeName, " {")
+		f.P("return &", typeName, "{")
+		f.P(field, ": ", param, ",")
 		f.P("}")
 		f.P("}")
 		f.P()
@@ -412,6 +537,8 @@ type GeneratedClient struct {
 }
 
 // WriteClient writes a client for interacting with the given service.
+//
+// TODO: Add support for endpoint-level RequestOptions.
 func (f *fileWriter) WriteClient(
 	irEndpoints []*ir.HttpEndpoint,
 	idempotencyHeaders []*ir.HttpHeader,
@@ -458,11 +585,8 @@ func (f *fileWriter) WriteClient(
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func New", clientName, "(opts ...core.ClientOption) *", clientName, " {")
-	f.P("options := core.NewClientOptions()")
-	f.P("for _, opt := range opts {")
-	f.P("opt(options)")
-	f.P("}")
+	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
+	f.P("options := core.NewRequestOptions(opts...)")
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: core.NewCaller(options.HTTPClient),")
@@ -1293,7 +1417,7 @@ func environmentsToEnvironmentsVariable(
 ) (*GeneratedEnvironment, error) {
 	writer.P("// Environments defines all of the API environments.")
 	writer.P("// These values can be used with the WithBaseURL")
-	writer.P("// ClientOption to override the client's default environment,")
+	writer.P("// RequestOption to override the client's default environment,")
 	writer.P("// if any.")
 	writer.P("var Environments = struct {")
 	importPath := writer.baseImportPath

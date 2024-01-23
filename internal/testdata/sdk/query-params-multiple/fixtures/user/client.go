@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures/core"
+	option "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures/option"
 	http "net/http"
 	url "net/url"
 )
@@ -17,11 +18,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

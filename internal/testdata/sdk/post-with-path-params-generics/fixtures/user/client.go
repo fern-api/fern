@@ -5,6 +5,7 @@ package user
 import (
 	sdk "acme.io/sdk"
 	core "acme.io/sdk/core"
+	option "acme.io/sdk/option"
 	context "context"
 	fmt "fmt"
 	http "net/http"
@@ -17,11 +18,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

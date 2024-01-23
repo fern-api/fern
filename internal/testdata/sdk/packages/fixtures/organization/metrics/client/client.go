@@ -6,6 +6,7 @@ import (
 	context "context"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	organization "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization"
 	metrics "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/metrics"
 	tag "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/metrics/tag"
@@ -20,11 +21,8 @@ type Client struct {
 	Tag *tag.Client
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

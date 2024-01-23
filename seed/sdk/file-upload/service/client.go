@@ -8,6 +8,7 @@ import (
 	fmt "fmt"
 	fern "github.com/file-upload/fern"
 	core "github.com/file-upload/fern/core"
+	option "github.com/file-upload/fern/option"
 	io "io"
 	multipart "mime/multipart"
 	http "net/http"
@@ -20,11 +21,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

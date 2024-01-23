@@ -6,6 +6,7 @@ import (
 	core "github.com/literal-headers/fern/core"
 	noheaders "github.com/literal-headers/fern/noheaders"
 	onlyliteralheaders "github.com/literal-headers/fern/onlyliteralheaders"
+	option "github.com/literal-headers/fern/option"
 	withnonliteralheaders "github.com/literal-headers/fern/withnonliteralheaders"
 	http "net/http"
 )
@@ -20,11 +21,8 @@ type Client struct {
 	WithNonLiteralHeaders *withnonliteralheaders.Client
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL:               options.BaseURL,
 		caller:                core.NewCaller(options.HTTPClient),

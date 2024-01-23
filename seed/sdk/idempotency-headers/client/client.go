@@ -4,6 +4,7 @@ package client
 
 import (
 	core "github.com/idempotency-headers/fern/core"
+	option "github.com/idempotency-headers/fern/option"
 	payment "github.com/idempotency-headers/fern/payment"
 	http "net/http"
 )
@@ -16,11 +17,8 @@ type Client struct {
 	Payment *payment.Client
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

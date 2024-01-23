@@ -10,6 +10,7 @@ import (
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures"
 	configclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/config/client"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	organizationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/client"
 	userclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/client"
 	io "io"
@@ -26,11 +27,8 @@ type Client struct {
 	Organization *organizationclient.Client
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL:      options.BaseURL,
 		caller:       core.NewCaller(options.HTTPClient),

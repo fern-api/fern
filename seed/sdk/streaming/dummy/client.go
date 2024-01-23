@@ -6,6 +6,7 @@ import (
 	context "context"
 	v2 "github.com/fern-api/stream-go/v2"
 	core "github.com/fern-api/stream-go/v2/core"
+	option "github.com/fern-api/stream-go/v2/option"
 	http "net/http"
 )
 
@@ -15,11 +16,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

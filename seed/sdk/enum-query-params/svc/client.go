@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	fern "github.com/enum-query-params/fern"
 	core "github.com/enum-query-params/fern/core"
+	option "github.com/enum-query-params/fern/option"
 	http "net/http"
 	url "net/url"
 )
@@ -17,11 +18,8 @@ type Client struct {
 	header  http.Header
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),

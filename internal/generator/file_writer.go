@@ -58,12 +58,16 @@ func newFileWriter(
 	scope.AddImport("net/url")
 	scope.AddImport("strconv")
 	scope.AddImport("strings")
+	scope.AddImport("testing")
 	scope.AddImport("time")
 	scope.AddImport("github.com/google/uuid")
+	scope.AddImport("github.com/stretchr/testify/assert")
+	scope.AddImport("github.com/stretchr/testify/require")
 
 	// Add an import to the core utilities package generated for
 	// the SDK.
 	scope.AddImport(path.Join(baseImportPath, "core"))
+	scope.AddImport(path.Join(baseImportPath, "option"))
 
 	return &fileWriter{
 		filename:       filename,
@@ -122,6 +126,11 @@ func (f *fileWriter) WriteDocs(docs *string) {
 	for _, line := range split {
 		f.P("// " + line)
 	}
+}
+
+// WriteRaw writes the raw string into the file.
+func (f *fileWriter) WriteRaw(s string) {
+	fmt.Fprint(f.buffer, s)
 }
 
 // removeUnusedImports parses the buffer, interpreting it as Go code,

@@ -4,6 +4,7 @@ package client
 
 import (
 	core "github.com/response-property/fern/core"
+	option "github.com/response-property/fern/option"
 	service "github.com/response-property/fern/service"
 	http "net/http"
 )
@@ -16,11 +17,8 @@ type Client struct {
 	Service *service.Client
 }
 
-func NewClient(opts ...core.ClientOption) *Client {
-	options := core.NewClientOptions()
-	for _, opt := range opts {
-		opt(options)
-	}
+func NewClient(opts ...option.RequestOption) *Client {
+	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),
