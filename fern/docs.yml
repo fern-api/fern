@@ -173,7 +173,7 @@ navigation:
             path: ./docs/pages/server-boilerplate/spring.mdx
           - page: Go
             path: ./docs/pages/server-boilerplate/go.mdx
-          - page: .NET
+          - page: DotNet
             path: ./docs/pages/server-boilerplate/dotnet.mdx  
           - page: Ruby on Rails
             path: ./docs/pages/server-boilerplate/ruby-on-rails.mdx
