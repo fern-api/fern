@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id "com.palantir.consistent-versions" version "2.15.0"
+    id "com.palantir.consistent-versions" version "2.19.0"
     id "com.palantir.git-version" version "3.0.0"
     id "org.inferred.processors" version "3.7.0"
     id "com.jfrog.artifactory" version "5.1.10"
