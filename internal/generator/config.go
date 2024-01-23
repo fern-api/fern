@@ -2,13 +2,14 @@ package generator
 
 // Config represents the Fern generator configuration.
 type Config struct {
-	DryRun             bool
-	EnableExplicitNull bool
-	IncludeReadme      bool
-	Organization       string
-	Version            string
-	IRFilepath         string
-	ImportPath         string
+	DryRun                     bool
+	EnableExplicitNull         bool
+	IncludeLegacyClientOptions bool
+	IncludeReadme              bool
+	Organization               string
+	Version                    string
+	IRFilepath                 string
+	ImportPath                 string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -34,6 +35,7 @@ type ModuleConfig struct {
 func NewConfig(
 	dryRun bool,
 	enableExplicitNull bool,
+	includeLegacyClientOptions bool,
 	includeReadme bool,
 	organization string,
 	version string,
@@ -42,13 +44,14 @@ func NewConfig(
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
 	return &Config{
-		DryRun:             dryRun,
-		EnableExplicitNull: enableExplicitNull,
-		IncludeReadme:      includeReadme,
-		Organization:       organization,
-		Version:            version,
-		IRFilepath:         irFilepath,
-		ImportPath:         importPath,
-		ModuleConfig:       moduleConfig,
+		DryRun:                     dryRun,
+		EnableExplicitNull:         enableExplicitNull,
+		IncludeLegacyClientOptions: includeLegacyClientOptions,
+		IncludeReadme:              includeReadme,
+		Organization:               organization,
+		Version:                    version,
+		IRFilepath:                 irFilepath,
+		ImportPath:                 importPath,
+		ModuleConfig:               moduleConfig,
 	}, nil
 }

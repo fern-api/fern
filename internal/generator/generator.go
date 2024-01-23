@@ -300,7 +300,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 		// Generate the request options.
-		fileInfo = fileInfoForRequestOptions(ir.ApiName, generatedNames)
+		fileInfo = fileInfoForRequestOptions()
 		writer = newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -318,6 +318,26 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
+		if g.config.IncludeLegacyClientOptions {
+			// Generate the legacy client option helper functions (for backwards compatibility).
+			fileInfo = fileInfoForLegacyClientOptions()
+			writer = newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+				ir.Errors,
+				g.coordinator,
+			)
+			if err = writer.WriteLegacyClientOptions(ir.Auth, ir.Headers); err != nil {
+				return nil, err
+			}
+			file, err = writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+		}
 		// Generate the Optional[T] constructors.
 		fileInfo, useCore := fileInfoForOptionalHelpers(ir.ApiName, generatedNames, generatedPackages)
 		writer = newFileWriter(
@@ -784,10 +804,17 @@ func fileInfoForRequestOptionsDefinition() *fileInfo {
 	}
 }
 
-func fileInfoForRequestOptions(apiName *fernir.Name, generatedNames map[string]struct{}) *fileInfo {
+func fileInfoForRequestOptions() *fileInfo {
 	return &fileInfo{
 		filename:    "option/request_option.go",
 		packageName: "option",
+	}
+}
+
+func fileInfoForLegacyClientOptions() *fileInfo {
+	return &fileInfo{
+		filename:    "client/options.go",
+		packageName: "client",
 	}
 }
 

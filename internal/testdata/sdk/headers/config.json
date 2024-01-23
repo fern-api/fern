@@ -7,7 +7,8 @@
         "path": "tmp"
     },
     "customConfig": {
-      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures"
+      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures",
+      "includeLegacyClientOptions": true 
     },
     "workspaceName": "test",
     "organization": "fernbot",

@@ -71,6 +71,106 @@ func (f *fileWriter) WriteOptionalHelpers(useCore bool) error {
 	return nil
 }
 
+// WriteLegacyClientOptions writes option functions in the client package, which
+// is where they were previously deposited in earlier versions of the generator.
+func (f *fileWriter) WriteLegacyClientOptions(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+) error {
+	f.P("// WithBaseURL sets the base URL, overriding the default")
+	f.P("// environment, if any.")
+	f.P("func WithBaseURL(baseURL string) *core.BaseURLOption {")
+	f.P("return option.WithBaseURL(baseURL)")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPClient uses the given HTTPClient to issue the request.")
+	f.P("func WithHTTPClient(httpClient core.HTTPClient) *core.HTTPClientOption {")
+	f.P("return option.WithHTTPClient(httpClient)")
+	f.P("}")
+	f.P()
+	f.P("// WithHTTPHeader adds the given http.Header to the request.")
+	f.P("func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {")
+	f.P("return option.WithHTTPHeader(httpHeader)")
+	f.P("}")
+	f.P()
+
+	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
+
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			var (
+				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+				typeName   = "*core." + pascalCase + "Option"
+			)
+			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
+			f.P("func ", optionName, "(", camelCase, " string ) ", typeName, " {")
+			f.P("return option.", optionName, "(", camelCase, ")")
+			f.P("}")
+		}
+		if authScheme.Basic != nil {
+			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithBasicAuth(username string, password string) *core.BasicAuthOption {")
+			f.P("return option.WithBasicAuth(username, password)")
+			f.P("}")
+		}
+		if authScheme.Header != nil {
+			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+				// We don't want to generate a request option for literal values.
+				continue
+			}
+			var (
+				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
+				optionName = fmt.Sprintf("With%s", pascalCase)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				typeName   = "*core." + pascalCase + "Option"
+			)
+			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func ", optionName, "(", camelCase, " ", goType, ") ", typeName, " {")
+			f.P("return option.", optionName, "(", camelCase, ")")
+			f.P("}")
+			f.P()
+		}
+	}
+
+	for _, header := range headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			// We don't want to generate a request option for literal values.
+			continue
+		}
+		var (
+			pascalCase = header.Name.Name.PascalCase.UnsafeName
+			camelCase  = header.Name.Name.CamelCase.SafeName
+			optionName = fmt.Sprintf("With%s", pascalCase)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			typeName   = "*core." + pascalCase + "Option"
+		)
+		f.P("// ", optionName, " sets the ", camelCase, " request header.")
+		if header.Docs != nil && len(*header.Docs) > 0 {
+			// If the header has any custom documentation, include it immediately below the standard
+			// option signature comment.
+			f.P("//")
+			f.WriteDocs(header.Docs)
+		}
+		f.P("func ", optionName, "(", camelCase, " ", goType, ") ", typeName, " {")
+		f.P("return option.", optionName, "(", camelCase, ")")
+		f.P("}")
+		f.P()
+	}
+
+	return nil
+}
+
 // WriteRequestOptionsDefinition writes the RequestOption interface and
 // *RequestOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.

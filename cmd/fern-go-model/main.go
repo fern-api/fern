@@ -25,6 +25,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
 		config.EnableExplicitNull,
+		config.IncludeLegacyClientOptions,
 		includeReadme,
 		config.Organization,
 		config.Version,
